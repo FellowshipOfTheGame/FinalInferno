@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f047c6ee540e16a4ab3c4c4d3bf866a3, type: 3}
+  m_Name: HeroTurn
+  m_EditorClassIdentifier: 
+  transitions:
+  - decisions:
+    - {fileID: 11400000, guid: ba810fe2b46647a409764d7561c117b4, type: 2}
+    nextState: {fileID: 11400000, guid: 4fd25ce43b4028f4c9c6a864dba5559c, type: 2}
+    actions:
+    - {fileID: 11400000, guid: dde36133b76652c41b06208f5019e210, type: 2}
+    - {fileID: 11400000, guid: 5256e0ddba6650641b1c7a8161328f8e, type: 2}
+    - {fileID: 11400000, guid: 630ea75fa8794914f94999f59dcdc0f9, type: 2}
+  - decisions:
+    - {fileID: 11400000, guid: 36bc18675a400834193f70c8afe6601e, type: 2}
+    nextState: {fileID: 11400000, guid: 6eb657d76c39e4e40981a97bbb7140eb, type: 2}
+    actions:
+    - {fileID: 11400000, guid: dde36133b76652c41b06208f5019e210, type: 2}
+    - {fileID: 11400000, guid: 5256e0ddba6650641b1c7a8161328f8e, type: 2}
+    - {fileID: 11400000, guid: 630ea75fa8794914f94999f59dcdc0f9, type: 2}
+  - decisions:
+    - {fileID: 11400000, guid: 588950e308163ff4db4e4f421a73f903, type: 2}
+    nextState: {fileID: 11400000, guid: 6eb657d76c39e4e40981a97bbb7140eb, type: 2}
+    actions:
+    - {fileID: 11400000, guid: dde36133b76652c41b06208f5019e210, type: 2}
+    - {fileID: 11400000, guid: 5256e0ddba6650641b1c7a8161328f8e, type: 2}
+    - {fileID: 11400000, guid: 630ea75fa8794914f94999f59dcdc0f9, type: 2}
