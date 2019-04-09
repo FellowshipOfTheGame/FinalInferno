@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "BattleUI SM/Decisions/Time")]
-public class ScanDecision : Decision
+public class TimeDecision : Decision
 {
     public float stateTime;
     public override bool Decide(StateController controller)

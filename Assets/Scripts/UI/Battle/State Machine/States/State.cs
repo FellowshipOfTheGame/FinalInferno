@@ -16,7 +16,7 @@ public class State : ScriptableObject
     {
         foreach (Transition T in transitions)
         {
-            bool decisionSucceeded = false;
+            bool decisionSucceeded = true;
             foreach (Decision D in T.decisions)
             {
                 decisionSucceeded = decisionSucceeded && D.Decide(controller);
