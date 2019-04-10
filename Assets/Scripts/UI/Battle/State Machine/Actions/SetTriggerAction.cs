@@ -16,4 +16,9 @@ public class SetTriggerAction : Action
     {
         animator.SetTrigger(trigger);
     }
+
+    public void SetAnimator(Animator newAnimator)
+    {
+        animator = newAnimator;
+    }
 }
