@@ -2,20 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "BattleUI SM/Decisions/Button Click")]
-public class ButtonClickDecision : Decision
+namespace FinalInferno.UI.FSM
 {
-    [SerializeField] private bool buttonIsClicked;
 
-    public override bool Decide(StateController controller)
+    [CreateAssetMenu(menuName = "BattleUI SM/Decisions/Button Click")]
+    public class ButtonClickDecision : Decision
     {
-        bool aux = buttonIsClicked;
-        buttonIsClicked = false;
-        return aux;
+        [SerializeField] private bool buttonIsClicked;
+
+        public override bool Decide(StateController controller)
+        {
+            bool aux = buttonIsClicked;
+            buttonIsClicked = false;
+            return aux;
+        }
+
+        public void Click()
+        {
+            buttonIsClicked = true;        
+        }
     }
 
-    public void Click()
-    {
-        buttonIsClicked = true;        
-    }
 }

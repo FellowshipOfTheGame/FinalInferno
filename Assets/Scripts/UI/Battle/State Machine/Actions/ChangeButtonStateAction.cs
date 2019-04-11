@@ -3,22 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[CreateAssetMenu(menuName = "BattleUI SM/Actions/Change Button State")]
-public class ChangeButtonStateAction : Action
+namespace FinalInferno.UI.FSM
 {
-    [SerializeField] private Button button;
-    public override void Act(StateController controller)
+
+    [CreateAssetMenu(menuName = "BattleUI SM/Actions/Change Button State")]
+    public class ChangeButtonStateAction : Action
     {
-        ChangeButtonState(controller);
+        [SerializeField] private Button button;
+        public override void Act(StateController controller)
+        {
+            ChangeButtonState(controller);
+        }
+
+        public void SetButton(Button newButton)
+        {
+            button = newButton;
+        }
+
+        private void ChangeButtonState(StateController controller)
+        {
+            button.interactable = !button.interactable;
+        }
     }
 
-    public void SetButton(Button newButton)
-    {
-        button = newButton;
-    }
-
-    private void ChangeButtonState(StateController controller)
-    {
-        button.interactable = !button.interactable;
-    }
 }

@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SetButton : MonoBehaviour
+namespace FinalInferno.UI.FSM
 {
-    [SerializeField] private ChangeButtonStateAction CBS;
-    void Start()
+    public class SetButton : MonoBehaviour
     {
-        CBS.SetButton(GetComponent<Button>());
+        [SerializeField] private ChangeButtonStateAction CBS;
+        void Start()
+        {
+            CBS.SetButton(GetComponent<Button>());
+        }
+
     }
 
 }

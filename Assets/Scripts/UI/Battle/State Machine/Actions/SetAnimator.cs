@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SetAnimator : MonoBehaviour
+namespace FinalInferno.UI.FSM
 {
-    [SerializeField] private SetTriggerAction[] STAs;
-    void Start()
+    public class SetAnimator : MonoBehaviour
     {
-        foreach (SetTriggerAction STA in STAs)
+        [SerializeField] private SetTriggerAction[] STAs;
+        void Start()
         {
-            STA.SetAnimator(GetComponent<Animator>());
+            foreach (SetTriggerAction STA in STAs)
+            {
+                STA.SetAnimator(GetComponent<Animator>());
+            }
         }
+
     }
 
 }

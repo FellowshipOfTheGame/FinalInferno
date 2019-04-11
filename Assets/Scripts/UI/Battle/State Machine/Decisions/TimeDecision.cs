@@ -2,17 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "BattleUI SM/Decisions/Time")]
-public class TimeDecision : Decision
+namespace FinalInferno.UI.FSM
 {
-    public float stateTime;
-    public override bool Decide(StateController controller)
+
+    [CreateAssetMenu(menuName = "BattleUI SM/Decisions/Time")]
+    public class TimeDecision : Decision
     {
-        return CheckStateTime(controller);
+        public float stateTime;
+        public override bool Decide(StateController controller)
+        {
+            return CheckStateTime(controller);
+        }
+
+        private bool CheckStateTime(StateController controller)
+        {
+            return controller.CheckIfCountDownElapsed(stateTime);
+        }
     }
 
-    private bool CheckStateTime(StateController controller)
-    {
-        return controller.CheckIfCountDownElapsed(stateTime);
-    }
 }

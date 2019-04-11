@@ -2,23 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "BattleUI SM/Actions/Set Trigger")]
-public class SetTriggerAction : Action
+namespace FinalInferno.UI.FSM
 {
-    [SerializeField] private Animator animator;
-    [SerializeField] private string trigger;
-    public override void Act(StateController controller)
+
+    [CreateAssetMenu(menuName = "BattleUI SM/Actions/Set Trigger")]
+    public class SetTriggerAction : Action
     {
-        SetTrigger(controller);
+        [SerializeField] private Animator animator;
+        [SerializeField] private string trigger;
+        public override void Act(StateController controller)
+        {
+            SetTrigger(controller);
+        }
+
+        private void SetTrigger(StateController controller)
+        {
+            animator.SetTrigger(trigger);
+        }
+
+        public void SetAnimator(Animator newAnimator)
+        {
+            animator = newAnimator;
+        }
     }
 
-    private void SetTrigger(StateController controller)
-    {
-        animator.SetTrigger(trigger);
-    }
-
-    public void SetAnimator(Animator newAnimator)
-    {
-        animator = newAnimator;
-    }
 }

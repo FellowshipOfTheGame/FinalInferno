@@ -2,14 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "BattleUI SM/Decisions/Key")]
-public class KeyDecision : Decision
+namespace FinalInferno.UI.FSM
 {
-    [SerializeField] private KeyCode key;
 
-    public override bool Decide(StateController controller)
+    [CreateAssetMenu(menuName = "BattleUI SM/Decisions/Key")]
+    public class KeyDecision : Decision
     {
-        return Input.GetKeyDown(key);
+        [SerializeField] private KeyCode key;
+
+        public override bool Decide(StateController controller)
+        {
+            return Input.GetKeyDown(key);
+        }
+
     }
 
 }

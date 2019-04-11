@@ -2,32 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "BattleUI SM/State")]
-public class State : ScriptableObject
+namespace FinalInferno.UI.FSM
 {
-    public Transition[] transitions;
 
-    public void UpdateState(StateController controller)
+    [CreateAssetMenu(menuName = "BattleUI SM/State")]
+    public class State : ScriptableObject
     {
-        CheckTransitions(controller);
-    }
+        public Transition[] transitions;
 
-    private void CheckTransitions(StateController controller)
-    {
-        foreach (Transition T in transitions)
+        public void UpdateState(StateController controller)
         {
-            bool decisionSucceeded = true;
-            foreach (Decision D in T.decisions)
-            {
-                decisionSucceeded = decisionSucceeded && D.Decide(controller);
-            }
+            CheckTransitions(controller);
+        }
 
-            if (decisionSucceeded)
+        private void CheckTransitions(StateController controller)
+        {
+            foreach (Transition T in transitions)
             {
-                controller.TransitionToState(T.nextState, T.actions);
+                bool decisionSucceeded = true;
+                foreach (Decision D in T.decisions)
+                {
+                    decisionSucceeded = decisionSucceeded && D.Decide(controller);
+                }
+
+                if (decisionSucceeded)
+                {
+                    controller.TransitionToState(T.nextState, T.actions);
+                }
             }
         }
-    }
 
+    }
 
 }
