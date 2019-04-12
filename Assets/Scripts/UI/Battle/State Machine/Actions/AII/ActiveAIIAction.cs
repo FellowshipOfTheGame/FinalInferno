@@ -7,18 +7,24 @@ namespace FinalInferno.UI.FSM
 {
 
     [CreateAssetMenu(menuName = "BattleUI SM/Actions/Active AII")]
-    public class ActiveAIIAction : Action
+    public class ActiveAIIAction : ComponentRequester
     {
-        [SerializeField] private AIIManager manager;
+        private AIIManager manager;
         public override void Act(StateController controller)
         {
             manager.Active();
         }
 
-        public void SetAII(AIIManager newManager)
+        public override void RequestComponent(GameObject provider)
         {
-            manager = newManager;
+            RequestAIIManager(provider);
         }
+
+        private void RequestAIIManager(GameObject provider)
+        {
+            manager = provider.GetComponent<AIIManager>();
+        }
+
     }
 
 }

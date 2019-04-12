@@ -5,10 +5,10 @@ using UnityEngine;
 namespace FinalInferno.UI.FSM
 {
 
-    [CreateAssetMenu(menuName = "BattleUI SM/Actions/Set Trigger")]
-    public class SetTriggerAction : Action
+    [CreateAssetMenu(menuName = "BattleUI SM/Actions/Trigger")]
+    public class TriggerAction : ComponentRequester
     {
-        [SerializeField] private Animator animator;
+        private Animator animator;
         [SerializeField] private string trigger;
         public override void Act(StateController controller)
         {
@@ -20,9 +20,14 @@ namespace FinalInferno.UI.FSM
             animator.SetTrigger(trigger);
         }
 
-        public void SetAnimator(Animator newAnimator)
+        public override void RequestComponent(GameObject provider)
         {
-            animator = newAnimator;
+            RequestAnimator(provider);
+        }
+
+        private void RequestAnimator(GameObject provider)
+        {
+            animator = provider.GetComponent<Animator>();
         }
     }
 

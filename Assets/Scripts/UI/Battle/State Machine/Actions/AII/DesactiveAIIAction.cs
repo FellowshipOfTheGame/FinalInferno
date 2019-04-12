@@ -7,17 +7,22 @@ namespace FinalInferno.UI.FSM
 {
 
     [CreateAssetMenu(menuName = "BattleUI SM/Actions/Desactive AII")]
-    public class DesactiveAIIAction : Action
+    public class DesactiveAIIAction : ComponentRequester
     {
-        [SerializeField] private AIIManager manager;
+        private AIIManager manager;
         public override void Act(StateController controller)
         {
             manager.Desactive();
         }
 
-        public void SetAII(AIIManager newManager)
+        public override void RequestComponent(GameObject provider)
         {
-            manager = newManager;
+            RequestAIIManager(provider);
+        }
+
+        private void RequestAIIManager(GameObject provider)
+        {
+            manager = provider.GetComponent<AIIManager>();
         }
     }
 
