@@ -12,6 +12,6 @@ public abstract class Unit : ScriptableObject{
     public int baseSpeed; //velocidade base dessa unidade, sem status de buff/debuff
     public Color color; //cor dessa unidade, utilizado para inimigos que tem o mesmo sprite mas nivel de poder diferente 
     public List<Skill> skills; //lista de "skills" da unidade
-    //public StatsTable statsTable; //lista de status fazendo efeito nessa unidade
+    //public StatsTable statsTable; //tabela com as statisticas de atributos da unidade baseadas no nivel da unidade
     public Animator animator; //"animator" dessa unidade 
 }
