@@ -14,7 +14,7 @@ namespace FinalInferno.UI.FSM
         /// <summary>
         /// Reference to the AII manager.
         /// </summary>
-        private AIIManager manager;
+        [SerializeField] private AIIManager manager;
 
         /// <summary>
         /// Execute an action.

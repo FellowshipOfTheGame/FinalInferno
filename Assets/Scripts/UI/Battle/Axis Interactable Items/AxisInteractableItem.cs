@@ -8,7 +8,7 @@ namespace FinalInferno.UI.AII
 	/// A component implementing an item that can be controlled by 
     /// a keyboard shortcut.
 	/// </summary>
-    public class AxisInteractableItem : MonoBehaviour
+    public abstract class AxisInteractableItem : MonoBehaviour
     {
         /// <summary>
         /// A game object that references whether this item is active.
@@ -48,7 +48,7 @@ namespace FinalInferno.UI.AII
         /// <summary>
         /// Represents if the item is active or not.
         /// </summary>
-        [SerializeField] private bool active;
+        //[SerializeField] private bool active;
 
         void Awake()
         {
@@ -62,7 +62,7 @@ namespace FinalInferno.UI.AII
         public void Enter()
         {
             OnEnter();
-            active = true;
+            //active = true;
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace FinalInferno.UI.AII
         public void Exit()
         {
             OnExit();
-            active = false;
+            //active = false;
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace FinalInferno.UI.AII
         /// <summary>
         /// Enable the game object that references this item.
         /// </summary>
-        private void EnableGO()
+        protected void EnableGO()
         {
             activeReference.SetActive(true);
         }
@@ -93,7 +93,7 @@ namespace FinalInferno.UI.AII
         /// <summary>
         /// Disable the game object that references this item.
         /// </summary>
-        private void DisableGO()
+        protected void DisableGO()
         {
             activeReference.SetActive(false);
         }

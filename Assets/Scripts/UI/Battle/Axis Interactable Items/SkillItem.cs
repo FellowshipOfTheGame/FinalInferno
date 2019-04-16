@@ -8,24 +8,30 @@ namespace FinalInferno.UI.AII
     /// <summary>
 	/// A type of item that can be clicked.
 	/// </summary>
-    public class ClickableItem : AxisInteractableItem
+    public class SkillItem : ClickableItem
     {
         /// <summary>
         /// Reference to the button click decision SO.
         /// </summary>
-        public ButtonClickDecision BCD;
+        public SkillList skillList;
+        private PlayerSkill skill;
 
-        void Start()
+        void Awake()
         {
-            OnAct += Click;
+            OnEnter += EnableGO;
+            OnExit += DisableGO;
+            OnEnter += UpdateSkillDescription;
         }
 
         /// <summary>
         /// Calls the button click decision trigger.
         /// </summary>
-        private void Click()
+        private void UpdateSkillDescription()
         {
-            BCD.Click();
+            if (skill == null)
+                skill = GetComponent<SkillElement>().skill;
+
+            skillList.UpdateSkillDescription(skill);
         }
     }
 

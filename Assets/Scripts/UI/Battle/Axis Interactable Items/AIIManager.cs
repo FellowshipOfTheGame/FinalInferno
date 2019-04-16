@@ -22,7 +22,7 @@ namespace FinalInferno.UI.AII
         /// <summary>
         /// Current item selected by the manager.
         /// </summary>
-        [SerializeField] private AxisInteractableItem currentItem;
+        public AxisInteractableItem currentItem;
 
         /// <summary>
         /// Orientation of the system, responsible for the identification
