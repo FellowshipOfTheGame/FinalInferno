@@ -4,8 +4,14 @@ using UnityEngine;
 
 namespace FinalInferno.UI.FSM
 {
+    /// <summary>
+    /// A component that provides the required component of a ComponentRequester.
+    /// </summary>
     public class ComponentProvider : MonoBehaviour
     {
+        /// <summary>
+        /// A reference to a component that requests another one.
+        /// </summary>
         [SerializeField] private ComponentRequester requester;
 
         /// <summary>

@@ -1,24 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FinalInferno.UI.AII;
 
 namespace FinalInferno.UI.FSM
 {
     /// <summary>
-    /// Action that calls an animator trigger.
+    /// Action that change the state of an AII.
     /// </summary>
-    [CreateAssetMenu(menuName = "BattleUI SM/Actions/Trigger")]
-    public class TriggerAction : ComponentRequester
+    [CreateAssetMenu(menuName = "BattleUI SM/Actions/Change AII State")]
+    public class ChangeAIIStateAction : ComponentRequester
     {
         /// <summary>
-        /// Reference to the animator.
+        /// Reference to the AII manager.
         /// </summary>
-        private Animator animator;
-
-        /// <summary>
-        /// Name of the parameter to be triggered.
-        /// </summary>
-        [SerializeField] private string trigger;
+        private AIIManager manager;
 
         /// <summary>
         /// Execute an action.
@@ -26,15 +22,18 @@ namespace FinalInferno.UI.FSM
         /// <param name="controller"> The Finite State Machine controller. </param>
         public override void Act(StateController controller)
         {
-            SetTrigger();
+            ChangeAIIState();
         }
 
         /// <summary>
-        /// Set the trigger value.
+        /// Change the state of an AII manager.
         /// </summary>
-        private void SetTrigger()
+        private void ChangeAIIState()
         {
-            animator.SetTrigger(trigger);
+            if (manager.active)
+                manager.Desactive();
+            else
+                manager.Active();
         }
 
         /// <summary>
@@ -43,16 +42,16 @@ namespace FinalInferno.UI.FSM
         /// <param name="provider"> Game object that provides the component requested. </param>
         public override void RequestComponent(GameObject provider)
         {
-            RequestAnimator(provider);
+            RequestAIIManager(provider);
         }
 
         /// <summary>
-        /// Request the animator component from the provider.
+        /// Request the AII manager component from the provider.
         /// </summary>
         /// <param name="provider"> Game object that provides the component requested. </param>
-        private void RequestAnimator(GameObject provider)
+        private void RequestAIIManager(GameObject provider)
         {
-            animator = provider.GetComponent<Animator>();
+            manager = provider.GetComponent<AIIManager>();
         }
     }
 
