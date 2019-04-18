@@ -9,8 +9,8 @@ public class SkillList : MonoBehaviour
 {
     public GameObject skillObject;
     public GameObject effectObject;
-    public Transform content;
-    public Transform effectsContent;
+    public RectTransform content;
+    public RectTransform effectsContent;
     [SerializeField] private AIIManager manager;
 
     public Text skillNameText;
@@ -73,5 +73,12 @@ public class SkillList : MonoBehaviour
             newEffect.GetComponent<EffectElement>().UpdateEffect(effect);
             newEffect.transform.SetParent(effectsContent);
         }
+    }
+
+    public void ClampSkillContent(RectTransform currentTrans)
+    {
+        float itemPos = currentTrans.localPosition.y;
+
+        content.localPosition = new Vector3(content.localPosition.x, Mathf.Clamp(content.localPosition.y, -itemPos-279, -itemPos-52));
     }
 }

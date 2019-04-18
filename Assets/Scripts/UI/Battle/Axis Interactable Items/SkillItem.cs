@@ -15,12 +15,16 @@ namespace FinalInferno.UI.AII
         /// </summary>
         public SkillList skillList;
         private PlayerSkill skill;
+        private RectTransform rect;
 
         void Awake()
         {
+            rect = GetComponent<RectTransform>();
+            
             OnEnter += EnableGO;
             OnExit += DisableGO;
             OnEnter += UpdateSkillDescription;
+            OnEnter += ClampSkillContent;
         }
 
         /// <summary>
@@ -32,6 +36,11 @@ namespace FinalInferno.UI.AII
                 skill = GetComponent<SkillElement>().skill;
 
             skillList.UpdateSkillDescription(skill);
+        }
+
+        private void ClampSkillContent()
+        {
+            skillList.ClampSkillContent(rect);
         }
     }
 
