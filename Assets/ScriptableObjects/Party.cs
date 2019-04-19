@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //representa a equipe inteira do jogador
-[CreateAssetMenu(menuName = "SOs/Party")]
+[CreateAssetMenu(fileName = "Party", menuName = "ScriptableObject/Party", order = 0)]
 public class Party : ScriptableObject{
     //public type questInfo; //informacoes sobre as missões da equipe
     //public List<Quest> quests; //lista de missões do jogador

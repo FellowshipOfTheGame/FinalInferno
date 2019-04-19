@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //engloba todas as "skills"
-[CreateAssetMenu(menuName = "SOs/Skill")]
+[CreateAssetMenu(fileName = "Skill", menuName = "ScriptableObject/Skill", order = 4)]
 public class Skill : ScriptableObject{
     public string name; //nome da "skill"
     public int cost; //tempo que a "skill" custara ao conjurador

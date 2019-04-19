@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //engloba todas as "skills" dos personagens do jogador, que ganham nivel
-[CreateAssetMenu(menuName = "SOs/PlayerSkill")]
+[CreateAssetMenu(fileName = "PlayerSkill", menuName = "ScriptableObject/PlayerSkill", order = 5)]
 public class PlayerSkill : Skill{
    public int level; //inivel da "skill"
    public long xp; //experiencia da "skill"

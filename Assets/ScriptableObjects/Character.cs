@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //engloba os personagens do jogador
-[CreateAssetMenu(menuName = "SOs/Character")]
+[CreateAssetMenu(fileName = "Character", menuName = "ScriptableObject/Character", order = 1)]
 public class Character : ScriptableObject{
     public Hero archetype; //classe desse personagem
     //public type skillInfo; //
