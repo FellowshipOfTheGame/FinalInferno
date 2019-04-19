@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "SOs/SkillEffect")]
+//engloba cada efeitos que uma "skill" pode causar
+[CreateAssetMenu(fileName = "SkillEffect", menuName = "ScriptableObject/SkillEffect", order = 6)]
 public class SkillEffect : ScriptableObject{
-    //public Effect effect;
-    public int value;
+    //public Effect effect; //efeito que a "skill" causara
+    public int value; //valor do efeito aplicado
+
 }
