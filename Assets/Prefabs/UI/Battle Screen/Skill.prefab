@@ -86,7 +86,9 @@ GameObject:
   - component: {fileID: 3092984641538209495}
   - component: {fileID: 3092984641538209492}
   - component: {fileID: 3092984641538209494}
+  - component: {fileID: 8101810880333043322}
   - component: {fileID: 7385340043210363885}
+  - component: {fileID: 8502283199406491362}
   - component: {fileID: 3593586228543324159}
   m_Layer: 5
   m_Name: Skill
@@ -172,6 +174,21 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &8101810880333043322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3092984641538209498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb91aec13b7461042bcdf63af3608e0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeReference: {fileID: 1964725702635104030}
+  negativeItem: {fileID: 0}
+  positiveItem: {fileID: 0}
 --- !u!114 &7385340043210363885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,6 +202,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skill: {fileID: 0}
+--- !u!114 &8502283199406491362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3092984641538209498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1c613c13d86bc9438b99528e41cf60b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BCD: {fileID: 0}
+  item: {fileID: 8101810880333043322}
 --- !u!114 &3593586228543324159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,8 +228,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8df51fcf8900a084993560a389250886, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeReference: {fileID: 1964725702635104030}
-  negativeItem: {fileID: 0}
-  positiveItem: {fileID: 0}
-  active: 0
   skillList: {fileID: 0}
+  item: {fileID: 8101810880333043322}

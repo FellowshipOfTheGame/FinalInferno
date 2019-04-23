@@ -8,27 +8,35 @@ namespace FinalInferno.UI.AII
     /// <summary>
 	/// A type of item that can be clicked.
 	/// </summary>
-    public class ClickableItem : MonoBehaviour
+    public class EffectItem : MonoBehaviour
     {
         /// <summary>
         /// Reference to the button click decision SO.
         /// </summary>
-        public ButtonClickDecision BCD;
+        public SkillList skillList;
+        private SkillEffect effect;
+        private RectTransform rect;
 
         [SerializeField] private AxisInteractableItem item;
 
         void Awake()
         {
-            item.OnAct += Click;
+            rect = GetComponent<RectTransform>();
+            
+            item.OnEnter += UpdateEffectDescription;
         }
 
         /// <summary>
         /// Calls the button click decision trigger.
         /// </summary>
-        private void Click()
+        private void UpdateEffectDescription()
         {
-            BCD.Click();
+            if (effect == null)
+                effect = GetComponent<EffectElement>().effect;
+
+            skillList.UpdateEffectDescription(effect);
         }
+
     }
 
 }

@@ -12,14 +12,15 @@ namespace FinalInferno.UI.FSM
         /// <summary>
         /// A reference to a component that requests another one.
         /// </summary>
-        [SerializeField] private ComponentRequester requester;
+        [SerializeField] private List<ComponentRequester> requesters;
 
         /// <summary>
         /// Awake is called when the script instance is being loaded.
         /// </summary>
         void Awake()
         {
-            requester.RequestComponent(gameObject);
+            foreach (ComponentRequester requester in requesters)
+                requester.RequestComponent(gameObject);
         }
     }
 

@@ -34,7 +34,7 @@ namespace FinalInferno.UI.AII
         /// Key pressed to execute the action relative of the 
         /// current item.
         /// </summary>
-        public KeyCode actKey;
+        [SerializeField] private string activatorAxis;
 
         /// <summary>
         /// Time gone since the last key down.
@@ -80,7 +80,7 @@ namespace FinalInferno.UI.AII
                 }
 
                 // If the act key is down, start the current item actions.
-                if (Input.GetKeyDown(actKey))
+                if (Input.GetAxisRaw(activatorAxis) != 0)
                 {
                     currentItem.Act();
                 }

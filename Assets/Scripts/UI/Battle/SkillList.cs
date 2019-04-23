@@ -12,9 +12,10 @@ public class SkillList : MonoBehaviour
     public RectTransform content;
     public RectTransform effectsContent;
     [SerializeField] private AIIManager manager;
+    [SerializeField] private AIIManager effectsManager;
 
     public Text skillNameText;
-    public Text damageText;
+    public Text descriptionText;
     public Text costText;
 
     public ButtonClickDecision BCD;
@@ -26,7 +27,7 @@ public class SkillList : MonoBehaviour
             Destroy(SE.gameObject);
         }
 
-        SkillItem lastSkillItem = null;
+        AxisInteractableItem lastItem = null;
         foreach (PlayerSkill skill in skills)
         {
             if (skill.active)
@@ -37,17 +38,21 @@ public class SkillList : MonoBehaviour
 
                 SkillItem newSkillItem = newSkill.GetComponent<SkillItem>();
                 newSkillItem.skillList = this;
-                newSkillItem.BCD = BCD;
-                if (lastSkillItem != null)
+
+                ClickableItem newClickableItem = newSkill.GetComponent<ClickableItem>();
+                newClickableItem.BCD = BCD;
+
+                AxisInteractableItem newItem = newSkill.GetComponent<AxisInteractableItem>();
+                if (lastItem != null)
                 {
-                    newSkillItem.positiveItem = lastSkillItem;
-                    lastSkillItem.negativeItem = newSkillItem;
+                    newItem.positiveItem = lastItem;
+                    lastItem.negativeItem = newItem;
                 }
                 else
                 {
-                    manager.currentItem = newSkillItem;                    
+                    manager.currentItem = newItem;                    
                 }
-                lastSkillItem = newSkillItem;
+                lastItem = newItem;
             }
         }
     }
@@ -56,8 +61,18 @@ public class SkillList : MonoBehaviour
     {
         skillNameText.text = skill.name;
         costText.text = skill.cost.ToString();
+        descriptionText.text = skill.description;
 
         UpdateEffectsContent(skill.effects);
+        effectsManager.Active();
+    }
+
+    public void ClampSkillContent(RectTransform currentTrans)
+    {
+        float itemPos = currentTrans.localPosition.y;
+
+        content.localPosition = new Vector3(content.localPosition.x, 
+                                    Mathf.Clamp(content.localPosition.y, -itemPos-279, -itemPos-52));
     }
 
     private void UpdateEffectsContent(List<SkillEffect> effects)
@@ -67,18 +82,32 @@ public class SkillList : MonoBehaviour
             Destroy(EE.gameObject);
         }
 
+        AxisInteractableItem lastItem = null;
         foreach (SkillEffect effect in effects)
         {
             GameObject newEffect = Instantiate(effectObject);
             newEffect.GetComponent<EffectElement>().UpdateEffect(effect);
             newEffect.transform.SetParent(effectsContent);
+
+            EffectItem newEffectItem = newEffect.GetComponent<EffectItem>();
+            newEffectItem.skillList = this;
+
+            AxisInteractableItem newItem = newEffect.GetComponent<AxisInteractableItem>();
+            if (lastItem != null)
+            {
+                newItem.negativeItem = lastItem;
+                lastItem.positiveItem = newItem;
+            }
+            else
+            {
+                effectsManager.currentItem = newItem;
+            }
+            lastItem = newItem;
         }
     }
 
-    public void ClampSkillContent(RectTransform currentTrans)
+    public void UpdateEffectDescription(SkillEffect effect)
     {
-        float itemPos = currentTrans.localPosition.y;
-
-        content.localPosition = new Vector3(content.localPosition.x, Mathf.Clamp(content.localPosition.y, -itemPos-279, -itemPos-52));
     }
+
 }

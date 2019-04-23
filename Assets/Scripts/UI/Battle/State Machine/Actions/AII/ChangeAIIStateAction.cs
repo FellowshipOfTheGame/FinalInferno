@@ -34,6 +34,8 @@ namespace FinalInferno.UI.FSM
                 manager.Desactive();
             else
                 manager.Active();
+
+            Debug.Log(this.name + " Changed to " + manager.active.ToString());
         }
 
         /// <summary>
@@ -52,6 +54,7 @@ namespace FinalInferno.UI.FSM
         private void RequestAIIManager(GameObject provider)
         {
             manager = provider.GetComponent<AIIManager>();
+            Debug.Log(this.name + " Requested");
         }
     }
 

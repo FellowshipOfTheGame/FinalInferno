@@ -8,7 +8,7 @@ namespace FinalInferno.UI.AII
     /// <summary>
 	/// A type of item that can be clicked.
 	/// </summary>
-    public class SkillItem : ClickableItem
+    public class SkillItem : MonoBehaviour
     {
         /// <summary>
         /// Reference to the button click decision SO.
@@ -17,14 +17,14 @@ namespace FinalInferno.UI.AII
         private PlayerSkill skill;
         private RectTransform rect;
 
+        [SerializeField] private AxisInteractableItem item;
+
         void Awake()
         {
             rect = GetComponent<RectTransform>();
             
-            OnEnter += EnableGO;
-            OnExit += DisableGO;
-            OnEnter += UpdateSkillDescription;
-            OnEnter += ClampSkillContent;
+            item.OnEnter += UpdateSkillDescription;
+            item.OnEnter += ClampSkillContent;
         }
 
         /// <summary>

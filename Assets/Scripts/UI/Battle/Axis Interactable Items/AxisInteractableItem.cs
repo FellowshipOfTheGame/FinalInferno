@@ -8,7 +8,7 @@ namespace FinalInferno.UI.AII
 	/// A component implementing an item that can be controlled by 
     /// a keyboard shortcut.
 	/// </summary>
-    public abstract class AxisInteractableItem : MonoBehaviour
+    public class AxisInteractableItem : MonoBehaviour
     {
         /// <summary>
         /// A game object that references whether this item is active.
