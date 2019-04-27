@@ -2,32 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 using FinalInferno.UI.FSM;
+using FinalInferno.UI.Battle.SkillMenu;
 
 namespace FinalInferno.UI.AII
 {
     /// <summary>
-	/// A type of item that can be clicked.
+	/// Item da lista de efeitos.
 	/// </summary>
     public class EffectItem : MonoBehaviour
     {
         /// <summary>
-        /// Reference to the button click decision SO.
+        /// Referência à lista de skills.
         /// </summary>
         public SkillList skillList;
-        private SkillEffect effect;
-        private RectTransform rect;
 
+        /// <summary>
+        /// Referência ao efeito do item.
+        /// </summary>
+        private SkillEffect effect;
+
+        /// <summary>
+        /// Referência ao item da lista.
+        /// </summary>
         [SerializeField] private AxisInteractableItem item;
 
         void Awake()
         {
-            rect = GetComponent<RectTransform>();
-            
             item.OnEnter += UpdateEffectDescription;
         }
 
         /// <summary>
-        /// Calls the button click decision trigger.
+        /// Atualiza a descrição do efeito no menu.
         /// </summary>
         private void UpdateEffectDescription()
         {

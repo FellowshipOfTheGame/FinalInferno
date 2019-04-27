@@ -6,56 +6,39 @@ using FinalInferno.UI.AII;
 namespace FinalInferno.UI.FSM
 {
     /// <summary>
-    /// Action that change the state of an AII.
+    /// Ação que muda o estado de um eixo de itens.
     /// </summary>
     [CreateAssetMenu(menuName = "BattleUI SM/Actions/Change AII State")]
     public class ChangeAIIStateAction : ComponentRequester
     {
         /// <summary>
-        /// Reference to the AII manager.
+        /// Referência ao gerenciador do eixo.
         /// </summary>
         [SerializeField] private AIIManager manager;
 
         /// <summary>
-        /// Execute an action.
+        /// Executa uma ação.
+        /// Muda o estado do gerenciador.
         /// </summary>
-        /// <param name="controller"> The Finite State Machine controller. </param>
+        /// <param name="controller"> O controlador da máquina de estados. </param>
         public override void Act(StateController controller)
-        {
-            ChangeAIIState();
-        }
-
-        /// <summary>
-        /// Change the state of an AII manager.
-        /// </summary>
-        private void ChangeAIIState()
         {
             if (manager.active)
                 manager.Desactive();
             else
                 manager.Active();
-
-            Debug.Log(this.name + " Changed to " + manager.active.ToString());
         }
 
         /// <summary>
-        /// Funcion called to request a component to the provider.
+        /// Função chamada para pedir um componente ao provedor.
+        /// Pede um AIIManager.
         /// </summary>
-        /// <param name="provider"> Game object that provides the component requested. </param>
+        /// <param name="provider"> Game object que provê o componente desejado. </param>
         public override void RequestComponent(GameObject provider)
         {
-            RequestAIIManager(provider);
+            manager = provider.GetComponent<AIIManager>();
         }
 
-        /// <summary>
-        /// Request the AII manager component from the provider.
-        /// </summary>
-        /// <param name="provider"> Game object that provides the component requested. </param>
-        private void RequestAIIManager(GameObject provider)
-        {
-            manager = provider.GetComponent<AIIManager>();
-            Debug.Log(this.name + " Requested");
-        }
     }
 
 }

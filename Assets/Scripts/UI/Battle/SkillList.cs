@@ -5,109 +5,206 @@ using UnityEngine.UI;
 using FinalInferno.UI.AII;
 using FinalInferno.UI.FSM;
 
-public class SkillList : MonoBehaviour
+namespace FinalInferno.UI.Battle.SkillMenu
 {
-    public GameObject skillObject;
-    public GameObject effectObject;
-    public RectTransform content;
-    public RectTransform effectsContent;
-    [SerializeField] private AIIManager manager;
-    [SerializeField] private AIIManager effectsManager;
-
-    public Text skillNameText;
-    public Text descriptionText;
-    public Text costText;
-
-    public ButtonClickDecision BCD;
-
-    public void UpdateContent(List<Skill> skills)
+    /// <summary>
+    /// Componente que reproduz o comportamento do menu de skills, responsável pela visualização das habilidades
+    /// especiais do heroi que está em seu turno, assim permitir visualizar detalhes de cada habilidade, 
+    /// como custo, tipo de alvo e efeitos aplicados por ela.
+    ///</summary>
+    public class SkillList : MonoBehaviour
     {
-        foreach (SkillElement SE in content.GetComponentsInChildren<SkillElement>())
+        [Header("Prefabs")]
+        /// <summary>
+        /// Objeto template para um item de skill que será mostrado no menu.
+        /// </summary>
+        [SerializeField] private GameObject skillObject;
+
+        /// <summary>
+        /// Objeto template para um item de efeito de skill que será mostrado no menu.
+        /// </summary>
+        [SerializeField] private GameObject effectObject;
+
+        [Header("Contents references")]
+        /// <summary>
+        /// Referência para o local onde todas as skills serão armazenadas e mostradas para o jogador.
+        /// </summary>
+        [SerializeField] private RectTransform skillsContent;
+
+        /// <summary>
+        /// Referência para o local onde os efeitos da skill selecionada serão armazenados 
+        /// e mostrados para o jogador.
+        /// </summary>
+        [SerializeField] private RectTransform effectsContent;
+
+        [Header("Managers")]
+        /// <summary>
+        /// Controlador dos itens de skill.
+        /// </summary>
+        [SerializeField] private AIIManager manager;
+
+        /// <summary>
+        /// Controlador dos itens de efeito.
+        /// </summary>
+        [SerializeField] private AIIManager effectsManager;
+
+        [Header("UI elements")]
+        /// <summary>
+        /// Campo de texto onde ficará o nome da skill selecionada.
+        /// </summary>
+        [SerializeField] private Text skillNameText;
+
+        /// <summary>
+        /// Campo de texto onde ficará a descrição da skill selecionada.
+        /// </summary>
+        [SerializeField] private Text descriptionText;
+
+        /// <summary>
+        /// Campo de texto onde ficará o custo da skill selecionada.
+        /// </summary>
+        [SerializeField] private Text costText;
+
+        /// <summary>
+        /// Campo de texto onde ficará a descrição do efeito selecionado.
+        /// </summary>
+        [SerializeField] private Text effectDescriptionText;
+
+        [Header("Click decision")]
+        /// <summary>
+        /// Decisão que será chamada quando a tecla de ativação for pressionada.
+        /// </summary>
+        [SerializeField] private ButtonClickDecision clickDecision;
+
+        /// <summary>
+        /// Carrega todas as skills ativas do heroi que está em seu turno no menu de skills.
+        /// </summary>
+        /// <param name="skills"> Lista com todas as skills do heroi. </param>
+        public void UpdateSkillsContent(List<Skill> skills)
         {
-            Destroy(SE.gameObject);
+            // Deleta todos os itens previamente alocados no content
+            foreach (SkillElement element in skillsContent.GetComponentsInChildren<SkillElement>())
+            {
+                Destroy(element.gameObject);
+            }
+
+            // Variável auxiliar para a ordenação dos itens
+            AxisInteractableItem lastItem = null;
+
+            // Passa por todas as skills da lista, adicionando as ativas no menu e as ordenando
+            foreach (PlayerSkill skill in skills)
+            {
+                if (skill.active)
+                {
+                    // Instancia um novo item e o coloca no content
+                    GameObject newSkill = Instantiate(skillObject);
+                    newSkill.GetComponent<SkillElement>().skill = skill;
+                    newSkill.transform.SetParent(skillsContent);
+
+                    // Define este script como responsável pelo item criado
+                    SkillItem newSkillItem = newSkill.GetComponent<SkillItem>();
+                    newSkillItem.skillList = this;
+
+                    // Adiciona a decisão de clique no item criado
+                    ClickableItem newClickableItem = newSkill.GetComponent<ClickableItem>();
+                    newClickableItem.BCD = clickDecision;
+
+                    // Ordena o item na lista
+                    AxisInteractableItem newItem = newSkill.GetComponent<AxisInteractableItem>();
+                    if (lastItem != null)
+                    {
+                        newItem.positiveItem = lastItem;
+                        lastItem.negativeItem = newItem;
+                    }
+                    else
+                    {
+                        manager.currentItem = newItem;                    
+                    }
+                    lastItem = newItem;
+                }
+            }
         }
 
-        AxisInteractableItem lastItem = null;
-        foreach (PlayerSkill skill in skills)
+        /// <summary>
+        /// Mostra detalhes da skill selecionada no menu.
+        /// </summary>
+        /// <param name="skill"> Skill para ser mostrada no menu. </param>
+        public void UpdateSkillDescription(PlayerSkill skill)
         {
-            if (skill.active)
+            // Mostra as informações básicas da skill
+            skillNameText.text = skill.name;
+            costText.text = skill.cost.ToString();
+            descriptionText.text = skill.description;
+
+            // Atualiza a lista de efeitos
+            UpdateEffectsContent(skill.effects);
+            effectsManager.Active();
+        }
+
+        /// <summary>
+        /// Atualiza a posição do content para melhor visualização da lista.
+        /// </summary>
+        /// <param name="currentTrans"> Transform do item selecionado. </param>
+        public void ClampSkillContent(RectTransform currentTrans)
+        {
+            // Salva a posição vertical do item em relação ao content
+            float itemPos = currentTrans.localPosition.y;
+
+            // Adapta a posição vertical do content para melhor visualização da lista
+            skillsContent.localPosition = new Vector3(skillsContent.localPosition.x, 
+                                        Mathf.Clamp(skillsContent.localPosition.y, -itemPos-239, -itemPos-92));
+        }
+
+        /// <summary>
+        /// Carrega todos os efeitos aplicados pela skill selecionada.
+        /// </summary>
+        /// <param name="effects"> Lista com todos os efeitos aplicados pela skill. </param>
+        private void UpdateEffectsContent(List<SkillEffect> effects)
+        {
+            // Deleta todos os itens previamente alocados no content
+            foreach (EffectElement EE in effectsContent.GetComponentsInChildren<EffectElement>())
             {
-                GameObject newSkill = Instantiate(skillObject);
-                newSkill.GetComponent<SkillElement>().skill = skill;
-                newSkill.transform.SetParent(content);
+                Destroy(EE.gameObject);
+            }
 
-                SkillItem newSkillItem = newSkill.GetComponent<SkillItem>();
-                newSkillItem.skillList = this;
+            // Variável auxiliar para a ordenação dos itens
+            AxisInteractableItem lastItem = null;
 
-                ClickableItem newClickableItem = newSkill.GetComponent<ClickableItem>();
-                newClickableItem.BCD = BCD;
+            // Passa por todas os efeitos da lista, adicionando no menu e ordenando
+            foreach (SkillEffect effect in effects)
+            {
+                // Instancia um novo item e o coloca no content
+                GameObject newEffect = Instantiate(effectObject);
+                newEffect.GetComponent<EffectElement>().UpdateEffect(effect);
+                newEffect.transform.SetParent(effectsContent);
 
-                AxisInteractableItem newItem = newSkill.GetComponent<AxisInteractableItem>();
+                // Define este script como responsável pelo item criado
+                EffectItem newEffectItem = newEffect.GetComponent<EffectItem>();
+                newEffectItem.skillList = this;
+
+                // Ordena o item na lista
+                AxisInteractableItem newItem = newEffect.GetComponent<AxisInteractableItem>();
                 if (lastItem != null)
                 {
-                    newItem.positiveItem = lastItem;
-                    lastItem.negativeItem = newItem;
+                    newItem.negativeItem = lastItem;
+                    lastItem.positiveItem = newItem;
                 }
                 else
                 {
-                    manager.currentItem = newItem;                    
+                    effectsManager.currentItem = newItem;
                 }
                 lastItem = newItem;
             }
         }
-    }
 
-    public void UpdateSkillDescription(PlayerSkill skill)
-    {
-        skillNameText.text = skill.name;
-        costText.text = skill.cost.ToString();
-        descriptionText.text = skill.description;
-
-        UpdateEffectsContent(skill.effects);
-        effectsManager.Active();
-    }
-
-    public void ClampSkillContent(RectTransform currentTrans)
-    {
-        float itemPos = currentTrans.localPosition.y;
-
-        content.localPosition = new Vector3(content.localPosition.x, 
-                                    Mathf.Clamp(content.localPosition.y, -itemPos-279, -itemPos-52));
-    }
-
-    private void UpdateEffectsContent(List<SkillEffect> effects)
-    {
-        foreach (EffectElement EE in effectsContent.GetComponentsInChildren<EffectElement>())
+        /// <summary>
+        /// Atualiza a descrição do efeito selecionado.
+        /// </summary>
+        /// <param name="effects"> Efeito selecionado. </param>
+        public void UpdateEffectDescription(SkillEffect effect)
         {
-            Destroy(EE.gameObject);
+            // effectDescriptionText.text = effect.description;
         }
 
-        AxisInteractableItem lastItem = null;
-        foreach (SkillEffect effect in effects)
-        {
-            GameObject newEffect = Instantiate(effectObject);
-            newEffect.GetComponent<EffectElement>().UpdateEffect(effect);
-            newEffect.transform.SetParent(effectsContent);
-
-            EffectItem newEffectItem = newEffect.GetComponent<EffectItem>();
-            newEffectItem.skillList = this;
-
-            AxisInteractableItem newItem = newEffect.GetComponent<AxisInteractableItem>();
-            if (lastItem != null)
-            {
-                newItem.negativeItem = lastItem;
-                lastItem.positiveItem = newItem;
-            }
-            else
-            {
-                effectsManager.currentItem = newItem;
-            }
-            lastItem = newItem;
-        }
-    }
-
-    public void UpdateEffectDescription(SkillEffect effect)
-    {
     }
 
 }

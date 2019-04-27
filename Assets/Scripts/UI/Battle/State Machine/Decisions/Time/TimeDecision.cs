@@ -5,33 +5,26 @@ using UnityEngine;
 namespace FinalInferno.UI.FSM
 {
     /// <summary>
-    /// Decision based on the time the state is active.
+    /// Decisão baseada no tempo em que o estado está ativo.
     /// </summary>
     [CreateAssetMenu(menuName = "BattleUI SM/Decisions/Time")]
     public class TimeDecision : Decision
     {
         /// <summary>
-        /// The maximum time the state will remain active.
+        /// O tempo máximo que o estado pode ficar ativo.
         /// </summary>
         public float stateTime;
 
         /// <summary>
-        /// Verify if the decision triggers.
+        /// Verifica se a decisão ativou.
+        /// Verifica se o tempo do estado já ultrapassou o limite máximo.
         /// </summary>
-        /// <param name="controller"> The Finite State Machine controller. </param>
+        /// <param name="controller"> O controlador da máquina de estados. </param>
         public override bool Decide(StateController controller)
-        {
-            return CheckStateTime(controller);
-        }
-
-        /// <summary>
-        /// Verify if the current state time elapsed the maximum time of the state.
-        /// </summary>
-        /// <param name="controller"> The Finite State Machine controller. </param>
-        private bool CheckStateTime(StateController controller)
         {
             return controller.CheckIfCountDownElapsed(stateTime);
         }
+
     }
 
 }

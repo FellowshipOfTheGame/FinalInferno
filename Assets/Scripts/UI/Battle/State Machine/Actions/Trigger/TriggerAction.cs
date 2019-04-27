@@ -5,55 +5,41 @@ using UnityEngine;
 namespace FinalInferno.UI.FSM
 {
     /// <summary>
-    /// Action that calls an animator trigger.
+    /// Ação que invoca um trigger de um animator.
     /// </summary>
     [CreateAssetMenu(menuName = "BattleUI SM/Actions/Trigger")]
     public class TriggerAction : ComponentRequester
     {
         /// <summary>
-        /// Reference to the animator.
+        /// Referência ao animator.
         /// </summary>
         private Animator animator;
 
         /// <summary>
-        /// Name of the parameter to be triggered.
+        /// Nome do parâmetro a ser chamado.
         /// </summary>
         [SerializeField] private string trigger;
 
         /// <summary>
-        /// Execute an action.
+        /// Executa uma ação.
+        /// Chama o trigger.
         /// </summary>
-        /// <param name="controller"> The Finite State Machine controller. </param>
+        /// <param name="controller"> O controlador da máquina de estados. </param>
         public override void Act(StateController controller)
-        {
-            SetTrigger();
-        }
-
-        /// <summary>
-        /// Set the trigger value.
-        /// </summary>
-        private void SetTrigger()
         {
             animator.SetTrigger(trigger);
         }
 
         /// <summary>
-        /// Funcion called to request a component to the provider.
+        /// Função chamada para pedir um componente ao provedor.
+        /// Requisita um animator.
         /// </summary>
-        /// <param name="provider"> Game object that provides the component requested. </param>
+        /// <param name="provider"> Game object que provê o componente desejado. </param>
         public override void RequestComponent(GameObject provider)
-        {
-            RequestAnimator(provider);
-        }
-
-        /// <summary>
-        /// Request the animator component from the provider.
-        /// </summary>
-        /// <param name="provider"> Game object that provides the component requested. </param>
-        private void RequestAnimator(GameObject provider)
         {
             animator = provider.GetComponent<Animator>();
         }
+
     }
 
 }

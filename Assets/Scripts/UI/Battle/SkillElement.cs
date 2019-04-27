@@ -2,7 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillElement : MonoBehaviour
+namespace FinalInferno.UI.Battle.SkillMenu
 {
-    public PlayerSkill skill;
+    /// <summary>
+    /// Classe que guarda o scriptable object da skill referente ao item.
+    /// </summary>
+    public class SkillElement : MonoBehaviour
+    {
+        /// <summary>
+        /// Scriptable object da skill referente ao item.
+        /// </summary>
+        public PlayerSkill skill;
+    }
+
 }

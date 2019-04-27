@@ -5,50 +5,45 @@ using UnityEngine;
 namespace FinalInferno.UI.AII
 {
     /// <summary>
-	/// A component implementing an item that can be controlled by 
-    /// a keyboard shortcut.
+	/// Componente que implementa um sistema de itens que podem ser selecionados por atalhos do teclado, 
+    /// como se fosse um eixo.
 	/// </summary>
     public class AxisInteractableItem : MonoBehaviour
     {
         /// <summary>
-        /// A game object that references whether this item is active.
+        /// Referência que se mostra visível quando o item está ativo.
         /// </summary>
         [SerializeField] private GameObject activeReference;
 
         /// <summary>
-        /// A delegate to an action of this item.
+        /// Base para as ações do item.
         /// </summary>
         public delegate void ItemAction();
 
         /// <summary>
-        /// An event called every time this item become active.
+        /// Evento chamado toda vez que o item é ativado.
         /// </summary>
         public event ItemAction OnEnter;
 
         /// <summary>
-        /// An event called every time this item become unactive.
+        /// Evento chamado toda vez que o item é desativado.
         /// </summary>
         public event ItemAction OnExit;
 
         /// <summary>
-        /// An event called every time this item acts.
+        /// Evento que representa as ações do item, quando chamado.
         /// </summary>
         public event ItemAction OnAct;
 
         /// <summary>
-        /// Reference to the item in a negative position (left/down).
+        /// Referência para o item da posição negativa (esquerda/baixo).
         /// </summary>
         public AxisInteractableItem negativeItem;
 
         /// <summary>
-        /// Reference to the item in a positive position (right/up).
+        /// Referência para o item da posição positiva (direita/cima).
         /// </summary>
         public AxisInteractableItem positiveItem;
-
-        /// <summary>
-        /// Represents if the item is active or not.
-        /// </summary>
-        //[SerializeField] private bool active;
 
         void Awake()
         {
@@ -57,25 +52,23 @@ namespace FinalInferno.UI.AII
         }
 
         /// <summary>
-        /// Activates this item.
+        /// Ativa o item.
         /// </summary>
         public void Enter()
         {
             OnEnter();
-            //active = true;
         }
 
         /// <summary>
-        /// Deactivates this item.
+        /// Desativa o item.
         /// </summary>
         public void Exit()
         {
             OnExit();
-            //active = false;
         }
 
         /// <summary>
-        /// Execute the item actions.
+        /// Executa a ação do item.
         /// </summary>
         public void Act()
         {
@@ -83,7 +76,7 @@ namespace FinalInferno.UI.AII
         }
 
         /// <summary>
-        /// Enable the game object that references this item.
+        /// Ativa a referência do item.
         /// </summary>
         protected void EnableGO()
         {
@@ -91,7 +84,7 @@ namespace FinalInferno.UI.AII
         }
 
         /// <summary>
-        /// Disable the game object that references this item.
+        /// Desativa a referência do item.
         /// </summary>
         protected void DisableGO()
         {

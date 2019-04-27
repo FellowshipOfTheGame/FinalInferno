@@ -5,28 +5,28 @@ using UnityEngine;
 namespace FinalInferno.UI.FSM
 {
     /// <summary>
-	/// A component implementing a Mealy Finite State Machine.
+	/// Componente que controla a máquina de estados.
 	/// </summary>
     public class StateController : MonoBehaviour
     {
         /// <summary>
-        /// The current state of the machine.
+        /// Estado atual da máquina.
         /// </summary>
         [SerializeField] private State currentState;
 
         /// <summary>
-        /// The time elapsed since the beginning of the current state.
+        /// Tempo que passou desde o início do estado.
         /// </summary>
         private float stateTimeElapsed;
 
         /// <summary>
-        /// Actions executed in the beginning of the execution.
+        /// Acões que serão executadas no início da execução.
         /// </summary>
         [SerializeField] private Action[] startActions;
 
         void Start()
         {
-            // Executing all the start actions.
+            // Executa as ações iniciais.
             foreach (Action A in startActions)
             {
                 A.Act(this);
@@ -35,17 +35,16 @@ namespace FinalInferno.UI.FSM
 
         void Update()
         {
-            // Update the state time elapsed and verify for transitions
+            // Atualiza o tempo passado e verifica por transições
             stateTimeElapsed += Time.deltaTime;
             currentState.UpdateState(this);
         }
 
         /// <summary>
-        /// Change the current state for another one and execute the 
-        /// transition actions.
+        /// Muda o estado atual para o novo e executa as ações da transição.
         /// </summary>
-        /// <param name="nextState"> The new state of the machine. </param>
-        /// <param name="transitionActions"> Actions executed in the transition. </param>
+        /// <param name="nextState"> O próximo estado da máquina. </param>
+        /// <param name="transitionActions"> Ações que serão executadas na transição. </param>
         public void TransitionToState(State nextState, Action[] transitionActions)
         {
             OnExitState(transitionActions);
@@ -54,19 +53,18 @@ namespace FinalInferno.UI.FSM
         }
 
         /// <summary>
-        /// Return if the state duration elapsed the duration.
+        /// Verifica se o estado já durou mais que o valor dado.
         /// </summary>
-        /// <param name="duration"> The duration to be verified. </param>
+        /// <param name="duration"> A duração a ser verificada. </param>
         public bool CheckIfCountDownElapsed(float duration)
         {
             return (stateTimeElapsed >= duration);
         }
 
         /// <summary>
-        /// Reset the state countdown and execute the transition
-        /// actions.
+        /// Executa as ações de transição.
         /// </summary>
-        /// <param name="transitionActions"> Actions executed in the transition. </param>
+        /// <param name="transitionActions"> Ações executadas na transição. </param>
         private void OnExitState(Action[] transitionActions)
         {
             stateTimeElapsed = 0;

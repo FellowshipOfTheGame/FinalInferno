@@ -5,20 +5,20 @@ using UnityEngine;
 namespace FinalInferno.UI.FSM
 {
     /// <summary>
-    /// Decision based in whether a key is pressed or not.
+    /// Decisão baseada em algum eixo de input.
     /// </summary>
     [CreateAssetMenu(menuName = "BattleUI SM/Decisions/Axis")]
     public class AxisDecision : Decision
     {
         /// <summary>
-        /// Key to be pressed to activate the trigger.
+        /// Eixo a ser ativado.
         /// </summary>
         [SerializeField] private string activatorAxis;
 
         /// <summary>
-        /// Verify if the decision triggers.
+        /// Verifica se a decisão ativou.
         /// </summary>
-        /// <param name="controller"> The Finite State Machine controller. </param>
+        /// <param name="controller"> O controlador da máquina de estados. </param>
         public override bool Decide(StateController controller)
         {
             return (Input.GetAxisRaw(activatorAxis) != 0);

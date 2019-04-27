@@ -6,15 +6,18 @@ using FinalInferno.UI.FSM;
 namespace FinalInferno.UI.AII
 {
     /// <summary>
-	/// A type of item that can be clicked.
+	/// Tipo de item que pode ser clicado.
 	/// </summary>
     public class ClickableItem : MonoBehaviour
     {
         /// <summary>
-        /// Reference to the button click decision SO.
+        /// Referência ao decisor de clique.
         /// </summary>
         public ButtonClickDecision BCD;
 
+        /// <summary>
+        /// Referência ao item da lista.
+        /// </summary>
         [SerializeField] private AxisInteractableItem item;
 
         void Awake()
@@ -23,7 +26,7 @@ namespace FinalInferno.UI.AII
         }
 
         /// <summary>
-        /// Calls the button click decision trigger.
+        /// Ativa o clique do botão.
         /// </summary>
         private void Click()
         {
