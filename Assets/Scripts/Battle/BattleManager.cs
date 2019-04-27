@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Battle : MonoBehaviour{
+public class BattleManager : MonoBehaviour{
     public List<Unit> units;
     public BattleQueue queue;
 

@@ -19,7 +19,7 @@ namespace FinalInferno.UI.FSM
         /// <summary>
         /// Gerenciador do sistema de batalhas.
         /// </summary>
-        private BattleDebug battle;
+        private BattleManager battle;
 
         /// <summary>
         /// Executa uma ação.
@@ -28,7 +28,7 @@ namespace FinalInferno.UI.FSM
         /// <param name="controller"> O controlador da máquina de estados. </param>
         public override void Act(StateController controller)
         {
-            info.LoadInfo(battle.GetCurrentUnit());
+            info.LoadInfo(battle.queue.Peek(0));
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace FinalInferno.UI.FSM
         public override void RequestComponent(GameObject provider)
         {
             HeroInfo newInfo = provider.GetComponent<HeroInfo>();
-            BattleDebug newBattle = provider.GetComponent<BattleDebug>();
+            BattleManager newBattle = provider.GetComponent<BattleManager>();
             if (newInfo != null)
                 info = newInfo;
             if (newBattle != null)
