@@ -2,33 +2,45 @@
 using System.Collections.Generic;
 using UnityEngine;
 using FinalInferno.UI.FSM;
+using FinalInferno.UI.Battle.SkillMenu;
 
 namespace FinalInferno.UI.AII
 {
     /// <summary>
-	/// A type of item that can be clicked.
+	/// Item da lista de skills.
 	/// </summary>
-    public class SkillItem : ClickableItem
+    public class SkillItem : MonoBehaviour
     {
         /// <summary>
-        /// Reference to the button click decision SO.
+        /// Referência à lista de skills.
         /// </summary>
         public SkillList skillList;
+
+        /// <summary>
+        /// Referência à skill do item.
+        /// </summary>
         private PlayerSkill skill;
+
+        /// <summary>
+        /// Referência ao retângulo do item.
+        /// </summary>
         private RectTransform rect;
+
+        /// <summary>
+        /// Referência ao item da lista.
+        /// </summary>
+        [SerializeField] private AxisInteractableItem item;
 
         void Awake()
         {
             rect = GetComponent<RectTransform>();
             
-            OnEnter += EnableGO;
-            OnExit += DisableGO;
-            OnEnter += UpdateSkillDescription;
-            OnEnter += ClampSkillContent;
+            item.OnEnter += UpdateSkillDescription;
+            item.OnEnter += ClampSkillContent;
         }
 
         /// <summary>
-        /// Calls the button click decision trigger.
+        /// Atualiza a descrição da skill no menu.
         /// </summary>
         private void UpdateSkillDescription()
         {
@@ -38,6 +50,9 @@ namespace FinalInferno.UI.AII
             skillList.UpdateSkillDescription(skill);
         }
 
+        /// <summary>
+        /// Atualiza a posição do content das skills.
+        /// </summary>
         private void ClampSkillContent()
         {
             skillList.ClampSkillContent(rect);

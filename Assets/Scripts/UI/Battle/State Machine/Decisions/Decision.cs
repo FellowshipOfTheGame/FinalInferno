@@ -5,14 +5,14 @@ using UnityEngine;
 namespace FinalInferno.UI.FSM
 {
     /// <summary>
-    /// A component abstracting the structure of a decision object.
+    /// Componente base para as decisões.
     /// </summary>
     public abstract class Decision : ScriptableObject
     {
         /// <summary>
-        /// Verify if the decision triggers.
+        /// Verifica se a decisão ativou.
         /// </summary>
-        /// <param name="controller"> The Finite State Machine controller. </param>
+        /// <param name="controller"> O controlador da máquina de estados. </param>
         public abstract bool Decide(StateController controller);
     }
 

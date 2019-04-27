@@ -5,24 +5,23 @@ using UnityEngine;
 namespace FinalInferno.UI.FSM
 {
     /// <summary>
-    /// Decisão baseada no tempo em que o estado está ativo.
+    /// Decisão baseada em algum eixo de input.
     /// </summary>
-    [CreateAssetMenu(menuName = "BattleUI SM/Decisions/Time")]
-    public class TimeDecision : Decision
+    [CreateAssetMenu(menuName = "BattleUI SM/Decisions/Axis")]
+    public class AxisDecision : Decision
     {
         /// <summary>
-        /// O tempo máximo que o estado pode ficar ativo.
+        /// Eixo a ser ativado.
         /// </summary>
-        public float stateTime;
+        [SerializeField] private string activatorAxis;
 
         /// <summary>
         /// Verifica se a decisão ativou.
-        /// Verifica se o tempo do estado já ultrapassou o limite máximo.
         /// </summary>
         /// <param name="controller"> O controlador da máquina de estados. </param>
         public override bool Decide(StateController controller)
         {
-            return controller.CheckIfCountDownElapsed(stateTime);
+            return (Input.GetAxisRaw(activatorAxis) != 0);
         }
 
     }

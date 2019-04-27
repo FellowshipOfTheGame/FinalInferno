@@ -5,14 +5,14 @@ using UnityEngine;
 namespace FinalInferno.UI.FSM
 {
     /// <summary>
-    /// An action that require a type of component.
+    /// Tipo de ação que requer algum componente.
     /// </summary>
     public abstract class ComponentRequester : Action
     {
         /// <summary>
-        /// Funcion called to request a component to the provider.
+        /// Função chamada para pedir um componente ao provedor.
         /// </summary>
-        /// <param name="provider"> Game object that provides the component requested. </param>
+        /// <param name="provider"> Game object que provê o componente desejado. </param>
         public abstract void RequestComponent(GameObject provider);
     }
 

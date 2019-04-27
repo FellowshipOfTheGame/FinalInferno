@@ -5,20 +5,20 @@ using UnityEngine;
 namespace FinalInferno.UI.FSM
 {
     /// <summary>
-    /// Decision based in whether a button is clicked or not.
+    /// Decisão baseada na ativação de um botão.
     /// </summary>
     [CreateAssetMenu(menuName = "BattleUI SM/Decisions/Button Click")]
     public class ButtonClickDecision : Decision
     {
         /// <summary>
-        /// Variable that check the state of the button.
+        /// Variável que checa se o botão foi clicado ou não.
         /// </summary>
         [SerializeField] private bool buttonIsClicked;
 
         /// <summary>
-        /// Verify if the decision triggers.
+        /// Verifica se a decisão ativou.
         /// </summary>
-        /// <param name="controller"> The Finite State Machine controller. </param>
+        /// <param name="controller"> O controlador da máquina de estados. </param>
         public override bool Decide(StateController controller)
         {
             bool aux = buttonIsClicked;
@@ -27,7 +27,7 @@ namespace FinalInferno.UI.FSM
         }
 
         /// <summary>
-        /// Function called on a button click event.
+        /// Função chamada para ativar a decisão.
         /// </summary>
         public void Click()
         {

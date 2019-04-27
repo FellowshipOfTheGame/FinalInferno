@@ -5,24 +5,24 @@ using UnityEngine;
 namespace FinalInferno.UI.FSM
 {
     /// <summary>
-    /// A component that store transition specifications.
+    /// Componente que guarda especificações da transição.
     /// </summary>
     [System.Serializable]
     public class Transition
     {
         /// <summary>
-        /// The decisions to trigger the transition.
-        /// All decisions must be true to activate the trigger.
+        /// Decisões para ativar a transição.
+        /// Todas as decisões devem estar ativas para ativar a transição.
         /// </summary>
         public Decision[] decisions;
 
         /// <summary>
-        /// The new state of the state machine.
+        /// O próximo estado ao ativar a transição.
         /// </summary>
         public State nextState;
 
         /// <summary>
-        /// Actions that activate in the transition.
+        /// Ações que serão executadas durante a transição.
         /// </summary>
         public Action[] actions;
     }

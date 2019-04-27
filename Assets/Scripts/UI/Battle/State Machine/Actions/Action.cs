@@ -5,14 +5,14 @@ using UnityEngine;
 namespace FinalInferno.UI.FSM
 {
     /// <summary>
-    /// A component abstracting the structure of a action object.
+    /// Componente que representa uma ação da máquina de estados.
     /// </summary>
     public abstract class Action : ScriptableObject 
     {
         /// <summary>
-        /// Execute an action.
+        /// Executa uma ação.
         /// </summary>
-        /// <param name="controller"> The Finite State Machine controller. </param>
+        /// <param name="controller"> O controlador da máquina de estados. </param>
         public abstract void Act (StateController controller);
     }
 

@@ -2,14 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HeroesLives : MonoBehaviour
+namespace FinalInferno.UI.Battle.LifeMenu
 {
-    public delegate void HeroUpdate();
-    public event HeroUpdate OnUpdate;
-
-    public void UpdateLives()
+    /// <summary>
+    /// Classe responsável por gerenciar o menu de vidas.
+    /// </summary>
+    public class HeroesLives : MonoBehaviour
     {
-        OnUpdate();
+        public delegate void HeroUpdate();
+        public event HeroUpdate OnUpdate;
+
+        public void UpdateLives()
+        {
+            OnUpdate();
+        }
+
     }
 
 }

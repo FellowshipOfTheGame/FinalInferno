@@ -5,29 +5,29 @@ using UnityEngine;
 namespace FinalInferno.UI.FSM
 {
     /// <summary>
-    /// A component implementing a state of the state machine.
+    /// Componente que implementa um estado da máquina de estados.
     /// </summary>
     [CreateAssetMenu(menuName = "BattleUI SM/State")]
     public class State : ScriptableObject
     {
         /// <summary>
-        /// All the transitions corresponding to the state.
+        /// Transições correspondentes ao estado.
         /// </summary>
         public Transition[] transitions;
 
         /// <summary>
-        /// Funcion called all the frames the state is activated.
+        /// Função chamada todo frame que o estado está ativado.
         /// </summary>
-        /// <param name="controller"> The Finite State Machine controller. </param>
+        /// <param name="controller"> O controlador da máquina de estados. </param>
         public void UpdateState(StateController controller)
         {
             CheckTransitions(controller);
         }
 
         /// <summary>
-        /// Verify the decision triggers and execute the transition, if needed.
+        /// Verifica as decisões das transições e a executa se necessário.
         /// </summary>
-        /// <param name="controller"> The Finite State Machine controller. </param>
+        /// <param name="controller"> O controlador da máquinda de estados. </param>
         private void CheckTransitions(StateController controller)
         {
             foreach (Transition T in transitions)

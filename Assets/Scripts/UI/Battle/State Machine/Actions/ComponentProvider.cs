@@ -5,21 +5,19 @@ using UnityEngine;
 namespace FinalInferno.UI.FSM
 {
     /// <summary>
-    /// A component that provides the required component of a ComponentRequester.
+    /// Componente que provê outro ao requisitador.
     /// </summary>
     public class ComponentProvider : MonoBehaviour
     {
         /// <summary>
-        /// A reference to a component that requests another one.
+        /// Referência aos componentes que requerem algum componente.
         /// </summary>
-        [SerializeField] private ComponentRequester requester;
+        [SerializeField] private List<ComponentRequester> requesters;
 
-        /// <summary>
-        /// Awake is called when the script instance is being loaded.
-        /// </summary>
         void Awake()
         {
-            requester.RequestComponent(gameObject);
+            foreach (ComponentRequester requester in requesters)
+                requester.RequestComponent(gameObject);
         }
     }
 
