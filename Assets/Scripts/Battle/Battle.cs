@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Battle : MonoBehaviour{
     public List<Unit> units;
-    //public Priorityqueue<BattleUnit> queue;
+    public BattleQueue queue;
 
     void Start(){
         
