@@ -21,7 +21,7 @@ public class BattleUnit{
         curDef = unit.baseDef;
         curMagicDef = unit.baseMagicDef;
         curSpeed = unit.baseSpeed;
-        actionPoints = curSpeed; 
+        actionPoints = 0; 
     }
 
     public void ApplyEffects(){
