@@ -31,6 +31,9 @@ namespace FinalInferno.UI.Battle.QueueMenu
         /// </summary>
         [SerializeField] private Transform currentTurnContent;
 
+        /// <summary>
+        /// Configurações de layout.
+        /// </summary>
         [SerializeField] private HorizontalLayoutGroup layout;
 
         void Start()
@@ -44,9 +47,11 @@ namespace FinalInferno.UI.Battle.QueueMenu
         /// </summary>
         private void LoadQueue()
         {
+            // Coloca o personagem que se encontra em seu turno atual no local específico.
             GameObject newItem = Instantiate(QueueObject, currentTurnContent);
             newItem.GetComponent<Image>().color = BattleManager.instance.currentUnit.unit.color;
 
+            // Coloca o restante dos personagens na fila.
             foreach (BattleUnit unit in BattleManager.instance.queue.list)
             {
                 newItem = Instantiate(QueueObject, content);
@@ -54,18 +59,30 @@ namespace FinalInferno.UI.Battle.QueueMenu
             }
         }
 
+        /// <summary>
+        /// Coloca um marcador na posição da lista onde o personagem ficará quando utilizar a referente skill.
+        /// </summary>
+        /// <param name="newPosition"> Posição do personagem se utilizar a skill. </param>
         public void StartPreview(int newPosition = 0)
         {
             PreviewObject.gameObject.SetActive(true);
             SetPreviewPosition(newPosition);
         }
 
+        /// <summary>
+        /// Posiciona o marcador na posição da lista onde o personagem ficará quando utilizar a referente skill.
+        /// </summary>
+        /// <param name="newPosition"> Posição do personagem se utilizar a skill. </param>
         public void SetPreviewPosition(int newPosition)
         {
             PreviewObject.anchoredPosition = new Vector3(layout.padding.left +
                                                 newPosition * (75 + layout.spacing / 2), 0f);
         }
 
+
+        /// <summary>
+        /// Retira o marcador.
+        /// </summary>
         public void StopPreview()
         {
             PreviewObject.gameObject.SetActive(false);

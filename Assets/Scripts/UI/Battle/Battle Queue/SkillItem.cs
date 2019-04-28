@@ -6,7 +6,7 @@ using FinalInferno.UI.AII;
 namespace FinalInferno.UI.Battle.QueueMenu
 {
     /// <summary>
-	/// Item da lista de skills.
+	/// Item que é utilizado para ativar uma skill.
 	/// </summary>
     public class SkillItem : MonoBehaviour
     {
@@ -26,12 +26,18 @@ namespace FinalInferno.UI.Battle.QueueMenu
             item.OnExit += StopPreview;
         }
 
+        /// <summary>
+        /// Coloca um marcador na posição da lista onde o personagem ficará quando utilizar a referente skill.
+        /// </summary>
         private void StartPreview()
         {
             BattleManager.instance.queueUI.StartPreview(BattleManager.instance.queue.PreviewPosition(BattleManager.instance.currentUnit.actionPoints
                                                  + skill.cost));
         }
 
+        /// <summary>
+        /// Retira o marcador da posição.
+        /// </summary>
         private void StopPreview()
         {
             BattleManager.instance.queueUI.StopPreview();

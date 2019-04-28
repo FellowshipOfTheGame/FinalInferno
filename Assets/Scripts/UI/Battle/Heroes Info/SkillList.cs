@@ -109,7 +109,7 @@ namespace FinalInferno.UI.Battle.SkillMenu
                     ClickableItem newClickableItem = newSkill.GetComponent<ClickableItem>();
                     newClickableItem.BCD = clickDecision;
 
-                    // Adiciona a skill
+                    // Adiciona a skill no item que a ativará
                     SkillItem newSkillItem = newSkill.GetComponent<SkillItem>();
                     newSkillItem.skill = skill;
 

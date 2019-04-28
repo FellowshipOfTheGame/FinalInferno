@@ -6,7 +6,7 @@ using FinalInferno.UI.AII;
 namespace FinalInferno.UI.Battle.QueueMenu
 {
     /// <summary>
-	/// Item da lista de skills.
+	/// Item que ativa a skill de ataque.
 	/// </summary>
     public class AttackItem : SkillItem
     {
