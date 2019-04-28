@@ -23,4 +23,10 @@ namespace FinalInferno
         MultiEnemy,
         Self
     }
+
+    public enum VictoryType {
+        Nobody,
+        Heroes,
+        Enemys
+    }
 }
