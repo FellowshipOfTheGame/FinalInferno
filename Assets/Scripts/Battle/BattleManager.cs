@@ -4,22 +4,34 @@ using UnityEngine;
 using FinalInferno;
 
 public class BattleManager : MonoBehaviour{
+    
+    public static BattleManager instance;
+
     public List<Unit> units;
     public BattleQueue queue;
 
-    void Start(){
+    public BattleUnit currentUnit {get; private set;}
+
+    void Awake() {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(this);
+
+        queue = new BattleQueue();
         foreach(Unit unit in units){
-            queue.Enqueue(new BattleUnit(unit));
+            queue.Enqueue(new BattleUnit(unit), 0);
         }
+        currentUnit = queue.Dequeue();
     }
 
-    void Update(){
-        
+    public void UpdateTurn(int cost){
+        queue.Enqueue(currentUnit, cost);
+        currentUnit = queue.Dequeue();
     }
 
-    public void Turn(){
-        BattleUnit battleUnitCur = queue.Dequeue();
-        bool isHero = IsHero(battleUnitCur.unit);
+    public UnitType Turn(){
+        return (IsHero(currentUnit.unit)) ? UnitType.Hero : UnitType.Enemy;
     }
 
     public bool IsHero(Unit unit){

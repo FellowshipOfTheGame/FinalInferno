@@ -29,4 +29,9 @@ namespace FinalInferno
         Heroes,
         Enemys
     }
+
+    public enum UnitType {
+        Hero,
+        Enemy
+    }
 }

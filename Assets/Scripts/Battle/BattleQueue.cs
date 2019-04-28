@@ -11,7 +11,9 @@ public class BattleQueue{
     }
 
     //insere uma BattleUnit na fila em ordem de actionPoints
-    public void Enqueue(BattleUnit element){
+    public void Enqueue(BattleUnit element, int additionalValue){
+        element.actionPoints += additionalValue;
+        
         int i;
         for(i = 0; i < list.Count && element.actionPoints >= list[i].actionPoints; i++);
 

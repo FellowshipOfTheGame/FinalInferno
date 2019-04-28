@@ -17,33 +17,25 @@ namespace FinalInferno.UI.FSM
         private HeroInfo info;
 
         /// <summary>
-        /// Gerenciador do sistema de batalhas.
-        /// </summary>
-        private BattleManager battle;
-
-        /// <summary>
         /// Executa uma ação.
         /// Carrega as informações do personagem.
         /// </summary>
         /// <param name="controller"> O controlador da máquina de estados. </param>
         public override void Act(StateController controller)
         {
-            info.LoadInfo(battle.queue.Peek(0));
+            info.LoadInfo(BattleManager.instance.currentUnit);
         }
 
         /// <summary>
         /// Função chamada para pedir um componente ao provedor.
-        /// Pede os componentes HeroInfo e Battle aos respectivos responsáveis.
+        /// Pede os componentes HeroInfo ao respectivo responsável.
         /// </summary>
         /// <param name="provider"> Game object que provê o componente desejado. </param>
         public override void RequestComponent(GameObject provider)
         {
             HeroInfo newInfo = provider.GetComponent<HeroInfo>();
-            BattleManager newBattle = provider.GetComponent<BattleManager>();
             if (newInfo != null)
                 info = newInfo;
-            if (newBattle != null)
-                battle = newBattle;
         }
     }
 
