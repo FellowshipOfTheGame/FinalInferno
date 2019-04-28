@@ -21,6 +21,7 @@ public class BattleManager : MonoBehaviour{
         queue = new BattleQueue();
         foreach(Unit unit in units){
             queue.Enqueue(new BattleUnit(unit), 0);
+            Debug.Log("Carregou " + unit.name);
         }
         currentUnit = queue.Dequeue();
     }
