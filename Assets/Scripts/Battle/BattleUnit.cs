@@ -4,7 +4,7 @@ using UnityEngine;
 using FinalInferno;
 
 //representa todos os buffs/debuffs, dano etc que essa unidade recebe
-public class BattleUnit : MonoBehaviour{
+public class BattleUnit{
     public Unit unit; //referencia para os atributos base dessa unidade
     public int curHP; //vida atual dessa unidade, descontando dano da vida maxima
     public int curDmg; //dano atual dessa unidade, contando status de buff/debuff
@@ -13,6 +13,16 @@ public class BattleUnit : MonoBehaviour{
     public int curSpeed; //velocidade atual dessa unidade, contando status de buff/debuff
     public int actionPoints; //define a posicao em que essa unidade agira no combate
     public List<StatusEffect> effects; //lista de status fazendo efeito nessa unidade
+
+    public BattleUnit(Unit unit){
+        this.unit = unit;
+        curHP = unit.hpMax;
+        curDmg = unit.baseDmg;
+        curDef = unit.baseDef;
+        curMagicDef = unit.baseMagicDef;
+        curSpeed = unit.baseSpeed;
+        actionPoints = curSpeed; 
+    }
 
     public void ApplyEffects(){
 
