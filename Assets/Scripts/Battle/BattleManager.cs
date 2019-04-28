@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using FinalInferno;
+using FinalInferno.UI.Battle.QueueMenu;
 
 public class BattleManager : MonoBehaviour{
     
@@ -9,6 +10,7 @@ public class BattleManager : MonoBehaviour{
 
     public List<Unit> units;
     public BattleQueue queue;
+    public BattleQueueUI queueUI;
 
     public BattleUnit currentUnit {get; private set;}
 
@@ -20,8 +22,8 @@ public class BattleManager : MonoBehaviour{
 
         queue = new BattleQueue();
         foreach(Unit unit in units){
-            queue.Enqueue(new BattleUnit(unit), 0);
-            Debug.Log("Carregou " + unit.name);
+            queue.Enqueue(new BattleUnit(unit), -unit.baseSpeed);
+            // Debug.Log("Carregou " + unit.name);
         }
         currentUnit = queue.Dequeue();
     }

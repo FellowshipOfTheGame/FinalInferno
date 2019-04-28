@@ -9,7 +9,7 @@ namespace FinalInferno.UI.AII
     /// <summary>
 	/// Item da lista de skills.
 	/// </summary>
-    public class SkillItem : MonoBehaviour
+    public class SkillListItem : MonoBehaviour
     {
         /// <summary>
         /// Referência à lista de skills.

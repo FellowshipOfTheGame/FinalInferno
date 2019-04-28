@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BattleQueue{
-    List<BattleUnit> list;
+    public List<BattleUnit> list;
 
     //construtor
     public BattleQueue(){
