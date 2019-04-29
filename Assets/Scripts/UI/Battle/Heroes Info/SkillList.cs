@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using FinalInferno.UI.AII;
 using FinalInferno.UI.FSM;
+using FinalInferno.UI.Battle.QueueMenu;
 
 namespace FinalInferno.UI.Battle.SkillMenu
 {
@@ -101,12 +102,16 @@ namespace FinalInferno.UI.Battle.SkillMenu
                     newSkill.transform.SetParent(skillsContent);
 
                     // Define este script como responsável pelo item criado
-                    SkillItem newSkillItem = newSkill.GetComponent<SkillItem>();
-                    newSkillItem.skillList = this;
+                    SkillListItem newSkillListItem = newSkill.GetComponent<SkillListItem>();
+                    newSkillListItem.skillList = this;
 
                     // Adiciona a decisão de clique no item criado
                     ClickableItem newClickableItem = newSkill.GetComponent<ClickableItem>();
                     newClickableItem.BCD = clickDecision;
+
+                    // Adiciona a skill no item que a ativará
+                    SkillItem newSkillItem = newSkill.GetComponent<SkillItem>();
+                    newSkillItem.skill = skill;
 
                     // Ordena o item na lista
                     AxisInteractableItem newItem = newSkill.GetComponent<AxisInteractableItem>();
@@ -178,7 +183,7 @@ namespace FinalInferno.UI.Battle.SkillMenu
                 newEffect.transform.SetParent(effectsContent);
 
                 // Define este script como responsável pelo item criado
-                EffectItem newEffectItem = newEffect.GetComponent<EffectItem>();
+                EffectListItem newEffectItem = newEffect.GetComponent<EffectListItem>();
                 newEffectItem.skillList = this;
 
                 // Ordena o item na lista
