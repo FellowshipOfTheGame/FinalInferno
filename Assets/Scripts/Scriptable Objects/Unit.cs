@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //engloba todas as unidades que entraram em batalha
-public abstract class Unit : ScriptableObject{
+public abstract class Unit : DialogueEntity {
     public int level; //nivel dessa unidade
     public int hpMax; //vida maxima dessa unidade
     public int baseDmg; //dano base dessa unidade, sem status de buff/debuff
