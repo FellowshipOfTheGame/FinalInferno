@@ -25,7 +25,7 @@ namespace Fog.Dialogue
 		[Tooltip("Reference to the TMPro text component of the title/name display.")]
 		[SerializeField] [HideInInspectorIfNot(nameof(useTitles))] private TextMeshProUGUI titleText = null;
 		[Tooltip("Current dialogue script to be displayed. To create a new dialogue, go to Assets->Create->Anathema->Dialogue.")]
-		[SerializeField] private Dialogue dialogue;
+		[SerializeField] public Dialogue dialogue;
 		[Tooltip("Game object that contains the chat box to be enabled/disabled")]
 		[SerializeField] private GameObject dialogueBox = null;
 
@@ -114,10 +114,13 @@ namespace Fog.Dialogue
 			if(dialogueLines.Count != 0)
 			{
 				currentLine = dialogueLines.Dequeue();
-				dialogueText.text = "";
 
-				if(useTitles && currentLine.Title != "")
-					titleText.text = "<b>" + (currentLine.Title) + "</b>\n\t";
+				if(useTitles && currentLine.Title != ""){
+					titleText.text = "<b>" + (currentLine.Title) + "</b>";
+					if(titleText == dialogueText)
+						titleText.text += "\n";
+				}
+				dialogueText.text = "  ";
 
 				yield return FillInText();
 
