@@ -33,11 +33,15 @@ public class BattleManager : MonoBehaviour{
         currentUnit = queue.Dequeue();
     }
 
-    public UnitType Turn(){
-        return (IsHero(currentUnit.unit)) ? UnitType.Hero : UnitType.Enemy;
+    private UnitType GetUnitType(Unit unit){
+        return (IsHero(unit)) ? UnitType.Hero : UnitType.Enemy;
     }
 
-    public bool IsHero(Unit unit){
+    public UnitType Turn(){
+        return GetUnitType(currentUnit.unit);
+    }
+
+    private bool IsHero(Unit unit){
         return (unit.GetType() == typeof(Hero));
     }
 
@@ -52,5 +56,16 @@ public class BattleManager : MonoBehaviour{
         if(quantityHeros == quantityAll) return VictoryType.Heroes;
         if(quantityHeros == 0) return VictoryType.Enemys;
         else return VictoryType.Nobody;
+    }
+
+    public List<BattleUnit> GetTeam(UnitType type){
+        List<BattleUnit> team = new List<BattleUnit>();
+
+        foreach(BattleUnit unit in queue.list){
+            if (GetUnitType(unit.unit) == type)
+                team.Add(unit);
+        }
+
+        return team;
     }
 }

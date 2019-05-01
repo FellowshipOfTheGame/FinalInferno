@@ -22,6 +22,8 @@ public class BattleUnit{
         curMagicDef = unit.baseMagicDef;
         curSpeed = unit.baseSpeed;
         actionPoints = 0; 
+
+        effects = new List<StatusEffect>();
     }
 
     public void ApplyEffects(){
