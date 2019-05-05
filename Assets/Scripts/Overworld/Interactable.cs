@@ -9,9 +9,12 @@ public class Interactable : MonoBehaviour, IInteractable
 
     public void OnInteractAttempt(){
         Fog.Dialogue.Dialogue selectedDialogue = null;
+
         foreach(DialogueEntry entry in dialogues){
             if(entry.quest.events[entry.eventFlag])
                 selectedDialogue = entry.dialogue;
+            else
+                break;
         }
         if(selectedDialogue != null){
             Fog.Dialogue.DialogueHandler.instance.dialogue = selectedDialogue;
