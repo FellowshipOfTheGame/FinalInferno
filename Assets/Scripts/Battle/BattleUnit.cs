@@ -41,5 +41,11 @@ public class BattleUnit{
     public void TakeDamage(int atk, float multiplier, DamageType type, Element element) {
         //implementacao provisoria, para teste
         curHP -= Mathf.FloorToInt(atk * multiplier * (1 - curDef/100));
+
+        if(curHP <= 0){
+            curHP = 0;
+            BattleManager.instance.queue.Remove(this);
+            //Destroy(this);
+        }
     }
 }
