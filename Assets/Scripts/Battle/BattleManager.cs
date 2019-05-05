@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using FinalInferno;
+using FinalInferno.UI.Battle;
 using FinalInferno.UI.Battle.QueueMenu;
 
 public class BattleManager : MonoBehaviour{
@@ -13,6 +14,8 @@ public class BattleManager : MonoBehaviour{
     public BattleQueueUI queueUI;
 
     public BattleUnit currentUnit {get; private set;}
+
+    public BattleUnitsUI unitsUI;
 
     void Awake() {
         if (instance == null)
@@ -46,7 +49,12 @@ public class BattleManager : MonoBehaviour{
         return GetUnitType(currentUnit.unit);
     }
 
-    private UnitType GetUnitType(Unit unit){
+    public void Kill(BattleUnit unit){
+        queue.Remove(unit);
+        unitsUI.RemoveUnit(unit);
+    }
+
+    public UnitType GetUnitType(Unit unit){
         return (IsHero(unit)) ? UnitType.Hero : UnitType.Enemy;
     }
 

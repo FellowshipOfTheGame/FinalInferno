@@ -44,7 +44,7 @@ public class BattleUnit{
 
         if(curHP <= 0){
             curHP = 0;
-            BattleManager.instance.queue.Remove(this);
+            BattleManager.instance.Kill(this);
             //Destroy(this);
         }
     }

@@ -24,6 +24,11 @@ namespace FinalInferno.UI.AII
         public AxisInteractableItem currentItem;
 
         /// <summary>
+        /// Primeiro item da lista.
+        /// </summary>
+        public AxisInteractableItem firstItem;
+
+        /// <summary>
         /// Orientação do eixo (horizontal/vertical), define as teclas que precisam ser pressionadas 
         /// para que haja mudança de item selecionado.
         /// </summary>
@@ -91,6 +96,7 @@ namespace FinalInferno.UI.AII
         public void Active()
         {
             active = true;
+            currentItem = firstItem;
             if (currentItem != null)
             {
                 currentItem.Enter();

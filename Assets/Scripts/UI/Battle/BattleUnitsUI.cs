@@ -58,9 +58,37 @@ namespace FinalInferno.UI.Battle
                 }
                 else
                 {
-                    manager.currentItem = newItem;
+                    manager.firstItem = newItem;
                 }
                 lastItem = newItem;
+            }
+        }
+
+        public void RemoveUnit(BattleUnit unit)
+        {
+            if (BattleManager.instance.GetUnitType(unit.unit) == UnitType.Hero)  
+                RemoveUnitFromContent(unit, heroesContent, heroesManager);
+            else
+                RemoveUnitFromContent(unit, enemiesContent, enemiesManager);
+        }
+
+        private void RemoveUnitFromContent(BattleUnit unit, Transform content, AIIManager manager)
+        {
+            UnitItem[] units = content.GetComponentsInChildren<UnitItem>();
+
+            for (int i = 0; i < units.Length; i++){
+                if (units[i].unit == unit){
+                    AxisInteractableItem item = units[i].GetComponent<AxisInteractableItem>();
+
+                    if (item == manager.firstItem)
+                        manager.firstItem = item.positiveItem;
+
+                    if (item.negativeItem != null)
+                        item.negativeItem.positiveItem = item.positiveItem;
+
+                    if (item.positiveItem != null)
+                        item.positiveItem.negativeItem = item.negativeItem;
+                }
             }
         }
 

@@ -122,7 +122,7 @@ namespace FinalInferno.UI.Battle.SkillMenu
                     }
                     else
                     {
-                        manager.currentItem = newItem;                    
+                        manager.firstItem = newItem;                    
                     }
                     lastItem = newItem;
                 }
@@ -195,7 +195,7 @@ namespace FinalInferno.UI.Battle.SkillMenu
                 }
                 else
                 {
-                    effectsManager.currentItem = newItem;
+                    effectsManager.firstItem = newItem;
                 }
                 lastItem = newItem;
             }
