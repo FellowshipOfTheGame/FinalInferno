@@ -25,13 +25,21 @@ public class BattleManager : MonoBehaviour{
             queue.Enqueue(new BattleUnit(unit), -unit.baseSpeed);
             // Debug.Log("Carregou " + unit.name);
         }
+        UpdateTurn();
+    }
+
+    public void UpdateTurn()
+    {
         currentUnit = queue.Dequeue();
     }
 
-    public void UpdateTurn(int cost){
+    public void UpdateQueue(int cost)
+    {
         queue.Enqueue(currentUnit, cost);
-        //CheckEnd();
-        currentUnit = queue.Dequeue();
+        if (CheckEnd() == VictoryType.Nobody){
+            UpdateTurn();
+            queueUI.LoadQueue();
+        }
     }
 
     public UnitType Turn(){
@@ -54,14 +62,18 @@ public class BattleManager : MonoBehaviour{
         for(int i = 0; i < quantityAll; i++){
             if(IsHero(queue.Peek(i).unit)) quantityHeros++;
         }
+        if (IsHero(currentUnit.unit)) quantityHeros++;
 
-        if(quantityHeros == quantityAll) return VictoryType.Heroes;
+        if(quantityHeros == quantityAll+1) return VictoryType.Heroes;
         if(quantityHeros == 0) return VictoryType.Enemys;
         else return VictoryType.Nobody;
     }
 
     public List<BattleUnit> GetTeam(UnitType type){
         List<BattleUnit> team = new List<BattleUnit>();
+
+        if (GetUnitType(currentUnit.unit) == type)
+            team.Add(currentUnit);
 
         foreach(BattleUnit unit in queue.list){
             if (GetUnitType(unit.unit) == type)

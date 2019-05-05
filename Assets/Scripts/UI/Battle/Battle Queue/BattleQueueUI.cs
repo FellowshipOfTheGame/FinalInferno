@@ -45,8 +45,14 @@ namespace FinalInferno.UI.Battle.QueueMenu
         /// <summary>
         /// Carrega a fila de batalha.
         /// </summary>
-        private void LoadQueue()
+        public void LoadQueue()
         {
+            // Apaga os itens previamente alocados na fila
+            foreach (Image img in content.GetComponentsInChildren<Image>())
+            {
+                Destroy(img.gameObject);
+            }
+            
             // Coloca o personagem que se encontra em seu turno atual no local específico.
             GameObject newItem = Instantiate(QueueObject, currentTurnContent);
             newItem.GetComponent<Image>().color = BattleManager.instance.currentUnit.unit.color;

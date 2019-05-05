@@ -46,9 +46,14 @@ namespace FinalInferno.UI.Battle.QueueMenu
 
         private void UseSkill()
         {
-            Debug.Log("Defesa Antes = " + BattleManager.instance.currentUnit.curDef);
-            skill.Use(BattleManager.instance.currentUnit, GetTargets(skill.target));
-            Debug.Log("Defesa Depois = " + BattleManager.instance.currentUnit.curDef);
+            // Debug.Log("Defesa Antes = " + BattleManager.instance.currentUnit.curDef);
+            BattleSkillManager.currentSkill = skill;
+            if (skill.target == TargetType.Self || skill.target == TargetType.MultiAlly || skill.target == TargetType.MultiEnemy)
+            {
+                BattleSkillManager.currentTargets = GetTargets(skill.target);
+                BattleSkillManager.UseSkill();
+            }
+            // Debug.Log("Defesa Depois = " + BattleManager.instance.currentUnit.curDef);
         }
 
         private List<BattleUnit> GetTargets(TargetType type)
@@ -64,12 +69,6 @@ namespace FinalInferno.UI.Battle.QueueMenu
                     targets = BattleManager.instance.GetTeam(UnitType.Hero);
                     break;
                 case TargetType.MultiEnemy :
-                    targets = BattleManager.instance.GetTeam(UnitType.Enemy);
-                    break;
-                case TargetType.SingleAlly :
-                    targets = BattleManager.instance.GetTeam(UnitType.Hero);
-                    break;
-                case TargetType.SingleEnemy :
                     targets = BattleManager.instance.GetTeam(UnitType.Enemy);
                     break;
             }
