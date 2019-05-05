@@ -30,16 +30,18 @@ public class BattleManager : MonoBehaviour{
 
     public void UpdateTurn(int cost){
         queue.Enqueue(currentUnit, cost);
+        //CheckEnd();
         currentUnit = queue.Dequeue();
+    }
+
+    public UnitType Turn(){
+        return GetUnitType(currentUnit.unit);
     }
 
     private UnitType GetUnitType(Unit unit){
         return (IsHero(unit)) ? UnitType.Hero : UnitType.Enemy;
     }
 
-    public UnitType Turn(){
-        return GetUnitType(currentUnit.unit);
-    }
 
     private bool IsHero(Unit unit){
         return (unit.GetType() == typeof(Hero));
