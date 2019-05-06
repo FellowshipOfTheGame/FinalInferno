@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using FinalInferno;
+using FinalInferno.UI.Battle;
 using FinalInferno.UI.Battle.QueueMenu;
 
 public class BattleManager : MonoBehaviour{
@@ -14,6 +15,8 @@ public class BattleManager : MonoBehaviour{
 
     public BattleUnit currentUnit {get; private set;}
 
+    public BattleUnitsUI unitsUI;
+
     void Awake() {
         if (instance == null)
             instance = this;
@@ -25,19 +28,39 @@ public class BattleManager : MonoBehaviour{
             queue.Enqueue(new BattleUnit(unit), -unit.baseSpeed);
             // Debug.Log("Carregou " + unit.name);
         }
-        currentUnit = queue.Dequeue();
+        UpdateTurn();
     }
 
-    public void UpdateTurn(int cost){
-        queue.Enqueue(currentUnit, cost);
+    public void UpdateTurn()
+    {
         currentUnit = queue.Dequeue();
+        currentUnit.UpdateStatusEffects();
+    }
+
+    public void UpdateQueue(int cost)
+    {
+        queue.Enqueue(currentUnit, cost);
+        if (CheckEnd() == VictoryType.Nobody){
+            UpdateTurn();
+            queueUI.LoadQueue();
+        }
     }
 
     public UnitType Turn(){
-        return (IsHero(currentUnit.unit)) ? UnitType.Hero : UnitType.Enemy;
+        return GetUnitType(currentUnit.unit);
     }
 
-    public bool IsHero(Unit unit){
+    public void Kill(BattleUnit unit){
+        queue.Remove(unit);
+        unitsUI.RemoveUnit(unit);
+    }
+
+    public UnitType GetUnitType(Unit unit){
+        return (IsHero(unit)) ? UnitType.Hero : UnitType.Enemy;
+    }
+
+
+    private bool IsHero(Unit unit){
         return (unit.GetType() == typeof(Hero));
     }
 
@@ -48,9 +71,24 @@ public class BattleManager : MonoBehaviour{
         for(int i = 0; i < quantityAll; i++){
             if(IsHero(queue.Peek(i).unit)) quantityHeros++;
         }
+        if (IsHero(currentUnit.unit)) quantityHeros++;
 
-        if(quantityHeros == quantityAll) return VictoryType.Heroes;
+        if(quantityHeros == quantityAll+1) return VictoryType.Heroes;
         if(quantityHeros == 0) return VictoryType.Enemys;
         else return VictoryType.Nobody;
+    }
+
+    public List<BattleUnit> GetTeam(UnitType type){
+        List<BattleUnit> team = new List<BattleUnit>();
+
+        if (GetUnitType(currentUnit.unit) == type)
+            team.Add(currentUnit);
+
+        foreach(BattleUnit unit in queue.list){
+            if (GetUnitType(unit.unit) == type)
+                team.Add(unit);
+        }
+
+        return team;
     }
 }

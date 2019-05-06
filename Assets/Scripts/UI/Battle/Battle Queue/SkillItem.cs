@@ -24,6 +24,7 @@ namespace FinalInferno.UI.Battle.QueueMenu
         {
             item.OnEnter += StartPreview;
             item.OnExit += StopPreview;
+            item.OnAct += UseSkill;
         }
 
         /// <summary>
@@ -41,6 +42,38 @@ namespace FinalInferno.UI.Battle.QueueMenu
         private void StopPreview()
         {
             BattleManager.instance.queueUI.StopPreview();
+        }
+
+        private void UseSkill()
+        {
+            // Debug.Log("Defesa Antes = " + BattleManager.instance.currentUnit.curDef);
+            BattleSkillManager.currentSkill = skill;
+            if (skill.target == TargetType.Self || skill.target == TargetType.MultiAlly || skill.target == TargetType.MultiEnemy)
+            {
+                BattleSkillManager.currentTargets = GetTargets(skill.target);
+                BattleSkillManager.UseSkill();
+            }
+            // Debug.Log("Defesa Depois = " + BattleManager.instance.currentUnit.curDef);
+        }
+
+        private List<BattleUnit> GetTargets(TargetType type)
+        {
+            List<BattleUnit> targets = new List<BattleUnit>();
+
+            switch (type)
+            {
+                case TargetType.Self : 
+                    targets.Add(BattleManager.instance.currentUnit);
+                    break;
+                case TargetType.MultiAlly : 
+                    targets = BattleManager.instance.GetTeam(UnitType.Hero);
+                    break;
+                case TargetType.MultiEnemy :
+                    targets = BattleManager.instance.GetTeam(UnitType.Enemy);
+                    break;
+            }
+
+            return targets;
         }
 
     }

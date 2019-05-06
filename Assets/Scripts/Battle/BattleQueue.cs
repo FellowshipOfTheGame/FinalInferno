@@ -45,6 +45,10 @@ public class BattleQueue{
             return list[position];
     }
 
+    public void Remove(BattleUnit unit){
+        list.Remove(unit);
+    }
+
     //esvazia a fila
     public void Clear(){
         list.Clear();
