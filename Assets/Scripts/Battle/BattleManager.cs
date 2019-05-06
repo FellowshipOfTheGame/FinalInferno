@@ -34,6 +34,7 @@ public class BattleManager : MonoBehaviour{
     public void UpdateTurn()
     {
         currentUnit = queue.Dequeue();
+        currentUnit.UpdateStatusEffects();
     }
 
     public void UpdateQueue(int cost)

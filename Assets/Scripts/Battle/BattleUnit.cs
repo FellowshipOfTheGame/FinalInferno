@@ -27,7 +27,6 @@ public class BattleUnit{
     }
 
     public void ApplyEffects(){
-
     }
 
     public void StartListening(){
@@ -38,9 +37,16 @@ public class BattleUnit{
 
     }
 
+    public void UpdateStatusEffects(){
+        foreach (StatusEffect effect in effects){
+            effect.Update();
+        }
+    }
+
     public void TakeDamage(int atk, float multiplier, DamageType type, Element element) {
-        //implementacao provisoria, para teste
-        curHP -= Mathf.FloorToInt(atk * multiplier * (1 - curDef/100));
+        int damage = Mathf.FloorToInt((atk - ((type == DamageType.Physical)? curDef : curMagicDef)) * multiplier * 1/*elementmultiplier*/);
+        
+        curHP -= Mathf.Max(damage, 1);
 
         if(curHP <= 0){
             curHP = 0;

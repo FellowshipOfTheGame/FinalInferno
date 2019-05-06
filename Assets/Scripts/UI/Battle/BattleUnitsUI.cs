@@ -81,7 +81,7 @@ namespace FinalInferno.UI.Battle
                     AxisInteractableItem item = units[i].GetComponent<AxisInteractableItem>();
 
                     if (item == manager.firstItem)
-                        manager.firstItem = item.positiveItem;
+                        manager.firstItem = item.negativeItem;
 
                     if (item.negativeItem != null)
                         item.negativeItem.positiveItem = item.positiveItem;
