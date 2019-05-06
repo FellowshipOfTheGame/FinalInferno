@@ -27,7 +27,7 @@ namespace FinalInferno.UI.AII
 
         private void SetTarget()
         {
-            Debug.Log("Setting target: " + unit.unit.name);
+            // Debug.Log("Setting target: " + unit.unit.name);
             BattleSkillManager.currentTargets.Clear();
             BattleSkillManager.currentTargets.Add(unit);
         }

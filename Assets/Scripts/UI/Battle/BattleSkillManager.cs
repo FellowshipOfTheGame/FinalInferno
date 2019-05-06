@@ -15,7 +15,7 @@ namespace FinalInferno.UI.Battle
             BattleManager.instance.UpdateQueue(currentSkill.cost);
 
             foreach (BattleUnit target in currentTargets)
-                Debug.Log(target.unit.name + " - " + target.curHP + "/" + target.unit.hpMax);
+                Debug.Log(currentSkill.name + "ing " + target.unit.name + " - " + target.curHP + "/" + target.unit.hpMax);
         }
 
         public static TargetType GetSkillType()
