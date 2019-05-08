@@ -27,7 +27,7 @@ namespace Fog.Dialogue
 		[Tooltip("Current dialogue script to be displayed. To create a new dialogue, go to Assets->Create->Anathema->Dialogue.")]
 		[SerializeField] public Dialogue dialogue;
 		[Tooltip("Game object that contains the chat box to be enabled/disabled")]
-		[SerializeField] private GameObject dialogueBox = null;
+		[SerializeField] private DialogueScrollPanel dialogueBox = null;
 
 		[Space(10)]
 
@@ -50,6 +50,9 @@ namespace Fog.Dialogue
 		private DialogueLine currentLine;
 		private bool isLineDone;
 		private bool isActive;
+		private Agent agent;
+		private FinalInferno.Movable movingAgent;
+		private string titleAux;
 
 		public delegate void DialogueAction();
 		public event DialogueAction OnDialogueStart;
@@ -66,6 +69,18 @@ namespace Fog.Dialogue
 				else if(instance != this)
 					Destroy(this);
 			}
+			isActive = false;
+			agent = null;
+			movingAgent = null;
+		}
+
+		void Update(){
+			if(isActive && Input.GetButtonDown("Interact")){
+				if(isLineDone)
+					StartCoroutine("NextLine");
+				else
+					Skip();
+			}
 		}
 
 		/// <summary>
@@ -73,8 +88,18 @@ namespace Fog.Dialogue
 		/// 	This overload is supposed to be used when there is a default dialogue sequence, since it uses the last set dialogue as the current dialogue.
 		/// 	Otherwise, use the StartDialogue(Dialogue dialogue) overload.
 		/// </summary>
-		public void StartDialogue()
+		public void StartDialogue(Agent _agent = null, FinalInferno.Movable _movingAgent = null)
 		{
+			if(_agent){
+				agent = _agent;
+				agent.canInteract = false;
+			}
+			if(_movingAgent){
+				movingAgent = _movingAgent;
+				movingAgent.CanMove = false;
+			}
+
+
 			OnDialogueStart?.Invoke();
 
 			if(isActive)
@@ -87,7 +112,7 @@ namespace Fog.Dialogue
 				dialogueLines.Enqueue(line);
 
 			isActive = true;
-			dialogueBox.SetActive(true);
+			dialogueBox.gameObject.SetActive(true);
 			StartCoroutine("NextLine");
 		}
 
@@ -96,10 +121,10 @@ namespace Fog.Dialogue
 		/// 	In case of a default dialogue (that repeats), you can also set the dialogue and use the StartDialogue() overload instead.
 		/// </summary>
 		/// <param name="dialogue"> The current dialogue scriptable object. </param>
-		public void StartDialogue(Dialogue dialogue)
+		public void StartDialogue(Dialogue dialogue, Agent _agent = null, FinalInferno.Movable _movingAgent = null)
 		{
 			this.dialogue = dialogue;
-			StartDialogue();
+			StartDialogue(_agent, _movingAgent);
 		}
 
 		/// <summary>
@@ -111,16 +136,18 @@ namespace Fog.Dialogue
 		{
 			isLineDone = false;
 
-			if(dialogueLines.Count != 0)
+			if(dialogueLines.Count > 0)
 			{
 				currentLine = dialogueLines.Dequeue();
 
+				dialogueText.text += "";
 				if(useTitles && currentLine.Title != ""){
-					titleText.text = "<b>" + (currentLine.Title) + "</b>";
-					if(titleText == dialogueText)
+					titleText.text = "<b>" + currentLine.Title + "</b>";
+					if(titleText == dialogueText){
 						titleText.text += "\n";
+						titleAux = titleText.text;
+					}
 				}
-				dialogueText.text = "  ";
 
 				yield return FillInText();
 
@@ -147,8 +174,12 @@ namespace Fog.Dialogue
 				StopAllCoroutines();
 				if(fillInBeforeSkip && !isLineDone)
 				{
-					dialogueText.text = currentLine.Text;
+					dialogueText.text = "";
+					if(dialogueText == titleText)
+						dialogueText.text += titleAux;
+					dialogueText.text += currentLine.Text;
 					isLineDone = true;
+					dialogueBox.JumpToEnd();
 				}
 				else
 					StartCoroutine("NextLine");
@@ -166,11 +197,16 @@ namespace Fog.Dialogue
 				foreach(var character in currentLine.Text)
 				{
 					dialogueText.text += character;
+					dialogueBox.ScrollToEnd();
 					yield return WaitForFrames(framesBetweenCharacters);
 				}
 			}
-			else
-				dialogueText.text = currentLine.Text;
+			else{
+				dialogueText.text = "";
+				if(dialogueText == titleText)
+					dialogueText.text += titleAux;
+				dialogueText.text += currentLine.Text;
+			}
 		}
 
 		/// <summary>
@@ -179,7 +215,16 @@ namespace Fog.Dialogue
 		/// </summary>
 		public void EndDialogue()
 		{
-			dialogueBox.SetActive(false);
+			if(agent){
+				agent.canInteract = true;
+			}
+			if(movingAgent){
+				movingAgent.CanMove = true;
+			}
+			agent = null;
+			movingAgent = null;
+			
+			dialogueBox.gameObject.SetActive(false);
 
 			dialogueText.text = "";
 			if(titleText){

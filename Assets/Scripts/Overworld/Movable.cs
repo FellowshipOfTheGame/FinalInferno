@@ -2,30 +2,55 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
-public class Movable : MonoBehaviour {
-	public float moveSpeed;
-	public MoveTo nextPosition;
-	private Rigidbody2D rigid2D;
-    private Animator anim;
-
-	// Salva a referencia para o rigdigbody
-	void Start(){
-		rigid2D = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
-	}
-
-	// Atualiza a velocidade atual de acordo com a direcao definida pelo script de MoveTo
-	void FixedUpdate(){
-		if(nextPosition != null){
-			Vector2 direction = nextPosition.Direction();
-			// No caso da direcao ser um vetor zero ou da moveSpeed ser 0, fica parado
-			rigid2D.velocity = moveSpeed * direction;
+namespace FinalInferno{
+	[RequireComponent(typeof(Rigidbody2D))]
+	public class Movable : MonoBehaviour {
+		public float moveSpeed;
+		public MoveTo nextPosition;
+		[HideInInspector]
+		private bool canMove;
+		public bool CanMove{
+			get { return canMove; }
+			set {
+				rigid2D.velocity = Vector2.zero;
+				canMove = value;
+			}
 		}
-        if (anim != null) {
-            anim.SetBool("moving", rigid2D.velocity != Vector2.zero);
-            anim.SetFloat("moveX", rigid2D.velocity.normalized.x);
-            anim.SetFloat("moveY", rigid2D.velocity.normalized.y);
-        }
+		private Rigidbody2D rigid2D;
+		private Animator anim;
+
+		void Reset(){
+			moveSpeed = 5f;
+			Rigidbody2D rb2D = GetComponent<Rigidbody2D>();
+			rb2D.bodyType = RigidbodyType2D.Kinematic;
+			rb2D.sharedMaterial = null;
+			rb2D.simulated = true;
+			rb2D.useFullKinematicContacts = true;
+			rb2D.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+			rb2D.sleepMode = RigidbodySleepMode2D.StartAwake;
+			rb2D.interpolation = RigidbodyInterpolation2D.None;
+			rb2D.constraints = RigidbodyConstraints2D.FreezeRotation;
+		}
+
+		// Salva a referencia para o rigdigbody
+		void Start(){
+			canMove = true;
+			rigid2D = GetComponent<Rigidbody2D>();
+			anim = GetComponent<Animator>();
+		}
+
+		// Atualiza a velocidade atual de acordo com a direcao definida pelo script de MoveTo
+		void FixedUpdate(){
+			if(nextPosition != null && canMove){
+				Vector2 direction = nextPosition.Direction();
+				// No caso da direcao ser um vetor zero ou da moveSpeed ser 0, fica parado
+				rigid2D.velocity = moveSpeed * direction;
+			}
+			if (anim != null) {
+				anim.SetBool("moving", rigid2D.velocity != Vector2.zero);
+				anim.SetFloat("moveX", rigid2D.velocity.normalized.x);
+				anim.SetFloat("moveY", rigid2D.velocity.normalized.y);
+			}
+		}
 	}
 }
