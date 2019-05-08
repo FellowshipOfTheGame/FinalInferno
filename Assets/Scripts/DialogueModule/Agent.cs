@@ -18,6 +18,9 @@ namespace Fog.Dialogue{
 
         [SerializeField]
         private int maxInteractions;
+        [SerializeField]
+        private int nFramesCooldown;
+        private int wait;
         [HideInInspector]
         public bool canInteract;
         private bool isProcessingInput;
@@ -31,16 +34,16 @@ namespace Fog.Dialogue{
         {
             canInteract = true;
             isProcessingInput = false;
+            wait = nFramesCooldown;
         }
 
         // Update is called once per frame
         void Update()
         {
             // Esse botao precisa ser declarado nos inputs do projeto
-            if (Input.GetButtonDown("Interact")) {
-                Debug.Log("entrou1");
+            if (Input.GetButtonDown("Interact") && wait <= 0) {
+                wait = nFramesCooldown;
                 if (!isProcessingInput && canInteract) {
-                    Debug.Log("entrou2");
                     isProcessingInput = true;
 
                     Collider2D[] colliders = new Collider2D[maxInteractions];
@@ -49,7 +52,6 @@ namespace Fog.Dialogue{
                     GetComponent<Collider2D>().OverlapCollider(contactFilter, colliders);
                     foreach (Collider2D col in colliders) {
                         if (col) {
-                            Debug.Log("checking");
                             IInteractable interact = col.GetComponent<IInteractable>();
                             if (interact != null)
                                 interact.OnInteractAttempt(this, GetComponent<FinalInferno.Movable>());
@@ -59,6 +61,11 @@ namespace Fog.Dialogue{
                     isProcessingInput = false;
                 }
             }
+            wait = (wait <= 0)? 0 : (wait-1);
+        }
+
+        public void InputCooldown(){
+            wait = nFramesCooldown;
         }
     }
 }

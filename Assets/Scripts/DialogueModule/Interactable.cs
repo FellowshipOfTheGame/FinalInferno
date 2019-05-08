@@ -33,7 +33,6 @@ namespace Fog.Dialogue
         }
 
         public void OnInteractAttempt(Agent agent, FinalInferno.Movable movingAgent = null){
-            Debug.Log("attempting interaction");
             Fog.Dialogue.Dialogue selectedDialogue = null;
 
             foreach(DialogueEntry entry in dialogues){

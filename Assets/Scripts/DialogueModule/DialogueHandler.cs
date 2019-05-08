@@ -19,31 +19,31 @@ namespace Fog.Dialogue
 
 		[Header("References")]
 		[Tooltip("Reference to the TMPro text component of the main dialogue box.")]
-		[SerializeField] private TextMeshProUGUI dialogueText = null;
+		[SerializeField] public TextMeshProUGUI dialogueText = null;
 		[Tooltip("Whether or not the dialogue has a title or character name display.")]
-		[SerializeField] private bool useTitles = false;
+		[SerializeField] public bool useTitles = false;
 		[Tooltip("Reference to the TMPro text component of the title/name display.")]
-		[SerializeField] [HideInInspectorIfNot(nameof(useTitles))] private TextMeshProUGUI titleText = null;
+		[SerializeField] [HideInInspectorIfNot(nameof(useTitles))] public TextMeshProUGUI titleText = null;
 		[Tooltip("Current dialogue script to be displayed. To create a new dialogue, go to Assets->Create->Anathema->Dialogue.")]
 		[SerializeField] public Dialogue dialogue;
 		[Tooltip("Game object that contains the chat box to be enabled/disabled")]
-		[SerializeField] private DialogueScrollPanel dialogueBox = null;
+		[SerializeField] public DialogueScrollPanel dialogueBox = null;
 
 		[Space(10)]
 
 		[Header("Settings")]
 		[Tooltip("Whether or not the characters are going to be displayed one at a time.")]
-		[SerializeField] private bool useTypingEffect = false;
-		[SerializeField] [HideInInspectorIfNot(nameof(useTypingEffect))] [Range(1, 60)] private int framesBetweenCharacters = 0;
+		[SerializeField] public bool useTypingEffect = false;
+		[SerializeField] [HideInInspectorIfNot(nameof(useTypingEffect))] [Range(1, 60)] public int framesBetweenCharacters = 0;
 		[Tooltip("If true, trying to skip dialogue will first fill in the entire dialogue line and then skip if prompted again, if false it will skip right away.")]
-		[SerializeField] [HideInInspectorIfNot(nameof(useTypingEffect))] private bool fillInBeforeSkip = false;
+		[SerializeField] [HideInInspectorIfNot(nameof(useTypingEffect))] public bool fillInBeforeSkip = false;
 		[Tooltip("Whether or not, after filling in the entire text, the dialogue skips to the next line automatically.")]
-		[SerializeField] private bool autoSkip = false;
-		[SerializeField] [HideInInspectorIfNot(nameof(autoSkip))] private float timeUntilSkip = 0;
+		[SerializeField] public bool autoSkip = false;
+		[SerializeField] [HideInInspectorIfNot(nameof(autoSkip))] public float timeUntilSkip = 0;
         [Tooltip("Whether or not to pause game during dialogue")]
-		[SerializeField] private bool pauseDuringDialogue = false;
+		[SerializeField] public bool pauseDuringDialogue = false;
         [Tooltip("Advanced setting: If there is only 1 handler/dialogue box (A visual novel for example) you can make this a singleton and call it from DialogueHandler.instance. If unsure, leave it false.")]
-        [SerializeField] private bool isSingleton = false;
+        [SerializeField] public bool isSingleton = false;
 
 
 		private Queue<DialogueLine> dialogueLines = new Queue<DialogueLine>();
@@ -215,14 +215,6 @@ namespace Fog.Dialogue
 		/// </summary>
 		public void EndDialogue()
 		{
-			if(agent){
-				agent.canInteract = true;
-			}
-			if(movingAgent){
-				movingAgent.CanMove = true;
-			}
-			agent = null;
-			movingAgent = null;
 			
 			dialogueBox.gameObject.SetActive(false);
 
@@ -240,6 +232,16 @@ namespace Fog.Dialogue
                 Time.timeScale = 1f;
 
 			OnDialogueEnd?.Invoke();
+
+			if(agent){
+				agent.InputCooldown();
+				agent.canInteract = true;
+			}
+			if(movingAgent){
+				movingAgent.CanMove = true;
+			}
+			agent = null;
+			movingAgent = null;
 		}
 
 		/// <summary>

@@ -11,6 +11,23 @@ public class DialogueScrollPanel : ScrollRect
     public float scrollSpeed;
     public float marginSize;
 
+    protected override void Reset(){
+        content = null;
+        horizontal = false;
+        vertical = true;
+        movementType = MovementType.Clamped;
+        inertia = false;
+        scrollSensitivity = 1;
+        viewport = null;
+        horizontalScrollbar = null;
+        horizontalScrollbarSpacing = 1f;
+        horizontalScrollbarVisibility = ScrollbarVisibility.AutoHideAndExpandViewport;
+        verticalScrollbar = null;
+        verticalScrollbarSpacing = 1f;
+        verticalScrollbarVisibility = ScrollbarVisibility.AutoHideAndExpandViewport;
+        onValueChanged = null;
+    }
+
     protected override void Start(){
         base.Start();
         if(content){
