@@ -5,17 +5,28 @@ using UnityEngine.UI;
 using UnityEditor;
 
 namespace Fog.Dialogue{
+
+    [CustomEditor(typeof(DialogueScrollPanel))]
+    public class DialogueScrollPanelEditor : UnityEditor.UI.ScrollRectEditor{
+        public override void OnInspectorGUI(){
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("smoothScrolling"), new GUIContent("Smooth Scrolling"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("scrollSpeed"), new GUIContent("Scroll Speed"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("marginSize"), new GUIContent("Margin Size"));
+            serializedObject.ApplyModifiedProperties();
+            EditorGUILayout.Space();
+            base.OnInspectorGUI();
+        }
+    }
+
     public class ScrollPanelMenu : MonoBehaviour
     {
         [MenuItem("GameObject/UI/FOG.Dialogue - ScrollPanel", false, 49)]
         static void CreateScrollPanel(MenuCommand menuCommand){
             // Create a custom game object
             GameObject panelObj = new GameObject("Dialogue Scroll Panel");
-            // Ensure it gets reparented if this was a context click (otherwise does nothing)
-            GameObjectUtility.SetParentAndAlign(panelObj, menuCommand.context as GameObject);
             // Register the creation in the undo system
             Undo.RegisterCreatedObjectUndo(panelObj, "Create " + panelObj.name);
-            // Do stuff
+            // Cria um Canvas se ele nao existir
             Canvas canvas = FindObjectOfType<Canvas>();
             if(!canvas){
                 GameObject canvasObj = new GameObject("Canvas", typeof(CanvasScaler));
@@ -31,7 +42,7 @@ namespace Fog.Dialogue{
                 canvas.targetDisplay = 0;
                 canvas.additionalShaderChannels = AdditionalCanvasShaderChannels.Normal | AdditionalCanvasShaderChannels.Tangent | AdditionalCanvasShaderChannels.TexCoord1;
             }
-
+            // Adiciona o panel como filho do canvas e seta propriedades iniciais
             panelObj.transform.parent = canvas.transform;
             panelObj.AddComponent<DialogueScrollPanel>();
             panelObj.GetComponent<CanvasRenderer>().cullTransparentMesh = false;
@@ -49,7 +60,7 @@ namespace Fog.Dialogue{
             img.rectTransform.anchorMax = new Vector2(1f, 0f);
             img.rectTransform.pivot = new Vector2(0.5f, 0f);
             img.rectTransform.position = new Vector3(img.rectTransform.position.x, 0f, img.rectTransform.position.z);
-
+            // Adiciona o objeto de viewport como filho do panel
             GameObject viewObj = new GameObject("Viewport");
             Undo.RegisterCreatedObjectUndo(viewObj, "Create " + viewObj.name);
             viewObj.transform.parent = panelObj.transform;
@@ -71,7 +82,8 @@ namespace Fog.Dialogue{
             img.rectTransform.pivot = new Vector2(0f, 0f);
             img.rectTransform.sizeDelta = new Vector2(0f, 0f);
             img.rectTransform.position = new Vector3(0f, 0f, 0f);
-
+            // Adiciona o objeto de content como filho do viewport
+            // O content por padrao contem um TextMeshProGUI
             GameObject contentObj = new GameObject("Content");
             Undo.RegisterCreatedObjectUndo(contentObj, "Create " + contentObj.name);
             contentObj.transform.parent = viewObj.transform;
@@ -91,7 +103,7 @@ namespace Fog.Dialogue{
             textMesh.rectTransform.anchorMax = new Vector2(1f, 1f);
             textMesh.rectTransform.pivot = new Vector2(0f, 1f);
             textMesh.rectTransform.sizeDelta = new Vector2(0f, 0f);
-
+            // Configura o DialogueHandler da cena (cria se necessario)
             DialogueHandler handler = FindObjectOfType<DialogueHandler>();
             if(!handler){
                 GameObject go = new GameObject("Dialogue Handler", typeof(DialogueHandler));

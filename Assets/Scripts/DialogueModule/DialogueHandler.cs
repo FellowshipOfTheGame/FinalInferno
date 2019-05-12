@@ -90,6 +90,7 @@ namespace Fog.Dialogue
 		/// </summary>
 		public void StartDialogue(Agent _agent = null, FinalInferno.Movable _movingAgent = null)
 		{
+			// If an agent or movable is passed as parameter, they must have interactions and movement blocked
 			if(_agent){
 				agent = _agent;
 				agent.canInteract = false;
@@ -140,7 +141,7 @@ namespace Fog.Dialogue
 			{
 				currentLine = dialogueLines.Dequeue();
 
-				dialogueText.text += "";
+				dialogueText.text = "";
 				if(useTitles && currentLine.Title != ""){
 					titleText.text = "<b>" + currentLine.Title + "</b>";
 					if(titleText == dialogueText){
@@ -233,7 +234,9 @@ namespace Fog.Dialogue
 
 			OnDialogueEnd?.Invoke();
 
+			// If an agent or movable was block, sets them free
 			if(agent){
+				// Input cooldown is needed because it uses the same "Interactable" button
 				agent.InputCooldown();
 				agent.canInteract = true;
 			}

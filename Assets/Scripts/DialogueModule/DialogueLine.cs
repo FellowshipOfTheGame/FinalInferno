@@ -13,7 +13,6 @@ namespace Fog.Dialogue
     public class DialogueLine
     {
         [Header("Dialogue Properties")]
-        //[SerializeField] private string title = null;
         [SerializeField] private DialogueEntity speaker = null;
         [SerializeField] [TextArea(3, 5)] private string text = null;
 

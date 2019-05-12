@@ -10,5 +10,5 @@ public class Hero : Unit{
     public Sprite portrait; //
 
     public override Color DialogueColor { get { return color; } }
-    public override string DialogueName { get { return name; } }
+    public override string DialogueName { get { return (name == null)? "" : name; } }
 }
