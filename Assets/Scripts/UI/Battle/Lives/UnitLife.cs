@@ -43,14 +43,10 @@ namespace FinalInferno.UI.Battle.LifeMenu
         /// <summary>
         /// Atualiza o campo de texto com as informações de vida do heroi e também com sua cor.
         /// </summary>
-        public void UpdateUnitLife()
+        public virtual void UpdateUnitLife()
         {
             lifeText.text = thisUnit.unit.name + " - " + thisUnit.curHP + "/" + thisUnit.unit.hpMax;
             lifeText.color = thisUnit.unit.color;
-        }
-
-        public UnitLife(UnitsLives newManager){
-            manager = newManager;
         }
     }
 

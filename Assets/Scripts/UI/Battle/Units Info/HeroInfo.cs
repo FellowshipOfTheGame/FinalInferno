@@ -32,6 +32,11 @@ namespace FinalInferno.UI.Battle.SkillMenu
         [SerializeField] private Slider hpSlider;
 
         /// <summary>
+        /// Campo de texto que mostrará a vida atual e máxima do personagem.
+        /// </summary>
+        [SerializeField] private Text hpText;
+
+        /// <summary>
         /// Campo de texto onde ficará o dano do personagem.
         /// </summary>
         [SerializeField] private Text damageText;
@@ -66,6 +71,7 @@ namespace FinalInferno.UI.Battle.SkillMenu
 
             hpSlider.maxValue = currentHero.hpMax;
             hpSlider.value = currentUnit.curHP;
+            hpText.text = currentUnit.curHP + "/" + currentHero.hpMax;
 
             damageText.text = currentUnit.curDmg.ToString();
             resistanceText.text = currentUnit.curDef.ToString();

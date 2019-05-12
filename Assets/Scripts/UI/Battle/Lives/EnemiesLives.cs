@@ -23,6 +23,12 @@ namespace FinalInferno.UI.Battle.LifeMenu
 
         private void LoadEnemies()
         {
+            foreach (UnitLife life in livesContent.GetComponentsInChildren<UnitLife>())
+                Destroy(life.gameObject);
+
+            foreach (EnemyInfo info in infosContent.GetComponentsInChildren<EnemyInfo>())
+                Destroy(info.gameObject);
+
             lives = new List<UnitLife>();
             foreach (BattleUnit unit in units)
             {
@@ -30,6 +36,11 @@ namespace FinalInferno.UI.Battle.LifeMenu
                 newLife.manager = this;
                 newLife.thisUnit = unit;
                 newLife.AddUpdateToEvent();
+
+                EnemyInfo newInfo = Instantiate(EnemyInfo, infosContent).GetComponent<EnemyInfo>();
+                newInfo.manager = this;
+                newInfo.thisUnit = unit;
+                newInfo.AddUpdateToEvent();
                 
                 lives.Add(newLife);
             }
