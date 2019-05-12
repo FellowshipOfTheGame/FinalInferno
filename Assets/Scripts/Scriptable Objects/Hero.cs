@@ -9,4 +9,6 @@ public class Hero : Unit{
     public Sprite skillBG; //"sprite" de fundo da arvore de "skills" 
     public Sprite portrait; //
 
+    public override Color DialogueColor { get { return color; } }
+    public override string DialogueName { get { return (name == null)? "" : name; } }
 }
