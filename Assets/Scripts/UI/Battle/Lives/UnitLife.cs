@@ -9,38 +9,48 @@ namespace FinalInferno.UI.Battle.LifeMenu
     /// <summary>
     /// Classe responsável por mostrar a vida máxima e atual de um heroi.
     /// </summary>
-    public class HeroLife : MonoBehaviour
+    public class UnitLife : MonoBehaviour
     {
         /// <summary>
         /// Referência para o gerenciador do menu de vidas.
         /// </summary>
-        [SerializeField] private HeroesLives manager;
+        public UnitsLives manager;
 
         /// <summary>
         /// Heroi que será mostrado as informações de vida.
         /// </summary>
-        private BattleUnit thisHero;
+        public BattleUnit thisUnit;
 
         /// <summary>
         /// Campo de texto onde serão mostradas as informações de vida do heroi.
         /// </summary>
-        [SerializeField] private Text heroText;
+        public Text lifeText;
 
         /// <summary>
         /// Adiciona a atualização da vida desse heroi no evento do gerenciador.
         /// </summary>
         void Awake()
         {
-            manager.OnUpdate += UpdateHeroLife;
+            if (manager != null)
+                AddUpdateToEvent();
+        }
+
+        public void AddUpdateToEvent()
+        {
+            manager.OnUpdate += UpdateUnitLife;
         }
 
         /// <summary>
         /// Atualiza o campo de texto com as informações de vida do heroi e também com sua cor.
         /// </summary>
-        public void UpdateHeroLife()
+        public void UpdateUnitLife()
         {
-            heroText.text = thisHero.unit.name + " - " + thisHero.curHP + "/" + thisHero.unit.hpMax;
-            heroText.color = thisHero.unit.color;
+            lifeText.text = thisUnit.unit.name + " - " + thisUnit.curHP + "/" + thisUnit.unit.hpMax;
+            lifeText.color = thisUnit.unit.color;
+        }
+
+        public UnitLife(UnitsLives newManager){
+            manager = newManager;
         }
     }
 

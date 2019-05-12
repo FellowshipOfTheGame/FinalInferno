@@ -4,6 +4,7 @@ using UnityEngine;
 using FinalInferno;
 using FinalInferno.UI.Battle;
 using FinalInferno.UI.Battle.QueueMenu;
+using FinalInferno.UI.Battle.LifeMenu;
 
 public class BattleManager : MonoBehaviour{
     
@@ -16,6 +17,8 @@ public class BattleManager : MonoBehaviour{
     public BattleUnit currentUnit {get; private set;}
 
     public BattleUnitsUI unitsUI;
+
+    public UnitsLives[] unitsLives;
 
     void Awake() {
         if (instance == null)
@@ -43,6 +46,8 @@ public class BattleManager : MonoBehaviour{
         if (CheckEnd() == VictoryType.Nobody){
             UpdateTurn();
             queueUI.LoadQueue();
+            foreach (UnitsLives lives in unitsLives)
+                lives.UpdateLives();
         }
     }
 
