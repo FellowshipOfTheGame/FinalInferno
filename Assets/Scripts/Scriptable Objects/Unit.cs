@@ -17,4 +17,5 @@ public abstract class Unit : Fog.Dialogue.DialogueEntity {
     public Skill defenseSkill;
     //public StatsTable statsTable; //tabela com as statisticas de atributos da unidade baseadas no nivel da unidade
     public Animator animator; //"animator" dessa unidade 
+    public Sprite portrait; //
 }
