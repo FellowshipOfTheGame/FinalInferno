@@ -22,7 +22,9 @@ namespace FinalInferno.UI.AII
 
         void Awake()
         {
+            item.OnEnter += UpdateEnemyContent;
             item.OnAct += SetTarget;
+            item.OnExit += ResetEnemyContent;
         }
 
         private void SetTarget()
@@ -30,6 +32,16 @@ namespace FinalInferno.UI.AII
             // Debug.Log("Setting target: " + unit.unit.name);
             BattleSkillManager.currentTargets.Clear();
             BattleSkillManager.currentTargets.Add(unit);
+        }
+
+        private void UpdateEnemyContent()
+        {
+            BattleManager.instance.enemyContent.ShowEnemyInfo(unit);
+        }
+
+        private void ResetEnemyContent()
+        {
+            BattleManager.instance.enemyContent.ShowAllLives();
         }
 
     }

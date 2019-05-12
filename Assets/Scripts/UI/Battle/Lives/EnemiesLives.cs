@@ -13,12 +13,15 @@ namespace FinalInferno.UI.Battle.LifeMenu
         [SerializeField] private RectTransform livesContent;
         [SerializeField] private RectTransform infosContent;
 
+        [SerializeField] private EnemyContent content;
+
         void Start()
         {
             team = UnitType.Enemy;
             units = BattleManager.instance.GetTeam(team);
             
             LoadEnemies();
+            content.LoadLives(lives);
         }
 
         private void LoadEnemies()

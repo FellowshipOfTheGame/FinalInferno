@@ -20,6 +20,8 @@ public class BattleManager : MonoBehaviour{
 
     public UnitsLives[] unitsLives;
 
+    public EnemyContent enemyContent;
+
     void Awake() {
         if (instance == null)
             instance = this;
@@ -38,6 +40,7 @@ public class BattleManager : MonoBehaviour{
     {
         currentUnit = queue.Dequeue();
         currentUnit.UpdateStatusEffects();
+        enemyContent.ShowEnemyInfo(currentUnit);
     }
 
     public void UpdateQueue(int cost)

@@ -3115,6 +3115,7 @@ MonoBehaviour:
     type: 3}
   livesContent: {fileID: 453134038}
   infosContent: {fileID: 1104706888}
+  content: {fileID: 1104706889}
 --- !u!1 &870867365
 GameObject:
   m_ObjectHideFlags: 0
@@ -4454,6 +4455,7 @@ GameObject:
   - component: {fileID: 1104706892}
   - component: {fileID: 1104706891}
   - component: {fileID: 1104706890}
+  - component: {fileID: 1104706889}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -4479,9 +4481,22 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -324, y: 0}
+  m_AnchoredPosition: {x: -0.000061035156, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1104706889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1104706887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0b2dce7cf43bcf469a0fea062d5048c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: {fileID: 1104706888}
 --- !u!114 &1104706890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7217,6 +7232,7 @@ MonoBehaviour:
   - {fileID: 620101495}
   - {fileID: 1125929270}
   - {fileID: 865854840}
+  enemyContent: {fileID: 1104706889}
 --- !u!4 &1984505593
 Transform:
   m_ObjectHideFlags: 0
