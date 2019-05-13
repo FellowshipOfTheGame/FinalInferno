@@ -20,7 +20,7 @@ namespace FinalInferno.UI.Battle
 
         public static TargetType GetSkillType()
         {
-            return currentSkill.target;
+            return currentSkill != null ? currentSkill.target : TargetType.Null;
         }
     }
 
