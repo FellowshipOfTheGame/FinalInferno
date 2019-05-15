@@ -72,15 +72,7 @@ namespace FinalInferno.UI.AII
         /// </summary>
         public void Act()
         {
-            if (OnAct != null)
-            {
-                Debug.Log(OnAct.GetInvocationList());
-                foreach(System.Delegate del in OnAct.GetInvocationList())
-                {
-                    Debug.Log(del.Method.Name);
-                }
-                OnAct();
-            }
+            if (OnAct != null) OnAct();
         }
 
         /// <summary>
