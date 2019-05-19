@@ -8,24 +8,18 @@ namespace FinalInferno{
     {
         public static bool encountersEnabled = true;
         // To do
-        // Por ser estatico nao da pra setar no inspetor, mas n faz sentido setar isso pra toda instancia de RECaltulator
+        // Por ser estatico nao da pra setar no inspetor, mas n faz sentido setar isso pra toda instancia de RECalculator
         public static List<PlayerSkill> encounterSkils;
         public Transform playerObj;
-        // Tabela de encontros aleatorios pra este mapa (public)
-        // To do
-        [SerializeField]
-        private TextAsset encounterTable;
+        // Tabela de encontros aleatorios pra este mapa
+        [SerializeField] private TextAsset encounterTable;
         private DynamicTable table;
-        [SerializeField]
-        private int minNumberEnemies;
-        [SerializeField]
-        private int maxNumberEnemies;
-        public Sprite BattleBG;
-        public AudioClip BattleBGM;
-        [SerializeField]
-        private float baseEncounterRate = 5.0f;
-        [SerializeField]
-        private float rateIncreaseFactor = 0.05f;
+        [SerializeField] private int minNumberEnemies;
+        [SerializeField] private int maxNumberEnemies;
+        [SerializeField] public Sprite BattleBG;
+        [SerializeField] private AudioClip BattleBGM;
+        [SerializeField] private float baseEncounterRate = 5.0f;
+        [SerializeField] private float rateIncreaseFactor = 0.05f;
         private float curEncounterRate;
         private Vector2 lastPosition;
 
@@ -55,7 +49,7 @@ namespace FinalInferno{
             // A distancia percorrida e usada para aumentar/diminuir a chance de encontro
             if (Random.Range(0.0f, 100.0f) < curEncounterRate * (distance)) {
                 // Quando encontrar uma batalha
-                Debug.Log("Found random encounter");
+                //Debug.Log("Found random encounter");
                 // Diminui a taxa de encontro para metade do valor base
                 // Isso reduz a chance de batalhas consecutivos (atualmente isso n serve pra nada)
                 curEncounterRate = baseEncounterRate/2;
@@ -63,20 +57,22 @@ namespace FinalInferno{
                 // Usar a tabela de encontros aleatorios para definir a lista de inimigos
                 // To do
                 Enemy[] enemies= new Enemy[Random.Range(minNumberEnemies, maxNumberEnemies+1)];
-                Debug.Log("About to fight " + enemies.Length + " enemies");
+                //Debug.Log("About to fight " + enemies.Length + " enemies");
                 for(int i = 0; i < enemies.Length; i++){
                     float roll = Random.Range(0f, 100.0f);
                     for(int j = 0; j < table.Rows.Count; j++){
+                        //Debug.Log("Rolled a " + roll + " for " + (Enemy)table.Rows[j]["Enemy"] + " with chance of " + (float)table.Rows[j]["Chance"]);
                         if(roll <= (float)table.Rows[j]["Chance"]){
                             enemies[i] = (Enemy)table.Rows[j]["Enemy"];
+                            break;
                         }
                     }
-                    Debug.Log(enemies[i]);
+                    //Debug.Log(enemies[i]);
                 }
                 SceneLoader.LoadBattleScene(enemies, new int[0], BattleBG, BattleBGM);
             } else {
                 // Caso nao encontre uma batalha
-                Debug.Log("Did not find random encounter");
+                //Debug.Log("Did not find random encounter");
                 // Aumenta a chance de encontro linearmente
                 curEncounterRate += rateIncreaseFactor;
             }
