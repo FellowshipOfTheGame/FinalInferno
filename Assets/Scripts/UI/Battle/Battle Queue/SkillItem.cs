@@ -52,7 +52,7 @@ namespace FinalInferno.UI.Battle.QueueMenu
             {
                 // Debug.Log(BattleSkillManager.currentSkill);
                 BattleSkillManager.currentTargets = GetTargets(skill.target);
-                BattleSkillManager.UseSkill();
+                // BattleSkillManager.UseSkill();
                 // Debug.Log(BattleSkillManager.currentTargets);
             }
             // Debug.Log("Defesa Depois = " + BattleManager.instance.currentUnit.curDef);

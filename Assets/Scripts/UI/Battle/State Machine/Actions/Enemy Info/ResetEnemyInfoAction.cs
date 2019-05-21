@@ -8,8 +8,8 @@ namespace FinalInferno.UI.FSM
     /// <summary>
     /// Ação que muda o estado de um botão.
     /// </summary>
-    [CreateAssetMenu(menuName = "BattleUI SM/Actions/Enemy Attack")]
-    public class EnemyAttackAction : Action
+    [CreateAssetMenu(menuName = "BattleUI SM/Actions/Reset Enemy Info")]
+    public class ResetEnemyInfoAction : Action
     {
         /// <summary>
         /// Executa uma ação.
@@ -18,8 +18,7 @@ namespace FinalInferno.UI.FSM
         /// <param name="controller"> O controlador da máquina de estados. </param>
         public override void Act(StateController controller)
         {
-            Enemy currentEnemy = (Enemy) BattleManager.instance.currentUnit.unit;
-            currentEnemy.AIEnemy();
+            BattleManager.instance.enemyContent.ShowAllLives();
         }
 
     }

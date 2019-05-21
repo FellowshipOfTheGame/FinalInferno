@@ -40,6 +40,11 @@ public class BattleManager : MonoBehaviour{
     {
         currentUnit = queue.Dequeue();
         currentUnit.UpdateStatusEffects();
+        // ShowEnemyInfo();
+    }
+
+    public void ShowEnemyInfo()
+    {
         enemyContent.ShowEnemyInfo(currentUnit);
     }
 
