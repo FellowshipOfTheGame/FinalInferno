@@ -82,7 +82,7 @@ namespace FinalInferno.UI.Battle.QueueMenu
         public void SetPreviewPosition(int newPosition)
         {
             PreviewObject.anchoredPosition = new Vector3(layout.padding.left +
-                                                newPosition * (75 + layout.spacing / 2), 0f);
+                                                newPosition * (75 + layout.spacing), 0f);
         }
 
 
