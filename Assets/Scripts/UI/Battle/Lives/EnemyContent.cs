@@ -40,7 +40,7 @@ namespace FinalInferno.UI.Battle.LifeMenu
 
         private void SetContentToPosition(int index)
         {
-            xPosition = -index * 324;
+            xPosition = -index * 317;
         }
     }
 
