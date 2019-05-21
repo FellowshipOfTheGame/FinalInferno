@@ -33,7 +33,7 @@ public class Enemy : Unit{
         BattleSkillManager.currentSkill = skill;
         BattleSkillManager.currentTargets = GetTargets(skill.target);
 
-        BattleSkillManager.UseSkill();
+        // BattleSkillManager.UseSkill();
     }
 
     private List<BattleUnit> GetTargets(TargetType type)
