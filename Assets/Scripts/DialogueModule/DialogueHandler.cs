@@ -234,7 +234,7 @@ namespace Fog.Dialogue
 
 			OnDialogueEnd?.Invoke();
 
-			// If an agent or movable was block, sets them free
+			// If an agent or movable was blocked, sets them free
 			if(agent){
 				// Input cooldown is needed because it uses the same "Interactable" button
 				agent.InputCooldown();
@@ -245,6 +245,9 @@ namespace Fog.Dialogue
 			}
 			agent = null;
 			movingAgent = null;
+
+			// Triggers dialogue AfterDialogue method
+			dialogue.AfterDialogue();
 		}
 
 		/// <summary>

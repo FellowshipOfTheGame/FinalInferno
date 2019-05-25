@@ -12,7 +12,8 @@ namespace FinalInferno{
 		public bool CanMove{
 			get { return canMove; }
 			set {
-				rigid2D.velocity = Vector2.zero;
+				if(value != canMove)
+					rigid2D.velocity = Vector2.zero;
 				canMove = value;
 			}
 		}
