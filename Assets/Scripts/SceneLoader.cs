@@ -12,7 +12,8 @@ namespace FinalInferno{
         public static Party party;
         public static Scene lastScene;
         private static List<Enemy> enemies;
-        public static void LoadBattleScene(Enemy[] enemiesSelected, int[] enemyCount, Sprite BG, AudioClip BGM) {
+        public static void LoadBattleScene(Enemy[] enemiesSelected, Sprite BG, AudioClip BGM) {
+            RECalculator.encountersEnabled = false;
             lastScene = SceneManager.GetActiveScene();
             // Adicionar o setup da batalha no SceneManager.sceneLoaded
             enemies = new List<Enemy>(enemiesSelected);
