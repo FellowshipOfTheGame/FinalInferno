@@ -22,7 +22,8 @@ namespace FinalInferno
         MultiAlly,
         SingleEnemy,
         MultiEnemy,
-        Self
+        Self,
+        Null
     }
 
     public enum VictoryType {

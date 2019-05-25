@@ -50,8 +50,10 @@ namespace FinalInferno.UI.Battle.QueueMenu
             BattleSkillManager.currentSkill = skill;
             if (skill.target == TargetType.Self || skill.target == TargetType.MultiAlly || skill.target == TargetType.MultiEnemy)
             {
+                // Debug.Log(BattleSkillManager.currentSkill);
                 BattleSkillManager.currentTargets = GetTargets(skill.target);
-                BattleSkillManager.UseSkill();
+                // BattleSkillManager.UseSkill();
+                // Debug.Log(BattleSkillManager.currentTargets);
             }
             // Debug.Log("Defesa Depois = " + BattleManager.instance.currentUnit.curDef);
         }

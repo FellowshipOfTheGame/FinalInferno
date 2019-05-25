@@ -10,6 +10,14 @@ public class Hero : Unit{
     public Sprite skillBG; //"sprite" de fundo da arvore de "skills"  
     public List<PlayerSkill> skillsToUpdate; //lista de skills que podem ser destravadas com o level do personagem
     
+    public static Hero FindHero(string heroName){
+        string[] resultsFound = UnityEditor.AssetDatabase.FindAssets(heroName + " t:" + typeof(Hero).ToString());
+        if(resultsFound.Length > 0){
+            return (Hero)UnityEditor.AssetDatabase.LoadAssetAtPath(UnityEditor.AssetDatabase.GUIDToAssetPath(resultsFound[0]), typeof(Hero));
+        }
+        return null;
+    }
+    
     //verifica se todas as skills que tem como pre requisito o level do heroi para destravar e tem todas as skills pai destravadas, podem ser destravdas
     public void UnlockSkills(){
         foreach (PlayerSkill skill in skillsToUpdate){

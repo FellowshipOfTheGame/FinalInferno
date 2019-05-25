@@ -54,6 +54,8 @@ namespace FinalInferno.UI.AII
         /// </summary>
         public bool active;
 
+        [SerializeField] private bool interactable;
+
         void Start()
         {
             _time = 0f;
@@ -83,7 +85,7 @@ namespace FinalInferno.UI.AII
                 }
 
                 // Executa a ação do item se o eixo for ativado.
-                if (Input.GetAxisRaw(activatorAxis) != 0)
+                if (interactable && Input.GetAxisRaw(activatorAxis) != 0)
                 {
                     currentItem.Act();
                 }

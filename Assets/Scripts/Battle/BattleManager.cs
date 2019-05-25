@@ -23,14 +23,20 @@ public class BattleManager : MonoBehaviour{
     public EnemyContent enemyContent;
 
     void Awake() {
+        // Singleton
         if (instance == null)
             instance = this;
         else if (instance != this)
             Destroy(this);
 
         queue = new BattleQueue();
+        units = new List<Unit>();
+    }
+
+    public void StartBattle(){
         foreach(Unit unit in units){
-            queue.Enqueue(new BattleUnit(unit), -unit.baseSpeed);
+            BattleUnit newUnit = new BattleUnit(unit);
+            queue.Enqueue(newUnit, -newUnit.curSpeed);
             // Debug.Log("Carregou " + unit.name);
         }
         UpdateTurn();
@@ -40,6 +46,11 @@ public class BattleManager : MonoBehaviour{
     {
         currentUnit = queue.Dequeue();
         currentUnit.UpdateStatusEffects();
+        // ShowEnemyInfo();
+    }
+
+    public void ShowEnemyInfo()
+    {
         enemyContent.ShowEnemyInfo(currentUnit);
     }
 

@@ -70,6 +70,16 @@ namespace FinalInferno.UI.Battle.SkillMenu
         /// </summary>
         [SerializeField] private Text effectDescriptionText;
 
+        /// <summary>
+        /// Imagem que mostrará o elemento da skill.
+        /// </summary>
+        [SerializeField] private Image elementImage;
+
+        /// <summary>
+        /// Imagem que mostrará o tipo de alvo da skill.
+        /// </summary>
+        [SerializeField] private Image targetTypeImage;
+
         [Header("Click decision")]
         /// <summary>
         /// Decisão que será chamada quando a tecla de ativação for pressionada.
@@ -137,8 +147,12 @@ namespace FinalInferno.UI.Battle.SkillMenu
         {
             // Mostra as informações básicas da skill
             skillNameText.text = skill.name;
-            costText.text = skill.cost.ToString();
+
+            costText.text = skill.cost.ToString();            
             descriptionText.text = skill.description;
+
+            elementImage.sprite = Icons.instance.elementSprites[(int) skill.attribute];
+            targetTypeImage.sprite = Icons.instance.targetTypeSprites[(int) skill.target];
 
             // Atualiza a lista de efeitos
             UpdateEffectsContent(skill.effects);

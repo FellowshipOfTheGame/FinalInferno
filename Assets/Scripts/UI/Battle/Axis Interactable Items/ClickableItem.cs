@@ -30,7 +30,10 @@ namespace FinalInferno.UI.AII
         /// </summary>
         private void Click()
         {
+            // Debug.Log("ATENSAO");
             BCD.Click();
+            // Debug.Log("ATENSAAAO");
+
         }
     }
 
