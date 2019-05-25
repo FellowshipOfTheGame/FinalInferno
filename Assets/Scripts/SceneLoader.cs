@@ -27,8 +27,8 @@ namespace FinalInferno{
         }
         public static void OnBattleLoad(Scene map, LoadSceneMode mode){
             // Adiciona os herois da party na lista de unidade da batalha
-            foreach(Hero hero in party.heroes){
-                BattleManager.instance.units.Add(hero);
+            foreach(Character character in party.characters){
+                BattleManager.instance.units.Add(character.archetype);
             }
             // Adiciona os inimigos desejados para a lista de unidades da batalha
             BattleManager.instance.units.AddRange(enemies);

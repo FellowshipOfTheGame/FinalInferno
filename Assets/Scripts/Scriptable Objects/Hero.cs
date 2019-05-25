@@ -20,14 +20,16 @@ public class Hero : Unit{
     
     //verifica se todas as skills que tem como pre requisito o level do heroi para destravar e tem todas as skills pai destravadas, podem ser destravdas
     public void UnlockSkills(){
-        foreach (PlayerSkill skill in skillsToUpdate){
+        foreach (PlayerSkill skill in skillsToUpdate)
+        for(int i = 0; i < skillsToUpdate.Count; i++){
             
             //se a skill for destrava esta eh removida da lista e suas skills filhas sao adicionadas
-            if(skill.Unlock()){  
-                skillsToUpdate.Remove(skill); //skill eh removida da lista
+            if(skillsToUpdate[i].CheckUnlock(level)){  
+                skillsToUpdate.RemoveAt(i); //skill eh removida da lista
+                i--;
 
                 //skills filhas sao adicionadas a lista
-                foreach(PlayerSkill child in skill.skillsToUpdate){
+                foreach(PlayerSkill child in skillsToUpdate[i].skillsToUpdate){
                     skillsToUpdate.Add(child);
                 }
             }

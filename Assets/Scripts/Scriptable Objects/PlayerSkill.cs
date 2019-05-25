@@ -11,8 +11,8 @@ public class PlayerSkill : Skill{
     public string description; //descricao da "skill" que aparecera para o jogador durante a batalha
     public bool active; //sinaliza se a "skill" esta ativa ou nao
     public List<PlayerSkill> skillsToUpdate; //lista de skills que podem ser destravadas com o level dessa skill
-    public List<PlayerSkill> prerequisiteSkill; //lista de skills que sao pre requisitos para essa skill destravar
-    public List<int> prerequisiteSkillLevel; //level que a skill de pre requisito precisa estar para essa skill destravar
+    public List<PlayerSkill> prerequisiteSkills; //lista de skills que sao pre requisitos para essa skill destravar
+    public List<int> prerequisiteSkillsLevel; //level que a skill de pre requisito precisa estar para essa skill destravar
     public int prerequisiteHeroLevel; //level que o heroi precisa estar para essa skill destravar
 
     //CONSTRUTOR
@@ -27,19 +27,22 @@ public class PlayerSkill : Skill{
     //     this.prerequisiteSkillLevel = prerequisiteSkillLevel;
     // }
 
-    // checa todos os pre requisitos foram cumpridos para essa skill ser destravada,
+    // checa se todos os pre requisitos foram cumpridos para essa skill ser destravada,
     // em caso positivo destrava a skill e retorna TRUE, caso contrario retorna FALSE
-    public bool Unlock(){
+    public bool CheckUnlock(int heroLevel){
         bool check = true;
 
-        //checa se todos os pre requisitos foram atendidos
-        for(int i = 0; i < prerequisiteSkill.Count; i++){
-            check &= prerequisiteSkill[i].CheckLevel(prerequisiteSkillLevel[i]);
-        }
+        if(heroLevel >= prerequisiteHeroLevel){
+            //checa se todos os pre requisitos foram atendidos
+            for(int i = 0; i < prerequisiteSkills.Count; i++){
+                check &= prerequisiteSkills[i].CheckLevel(prerequisiteSkillsLevel[i]);
+            }
 
-        //se todos os pre requisitos foram atendidos, destrava a skill
-        if(check) this.level = 1;
-        
+            //se todos os pre requisitos foram atendidos, destrava a skill
+            if(check) this.level = 1;
+        }
+        else check = false;
+
         return check;
     }
 

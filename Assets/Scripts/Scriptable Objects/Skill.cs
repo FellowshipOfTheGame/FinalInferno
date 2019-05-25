@@ -22,6 +22,8 @@ public class Skill : ScriptableObject{
 
     //funcao que define como a skill sera usada
     public void Use(BattleUnit user, List<BattleUnit> targets){
+        
+
         foreach (BattleUnit trgt in targets) {
             foreach (SkillEffect effect in effects) {
                 effect.Apply(user, trgt);
