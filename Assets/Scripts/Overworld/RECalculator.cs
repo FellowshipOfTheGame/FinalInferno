@@ -69,7 +69,7 @@ namespace FinalInferno{
                     }
                     //Debug.Log(enemies[i]);
                 }
-                SceneLoader.LoadBattleScene(enemies, new int[0], BattleBG, BattleBGM);
+                SceneLoader.LoadBattleScene(enemies, BattleBG, BattleBGM);
             } else {
                 // Caso nao encontre uma batalha
                 //Debug.Log("Did not find random encounter");
