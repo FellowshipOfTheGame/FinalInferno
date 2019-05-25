@@ -1,15 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using FinalInferno;
 
-namespace Fog.Dialogue
-{
+namespace FinalInferno{
     [RequireComponent(typeof(Collider2D))]
-    public class Interactable : MonoBehaviour, IInteractable
+    public abstract class Triggerable : MonoBehaviour
     {
-        public List<DialogueEntry> dialogues;
-
         public void Reset(){
             int nColliders = GetComponents<Collider2D>().Length;
             // Se so tem um collider, se certifica que ele seja trigger
@@ -28,22 +24,11 @@ namespace Fog.Dialogue
                     GetComponent<Collider2D>().isTrigger = true;
             }
         }
-
-        public void Start(){
-        }
-
-        public void OnInteractAttempt(Agent agent, FinalInferno.Movable movingAgent = null){
-            Fog.Dialogue.Dialogue selectedDialogue = null;
-
-            foreach(DialogueEntry entry in dialogues){
-                if(entry.quest.events[entry.eventFlag])
-                    selectedDialogue = entry.dialogue;
-                else
-                    break;
-            }
-            if(selectedDialogue != null){
-                Fog.Dialogue.DialogueHandler.instance.StartDialogue(selectedDialogue, agent, movingAgent);
-            }
+        protected abstract void TriggerAction(Fog.Dialogue.Agent agent);
+        private void OnTriggerEnter2D(Collider2D col){
+            Fog.Dialogue.Agent agent = col.GetComponent<Fog.Dialogue.Agent>();
+            if(agent != null)
+                TriggerAction(agent);
         }
     }
 }
