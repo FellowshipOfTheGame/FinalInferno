@@ -53,6 +53,8 @@ namespace FinalInferno{
                 // Diminui a taxa de encontro para metade do valor base
                 // Isso reduz a chance de batalhas consecutivos (atualmente isso n serve pra nada)
                 curEncounterRate = baseEncounterRate/2;
+                // Impede que o player se movimente
+                playerObj.GetComponent<Movable>().CanMove = false;
                 // Salvar a posição atual de cada player dentro do seu respectivo SO
                 // Usar a tabela de encontros aleatorios para definir a lista de inimigos
                 // To do

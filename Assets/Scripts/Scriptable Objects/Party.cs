@@ -26,6 +26,9 @@ public class Party : ScriptableObject{
             instance = this;
     }
 
+    public void GiveExp(int value){
+    }
+
     //faz todos os persoangens subirem de nivel
     /*public void LevelUp(){
 
