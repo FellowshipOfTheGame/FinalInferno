@@ -10,7 +10,7 @@ public class Party : ScriptableObject{
     public int level; //nivel da equipe(todos os personagens tem sempre o mesmo nivel)
     public long xp; //experiencia da equipe(todos os personagens tem sempre a mesma experiencia)
     public long xpNext; //experiencia necessaria para avancar de nivel
-    public List<Hero> heroes; //lista dos personagens que compoe a equipe 
+    public List<Character> characters; //lista dos personagens que compoe a equipe 
     
     //faz todos os persoangens subirem de nivel
     /*public void LevelUp(){
