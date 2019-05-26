@@ -8,33 +8,15 @@ namespace FinalInferno{
     {
         [MenuItem("GameObject/FinalInferno/Overworld Objects", false, 48)]
         static void CreateOverworldObjects(MenuCommand menuCommand){
-            List<GameObject> prefabs = new List<GameObject>();
-            //GameObject[] prefabs = AssetDatabase.LoadAllAssetsAtPath("Assets/Prefabs/Overworld/") as GameObject[];
             GameObject[] objectList = new GameObject[6];
-            foreach(GameObject prefab in prefabs){
-                switch(prefab.name){
-                    case "Main Camera":
-                        objectList[0] = prefab;
-                        break;
-                    case "Random Encounter Calculator":
-                        objectList[1] = prefab;
-                        break;
-                    case "Character 1":
-                        objectList[2] = prefab;
-                        break;
-                    case "Character 2":
-                        objectList[3] = prefab;
-                        break;
-                    case "Character 3":
-                        objectList[4] = prefab;
-                        break;
-                    case "Character 4":
-                        objectList[5] = prefab;
-                        break;
-                }
-            }
+            objectList[5] = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Overworld/Main Camera.prefab", typeof(GameObject));
+            objectList[4] = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Overworld/Random Encounter Calculator.prefab", typeof(GameObject));
+            objectList[3] = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Overworld/Character 1.prefab", typeof(GameObject));
+            objectList[2] = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Overworld/Character 2.prefab", typeof(GameObject));
+            objectList[1] = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Overworld/Character 3.prefab", typeof(GameObject));
+            objectList[0] = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Overworld/Character 4.prefab", typeof(GameObject));
             foreach(GameObject go in objectList){
-                GameObject newObj = Instantiate(go);
+                GameObject newObj = (GameObject)PrefabUtility.InstantiatePrefab(go);
                 GameObjectUtility.SetParentAndAlign(newObj, menuCommand.context as GameObject);
                 Undo.RegisterCreatedObjectUndo(newObj, "Create " + newObj.name);
                 if(go.name == "Random Encounter Calculator")
