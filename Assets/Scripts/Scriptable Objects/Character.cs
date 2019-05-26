@@ -8,7 +8,7 @@ public class Character : ScriptableObject{
     public Hero archetype; //classe desse personagem
     //public type skillInfo; //
     public int hpCur; //vida atual do personagem, descontando dano da vida maxima
-    public Vector2 position; //posicao do personagem no "Over Wolrd"
+    public Vector2 position; //posicao do personagem no "Overworld"
 
     //funcao que ajusta todos os atributos e "skills" do persoangem quando sobe de nivel
     /*public void LevelUp(int level){

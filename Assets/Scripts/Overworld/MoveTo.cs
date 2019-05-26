@@ -12,7 +12,7 @@ namespace FinalInferno{
 		// Mas isso é mais apropriado para movimentacao com translacoes, entao nao usaremos
 		//public abstract Vector2 Position();
 
-		void Reset(){
+		public void Reset(){
 			GetComponent<Movable>().nextPosition = this;
 		}
 	}

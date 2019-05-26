@@ -27,6 +27,7 @@ namespace FinalInferno{
         void Start()
         {
             table = DynamicTable.Create(encounterTable);
+            playerObj = CharacterOW.MainOWCharacter.transform;
             lastPosition = new Vector2(playerObj.position.x, playerObj.position.y);
         }
 
