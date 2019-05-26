@@ -4,13 +4,21 @@ using UnityEngine;
 using FinalInferno;
 using FinalInferno.UI.Battle;
 
-//englobas os inimigos do jogador
+//engloba os inimigos do jogador
 [CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObject/Enemy", order = 3)]
 public class Enemy : Unit{
 
     public override Color DialogueColor { get { return color; } }
     public override string DialogueName { get { return (name == null)? "" : name; } }
-        
+    
+    public static Enemy FindEnemy(string enemyName){
+        string[] resultsFound = UnityEditor.AssetDatabase.FindAssets(enemyName + " t:" + typeof(Enemy).ToString());
+        if(resultsFound.Length > 0){
+            return (Enemy)UnityEditor.AssetDatabase.LoadAssetAtPath(UnityEditor.AssetDatabase.GUIDToAssetPath(resultsFound[0]), typeof(Enemy));
+        }
+        return null;
+    }
+
     //inteligencia atificial do inimigo na batalha
     public void AIEnemy(){
         Skill skill;
@@ -25,7 +33,7 @@ public class Enemy : Unit{
         BattleSkillManager.currentSkill = skill;
         BattleSkillManager.currentTargets = GetTargets(skill.target);
 
-        BattleSkillManager.UseSkill();
+        // BattleSkillManager.UseSkill();
     }
 
     private List<BattleUnit> GetTargets(TargetType type)

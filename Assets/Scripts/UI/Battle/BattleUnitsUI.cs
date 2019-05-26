@@ -45,6 +45,8 @@ namespace FinalInferno.UI.Battle
             {
                 // Instancia um novo item e o coloca no content
                 GameObject newUnit = Instantiate(unitPrefab, content);
+                newUnit.transform.rotation = Quaternion.identity;
+
                 newUnit.GetComponent<UnitItem>().unit = unit;
 
                 newUnit.GetComponent<Image>().color = unit.unit.color;

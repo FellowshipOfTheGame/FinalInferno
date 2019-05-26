@@ -42,8 +42,7 @@ namespace Fog.Dialogue
                     break;
             }
             if(selectedDialogue != null){
-                Fog.Dialogue.DialogueHandler.instance.dialogue = selectedDialogue;
-                Fog.Dialogue.DialogueHandler.instance.StartDialogue(agent, movingAgent);
+                Fog.Dialogue.DialogueHandler.instance.StartDialogue(selectedDialogue, agent, movingAgent);
             }
         }
     }

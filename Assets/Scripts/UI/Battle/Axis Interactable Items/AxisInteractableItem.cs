@@ -56,7 +56,7 @@ namespace FinalInferno.UI.AII
         /// </summary>
         public void Enter()
         {
-            OnEnter();
+            if (OnEnter != null) OnEnter();
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace FinalInferno.UI.AII
         /// </summary>
         public void Exit()
         {
-            OnExit();
+            if (OnExit != null) OnExit();
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace FinalInferno.UI.AII
         /// </summary>
         public void Act()
         {
-            OnAct();
+            if (OnAct != null) OnAct();
         }
 
         /// <summary>

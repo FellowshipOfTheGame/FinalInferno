@@ -12,6 +12,7 @@ namespace Fog.Dialogue
     public class Dialogue : ScriptableObject
     {
         [Reorderable] public ReorderableDialogueList lines;
+        public virtual void AfterDialogue(){}
     }
 
     [System.Serializable]

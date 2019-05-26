@@ -4,6 +4,7 @@ using UnityEngine;
 using FinalInferno;
 using FinalInferno.UI.Battle;
 using FinalInferno.UI.Battle.QueueMenu;
+using FinalInferno.UI.Battle.LifeMenu;
 
 public class BattleManager : MonoBehaviour{
     
@@ -17,15 +18,25 @@ public class BattleManager : MonoBehaviour{
 
     public BattleUnitsUI unitsUI;
 
+    public UnitsLives[] unitsLives;
+
+    public EnemyContent enemyContent;
+
     void Awake() {
+        // Singleton
         if (instance == null)
             instance = this;
         else if (instance != this)
             Destroy(this);
 
         queue = new BattleQueue();
+        units = new List<Unit>();
+    }
+
+    public void StartBattle(){
         foreach(Unit unit in units){
-            queue.Enqueue(new BattleUnit(unit), -unit.baseSpeed);
+            BattleUnit newUnit = new BattleUnit(unit);
+            queue.Enqueue(newUnit, -newUnit.curSpeed);
             // Debug.Log("Carregou " + unit.name);
         }
         UpdateTurn();
@@ -35,15 +46,29 @@ public class BattleManager : MonoBehaviour{
     {
         currentUnit = queue.Dequeue();
         currentUnit.UpdateStatusEffects();
+        // ShowEnemyInfo();
+    }
+
+    public void ShowEnemyInfo()
+    {
+        enemyContent.ShowEnemyInfo(currentUnit);
     }
 
     public void UpdateQueue(int cost)
     {
         queue.Enqueue(currentUnit, cost);
-        if (CheckEnd() == VictoryType.Nobody){
+        if (CheckEnd() == VictoryType.Nobody)
+        {
             UpdateTurn();
             queueUI.LoadQueue();
+            UpdateLives();
         }
+    }
+
+    public void UpdateLives()
+    {
+        foreach (UnitsLives lives in unitsLives)
+            lives.UpdateLives();
     }
 
     public UnitType Turn(){
