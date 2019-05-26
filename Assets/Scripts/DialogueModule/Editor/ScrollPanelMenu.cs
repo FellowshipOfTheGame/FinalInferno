@@ -37,7 +37,7 @@ namespace Fog.Dialogue{
                 canvasScaler.scaleFactor = 1f;
                 canvasScaler.referencePixelsPerUnit = 100f;
                 canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-                canvas.pixelPerfect = false;
+                canvas.pixelPerfect = true;
                 canvas.sortingOrder = 0;
                 canvas.targetDisplay = 0;
                 canvas.additionalShaderChannels = AdditionalCanvasShaderChannels.Normal | AdditionalCanvasShaderChannels.Tangent | AdditionalCanvasShaderChannels.TexCoord1;

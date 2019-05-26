@@ -20,7 +20,7 @@ namespace FinalInferno{
 		private Rigidbody2D rigid2D;
 		private Animator anim;
 
-		void Reset(){
+		public void Reset(){
 			moveSpeed = 5f;
 			Rigidbody2D rb2D = GetComponent<Rigidbody2D>();
 			rb2D.bodyType = RigidbodyType2D.Kinematic;
@@ -31,6 +31,7 @@ namespace FinalInferno{
 			rb2D.sleepMode = RigidbodySleepMode2D.StartAwake;
 			rb2D.interpolation = RigidbodyInterpolation2D.None;
 			rb2D.constraints = RigidbodyConstraints2D.FreezeRotation;
+			rb2D.gravityScale = 0f;
 		}
 
 		// Salva a referencia para o rigdigbody

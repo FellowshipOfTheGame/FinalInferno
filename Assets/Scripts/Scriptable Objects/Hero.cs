@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Hero", menuName = "ScriptableObject/Hero", order = 2)]
 public class Hero : Unit{
     public Sprite spriteOW; //"sprite" do heroi no "Over Wolrd"
-    public Animator animatorOW; //"animator" do "Over World"
+    public RuntimeAnimatorController animatorOW; //"animator" do "Over World"
     public Sprite skillBG; //"sprite" de fundo da arvore de "skills"  
     public List<PlayerSkill> skillsToUpdate; //lista de skills que podem ser destravadas com o level do personagem
     
