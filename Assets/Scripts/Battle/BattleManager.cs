@@ -60,13 +60,13 @@ public class BattleManager : MonoBehaviour{
         if (CheckEnd() == VictoryType.Nobody)
         {
             UpdateTurn();
-            queueUI.LoadQueue();
             UpdateLives();
         }
     }
 
     public void UpdateLives()
     {
+        queueUI.LoadQueue();
         foreach (UnitsLives lives in unitsLives)
             lives.UpdateLives();
     }
