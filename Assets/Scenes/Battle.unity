@@ -792,6 +792,80 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 127055007}
   m_CullTransparentMesh: 0
+--- !u!1 &141123359
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 141123360}
+  - component: {fileID: 141123362}
+  - component: {fileID: 141123361}
+  m_Layer: 5
+  m_Name: Dark Panel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &141123360
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 141123359}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1458118872}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &141123361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 141123359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+--- !u!222 &141123362
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 141123359}
+  m_CullTransparentMesh: 0
 --- !u!1 &152568103
 GameObject:
   m_ObjectHideFlags: 0
@@ -806,6 +880,7 @@ GameObject:
   - component: {fileID: 152568108}
   - component: {fileID: 152568107}
   - component: {fileID: 152568109}
+  - component: {fileID: 152568110}
   m_Layer: 5
   m_Name: Defeat Screen
   m_TagString: Untagged
@@ -827,6 +902,7 @@ RectTransform:
   - {fileID: 305533089}
   - {fileID: 97596404}
   - {fileID: 1364399566}
+  - {fileID: 1014771965}
   m_Father: {fileID: 1371050431}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -887,6 +963,8 @@ MonoBehaviour:
   requesters:
   - {fileID: 11400000, guid: 718a87c8567933a408e7abcc1e18e7be, type: 2}
   - {fileID: 11400000, guid: 0228b2ffa82b96a41a69ac9a4839fdc0, type: 2}
+  - {fileID: 11400000, guid: c90a17a1a56f730419e5762a77517663, type: 2}
+  - {fileID: 11400000, guid: d3efe1550d1399e46bf2026727b6713c, type: 2}
 --- !u!95 &152568108
 Animator:
   serializedVersion: 3
@@ -925,6 +1003,18 @@ MonoBehaviour:
   timeBetweenClicks: 0.1
   active: 0
   interactable: 1
+--- !u!114 &152568110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152568103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30ab2f627659c7f4d8559aa5632dc3db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &154471484
 GameObject:
   m_ObjectHideFlags: 0
@@ -4497,6 +4587,80 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1002140532}
   m_CullTransparentMesh: 0
+--- !u!1 &1014771964
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1014771965}
+  - component: {fileID: 1014771967}
+  - component: {fileID: 1014771966}
+  m_Layer: 5
+  m_Name: Dark Panel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1014771965
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1014771964}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 152568104}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1014771966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1014771964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+--- !u!222 &1014771967
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1014771964}
+  m_CullTransparentMesh: 0
 --- !u!1 &1033554677
 GameObject:
   m_ObjectHideFlags: 0
@@ -6219,7 +6383,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BCD: {fileID: 11400000, guid: ab6035b797b22b74183700f4a036c8f6, type: 2}
-  item: {fileID: 97596405}
+  item: {fileID: 1364399570}
 --- !u!114 &1364399568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6492,7 +6656,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.02983034}
   m_AnchorMax: {x: 1, y: 0.46483034}
-  m_AnchoredPosition: {x: 256.05, y: -0.060012817}
+  m_AnchoredPosition: {x: 256.05, y: -0.05999756}
   m_SizeDelta: {x: 0, y: -0.69999695}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1389906490
@@ -6762,6 +6926,7 @@ GameObject:
   - component: {fileID: 1458118875}
   - component: {fileID: 1458118876}
   - component: {fileID: 1458118877}
+  - component: {fileID: 1458118878}
   m_Layer: 5
   m_Name: Victory Screen
   m_TagString: Untagged
@@ -6785,6 +6950,7 @@ RectTransform:
   - {fileID: 436580331}
   - {fileID: 2106420395}
   - {fileID: 1454664757}
+  - {fileID: 141123360}
   m_Father: {fileID: 1371050431}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6848,7 +7014,7 @@ MonoBehaviour:
   activatorAxis: Submit
   timeBetweenClicks: 0.1
   active: 0
-  interactable: 0
+  interactable: 1
 --- !u!95 &1458118876
 Animator:
   serializedVersion: 3
@@ -6883,6 +7049,19 @@ MonoBehaviour:
   requesters:
   - {fileID: 11400000, guid: b14fcd891317d2e4da963d35b7644f7f, type: 2}
   - {fileID: 11400000, guid: 3d947cff1f7665a4d94a72f550ab35a2, type: 2}
+  - {fileID: 11400000, guid: 0024d7b7face82d4c8c7f77422974d0a, type: 2}
+--- !u!114 &1458118878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1458118871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30ab2f627659c7f4d8559aa5632dc3db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1463243231
 GameObject:
   m_ObjectHideFlags: 0
