@@ -24,7 +24,9 @@ namespace FinalInferno{
                     GetComponent<Collider2D>().isTrigger = true;
             }
         }
+
         protected abstract void TriggerAction(Fog.Dialogue.Agent agent);
+        
         private void OnTriggerEnter2D(Collider2D col){
             Fog.Dialogue.Agent agent = col.GetComponent<Fog.Dialogue.Agent>();
             if(agent != null)

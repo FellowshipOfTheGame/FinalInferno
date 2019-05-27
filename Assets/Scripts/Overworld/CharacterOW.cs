@@ -7,8 +7,9 @@ namespace FinalInferno{
     {
         [SerializeField] private Character characterSO;
         [SerializeField] private bool isMain;
-        private static CharacterOW mainOWCharacter;
+        private static CharacterOW mainOWCharacter = null;
         public static CharacterOW MainOWCharacter{ get{ return mainOWCharacter; } }
+
         public void Awake(){
             BoxCollider2D col = GetComponent<BoxCollider2D>();
             if(!col)
@@ -27,22 +28,29 @@ namespace FinalInferno{
                     col.size = sr.bounds.size;
                 }
             }
-            if(isMain){
+            if(isMain && !MainOWCharacter){
                 gameObject.AddComponent<MoveToInput>();
                 gameObject.GetComponent<Movable>().Reset();
                 gameObject.GetComponent<MoveToInput>().Reset();
                 gameObject.AddComponent<Fog.Dialogue.Agent>();
                 mainOWCharacter = this;
             }else{
+                isMain = false;
                 gameObject.AddComponent<MoveToTarget>();
                 gameObject.GetComponent<Movable>().Reset();
                 gameObject.GetComponent<MoveToTarget>().Reset();
             }
         }
+
         public void Start(){
             if(!isMain){
                 GetComponent<MoveToTarget>().target = mainOWCharacter.transform;
             }
+        }
+
+        public void OnDestroy(){
+            if(isMain)
+                mainOWCharacter = null;
         }
     }
 }

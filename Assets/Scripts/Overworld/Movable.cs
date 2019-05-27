@@ -5,9 +5,8 @@ using UnityEngine;
 namespace FinalInferno{
 	[RequireComponent(typeof(Rigidbody2D))]
 	public class Movable : MonoBehaviour {
-		public float moveSpeed;
+		[SerializeField] private float moveSpeed = 5f;
 		public MoveTo nextPosition;
-		[HideInInspector]
 		private bool canMove;
 		public bool CanMove{
 			get { return canMove; }

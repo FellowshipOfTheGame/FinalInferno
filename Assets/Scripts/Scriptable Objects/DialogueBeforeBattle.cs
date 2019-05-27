@@ -9,6 +9,7 @@ namespace FinalInferno{
         [SerializeField] private Sprite battleBG;
         [SerializeField] private AudioClip battleBGM;
         [SerializeField] private Enemy[] battleEnemies;
+        
         public override void AfterDialogue(){
             SceneLoader.LoadBattleScene(battleEnemies, battleBG, battleBGM);
         }

@@ -46,6 +46,7 @@ namespace FinalInferno
         public string eventFlag;
         public Fog.Dialogue.Dialogue dialogue;
     }
+    #if UNITY_EDITOR
     // PropertyDrawer necessario para exibir e editar DialogueEntry no editor da unity
     [CustomPropertyDrawer(typeof(DialogueEntry))]
     public class DialogueEntryDrawer : PropertyDrawer{
@@ -96,12 +97,14 @@ namespace FinalInferno
             EditorGUI.EndProperty();
         }
     }
+    #endif
 
     [System.Serializable]
     public struct QuestEvent{
         public Quest quest;
         public string eventFlag;
     }
+    #if UNITY_EDITOR
     // PropertyDrawer necessario para exibir e editar QuestEvent no editor da unity
     [CustomPropertyDrawer(typeof(QuestEvent))]
     public class QuestEventDrawer : PropertyDrawer{
@@ -146,4 +149,5 @@ namespace FinalInferno
             EditorGUI.EndProperty();
         }
     }
+    #endif
 }

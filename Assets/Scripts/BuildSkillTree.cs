@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BuildSkillTree{
-    public Party party;
+    //public Party party;
 
     void Start(){
         // le Skill Table do Gregorim;
