@@ -8,9 +8,24 @@ namespace FinalInferno{
     //engloba os inimigos do jogador
     [CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObject/Enemy", order = 3)]
     public class Enemy : Unit{
-
         public override Color DialogueColor { get { return color; } }
         public override string DialogueName { get { return (name == null)? "" : name; } }
+        [SerializeField] private TextAsset enemyTable;
+        private DynamicTable table;
+
+        void Awake(){
+            table = DynamicTable.Create(enemyTable);
+
+            level = (int)table.Rows[0]["Level"];
+            hpMax = (int)table.Rows[0]["HP"];
+            baseDmg = (int)table.Rows[0]["Dano"];
+            baseDef = (int)table.Rows[0]["Defesa"];
+            baseMagicDef = (int)table.Rows[0]["Resistência"];
+            baseSpeed = (int)table.Rows[0]["Speed"];
+            //damageType/element = (int)table.Rows[0]["DamageType"];
+            color = (Color)table.Rows[0]["Color"];
+
+        }
 
         //inteligencia atificial do inimigo na batalha
         public void AIEnemy(){

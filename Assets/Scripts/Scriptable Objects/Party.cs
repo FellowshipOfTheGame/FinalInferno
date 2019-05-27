@@ -42,8 +42,11 @@ namespace FinalInferno{
             }
         }
 
-        //checa se os personagens subiram de nivel
-        public bool CheckLevelUp(){
+        //Adiciona os pontos de experiência conquistado pelo jogador
+        public bool GiveExp(int value){
+            xp += value;
+
+            //testa se os persoangens subiram de nivel
             if(xp >= xpNext){
                 // xpNext = table.Rows[level].Field<long>("XP para próximo nível");
                 xpNext = (long)table.Rows[level]["XP Acumulada"];
@@ -53,10 +56,6 @@ namespace FinalInferno{
                 return true;
             }
             return false;
-        }
-
-        public void GiveExp(int value){
-            xp += value;
         }
 
         //faz todos os persoangens subirem de nivel
