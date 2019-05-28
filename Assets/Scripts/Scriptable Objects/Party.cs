@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Data;
+
 
 namespace FinalInferno{
     //representa a equipe inteira do jogador
@@ -31,8 +33,7 @@ namespace FinalInferno{
             table = DynamicTable.Create(XPTable);
             level = 1;
             xp = 0;
-            //xpNext = table.Rows[0].Field<long>("XP para próximo nível");
-            xpNext = (long)table.Rows[0]["XP Acumulada"];
+            xpNext = table.Rows[0].Field<long>("XP para próximo nível");
         }
 
         //faz todos os persoangens subirem de nivel
@@ -48,8 +49,7 @@ namespace FinalInferno{
 
             //testa se os persoangens subiram de nivel
             if(xp >= xpNext){
-                // xpNext = table.Rows[level].Field<long>("XP para próximo nível");
-                xpNext = (long)table.Rows[level]["XP Acumulada"];
+                xpNext = table.Rows[level].Field<long>("XP para próximo nível");
                 level++;
                 LevelUp();
             

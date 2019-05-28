@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using FinalInferno;
 using FinalInferno.UI.Battle;
+using System.Data;
+
 
 namespace FinalInferno{
     //engloba os inimigos do jogador
@@ -16,14 +18,15 @@ namespace FinalInferno{
         void Awake(){
             table = DynamicTable.Create(enemyTable);
 
-            level = (int)table.Rows[0]["Level"];
-            hpMax = (int)table.Rows[0]["HP"];
-            baseDmg = (int)table.Rows[0]["Dano"];
-            baseDef = (int)table.Rows[0]["Defesa"];
-            baseMagicDef = (int)table.Rows[0]["Resistência"];
-            baseSpeed = (int)table.Rows[0]["Speed"];
-            //damageType/element = (int)table.Rows[0]["DamageType"];
-            color = (Color)table.Rows[0]["Color"];
+
+            level = table.Rows[0].Field<int>("Level");
+            hpMax = table.Rows[0].Field<int>("HP");
+            baseDmg = table.Rows[0].Field<int>("Dano");
+            baseDef = table.Rows[0].Field<int>("Defesa");
+            baseMagicDef = table.Rows[0].Field<int>("Resistência");
+            baseSpeed = table.Rows[0].Field<int>("Speed");
+            //damageType/element = able.Rows[0].Field(int)("DamageType");
+            color = table.Rows[0].Field<Color>("Color");
 
         }
 

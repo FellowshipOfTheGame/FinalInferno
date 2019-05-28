@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using FinalInferno;
+using System.Data;
 
 //engloba os tipos/classes de heroi, personagem do jogador
 [CreateAssetMenu(fileName = "Hero", menuName = "ScriptableObject/Hero", order = 2)]
@@ -22,16 +23,11 @@ public class Hero : Unit{
         int difference = hpMax - hpCur;
 
         this.level = level;
-        // hpMax = table.Rows[level-1].Field<int>("HP");
-        // baseDmg = table.Rows[level-1].Field<int>("Dano");
-        // baseDef = table.Rows[level-1].Field<int>("Defesa");
-        // baseMagicDef = table.Rows[level-1].Field<int>("Resistência");
-        // baseSpeed = table.Rows[level-1].Field<int>("Speed");
-        hpMax = (int)table.Rows[level-1]["HP"];
-        baseDmg = (int)table.Rows[level-1]["Dano"];
-        baseDef = (int)table.Rows[level-1]["Defesa"];
-        baseMagicDef = (int)table.Rows[level-1]["Resistência"];
-        baseSpeed = (int)table.Rows[level-1]["Speed"];
+        hpMax = table.Rows[level-1].Field<int>("HP");
+        baseDmg = table.Rows[level-1].Field<int>("Dano");
+        baseDef = table.Rows[level-1].Field<int>("Defesa");
+        baseMagicDef = table.Rows[level-1].Field<int>("Resistência");
+        baseSpeed = table.Rows[level-1].Field<int>("Speed");
 
         UnlockSkills();
 
