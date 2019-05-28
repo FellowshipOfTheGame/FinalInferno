@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FinalInferno;
+using System.Data;
 
 //engloba todas as "skills" dos personagens do jogador, que ganham nivel
 [CreateAssetMenu(fileName = "PlayerSkill", menuName = "ScriptableObject/PlayerSkill", order = 5)]
@@ -14,18 +16,32 @@ public class PlayerSkill : Skill{
     public List<PlayerSkill> prerequisiteSkills; //lista de skills que sao pre requisitos para essa skill destravar
     public List<int> prerequisiteSkillsLevel; //level que a skill de pre requisito precisa estar para essa skill destravar
     public int prerequisiteHeroLevel; //level que o heroi precisa estar para essa skill destravar
+    [SerializeField] private TextAsset skillTable;
+    private DynamicTable table;
 
-    //CONSTRUTOR
-    // public PlayerSkill(int level, long xp, long xpNext, string description, bool active, List<PlayerSkill> skillsToUpdate, List<PlayerSkill> prerequisiteSkill, List<int> prerequisiteSkillLevel){
-    //     this.level = level;
-    //     this.xp = xp;
-    //     this.xpNext = xpNext;
-    //     this.description = description;
-    //     this.active = active;
-    //     this.skillsToUpdate = skillsToUpdate;
-    //     this.prerequisiteSkill = prerequisiteSkill;
-    //     this.prerequisiteSkillLevel = prerequisiteSkillLevel;
-    // }
+    void Awake(){
+        table = DynamicTable.Create(skillTable);
+    }
+
+    public void LevelUp(){
+        //atualiza o value dos efeitos, se for necessario.
+    }
+    
+
+    //Adiciona os pontos de experiência ao utilizar a skill
+    public bool GiveExp(){
+        xp += 2;
+
+        //testa se a skill subiu de nivel
+        if(xp >= xpNext){
+            xpNext = table.Rows[level].Field<long>("XP para próximo nível");
+            level++;
+            LevelUp();
+        
+            return true;
+        }
+        return false;
+    }
 
     // checa se todos os pre requisitos foram cumpridos para essa skill ser destravada,
     // em caso positivo destrava a skill e retorna TRUE, caso contrario retorna FALSE
@@ -51,5 +67,14 @@ public class PlayerSkill : Skill{
         return (level >= prerequisite);
     }
 
-    
+    //funcao que define como a skill sera usada
+    /*public override void Use(BattleUnit user, List<BattleUnit> targets){
+        GiveExp();
+
+        foreach (BattleUnit trgt in targets) {
+            foreach (SkillEffect effect in effects) {
+                effect.Apply(user, trgt);
+            }
+        }
+    }*/
 }

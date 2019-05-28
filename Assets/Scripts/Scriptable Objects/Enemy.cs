@@ -3,14 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using FinalInferno;
 using FinalInferno.UI.Battle;
+using System.Data;
+
 
 namespace FinalInferno{
     //engloba os inimigos do jogador
     [CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObject/Enemy", order = 3)]
     public class Enemy : Unit{
-
         public override Color DialogueColor { get { return color; } }
         public override string DialogueName { get { return (name == null)? "" : name; } }
+        [SerializeField] private TextAsset enemyTable;
+        private DynamicTable table;
+
+        void Awake(){
+            table = DynamicTable.Create(enemyTable);
+
+
+            level = table.Rows[0].Field<int>("Level");
+            hpMax = table.Rows[0].Field<int>("HP");
+            baseDmg = table.Rows[0].Field<int>("Dano");
+            baseDef = table.Rows[0].Field<int>("Defesa");
+            baseMagicDef = table.Rows[0].Field<int>("Resistência");
+            baseSpeed = table.Rows[0].Field<int>("Speed");
+            //damageType/element = able.Rows[0].Field(int)("DamageType");
+            color = table.Rows[0].Field<Color>("Color");
+
+        }
 
         //inteligencia atificial do inimigo na batalha
         public void AIEnemy(){
