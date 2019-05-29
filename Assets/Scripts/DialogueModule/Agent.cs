@@ -17,9 +17,9 @@ namespace Fog.Dialogue{
         }
 
         [SerializeField]
-        private int maxInteractions;
+        private int maxInteractions = 1;
         [SerializeField]
-        private int nFramesCooldown;
+        private int nFramesCooldown = 5;
         private int wait;
         [HideInInspector]
         public bool canInteract;

@@ -7,4 +7,8 @@ public abstract class SkillEffect : ScriptableObject{
     public float value; //valor do efeito aplicado
 
     public abstract void Apply(BattleUnit source, BattleUnit target);
+
+    /*public void Update(float valueUpdated){
+        value = valueUpdated;
+    }*/
 }

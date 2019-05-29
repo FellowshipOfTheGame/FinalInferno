@@ -10,7 +10,7 @@ namespace FinalInferno{
         // To do
         // Por ser estatico nao da pra setar no inspetor, mas n faz sentido setar isso pra toda instancia de RECalculator
         public static List<PlayerSkill> encounterSkils;
-        public Transform playerObj;
+        [SerializeField] private Transform playerObj;
         // Tabela de encontros aleatorios pra este mapa
         [SerializeField] private TextAsset encounterTable;
         private DynamicTable table;
@@ -27,6 +27,7 @@ namespace FinalInferno{
         void Start()
         {
             table = DynamicTable.Create(encounterTable);
+            playerObj = CharacterOW.MainOWCharacter.transform;
             lastPosition = new Vector2(playerObj.position.x, playerObj.position.y);
         }
 
@@ -64,8 +65,8 @@ namespace FinalInferno{
                     float roll = Random.Range(0f, 100.0f);
                     for(int j = 0; j < table.Rows.Count; j++){
                         //Debug.Log("Rolled a " + roll + " for " + (Enemy)table.Rows[j]["Enemy"] + " with chance of " + (float)table.Rows[j]["Chance"]);
-                        if(roll <= (float)table.Rows[j]["Chance"]){
-                            enemies[i] = (Enemy)table.Rows[j]["Enemy"];
+                        if(roll <= table.Rows[j].Field<float>("Chance")){
+                            enemies[i] = table.Rows[j].Field<Enemy>("Enemy");
                             break;
                         }
                     }

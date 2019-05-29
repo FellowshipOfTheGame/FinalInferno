@@ -15,7 +15,7 @@ namespace Fog.Dialogue{
         // To do
         // Preciso pegar ter uma cor de fundo no viewport
 
-        protected override void Reset(){
+        protected void Reset(){
             smoothScrolling = false;
             scrollSpeed = 10f;
             marginSize = 0f;
@@ -35,7 +35,7 @@ namespace Fog.Dialogue{
             onValueChanged = null;
         }
 
-        protected override void Start(){
+        protected void Start(){
             base.Start();
             if(content){
                 contentIsText = (content.GetComponent<TMPro.TextMeshProUGUI>() != null) || (content.GetComponent<Text>() != null);

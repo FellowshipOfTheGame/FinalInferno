@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace FinalInferno{
-    [CreateAssetMenu(fileName = "NewDialogue", menuName = "ScriptableObject/DialogueSystem/EventDialogue")]
+    [CreateAssetMenu(fileName = "NewEventDialogue", menuName = "ScriptableObject/DialogueSystem/EventDialogue")]
     public class DialogueEventTrigger : Fog.Dialogue.Dialogue
     {
         public QuestEvent[] eventsTriggered;

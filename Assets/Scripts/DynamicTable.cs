@@ -23,6 +23,9 @@ namespace FinalInferno{
                 string colType = lines[1].Split(',')[i];
                 // Safeguard for types from different assembly file
                 switch(colType){
+                    case "string":
+                        colType = typeof(string).AssemblyQualifiedName;
+                        break;
                     case "int":
                         colType = typeof(int).AssemblyQualifiedName;
                         break;
@@ -34,6 +37,18 @@ namespace FinalInferno{
                         break;
                     case "Color":
                         colType = typeof(Color).AssemblyQualifiedName;
+                        break;
+                    case "Enemy":
+                        colType = typeof(Enemy).AssemblyQualifiedName;
+                        break;
+                    case "Party":
+                        colType = typeof(Party).AssemblyQualifiedName;
+                        break;
+                    case "Skill":
+                        colType = typeof(Skill).AssemblyQualifiedName;
+                        break;
+                    default:
+                        colType = typeof(string).AssemblyQualifiedName;
                         break;
                 }
                 Columns.Add(new DataColumn(colHeader, System.Type.GetType(colType)));
@@ -49,9 +64,10 @@ namespace FinalInferno{
             }
         }
         protected void AddElement(ref DataRow row, string colName, string description, System.Type type){
-            System.Type stringType = typeof(string);
             if(type == typeof(int)){
                 row[colName] = int.Parse(description);
+            }else if(type == typeof(string)){
+                row[colName] = description;
             }else if(type == typeof(float)){
                 row[colName] = float.Parse(description);
             }else if(type == typeof(string)){
@@ -63,7 +79,7 @@ namespace FinalInferno{
                 ColorUtility.TryParseHtmlString(description, out newColor);
                 row[colName] = newColor;
             }else{
-                row[colName] = UnityEditor.AssetDatabase.LoadAssetAtPath(UnityEditor.AssetDatabase.GUIDToAssetPath(UnityEditor.AssetDatabase.FindAssets(description + " t:" + type.ToString())[0]), type);
+                row[colName] = AssetManager.LoadAsset(description, type);
             }
         }
     }

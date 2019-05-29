@@ -12,7 +12,6 @@ namespace FinalInferno{
         private static bool updatePositions;
         public static void LoadBattleScene(Enemy[] enemiesSelected, Sprite BG, AudioClip BGM) {
             RECalculator.encountersEnabled = false;
-            lastOWScene = SceneManager.GetActiveScene();
             // Adicionar o setup da batalha no SceneManager.sceneLoaded
             enemies = new List<Enemy>(enemiesSelected);
             SceneManager.sceneLoaded += OnBattleLoad;
@@ -50,6 +49,7 @@ namespace FinalInferno{
                 // To do
             }
             RECalculator.encountersEnabled = true;
+            lastOWScene = SceneManager.GetActiveScene();
             SceneManager.sceneLoaded -= OnMapLoad;
         }
     }

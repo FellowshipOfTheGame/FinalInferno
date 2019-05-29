@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Fog.Editor
 {
+    #if UNIITY_EDITOR
     [CustomPropertyDrawer(typeof(HideInInspectorIf))]
     [CustomPropertyDrawer(typeof(HideInInspectorIfNot))]
     public class HideInInspectorIfDrawer : PropertyDrawer
@@ -45,4 +46,5 @@ namespace Fog.Editor
             }
         }
     }
+    #endif
 }

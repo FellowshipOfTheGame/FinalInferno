@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace FinalInferno{
 	public class MoveToTarget : MoveTo{
-		public float maxDistance;
+		[SerializeField] private float maxDistance = 1f;
 		public Transform target;
 		private Rigidbody2D rigid2D;
 
