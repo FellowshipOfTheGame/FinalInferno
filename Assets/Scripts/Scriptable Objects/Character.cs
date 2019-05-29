@@ -10,10 +10,10 @@ public class Character : ScriptableObject{
     public int hpCur; //vida atual do personagem, descontando dano da vida maxima
     public Vector2 position; //posicao do personagem no "Overworld"
 
-    //funcao que ajusta todos os atributos e "skills" do persoangem quando sobe de nivel
-    /*public void LevelUp(int level){
-
-    }*/
+    //funcao que ajusta a vida atual do personagem quando sobe de nivel
+    public void LevelUp(int level){
+        hpCur = archetype.LevelUp(level, hpCur);
+    }
 
     //quando comeca o jogo, carrega todas as "skills" do personagem baseado no seu nivel
     /*public void LoadSkills(int level){
