@@ -100,7 +100,6 @@ namespace Fog.Dialogue
 				movingAgent.CanMove = false;
 			}
 
-
 			OnDialogueStart?.Invoke();
 
 			if(isActive)
@@ -135,16 +134,27 @@ namespace Fog.Dialogue
 		/// <returns> IEnumerator for the Coroutine. </returns>
 		private IEnumerator NextLine()
 		{
+
 			isLineDone = false;
 
 			if(dialogueLines.Count > 0)
 			{
 				currentLine = dialogueLines.Dequeue();
 
+				// Change dialogue box color to the one given by speaker
+				Image panelImg = dialogueBox.GetComponent<Image>();
+				if(panelImg){
+					panelImg.color = currentLine.Color;
+				}
+
 				dialogueText.text = "";
-				if(useTitles && currentLine.Title != ""){
-					titleText.text = "<b>" + currentLine.Title + "</b>";
+				if(useTitles && currentLine.Title != null){
+					titleText.text = "";
+					if(titleText == dialogueText)
+							titleText.text += "<size=" + (dialogueText.fontSize+3) + ">";
+					titleText.text += "<b>" + currentLine.Title + "</b>";
 					if(titleText == dialogueText){
+						titleText.text += "</size>";
 						titleText.text += "\n";
 						titleAux = titleText.text;
 					}

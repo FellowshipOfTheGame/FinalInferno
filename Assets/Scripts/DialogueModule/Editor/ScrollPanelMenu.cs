@@ -92,7 +92,8 @@ namespace Fog.Dialogue{
             contentObj.GetComponent<ContentSizeFitter>().horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
             contentObj.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
             TMPro.TextMeshProUGUI textMesh = contentObj.GetComponent<TMPro.TextMeshProUGUI>();
-            textMesh.fontSize = 20;
+            textMesh.font = TMPro.TMP_FontAsset.defaultFontAsset;
+            textMesh.fontSize = 21;
             textMesh.color = Color.black;
             textMesh.alignment = TMPro.TextAlignmentOptions.TopJustified;
             textMesh.wordWrappingRatios = 0f;
