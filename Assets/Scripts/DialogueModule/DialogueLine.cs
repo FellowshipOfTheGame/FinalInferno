@@ -16,7 +16,8 @@ namespace Fog.Dialogue
         [SerializeField] private DialogueEntity speaker = null;
         [SerializeField] [TextArea(3, 5)] private string text = null;
 
-        public string Title { get { return (speaker == null)? "" : speaker.DialogueName; } }
+        public string Title { get { return (speaker == null)? null : speaker.DialogueName; } }
+        public Color Color { get {return (speaker == null)? Color.white : speaker.DialogueColor; } }
         public string Text { get { return text; } }
     }
 }
