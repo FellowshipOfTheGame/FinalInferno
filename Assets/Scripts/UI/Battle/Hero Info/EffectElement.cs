@@ -30,10 +30,12 @@ namespace FinalInferno.UI.Battle.SkillMenu
         /// Inicializa o item de efeito.
         /// </summary>
         /// <param name="newEffect"> Efeito a ser inicializado. </param>
-        public void UpdateEffect(SkillEffect newEffect)
+        public void UpdateEffect(SkillEffectTuple newEffect)
         {
-            effect = newEffect;
-            effectValue.text = effect.value + "%";
+            effect = newEffect.effect;
+            effectValue.text = effect.value1 + effect.Description1;
+            if(effect.Description2 != null)
+                effectValue.text += "; " + effect.value2 + effect.Description2;
         }
 
     }
