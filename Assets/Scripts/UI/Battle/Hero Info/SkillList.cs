@@ -177,7 +177,7 @@ namespace FinalInferno.UI.Battle.SkillMenu
         /// Carrega todos os efeitos aplicados pela skill selecionada.
         /// </summary>
         /// <param name="effects"> Lista com todos os efeitos aplicados pela skill. </param>
-        private void UpdateEffectsContent(List<SkillEffect> effects)
+        private void UpdateEffectsContent(List<SkillEffectTuple> effects)
         {
             // Deleta todos os itens previamente alocados no content
             foreach (EffectElement EE in effectsContent.GetComponentsInChildren<EffectElement>())
@@ -189,7 +189,7 @@ namespace FinalInferno.UI.Battle.SkillMenu
             AxisInteractableItem lastItem = null;
 
             // Passa por todas os efeitos da lista, adicionando no menu e ordenando
-            foreach (SkillEffect effect in effects)
+            foreach (SkillEffectTuple effect in effects)
             {
                 // Instancia um novo item e o coloca no content
                 GameObject newEffect = Instantiate(effectObject);
