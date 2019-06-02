@@ -12,8 +12,6 @@ namespace Fog.Dialogue{
         [Fog.Editor.HideInInspectorIfNot(nameof(smoothScrolling))]
         public float scrollSpeed;
         public float marginSize; // To do
-        // To do
-        // Preciso pegar ter uma cor de fundo no viewport
 
         protected void Reset(){
             smoothScrolling = false;

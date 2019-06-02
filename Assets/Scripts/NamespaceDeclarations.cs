@@ -37,8 +37,37 @@ namespace FinalInferno
         Enemy
     }
 
+    public enum SkillType {
+        Active,
+        PassiveOnSpawn,
+        PassiveOnStart,
+        PassiveOnEnd,
+        PassiveOnGiveBuff,
+        PassiveOnReceiveBuff,
+        PassiveOnGiveDebuff,
+        PassiveOnReceiveDebuff,
+        PassiveOnGiveDamage,
+        PassiveOnTakeDamage,
+        PassiveOnHit,
+        PassiveOnGetHit,
+        PassiveOnDeath
+    }
+
+    public enum StatusType {
+        Buff,
+        Debuff,
+        None
+    }
+
     [System.Serializable]
     public class QuestDictionary : RotaryHeart.Lib.SerializableDictionary.SerializableDictionaryBase<string, bool>{ }
+
+    [System.Serializable]
+    public struct SkillEffectTuple{
+        public SkillEffect effect;
+        public float value1;
+        public float value2;
+    }
 
     [System.Serializable]
     public struct DialogueEntry{
