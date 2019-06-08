@@ -28,6 +28,7 @@ namespace FinalInferno{
 
         void Awake(){
             animator = GetComponent<Animator>();
+            activeSkills = new List<Skill>();
         }
 
         public void Configure(Unit unit){

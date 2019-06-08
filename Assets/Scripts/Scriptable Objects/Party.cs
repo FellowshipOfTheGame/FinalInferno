@@ -30,10 +30,10 @@ namespace FinalInferno{
             if(!instance)
                 instance = this;
 
-            table = DynamicTable.Create(XPTable);
+            //table = DynamicTable.Create(XPTable);
             level = 1;
             xp = 0;
-            xpNext = table.Rows[0].Field<long>("XP para proximo nivel");
+            //xpNext = table.Rows[0].Field<long>("XP para proximo nivel");
         }
 
         //faz todos os persoangens subirem de nivel
@@ -49,7 +49,7 @@ namespace FinalInferno{
 
             //testa se os persoangens subiram de nivel
             if(xp >= xpNext){
-                xpNext = table.Rows[level].Field<long>("XP para próximo nível");
+                //xpNext = table.Rows[level].Field<long>("XP para próximo nível");
                 level++;
                 LevelUp();
             

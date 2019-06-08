@@ -62,6 +62,8 @@ namespace FinalInferno{
         public void UpdateQueue(int cost)
         {
             queue.Enqueue(currentUnit, cost);
+            currentUnit = null;
+
             if (CheckEnd() == VictoryType.Nobody)
             {
                 UpdateTurn();
@@ -102,7 +104,7 @@ namespace FinalInferno{
             for(int i = 0; i < quantityAll; i++){
                 if(IsHero(queue.Peek(i).unit)) quantityHeros++;
             }
-            if (IsHero(currentUnit.unit)) quantityHeros++;
+            if (currentUnit && IsHero(currentUnit.unit)) quantityHeros++;
 
             if(quantityHeros == quantityAll+1) return VictoryType.Heroes;
             if(quantityHeros == 0) return VictoryType.Enemys;
