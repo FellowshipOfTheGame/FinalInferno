@@ -23,17 +23,18 @@ namespace FinalInferno{
         public long xp; //experiencia da equipe(todos os personagens tem sempre a mesma experiencia)
         public long xpNext; //experiencia necessaria para avancar de nivel
         public List<Character> characters; //lista dos personagens que compoe a equipe 
-        [SerializeField] private TextAsset XPTable;
+        [SerializeField] private TextAsset XP;
         private DynamicTable table;
 
         public void Awake(){
             if(!instance)
                 instance = this;
 
-            table = DynamicTable.Create(XPTable);
-            level = 1;
+            table = DynamicTable.Create(XP);
+            level = 0;
             xp = 0;
-            xpNext = table.Rows[0].Field<long>("XP para próximo nível");
+            xpNext = 0;
+            
         }
 
         //faz todos os persoangens subirem de nivel
@@ -44,24 +45,22 @@ namespace FinalInferno{
         }
 
         //Adiciona os pontos de experiência conquistado pelo jogador
-        public bool GiveExp(int value){
+        public bool GiveExp(long value){
+            bool up = false;
+            
             xp += value;
 
             //testa se os persoangens subiram de nivel
-            if(xp >= xpNext){
+            while(xp >= xpNext){
                 xpNext = table.Rows[level].Field<long>("XP para próximo nível");
                 level++;
                 LevelUp();
             
-                return true;
+                up = true;
             }
-            return false;
+
+            return up;
         }
-
-        //faz todos os persoangens subirem de nivel
-        /*public void LevelUp(){
-
-        }*/
 
         //salva o jogo do jogador
         /*public void Save(){

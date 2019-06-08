@@ -16,7 +16,7 @@ namespace FinalInferno{
         public SkillType Type{ get { return type; } }
 
         //funcao que define como a skill sera usada
-        public void Use(BattleUnit user, List<BattleUnit> targets, bool shouldOverride = false, float value1 = 0f, float value2 = 0f){
+        public virtual void Use(BattleUnit user, List<BattleUnit> targets, bool shouldOverride = false, float value1 = 0f, float value2 = 0f){
             foreach (BattleUnit trgt in targets) {
                 foreach (SkillEffectTuple skillEffect in effects) {
                     skillEffect.effect.value1 = (shouldOverride)? value1 : skillEffect.value1;

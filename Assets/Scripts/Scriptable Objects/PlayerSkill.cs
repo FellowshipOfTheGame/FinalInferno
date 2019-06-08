@@ -22,24 +22,33 @@ public class PlayerSkill : Skill{
         table = DynamicTable.Create(skillTable);
     }
 
+    //atualiza o value dos efeitos, se for necessario.
     public void LevelUp(){
-        //atualiza o value dos efeitos, se for necessario.
+        foreach (SkillEffectTuple skillEffect in effects){
+            skillEffect.effect.value1 = table.Rows[level-1].Field<long>("Skill Effect 0 Value 0");
+            skillEffect.effect.value2 = table.Rows[level-1].Field<long>("Skill Effect 0 Value 1");
+        }
+
+        cost = table.Rows[level-1].Field<int>("Cost");
     }
-    
 
     //Adiciona os pontos de experiência ao utilizar a skill
-    public bool GiveExp(){
-        xp += 2;
+    public bool GiveExp(long exp){
+        bool up = false;
+        
+        xp += exp;
 
         //testa se a skill subiu de nivel
-        if(xp >= xpNext){
+        while(xp >= xpNext){
             xpNext = table.Rows[level].Field<long>("XP para próximo nível");
             level++;
             LevelUp();
         
-            return true;
+            up = true;
         }
-        return false;
+
+
+        return up;
     }
 
     // checa se todos os pre requisitos foram cumpridos para essa skill ser destravada,
@@ -67,13 +76,16 @@ public class PlayerSkill : Skill{
     }
 
     //funcao que define como a skill sera usada
-    /*public override void Use(BattleUnit user, List<BattleUnit> targets){
-        GiveExp();
+    // public override void Use(BattleUnit user, List<BattleUnit> targets, bool shouldOverride = false, float value1 = 0f, float value2 = 0f, long exp){
+    //     GiveExp(exp);
 
-        foreach (BattleUnit trgt in targets) {
-            foreach (SkillEffect effect in effects) {
-                effect.Apply(user, trgt);
-            }
-        }
-    }*/
+    //     foreach (BattleUnit trgt in targets) {
+    //         foreach (SkillEffectTuple skillEffect in effects) {
+    //             skillEffect.effect.value1 = (shouldOverride)? value1 : skillEffect.value1;
+    //             skillEffect.effect.value2 = (shouldOverride)? value2 : skillEffect.value2;
+                
+    //             skillEffect.effect.Apply(user, trgt);
+    //         }
+    //     }
+    // }
 }

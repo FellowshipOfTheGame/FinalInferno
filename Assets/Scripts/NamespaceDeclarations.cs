@@ -59,6 +59,26 @@ namespace FinalInferno
         None
     }
 
+     public struct SkillInfo{
+        long xp;
+        bool active;
+    }
+
+    public struct QuestInfo{
+        string name;
+        int flagsTrue;
+    }
+
+    public struct SaveInfo{
+        long xpParty;
+        List<QuestInfo> quest;
+        //quests de kill
+        List<string> archetype;
+        List<int> hpCur;
+        List<Vector2> position;
+        List<List<SkillInfo> > skills;
+    }
+
     [System.Serializable]
     public class QuestDictionary : RotaryHeart.Lib.SerializableDictionary.SerializableDictionaryBase<string, bool>{ }
 

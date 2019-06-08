@@ -20,8 +20,6 @@ public class Hero : Unit{
 
     //funcao que ajusta todos os atributos e "skills" do persoangem quando sobe de nivel
     public int LevelUp(int level, int hpCur){
-        int difference = hpMax - hpCur;
-
         this.level = level;
         hpMax = table.Rows[level-1].Field<int>("HP");
         baseDmg = table.Rows[level-1].Field<int>("Dano");
@@ -31,12 +29,12 @@ public class Hero : Unit{
 
         UnlockSkills();
 
-        return hpMax - difference;
+        return hpMax;
     }
     
     //verifica se todas as skills que tem como pre requisito o level do heroi para destravar e tem todas as skills pai destravadas, podem ser destravdas
     public void UnlockSkills(){
-        foreach (PlayerSkill skill in skillsToUpdate)
+        //foreach (PlayerSkill skill in skillsToUpdate)
         for(int i = 0; i < skillsToUpdate.Count; i++){
             
             //se a skill for destrava esta eh removida da lista e suas skills filhas sao adicionadas
@@ -51,12 +49,7 @@ public class Hero : Unit{
             }
         }
     }
-
-    //checa se o level do heroi cumpre um pre requisito, i.e., eh maior ou igual a um certo valor
-    public bool CheckLevel(int prerequisite){
-        return (level >= prerequisite);
-    }
-
+    
     public override Color DialogueColor { get { return color; } }
     public override string DialogueName { get { return (name == null)? "" : name; } }
 }
