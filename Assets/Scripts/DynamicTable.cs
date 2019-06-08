@@ -18,7 +18,6 @@ namespace FinalInferno{
             string[] lines = Regex.Split(textFile.text, "\n|\r\n|\r");
             int nCols = lines[0].Split(',').Length;
             // Create table columns
-            Debug.Log("Reading new table");
             for(int i = 0; i < nCols; i++){
                 string colHeader = lines[0].Split(',')[i];
                 string colType = lines[1].Split(',')[i];
@@ -68,7 +67,6 @@ namespace FinalInferno{
             }
         }
         protected void AddElement(ref DataRow row, string colName, string description, System.Type type){
-            Debug.Log("colName = " + colName + "; type = " + type.ToString());
             if(type == typeof(int)){
                 //Debug.Log("parsing " + description + " as int for column " + colName + " and row " + row.ToString());
                 row[colName] = int.Parse(description);
@@ -85,7 +83,6 @@ namespace FinalInferno{
             }else if(type == typeof(Color)){
                 Color newColor = new Color();
                 ColorUtility.TryParseHtmlString(description, out newColor);
-                Debug.Log("Color loaded: " + newColor.ToString());
                 row[colName] = newColor;
             }else{
                 row[colName] = AssetManager.LoadAsset(description, type);
