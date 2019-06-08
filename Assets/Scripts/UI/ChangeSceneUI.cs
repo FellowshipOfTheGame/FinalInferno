@@ -9,12 +9,18 @@ namespace FinalInferno.UI
     {
         private void MainMenu()
         {
-            //SceneLoader.LoadOWScene(SceneLoader.LastOWScene, true);
+            SceneLoader.LoadMainMenu();
         }
 
         private void ReturnCheckpoint()
         {
+            // TO DO: Carrega o jogo salvo no slot atual
             //SceneLoader.LoadOWScene(SceneLoader.LastOWScene, true);
+        }
+
+        private void Continue()
+        {
+            SceneLoader.LoadOWScene(SceneLoader.LastOWSceneID, true);
         }
     }
 

@@ -12,10 +12,13 @@ namespace FinalInferno{
         public TargetType target; //tipo de alvo da "skill"
         public Element attribute; //elemento da "skill"
         public List<SkillEffectTuple> effects; //lista de efeitos que a "skill" causa e seus valores associados
-        [SerializeField] private SkillType type;
+        [SerializeField] private SkillType type; // Tipo da skill (ativa/passiva e qual tipo de passiva)
         public SkillType Type{ get { return type; } }
+        [SerializeField] private GameObject visualEffect; // Prefab contendo uma animação da skill
+        public GameObject VisualEffect { get{ return visualEffect; } }
 
         //funcao que define como a skill sera usada
+        // TO DO: Passará a receber apenas um alvo como parametro ao inves de uma lista
         public void Use(BattleUnit user, List<BattleUnit> targets, bool shouldOverride = false, float value1 = 0f, float value2 = 0f){
             foreach (BattleUnit trgt in targets) {
                 foreach (SkillEffectTuple skillEffect in effects) {

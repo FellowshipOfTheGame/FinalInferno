@@ -36,7 +36,7 @@ namespace FinalInferno{
 
         public void StartBattle(){
             foreach(Unit unit in units){
-                BattleUnit newUnit = new BattleUnit(unit);
+                BattleUnit newUnit = BattleUnitsUI.instance.LoadUnit(unit);
                 queue.Enqueue(newUnit, -newUnit.curSpeed);
                 // Debug.Log("Carregou " + unit.name);
             }

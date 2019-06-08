@@ -13,12 +13,13 @@ namespace FinalInferno.UI.FSM
     {
         /// <summary>
         /// Executa uma ação.
-        /// Muda o estado do botão.
+        /// Usa a skill selecionada atualmente.
         /// </summary>
         /// <param name="controller"> O controlador da máquina de estados. </param>
         public override void Act(StateController controller)
         {
-            BattleSkillManager.UseSkill();
+            // TO DO: setar o trigger do animator ao inves de chamar a funcao diretamente
+            BattleManager.instance.currentUnit.SkillSelected();
         }
 
     }

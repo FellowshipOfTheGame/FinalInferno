@@ -17,7 +17,8 @@ namespace FinalInferno{
         public Skill attackSkill; //habilidade basica de ataque
         public Skill defenseSkill; //habilidade basica de defesa
         //public StatsTable statsTable; //tabela com as statisticas de atributos da unidade baseadas no nivel da unidade
-        public Animator animator; //"animator" dessa unidade 
+        public RuntimeAnimatorController animator; //"animator" dessa unidade 
         public Sprite portrait; //
+        public Sprite battleSprite;
     }
 }

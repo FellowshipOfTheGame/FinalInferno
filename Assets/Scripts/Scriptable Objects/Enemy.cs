@@ -21,9 +21,9 @@ namespace FinalInferno{
 
             level = table.Rows[0].Field<int>("Level");
             hpMax = table.Rows[0].Field<int>("HP");
-            baseDmg = table.Rows[0].Field<int>("Dano");
-            baseDef = table.Rows[0].Field<int>("Defesa");
-            baseMagicDef = table.Rows[0].Field<int>("Resistência");
+            baseDmg = table.Rows[0].Field<int>("Damage");
+            baseDef = table.Rows[0].Field<int>("Defense");
+            baseMagicDef = table.Rows[0].Field<int>("Resistance");
             baseSpeed = table.Rows[0].Field<int>("Speed");
             //damageType/element = able.Rows[0].Field(int)("DamageType");
             color = table.Rows[0].Field<Color>("Color");

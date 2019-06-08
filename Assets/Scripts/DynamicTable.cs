@@ -29,6 +29,9 @@ namespace FinalInferno{
                     case "int":
                         colType = typeof(int).AssemblyQualifiedName;
                         break;
+                    case "long":
+                        colType = typeof(long).AssemblyQualifiedName;
+                        break;
                     case "float":
                         colType = typeof(float).AssemblyQualifiedName;
                         break;
@@ -65,7 +68,10 @@ namespace FinalInferno{
         }
         protected void AddElement(ref DataRow row, string colName, string description, System.Type type){
             if(type == typeof(int)){
+                //Debug.Log("parsing " + description + " as int for column " + colName + " and row " + row.ToString());
                 row[colName] = int.Parse(description);
+            }else if(type == typeof(long)){
+                row[colName] = long.Parse(description);
             }else if(type == typeof(string)){
                 row[colName] = description;
             }else if(type == typeof(float)){
@@ -77,6 +83,7 @@ namespace FinalInferno{
             }else if(type == typeof(Color)){
                 Color newColor = new Color();
                 ColorUtility.TryParseHtmlString(description, out newColor);
+                Debug.Log("Color loaded: " + newColor.ToString());
                 row[colName] = newColor;
             }else{
                 row[colName] = AssetManager.LoadAsset(description, type);

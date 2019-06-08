@@ -74,11 +74,17 @@ namespace FinalInferno{
                 case "party":
                     bundle = Party;
                     break;
+                case "hero":
+                    bundle = Hero;
+                    break;
                 case "enemy":
                     bundle = Enemy;
                     break;
                 case "skill":
                     bundle = Skill;
+                    break;
+                case "character":
+                    bundle = Character;
                     break;
                 default:
                     Debug.Log("Access to bundle " + typeName + " is not implemented");
@@ -104,11 +110,17 @@ namespace FinalInferno{
                 case "party":
                     bundle = Party;
                     break;
+                case "hero":
+                    bundle = Hero;
+                    break;
                 case "enemy":
                     bundle = Enemy;
                     break;
                 case "skill":
                     bundle = Skill;
+                    break;
+                case "character":
+                    bundle = Character;
                     break;
                 default:
                     Debug.Log("Access to bundle " + typeName + " is not implemented");
@@ -148,7 +160,9 @@ namespace FinalInferno{
             #endif
             AssetBundle.UnloadAllAssetBundles(shouldDestroy);
             party = null;
+            hero = null;
             enemy = null;
+            character = null;
             skill = null;
         }
     }
