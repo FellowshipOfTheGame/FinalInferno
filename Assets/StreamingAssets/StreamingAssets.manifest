@@ -1,26 +1,26 @@
 ManifestFileVersion: 0
-CRC: 606520624
+CRC: 2418803606
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: party
-      Dependencies:
-        Dependency_0: character
-    Info_1:
-      Name: character
-      Dependencies:
-        Dependency_0: hero
-    Info_2:
-      Name: skill
-      Dependencies: {}
-    Info_3:
       Name: hero
       Dependencies:
         Dependency_0: skill
+    Info_1:
+      Name: enemy
+      Dependencies:
+        Dependency_0: skill
+    Info_2:
+      Name: character
+      Dependencies:
+        Dependency_0: hero
+    Info_3:
+      Name: party
+      Dependencies:
+        Dependency_0: character
     Info_4:
       Name: quest
       Dependencies: {}
     Info_5:
-      Name: enemy
-      Dependencies:
-        Dependency_0: skill
+      Name: skill
+      Dependencies: {}

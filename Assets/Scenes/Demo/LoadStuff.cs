@@ -5,15 +5,13 @@ using UnityEngine;
 namespace FinalInferno{
     public class LoadStuff : MonoBehaviour
     {
-        public static bool gameStarted = false;
-
         public void Start(){
-            if(!gameStarted){
+            Debug.Log("StaticLoadStuff.gameStarted = " + StaticLoadStuff.gameStarted);
+            if(!StaticLoadStuff.gameStarted){
                 AssetManager.LoadAllAssets();
                 Quest exQuest = AssetManager.LoadAsset<Quest>("AdventurerQuest");
                 exQuest.events["TutorialComplete"] = false;
-                gameStarted = true;
-                Debug.Log("suahsuasuahus");
+                StaticLoadStuff.gameStarted = true;
             }
         }
     }

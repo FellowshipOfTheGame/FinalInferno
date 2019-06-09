@@ -70,8 +70,8 @@ namespace FinalInferno.UI.Battle.SkillMenu
             heroImage.sprite = currentHero.portrait;
 
             hpSlider.maxValue = currentHero.hpMax;
-            hpSlider.value = currentUnit.curHP;
-            hpText.text = currentUnit.curHP + "/" + currentHero.hpMax;
+            hpSlider.value = currentUnit.CurHP;
+            hpText.text = currentUnit.CurHP + "/" + currentUnit.MaxHP;
 
             damageText.text = currentUnit.curDmg.ToString();
             resistanceText.text = currentUnit.curDef.ToString();

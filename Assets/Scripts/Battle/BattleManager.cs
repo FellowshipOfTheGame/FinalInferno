@@ -12,6 +12,7 @@ namespace FinalInferno{
         public static BattleManager instance;
 
         public List<Unit> units;
+        private List<BattleUnit> battleUnits;
         public BattleQueue queue;
         public BattleQueueUI queueUI;
 
@@ -32,11 +33,13 @@ namespace FinalInferno{
 
             queue = new BattleQueue();
             units = new List<Unit>();
+            battleUnits = new List<BattleUnit>();
         }
 
         public void StartBattle(){
             foreach(Unit unit in units){
                 BattleUnit newUnit = BattleUnitsUI.instance.LoadUnit(unit);
+                battleUnits.Add(newUnit);
                 queue.Enqueue(newUnit, -newUnit.curSpeed);
                 // Debug.Log("Carregou " + unit.name);
             }
@@ -111,15 +114,22 @@ namespace FinalInferno{
             else return VictoryType.Nobody;
         }
 
-        public List<BattleUnit> GetTeam(UnitType type){
+        public List<BattleUnit> GetTeam(UnitType type, bool countDead = false, bool deadOnly = false){
             List<BattleUnit> team = new List<BattleUnit>();
 
-            if (GetUnitType(currentUnit.unit) == type)
-                team.Add(currentUnit);
+            if(!countDead){
+                if (GetUnitType(currentUnit.unit) == type)
+                    team.Add(currentUnit);
 
-            foreach(BattleUnit unit in queue.list){
-                if (GetUnitType(unit.unit) == type)
-                    team.Add(unit);
+                foreach(BattleUnit unit in queue.list){
+                    if (GetUnitType(unit.unit) == type)
+                        team.Add(unit);
+                }
+            }else{
+                foreach(BattleUnit unit in battleUnits){
+                    if((GetUnitType(unit.unit) == type) && ( !deadOnly ||(deadOnly && unit.CurHP < 0)))
+                        team.Add(unit);
+                }
             }
 
             return team;

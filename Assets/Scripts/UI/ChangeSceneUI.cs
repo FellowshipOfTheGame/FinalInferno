@@ -10,7 +10,7 @@ namespace FinalInferno.UI
         private void MainMenu()
         {
             //SceneLoader.LoadMainMenu();
-            LoadStuff.gameStarted = false;
+            StaticLoadStuff.gameStarted = false;
             SceneLoader.LoadOWScene(SceneLoader.LastOWSceneID);
         }
 
@@ -18,7 +18,7 @@ namespace FinalInferno.UI
         {
             // TO DO: Carrega o jogo salvo no slot atual
             //SceneLoader.LoadOWScene(SceneLoader.LastOWSceneID, true);
-            LoadStuff.gameStarted = false;
+            StaticLoadStuff.gameStarted = false;
             SceneLoader.LoadOWScene(SceneLoader.LastOWSceneID);
         }
 
