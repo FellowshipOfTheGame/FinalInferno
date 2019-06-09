@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Collections.ObjectModel;
+using FinalInferno.UI.Battle;
 
 namespace FinalInferno{
     //representa todos os buffs/debuffs, dano etc que essa unidade recebe
-    public class BattleUnit{
+    [RequireComponent(typeof(Animator)),RequireComponent(typeof(SpriteRenderer)),RequireComponent(typeof(FinalInferno.UI.AII.UnitItem))]
+    public class BattleUnit : MonoBehaviour{
         public delegate void SkillDelegate(BattleUnit user, List<BattleUnit> targets, bool shouldOverride = false, float value1 = 0f, float value2 = 0f);
         public Unit unit; //referencia para os atributos base dessa unidade
         public int curHP; //vida atual dessa unidade, descontando dano da vida maxima
@@ -22,13 +24,26 @@ namespace FinalInferno{
         public SkillDelegate OnEndBattle = null;
         public SkillDelegate OnStartBattle = null;
 
-        public BattleUnit(Unit unit){
+        private Animator animator;
+
+        void Awake(){
+            animator = GetComponent<Animator>();
+            activeSkills = new List<Skill>();
+        }
+
+        public void Configure(Unit unit){
+            // Seta configuracoes de renderizacao
+            GetComponent<SpriteRenderer>().sprite = unit.battleSprite;
+            animator.runtimeAnimatorController = unit.animator;
+            GetComponent<FinalInferno.UI.AII.UnitItem>().unit = this;
+
             if(unit.GetType() == typeof(Enemy)){
                 Enemy enemy = (Enemy)unit;
                 // Checa se o level do inimigo esta correto
                 // Caso nao esteja, aumenta o nivel do inimigo
                 // TO DO
             }
+
 
             // Aplica os status base da unidade
             this.unit = unit;
@@ -80,8 +95,7 @@ namespace FinalInferno{
         }
 
         public void TakeDamage(int atk, float multiplier, DamageType type, Element element) {
-            int damage = Mathf.FloorToInt((atk - ((type == DamageType.Physical)? curDef : curMagicDef)) * multiplier * 1/*elementmultiplier*/ * (Mathf.Clamp(1.0f - damageResistance, 0.0f, 1.0f)));
-            
+            int damage = Mathf.FloorToInt((atk - ((type == DamageType.Physical)? curDef : curMagicDef)) * multiplier * 1/*elementmultiplier*/ * (Mathf.Clamp(1.0f - damageResistance, 0.0f, 1.0f)) * 10);
             curHP -= Mathf.Max(damage, 1);
 
             if(curHP <= 0){
@@ -104,6 +118,21 @@ namespace FinalInferno{
                     // TO DO: chama o callback de receber debuff com o status effect atual (value1 = index do status effect novo)
                     break;
             }
+        }
+
+        public void SkillSelected(){
+            // TO DO: Esse trigger deve ser setado por fora
+            animator.SetTrigger("UseSkill");
+            // TO DO: Essa função deve ser chamada pela animação de usar skill usando evento
+            BattleManager.instance.UpdateQueue(BattleSkillManager.currentSkill.cost);
+            // TODO: Instancia o prefab da skill como filho de cada um dos alvos
+        }
+
+        public void UseSkill(){
+            // TO DO: Essa função não vai ser responsabilidade do BattleUnit e sim do prefab da animação da skill
+            // e ao inves de chamar a função da skill em todos os alvos vai chamar so no alvo que ela é filha
+            BattleSkillManager.UseSkill();
+            FinalInferno.UI.FSM.AnimationEnded.EndAnimation();
         }
     }
 }

@@ -15,7 +15,7 @@ public class Hero : Unit{
     private DynamicTable table;
 
     void Awake(){
-        table = DynamicTable.Create(heroTable);
+        //table = DynamicTable.Create(heroTable);
     }
 
     //funcao que ajusta todos os atributos e "skills" do persoangem quando sobe de nivel

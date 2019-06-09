@@ -11,6 +11,8 @@ namespace FinalInferno.UI.Battle
     /// </summary>
     public class BattleUnitsUI : MonoBehaviour
     {
+        public static BattleUnitsUI instance;
+
         [Header("Contents")]
         [SerializeField] private Transform heroesContent;
         [SerializeField] private Transform enemiesContent;
@@ -22,10 +24,45 @@ namespace FinalInferno.UI.Battle
         [Header("Prefab")]
         [SerializeField] private GameObject unitPrefab;
 
+
+        void Awake(){
+            // Singleton
+            if (instance == null)
+                instance = this;
+            else if (instance != this)
+                Destroy(this);
+        }
+
         void Start()
         {
-            LoadTeam(UnitType.Hero, heroesContent, heroesManager);
-            LoadTeam(UnitType.Enemy, enemiesContent, enemiesManager);
+            //LoadTeam(UnitType.Hero, heroesContent, heroesManager);
+            //LoadTeam(UnitType.Enemy, enemiesContent, enemiesManager);
+        }
+
+        public BattleUnit LoadUnit(Unit unit){
+            GameObject newUnit = Instantiate(unitPrefab, (unit.GetType() == typeof(Hero))? heroesContent : enemiesContent);
+            AIIManager manager = (unit.GetType() == typeof(Hero))? heroesManager : enemiesManager;
+            BattleUnit battleUnit = newUnit.GetComponent<BattleUnit>();
+
+            newUnit.transform.rotation = Quaternion.identity;
+            battleUnit.Configure(unit);
+            // TO DO: Isso não deve ser necessário depois que todas as unidades tiverem o animator e as animações funcionando
+            newUnit.GetComponent<Image>().sprite = unit.battleSprite;
+            
+            // Ordena o item na lista
+            AxisInteractableItem newItem = newUnit.GetComponent<AxisInteractableItem>();
+            if (manager.lastItem != null)
+            {
+                newItem.positiveItem = manager.lastItem;
+                manager.lastItem.negativeItem = newItem;
+            }
+            else
+            {
+                manager.firstItem = newItem;
+            }
+            manager.lastItem = newItem;
+
+            return battleUnit;
         }
 
         private void LoadTeam(UnitType team, Transform content, AIIManager manager)
@@ -50,6 +87,10 @@ namespace FinalInferno.UI.Battle
                 newUnit.GetComponent<UnitItem>().unit = unit;
 
                 newUnit.GetComponent<Image>().color = unit.unit.color;
+
+                newUnit.GetComponent<Animator>().runtimeAnimatorController = unit.unit.animator;
+
+                newUnit.GetComponent<SpriteRenderer>().sprite = unit.unit.battleSprite;
 
                 // Ordena o item na lista
                 AxisInteractableItem newItem = newUnit.GetComponent<AxisInteractableItem>();

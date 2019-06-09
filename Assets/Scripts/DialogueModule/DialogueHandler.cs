@@ -97,7 +97,8 @@ namespace Fog.Dialogue
 			}
 			if(_movingAgent){
 				movingAgent = _movingAgent;
-				movingAgent.CanMove = false;
+				FinalInferno.CharacterOW.PartyCanMove = false;
+				//movingAgent.CanMove = false;
 			}
 
 			OnDialogueStart?.Invoke();
@@ -251,7 +252,8 @@ namespace Fog.Dialogue
 				agent.canInteract = true;
 			}
 			if(movingAgent){
-				movingAgent.CanMove = true;
+				FinalInferno.CharacterOW.PartyCanMove = true;
+				//movingAgent.CanMove = true;
 			}
 			agent = null;
 			movingAgent = null;

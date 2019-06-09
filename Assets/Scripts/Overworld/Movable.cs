@@ -51,6 +51,13 @@ namespace FinalInferno{
 				anim.SetBool("moving", rigid2D.velocity != Vector2.zero);
 				anim.SetFloat("moveX", rigid2D.velocity.normalized.x);
 				anim.SetFloat("moveY", rigid2D.velocity.normalized.y);
+				if(Mathf.Abs(rigid2D.velocity.x) > Mathf.Abs(rigid2D.velocity.y)){
+					anim.SetFloat("directionY", 0f);
+					anim.SetFloat("directionX", rigid2D.velocity.normalized.x);
+				}else if(Mathf.Abs(rigid2D.velocity.y) > Mathf.Abs(rigid2D.velocity.x)){
+					anim.SetFloat("directionX", 0f);
+					anim.SetFloat("directionY", rigid2D.velocity.normalized.y);
+				}
 			}
 		}
 	}

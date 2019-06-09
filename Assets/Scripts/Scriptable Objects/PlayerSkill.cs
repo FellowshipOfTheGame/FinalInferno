@@ -19,7 +19,7 @@ public class PlayerSkill : Skill{
     private DynamicTable table;
 
     void Awake(){
-        table = DynamicTable.Create(skillTable);
+        //table = DynamicTable.Create(skillTable);
     }
 
     //atualiza o value dos efeitos, se for necessario.

@@ -29,6 +29,11 @@ namespace FinalInferno.UI.AII
         public AxisInteractableItem firstItem;
 
         /// <summary>
+        /// Último item da lista.
+        /// </summary>
+        public AxisInteractableItem lastItem;
+
+        /// <summary>
         /// Orientação do eixo (horizontal/vertical), define as teclas que precisam ser pressionadas 
         /// para que haja mudança de item selecionado.
         /// </summary>
@@ -55,6 +60,11 @@ namespace FinalInferno.UI.AII
         public bool active;
 
         [SerializeField] private bool interactable;
+
+
+        void Awake(){
+            currentItem = null;
+        }
 
         void Start()
         {

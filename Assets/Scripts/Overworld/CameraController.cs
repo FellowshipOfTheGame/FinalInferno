@@ -8,7 +8,7 @@ namespace FinalInferno{
     public class CameraController : MonoBehaviour
     {
         //private Grid grid;
-        private Tilemap tilemap;
+        private Tilemap[] tilemaps = null;
         private Vector2 lowerBounds;
         private Vector2 upperBounds;
         [SerializeField] private Transform target;
@@ -18,12 +18,32 @@ namespace FinalInferno{
         void Awake(){
             Camera camera = GetComponent<Camera>();
             //grid = FindObjectOfType<Grid>();
-            tilemap = FindObjectOfType<Tilemap>();
-            if(tilemap){
+            tilemaps = FindObjectsOfType<Tilemap>();
+            if(tilemaps != null && tilemaps.Length > 0){
+                // TO DO: consertar isso aqui
+                // Nem sei se essa parte de setar os bounds ta funcionando direito, precisamos definir a resolução do jogo
+                float tilemapMinX = float.MaxValue;
+                float tilemapMinY = float.MaxValue;
+                float tilemapMaxX = float.MinValue;
+                float tilemapMaxY = float.MinValue;
+                foreach(Tilemap tilemap in tilemaps){
+                    if(tilemap.localBounds.min.x < tilemapMinX)
+                        tilemapMinX = tilemap.localBounds.min.x;
+                    if(tilemap.localBounds.min.y < tilemapMinY)
+                        tilemapMinY = tilemap.localBounds.min.y;
+                    if(tilemap.localBounds.max.x > tilemapMaxX)
+                        tilemapMaxX = tilemap.localBounds.max.x;
+                    if(tilemap.localBounds.max.y > tilemapMaxY)
+                        tilemapMaxY = tilemap.localBounds.max.y;
+                }
                 float cameraHalfHeight = camera.orthographicSize;
-                float cameraHalfWidth = (camera.orthographicSize * Screen.width) / Screen.height;
-                lowerBounds = new Vector2(tilemap.localBounds.min.x + cameraHalfWidth, tilemap.localBounds.min.y + cameraHalfHeight);
-                upperBounds = new Vector2(tilemap.localBounds.max.x - cameraHalfWidth, tilemap.localBounds.max.y - cameraHalfHeight);
+                float cameraHalfWidth = cameraHalfHeight * camera.aspect;
+                Debug.Log(cameraHalfWidth + "," + cameraHalfHeight);
+                lowerBounds = new Vector2(tilemapMinX + cameraHalfWidth, tilemapMinY + cameraHalfHeight);
+                upperBounds = new Vector2(tilemapMaxX - cameraHalfWidth, tilemapMaxY - cameraHalfHeight);
+                
+                Debug.Log(lowerBounds);
+                Debug.Log(upperBounds);
             }else{
                 lowerBounds = new Vector2(float.MinValue, float.MinValue);
                 upperBounds = new Vector2(float.MaxValue, float.MaxValue);

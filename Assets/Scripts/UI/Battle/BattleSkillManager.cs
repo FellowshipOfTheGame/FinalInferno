@@ -10,9 +10,9 @@ namespace FinalInferno.UI.Battle
         public static List<BattleUnit> currentTargets = new List<BattleUnit>();
 
         public static void UseSkill()
-        {                
+        {
+            // TO DO: fazer isso funcionar com as animacoes e sem redundancias
             currentSkill.Use(BattleManager.instance.currentUnit, currentTargets);
-            BattleManager.instance.UpdateQueue(currentSkill.cost);
 
             // foreach (BattleUnit target in currentTargets)
             //     Debug.Log(currentSkill.name + "ing " + target.unit.name + " - " + target.curHP + "/" + target.unit.hpMax);
