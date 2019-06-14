@@ -45,7 +45,7 @@ namespace FinalInferno.UI.Battle.LifeMenu
         /// </summary>
         public virtual void UpdateUnitLife()
         {
-            lifeText.text = thisUnit.unit.name + " - " + thisUnit.curHP + "/" + thisUnit.unit.hpMax;
+            lifeText.text = thisUnit.unit.name + " - " + thisUnit.CurHP + "/" + thisUnit.MaxHP;
             lifeText.color = thisUnit.unit.color;
         }
     }

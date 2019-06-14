@@ -34,6 +34,7 @@ namespace FinalInferno.UI.Battle.SkillMenu
         {
             effect = newEffect.effect;
             effectValue.text = effect.value1 + effect.Description1;
+            effectImage.sprite = newEffect.effect.Icon;
             if(effect.Description2 != null)
                 effectValue.text += "; " + effect.value2 + effect.Description2;
         }

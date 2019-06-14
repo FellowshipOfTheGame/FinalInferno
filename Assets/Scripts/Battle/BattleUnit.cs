@@ -10,7 +10,9 @@ namespace FinalInferno{
     public class BattleUnit : MonoBehaviour{
         public delegate void SkillDelegate(BattleUnit user, List<BattleUnit> targets, bool shouldOverride = false, float value1 = 0f, float value2 = 0f);
         public Unit unit; //referencia para os atributos base dessa unidade
-        public int curHP; //vida atual dessa unidade, descontando dano da vida maxima
+        public int MaxHP { private set; get; }
+        private int curHP; //vida atual dessa unidade, descontando dano da vida maxima
+        public int CurHP { get{ return curHP; } private set{ curHP = Mathf.Clamp(value, 0, MaxHP); } }
         public int curDmg; //dano atual dessa unidade, contando status de buff/debuff
         public int curDef; //defesa atual dessa unidade, contando status de buff/debuff
         public int curMagicDef; //defesa magica atual dessa unidade, contando status de buff/debuff
@@ -47,7 +49,8 @@ namespace FinalInferno{
 
             // Aplica os status base da unidade
             this.unit = unit;
-            curHP = unit.hpMax;
+            MaxHP = unit.hpMax;
+            CurHP = unit.hpMax;
             curDmg = unit.baseDmg;
             curDef = unit.baseDef;
             curMagicDef = unit.baseMagicDef;
@@ -89,17 +92,18 @@ namespace FinalInferno{
         }
 
         public void UpdateStatusEffects(){
-            foreach (StatusEffect effect in effects){
+            foreach (StatusEffect effect in effects.ToArray()){
                 effect.Update();
             }
         }
 
         public void TakeDamage(int atk, float multiplier, DamageType type, Element element) {
-            int damage = Mathf.FloorToInt((atk - ((type == DamageType.Physical)? curDef : curMagicDef)) * multiplier * 1/*elementmultiplier*/ * (Mathf.Clamp(1.0f - damageResistance, 0.0f, 1.0f)) * 10);
-            curHP -= Mathf.Max(damage, 1);
+            float atkDifference = atk - ( (type == DamageType.Physical)? curDef : ((type == DamageType.Magical)? curMagicDef : 0));
+            atkDifference = Mathf.Max(atkDifference, 1);
+            int damage = Mathf.FloorToInt(atkDifference * multiplier * 1/*elementmultiplier*/ * (Mathf.Clamp(1.0f - damageResistance, 0.0f, 1.0f)) * 10);
+            CurHP -= damage;
 
-            if(curHP <= 0){
-                curHP = 0;
+            if(CurHP <= 0){
                 BattleManager.instance.Kill(this);
                 //Destroy(this);
             }

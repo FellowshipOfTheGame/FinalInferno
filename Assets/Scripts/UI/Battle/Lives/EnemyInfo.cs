@@ -69,8 +69,8 @@ namespace FinalInferno.UI.Battle.LifeMenu
             enemyImage.sprite = thisEnemy.portrait;
 
             hpSlider.maxValue = thisEnemy.hpMax;
-            hpSlider.value = thisUnit.curHP;
-            hpText.text = thisUnit.curHP + "/" + thisEnemy.hpMax;
+            hpSlider.value = thisUnit.CurHP;
+            hpText.text = thisUnit.CurHP + "/" + thisUnit.MaxHP;
 
             damageText.text = thisUnit.curDmg.ToString();
             resistanceText.text = thisUnit.curDef.ToString();

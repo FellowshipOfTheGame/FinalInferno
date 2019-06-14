@@ -41,7 +41,7 @@ namespace FinalInferno{
             else
                 skill = defenseSkill;
             
-            BattleSkillManager.currentSkill = skill;
+            BattleSkillManager.currentSkill = attackSkill;
             BattleSkillManager.currentTargets = GetTargets(skill.target);
 
             // BattleSkillManager.UseSkill();
