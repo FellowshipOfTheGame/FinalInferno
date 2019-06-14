@@ -7,45 +7,44 @@ namespace FinalInferno{
         public SaveInfo[] saves = new SaveInfo[5];
         //public SaveInfo save;
 
-        /*public void Save(int slot){
-            if(slot < 0 && slot > 4){
+        public void Save(int slot){
+            /*if(slot < 0 && slot > 4){
                 Debug.Log("Slot de Save inválido");
                 return;
             }
 
-            Party instance = Party.instance;
             List<SkillInfo> lsi = new List<SkillInfo>();
             SkillInfo si = new SkillInfo();
 
-            save[slot].xpParty = instance.xp;
+            saves[slot].xpParty = Party.Instance.xp;
             for(int i = 0; i < 4; i++){
-                save[slot].archetype.Insert(instance.character[i].archetype.name);
-                save[slot].hpCur.Insert(instance.character[i].hpCur);
-                save[slot].position.Insert(instance.character[i].position);
+                saves[slot].archetype.Insert(Party.Instance.characters[i].archetype.name);
+                saves[slot].hpCur.Insert(Party.Instance.characters[i].hpCur);
+                saves[slot].position.Insert(Party.Instance.characters[i].position);
                 
-                foreach (PlayerSkill skill in instance.character[i].archetype.skills){
+                foreach (PlayerSkill skill in Party.Instance.characters[i].archetype.skills){
                     si.xp = skill.xp;
                     si.active = skill.active;
                     lsi.Insert(si);
                 }
-                save[slot].skills.Insert(lsi);
-            }
+                saves[slot].skills.Insert(lsi);
+            }*/
         }
-        
+
         public void Load(int slot){
-            Party.instance.xp = save[slot].xpParty;
-            for(int i = 0; i < 4; i++){
-                Party.instance.character[i].archetype.name = save[slot].archetype[i];
-                Party.instance.character[i].hpCur = save[slot].hpCur[i];
-                Party.instance.character[i].position = save[slot].position[i];
+            /*for(int i = 0; i < 4; i++){
+                Party.Instance.characters[i].archetype.name = saves[slot].archetype[i];
+                Party.Instance.characters[i].hpCur = saves[slot].hpCur[i];
+                Party.Instance.characters[i].position = saves[slot].position[i];
                 
                 foreach (SkillInfo skill in saves[slot].skills[i]){
-                    Party.instance.character[i].archetype.skills[i].xp = skill.xp;
-                    Party.instance.character[i].archetype.skills[i].active = skill.active;
+                    Party.Instance.characters[i].archetype.skills[i].xp = skill.xp;
+                    Party.Instance.characters[i].archetype.skills[i].active = skill.active;
                 }
             }
-        }
-        */
+
+            Party.Instance.GiveExp(saves[slot].xpParty);
+        */}
 
         public void NewGame(){
             Party.Instance.GiveExp(0);

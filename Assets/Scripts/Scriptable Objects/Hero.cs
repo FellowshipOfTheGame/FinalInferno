@@ -15,19 +15,21 @@ public class Hero : Unit{
     private DynamicTable table;
 
     void Awake(){
-        //table = DynamicTable.Create(heroTable);
+        table = DynamicTable.Create(heroTable);
     }
 
     //funcao que ajusta todos os atributos e "skills" do persoangem quando sobe de nivel
     public int LevelUp(int level, int hpCur){
-        this.level = level;
-        hpMax = table.Rows[level-1].Field<int>("HP");
-        baseDmg = table.Rows[level-1].Field<int>("Dano");
-        baseDef = table.Rows[level-1].Field<int>("Defesa");
-        baseMagicDef = table.Rows[level-1].Field<int>("Resistência");
-        baseSpeed = table.Rows[level-1].Field<int>("Speed");
+        Debug.Log(name + " subiu mesmo de level!");
 
-        UnlockSkills();
+        this.level = level;
+        // hpMax = table.Rows[level].Field<int>("HP");
+        // baseDmg = table.Rows[level].Field<int>("Dano");
+        // baseDef = table.Rows[level].Field<int>("Defesa");
+        // baseMagicDef = table.Rows[level].Field<int>("Resistência");
+        // baseSpeed = table.Rows[level].Field<int>("Speed");
+
+        //UnlockSkills();
 
         return hpMax;
     }

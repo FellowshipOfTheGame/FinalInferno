@@ -60,23 +60,23 @@ namespace FinalInferno
     }
 
      public struct SkillInfo{
-        long xp;
-        bool active;
+        public long xp;
+        public bool active;
     }
 
     public struct QuestInfo{
-        string name;
-        int flagsTrue;
+        public string name;
+        public int flagsTrue;
     }
 
     public struct SaveInfo{
-        long xpParty;
-        List<QuestInfo> quest;
+        public long xpParty;
+        public List<QuestInfo> quest;
         //quests de kill
-        List<string> archetype;
-        List<int> hpCur;
-        List<Vector2> position;
-        List<List<SkillInfo> > skills;
+        public List<string> archetype;
+        public List<int> hpCur;
+        public List<Vector2> position;
+        public List<List<SkillInfo> > skills;
     }
 
     [System.Serializable]
