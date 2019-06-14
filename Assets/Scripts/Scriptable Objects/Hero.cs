@@ -41,13 +41,13 @@ public class Hero : Unit{
             
             //se a skill for destrava esta eh removida da lista e suas skills filhas sao adicionadas
             if(skillsToUpdate[i].CheckUnlock(level)){  
-                skillsToUpdate.RemoveAt(i); //skill eh removida da lista
-                i--;
-
                 //skills filhas sao adicionadas a lista
                 foreach(PlayerSkill child in skillsToUpdate[i].skillsToUpdate){
                     skillsToUpdate.Add(child);
                 }
+                
+                skillsToUpdate.RemoveAt(i); //skill eh removida da lista
+                i--;
             }
         }
     }

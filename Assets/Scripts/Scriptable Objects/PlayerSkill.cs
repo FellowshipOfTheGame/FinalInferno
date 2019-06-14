@@ -19,17 +19,17 @@ public class PlayerSkill : Skill{
     private DynamicTable table;
 
     void Awake(){
-        //table = DynamicTable.Create(skillTable);
+        table = DynamicTable.Create(skillTable);
     }
 
     //atualiza o value dos efeitos, se for necessario.
     public void LevelUp(){
-        foreach (SkillEffectTuple skillEffect in effects){
-            // skillEffect.effect.value1 = table.Rows[level-1].Field<long>("Skill Effect 0 Value 0");
-            // skillEffect.effect.value2 = table.Rows[level-1].Field<long>("Skill Effect 0 Value 1");
+        for(int i = 0; i < effects.Count; i++){
+            effects[i].effect.value1 = table.Rows[level-1].Field<long>("Skill Effect " + i + " Value 0");
+            effects[i].effect.value2 = table.Rows[level-1].Field<long>("Skill Effect " + i + " Value 1");
         }
 
-        //cost = table.Rows[level-1].Field<int>("Cost");
+        cost = table.Rows[level-1].Field<int>("Cost");
     }
 
     //Adiciona os pontos de experiência ao utilizar a skill
@@ -41,7 +41,7 @@ public class PlayerSkill : Skill{
         //testa se a skill subiu de nivel
         if(xp >= xpNext){
             while(xp >= xpNext){
-                //xpNext = table.Rows[level].Field<long>("XP para próximo nível");
+                xpNext = table.Rows[level].Field<long>("XP para próximo nível");
                 level++;
             }
 
