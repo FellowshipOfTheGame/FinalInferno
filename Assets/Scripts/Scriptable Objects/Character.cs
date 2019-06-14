@@ -13,7 +13,7 @@ public class Character : ScriptableObject{
     //funcao que ajusta a vida atual do personagem quando sobe de nivel
     public void LevelUp(int level){
         Debug.Log(archetype.name + " passou pro level: " + level);
-        hpCur = archetype.LevelUp(level, hpCur);
+        hpCur = archetype.LevelUp(level);
     }
 
     //quando comeca o jogo, carrega todas as "skills" do personagem baseado no seu nivel

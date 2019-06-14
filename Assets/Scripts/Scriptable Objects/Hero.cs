@@ -19,17 +19,17 @@ public class Hero : Unit{
     }
 
     //funcao que ajusta todos os atributos e "skills" do persoangem quando sobe de nivel
-    public int LevelUp(int level, int hpCur){
+    public int LevelUp(int level){
         Debug.Log(name + " subiu mesmo de level!");
 
         this.level = level;
-        // hpMax = table.Rows[level].Field<int>("HP");
-        // baseDmg = table.Rows[level].Field<int>("Dano");
-        // baseDef = table.Rows[level].Field<int>("Defesa");
-        // baseMagicDef = table.Rows[level].Field<int>("Resistência");
-        // baseSpeed = table.Rows[level].Field<int>("Speed");
+        hpMax = table.Rows[level-1].Field<int>("HP");
+        baseDmg = table.Rows[level-1].Field<int>("Dano");
+        baseDef = table.Rows[level-1].Field<int>("Defesa");
+        baseMagicDef = table.Rows[level-1].Field<int>("Resistência");
+        baseSpeed = table.Rows[level-1].Field<int>("Speed");
 
-        //UnlockSkills();
+        UnlockSkills();
 
         return hpMax;
     }
