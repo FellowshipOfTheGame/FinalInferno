@@ -58,8 +58,11 @@ namespace FinalInferno{
             //testa se os persoangens subiram de nivel
             Debug.Log(xp + ">=" + xpNext + "?");
             if(xp >= xpNext){
+                Debug.Log("upo ne");
+
                 while(xp >= xpNext){
-                    xpNext = table.Rows[level].Field<long>("XPAcumulada");
+                    Debug.Log("claro que upo");
+                    xpNext = table.Rows[level+1].Field<long>("XPAcumulada");
                     Debug.Log("agora xp pro proximo level eh: " + xpNext);
                     level++;
                 }

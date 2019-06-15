@@ -128,7 +128,7 @@ namespace FinalInferno{
             // TO DO: Esse trigger deve ser setado por fora
             animator.SetTrigger("UseSkill");
             // TO DO: Essa função deve ser chamada pela animação de usar skill usando evento
-            BattleManager.instance.UpdateQueue(BattleSkillManager.currentSkill.cost);
+            BattleManager.instance.UpdateQueue(Mathf.FloorToInt(BattleSkillManager.currentSkill.cost * curSpeed));
             // TODO: Instancia o prefab da skill como filho de cada um dos alvos
         }
 

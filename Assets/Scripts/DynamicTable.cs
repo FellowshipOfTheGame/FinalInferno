@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
 using System.Data;
+using System.Globalization;
 
 namespace FinalInferno{
     public class DynamicTable : DataTable
@@ -75,7 +76,7 @@ namespace FinalInferno{
             }else if(type == typeof(string)){
                 row[colName] = description;
             }else if(type == typeof(float)){
-                row[colName] = float.Parse(description);
+                row[colName] = float.Parse(description,  NumberStyles.Float | NumberStyles.AllowDecimalPoint);
             }else if(type == typeof(string)){
                 row[colName] = description;
             }else if(type == typeof(bool)){

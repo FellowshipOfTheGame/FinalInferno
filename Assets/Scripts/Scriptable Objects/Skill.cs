@@ -8,7 +8,7 @@ namespace FinalInferno{
     public class Skill : ScriptableObject{
         public new string name; //nome da "skill"
         public int level; //nivel da "skill"
-        public int cost; //tempo que a "skill" custara ao conjurador
+        public float cost; //tempo que a "skill" custara ao conjurador, em porcentagem da sua velocidade
         public TargetType target; //tipo de alvo da "skill"
         public Element attribute; //elemento da "skill"
         public List<SkillEffectTuple> effects; //lista de efeitos que a "skill" causa e seus valores associados

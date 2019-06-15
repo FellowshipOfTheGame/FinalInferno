@@ -20,16 +20,33 @@ public class PlayerSkill : Skill{
 
     void Awake(){
         table = DynamicTable.Create(skillTable);
+        level = 0;
+        xp = 0;
+        xpNext = 0;
     }
 
     //atualiza o value dos efeitos, se for necessario.
     public void LevelUp(){
+        // int i = 0;
+        // effects[i].effect.value1 = table.Rows[level-1].Field<float>("Effect0Value0");
+        // effects[i].effect.value2 = table.Rows[level-1].Field<float>("Effect0Value1");
+
         for(int i = 0; i < effects.Count; i++){
-            effects[i].effect.value1 = table.Rows[level-1].Field<long>("Skill Effect " + i + " Value 0");
-            effects[i].effect.value2 = table.Rows[level-1].Field<long>("Skill Effect " + i + " Value 1");
+            SkillEffectTuple modifyEffect = effects[i];
+            Debug.Log("levelapo a " + name);
+
+            modifyEffect.value1 = table.Rows[level-1].Field<float>("Skill Effect " + i + " Value 0");
+            Debug.Log("Mvalue1: " + modifyEffect.value1);
+            
+            modifyEffect.value2 = table.Rows[level-1].Field<float>("Skill Effect " + i + " Value 1");
+            Debug.Log("Mvalue2: " + modifyEffect.value2);
+
+            effects[i] = modifyEffect;
+            Debug.Log("value1: " + effects[i].value1);
+            Debug.Log("value2: " + effects[i].value2);
         }
 
-        cost = table.Rows[level-1].Field<int>("Cost");
+        cost = table.Rows[level-1].Field<float>("Cost");
     }
 
     //Adiciona os pontos de experiência ao utilizar a skill
@@ -40,9 +57,10 @@ public class PlayerSkill : Skill{
 
         //testa se a skill subiu de nivel
         if(xp >= xpNext){
+            Debug.Log("upo a skill " + name);
             while(xp >= xpNext){
-                xpNext = table.Rows[level].Field<long>("XP para próximo nível");
                 level++;
+                xpNext = level * 100;
             }
 
             LevelUp();
@@ -65,7 +83,7 @@ public class PlayerSkill : Skill{
             }
 
             //se todos os pre requisitos foram atendidos, destrava a skill
-            if(check) this.level = 1;
+            if(check) GiveExp(0);
         }
         else check = false;
 
