@@ -14,10 +14,11 @@ namespace FinalInferno{
         public override string DialogueName { get { return (name == null)? "" : name; } }
         [SerializeField] private TextAsset enemyTable;
         private DynamicTable table;
+        public override long SkillExp { get { return BaseExp/2; } } // Quanta exp o inimigo dá pra skill quando ela é usada nele
+        public long BaseExp { get; protected set; } // Quanta exp o inimigo dá pra party ao final da batalha
 
         void Awake(){
             table = DynamicTable.Create(enemyTable);
-
 
             level = table.Rows[0].Field<int>("Level");
             hpMax = table.Rows[0].Field<int>("HP");

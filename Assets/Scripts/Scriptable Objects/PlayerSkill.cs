@@ -9,6 +9,8 @@ using System.Data;
 public class PlayerSkill : Skill{
     public long xp; //experiencia da "skill"
     public long xpNext; //experiencia necessaria para a "skill" subir de nivel
+    // TO DO: Revisão de tabelas (nao sabemos o nome definitivo da coluna)
+    public long XpCumulative { get { return ( (table == null)? 0 : (xp + table.Rows[level-1].Field<long>("XPProximoNivel")) ); } }
     public string description; //descricao da "skill" que aparecera para o jogador durante a batalha
     public bool active; //sinaliza se a "skill" esta ativa ou nao
     public List<PlayerSkill> skillsToUpdate; //lista de skills que podem ser destravadas com o level dessa skill
@@ -71,6 +73,17 @@ public class PlayerSkill : Skill{
         return up;
     }
 
+    public bool GiveExp(List<BattleUnit> targets){
+        long expValue = 0;
+
+        foreach(BattleUnit target in targets){
+            expValue += target.unit.SkillExp;
+        }
+        expValue /= targets.Count;
+
+        return GiveExp(expValue);
+    }
+
     // checa se todos os pre requisitos foram cumpridos para essa skill ser destravada,
     // em caso positivo destrava a skill e retorna TRUE, caso contrario retorna FALSE
     public bool CheckUnlock(int heroLevel){
@@ -96,16 +109,9 @@ public class PlayerSkill : Skill{
     }
 
     //funcao que define como a skill sera usada
-    // public override void Use(BattleUnit user, List<BattleUnit> targets, bool shouldOverride = false, float value1 = 0f, float value2 = 0f, long exp){
-    //     GiveExp(exp);
-
-    //     foreach (BattleUnit trgt in targets) {
-    //         foreach (SkillEffectTuple skillEffect in effects) {
-    //             skillEffect.effect.value1 = (shouldOverride)? value1 : skillEffect.value1;
-    //             skillEffect.effect.value2 = (shouldOverride)? value2 : skillEffect.value2;
-                
-    //             skillEffect.effect.Apply(user, trgt);
-    //         }
-    //     }
-    // }
+    // TO DO: Se o metodo Use for alterado para ter apenas um alvo, GiveExp sera chamado na BattleUnit e isso aqui n existe mais
+    public override void Use(BattleUnit user, List<BattleUnit> targets, bool shouldOverride = false, float value1 = 0f, float value2 = 0f){
+        GiveExp(targets);
+        base.Use(user, targets, shouldOverride, value1, value2);
+    }
 }

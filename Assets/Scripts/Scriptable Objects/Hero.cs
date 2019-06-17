@@ -11,6 +11,7 @@ public class Hero : Unit{
     public RuntimeAnimatorController animatorOW; //"animator" do "Over World"
     public Sprite skillBG; //"sprite" de fundo da arvore de "skills"  
     public List<PlayerSkill> skillsToUpdate; //lista de skills que podem ser destravadas com o level do personagem
+    public override long SkillExp {get { return Mathf.Max(10, (Mathf.FloorToInt(Mathf.Sqrt(Party.Instance.XpCumulative)))); } }
     [SerializeField] private TextAsset heroTable;
     private DynamicTable table;
 

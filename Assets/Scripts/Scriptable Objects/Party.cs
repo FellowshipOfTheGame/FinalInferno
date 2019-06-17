@@ -22,6 +22,9 @@ namespace FinalInferno{
         public int level; //nivel da equipe(todos os personagens tem sempre o mesmo nivel)
         public long xp; //experiencia da equipe(todos os personagens tem sempre a mesma experiencia)
         public long xpNext; //experiencia necessaria para avancar de nivel
+        // TO DO: Revisão de tabelas
+        public long XpCumulative{ get{ return ( (table == null)? 0 : (xp + table.Rows[level].Field<long>("XPAcumulada")) ); } }
+        public string currentMap;
         public List<Character> characters = new List<Character>(); //lista dos personagens que compoe a equipe 
         [SerializeField] private TextAsset PartyXP;
         private DynamicTable table;
@@ -60,11 +63,13 @@ namespace FinalInferno{
             if(xp >= xpNext){
                 Debug.Log("upo ne");
 
-                while(xp >= xpNext){
+                while(xp >= xpNext && level < table.Rows.Count-1){
                     Debug.Log("claro que upo");
-                    xpNext = table.Rows[level+1].Field<long>("XPAcumulada");
-                    Debug.Log("agora xp pro proximo level eh: " + xpNext);
+                    // TO DO: Revisão de tabelas (level tem que ser user friendly)
+                    xp -= xpNext;
                     level++;
+                    xpNext = table.Rows[level].Field<long>("XPProximoNivel");
+                    Debug.Log("agora xp pro proximo level eh: " + xpNext);
                 }
                 
                 Debug.Log("passou pro level: " + level);

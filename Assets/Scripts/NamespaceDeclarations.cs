@@ -66,17 +66,19 @@ namespace FinalInferno
 
     public struct QuestInfo{
         public string name;
+        public List<string> flagsNames;
         public int flagsTrue;
     }
 
     public struct SaveInfo{
         public long xpParty;
+        public string mapName;
         public List<QuestInfo> quest;
         //quests de kill
         public List<string> archetype;
         public List<int> hpCur;
         public List<Vector2> position;
-        public List<List<SkillInfo> > skills;
+        public List<List<SkillInfo>> skills;
     }
 
     [System.Serializable]
