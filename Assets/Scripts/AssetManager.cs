@@ -65,12 +65,22 @@ namespace FinalInferno{
                 return skill;
             }
         }
+        private static AssetBundle quest = null;
+        private static AssetBundle Quest{
+            get{
+                if(quest == null || !BundleList.Contains(skill)){
+                    quest = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "quest"));
+                    BundleList.Add(quest);
+                }
+                return quest;
+            }
+        }
 
         public static void LoadAllBundles(){
             #if UNITY_EDITOR
             return;
             #else
-            if(Party && Character && Hero && Enemy && Skill)
+            if(Party && Character && Hero && Enemy && Skill && Quest)
             return;
             #endif
         }
@@ -90,6 +100,8 @@ namespace FinalInferno{
                 LoadBundleAssets<Enemy>();
             if(Skill)
                 LoadBundleAssets<Skill>();
+            if(Quest)
+                LoadBundleAssets<Quest>();
             return;
             #endif
         }
@@ -111,6 +123,9 @@ namespace FinalInferno{
                     break;
                 case "skill":
                     bundle = Skill;
+                    break;
+                case "quest":
+                    bundle = Quest;
                     break;
                 default:
                     Debug.Log("Access to bundle " + typeName + " is not implemented");
