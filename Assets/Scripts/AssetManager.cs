@@ -59,8 +59,23 @@ namespace FinalInferno{
             }
         }
 
+        public static void LoadAllBundles(){
+            if(Party && Character && Hero && Enemy && Skill)
+            return;
+        }
+
         public static void LoadAllAssets(){
-            if(Party && Character && Hero && Skill && Enemy)
+            LoadAllBundles();
+            if(Party)
+                LoadBundleAssets<Party>();
+            if(Character)
+                LoadBundleAssets<Character>();
+            if(Hero)
+                LoadBundleAssets<Hero>();
+            if(Enemy)
+                LoadBundleAssets<Enemy>();
+            if(Skill)
+                LoadBundleAssets<Skill>();
             return;
         }
 
@@ -73,14 +88,14 @@ namespace FinalInferno{
                 case "hero":
                     bundle = Hero;
                     break;
+                case "character":
+                    bundle = Character;
+                    break;
                 case "enemy":
                     bundle = Enemy;
                     break;
                 case "skill":
                     bundle = Skill;
-                    break;
-                case "character":
-                    bundle = Character;
                     break;
                 default:
                     Debug.Log("Access to bundle " + typeName + " is not implemented");

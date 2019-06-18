@@ -6,6 +6,7 @@ using System.Data;
 using System.Globalization;
 
 namespace FinalInferno{
+    [System.Serializable]
     public class DynamicTable : DataTable
     {
         public static DynamicTable Create(TextAsset textFile){

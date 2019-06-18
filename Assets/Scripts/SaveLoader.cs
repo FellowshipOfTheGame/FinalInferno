@@ -3,93 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace FinalInferno{
-    public class SaveLoader{
-        private const int nSaveSlots = 5;
-        private int slot = 0;
-        public int Slot{
-            get{
-                return slot;
-            }
-            set{
-                if(value >= 0 && value < nSaveSlots)
-                    slot = value;
-            }
-        }
-        public SaveInfo[] saves = new SaveInfo[nSaveSlots];
+    public static class SaveLoader{
+        private const string fileName = "SaveFile";
+        private static DataSaver<SaveFile> dataSaver = new DataSaver<SaveFile>(fileName, true);
+        private static SaveFile saveFile = dataSaver.LoadData();
+        public static SaveFile SaveFile { get{ return saveFile; } }
 
-        public void Save(){
-            List<SkillInfo> lsi = new List<SkillInfo>();
-            SkillInfo si = new SkillInfo();
-
-            saves[Slot].xpParty = Party.Instance.XpCumulative;
-            saves[Slot].mapName = Party.Instance.currentMap;
-            saves[Slot].archetype = new List<string>();
-            saves[Slot].hpCur = new List<int>();
-            saves[Slot].position = new List<Vector2>();
-            saves[Slot].skills = new List<List<SkillInfo>>();
-            saves[Slot].quest = new List<QuestInfo>();
-            for(int i = 0; i < Party.Instance.characters.Count; i++){
-                saves[Slot].archetype.Add(Party.Instance.characters[i].archetype.name);
-                saves[Slot].hpCur.Add(Party.Instance.characters[i].hpCur);
-                saves[Slot].position.Add(Party.Instance.characters[i].position);
-                
-                foreach (PlayerSkill skill in Party.Instance.characters[i].archetype.skills){
-                    si.xp = skill.XpCumulative;
-                    si.active = skill.active;
-                    lsi.Add(si);
-                }
-                saves[Slot].skills.Add(lsi);
-            }
-
-            List<Quest> quests = AssetManager.LoadBundleAssets<Quest>();
-            foreach(Quest quest in quests){
-                QuestInfo qinfo;
-                qinfo.name = quest.name;
-
-                string[] keys = new string[quest.events.Keys.Count];
-                quest.events.Keys.CopyTo(keys, 0);
-
-                qinfo.flagsNames = new List<string>(keys);
-                qinfo.flagsNames.Sort();
-
-                qinfo.flagsTrue = 0;
-                for(int i = 0; i < quest.events.Count; i++){
-                    qinfo.flagsTrue = qinfo.flagsTrue & ((int)Mathf.Pow(2, i) * ((quest.events[qinfo.flagsNames[i]])? 1 : 0));
-                }
-                saves[Slot].quest.Add(qinfo);
-            }
-
-            // Salva as informações no arquivo de usando o asset do fog
+        public static void SaveGame(){
+            // Avalia a situação atual do jogo e salva todas as informações necessarias
+            saveFile.Save();
+            // Escreve as informações no arquivo de save
+            dataSaver.SaveData(saveFile);
         }
 
-        public void Load(){
-            for(int i = 0; i < Party.Instance.characters.Count; i++){
-                Party.Instance.characters[i].archetype = AssetManager.LoadAsset<Hero>(saves[Slot].archetype[i]);
-                Party.Instance.characters[i].hpCur = saves[Slot].hpCur[i];
-                Party.Instance.characters[i].position = saves[Slot].position[i];
-                
-                foreach (SkillInfo skill in saves[Slot].skills[i]){
-                    ((PlayerSkill)Party.Instance.characters[i].archetype.skills[i]).GiveExp(skill.xp);
-                    ((PlayerSkill)Party.Instance.characters[i].archetype.skills[i]).active = skill.active;
-                }
-            }
-
-            foreach(QuestInfo questInfo in saves[Slot].quest){
-                Quest quest = AssetManager.LoadAsset<Quest>(questInfo.name);
-                for(int i = 0; i < quest.events.Count; i++){
-                    quest.events[questInfo.flagsNames[i]] = (questInfo.flagsTrue & (int)Mathf.Pow(2, i)) == (int)Mathf.Pow(2, i);
-                }
-            }
-
-            Party.Instance.currentMap = saves[Slot].mapName;
-            Party.Instance.GiveExp(saves[Slot].xpParty);
-            // TO DO: Carrega a cena atual
+        public static void LoadGame(){
+            // Teoricamente não é necessario reler o arquivo, mas faremos isso como medida de segurança,
+            // assim evitamos que a variavel saveFile tenha sido alterada de alguma maneira em runtime
+            saveFile = dataSaver.LoadData();
+            // Aplica a situação do save slot atual nos arquivos do jogo
+            saveFile.Load();
+            // Carrega a nova cena
             //SceneLoader.LoadOWScene(Party.Instance.currentMap, true);
         }
 
-        public void NewGame(){
-            Party.Instance.GiveExp(0);
-            // TO DO: Se certificar que todos os SOs relevantes foram resetados e carregar a primeira cena
+        public static void NewGame(){
+            // Reseta todas as informações do jogo para um estado inicial
+            // Carrega a cena inicial
             //SceneLoader.LoadOWScene(Party.Instance.currentMap, true);
         }
     }

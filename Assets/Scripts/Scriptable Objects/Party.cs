@@ -41,7 +41,7 @@ namespace FinalInferno{
             xp = 0;
             xpNext = 0;
             Debug.Log("Iniciou");
-            GiveExp(0);
+            //GiveExp(0);
         }
 
         //faz todos os persoangens subirem de nivel
@@ -49,6 +49,15 @@ namespace FinalInferno{
             foreach (Character character in characters){
                 character.LevelUp(level);
             }
+        }
+
+        // Função auxiliar para preview de level baseado na informação do save file
+        public int GetLevel(long cumulativeExp){
+            level = 0;
+            while(cumulativeExp > table.Rows[level].Field<long>("XPAcumulada")){
+                level++;
+            }
+            return level;
         }
 
         //Adiciona os pontos de experiência conquistado pelo jogador

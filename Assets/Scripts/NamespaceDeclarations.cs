@@ -59,26 +59,51 @@ namespace FinalInferno
         None
     }
 
+    [System.Serializable]
      public struct SkillInfo{
         public long xp;
         public bool active;
     }
 
+    [System.Serializable]
     public struct QuestInfo{
         public string name;
         public List<string> flagsNames;
         public int flagsTrue;
     }
 
+    [System.Serializable]
     public struct SaveInfo{
-        public long xpParty;
-        public string mapName;
-        public List<QuestInfo> quest;
+        public long xpParty; // exp acumulativa da party
+        public string mapName; // nome do mapa (cena de overworld) atual
+        public List<QuestInfo> quest; // Lsta de informações das quests
         //quests de kill
-        public List<string> archetype;
-        public List<int> hpCur;
-        public List<Vector2> position;
-        public List<List<SkillInfo>> skills;
+        public List<string> archetype; // Lista com a ordem dos heroes
+        public List<int> hpCur; // hp atual de cada personagem
+        public List<Vector2> position; // posição no overworld dos personagens
+        public List<List<SkillInfo>> skills; // Info de skills
+    }
+
+    // Struct a ser usada para visualizar os saveSlots
+    public struct SavePreviewInfo{
+        public int level;
+        public string mapName;
+        public List<Hero> heroes;
+        public SavePreviewInfo(SaveInfo save){
+            // Listas são null por default, portanto um save com uma lista nula não foi inicializado
+            if(save.archetype == null){
+                level = 0;
+                mapName = "";
+                heroes = null;
+            }else{
+                level = Party.Instance.GetLevel(save.xpParty);
+                mapName = save.mapName;
+                heroes = new List<Hero>();
+                foreach(string heroName in save.archetype){
+                    heroes.Add(AssetManager.LoadAsset<Hero>(heroName));
+                }
+            }
+        }
     }
 
     [System.Serializable]
