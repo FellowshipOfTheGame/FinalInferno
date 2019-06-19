@@ -59,7 +59,14 @@ namespace FinalInferno{
         [SerializeField] private string[] colTypes;
         [SerializeField] private ColDescription Col;
         [SerializeField] private TableRow[] rows;
-        public ReadOnlyCollection<TableRow> Rows { get{ return new List<TableRow>(rows).AsReadOnly(); } }
+        public ReadOnlyCollection<TableRow> Rows {
+            get{
+                if(rows == null)
+                    return new ReadOnlyCollection<TableRow>(new List<TableRow>());
+                else
+                    return (new List<TableRow>(rows)).AsReadOnly();
+            }
+        }
 
         // Metodos ---------------------------------------
         public static DynamicTable Create(TextAsset textFile){
@@ -115,7 +122,7 @@ namespace FinalInferno{
             }
 
             for(int i = 2; i < lines.Length; i++){
-                rows[i] = new TableRow(lines[i], GetColNumber);
+                rows[i-2] = new TableRow(lines[i], GetColNumber);
             }
         }
 

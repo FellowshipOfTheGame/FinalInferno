@@ -13,21 +13,28 @@ namespace FinalInferno{
         public override Color DialogueColor { get { return color; } }
         public override string DialogueName { get { return (name == null)? "" : name; } }
         [SerializeField] private TextAsset enemyTable;
-        private DynamicTable table;
+        [SerializeField] private DynamicTable table;
+        private DynamicTable Table {
+            get {
+                if(table == null)
+                    table = DynamicTable.Create(enemyTable);
+                return table;
+            }
+        }
         public override long SkillExp { get { return BaseExp/2; } } // Quanta exp o inimigo dá pra skill quando ela é usada nele
         public long BaseExp { get; protected set; } // Quanta exp o inimigo dá pra party ao final da batalha
 
         void Awake(){
             table = DynamicTable.Create(enemyTable);
-
-            level = table.Rows[0].Field<int>("Level");
-            hpMax = table.Rows[0].Field<int>("HP");
-            baseDmg = table.Rows[0].Field<int>("Damage");
-            baseDef = table.Rows[0].Field<int>("Defense");
-            baseMagicDef = table.Rows[0].Field<int>("Resistance");
-            baseSpeed = table.Rows[0].Field<int>("Speed");
+            
+            level = Table.Rows[0].Field<int>("Level");
+            hpMax = Table.Rows[0].Field<int>("HP");
+            baseDmg = Table.Rows[0].Field<int>("Damage");
+            baseDef = Table.Rows[0].Field<int>("Defense");
+            baseMagicDef = Table.Rows[0].Field<int>("Resistance");
+            baseSpeed = Table.Rows[0].Field<int>("Speed");
             //damageType/element = able.Rows[0].Field(int)("DamageType");
-            color = table.Rows[0].Field<Color>("Color");
+            color = Table.Rows[0].Field<Color>("Color");
 
         }
 
