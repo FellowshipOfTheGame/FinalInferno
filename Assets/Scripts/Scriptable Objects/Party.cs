@@ -27,7 +27,7 @@ namespace FinalInferno{
         public string currentMap;
         public List<Character> characters = new List<Character>(); //lista dos personagens que compoe a equipe 
         [SerializeField] private TextAsset PartyXP;
-        private DynamicTable table;
+        [SerializeField] private DynamicTable table;
 
         public void Awake(){
             Debug.Log("sera que tem awake?");
@@ -41,7 +41,6 @@ namespace FinalInferno{
             xp = 0;
             xpNext = 0;
             Debug.Log("Iniciou");
-            //GiveExp(0);
         }
 
         //faz todos os persoangens subirem de nivel
@@ -62,6 +61,7 @@ namespace FinalInferno{
 
         //Adiciona os pontos de experiência conquistado pelo jogador
         public bool GiveExp(long value){
+            table = DynamicTable.Create(PartyXP);
             bool up = false;
             
             xp += value;

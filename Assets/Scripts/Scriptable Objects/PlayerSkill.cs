@@ -18,7 +18,7 @@ public class PlayerSkill : Skill{
     public List<int> prerequisiteSkillsLevel; //level que a skill de pre requisito precisa estar para essa skill destravar
     public int prerequisiteHeroLevel; //level que o heroi precisa estar para essa skill destravar
     [SerializeField] private TextAsset skillTable;
-    private DynamicTable table;
+    [SerializeField] private DynamicTable table;
 
     void Awake(){
         table = DynamicTable.Create(skillTable);
@@ -29,6 +29,7 @@ public class PlayerSkill : Skill{
 
     //atualiza o value dos efeitos, se for necessario.
     public void LevelUp(){
+        table = DynamicTable.Create(skillTable);
         // int i = 0;
         // effects[i].effect.value1 = table.Rows[level-1].Field<float>("Effect0Value0");
         // effects[i].effect.value2 = table.Rows[level-1].Field<float>("Effect0Value1");

@@ -13,7 +13,7 @@ public class Hero : Unit{
     public List<PlayerSkill> skillsToUpdate; //lista de skills que podem ser destravadas com o level do personagem
     public override long SkillExp {get { return Mathf.Max(10, (Mathf.FloorToInt(Mathf.Sqrt(Party.Instance.XpCumulative)))); } }
     [SerializeField] private TextAsset heroTable;
-    private DynamicTable table;
+    [SerializeField] private DynamicTable table;
 
     void Awake(){
         table = DynamicTable.Create(heroTable);
@@ -21,9 +21,11 @@ public class Hero : Unit{
 
     //funcao que ajusta todos os atributos e "skills" do persoangem quando sobe de nivel
     public int LevelUp(int level){
+        table = DynamicTable.Create(heroTable);
         Debug.Log(name + " subiu mesmo de level!");
 
         this.level = level;
+        //le novos valores da tabela
         hpMax = table.Rows[level-1].Field<int>("HP");
         baseDmg = table.Rows[level-1].Field<int>("Dano");
         baseDef = table.Rows[level-1].Field<int>("Defesa");

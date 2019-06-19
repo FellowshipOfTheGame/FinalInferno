@@ -13,7 +13,7 @@ namespace FinalInferno{
         public override Color DialogueColor { get { return color; } }
         public override string DialogueName { get { return (name == null)? "" : name; } }
         [SerializeField] private TextAsset enemyTable;
-        private DynamicTable table;
+        [SerializeField] private DynamicTable table;
         public override long SkillExp { get { return BaseExp/2; } } // Quanta exp o inimigo dá pra skill quando ela é usada nele
         public long BaseExp { get; protected set; } // Quanta exp o inimigo dá pra party ao final da batalha
 

@@ -20,9 +20,6 @@ namespace FinalInferno{
 		void Update() {
 			input.x = Input.GetAxisRaw("Horizontal");
 			input.y = Input.GetAxisRaw("Vertical");
-			if(Input.GetKey(KeyCode.Z)){
-				Party.Instance.GiveExp(1000);
-			}
 		}
 }
 }

@@ -14,5 +14,11 @@ namespace FinalInferno{
                 StaticLoadStuff.gameStarted = true;
             }
         }
+
+        void Update(){
+            if(Input.GetKey(KeyCode.Z)){
+				Party.Instance.GiveExp(100);
+			}
+        }
     }
 }
