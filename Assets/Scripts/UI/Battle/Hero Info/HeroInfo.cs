@@ -57,6 +57,30 @@ namespace FinalInferno.UI.Battle.SkillMenu
         [SerializeField] private Text speedText;
 
         /// <summary>
+        /// Campo de texto onde ficará o dano do personagem.
+        /// </summary>
+        [SerializeField] private Text alteredDamageText;
+
+        /// <summary>
+        /// Campo de texto onde ficará a defesa do personagem.
+        /// </summary>
+        [SerializeField] private Text alteredResistanceText;
+
+        /// <summary>
+        /// Campo de texto onde ficará a defesa mágica do personagem.
+        /// </summary>
+        [SerializeField] private Text alteredMagicResistanceText;
+
+        /// <summary>
+        /// Campo de texto onde ficará a velocidade do personagem.
+        /// </summary>
+        [SerializeField] private Text alteredSpeedText;
+
+        [Header("Colors")]
+        [SerializeField] private Color positiveColor;
+        [SerializeField] private Color negativeColor;
+
+        /// <summary>
         /// Carrega as informações do personagem no menu.
         /// </summary>
         /// <param name="currentUnit"> Referência ao heroi que está em seu turno. </param>
@@ -73,10 +97,62 @@ namespace FinalInferno.UI.Battle.SkillMenu
             hpSlider.value = currentUnit.CurHP;
             hpText.text = currentUnit.CurHP + "/" + currentUnit.MaxHP;
 
-            damageText.text = currentUnit.curDmg.ToString();
-            resistanceText.text = currentUnit.curDef.ToString();
-            magicResistanceText.text = currentUnit.curMagicDef.ToString();
-            speedText.text = currentUnit.curSpeed.ToString();
+            damageText.text = currentUnit.unit.baseDmg.ToString();
+            if (currentUnit.curDmg > currentUnit.unit.baseDmg)
+            {
+                alteredDamageText.text = "(+" + (currentUnit.curDmg - currentUnit.unit.baseDmg).ToString() + ")";
+                alteredDamageText.color = positiveColor;
+            }
+            else if (currentUnit.curDmg < currentUnit.unit.baseDmg)
+            {
+                alteredDamageText.text = "(-" + (currentUnit.curDmg - currentUnit.unit.baseDmg).ToString() + ")";
+                alteredDamageText.color = negativeColor;
+            }
+            else
+                alteredDamageText.text = "";
+                
+            resistanceText.text = currentUnit.unit.baseDef.ToString();
+            if (currentUnit.curDef > currentUnit.unit.baseDef)
+            {
+                alteredResistanceText.text = "(+" +(currentUnit.curDef - currentUnit.unit.baseDef).ToString() + ")";
+                alteredResistanceText.color = positiveColor;
+            }
+            else if (currentUnit.curDef < currentUnit.unit.baseDef)
+            {
+                alteredResistanceText.text = "(-" + (currentUnit.curDef - currentUnit.unit.baseDef).ToString() + ")";
+                alteredResistanceText.color = negativeColor;
+            }
+            else
+                alteredResistanceText.text = "";
+
+            magicResistanceText.text = currentUnit.unit.baseMagicDef.ToString();
+            if (currentUnit.curMagicDef > currentUnit.unit.baseMagicDef)
+            {
+                alteredMagicResistanceText.text = "(+" + (currentUnit.curMagicDef - currentUnit.unit.baseMagicDef).ToString() + ")";
+                alteredMagicResistanceText.color = positiveColor;
+            }
+            else if (currentUnit.curMagicDef < currentUnit.unit.baseMagicDef)
+            {
+                alteredMagicResistanceText.text = "(-" + (currentUnit.curMagicDef - currentUnit.unit.baseMagicDef).ToString() + ")";
+                alteredMagicResistanceText.color = negativeColor;
+            }
+            else
+                alteredMagicResistanceText.text = "";
+
+            speedText.text = currentUnit.unit.baseSpeed.ToString();
+            if (currentUnit.curSpeed > currentUnit.unit.baseSpeed)
+            {
+                alteredSpeedText.text = "(+" +(currentUnit.curSpeed - currentUnit.unit.baseSpeed).ToString() + ")";
+                alteredSpeedText.color = positiveColor;
+            }
+            else if (currentUnit.curSpeed < currentUnit.unit.baseSpeed)
+            {
+                alteredSpeedText.text = "(-" + (currentUnit.curSpeed - currentUnit.unit.baseSpeed).ToString() + ")";
+                alteredSpeedText.color = negativeColor;
+            }
+            else
+                alteredSpeedText.text = "";
+
         }
 
         /// <summary>
