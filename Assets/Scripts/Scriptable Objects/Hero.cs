@@ -13,6 +13,7 @@ public class Hero : Unit{
     public List<PlayerSkill> skillsToUpdate; //lista de skills que podem ser destravadas com o level do personagem
     [SerializeField] private TextAsset heroTable;
     private DynamicTable table;
+    public override bool IsHero{ get{ return true; } }
 
     void Awake(){
         //table = DynamicTable.Create(heroTable);

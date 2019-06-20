@@ -19,6 +19,7 @@ namespace FinalInferno{
         }
         //public type questInfo; //informacoes sobre as missões da equipe
         //public List<Quest> quests; //lista de missões do jogador
+        public string currentMap = "StartingArea00";
         public int level; //nivel da equipe(todos os personagens tem sempre o mesmo nivel)
         public long xp; //experiencia da equipe(todos os personagens tem sempre a mesma experiencia)
         public long xpNext; //experiencia necessaria para avancar de nivel

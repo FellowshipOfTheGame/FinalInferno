@@ -6,14 +6,17 @@ using UnityEngine.SceneManagement;
 namespace FinalInferno{
     public static class SceneLoader {
         // Essa referencia precisa ser configurada quando o jogo for inicializado
-        private static int lastOWSceneID;
-        public static int LastOWSceneID{ get{ return lastOWSceneID; } }
-        private static List<Enemy> enemies;
-        private static bool updatePositions;
+        //private static int lastOWSceneID = 0;
+        //public static int LastOWSceneID{ get{ return lastOWSceneID; } }
+        private static List<Enemy> enemies = new List<Enemy>();
+        private static bool updatePositions = false;
+        private static Fog.Dialogue.Dialogue cutsceneDialogue = null;
 
         public static void LoadBattleScene(Enemy[] enemiesSelected, Sprite BG, AudioClip BGM) {
             RECalculator.encountersEnabled = false;
-            lastOWSceneID = SceneManager.GetActiveScene().buildIndex;
+            // Essa atualização do mapa so e necessaria para a demo
+            //lastOWSceneID = SceneManager.GetActiveScene().buildIndex;
+            Party.Instance.currentMap = SceneManager.GetActiveScene().name;
             // Armazena a posicao dos personagens no overworld dentro do SO correspondente
             for(int i = 0; i < Party.Instance.characters.Count; i++){
                 Party.Instance.characters[i].position = CharacterOW.CharacterList[i].transform.position;
@@ -22,23 +25,80 @@ namespace FinalInferno{
             enemies = new List<Enemy>(enemiesSelected);
             SceneManager.sceneLoaded += OnBattleLoad;
             // To do: Iniciar animação de encounter caso tenha (Ex.: tela escurecendo)
+            // A animação também pode ser iniciada pelo RECalculator, ante de chamar este metodo
             SceneManager.LoadScene("Battle");
         }
 
-        public static void LoadOWScene(Scene map, bool shouldUpdate = false) {
+
+        // Métodos que carregam a cena desejada
+        public static void LoadOWScene(Scene map, bool shouldUpdate = false, Vector2? newPosition = null) {
             updatePositions = shouldUpdate;
+            if(newPosition != null){
+                foreach(Character character in Party.Instance.characters){
+                    character.position = newPosition.Value;
+                }
+            }
+            Party.Instance.currentMap = map.name;
+            // TO DO: Salva o jogo se o autosave esta ativado
             SceneManager.sceneLoaded += OnMapLoad;
+            SceneManager.sceneLoaded += UnlockMovement;
             SceneManager.LoadScene(map.buildIndex);
         }
-        public static void LoadOWScene(string map, bool shouldUpdate = false) {
+        public static void LoadOWScene(string map, bool shouldUpdate = false, Vector2? newPosition = null) {
             updatePositions = shouldUpdate;
+            if(newPosition != null){
+                foreach(Character character in Party.Instance.characters){
+                    character.position = newPosition.Value;
+                }
+            }
+            Party.Instance.currentMap = map;
+            // TO DO: Salva o jogo se o autosave esta ativado
             SceneManager.sceneLoaded += OnMapLoad;
+            SceneManager.sceneLoaded += UnlockMovement;
             SceneManager.LoadScene(map);
         }
-        public static void LoadOWScene(int mapID, bool shouldUpdate = false) {
+        public static void LoadOWScene(int mapID, bool shouldUpdate = false, Vector2? newPosition = null) {
             updatePositions = shouldUpdate;
+            if(newPosition != null){
+                foreach(Character character in Party.Instance.characters){
+                    character.position = newPosition.Value;
+                }
+            }
+            Party.Instance.currentMap = SceneManager.GetSceneByBuildIndex(mapID).name;
+            // TO DO: Salva o jogo se o autosave esta ativado
             SceneManager.sceneLoaded += OnMapLoad;
+            SceneManager.sceneLoaded += UnlockMovement;
             SceneManager.LoadScene(mapID);
+        }
+
+        // Métodos que carregam a cena e iniciam um diálogo
+        public static void LoadCustscene(Scene map, Fog.Dialogue.Dialogue dialogue, Vector2? newPosition = null) {
+            updatePositions = false;
+            cutsceneDialogue = dialogue;
+            if(newPosition != null){
+                foreach(Character character in Party.Instance.characters){
+                    character.position = newPosition.Value;
+                }
+            }
+            Party.Instance.currentMap = SceneManager.GetActiveScene().name;
+            // TO DO: Salva o jogo se o autosave esta ativado
+            SceneManager.sceneLoaded += OnMapLoad;
+            SceneManager.sceneLoaded += StartDialogue;
+            SceneManager.LoadScene(map.buildIndex);
+        }
+        public static void LoadCustscene(string map, Fog.Dialogue.Dialogue dialogue, Vector2? newPosition = null) {
+            updatePositions = false;
+            cutsceneDialogue = dialogue;
+            if(newPosition != null){
+                foreach(Character character in Party.Instance.characters){
+                    character.position = newPosition.Value;
+                }
+            }
+            Party.Instance.currentMap = SceneManager.GetActiveScene().name;
+            // TO DO: Salva o jogo se o autosave esta ativado
+            SceneManager.sceneLoaded += OnMapLoad;
+            SceneManager.sceneLoaded += StartDialogue;
+            SceneManager.LoadScene(map);
         }
 
         public static void LoadMainMenu(){
@@ -47,6 +107,7 @@ namespace FinalInferno{
             SceneManager.LoadScene("MainMenu");
         }
 
+        // Metodos que podem ser chamados ao carregar uma nova cena
         public static void OnBattleLoad(Scene map, LoadSceneMode mode){
             // Adiciona os herois da party na lista de unidade da batalha
             foreach(Character character in Party.Instance.characters){
@@ -69,8 +130,19 @@ namespace FinalInferno{
                 }
             }
             RECalculator.encountersEnabled = true;
-            lastOWSceneID = SceneManager.GetActiveScene().buildIndex;
+            //lastOWSceneID = SceneManager.GetActiveScene().buildIndex;
+            Party.Instance.currentMap = SceneManager.GetActiveScene().name;
             SceneManager.sceneLoaded -= OnMapLoad;
+        }
+        public static void UnlockMovement(Scene map, LoadSceneMode mode){
+            CharacterOW.PartyCanMove = true;
+            SceneManager.sceneLoaded -= UnlockMovement;
+        }
+        public static void StartDialogue(Scene map, LoadSceneMode mode){
+            Fog.Dialogue.Agent agent = CharacterOW.MainOWCharacter.GetComponent<Fog.Dialogue.Agent>();
+            Fog.Dialogue.DialogueHandler.instance.StartDialogue(cutsceneDialogue, agent, agent.GetComponent<Movable>());
+            cutsceneDialogue = null;
+            SceneManager.sceneLoaded -= StartDialogue;
         }
     }
 }

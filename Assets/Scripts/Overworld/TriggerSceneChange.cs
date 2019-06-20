@@ -8,10 +8,25 @@ namespace FinalInferno{
     public class TriggerSceneChange : Triggerable
     {
         [SerializeField] private string sceneName = "Battle";
+        [SerializeField] private Vector2 positionOnLoad = new Vector2(0,0);
+        [SerializeField] private bool isCutscene = false;
+        [SerializeField] private List<DialogueEntry> dialogues = new List<DialogueEntry>();
         
         protected override void TriggerAction(Fog.Dialogue.Agent agent){
             if(sceneName != null && sceneName != ""){
-                SceneLoader.LoadOWScene(sceneName);
+                Fog.Dialogue.Dialogue selectedDialogue = null;
+                if(isCutscene){
+                    foreach(DialogueEntry entry in dialogues){
+                        if(entry.quest.events[entry.eventFlag])
+                            selectedDialogue = entry.dialogue;
+                        else
+                            break;
+                    }
+                }
+                if(selectedDialogue == null)
+                    SceneLoader.LoadOWScene(sceneName, true, positionOnLoad);
+                else
+                    SceneLoader.LoadCustscene(sceneName, selectedDialogue);
             }
         }
     }
@@ -42,6 +57,17 @@ namespace FinalInferno{
                 sceneName.stringValue = sceneObj.name;
             else
                 sceneName.stringValue = "";
+
+            if(sceneObj != null){
+                SerializedProperty positionOnLoad = serializedObject.FindProperty("positionOnLoad");
+                SerializedProperty isCutscene = serializedObject.FindProperty("isCutscene");
+                EditorGUILayout.PropertyField(positionOnLoad);
+                EditorGUILayout.PropertyField(isCutscene);
+                if(isCutscene.boolValue){
+                    SerializedProperty dialogues = serializedObject.FindProperty("dialogues");
+                    EditorGUILayout.PropertyField(dialogues, includeChildren:true);
+                }
+            }
 
             serializedObject.ApplyModifiedProperties();
         }

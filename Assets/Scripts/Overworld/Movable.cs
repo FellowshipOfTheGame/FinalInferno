@@ -34,8 +34,8 @@ namespace FinalInferno{
 		}
 
 		// Salva a referencia para o rigdigbody
-		void Start(){
-			canMove = true;
+		void Awake(){
+			//canMove = true;
 			rigid2D = GetComponent<Rigidbody2D>();
 			anim = GetComponent<Animator>();
 		}

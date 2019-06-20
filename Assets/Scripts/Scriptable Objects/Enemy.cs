@@ -34,12 +34,12 @@ namespace FinalInferno{
         public void AIEnemy(){
             Skill skill;
             
-            float rand = Random.Range(0, 2);
+            //float rand = Random.Range(0, 2);
 
-            if(rand == 0)
+            //if(rand == 0)
                 skill = attackSkill;
-            else
-                skill = defenseSkill;
+            //else
+            //    skill = defenseSkill;
             
             BattleSkillManager.currentSkill = attackSkill;
             BattleSkillManager.currentTargets = GetTargets(skill.target);
@@ -58,10 +58,10 @@ namespace FinalInferno{
                     targets.Add(BattleManager.instance.currentUnit);
                     break;
                 case TargetType.MultiAlly:
-                    targets = team = BattleManager.instance.GetTeam(UnitType.Enemy);
+                    targets = BattleManager.instance.GetTeam(UnitType.Enemy);
                     break;
                 case TargetType.MultiEnemy:
-                    targets = team = BattleManager.instance.GetTeam(UnitType.Hero);
+                    targets = BattleManager.instance.GetTeam(UnitType.Hero);
                     break;
                 case TargetType.SingleAlly:
                     team = BattleManager.instance.GetTeam(UnitType.Enemy);
