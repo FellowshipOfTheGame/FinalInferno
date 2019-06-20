@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Collections.ObjectModel;
 using FinalInferno.UI.Battle;
+using FinalInferno.UI.AII;
 
 namespace FinalInferno{
     //representa todos os buffs/debuffs, dano etc que essa unidade recebe
@@ -25,6 +26,7 @@ namespace FinalInferno{
         public ReadOnlyCollection<Skill> ActiveSkills { get{ return activeSkills.AsReadOnly(); } }
         public SkillDelegate OnEndBattle = null;
         public SkillDelegate OnStartBattle = null;
+        public UnitItem battleItem;
 
         private Animator animator;
 
@@ -137,6 +139,11 @@ namespace FinalInferno{
             // e ao inves de chamar a função da skill em todos os alvos vai chamar so no alvo que ela é filha
             BattleSkillManager.UseSkill();
             FinalInferno.UI.FSM.AnimationEnded.EndAnimation();
+        }
+
+        public void ShowThisAsATarget()
+        {
+            battleItem.ShowThisAsATarget();
         }
     }
 }
