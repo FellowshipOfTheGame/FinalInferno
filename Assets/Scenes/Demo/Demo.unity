@@ -4713,7 +4713,6 @@ GameObject:
   m_Component:
   - component: {fileID: 582292524}
   - component: {fileID: 582292523}
-  - component: {fileID: 582292525}
   m_Layer: 0
   m_Name: Dialogue Handler
   m_TagString: Untagged
@@ -4759,18 +4758,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &582292525
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 582292522}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a61b1169e4f5ef4bbff697df5dcd978, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &589462850
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15555,12 +15542,12 @@ PrefabInstance:
     - target: {fileID: 1116840969944616644, guid: dad01e9eb202c044185eb8fa24ac9520,
         type: 3}
       propertyPath: baseEncounterRate
-      value: 10
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1116840969944616644, guid: dad01e9eb202c044185eb8fa24ac9520,
         type: 3}
       propertyPath: rateIncreaseFactor
-      value: 10
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dad01e9eb202c044185eb8fa24ac9520, type: 3}

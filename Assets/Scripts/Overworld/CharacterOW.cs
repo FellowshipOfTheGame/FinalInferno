@@ -74,6 +74,7 @@ namespace FinalInferno{
                 gameObject.GetComponent<Collider2D>().isTrigger = true;
             }
             characterList[int.Parse(characterSO.name.Split(' ')[1]) - 1] = this;
+            GetComponent<Movable>().CanMove = false;
         }
 
         public void Start(){

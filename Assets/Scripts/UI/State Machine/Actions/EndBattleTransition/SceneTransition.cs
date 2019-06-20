@@ -23,7 +23,7 @@ namespace FinalInferno.UI.FSM
             //     SceneLoader.LoadOWScene(SceneLoader.LastOWScene);
             // else
             //     SceneLoader.LoadOWScene(sceneName);
-            SceneLoader.LoadOWScene(SceneLoader.LastOWSceneID, true);
+            SceneLoader.LoadOWScene(Party.Instance.currentMap, true);
         }
 
     }
