@@ -48,6 +48,7 @@ namespace FinalInferno.UI.Battle.QueueMenu
         {
             // Debug.Log("Defesa Antes = " + BattleManager.instance.currentUnit.curDef);
             BattleSkillManager.currentSkill = skill;
+            BattleSkillManager.currentUser = BattleManager.instance.currentUnit;
             if (skill.target == TargetType.Self || skill.target == TargetType.MultiAlly || skill.target == TargetType.MultiEnemy)
             {
                 // Debug.Log(BattleSkillManager.currentSkill);

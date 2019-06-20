@@ -42,6 +42,7 @@ namespace FinalInferno{
             //    skill = defenseSkill;
             
             BattleSkillManager.currentSkill = attackSkill;
+            BattleSkillManager.currentUser = BattleManager.instance.currentUnit;
             BattleSkillManager.currentTargets = GetTargets(skill.target);
 
             // BattleSkillManager.UseSkill();
