@@ -12,11 +12,5 @@ namespace FinalInferno{
             exQuest.events["TutorialComplete"] = false;
             SceneLoader.LoadOWScene(Party.Instance.currentMap);
         }
-
-        void Update(){
-            if(Input.GetKey(KeyCode.Z)){
-				Party.Instance.GiveExp(100);
-			}
-        }
     }
 }

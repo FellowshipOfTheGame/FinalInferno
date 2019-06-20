@@ -12,17 +12,26 @@ namespace FinalInferno{
     {
         // Declaração de subclasses e delegates ------------------
         [System.Serializable]
-        private class ColDescription : RotaryHeart.Lib.SerializableDictionary.SerializableDictionaryBase<string, int>{ }
+        public class ColDescription : RotaryHeart.Lib.SerializableDictionary.SerializableDictionaryBase<string, int>{ }
 
         [System.Serializable]
         public class TableRow {
-            [SerializeField] private ColNumberDelegate GetColNumber;
             public int Count { get{ return (elements != null)? elements.Length : 0; }}
             [SerializeField] private string[] elements;
+            [HideInInspector,SerializeField] string[] colTypes;
+            [HideInInspector,SerializeField] ColDescription Col;
 
-            public TableRow(string line, ColNumberDelegate colDelegate){
+            public TableRow(string line, ColDescription col, string[] types){
                 elements = line.Split(splitCharacter);
-                GetColNumber = colDelegate;
+                Col = col;
+                colTypes = types;
+            }
+
+            private int GetColNumber(string colName, string assembQualName){
+                if(colTypes[Col[colName]] == assembQualName)
+                    return Col[colName];
+                else
+                    return -1;
             }
 
             public T Field<T>(string colName){
@@ -51,8 +60,6 @@ namespace FinalInferno{
                 }
             }
         }
-
-        public delegate int ColNumberDelegate(string colName, string typeQualName);
 
         // Variaveis/Proriedades -------------------------
         private const char splitCharacter = ',';
@@ -102,9 +109,6 @@ namespace FinalInferno{
             }
         }
 
-        public int GetColNumber(string colName, string assembQualName){
-            return Col[colName];
-        }
 
         protected DynamicTable(TextAsset textFile){
             string[] lines = Regex.Split(textFile.text, "\n|\r\n|\r");
@@ -122,7 +126,7 @@ namespace FinalInferno{
             }
 
             for(int i = 2; i < lines.Length; i++){
-                rows[i-2] = new TableRow(lines[i], GetColNumber);
+                rows[i-2] = new TableRow(lines[i], Col, colTypes);
             }
         }
 

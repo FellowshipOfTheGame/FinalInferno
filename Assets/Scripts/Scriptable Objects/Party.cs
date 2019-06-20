@@ -25,7 +25,6 @@ namespace FinalInferno{
         public long xpNext; //experiencia necessaria para avancar de nivel
         // TO DO: Revisão de tabelas
         public long XpCumulative{ get{ return ( (table == null)? 0 : (xp + table.Rows[level].Field<long>("XPAcumulada")) ); } }
-        public string currentMap;
         public List<Character> characters = new List<Character>(); //lista dos personagens que compoe a equipe 
         [SerializeField] private TextAsset PartyXP;
         [SerializeField] private DynamicTable table;
