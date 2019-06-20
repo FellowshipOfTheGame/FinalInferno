@@ -37,26 +37,6 @@ namespace FinalInferno.UI.Battle.LifeMenu
         [SerializeField] private Text hpText;
 
         /// <summary>
-        /// Campo de texto onde ficará o dano do personagem.
-        /// </summary>
-        [SerializeField] private Text damageText;
-
-        /// <summary>
-        /// Campo de texto onde ficará a defesa do personagem.
-        /// </summary>
-        [SerializeField] private Text resistanceText;
-
-        /// <summary>
-        /// Campo de texto onde ficará a defesa mágica do personagem.
-        /// </summary>
-        [SerializeField] private Text magicResistanceText;
-
-        /// <summary>
-        /// Campo de texto onde ficará a velocidade do personagem.
-        /// </summary>
-        [SerializeField] private Text speedText;
-
-        /// <summary>
         /// Carrega as informações do personagem no menu.
         /// </summary>
         public override void UpdateUnitLife()
@@ -71,11 +51,6 @@ namespace FinalInferno.UI.Battle.LifeMenu
             hpSlider.maxValue = thisEnemy.hpMax;
             hpSlider.value = thisUnit.CurHP;
             hpText.text = thisUnit.CurHP + "/" + thisUnit.MaxHP;
-
-            damageText.text = thisUnit.curDmg.ToString();
-            resistanceText.text = thisUnit.curDef.ToString();
-            magicResistanceText.text = thisUnit.curMagicDef.ToString();
-            speedText.text = thisUnit.curSpeed.ToString();
         }
     }
 
