@@ -82,9 +82,15 @@ namespace FinalInferno{
             }
             Party.Instance.currentMap = SceneManager.GetActiveScene().name;
             // TO DO: Salva o jogo se o autosave esta ativado
-            SceneManager.sceneLoaded += OnMapLoad;
-            SceneManager.sceneLoaded += StartDialogue;
-            SceneManager.LoadScene(map.buildIndex);
+            if(dialogue != null){
+                SceneManager.sceneLoaded += OnMapLoad;
+                SceneManager.sceneLoaded += StartDialogue;
+                SceneManager.LoadScene(map.buildIndex);
+            }else{
+                SceneManager.sceneLoaded += OnMapLoad;
+                SceneManager.sceneLoaded += UnlockMovement;
+                SceneManager.LoadScene(map.buildIndex);
+            }
         }
         public static void LoadCustscene(string map, Fog.Dialogue.Dialogue dialogue, Vector2? newPosition = null) {
             updatePositions = false;
@@ -96,9 +102,15 @@ namespace FinalInferno{
             }
             Party.Instance.currentMap = SceneManager.GetActiveScene().name;
             // TO DO: Salva o jogo se o autosave esta ativado
-            SceneManager.sceneLoaded += OnMapLoad;
-            SceneManager.sceneLoaded += StartDialogue;
-            SceneManager.LoadScene(map);
+            if(dialogue != null){
+                SceneManager.sceneLoaded += OnMapLoad;
+                SceneManager.sceneLoaded += StartDialogue;
+                SceneManager.LoadScene(map);
+            }else{
+                SceneManager.sceneLoaded += OnMapLoad;
+                SceneManager.sceneLoaded += UnlockMovement;
+                SceneManager.LoadScene(map);
+            }
         }
 
         public static void LoadMainMenu(){

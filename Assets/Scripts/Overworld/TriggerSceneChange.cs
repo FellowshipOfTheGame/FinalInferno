@@ -23,7 +23,7 @@ namespace FinalInferno{
                             break;
                     }
                 }
-                if(selectedDialogue == null)
+                if(!isCutscene)
                     SceneLoader.LoadOWScene(sceneName, true, positionOnLoad);
                 else
                     SceneLoader.LoadCustscene(sceneName, selectedDialogue);
