@@ -28,6 +28,13 @@ namespace FinalInferno{
         public List<Character> characters = new List<Character>(); //lista dos personagens que compoe a equipe 
         [SerializeField] private TextAsset PartyXP;
         [SerializeField] private DynamicTable table;
+        private DynamicTable Table {
+            get {
+                if(table == null)
+                    table = DynamicTable.Create(PartyXP);
+                return table;
+            }
+        }
 
         public void Awake(){
             Debug.Log("sera que tem awake?");
@@ -53,7 +60,7 @@ namespace FinalInferno{
         // Função auxiliar para preview de level baseado na informação do save file
         public int GetLevel(long cumulativeExp){
             level = 0;
-            while(cumulativeExp > table.Rows[level].Field<long>("XPAcumulada")){
+            while(cumulativeExp > Table.Rows[level].Field<long>("XPAcumulada")){
                 level++;
             }
             return level;
@@ -72,12 +79,12 @@ namespace FinalInferno{
             if(xp >= xpNext){
                 Debug.Log("upo ne");
 
-                while(xp >= xpNext && level < table.Rows.Count-1){
+                while(xp >= xpNext && level < Table.Rows.Count-1){
                     Debug.Log("claro que upo");
                     // TO DO: Revisão de tabelas (level tem que ser user friendly)
                     xp -= xpNext;
                     level++;
-                    xpNext = table.Rows[level].Field<long>("XPProximoNivel");
+                    xpNext = Table.Rows[level].Field<long>("XPProximoNivel");
                     Debug.Log("agora xp pro proximo level eh: " + xpNext);
                 }
                 
