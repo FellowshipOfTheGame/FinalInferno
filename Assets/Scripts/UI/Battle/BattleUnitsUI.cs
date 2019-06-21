@@ -42,7 +42,9 @@ namespace FinalInferno.UI.Battle
         public BattleUnit LoadUnit(Unit unit){
             GameObject newUnit = Instantiate(unitPrefab, (unit.GetType() == typeof(Hero))? heroesContent : enemiesContent);
             AIIManager manager = (unit.GetType() == typeof(Hero))? heroesManager : enemiesManager;
+            
             BattleUnit battleUnit = newUnit.GetComponent<BattleUnit>();
+            battleUnit.battleItem = newUnit.GetComponent<UnitItem>();
 
             newUnit.transform.rotation = Quaternion.identity;
             battleUnit.Configure(unit);
@@ -84,7 +86,8 @@ namespace FinalInferno.UI.Battle
                 GameObject newUnit = Instantiate(unitPrefab, content);
                 newUnit.transform.rotation = Quaternion.identity;
 
-                newUnit.GetComponent<UnitItem>().unit = unit;
+                unit.battleItem = newUnit.GetComponent<UnitItem>();
+                unit.battleItem.unit = unit;
 
                 newUnit.GetComponent<Image>().color = unit.unit.color;
 
