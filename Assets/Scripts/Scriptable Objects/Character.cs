@@ -10,6 +10,7 @@ namespace FinalInferno{
         //public type skillInfo; //
         public int hpCur; //vida atual do personagem, descontando dano da vida maxima
         public Vector2 position; //posicao do personagem no "Overworld"
+        //public bool isPresent;
 
         //funcao que ajusta a vida atual do personagem quando sobe de nivel
         public void LevelUp(int level){

@@ -10,6 +10,7 @@ namespace FinalInferno{
             Party.Instance.currentMap = "Demo";
             Quest exQuest = AssetManager.LoadAsset<Quest>("AdventurerQuest");
             exQuest.events["TutorialComplete"] = false;
+            Party.Instance.GiveExp(0);
             SceneLoader.LoadOWScene(Party.Instance.currentMap);
         }
     }

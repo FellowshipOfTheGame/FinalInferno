@@ -10,6 +10,7 @@ namespace FinalInferno{
         [SerializeField] private Character characterSO;
         public Character CharacterSO { get{ return characterSO; } }
         [SerializeField] private bool isMain;
+        // Tamanho desse vetor deve ser igual a Party.Capacity
         private static CharacterOW[] characterList = new CharacterOW[]{null, null, null, null};
         public static ReadOnlyCollection<CharacterOW> CharacterList {get {return System.Array.AsReadOnly(characterList); } }
         public static CharacterOW MainOWCharacter{ get{ return characterList[0]; } }

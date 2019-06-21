@@ -39,7 +39,11 @@ namespace FinalInferno{
                 }
             }
             Party.Instance.currentMap = map.name;
-            // TO DO: Salva o jogo se o autosave esta ativado
+
+            // Salva o jogo se o autosave esta ativado
+            if(SaveLoader.AutoSave)
+                SaveLoader.SaveGame();
+
             SceneManager.sceneLoaded += OnMapLoad;
             SceneManager.sceneLoaded += UnlockMovement;
             SceneManager.LoadScene(map.buildIndex);
@@ -52,7 +56,11 @@ namespace FinalInferno{
                 }
             }
             Party.Instance.currentMap = map;
-            // TO DO: Salva o jogo se o autosave esta ativado
+
+            // Salva o jogo se o autosave esta ativado
+            if(SaveLoader.AutoSave)
+                SaveLoader.SaveGame();
+
             SceneManager.sceneLoaded += OnMapLoad;
             SceneManager.sceneLoaded += UnlockMovement;
             SceneManager.LoadScene(map);
@@ -65,7 +73,11 @@ namespace FinalInferno{
                 }
             }
             Party.Instance.currentMap = SceneManager.GetSceneByBuildIndex(mapID).name;
-            // TO DO: Salva o jogo se o autosave esta ativado
+
+            // Salva o jogo se o autosave esta ativado
+            if(SaveLoader.AutoSave)
+                SaveLoader.SaveGame();
+
             SceneManager.sceneLoaded += OnMapLoad;
             SceneManager.sceneLoaded += UnlockMovement;
             SceneManager.LoadScene(mapID);
@@ -81,7 +93,11 @@ namespace FinalInferno{
                 }
             }
             Party.Instance.currentMap = SceneManager.GetActiveScene().name;
-            // TO DO: Salva o jogo se o autosave esta ativado
+
+            // Salva o jogo se o autosave esta ativado
+            if(SaveLoader.AutoSave)
+                SaveLoader.SaveGame();
+
             if(dialogue != null){
                 SceneManager.sceneLoaded += OnMapLoad;
                 SceneManager.sceneLoaded += StartDialogue;
@@ -101,7 +117,11 @@ namespace FinalInferno{
                 }
             }
             Party.Instance.currentMap = SceneManager.GetActiveScene().name;
-            // TO DO: Salva o jogo se o autosave esta ativado
+
+            // Salva o jogo se o autosave esta ativado
+            if(SaveLoader.AutoSave)
+                SaveLoader.SaveGame();
+
             if(dialogue != null){
                 SceneManager.sceneLoaded += OnMapLoad;
                 SceneManager.sceneLoaded += StartDialogue;
@@ -121,6 +141,7 @@ namespace FinalInferno{
 
         // Metodos que podem ser chamados ao carregar uma nova cena
         public static void OnBattleLoad(Scene map, LoadSceneMode mode){
+            BattleManager.instance.units.Clear();
             // Adiciona os herois da party na lista de unidade da batalha
             foreach(Character character in Party.Instance.characters){
                 BattleManager.instance.units.Add(character.archetype);

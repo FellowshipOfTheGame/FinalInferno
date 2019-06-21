@@ -50,7 +50,16 @@ namespace FinalInferno{
             // Aplica os status base da unidade
             this.unit = unit;
             MaxHP = unit.hpMax;
-            CurHP = unit.hpMax;
+            if(unit.IsHero){
+                foreach(Character character in Party.Instance.characters){
+                    if(character.archetype == unit){
+                        CurHP = character.hpCur;
+                        break;
+                    }
+                }
+            }else{
+                CurHP = unit.hpMax;
+            }
             curDmg = unit.baseDmg;
             curDef = unit.baseDef;
             curMagicDef = unit.baseMagicDef;

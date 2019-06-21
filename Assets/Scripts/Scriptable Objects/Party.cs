@@ -17,15 +17,28 @@ namespace FinalInferno{
                 return instance;
             }
         }
-        //public type questInfo; //informacoes sobre as missões da equipe
-        //public List<Quest> quests; //lista de missões do jogador
-        public string currentMap = "StartingArea00";
+        
+        public const int Capacity = 4;
+        public const string StartingMap = "StartingArea00";
+        public string currentMap = StartingMap;
         public int level; //nivel da equipe(todos os personagens tem sempre o mesmo nivel)
         public long xp; //experiencia da equipe(todos os personagens tem sempre a mesma experiencia)
         public long xpNext; //experiencia necessaria para avancar de nivel
         // TO DO: Revisão de tabelas
         public long XpCumulative{ get{ return ( (table == null)? 0 : (xp +  ((level <= 1)? 0 : (table.Rows[level-2].Field<long>("XPAcumulada"))) ) ); } }
         public List<Character> characters = new List<Character>(); //lista dos personagens que compoe a equipe 
+        // Precisaria disso pra dar suporte a salvar o jogo em situações com menos personagems que o desejado mas
+        // como talvez de mais trabalho vamo deixar comentado mesmo
+        // public int Count{
+        //     get{
+        //         int i = 0;
+        //         foreach(Character character in characters){
+        //             if(character.isPresent)
+        //                 i++;
+        //         }
+        //         return i;
+        //     }
+        // }
         [SerializeField] private TextAsset PartyXP;
         [SerializeField] private DynamicTable table;
         private DynamicTable Table {
