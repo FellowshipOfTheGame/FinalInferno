@@ -61,27 +61,32 @@ namespace FinalInferno
 
     [System.Serializable]
      public struct SkillInfo{
-        public long xp;
-        public bool active;
+        [SerializeField] public long xp;
+        [SerializeField] public bool active;
     }
 
     [System.Serializable]
     public struct QuestInfo{
-        public string name;
-        public List<string> flagsNames;
-        public int flagsTrue;
+        [SerializeField] public string name;
+        [SerializeField] public string[] flagsNames;
+        [SerializeField] public int flagsTrue;
+    }
+
+    [System.Serializable]
+    public struct SkillInfoArray{
+        [SerializeField] public SkillInfo[] skills;
     }
 
     [System.Serializable]
     public struct SaveInfo{
-        public long xpParty; // exp acumulativa da party
-        public string mapName; // nome do mapa (cena de overworld) atual
-        public List<QuestInfo> quest; // Lsta de informações das quests
+        [SerializeField] public long xpParty; // exp acumulativa da party
+        [SerializeField] public string mapName; // nome do mapa (cena de overworld) atual
+        [SerializeField] public QuestInfo[] quest; // Lsta de informações das quests
         //quests de kill
-        public List<string> archetype; // Lista com a ordem dos heroes
-        public List<int> hpCur; // hp atual de cada personagem
-        public List<Vector2> position; // posição no overworld dos personagens
-        public List<List<SkillInfo>> skills; // Info de skills
+        [SerializeField] public string[] archetype; // Lista com a ordem dos heroes
+        [SerializeField] public int[] hpCur; // hp atual de cada personagem
+        [SerializeField] public Vector2[] position; // posição no overworld dos personagens
+        [SerializeField] public SkillInfoArray[] heroSkills; // Info de skills
     }
 
     // Struct a ser usada para visualizar os saveSlots

@@ -10,6 +10,7 @@ namespace FinalInferno{
         public Sprite spriteOW; //"sprite" do heroi no "Over Wolrd"
         public RuntimeAnimatorController animatorOW; //"animator" do "Over World"
         public Sprite skillBG; //"sprite" de fundo da arvore de "skills"  
+        [SerializeField] private List<PlayerSkill> InitialsSkills;
         public List<PlayerSkill> skillsToUpdate; //lista de skills que podem ser destravadas com o level do personagem
         public override long SkillExp {get { return Mathf.Max(10, (Mathf.FloorToInt(Mathf.Sqrt(Party.Instance.XpCumulative)))); } }
         [SerializeField] private TextAsset heroTable;
@@ -59,6 +60,15 @@ namespace FinalInferno{
                     i--;
                 }
             }
+        }
+
+        public void ResetHero(){
+            foreach(Skill skill in skills){
+                skill.ResetSkill();
+            }
+
+            skillsToUpdate = new List<PlayerSkill>(InitialsSkills);
+            Debug.Log("Hero resetado");
         }
         
         public override Color DialogueColor { get { return color; } }

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace FinalInferno{
     public static class SaveLoader{
         private const string fileName = "SaveFile";
-        private static DataSaver<SaveFile> dataSaver = new DataSaver<SaveFile>(fileName, true);
+        private static DataSaver<SaveFile> dataSaver = new DataSaver<SaveFile>(fileName, false);
         private static SaveFile saveFile = dataSaver.LoadData();
         public static SaveFile SaveFile { get{ return saveFile; } }
 
@@ -17,6 +17,7 @@ namespace FinalInferno{
         }
 
         public static void LoadGame(){
+            ResetGame();
             // Teoricamente não é necessario reler o arquivo, mas faremos isso como medida de segurança,
             // assim evitamos que a variavel saveFile tenha sido alterada de alguma maneira em runtime
             saveFile = dataSaver.LoadData();
@@ -28,8 +29,20 @@ namespace FinalInferno{
 
         public static void NewGame(){
             // Reseta todas as informações do jogo para um estado inicial
+            ResetGame();
+            Party.Instance.GiveExp(0);
             // Carrega a cena inicial
             //SceneLoader.LoadOWScene(Party.Instance.currentMap, true);
+        }
+
+        public static void ResetGame(){
+            Debug.Log("Vamo reseta entao!!!");
+            Party.Instance.ResetParty();
+           
+            foreach(Character character in Party.Instance.characters){
+                character.ResetCharacter();
+                character.archetype.ResetHero();
+            }
         }
     }
 }

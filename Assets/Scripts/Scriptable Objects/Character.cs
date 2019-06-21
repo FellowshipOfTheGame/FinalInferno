@@ -16,6 +16,11 @@ namespace FinalInferno{
             Debug.Log(archetype.name + " passou pro level: " + level);
             hpCur = archetype.LevelUp(level);
         }
+        
+        public void ResetCharacter(){
+            position = Vector2.zero;
+            hpCur = archetype.LevelUp(1);
+        }
 
         //quando comeca o jogo, carrega todas as "skills" do personagem baseado no seu nivel
         /*public void LoadSkills(int level){

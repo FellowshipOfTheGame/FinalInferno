@@ -10,7 +10,7 @@ namespace FinalInferno{
         public long xp; //experiencia da "skill"
         public long xpNext; //experiencia necessaria para a "skill" subir de nivel
         // TO DO: Revisão de tabelas (nao sabemos o nome definitivo da coluna)
-        public long XpCumulative { get { return ( (table == null)? 0 : (xp + table.Rows[level-1].Field<long>("XPProximoNivel")) ); } }
+        public long XpCumulative { get { return ( (table == null)? 0 : xp/*(xp +  ((level <= 1)? 0 : (table.Rows[level-2].Field<long>("XPAcumulada"))) ) */ ); } }
         public string description; //descricao da "skill" que aparecera para o jogador durante a batalha
         public bool active; //sinaliza se a "skill" esta ativa ou nao
         public List<PlayerSkill> skillsToUpdate; //lista de skills que podem ser destravadas com o level dessa skill
@@ -65,17 +65,14 @@ namespace FinalInferno{
             xp += exp;
 
             //testa se a skill subiu de nivel
-            if(xp >= xpNext){
-                Debug.Log("upo a skill " + name);
-                while(xp >= xpNext){
-                    level++;
-                    xpNext = level * 100;
-                }
-
-                LevelUp();
-            
+            while(xp >= xpNext && level < Table.Rows.Count-1){
+                level++;
+                xpNext = level * 100;
+                
                 up = true;
             }
+
+            if(up) LevelUp();
 
             return up;
         }
@@ -121,5 +118,12 @@ namespace FinalInferno{
             GiveExp(targets);
             base.Use(user, targets, shouldOverride, value1, value2);
         }
+
+        public override void ResetSkill(){
+            level = 0;
+            xp = 0;
+            xpNext = 0;
+            Debug.Log("Skill resetada");
+        } 
     }
 }

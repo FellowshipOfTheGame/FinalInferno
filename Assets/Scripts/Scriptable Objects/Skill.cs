@@ -29,5 +29,7 @@ namespace FinalInferno{
                 }
             }
         }
+
+        public virtual void ResetSkill(){Debug.Log("Reseto skill errado");} 
     }
 }

@@ -24,7 +24,7 @@ namespace FinalInferno{
         public long xp; //experiencia da equipe(todos os personagens tem sempre a mesma experiencia)
         public long xpNext; //experiencia necessaria para avancar de nivel
         // TO DO: Revisão de tabelas
-        public long XpCumulative{ get{ return ( (table == null)? 0 : (xp + table.Rows[level].Field<long>("XPAcumulada")) ); } }
+        public long XpCumulative{ get{ return ( (table == null)? 0 : (xp +  ((level <= 1)? 0 : (table.Rows[level-2].Field<long>("XPAcumulada"))) ) ); } }
         public List<Character> characters = new List<Character>(); //lista dos personagens que compoe a equipe 
         [SerializeField] private TextAsset PartyXP;
         [SerializeField] private DynamicTable table;
@@ -76,25 +76,28 @@ namespace FinalInferno{
 
             //testa se os persoangens subiram de nivel
             Debug.Log(xp + ">=" + xpNext + "?");
-            if(xp >= xpNext){
-                Debug.Log("upo ne");
-
-                while(xp >= xpNext && level < Table.Rows.Count-1){
-                    Debug.Log("claro que upo");
-                    // TO DO: Revisão de tabelas (level tem que ser user friendly)
-                    xp -= xpNext;
-                    level++;
-                    xpNext = Table.Rows[level].Field<long>("XPProximoNivel");
-                    Debug.Log("agora xp pro proximo level eh: " + xpNext);
-                }
+            while(xp >= xpNext && level < Table.Rows.Count-1){
+                Debug.Log("claro que upo");
+                // TO DO: Revisão de tabelas (level tem que ser user friendly)
+                xp -= xpNext;
+                level++;
+                xpNext = Table.Rows[level-1].Field<long>("XPProximoNivel");
+                Debug.Log("agora xp pro proximo level eh: " + xpNext);
                 
-                Debug.Log("passou pro level: " + level);
-                LevelUp();
-            
                 up = true;
             }
+                
+
+            if(up) LevelUp();
 
             return up;
+        }
+
+        public void ResetParty(){
+            level = 0;
+            xp = 0;
+            xpNext = 0;
+            Debug.Log("Party resetada");
         }
 
         //salva o jogo do jogador

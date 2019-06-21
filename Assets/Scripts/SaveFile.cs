@@ -7,8 +7,7 @@ namespace FinalInferno{
     public class SaveFile{
         private const int nSaveSlots = 5;
         public static int NSaveSlots { get{ return nSaveSlots; } }
-        [SerializeField]
-        private int slot = 0;
+        [SerializeField] private int slot = 0;
         public int Slot{
             get{
                 return slot;
@@ -30,48 +29,43 @@ namespace FinalInferno{
         }
 
         public void Save(){
-            List<SkillInfo> lsi = new List<SkillInfo>();
-            SkillInfo si = new SkillInfo();
 
             saves[Slot].xpParty = Party.Instance.XpCumulative;
             saves[Slot].mapName = Party.Instance.currentMap;
-            saves[Slot].archetype = new List<string>();
-            saves[Slot].hpCur = new List<int>();
-            saves[Slot].position = new List<Vector2>();
-            saves[Slot].skills = new List<List<SkillInfo>>();
-            saves[Slot].quest = new List<QuestInfo>();
+            saves[Slot].archetype = new string[Party.Instance.characters.Count];
+            saves[Slot].hpCur = new int[Party.Instance.characters.Count];
+            saves[Slot].position = new Vector2[Party.Instance.characters.Count];
+            saves[Slot].heroSkills = new SkillInfoArray[Party.Instance.characters.Count];
+            List<Quest> quests = AssetManager.LoadBundleAssets<Quest>();
+            saves[Slot].quest = new QuestInfo[quests.Count];
 
             // Salva as informações de cada personagem no slot atual
             for(int i = 0; i < Party.Instance.characters.Count; i++){
-                saves[Slot].archetype.Add(Party.Instance.characters[i].archetype.name);
-                saves[Slot].hpCur.Add(Party.Instance.characters[i].hpCur);
-                saves[Slot].position.Add(Party.Instance.characters[i].position);
+                saves[Slot].archetype[i] = Party.Instance.characters[i].archetype.name;
+                saves[Slot].hpCur[i] = Party.Instance.characters[i].hpCur;
+                saves[Slot].position[i] = Party.Instance.characters[i].position;
+                saves[Slot].heroSkills[i].skills = new SkillInfo[Party.Instance.characters[i].archetype.skills.Count];
                 
-                foreach (PlayerSkill skill in Party.Instance.characters[i].archetype.skills){
-                    si.xp = skill.XpCumulative;
-                    si.active = skill.active;
-                    lsi.Add(si);
+                for (int j = 0; j < Party.Instance.characters[i].archetype.skills.Count; j++){
+                    saves[Slot].heroSkills[i].skills[j].xp = ((PlayerSkill)Party.Instance.characters[i].archetype.skills[j]).XpCumulative;
+                    saves[Slot].heroSkills[i].skills[j].active = ((PlayerSkill)Party.Instance.characters[i].archetype.skills[j]).active;
                 }
-                saves[Slot].skills.Add(lsi);
             }
 
             // Salva as informações de todas as quests do jogo
-            List<Quest> quests = AssetManager.LoadBundleAssets<Quest>();
-            foreach(Quest quest in quests){
+            for(int i = 0; i < quests.Count; i++){
                 QuestInfo qinfo;
-                qinfo.name = quest.name;
+                qinfo.name = quests[i].name;
+                qinfo.flagsNames = new string[quests[i].events.Keys.Count];
 
-                string[] keys = new string[quest.events.Keys.Count];
-                quest.events.Keys.CopyTo(keys, 0);
-
-                qinfo.flagsNames = new List<string>(keys);
-                qinfo.flagsNames.Sort();
+                quests[i].events.Keys.CopyTo(qinfo.flagsNames, 0);
+                System.Array.Sort(qinfo.flagsNames);
 
                 qinfo.flagsTrue = 0;
-                for(int i = 0; i < quest.events.Count; i++){
-                    qinfo.flagsTrue = qinfo.flagsTrue & ((int)Mathf.Pow(2, i) * ((quest.events[qinfo.flagsNames[i]])? 1 : 0));
+                for(int j = 0; j < quests[i].events.Count; j++){
+                    qinfo.flagsTrue = qinfo.flagsTrue & ((int)Mathf.Pow(2, j) * ((quests[i].events[qinfo.flagsNames[j]])? 1 : 0));
                 }
-                saves[Slot].quest.Add(qinfo);
+                saves[Slot].quest[i] = qinfo;
             }
         }
 
@@ -81,9 +75,9 @@ namespace FinalInferno{
                 Party.Instance.characters[i].hpCur = saves[Slot].hpCur[i];
                 Party.Instance.characters[i].position = saves[Slot].position[i];
                 
-                foreach (SkillInfo skill in saves[Slot].skills[i]){
-                    ((PlayerSkill)Party.Instance.characters[i].archetype.skills[i]).GiveExp(skill.xp);
-                    ((PlayerSkill)Party.Instance.characters[i].archetype.skills[i]).active = skill.active;
+                for (int j = 0; j < saves[Slot].heroSkills[i].skills.Length; j++){//SkillInfo skill in saves[Slot].skills[i]){
+                    ((PlayerSkill)Party.Instance.characters[i].archetype.skills[j]).GiveExp(saves[Slot].heroSkills[i].skills[j].xp);
+                    ((PlayerSkill)Party.Instance.characters[i].archetype.skills[j]).active = saves[Slot].heroSkills[i].skills[j].active;
                 }
             }
 
