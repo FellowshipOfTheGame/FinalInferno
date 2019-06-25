@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Collections.ObjectModel;
 using FinalInferno.UI.Battle;
+using FinalInferno.UI.AII;
 
 namespace FinalInferno{
     //representa todos os buffs/debuffs, dano etc que essa unidade recebe
@@ -25,6 +26,7 @@ namespace FinalInferno{
         public ReadOnlyCollection<Skill> ActiveSkills { get{ return activeSkills.AsReadOnly(); } }
         public SkillDelegate OnEndBattle = null;
         public SkillDelegate OnStartBattle = null;
+        public UnitItem battleItem;
 
         private Animator animator;
 
@@ -50,7 +52,16 @@ namespace FinalInferno{
             // Aplica os status base da unidade
             this.unit = unit;
             MaxHP = unit.hpMax;
-            CurHP = unit.hpMax;
+            if(unit.IsHero){
+                foreach(Character character in Party.Instance.characters){
+                    if(character.archetype == unit){
+                        CurHP = character.hpCur;
+                        break;
+                    }
+                }
+            }else{
+                CurHP = unit.hpMax;
+            }
             curDmg = unit.baseDmg;
             curDef = unit.baseDef;
             curMagicDef = unit.baseMagicDef;
@@ -132,7 +143,7 @@ namespace FinalInferno{
             // TO DO: Esse trigger deve ser setado por fora
             animator.SetTrigger("UseSkill");
             // TO DO: Essa função deve ser chamada pela animação de usar skill usando evento
-            BattleManager.instance.UpdateQueue(BattleSkillManager.currentSkill.cost);
+            BattleManager.instance.UpdateQueue(Mathf.FloorToInt(BattleSkillManager.currentSkill.cost * curSpeed));
             // TODO: Instancia o prefab da skill como filho de cada um dos alvos
         }
 
@@ -141,6 +152,11 @@ namespace FinalInferno{
             // e ao inves de chamar a função da skill em todos os alvos vai chamar so no alvo que ela é filha
             BattleSkillManager.UseSkill();
             FinalInferno.UI.FSM.AnimationEnded.EndAnimation();
+        }
+
+        public void ShowThisAsATarget()
+        {
+            battleItem.ShowThisAsATarget();
         }
     }
 }

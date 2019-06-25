@@ -14,9 +14,5 @@ namespace FinalInferno{
         public abstract string Description2 { get; }
 
         public abstract void Apply(BattleUnit source, BattleUnit target);
-
-        /*public void Update(float valueUpdated){
-            value = valueUpdated;
-        }*/
     }
 }

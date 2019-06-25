@@ -10,6 +10,7 @@ namespace FinalInferno{
         [SerializeField] private Character characterSO;
         public Character CharacterSO { get{ return characterSO; } }
         [SerializeField] private bool isMain;
+        // Tamanho desse vetor deve ser igual a Party.Capacity
         private static CharacterOW[] characterList = new CharacterOW[]{null, null, null, null};
         public static ReadOnlyCollection<CharacterOW> CharacterList {get {return System.Array.AsReadOnly(characterList); } }
         public static CharacterOW MainOWCharacter{ get{ return characterList[0]; } }
@@ -74,6 +75,7 @@ namespace FinalInferno{
                 gameObject.GetComponent<Collider2D>().isTrigger = true;
             }
             characterList[int.Parse(characterSO.name.Split(' ')[1]) - 1] = this;
+            GetComponent<Movable>().CanMove = false;
         }
 
         public void Start(){

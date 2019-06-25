@@ -6,13 +6,12 @@ namespace FinalInferno{
     public class LoadStuff : MonoBehaviour
     {
         public void Start(){
-            Debug.Log("StaticLoadStuff.gameStarted = " + StaticLoadStuff.gameStarted);
-            if(!StaticLoadStuff.gameStarted){
-                AssetManager.LoadAllAssets();
-                Quest exQuest = AssetManager.LoadAsset<Quest>("AdventurerQuest");
-                exQuest.events["TutorialComplete"] = false;
-                StaticLoadStuff.gameStarted = true;
-            }
+            AssetManager.LoadAllAssets();
+            Party.Instance.currentMap = "Demo";
+            Quest exQuest = AssetManager.LoadAsset<Quest>("AdventurerQuest");
+            exQuest.events["TutorialComplete"] = false;
+            Party.Instance.GiveExp(0);
+            SceneLoader.LoadOWScene(Party.Instance.currentMap);
         }
     }
 }

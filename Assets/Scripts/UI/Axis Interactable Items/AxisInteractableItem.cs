@@ -78,7 +78,7 @@ namespace FinalInferno.UI.AII
         /// <summary>
         /// Ativa a referência do item.
         /// </summary>
-        protected void EnableGO()
+        public void EnableGO()
         {
             activeReference.SetActive(true);
         }
@@ -86,7 +86,7 @@ namespace FinalInferno.UI.AII
         /// <summary>
         /// Desativa a referência do item.
         /// </summary>
-        protected void DisableGO()
+        public void DisableGO()
         {
             activeReference.SetActive(false);
         }

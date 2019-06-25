@@ -13,7 +13,14 @@ namespace FinalInferno{
         [SerializeField] private Transform playerObj;
         // Tabela de encontros aleatorios pra este mapa
         [SerializeField] private TextAsset encounterTable;
-        private DynamicTable table;
+        [SerializeField] private DynamicTable table = null;
+        private DynamicTable Table {
+            get {
+                if(table == null)
+                    table = DynamicTable.Create(encounterTable);
+                return table;
+            }
+        }
         [SerializeField] private int minNumberEnemies;
         [SerializeField] private int maxNumberEnemies;
         [SerializeField] public Sprite BattleBG;
@@ -63,10 +70,10 @@ namespace FinalInferno{
                 //Debug.Log("About to fight " + enemies.Length + " enemies");
                 for(int i = 0; i < enemies.Length; i++){
                     float roll = Random.Range(0f, 100.0f);
-                    for(int j = 0; j < table.Rows.Count; j++){
-                        //Debug.Log("Rolled a " + roll + " for " + (Enemy)table.Rows[j]["Enemy"] + " with chance of " + (float)table.Rows[j]["Chance"]);
-                        if(roll <= table.Rows[j].Field<float>("Chance")){
-                            enemies[i] = table.Rows[j].Field<Enemy>("Enemy");
+                    for(int j = 0; j < Table.Rows.Count; j++){
+                        //Debug.Log("Rolled a " + roll + " for " + (Enemy)Table.Rows[j]["Enemy"] + " with chance of " + (float)Table.Rows[j]["Chance"]);
+                        if(roll <= Table.Rows[j].Field<float>("Chance")){
+                            enemies[i] = Table.Rows[j].Field<Enemy>("Enemy");
                             break;
                         }
                     }

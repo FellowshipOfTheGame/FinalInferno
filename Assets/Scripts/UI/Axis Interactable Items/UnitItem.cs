@@ -20,6 +20,8 @@ namespace FinalInferno.UI.AII
         /// </summary>
         [SerializeField] private AxisInteractableItem item;
 
+        private bool showingTarget = false;
+
         void Awake()
         {
             item.OnEnter += UpdateEnemyContent;
@@ -42,6 +44,15 @@ namespace FinalInferno.UI.AII
         private void ResetEnemyContent()
         {
             BattleManager.instance.enemyContent.ShowAllLives();
+        }
+
+        public void ShowThisAsATarget()
+        {
+            if(showingTarget)
+                item.DisableGO();
+            else
+                item.EnableGO();
+            showingTarget = !showingTarget;
         }
 
     }

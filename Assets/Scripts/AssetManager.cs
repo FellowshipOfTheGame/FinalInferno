@@ -6,11 +6,21 @@ using System.IO;
 namespace FinalInferno{
     public static class AssetManager
     {
+        private static List<AssetBundle> bundleList;
+        private static List<AssetBundle> BundleList {
+            get{
+                if(bundleList == null)
+                    bundleList = new List<AssetBundle>();
+                return bundleList;
+            }
+        }
+
         private static AssetBundle party = null;
         private static AssetBundle Party{
             get{
-                if(party == null){
+                if(party == null || !BundleList.Contains(party)){
                     party = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "party"));
+                    BundleList.Add(party);
                 }
                 return party;
             }
@@ -18,8 +28,9 @@ namespace FinalInferno{
         private static AssetBundle hero = null;
         private static AssetBundle Hero{
             get{
-                if(hero == null){
+                if(hero == null || !BundleList.Contains(hero)){
                     hero = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "hero"));
+                    BundleList.Add(hero);
                 }
                 return hero;
             }
@@ -27,8 +38,9 @@ namespace FinalInferno{
         private static AssetBundle character = null;
         private static AssetBundle Character{
             get{
-                if(character == null){
+                if(character == null || !BundleList.Contains(character)){
                     character = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "character"));
+                    BundleList.Add(character);
                 }
                 return character;
             }
@@ -36,8 +48,9 @@ namespace FinalInferno{
         private static AssetBundle enemy = null;
         private static AssetBundle Enemy{
             get{
-                if(enemy == null){
+                if(enemy == null || !BundleList.Contains(enemy)){
                     enemy = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "enemy"));
+                    BundleList.Add(enemy);
                 }
                 return enemy;
             }
@@ -45,16 +58,95 @@ namespace FinalInferno{
         private static AssetBundle skill = null;
         private static AssetBundle Skill{
             get{
-                if(skill == null){
+                if(skill == null || !BundleList.Contains(skill)){
                     skill = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "skill"));
+                    BundleList.Add(skill);
                 }
                 return skill;
             }
         }
+        private static AssetBundle quest = null;
+        private static AssetBundle Quest{
+            get{
+                if(quest == null || !BundleList.Contains(skill)){
+                    quest = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "quest"));
+                    BundleList.Add(quest);
+                }
+                return quest;
+            }
+        }
+
+        public static void LoadAllBundles(){
+            #if UNITY_EDITOR
+            return;
+            #else
+            if(Party && Character && Hero && Enemy && Skill && Quest)
+            return;
+            #endif
+        }
 
         public static void LoadAllAssets(){
-            if(Party && Character && Hero && Skill && Enemy)
+            #if UNITY_EDITOR
             return;
+            #else
+            LoadAllBundles();
+            if(Party)
+                LoadBundleAssets<Party>();
+            if(Character)
+                LoadBundleAssets<Character>();
+            if(Hero)
+                LoadBundleAssets<Hero>();
+            if(Enemy)
+                LoadBundleAssets<Enemy>();
+            if(Skill)
+                LoadBundleAssets<Skill>();
+            if(Quest)
+                LoadBundleAssets<Quest>();
+            return;
+            #endif
+        }
+
+        private static AssetBundle GetBundle(string typeName){
+            AssetBundle bundle = null;
+            switch(typeName){
+                case "party":
+                    bundle = Party;
+                    break;
+                case "hero":
+                    bundle = Hero;
+                    break;
+                case "character":
+                    bundle = Character;
+                    break;
+                case "enemy":
+                    bundle = Enemy;
+                    break;
+                case "skill":
+                    bundle = Skill;
+                    break;
+                case "quest":
+                    bundle = Quest;
+                    break;
+                default:
+                    Debug.Log("Access to bundle " + typeName + " is not implemented");
+                    break;
+            }
+            return bundle;
+        }
+
+        public static List<T> LoadBundleAssets<T>() where T : UnityEngine.Object{
+            #if UNITY_EDITOR
+            string[] objectsFound = UnityEditor.AssetDatabase.FindAssets("t:" + typeof(T).Name);
+            List<T> newList = new List<T>();
+            foreach(string guid in objectsFound){
+                newList.Add(UnityEditor.AssetDatabase.LoadAssetAtPath<T>(UnityEditor.AssetDatabase.GUIDToAssetPath(guid)));
+            }
+            return newList;
+            #else
+            string typeName = typeof(T).Name.ToLower();
+            AssetBundle bundle = GetBundle(typeName);
+            return (bundle == null)? null : new List<T>(bundle.LoadAllAssets<T>());
+            #endif
         }
 
         public static T LoadAsset<T>(string name) where T : UnityEngine.Object{
@@ -67,30 +159,11 @@ namespace FinalInferno{
                 Debug.Log("object " + name + " not found");
                 return null;
             }
-            #endif
+            #else
             string typeName = typeof(T).Name.ToLower();
-            AssetBundle bundle = null;
-            switch(typeName){
-                case "party":
-                    bundle = Party;
-                    break;
-                case "hero":
-                    bundle = Hero;
-                    break;
-                case "enemy":
-                    bundle = Enemy;
-                    break;
-                case "skill":
-                    bundle = Skill;
-                    break;
-                case "character":
-                    bundle = Character;
-                    break;
-                default:
-                    Debug.Log("Access to bundle " + typeName + " is not implemented");
-                    return null;
-            }
-            return bundle.LoadAsset<T>(name);
+            AssetBundle bundle = GetBundle(typeName);
+            return (bundle == null)? null : bundle.LoadAsset<T>(name);
+            #endif
         }
 
         public static UnityEngine.Object LoadAsset(string name, System.Type type){
@@ -103,67 +176,34 @@ namespace FinalInferno{
                 Debug.Log("object " + name + " not found");
                 return null;
             }
-            #endif
+            #else
             string typeName = type.Name.ToLower();
-            AssetBundle bundle = null;
-            switch(typeName){
-                case "party":
-                    bundle = Party;
-                    break;
-                case "hero":
-                    bundle = Hero;
-                    break;
-                case "enemy":
-                    bundle = Enemy;
-                    break;
-                case "skill":
-                    bundle = Skill;
-                    break;
-                case "character":
-                    bundle = Character;
-                    break;
-                default:
-                    Debug.Log("Access to bundle " + typeName + " is not implemented");
-                    return null;
-            }
-            return bundle.LoadAsset(name, type);
+            AssetBundle bundle = GetBundle(typeName);
+            return (bundle == null)? null : bundle.LoadAsset(name, type);
+            #endif
         }
 
         public static void UnloadAssets<T>(bool shouldDestroy = true){
             #if UNITY_EDITOR
             return;
-            #endif
+            #else
             
-            switch(typeof(T).ToString().ToLower()){
-                case "party":
-                    party.Unload(shouldDestroy);
-                    party = null;
-                    break;
-                case "enemy":
-                    enemy.Unload(shouldDestroy);
-                    enemy = null;
-                    break;
-                case "skill":
-                    skill.Unload(shouldDestroy);
-                    skill = null;
-                    break;
-                default:
-                    Debug.Log("Access to bundle " + typeof(T).ToString().ToLower() + " is not implemented");
-                    return;
-
-            }
+            string typeName = typeof(T).Name.ToLower();
+            AssetBundle bundle = GetBundle(typeName);
+            bundle.Unload(shouldDestroy);
+            BundleList.Remove(bundle);
+            #endif
         }
 
         public static void UnloadAllAssets(bool shouldDestroy = true){
             #if UNITY_EDITOR
             return;
+            #else
+            foreach(AssetBundle bundle in BundleList){
+                bundle.Unload(shouldDestroy);
+            }
+            BundleList.Clear();
             #endif
-            AssetBundle.UnloadAllAssetBundles(shouldDestroy);
-            party = null;
-            hero = null;
-            enemy = null;
-            character = null;
-            skill = null;
         }
     }
 }

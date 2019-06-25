@@ -16,6 +16,8 @@ namespace FinalInferno{
         public List<Skill> skills; //lista de "skills" da unidade
         public Skill attackSkill; //habilidade basica de ataque
         public Skill defenseSkill; //habilidade basica de defesa
+        public virtual bool IsHero{ get{ return false; } }
+        public abstract long SkillExp {get;}
         //public StatsTable statsTable; //tabela com as statisticas de atributos da unidade baseadas no nivel da unidade
         public RuntimeAnimatorController animator; //"animator" dessa unidade 
         public Sprite portrait; //

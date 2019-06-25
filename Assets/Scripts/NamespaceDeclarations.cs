@@ -60,6 +60,58 @@ namespace FinalInferno
     }
 
     [System.Serializable]
+     public struct SkillInfo{
+        [SerializeField] public long xp;
+        [SerializeField] public bool active;
+    }
+
+    [System.Serializable]
+    public struct QuestInfo{
+        [SerializeField] public string name;
+        [SerializeField] public string[] flagsNames;
+        [SerializeField] public int flagsTrue;
+    }
+
+    [System.Serializable]
+    public struct SkillInfoArray{
+        [SerializeField] public SkillInfo[] skills;
+    }
+
+    [System.Serializable]
+    public struct SaveInfo{
+        [SerializeField] public long xpParty; // exp acumulativa da party
+        [SerializeField] public string mapName; // nome do mapa (cena de overworld) atual
+        [SerializeField] public QuestInfo[] quest; // Lsta de informações das quests
+        //quests de kill
+        [SerializeField] public string[] archetype; // Lista com a ordem dos heroes
+        [SerializeField] public int[] hpCur; // hp atual de cada personagem
+        [SerializeField] public Vector2[] position; // posição no overworld dos personagens
+        [SerializeField] public SkillInfoArray[] heroSkills; // Info de skills
+    }
+
+    // Struct a ser usada para visualizar os saveSlots
+    public struct SavePreviewInfo{
+        public int level;
+        public string mapName;
+        public List<Hero> heroes;
+        public SavePreviewInfo(SaveInfo save){
+            // Listas são null por default, portanto um save com uma lista nula não foi inicializado
+            if(save.archetype == null){
+                level = 0;
+                mapName = "";
+                heroes = null;
+            }else{
+                level = Party.Instance.GetLevel(save.xpParty);
+                mapName = save.mapName;
+                heroes = new List<Hero>();
+                foreach(string heroName in save.archetype){
+                    heroes.Add(AssetManager.LoadAsset<Hero>(heroName));
+                }
+            }
+        }
+    }
+
+    [System.Serializable]
     public class QuestDictionary : RotaryHeart.Lib.SerializableDictionary.SerializableDictionaryBase<string, bool>{ }
 
     [System.Serializable]

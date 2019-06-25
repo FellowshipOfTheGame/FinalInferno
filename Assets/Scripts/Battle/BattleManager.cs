@@ -92,12 +92,7 @@ namespace FinalInferno{
         }
 
         public UnitType GetUnitType(Unit unit){
-            return (IsHero(unit)) ? UnitType.Hero : UnitType.Enemy;
-        }
-
-
-        private bool IsHero(Unit unit){
-            return (unit.GetType() == typeof(Hero));
+            return (unit.IsHero) ? UnitType.Hero : UnitType.Enemy;
         }
 
         public VictoryType CheckEnd(){
@@ -105,9 +100,9 @@ namespace FinalInferno{
             int quantityHeros = 0;
 
             for(int i = 0; i < quantityAll; i++){
-                if(IsHero(queue.Peek(i).unit)) quantityHeros++;
+                if((queue.Peek(i).unit).IsHero) quantityHeros++;
             }
-            if (currentUnit && IsHero(currentUnit.unit)) quantityHeros++;
+            if (currentUnit && currentUnit.unit.IsHero) quantityHeros++;
 
             if(quantityHeros == quantityAll+1) return VictoryType.Heroes;
             if(quantityHeros == 0) return VictoryType.Enemys;
@@ -122,12 +117,15 @@ namespace FinalInferno{
                     team.Add(currentUnit);
 
                 foreach(BattleUnit unit in queue.list){
-                    if (GetUnitType(unit.unit) == type)
+                    if (unit != currentUnit && GetUnitType(unit.unit) == type)
                         team.Add(unit);
                 }
             }else{
+                if (GetUnitType(currentUnit.unit) == type && !deadOnly)
+                    team.Add(currentUnit);
+
                 foreach(BattleUnit unit in battleUnits){
-                    if((GetUnitType(unit.unit) == type) && ( !deadOnly ||(deadOnly && unit.CurHP < 0)))
+                    if(unit != currentUnit && (GetUnitType(unit.unit) == type) && ( !deadOnly ||(deadOnly && unit.CurHP < 0)))
                         team.Add(unit);
                 }
             }

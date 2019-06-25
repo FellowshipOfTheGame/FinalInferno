@@ -8,7 +8,7 @@ namespace FinalInferno{
     public class Skill : ScriptableObject{
         public new string name; //nome da "skill"
         public int level; //nivel da "skill"
-        public int cost; //tempo que a "skill" custara ao conjurador
+        public float cost; //tempo que a "skill" custara ao conjurador, em porcentagem da sua velocidade
         public TargetType target; //tipo de alvo da "skill"
         public Element attribute; //elemento da "skill"
         public List<SkillEffectTuple> effects; //lista de efeitos que a "skill" causa e seus valores associados
@@ -19,7 +19,7 @@ namespace FinalInferno{
 
         //funcao que define como a skill sera usada
         // TO DO: Passará a receber apenas um alvo como parametro ao inves de uma lista
-        public void Use(BattleUnit user, List<BattleUnit> targets, bool shouldOverride = false, float value1 = 0f, float value2 = 0f){
+        public virtual void Use(BattleUnit user, List<BattleUnit> targets, bool shouldOverride = false, float value1 = 0f, float value2 = 0f){
             foreach (BattleUnit trgt in targets) {
                 foreach (SkillEffectTuple skillEffect in effects) {
                     skillEffect.effect.value1 = (shouldOverride)? value1 : skillEffect.value1;
@@ -29,5 +29,7 @@ namespace FinalInferno{
                 }
             }
         }
+
+        public virtual void ResetSkill(){Debug.Log("Reseto skill errado");} 
     }
 }
