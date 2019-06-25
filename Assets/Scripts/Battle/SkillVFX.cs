@@ -15,4 +15,8 @@ public class SkillVFX : MonoBehaviour
             // TO DO: Avisa que acabou as animacoes da skill
         }
     }
+    void DestroySkillObject()
+    {
+        Destroy(this);
+    }
 }

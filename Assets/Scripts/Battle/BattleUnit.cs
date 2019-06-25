@@ -98,6 +98,8 @@ namespace FinalInferno{
         }
 
         public void TakeDamage(int atk, float multiplier, DamageType type, Element element) {
+            // TO DO: Esse trigger deve ser setado por fora
+            animator.SetTrigger("TakeDamage");
             float atkDifference = atk - ( (type == DamageType.Physical)? curDef : ((type == DamageType.Magical)? curMagicDef : 0));
             atkDifference = Mathf.Max(atkDifference, 1);
             int damage = Mathf.FloorToInt(atkDifference * multiplier * 1/*elementmultiplier*/ * (Mathf.Clamp(1.0f - damageResistance, 0.0f, 1.0f)) * 10);
@@ -105,6 +107,8 @@ namespace FinalInferno{
 
             if(CurHP <= 0){
                 BattleManager.instance.Kill(this);
+                // TO DO: Esse trigger deve ser setado por fora
+                animator.SetTrigger("IsDead");
                 //Destroy(this);
             }
 
