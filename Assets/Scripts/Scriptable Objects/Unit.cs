@@ -22,5 +22,6 @@ namespace FinalInferno{
         public RuntimeAnimatorController animator; //"animator" dessa unidade 
         public Sprite portrait; //
         public Sprite battleSprite;
+        public Sprite queueSprite;
     }
 }
