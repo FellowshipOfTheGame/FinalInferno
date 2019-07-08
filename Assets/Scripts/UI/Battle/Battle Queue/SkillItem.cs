@@ -33,7 +33,7 @@ namespace FinalInferno.UI.Battle.QueueMenu
         private void StartPreview()
         {
             BattleManager.instance.queueUI.StartPreview(BattleManager.instance.queue.PreviewPosition(BattleManager.instance.currentUnit.actionPoints
-                                                 + Mathf.FloorToInt(BattleManager.instance.currentUnit.curSpeed * skill.cost)));
+                                                 + Mathf.FloorToInt((1.0f - BattleManager.instance.currentUnit.ActionCostReduction) * skill.cost)));
         }
 
         /// <summary>

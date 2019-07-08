@@ -11,7 +11,7 @@ namespace FinalInferno
         None
     }
     public enum Element {
-        Fire,
+        Fire = 0,
         Ice,
         Wind,
         Earth,
@@ -46,8 +46,11 @@ namespace FinalInferno
         PassiveOnReceiveBuff,
         PassiveOnGiveDebuff,
         PassiveOnReceiveDebuff,
+        PassiveOnReceiveDebuffAll,
+        PassiveOnReceiveBuffAll,
         PassiveOnGiveDamage,
         PassiveOnTakeDamage,
+        PassiveOnTakeDamageAll,
         PassiveOnHit,
         PassiveOnGetHit,
         PassiveOnDeath

@@ -18,7 +18,8 @@ namespace FinalInferno.UI.FSM
         public override void Act(StateController controller)
         {
             foreach(BattleUnit battleUnit in BattleManager.instance.queue.list){
-                battleUnit.OnEndBattle(battleUnit, BattleManager.instance.GetTeam(UnitType.Hero, true));
+                if(battleUnit.OnEndBattle != null)
+                    battleUnit.OnEndBattle(battleUnit, BattleManager.instance.GetTeam(UnitType.Hero, true));
             }
         }
 

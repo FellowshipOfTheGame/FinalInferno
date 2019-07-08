@@ -32,6 +32,10 @@ namespace FinalInferno{
         //retira e retorna a proxima BattleUnit que agira no combate
         public BattleUnit Dequeue(){
             BattleUnit bU = list[0];
+            int currentActionPoints = bU.actionPoints;
+            foreach(BattleUnit bUnit in list){
+                bUnit.actionPoints -= currentActionPoints;
+            }
             list.RemoveAt(0);
             return bU;
         }

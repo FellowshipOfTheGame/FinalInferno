@@ -18,6 +18,12 @@ namespace FinalInferno{
         public int curDef; //defesa atual dessa unidade, contando status de buff/debuff
         public int curMagicDef; //defesa magica atual dessa unidade, contando status de buff/debuff
         public int curSpeed; //velocidade atual dessa unidade, contando status de buff/debuff
+        public float ActionCostReduction{ // Redução porcentual do cust de ações dessa unidade
+            get{
+                float maxReduction = 0.5f;
+                return Mathf.Clamp(maxReduction * (curSpeed / (Unit.maxStatValue * 1.0f)), 0.0f, maxReduction);
+            }
+        }
         public int actionPoints; //define a posicao em que essa unidade agira no combate
         public float DebuffResistance { get; private set; } // resistencia a debuffs em geral
         private float damageResistance = 0.0f; // resistencia a danos em geral
@@ -92,16 +98,6 @@ namespace FinalInferno{
             }
         }
 
-        public void ApplyEffects(){
-        }
-
-        public void StartListening(){
-
-        }
-
-        public void Act(){
-        }
-
         public void UpdateStatusEffects(){
             foreach (StatusEffect effect in effects.ToArray()){
                 effect.Update();
@@ -109,7 +105,6 @@ namespace FinalInferno{
         }
 
         public void TakeDamage(int atk, float multiplier, DamageType type, Element element) {
-            // TO DO: Esse trigger deve ser setado por fora
             animator.SetTrigger("TakeDamage");
             float atkDifference = atk - ( (type == DamageType.Physical)? curDef : ((type == DamageType.Magical)? curMagicDef : 0));
             atkDifference = Mathf.Max(atkDifference, 1);
@@ -118,7 +113,6 @@ namespace FinalInferno{
 
             if(CurHP <= 0){
                 BattleManager.instance.Kill(this);
-                // TO DO: Esse trigger deve ser setado por fora
                 animator.SetTrigger("IsDead");
                 //Destroy(this);
             }
@@ -141,7 +135,7 @@ namespace FinalInferno{
 
         public void SkillSelected(){
             animator.SetTrigger("UseSkill");
-            BattleManager.instance.UpdateQueue(Mathf.FloorToInt(BattleSkillManager.currentSkill.cost * curSpeed));
+            BattleManager.instance.UpdateQueue(Mathf.FloorToInt(BattleSkillManager.currentSkill.cost * (1.0f - ActionCostReduction) ));
         }
 
         public void UseSkill(){

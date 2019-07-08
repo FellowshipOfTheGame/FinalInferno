@@ -39,7 +39,7 @@ namespace FinalInferno{
         }
 
         //inteligencia atificial do inimigo na batalha
-        public void AIEnemy(){
+        public virtual void AIEnemy(){
             Skill skill;
             
             //float rand = Random.Range(0, 2);
@@ -49,14 +49,14 @@ namespace FinalInferno{
             //else
             //    skill = defenseSkill;
             
-            BattleSkillManager.currentSkill = attackSkill;
+            BattleSkillManager.currentSkill = skill;
             BattleSkillManager.currentUser = BattleManager.instance.currentUnit;
             BattleSkillManager.currentTargets = GetTargets(skill.target);
 
             // BattleSkillManager.UseSkill();
         }
 
-        private List<BattleUnit> GetTargets(TargetType type)
+        protected virtual List<BattleUnit> GetTargets(TargetType type)
         {
             List<BattleUnit> targets = new List<BattleUnit>();
             List<BattleUnit> team = new List<BattleUnit>();
