@@ -21,6 +21,11 @@ namespace FinalInferno{
         // Uma array de saves inicializados com valores padrão
         public SaveInfo[] saves = new SaveInfo[nSaveSlots];
 
+        public SavePreviewInfo Preview(int slotNumber){
+            slotNumber = Mathf.Clamp(slotNumber, 0, nSaveSlots);
+            return new SavePreviewInfo(saves[slotNumber]);
+        }
+
         public SavePreviewInfo[] Preview(){
             SavePreviewInfo[] previews = new SavePreviewInfo[nSaveSlots];
             for(int i = 0; i < nSaveSlots; i++){
