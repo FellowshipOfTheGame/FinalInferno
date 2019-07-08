@@ -12,11 +12,11 @@ namespace FinalInferno.UI.Battle
 
         public static void UseSkill()
         {
-            // TO DO: fazer isso funcionar com as animacoes e sem redundancias
             currentSkill.Use(currentUser, currentTargets);
-
-            // foreach (BattleUnit target in currentTargets)
-            //     Debug.Log(currentSkill.name + "ing " + target.unit.name + " - " + target.curHP + "/" + target.unit.hpMax);
+            SkillVFX.nTargets = currentTargets.Count;
+            foreach(BattleUnit target in currentTargets){
+                GameObject.Instantiate(currentSkill.VisualEffect, target.transform);
+            }
         }
 
         public static TargetType GetSkillType()

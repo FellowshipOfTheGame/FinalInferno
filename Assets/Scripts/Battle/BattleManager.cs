@@ -136,5 +136,12 @@ namespace FinalInferno{
         public List<BattleUnit> GetTeam(BattleUnit battleUnit){
             return GetTeam(GetUnitType(battleUnit.unit));
         }
+
+        public BattleUnit GetBattleUnit(Unit unit){
+            foreach(BattleUnit bUnit in battleUnits){
+                if(bUnit.unit == unit) return bUnit;
+            }
+            return null;
+        }
     }
 }

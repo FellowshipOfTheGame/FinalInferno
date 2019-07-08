@@ -22,6 +22,9 @@ namespace FinalInferno.UI
 
         private void Continue()
         {
+            foreach(Character character in Party.Instance.characters){
+                character.hpCur = Mathf.Max(BattleManager.instance.GetBattleUnit(character.archetype).CurHP, 1);
+            }
             SceneLoader.LoadOWScene(Party.Instance.currentMap, true);
         }
     }

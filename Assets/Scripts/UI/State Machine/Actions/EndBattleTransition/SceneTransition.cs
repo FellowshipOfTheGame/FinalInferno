@@ -23,13 +23,16 @@ namespace FinalInferno.UI.FSM
             //     SceneLoader.LoadOWScene(SceneLoader.LastOWScene);
             // else
             //     SceneLoader.LoadOWScene(sceneName);
+            foreach(Character character in Party.Instance.characters){
+                character.hpCur = Mathf.Max(BattleManager.instance.GetBattleUnit(character.archetype).CurHP, 1);
+            }
             SceneLoader.LoadOWScene(Party.Instance.currentMap, true);
         }
 
     }
 
     #if UNITY_EDITOR
-    // PropertyDrawer necessario para exibir e editar QuestEvent no editor da unity
+    // PropertyDrawer necessario para exibir e editar SceneTransition no editor da unity
     [CustomEditor(typeof(SceneTransition))]
     public class SceneTransitionEditor : Editor{
         SerializedProperty sceneName;
