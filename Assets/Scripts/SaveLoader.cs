@@ -7,7 +7,7 @@ namespace FinalInferno{
         private const string fileName = "SaveFile";
         private static DataSaver<SaveFile> dataSaver = new DataSaver<SaveFile>(fileName, false);
         private static SaveFile saveFile = dataSaver.LoadData();
-        public static SaveFile SaveFile { get{ return saveFile; } }
+        public static int SaveSlot { get{ return saveFile.Slot; } set{ saveFile.Slot = value; }}
         public static bool AutoSave {
             get{
                 if(saveFile != null){
@@ -32,6 +32,14 @@ namespace FinalInferno{
                 }
                 return (charCount == Party.Capacity);
             }
+        }
+
+        public static SavePreviewInfo[] PreviewAllSlots(){
+            return saveFile.Preview();
+        }
+
+        public static SavePreviewInfo PreviewSlot(int slotNumber){
+            return saveFile.Preview(slotNumber);
         }
 
         public static void SaveGame(){
