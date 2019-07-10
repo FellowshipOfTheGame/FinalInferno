@@ -46,7 +46,7 @@ namespace FinalInferno.UI.Saves
                 SavePreviewInfo slot = slots[i];
                 GameObject slotGO = slotObjects[i];
                 // Instancia um novo item e o coloca no content
-                slotGO.GetComponent<Slot>().LoadSlot(slot);
+                slotGO.GetComponent<Slot>().LoadSlot(slot, i);
                 slotGO.transform.SetParent(slotsContent);
             }
         }

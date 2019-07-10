@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using FinalInferno.UI.AII;
+using FinalInferno.UI.FSM;
 
 namespace FinalInferno.UI.Saves
 {
@@ -16,9 +18,21 @@ namespace FinalInferno.UI.Saves
         [SerializeField] private TMP_Text InfosText;
         [SerializeField] private Image[] HeroesImages;
 
-        public void LoadSlot(SavePreviewInfo info)
+        [Header("Axis Interactable Item")]
+        [SerializeField] private AxisInteractableItem Item;
+        [SerializeField] private BoolDecision decision;
+
+        private int slotNumber = -1;
+        private bool emptySlot;
+
+        void Awake()
         {
-            if (info.level == 0)
+            Item.OnEnter += SetSlotTypeValue;
+        }
+
+        public void LoadSlot(SavePreviewInfo info, int number)
+        {
+            if (emptySlot = (info.level == 0))
             {
                 EmptySlotGO.SetActive(true);
             }
@@ -30,6 +44,14 @@ namespace FinalInferno.UI.Saves
                 for (int i = 0; i < 4; i++)
                     HeroesImages[i].sprite = info.heroes[i].queueSprite;
             }
+
+            slotNumber = number;
+        }
+
+        private void SetSlotTypeValue()
+        {
+            decision.UpdateValue(emptySlot);
+            SaveLoader.SaveSlot = slotNumber;
         }
     }
 }
