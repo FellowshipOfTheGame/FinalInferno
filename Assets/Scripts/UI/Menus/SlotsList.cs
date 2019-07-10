@@ -13,7 +13,7 @@ namespace FinalInferno.UI.Saves
         /// <summary>
         /// Objeto template para um item de slot que será mostrado no menu.
         /// </summary>
-        [SerializeField] private GameObject slotObject;
+        [SerializeField] private GameObject[] slotObjects;
 
         [Header("Content reference")]
         /// <summary>
@@ -33,50 +33,21 @@ namespace FinalInferno.UI.Saves
         /// </summary>
         [SerializeField] private ButtonClickDecision clickDecision;
 
-        /// <summary>
-        /// Start is called on the frame when a script is enabled just before
-        /// any of the Update methods is called the first time.
-        /// </summary>
-        void Start()
+        void Awake()
         {
-            //UpdateSlotsContent(SaveLoader.PreviewAllSlots());
+            UpdateSlotsContent(SaveLoader.PreviewAllSlots());
         }
 
-        public void UpdateSlotsContent(List<SavePreviewInfo> slots)
+        public void UpdateSlotsContent(SavePreviewInfo[] slots)
         {
-            // Deleta todos os itens previamente alocados no content
-            foreach (Slot element in slotsContent.GetComponentsInChildren<Slot>())
-            {
-                Destroy(element.gameObject);
-            }
-
-            // Variável auxiliar para a ordenação dos itens
-            AxisInteractableItem lastItem = null;
-
             // Passa por todas as skills da lista, adicionando as ativas no menu e as ordenando
-            foreach (SavePreviewInfo slot in slots)
+            for (int i = 0; i < 5; i++)
             {
+                SavePreviewInfo slot = slots[i];
+                GameObject slotGO = slotObjects[i];
                 // Instancia um novo item e o coloca no content
-                GameObject newSlot = Instantiate(slotObject);
-                newSlot.GetComponent<Slot>().LoadSlot(slot);
-                newSlot.transform.SetParent(slotsContent);
-
-                // Adiciona a decisão de clique no item criado
-                ClickableItem newClickableItem = newSlot.GetComponent<ClickableItem>();
-                newClickableItem.BCD = clickDecision;
-
-                // Ordena o item na lista
-                AxisInteractableItem newItem = newSlot.GetComponent<AxisInteractableItem>();
-                if (lastItem != null)
-                {
-                    newItem.positiveItem = lastItem;
-                    lastItem.negativeItem = newItem;
-                }
-                else
-                {
-                    manager.firstItem = newItem;
-                }
-                lastItem = newItem;
+                slotGO.GetComponent<Slot>().LoadSlot(slot);
+                slotGO.transform.SetParent(slotsContent);
             }
         }
     }
