@@ -24,6 +24,10 @@ namespace FinalInferno.UI.Battle
         [Header("Prefab")]
         [SerializeField] private GameObject unitPrefab;
 
+        [Header("Selection Indicator")]
+        [SerializeField] private Sprite heroIndicator;
+        [SerializeField] private Sprite enemyIndicator;
+
 
         void Awake(){
             // Singleton
@@ -49,7 +53,10 @@ namespace FinalInferno.UI.Battle
             newUnit.transform.rotation = Quaternion.identity;
             battleUnit.Configure(unit);
             // TO DO: Isso não deve ser necessário depois que todas as unidades tiverem o animator e as animações funcionando
-            newUnit.GetComponent<Image>().sprite = unit.battleSprite;
+            Image[] unitImages = newUnit.GetComponentsInChildren<Image>();
+            unitImages[0].sprite = (unit.GetType() == typeof(Hero))? heroIndicator : enemyIndicator;
+            unitImages[0].gameObject.SetActive(false);
+            unitImages[1].sprite = unit.battleSprite;
             
             // Ordena o item na lista
             AxisInteractableItem newItem = newUnit.GetComponent<AxisInteractableItem>();
