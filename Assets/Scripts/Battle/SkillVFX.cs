@@ -1,18 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FinalInferno.UI.Battle;
 
-[RequireComponent(typeof(Animator)), RequireComponent(typeof(SpriteRenderer))]
-public class SkillVFX : MonoBehaviour
-{
-    public static int nTargets;
-    private static int counter = 0;
-    void UseSkill(){
-        // TO DO: usa a skill selecionada com o currentUnit como source e transform.parent.getComponent<BattleUnit>(como alvo)
-        counter++;
-        if(counter >= nTargets){
-            counter = 0;
-            // TO DO: Avisa que acabou as animacoes da skill
+namespace FinalInferno{
+    [RequireComponent(typeof(Animator)), RequireComponent(typeof(SpriteRenderer))]
+    public class SkillVFX : MonoBehaviour
+    {
+        public static int nTargets;
+        private static int counter = 0;
+        void UseSkill(){
+            BattleSkillManager.currentSkill.Use(BattleSkillManager.currentUser, transform.parent.GetComponent<BattleUnit>());
+        }
+        void DestroySkillObject()
+        {
+            counter++;
+            if(counter >= nTargets){
+                counter = 0;
+                nTargets = -1;
+                FinalInferno.UI.FSM.AnimationEnded.EndAnimation();
+            }
+            Destroy(this);
         }
     }
 }

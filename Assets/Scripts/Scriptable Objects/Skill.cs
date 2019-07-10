@@ -17,8 +17,8 @@ namespace FinalInferno{
         [SerializeField] private GameObject visualEffect; // Prefab contendo uma animação da skill
         public GameObject VisualEffect { get{ return visualEffect; } }
 
-        //funcao que define como a skill sera usada
-        // TO DO: Passará a receber apenas um alvo como parametro ao inves de uma lista
+        // funcao que define como a skill sera usada
+        // A versão da função com lista é usada para skills de callback, e invoca o efeito visual
         public virtual void Use(BattleUnit user, List<BattleUnit> targets, bool shouldOverride = false, float value1 = 0f, float value2 = 0f){
             foreach (BattleUnit trgt in targets) {
                 foreach (SkillEffectTuple skillEffect in effects) {
@@ -26,7 +26,18 @@ namespace FinalInferno{
                     skillEffect.effect.value2 = (shouldOverride)? value2 : skillEffect.value2;
                     
                     skillEffect.effect.Apply(user, trgt);
+                    GameObject.Instantiate(visualEffect, trgt.transform);
                 }
+            }
+        }
+        
+        // A versão da função com um único alvo é usado durante o turno normal e é ivocada pelo efeito visual
+        public virtual void Use(BattleUnit user, BattleUnit target, bool shouldOverride = false, float value1 = 0f, float value2 = 0f){
+            foreach (SkillEffectTuple skillEffect in effects) {
+                skillEffect.effect.value1 = (shouldOverride)? value1 : skillEffect.value1;
+                skillEffect.effect.value2 = (shouldOverride)? value2 : skillEffect.value2;
+                
+                skillEffect.effect.Apply(user, target);
             }
         }
 

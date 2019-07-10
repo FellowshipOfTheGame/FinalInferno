@@ -18,6 +18,12 @@ namespace FinalInferno{
         public int curDef; //defesa atual dessa unidade, contando status de buff/debuff
         public int curMagicDef; //defesa magica atual dessa unidade, contando status de buff/debuff
         public int curSpeed; //velocidade atual dessa unidade, contando status de buff/debuff
+        public float ActionCostReduction{ // Redução porcentual do cust de ações dessa unidade
+            get{
+                float maxReduction = 0.5f;
+                return Mathf.Clamp(maxReduction * (curSpeed / (Unit.maxStatValue * 1.0f)), 0.0f, maxReduction);
+            }
+        }
         public int actionPoints; //define a posicao em que essa unidade agira no combate
         public float DebuffResistance { get; private set; } // resistencia a debuffs em geral
         private float damageResistance = 0.0f; // resistencia a danos em geral
@@ -92,16 +98,6 @@ namespace FinalInferno{
             }
         }
 
-        public void ApplyEffects(){
-        }
-
-        public void StartListening(){
-
-        }
-
-        public void Act(){
-        }
-
         public void UpdateStatusEffects(){
             foreach (StatusEffect effect in effects.ToArray()){
                 effect.Update();
@@ -109,6 +105,7 @@ namespace FinalInferno{
         }
 
         public void TakeDamage(int atk, float multiplier, DamageType type, Element element) {
+            animator.SetTrigger("TakeDamage");
             float atkDifference = atk - ( (type == DamageType.Physical)? curDef : ((type == DamageType.Magical)? curMagicDef : 0));
             atkDifference = Mathf.Max(atkDifference, 1);
             int damage = Mathf.FloorToInt(atkDifference * multiplier * 1/*elementmultiplier*/ * (Mathf.Clamp(1.0f - damageResistance, 0.0f, 1.0f)) * 10);
@@ -116,6 +113,7 @@ namespace FinalInferno{
 
             if(CurHP <= 0){
                 BattleManager.instance.Kill(this);
+                animator.SetTrigger("IsDead");
                 //Destroy(this);
             }
 
@@ -136,18 +134,12 @@ namespace FinalInferno{
         }
 
         public void SkillSelected(){
-            // TO DO: Esse trigger deve ser setado por fora
             animator.SetTrigger("UseSkill");
-            // TO DO: Essa função deve ser chamada pela animação de usar skill usando evento
-            BattleManager.instance.UpdateQueue(Mathf.FloorToInt(BattleSkillManager.currentSkill.cost * curSpeed));
-            // TODO: Instancia o prefab da skill como filho de cada um dos alvos
+            BattleManager.instance.UpdateQueue(Mathf.FloorToInt(BattleSkillManager.currentSkill.cost * (1.0f - ActionCostReduction) ));
         }
 
         public void UseSkill(){
-            // TO DO: Essa função não vai ser responsabilidade do BattleUnit e sim do prefab da animação da skill
-            // e ao inves de chamar a função da skill em todos os alvos vai chamar so no alvo que ela é filha
             BattleSkillManager.UseSkill();
-            FinalInferno.UI.FSM.AnimationEnded.EndAnimation();
         }
 
         public void ShowThisAsATarget()

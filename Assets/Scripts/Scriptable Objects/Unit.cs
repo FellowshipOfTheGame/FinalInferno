@@ -5,6 +5,7 @@ using UnityEngine;
 namespace FinalInferno{
     //engloba todas as unidades que entraram em batalha
     public abstract class Unit : Fog.Dialogue.DialogueEntity {
+        public const int maxStatValue = 999;
         public new string name;
         public int level; //nivel dessa unidade
         public int hpMax; //vida maxima dessa unidade
