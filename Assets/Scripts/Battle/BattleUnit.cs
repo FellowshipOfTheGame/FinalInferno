@@ -32,6 +32,11 @@ namespace FinalInferno{
         public ReadOnlyCollection<Skill> ActiveSkills { get{ return activeSkills.AsReadOnly(); } }
         public SkillDelegate OnEndBattle = null;
         public SkillDelegate OnStartBattle = null;
+        public SkillDelegate OnGiveBuff = null;
+        public SkillDelegate OnReceiveBuff = null;
+        public SkillDelegate OnGiveDebuff = null;
+        public SkillDelegate OnReceiveDebuff = null;
+        public SkillDelegate OnDeath = null;
         public UnitItem battleItem;
 
         private Animator animator;
@@ -84,7 +89,7 @@ namespace FinalInferno{
                         break;
                     case SkillType.PassiveOnSpawn:
                         // Aplica o efeito das skills relevantes na unidade
-                        // TO DO
+                        skill.Use(this, this);
                         break;
                     case SkillType.PassiveOnStart:
                         // Adiciona a skill no callback de inicio de batalha

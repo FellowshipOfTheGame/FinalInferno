@@ -11,9 +11,10 @@ namespace FinalInferno{
         public BattleUnit Target { protected set; get; }
         public abstract float Value { get; } // Valor relevante para replicacao de efeitos
 
-        public abstract void Apply();
-        public abstract void Remove();
-        public void Update() {
+        public virtual void Amplify(float modifier){/*Multiplica os valores relevantes pelo modifier*/}
+        public virtual void Apply(){}
+        public virtual void Remove(){}
+        public virtual void Update() {
             TurnsLeft--;
             if (TurnsLeft == 0)
                 Remove();

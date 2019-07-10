@@ -23,6 +23,12 @@ namespace FinalInferno{
             Apply();
         }
 
+        public override void Amplify(float modifier){
+            dmgValue = Mathf.FloorToInt(modifier * dmgValue);
+            Source.curDmg -= dmgValue; // Se chamar Remove pode dar problema
+            Apply();
+        }
+
         public override void Apply() {
             Source.curDmg += dmgValue;
         }

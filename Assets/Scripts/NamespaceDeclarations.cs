@@ -23,6 +23,10 @@ namespace FinalInferno
         SingleEnemy,
         MultiEnemy,
         Self,
+        DeadAllies,
+        AllAllies,
+        DeadEnemies,
+        AllEnemies,
         Null
     }
 

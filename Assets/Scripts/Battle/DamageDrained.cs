@@ -17,6 +17,12 @@ namespace FinalInferno{
             Apply();
         }
 
+        public override void Amplify(float modifier){
+            dmgValue = Mathf.FloorToInt(modifier * dmgValue);
+            Remove();
+            Apply();
+        }
+
         public override void Apply() {
             Target.curDmg -= dmgValue;
         }

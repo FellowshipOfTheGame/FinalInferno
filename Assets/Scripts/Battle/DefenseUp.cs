@@ -8,12 +8,18 @@ namespace FinalInferno{
         public override float Value { get{ return defValue; } }
         private int defValue;
 
-        public DefenseUp(BattleUnit trgt, float value, int dur = 1) {
+        public DefenseUp(BattleUnit src, BattleUnit trgt, float value, int dur = 1) {
             Duration = dur;
             TurnsLeft = Duration;
             Target = trgt;
-            Source = Target;
+            Source = src;
             defValue = Mathf.FloorToInt(trgt.curDef * value);
+            Apply();
+        }
+
+        public override void Amplify(float modifier){
+            defValue = Mathf.FloorToInt(modifier * defValue);
+            Remove();
             Apply();
         }
 
