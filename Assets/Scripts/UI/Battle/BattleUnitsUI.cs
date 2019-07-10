@@ -50,6 +50,9 @@ namespace FinalInferno.UI.Battle
             BattleUnit battleUnit = newUnit.GetComponent<BattleUnit>();
             battleUnit.battleItem = newUnit.GetComponent<UnitItem>();
 
+            battleUnit.battleItem.layout.preferredWidth = unit.battleSprite.bounds.size.x * 64;
+            battleUnit.battleItem.layout.preferredHeight = unit.battleSprite.bounds.size.y * 64;
+
             newUnit.transform.rotation = Quaternion.identity;
             battleUnit.Configure(unit);
             // TO DO: Isso não deve ser necessário depois que todas as unidades tiverem o animator e as animações funcionando
