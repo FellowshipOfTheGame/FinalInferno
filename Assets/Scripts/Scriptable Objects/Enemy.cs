@@ -34,9 +34,15 @@ namespace FinalInferno{
             baseMagicDef = Table.Rows[0].Field<int>("Resistance");
             baseSpeed = Table.Rows[0].Field<int>("Speed");
             //damageType/element = able.Rows[0].Field(int)("DamageType");
+            // TO DO: Ler as resistencias elementais a partir da tabela
+            for(int i = 0; i < elementalResistance.Length; i++){
+                elementalResistance[i] = 1.0f;
+            }
             color = Table.Rows[0].Field<Color>("Color");
 
         }
+
+        //TO DO: Função que atualiza os status do inimigo para um novo level
 
         //inteligencia atificial do inimigo na batalha
         public virtual void AIEnemy(){

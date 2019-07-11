@@ -11,11 +11,11 @@ namespace FinalInferno
         None
     }
     public enum Element {
-        Fire = 0,
+        Fire = 1, // O primeiro elemento deve ter valor = 1
         Ice,
         Wind,
         Earth,
-        Neutral
+        Neutral // Neutral deve sempre ser o ultimo
     }
     public enum TargetType {
         SingleAlly,
@@ -23,8 +23,10 @@ namespace FinalInferno
         SingleEnemy,
         MultiEnemy,
         Self,
+        DeadAlly,
         DeadAllies,
         AllAllies,
+        DeadEnemy,
         DeadEnemies,
         AllEnemies,
         Null
@@ -46,17 +48,15 @@ namespace FinalInferno
         PassiveOnSpawn,
         PassiveOnStart,
         PassiveOnEnd,
-        PassiveOnGiveBuff,
+       // PassiveOnGiveBuff,
         PassiveOnReceiveBuff,
-        PassiveOnGiveDebuff,
+        PassiveOnReceiveBuffAll,
+        //PassiveOnGiveDebuff,
         PassiveOnReceiveDebuff,
         PassiveOnReceiveDebuffAll,
-        PassiveOnReceiveBuffAll,
-        PassiveOnGiveDamage,
+        //PassiveOnDealDamage,
         PassiveOnTakeDamage,
         PassiveOnTakeDamageAll,
-        PassiveOnHit,
-        PassiveOnGetHit,
         PassiveOnDeath
     }
 

@@ -88,7 +88,15 @@ namespace FinalInferno{
         public void Kill(BattleUnit unit){
             queue.Remove(unit);
             unitsUI.RemoveUnit(unit);
-            // TO DO: chama a funcao de callback de morte da unidade
+            // chama a funcao de callback de morte da unidade
+            if(unit.OnDeath != null){
+                unit.OnDeath(unit, new List<BattleUnit>());
+            }
+        }
+
+        public void Revive(BattleUnit unit){
+            queue.Enqueue(unit, 0);
+            unitsUI.ReinsertUnit(unit);
         }
 
         public UnitType GetUnitType(Unit unit){

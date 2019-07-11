@@ -12,6 +12,8 @@ namespace FinalInferno{
         private bool isPermanent;
 
         public DrainingDamage(BattleUnit src, BattleUnit trgt, float value, int dur = 1, bool dbleEdged = false, bool isPermnt = false) {
+            if(dur < 0)
+                dur = int.MinValue;
             Duration = dur;
             TurnsLeft = Duration;
             Target = trgt;
@@ -24,8 +26,8 @@ namespace FinalInferno{
         }
 
         public override void Amplify(float modifier){
-            dmgValue = Mathf.FloorToInt(modifier * dmgValue);
             Source.curDmg -= dmgValue; // Se chamar Remove pode dar problema
+            dmgValue = Mathf.FloorToInt(modifier * dmgValue);
             Apply();
         }
 

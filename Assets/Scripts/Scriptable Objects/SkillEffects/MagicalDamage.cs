@@ -11,7 +11,7 @@ namespace FinalInferno{
         public override string Description2{
             get{
                 string value = "\b";
-                Element element = (Element)(Mathf.Clamp((int)value2, 0, (int)Element.Neutral));
+                Element element = (Element)(Mathf.Clamp((int)value2, 1, (int)Element.Neutral));
                 switch(element){
                     case Element.Fire:
                         value += "Fire";
@@ -33,7 +33,7 @@ namespace FinalInferno{
             }
         }
         public override void Apply(BattleUnit source, BattleUnit target) {
-            target.TakeDamage(source.curDmg, value1, DamageType.Magical, (Element)(Mathf.Clamp((int)value2, 0, (int)Element.Neutral)) );
+            target.TakeDamage(source.curDmg, value1, DamageType.Magical, (Element)(Mathf.Clamp((int)value2, 1, (int)Element.Neutral)), source);
         }
     }
 }

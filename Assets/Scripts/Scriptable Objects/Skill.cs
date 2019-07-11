@@ -26,7 +26,8 @@ namespace FinalInferno{
                     skillEffect.effect.value2 = (shouldOverride)? value2 : skillEffect.value2;
                     
                     skillEffect.effect.Apply(user, trgt);
-                    GameObject.Instantiate(visualEffect, trgt.transform);
+                    if(visualEffect)
+                        GameObject.Instantiate(visualEffect, trgt.transform);
                 }
             }
         }

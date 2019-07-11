@@ -9,6 +9,8 @@ namespace FinalInferno{
         private int dmgValue;
 
         public DamageDown(BattleUnit src, BattleUnit trgt, float value, int dur = 1) {
+            if(dur < 0)
+                dur = int.MinValue;
             Duration = dur;
             TurnsLeft = Duration;
             Target = trgt;
@@ -18,8 +20,8 @@ namespace FinalInferno{
         }
 
         public override void Amplify(float modifier){
-            dmgValue = Mathf.FloorToInt(modifier * dmgValue);
             Remove();
+            dmgValue = Mathf.FloorToInt(modifier * dmgValue);
             Apply();
         }
 

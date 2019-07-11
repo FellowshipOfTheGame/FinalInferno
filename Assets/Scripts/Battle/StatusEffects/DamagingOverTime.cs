@@ -10,6 +10,8 @@ namespace FinalInferno{
         private Element element;
 
         public DamagingOverTime(BattleUnit src, BattleUnit trgt, float value, Element elemnt, int dur = 1) {
+            if(dur < 0)
+                dur = int.MinValue;
             Duration = dur;
             TurnsLeft = Duration;
             Target = trgt;
@@ -22,9 +24,9 @@ namespace FinalInferno{
             dmgPerTurn = Mathf.FloorToInt(modifier * dmgPerTurn);
         }
 
-        public override void Update(){
+        public override bool Update(){
             Target.TakeDamage(dmgPerTurn, 1.0f, DamageType.None, element);
-            base.Update();
+            return base.Update();
         }
     }
 }
