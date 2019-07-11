@@ -77,7 +77,8 @@ namespace FinalInferno{
             foreach(Quest quest in quests){
                 // Desativa todas as flags de quest
                 quest.active = false;
-                foreach(string key in quest.events.Keys){
+                List<string> keyList = new List<string>(quest.events.Keys);
+                foreach(string key in keyList){
                     quest.events[key] = false;
                 }
                 // Checa se é a quest principal, e ativa a flag padrão
