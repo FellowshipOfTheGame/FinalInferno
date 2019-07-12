@@ -179,6 +179,9 @@ namespace FinalInferno{
         }
 
         public void AddEffect(StatusEffect statusEffect){
+            if(statusEffect.Failed)
+                return;
+                
             effects.Add(statusEffect);
             List<BattleUnit> targets = new List<BattleUnit>();
             targets.Add(statusEffect.Target);

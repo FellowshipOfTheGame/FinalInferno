@@ -16,17 +16,20 @@ namespace FinalInferno{
             Target = trgt;
             Source = src;
             resistIncrease = value;
-            Apply();
+            Failed = !Apply();
         }
 
         public override void Amplify(float modifier){
             Remove();
             resistIncrease *= modifier;
-            Apply();
+            Apply(true);
         }
 
-        public override void Apply() {
+        public override bool Apply(bool force = false) {
+            if(!base.Apply(force))
+                return false;
             Target.statusResistance += resistIncrease;
+            return true;
         }
 
         public override void Remove() {

@@ -112,9 +112,9 @@ namespace FinalInferno{
             return (level >= prerequisite);
         }
 
-        //funcao que define como a skill sera usada
-        // TO DO: Se o metodo Use for alterado para ter apenas um alvo, GiveExp sera chamado na BattleUnit e isso aqui n existe mais
+        // Versao de callback das skills precisa ser responsavel por calcular o ganho de exp
         public override void Use(BattleUnit user, List<BattleUnit> targets, bool shouldOverride = false, float value1 = 0f, float value2 = 0f){
+            targets = FilterTargets(user, targets); // Filtragem para garantir a consistencia dos callbacks de AoE
             GiveExp(targets);
             base.Use(user, targets, shouldOverride, value1, value2);
         }

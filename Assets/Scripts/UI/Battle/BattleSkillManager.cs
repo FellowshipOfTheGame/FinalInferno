@@ -12,8 +12,11 @@ namespace FinalInferno.UI.Battle
 
         public static void UseSkill()
         {
-            currentSkill.Use(currentUser, currentTargets);
+            //currentSkill.Use(currentUser, currentTargets);
             SkillVFX.nTargets = currentTargets.Count;
+            if(currentSkill.GetType() == typeof(PlayerSkill)){
+                ((PlayerSkill)currentSkill).GiveExp(currentTargets);
+            }
             foreach(BattleUnit target in currentTargets){
                 GameObject.Instantiate(currentSkill.VisualEffect, target.transform);
             }

@@ -43,9 +43,10 @@ namespace FinalInferno{
                 queue.Enqueue(newUnit, -newUnit.curSpeed);
                 // Debug.Log("Carregou " + unit.name);
             }
+            List<BattleUnit> auxList = new List<BattleUnit>(queue.list);
             foreach(BattleUnit unit in queue.list){
                 if(unit.OnStartBattle != null)
-                    unit.OnStartBattle(unit, queue.list);
+                    unit.OnStartBattle(unit, auxList);
             }
             UpdateTurn();
         }
@@ -90,7 +91,8 @@ namespace FinalInferno{
             unitsUI.RemoveUnit(unit);
             // chama a funcao de callback de morte da unidade
             if(unit.OnDeath != null){
-                unit.OnDeath(unit, new List<BattleUnit>());
+                unit.OnDeath(unit, new List<BattleUnit>(battleUnits));
+                unit.OnDeath = null;
             }
         }
 

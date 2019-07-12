@@ -22,17 +22,20 @@ namespace FinalInferno{
             multiplier = value;
             isPermanent = isPermnt;
             dmgValue = Mathf.FloorToInt(trgt.curDmg * value);
-            Apply();
+            Failed = !Apply();
         }
 
         public override void Amplify(float modifier){
             Source.curDmg -= dmgValue; // Se chamar Remove pode dar problema
             dmgValue = Mathf.FloorToInt(modifier * dmgValue);
-            Apply();
+            Apply(true);
         }
 
-        public override void Apply() {
+        public override bool Apply(bool force = false) {
+            if(!base.Apply(force))
+                return false;
             Source.curDmg += dmgValue;
+            return true;
         }
 
         public override void Remove() {

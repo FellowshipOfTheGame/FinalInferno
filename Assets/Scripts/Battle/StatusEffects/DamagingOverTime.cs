@@ -18,6 +18,7 @@ namespace FinalInferno{
             Source = src;
             element = elemnt;
             dmgPerTurn = Mathf.FloorToInt(Source.curDmg * value);
+            Failed = !Apply();
         }
 
         public override void Amplify(float modifier){

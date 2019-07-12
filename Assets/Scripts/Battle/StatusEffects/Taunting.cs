@@ -16,7 +16,7 @@ namespace FinalInferno{
             Target = trgt;
             Source = src;
             aggroIncrease = value;
-            Apply();
+            Failed = !Apply();
         }
 
         public override void Amplify(float modifier){

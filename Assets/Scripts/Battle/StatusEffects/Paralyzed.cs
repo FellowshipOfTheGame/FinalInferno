@@ -3,37 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace FinalInferno{
-    public class DefenseDown : StatusEffect {
+    public class Paralyzed : StatusEffect {
         public override StatusType Type { get{ return StatusType.Debuff; } }
-        public override float Value { get{ return defValue; } }
-        private int defValue;
+        public override float Value { get{ return Duration; } }
 
-        public DefenseDown(BattleUnit src, BattleUnit trgt, float value, int dur = 1) {
+        public Paralyzed(BattleUnit src, BattleUnit trgt, float value, int dur = 1) {
             if(dur < 0)
                 dur = int.MinValue;
             Duration = dur;
             TurnsLeft = Duration;
             Target = trgt;
             Source = src;
-            defValue = Mathf.FloorToInt(trgt.curDef * value);
+            rollValue = value;
             Failed = !Apply();
-        }
-
-        public override void Amplify(float modifier){
-            Remove();
-            defValue = Mathf.FloorToInt(modifier * defValue);
-            Apply(true);
         }
 
         public override bool Apply(bool force = false) {
             if(!base.Apply(force))
                 return false;
-            Target.curDef -= defValue;
+            Target.stuns++;
             return true;
         }
 
         public override void Remove() {
-            Target.curDef += defValue;
+            Target.stuns--;
         }
     }
 }

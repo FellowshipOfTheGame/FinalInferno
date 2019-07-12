@@ -13,7 +13,7 @@ namespace FinalInferno{
             if(value2 < 0)
                 target.statusResistance += value1;
             else
-                target.AddEffect(new DefenseUp(source, target, value1, (int)value2));
+                target.AddEffect(new StatusResistUp(source, target, value1, (int)value2));
         }
     }
 }

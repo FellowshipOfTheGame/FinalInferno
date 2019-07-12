@@ -16,17 +16,20 @@ namespace FinalInferno{
             Target = trgt;
             Source = src;
             dmgValue = Mathf.FloorToInt(trgt.curDmg * value);
-            Apply();
+            Failed = !Apply();
         }
 
         public override void Amplify(float modifier){
             Remove();
             dmgValue = Mathf.FloorToInt(modifier * dmgValue);
-            Apply();
+            Apply(true);
         }
 
-        public override void Apply() {
+        public override bool Apply(bool force = false) {
+            if(!base.Apply(force))
+                return false;
             Target.curDmg -= dmgValue;
+            return true;
         }
 
         public override void Remove() {

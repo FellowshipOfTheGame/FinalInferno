@@ -3,37 +3,37 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace FinalInferno{
-    public class DefenseUp : StatusEffect {
+    public class ResistanceUp : StatusEffect {
         public override StatusType Type { get{ return StatusType.Buff; } }
-        public override float Value { get{ return defValue; } }
-        private int defValue;
+        public override float Value { get{ return resValue; } }
+        private int resValue;
 
-        public DefenseUp(BattleUnit src, BattleUnit trgt, float value, int dur = 1) {
+        public ResistanceUp(BattleUnit src, BattleUnit trgt, float value, int dur = 1) {
             if(dur < 0)
                 dur = int.MinValue;
             Duration = dur;
             TurnsLeft = Duration;
             Target = trgt;
             Source = src;
-            defValue = Mathf.FloorToInt(trgt.curDef * value);
+            resValue = Mathf.FloorToInt(trgt.curMagicDef * value);
             Failed = !Apply();
         }
 
         public override void Amplify(float modifier){
             Remove();
-            defValue = Mathf.FloorToInt(modifier * defValue);
+            resValue = Mathf.FloorToInt(modifier * resValue);
             Apply(true);
         }
 
         public override bool Apply(bool force = false) {
             if(!base.Apply(force))
                 return false;
-            Target.curDef += defValue;
+            Target.curMagicDef += resValue;
             return true;
         }
 
         public override void Remove() {
-            Target.curDef -= defValue;
+            Target.curMagicDef -= resValue;
         }
     }
 }
