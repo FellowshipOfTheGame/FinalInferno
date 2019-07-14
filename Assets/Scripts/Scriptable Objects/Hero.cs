@@ -22,7 +22,7 @@ namespace FinalInferno{
                 return table;
             }
         }
-    public override bool IsHero{ get{ return true; } }
+        public override bool IsHero{ get{ return true; } }
 
         void Awake(){
             table = DynamicTable.Create(heroTable);

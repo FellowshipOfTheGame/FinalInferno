@@ -38,26 +38,53 @@ namespace FinalInferno{
 
         }
 
+        public int TargetDecision(List<BattleUnit> team){
+            return Random.Range(0, team.Count);
+
+            /*float sumTotal = 0.0f;
+            Vector<float> percentual;
+
+            foreach (BattleUnit unit in team){
+                sumTotal += unit.aggro;
+            }
+        
+            foreach (BattleUnit unit in team){
+                percentual.Add(unit.aggro/sumTotal);
+            }
+
+            float rand = Random.Range(0.0f, 1.0f);
+
+            for(int i = 0; i < team.Count; i++){
+                if(rand <= percentual[i])
+                    return i;
+                
+                rand -= percentual[i];
+            }*/
+        }
+
+        public virtual Skill AttackDecision(){
+            return attackSkill;
+        }
+
+        public virtual Skill SkillDecision(){
+            return AttackDecision();
+        }
+
         //inteligencia atificial do inimigo na batalha
         public virtual void AIEnemy(){
             Skill skill;
             
-            //float rand = Random.Range(0, 2);
-
-            //if(rand == 0)
-                skill = attackSkill;
-            //else
-            //    skill = defenseSkill;
+            skill = SkillDecision();
             
             BattleSkillManager.currentSkill = skill;
             BattleSkillManager.currentUser = BattleManager.instance.currentUnit;
             BattleSkillManager.currentTargets = GetTargets(skill.target);
 
             // BattleSkillManager.UseSkill();
+
         }
 
-        protected virtual List<BattleUnit> GetTargets(TargetType type)
-        {
+        protected virtual List<BattleUnit> GetTargets(TargetType type){
             List<BattleUnit> targets = new List<BattleUnit>();
             List<BattleUnit> team = new List<BattleUnit>();
 
@@ -78,7 +105,7 @@ namespace FinalInferno{
                     break;
                 case TargetType.SingleEnemy:
                     team = BattleManager.instance.GetTeam(UnitType.Hero);
-                    targets.Add(team[Random.Range(0, team.Count)]);
+                    targets.Add(team[TargetDecision(team)]);
                     break;
             }
 
