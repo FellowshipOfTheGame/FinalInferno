@@ -4,9 +4,10 @@ using UnityEngine;
 
 namespace FinalInferno{
     public class DamagingOverTime : StatusEffect {
-        public override StatusType Type { get{ return StatusType.None; } }
+        public override StatusType Type { get{ return StatusType.Undesirable; } }
         public override float Value { get{ return dmgPerTurn; } }
         private int dmgPerTurn;
+        private float valueReceived;
         private Element element;
 
         public DamagingOverTime(BattleUnit src, BattleUnit trgt, float value, Element elemnt, int dur = 1) {
@@ -17,8 +18,13 @@ namespace FinalInferno{
             Target = trgt;
             Source = src;
             element = elemnt;
+            valueReceived = value;
             dmgPerTurn = Mathf.FloorToInt(Source.curDmg * value);
             Failed = !Apply();
+        }
+
+        public override void CopyTo(BattleUnit target, float modifier = 1.0f){
+            target.AddEffect(new DamagingOverTime(Source, target, valueReceived * modifier, element, Duration), true);
         }
 
         public override void Amplify(float modifier){

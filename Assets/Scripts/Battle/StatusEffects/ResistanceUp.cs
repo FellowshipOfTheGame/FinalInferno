@@ -7,6 +7,7 @@ namespace FinalInferno{
         public override StatusType Type { get{ return StatusType.Buff; } }
         public override float Value { get{ return resValue; } }
         private int resValue;
+        private float valueReceived;
 
         public ResistanceUp(BattleUnit src, BattleUnit trgt, float value, int dur = 1) {
             if(dur < 0)
@@ -15,8 +16,13 @@ namespace FinalInferno{
             TurnsLeft = Duration;
             Target = trgt;
             Source = src;
+            valueReceived = value;
             resValue = Mathf.FloorToInt(trgt.curMagicDef * value);
             Failed = !Apply();
+        }
+
+        public override void CopyTo(BattleUnit target, float modifier = 1.0f){
+            target.AddEffect(new ResistanceUp(Source, target, valueReceived * modifier, Duration), true);
         }
 
         public override void Amplify(float modifier){

@@ -9,7 +9,7 @@ namespace FinalInferno{
     //representa todos os buffs/debuffs, dano etc que essa unidade recebe
     [RequireComponent(typeof(Animator)),RequireComponent(typeof(SpriteRenderer)),RequireComponent(typeof(FinalInferno.UI.AII.UnitItem))]
     public class BattleUnit : MonoBehaviour{
-        public delegate void SkillDelegate(BattleUnit user, List<BattleUnit> targets, bool shouldOverride = false, float value1 = 0f, float value2 = 0f);
+        public delegate void SkillDelegate(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f);
         public Unit unit; //referencia para os atributos base dessa unidade
         public int MaxHP { private set; get; }
         private int curHP; //vida atual dessa unidade, descontando dano da vida maxima
@@ -132,13 +132,14 @@ namespace FinalInferno{
             }
         }
 
-        public void TakeDamage(int atk, float multiplier, DamageType type, Element element, BattleUnit attacker = null) {
+        // TO DO: Criar polimorfismo para dano porcentual de hp e cura, e revisar todos os skill effects relevantes
+        public int TakeDamage(int atk, float multiplier, DamageType type, Element element, BattleUnit attacker = null) {
             animator.SetTrigger("TakeDamage");
             float atkDifference = atk - ( (type == DamageType.Physical)? curDef : ((type == DamageType.Magical)? curMagicDef : 0));
             atkDifference = Mathf.Max(atkDifference, 1);
-            int damage = Mathf.FloorToInt(atkDifference * multiplier * elementalResistance[(int)element] * (Mathf.Clamp(1.0f - damageResistance, 0.0f, 1.0f)) * 10);
+            int damage = Mathf.FloorToInt(atkDifference * multiplier * elementalResistance[(int)element] * (Mathf.Clamp(1.0f - damageResistance, 0.0f, 1.0f))/* * 10 */);
             if(damage > 0 && CurHP <= 0)
-                return;
+                return 0;
             CurHP -= damage;
             // Aplica o aggro pra dano e cura
             if(attacker != null){
@@ -162,12 +163,13 @@ namespace FinalInferno{
                     //Se a unidade ainda estiver morta, anima a morte
                     animator.SetTrigger("IsDead");
                 }
-            }else if(OnTakeDamage != null){
+            }else if(OnTakeDamage != null && damage > 0){
             // Chama a funcao de callback de dano tomado
                 List<BattleUnit> aux = new List<BattleUnit>();
                 aux.Add(this);
-                OnTakeDamage(attacker, aux, true, damage, (int)element);
+                OnTakeDamage(attacker, aux, true, damage, true, (int)element);
             }
+            return damage;
         }
 
         public void Revive(){
@@ -178,22 +180,33 @@ namespace FinalInferno{
             }
         }
 
-        public void AddEffect(StatusEffect statusEffect){
+        public int DecreaseHP(float lostHPPercent){
+            int returnValue = Mathf.FloorToInt(lostHPPercent * MaxHP);
+
+            MaxHP = Mathf.Max(Mathf.FloorToInt((1.0f - lostHPPercent) * MaxHP), 1);
+            CurHP = CurHP;
+
+            return returnValue;
+        }
+
+        public void AddEffect(StatusEffect statusEffect, bool ignoreCallback = false){
             if(statusEffect.Failed)
                 return;
                 
             effects.Add(statusEffect);
+            statusEffect.Source.aggro += statusEffect.AggroOnApply;
             List<BattleUnit> targets = new List<BattleUnit>();
             targets.Add(statusEffect.Target);
             switch(statusEffect.Type){
                 case StatusType.Buff:
                     // chama o callback de receber buff com o status effect atual (value1 = index do status effect novo)
-                    if(OnReceiveBuff != null)
-                        OnReceiveBuff(statusEffect.Source, targets, true, effects.IndexOf(statusEffect), 0.0f);
+                    if(OnReceiveBuff != null && !ignoreCallback)
+                        OnReceiveBuff(statusEffect.Source, targets, true, effects.IndexOf(statusEffect));
                     break;
                 case StatusType.Debuff:
                     // chama o callback de receber debuff com o status effect atual (value1 = index do status effect novo)
-                        OnReceiveBuff(statusEffect.Source, targets, true, effects.IndexOf(statusEffect), 0.0f);
+                    if(OnReceiveDebuff != null && !ignoreCallback)
+                        OnReceiveDebuff(statusEffect.Source, targets, true, effects.IndexOf(statusEffect));
                     break;
             }
         }

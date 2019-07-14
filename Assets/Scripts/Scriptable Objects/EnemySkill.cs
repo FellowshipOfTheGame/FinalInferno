@@ -60,22 +60,22 @@ namespace FinalInferno{
             level = 0;
             Debug.Log("Skill resetada");
         }
+        
+        // public override void Use(BattleUnit user, BattleUnit target, bool shouldOverride = false, float value1 = 0, float value2 = 0){
+        //     /*
+        //     if(user.unit.GetType() == typeof(Enemy)){
+        //         Level = ((Enemy)user.unit).GetSkillLevel(this);
+        //     } */
+        //     base.Use(user, target, shouldOverride, value1, value2);
+        // }
 
-        public override void Use(BattleUnit user, BattleUnit target, bool shouldOverride = false, float value1 = 0, float value2 = 0){
-            /*
-            if(user.unit.GetType() == typeof(Enemy)){
-                Level = ((Enemy)user.unit).GetSkillLevel(this);
-            } */
-            base.Use(user, target, shouldOverride, value1, value2);
-        }
-
-        public override void Use(BattleUnit user, List<BattleUnit> targets, bool shouldOverride = false, float value1 = 0, float value2 = 0){
+        public override void Use(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f){
             /*
             if(user.unit.GetType() == typeof(Enemy)){ // Isso aqui pode ser bem complicado de garantir nos callbacks, ja que o callback sendo chamado em uma unidade nao necessariamente foi colocado ali por ela mesma
                 Level = ((Enemy)user.unit).GetSkillLevel(this);
             }*/
             targets = FilterTargets(user, targets); // Filtragem para garantir a consistencia dos callbacks de AoE
-            base.Use(user, targets, shouldOverride, value1, value2);
+            base.Use(user, targets, shouldOverride1, value1, shouldOverride2, value2);
         }
     }
 }

@@ -63,11 +63,11 @@ namespace FinalInferno{
 
         // funcao que define como a skill sera usada
         // A versão da função com lista é usada para skills de callback, e invoca o efeito visual
-        public virtual void Use(BattleUnit user, List<BattleUnit> targets, bool shouldOverride = false, float value1 = 0f, float value2 = 0f){
+        public virtual void Use(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f){
             foreach (BattleUnit trgt in targets) {
                 foreach (SkillEffectTuple skillEffect in effects) {
-                    skillEffect.effect.value1 = (shouldOverride)? value1 : skillEffect.value1;
-                    skillEffect.effect.value2 = (shouldOverride)? value2 : skillEffect.value2;
+                    skillEffect.effect.value1 = (shouldOverride1)? value1 : skillEffect.value1;
+                    skillEffect.effect.value2 = (shouldOverride2)? value2 : skillEffect.value2;
                     
                     skillEffect.effect.Apply(user, trgt);
                     if(visualEffect)
@@ -77,10 +77,10 @@ namespace FinalInferno{
         }
         
         // A versão da função com um único alvo é usado durante o turno normal e é invocada pelo efeito visual
-        public virtual void Use(BattleUnit user, BattleUnit target, bool shouldOverride = false, float value1 = 0f, float value2 = 0f){
+        public virtual void Use(BattleUnit user, BattleUnit target, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false,  float value2 = 0f){
             foreach (SkillEffectTuple skillEffect in effects) {
-                skillEffect.effect.value1 = (shouldOverride)? value1 : skillEffect.value1;
-                skillEffect.effect.value2 = (shouldOverride)? value2 : skillEffect.value2;
+                skillEffect.effect.value1 = (shouldOverride1)? value1 : skillEffect.value1;
+                skillEffect.effect.value2 = (shouldOverride2)? value2 : skillEffect.value2;
                 
                 skillEffect.effect.Apply(user, target);
             }

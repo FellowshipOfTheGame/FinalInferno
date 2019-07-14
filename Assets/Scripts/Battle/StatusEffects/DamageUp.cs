@@ -7,6 +7,7 @@ namespace FinalInferno{
         public override StatusType Type { get{ return StatusType.Buff; } }
         public override float Value { get{ return dmgValue; } }
         private int dmgValue;
+        private float valueReceived;
 
         public DamageUp(BattleUnit src, BattleUnit trgt, float value, int dur = 1) {
             if(dur < 0)
@@ -15,8 +16,13 @@ namespace FinalInferno{
             TurnsLeft = Duration;
             Target = trgt;
             Source = src;
+            valueReceived = value;
             dmgValue = Mathf.FloorToInt(trgt.curDmg * value);
             Failed = !Apply();
+        }
+
+        public override void CopyTo(BattleUnit target, float modifier = 1.0f){
+            target.AddEffect(new DamageUp(Source, target, valueReceived * modifier, Duration), true);
         }
 
         public override void Amplify(float modifier){

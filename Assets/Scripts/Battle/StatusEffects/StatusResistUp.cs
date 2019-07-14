@@ -19,6 +19,10 @@ namespace FinalInferno{
             Failed = !Apply();
         }
 
+        public override void CopyTo(BattleUnit target, float modifier = 1.0f){
+            target.AddEffect(new StatusResistUp(Source, target, resistIncrease * modifier, Duration), true);
+        }
+
         public override void Amplify(float modifier){
             Remove();
             resistIncrease *= modifier;

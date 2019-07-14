@@ -25,6 +25,10 @@ namespace FinalInferno{
             Failed = !Apply();
         }
 
+        public override void CopyTo(BattleUnit target, float modifier = 1.0f){
+            target.AddEffect(new DrainingDamage(Source, target, multiplier * modifier, Duration), true);
+        }
+
         public override void Amplify(float modifier){
             Source.curDmg -= dmgValue; // Se chamar Remove pode dar problema
             dmgValue = Mathf.FloorToInt(modifier * dmgValue);
