@@ -22,10 +22,13 @@ namespace FinalInferno{
                 return table;
             }
         }
-    public override bool IsHero{ get{ return true; } }
+        public override bool IsHero{ get{ return true; } }
 
         void Awake(){
             table = DynamicTable.Create(heroTable);
+            for(int i = 0; i < elementalResistance.Length; i++){
+                elementalResistance[i] = 1.0f;
+            }
         }
 
         //funcao que ajusta todos os atributos e "skills" do persoangem quando sobe de nivel

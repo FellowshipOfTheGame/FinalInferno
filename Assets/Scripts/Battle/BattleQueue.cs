@@ -59,6 +59,14 @@ namespace FinalInferno{
             list.Clear();
         }
 
+        public void Sort(){
+            list.Sort(CompareUnits);
+        }
+
+        private int CompareUnits(BattleUnit x, BattleUnit y){
+            return x.actionPoints - y.actionPoints;
+        }
+
         // public void Print(){
         //     Debug.Log("INICIO:");
         //     foreach(BattleUnit bU in list){

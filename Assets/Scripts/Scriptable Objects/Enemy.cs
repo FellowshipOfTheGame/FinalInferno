@@ -10,6 +10,10 @@ namespace FinalInferno{
     //engloba os inimigos do jogador
     [CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObject/Enemy", order = 3)]
     public class Enemy : Unit{
+        [SerializeField] private Element element = Element.Neutral;
+        public Element Element { get{ return element; } }
+        [SerializeField] private DamageType damageFocus = DamageType.None;
+        public DamageType DamageFocus { get{ return damageFocus; } }
         public override Color DialogueColor { get { return color; } }
         public override string DialogueName { get { return (name == null)? "" : name; } }
         [SerializeField] private TextAsset enemyTable;
@@ -34,9 +38,24 @@ namespace FinalInferno{
             baseMagicDef = Table.Rows[0].Field<int>("Resistance");
             baseSpeed = Table.Rows[0].Field<int>("Speed");
             //damageType/element = able.Rows[0].Field(int)("DamageType");
+            // TO DO: Ler as resistencias elementais a partir da tabela
+            for(int i = 0; i < elementalResistance.Length; i++){
+                elementalResistance[i] = 1.0f;
+            }
             color = Table.Rows[0].Field<Color>("Color");
-
+            for(int i = 0; i < skills.Count; i++){
+                skills[i].Level = Table.Rows[0].Field<int>("Level Skill " + i);
+            }
         }
+
+        public int GetSkillLevel(EnemySkill skill){
+            int skillIndex = skills.IndexOf(skill);
+            if(skillIndex >= 0)
+                return Table.Rows[level/5].Field<int>("Level Skill " + skillIndex);
+            return 0;
+        }
+
+        //TO DO: Função que atualiza os status do inimigo para um novo level e seta o nível das skills
 
         //inteligencia atificial do inimigo na batalha
         public virtual void AIEnemy(){

@@ -11,18 +11,24 @@ namespace FinalInferno
         None
     }
     public enum Element {
-        Fire = 0,
+        Fire = 1, // O primeiro elemento deve ter valor = 1
         Ice,
         Wind,
         Earth,
-        Neutral
+        Neutral // Neutral deve sempre ser o ultimo
     }
     public enum TargetType {
-        SingleAlly,
-        MultiAlly,
-        SingleEnemy,
-        MultiEnemy,
-        Self,
+        SingleAlly, // Mira em um unico aliado (incluindo a sim próprio)
+        MultiAlly, // Mira em todos os aliados vivos
+        SingleEnemy, // Mira em um unico inimigo
+        MultiEnemy, // Mira em todos os inimigos vivos
+        Self, // Mira em si mesmo
+        DeadAlly, // Mira em um unico aliado morto
+        DeadAllies, // Mira em todos os aliados mortos
+        AllAllies, // Mira em todos os aliados, vivos ou mortos
+        DeadEnemy, // Mira em um unico inimigo morto
+        DeadEnemies, // Mira em todos os inimigos mortos
+        AllEnemies, // Mira em todos os inimigos, vivos ou mortos
         Null
     }
 
@@ -42,23 +48,22 @@ namespace FinalInferno
         PassiveOnSpawn,
         PassiveOnStart,
         PassiveOnEnd,
-        PassiveOnGiveBuff,
+       // PassiveOnGiveBuff,
         PassiveOnReceiveBuff,
-        PassiveOnGiveDebuff,
+        PassiveOnReceiveBuffAll,
+        //PassiveOnGiveDebuff,
         PassiveOnReceiveDebuff,
         PassiveOnReceiveDebuffAll,
-        PassiveOnReceiveBuffAll,
-        PassiveOnGiveDamage,
+        //PassiveOnDealDamage,
         PassiveOnTakeDamage,
         PassiveOnTakeDamageAll,
-        PassiveOnHit,
-        PassiveOnGetHit,
         PassiveOnDeath
     }
 
     public enum StatusType {
         Buff,
         Debuff,
+        Undesirable,
         None
     }
 
