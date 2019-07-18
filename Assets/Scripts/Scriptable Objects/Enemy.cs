@@ -37,10 +37,13 @@ namespace FinalInferno{
             baseDef = Table.Rows[0].Field<int>("Defense");
             baseMagicDef = Table.Rows[0].Field<int>("Resistance");
             baseSpeed = Table.Rows[0].Field<int>("Speed");
+            damageFocus = Table.Rows[0].Field<DamageType>("DamageType");
+            element = Table.Rows[0].Field<Element>("Element");
             //damageType/element = able.Rows[0].Field(int)("DamageType");
             // TO DO: Ler as resistencias elementais a partir da tabela
             for(int i = 0; i < elementalResistance.Length; i++){
-                elementalResistance[i] = 1.0f;
+                //elementalResistance[i] = 1.0f;
+                elementalResistance[i] = Table.Rows[0].Field<float>(System.Enum.GetNames(typeof(Element))[i] + "Resistance");
             }
             color = Table.Rows[0].Field<Color>("Color");
             for(int i = 0; i < skills.Count; i++){
@@ -61,18 +64,16 @@ namespace FinalInferno{
         public virtual void AIEnemy(){
             Skill skill;
             
-            //float rand = Random.Range(0, 2);
+            int rand = Random.Range(0, skills.Count);
 
-            //if(rand == 0)
+            if(rand == 0)
                 skill = attackSkill;
-            //else
-            //    skill = defenseSkill;
+            else
+                skill = skills[rand-1];
             
             BattleSkillManager.currentSkill = skill;
             BattleSkillManager.currentUser = BattleManager.instance.currentUnit;
             BattleSkillManager.currentTargets = GetTargets(skill.target);
-
-            // BattleSkillManager.UseSkill();
         }
 
         protected virtual List<BattleUnit> GetTargets(TargetType type)
@@ -93,11 +94,11 @@ namespace FinalInferno{
                     break;
                 case TargetType.SingleAlly:
                     team = BattleManager.instance.GetTeam(UnitType.Enemy);
-                    targets.Add(team[Random.Range(0, team.Count)]);
+                    targets.Add(team[Random.Range(0, team.Count-1)]);
                     break;
                 case TargetType.SingleEnemy:
                     team = BattleManager.instance.GetTeam(UnitType.Hero);
-                    targets.Add(team[Random.Range(0, team.Count)]);
+                    targets.Add(team[Random.Range(0, team.Count-1)]);
                     break;
             }
 

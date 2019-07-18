@@ -6,12 +6,12 @@ using UnityEditor;
 namespace FinalInferno
 {
     public enum DamageType {
-        Physical,
+        Physical = 1, // O enum começa em 1 para a tabela ficar mais human friendly
         Magical,
-        None
+        None // None deve sempre ser o ultimo
     }
     public enum Element {
-        Fire = 1, // O primeiro elemento deve ter valor = 1
+        Fire = 1, // O primeiro elemento deve ter valor = 1 (mesmo motivo de DamageType)
         Ice,
         Wind,
         Earth,
