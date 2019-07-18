@@ -64,12 +64,12 @@ namespace FinalInferno{
         public virtual void AIEnemy(){
             Skill skill;
             
-            int rand = Random.Range(0, skills.Count);
+            int rand = Random.Range(0, BattleManager.instance.currentUnit.ActiveSkills.Count);
 
             if(rand == 0)
                 skill = attackSkill;
             else
-                skill = skills[rand-1];
+                skill = BattleManager.instance.currentUnit.ActiveSkills[rand-1];
             
             BattleSkillManager.currentSkill = skill;
             BattleSkillManager.currentUser = BattleManager.instance.currentUnit;
