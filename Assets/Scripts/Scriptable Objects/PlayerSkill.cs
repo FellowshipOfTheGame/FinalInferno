@@ -18,7 +18,7 @@ namespace FinalInferno{
         public List<int> prerequisiteSkillsLevel; //level que a skill de pre requisito precisa estar para essa skill destravar
         public int prerequisiteHeroLevel; //level que o heroi precisa estar para essa skill destravar
         [SerializeField] private TextAsset skillTable;
-        [SerializeField] private DynamicTable table;
+        [SerializeField] private DynamicTable table = null;
         private DynamicTable Table {
             get {
                 if(table == null)
@@ -28,6 +28,7 @@ namespace FinalInferno{
         }
 
         void Awake(){
+            table = null;
             table = DynamicTable.Create(skillTable);
             level = 0;
             xp = 0;
@@ -81,7 +82,7 @@ namespace FinalInferno{
             foreach(BattleUnit target in targets){
                 expValue += target.unit.SkillExp;
             }
-            expValue /= targets.Count;
+            expValue /= Mathf.Max(targets.Count, 1);
 
             return GiveExp(expValue);
         }

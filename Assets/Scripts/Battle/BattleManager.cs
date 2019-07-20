@@ -123,7 +123,7 @@ namespace FinalInferno{
             List<BattleUnit> team = new List<BattleUnit>();
 
             if(!countDead){
-                if (GetUnitType(currentUnit.unit) == type)
+                if (currentUnit != null && GetUnitType(currentUnit.unit) == type)
                     team.Add(currentUnit);
 
                 foreach(BattleUnit unit in queue.list){
@@ -131,7 +131,7 @@ namespace FinalInferno{
                         team.Add(unit);
                 }
             }else{
-                if (GetUnitType(currentUnit.unit) == type && !deadOnly)
+                if (currentUnit != null && GetUnitType(currentUnit.unit) == type && !deadOnly)
                     team.Add(currentUnit);
 
                 foreach(BattleUnit unit in battleUnits){

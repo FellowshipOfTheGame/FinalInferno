@@ -14,20 +14,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Pwner
   level: 1
-  hpMax: 999
-  baseDmg: 99
-  baseDef: 99
-  baseMagicDef: 99
-  baseSpeed: 99
+  hpMax: 600
+  baseDmg: 50
+  baseDef: 50
+  baseMagicDef: 50
+  baseSpeed: 50
+  elementalResistance:
+  - 0.3
+  - 0.3
+  - 0.3
+  - 0.3
+  - 0.3
   color: {r: 1, g: 0, b: 0, a: 1}
-  skills: []
-  attackSkill: {fileID: 11400000, guid: 6e6df82ee366da349991345d594ba30e, type: 2}
+  skills:
+  - {fileID: 11400000, guid: 2c3021b87d1b78a458264d0c93f382d1, type: 2}
+  - {fileID: 11400000, guid: c7f8ca5a99d6a8240a8df51799499057, type: 2}
+  - {fileID: 11400000, guid: 0ca2852212a68e141abd6654048cd58e, type: 2}
+  - {fileID: 11400000, guid: df9ec28c727b6984db874ca73c12eba5, type: 2}
+  - {fileID: 11400000, guid: 44550d9bdd31a5447a4eb4a6f3fe78b1, type: 2}
+  - {fileID: 11400000, guid: 0aabb7711250c0043a60cdb4a6f69917, type: 2}
+  attackSkill: {fileID: 11400000, guid: 95407fd86bf202049848deeb79956196, type: 2}
   defenseSkill: {fileID: 11400000, guid: 91ee493282c723147a741a8ac23970d9, type: 2}
   animator: {fileID: 9100000, guid: c9e8385d60ec93a419b4e96310a76447, type: 2}
-  portrait: {fileID: 21300002, guid: 1a6d131da3148b2418caf1d116ceb208, type: 3}
-  battleSprite: {fileID: 21300002, guid: 1a6d131da3148b2418caf1d116ceb208, type: 3}
-  queueSprite: {fileID: 21300000, guid: 1a6d131da3148b2418caf1d116ceb208, type: 3}
-  enemyTable: {fileID: 4900000, guid: d03b0f57ea72ac34385c419a010ec46f, type: 3}
+  portrait: {fileID: 21300000, guid: 5959357f3f25e2e418d3fcad1413dfdc, type: 3}
+  battleSprite: {fileID: 21300000, guid: 5959357f3f25e2e418d3fcad1413dfdc, type: 3}
+  queueSprite: {fileID: 21300000, guid: 5959357f3f25e2e418d3fcad1413dfdc, type: 3}
+  element: 5
+  damageFocus: 1
+  enemyTable: {fileID: 4900000, guid: e64e21d090f18764e98c3aba80c17a14, type: 3}
   table:
     colTypes:
     - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -37,18 +51,21 @@ MonoBehaviour:
     - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-    - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - UnityEngine.Color, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     Col:
       reorderableList:
         canAdd: 1
@@ -80,17 +97,20 @@ MonoBehaviour:
       - Defense
       - Resistance
       - Speed
-      - DamageType
       - Color
-      - Element
-      - Fire Resistance
-      - Water Resistance
-      - Wind Resistance
-      - Earth Resistance
+      - FireResistance
+      - WaterResistance
+      - WindResistance
+      - EarthResistance
+      - NeutralResistance
       - XP
-      - Level Skill 0
-      - Level Skill 1
-      - Chance to Use Skill
+      - ChancetoUseSkill
+      - LevelSkill0
+      - LevelSkill1
+      - LevelSkill2
+      - LevelSkill3
+      - LevelSkill4
+      - LevelSkill5
       _keys:
       - Rank
       - Level
@@ -99,54 +119,245 @@ MonoBehaviour:
       - Defense
       - Resistance
       - Speed
-      - DamageType
       - Color
-      - Element
-      - Fire Resistance
-      - Water Resistance
-      - Wind Resistance
-      - Earth Resistance
+      - FireResistance
+      - WaterResistance
+      - WindResistance
+      - EarthResistance
+      - NeutralResistance
       - XP
-      - Level Skill 0
-      - Level Skill 1
-      - Chance to Use Skill
-      _values: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f0000001000000011000000
+      - ChancetoUseSkill
+      - LevelSkill0
+      - LevelSkill1
+      - LevelSkill2
+      - LevelSkill3
+      - LevelSkill4
+      - LevelSkill5
+      _values: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f0000001000000011000000120000001300000014000000
     rows:
     - elements:
-      - Dummy
+      - Pwner
       - 1
-      - 999
-      - 99
-      - 99
-      - 99
-      - 99
-      - 0
+      - 600
+      - 50
+      - 50
+      - 50
+      - 50
       - '#FF0000'
-      - 4
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
+      - 0.3
+      - 0.3
+      - 0.3
+      - 0.3
+      - 0.3
       - 22
       - 0
-      - 0
-      - 0.5
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      colTypes:
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - UnityEngine.Color, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      Col:
+        reorderableList:
+          canAdd: 1
+          canRemove: 1
+          draggable: 1
+          expandable: 1
+          multipleSelection: 1
+          isExpanded: 0
+          label:
+            m_Text: Keys
+            m_Image: {fileID: 0}
+            m_Tooltip: 
+          headerHeight: 18
+          footerHeight: 13
+          slideEasing: 0.15
+          verticalSpacing: 2
+          showDefaultBackground: 1
+          elementDisplayType: 0
+          elementNameProperty: 
+          elementNameOverride: 
+          elementIcon: {fileID: 0}
+        reqReferences: {fileID: 0}
+        isExpanded: 0
+        _keyValues:
+        - Rank
+        - Level
+        - HP
+        - Damage
+        - Defense
+        - Resistance
+        - Speed
+        - Color
+        - FireResistance
+        - WaterResistance
+        - WindResistance
+        - EarthResistance
+        - NeutralResistance
+        - XP
+        - ChancetoUseSkill
+        - LevelSkill0
+        - LevelSkill1
+        - LevelSkill2
+        - LevelSkill3
+        - LevelSkill4
+        - LevelSkill5
+        _keys:
+        - Rank
+        - Level
+        - HP
+        - Damage
+        - Defense
+        - Resistance
+        - Speed
+        - Color
+        - FireResistance
+        - WaterResistance
+        - WindResistance
+        - EarthResistance
+        - NeutralResistance
+        - XP
+        - ChancetoUseSkill
+        - LevelSkill0
+        - LevelSkill1
+        - LevelSkill2
+        - LevelSkill3
+        - LevelSkill4
+        - LevelSkill5
+        _values: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f0000001000000011000000120000001300000014000000
     - elements:
-      - Dummy
+      - Pwner
       - 5
-      - 999
-      - 99
-      - 99
-      - 99
-      - 99
-      - 0
+      - 1000
+      - 100
+      - 100
+      - 100
+      - 100
       - '#FF0000'
-      - 4
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 22
+      - 0.3
+      - 0.3
+      - 0.3
+      - 0.3
+      - 0.3
+      - 83
       - 0
-      - 0
-      - 0.5
+      - 2
+      - 2
+      - 2
+      - 2
+      - 2
+      - 2
+      colTypes:
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - UnityEngine.Color, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      Col:
+        reorderableList:
+          canAdd: 1
+          canRemove: 1
+          draggable: 1
+          expandable: 1
+          multipleSelection: 1
+          isExpanded: 0
+          label:
+            m_Text: Keys
+            m_Image: {fileID: 0}
+            m_Tooltip: 
+          headerHeight: 18
+          footerHeight: 13
+          slideEasing: 0.15
+          verticalSpacing: 2
+          showDefaultBackground: 1
+          elementDisplayType: 0
+          elementNameProperty: 
+          elementNameOverride: 
+          elementIcon: {fileID: 0}
+        reqReferences: {fileID: 0}
+        isExpanded: 0
+        _keyValues:
+        - Rank
+        - Level
+        - HP
+        - Damage
+        - Defense
+        - Resistance
+        - Speed
+        - Color
+        - FireResistance
+        - WaterResistance
+        - WindResistance
+        - EarthResistance
+        - NeutralResistance
+        - XP
+        - ChancetoUseSkill
+        - LevelSkill0
+        - LevelSkill1
+        - LevelSkill2
+        - LevelSkill3
+        - LevelSkill4
+        - LevelSkill5
+        _keys:
+        - Rank
+        - Level
+        - HP
+        - Damage
+        - Defense
+        - Resistance
+        - Speed
+        - Color
+        - FireResistance
+        - WaterResistance
+        - WindResistance
+        - EarthResistance
+        - NeutralResistance
+        - XP
+        - ChancetoUseSkill
+        - LevelSkill0
+        - LevelSkill1
+        - LevelSkill2
+        - LevelSkill3
+        - LevelSkill4
+        - LevelSkill5
+        _values: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f0000001000000011000000120000001300000014000000

@@ -37,24 +37,22 @@ namespace FinalInferno{
             baseDef = Table.Rows[0].Field<int>("Defense");
             baseMagicDef = Table.Rows[0].Field<int>("Resistance");
             baseSpeed = Table.Rows[0].Field<int>("Speed");
-            damageFocus = Table.Rows[0].Field<DamageType>("DamageType");
-            element = Table.Rows[0].Field<Element>("Element");
-            //damageType/element = able.Rows[0].Field(int)("DamageType");
-            // TO DO: Ler as resistencias elementais a partir da tabela
+            BaseExp = Table.Rows[0].Field<int>("XP");
             for(int i = 0; i < elementalResistance.Length; i++){
                 //elementalResistance[i] = 1.0f;
+
                 elementalResistance[i] = Table.Rows[0].Field<float>(System.Enum.GetNames(typeof(Element))[i] + "Resistance");
             }
             color = Table.Rows[0].Field<Color>("Color");
             for(int i = 0; i < skills.Count; i++){
-                skills[i].Level = Table.Rows[0].Field<int>("Level Skill " + i);
+                skills[i].Level = Table.Rows[0].Field<int>("LevelSkill" + i);
             }
         }
 
         public int GetSkillLevel(EnemySkill skill){
             int skillIndex = skills.IndexOf(skill);
             if(skillIndex >= 0)
-                return Table.Rows[level/5].Field<int>("Level Skill " + skillIndex);
+                return Table.Rows[level/5].Field<int>("LevelSkill" + skillIndex);
             return 0;
         }
 

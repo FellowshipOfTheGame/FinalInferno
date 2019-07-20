@@ -151,7 +151,7 @@ namespace FinalInferno.UI.Battle.SkillMenu
             costText.text = skill.cost.ToString();            
             descriptionText.text = skill.description;
 
-            elementImage.sprite = Icons.instance.elementSprites[(int) skill.attribute];
+            elementImage.sprite = Icons.instance.elementSprites[(int) skill.attribute-1];
             targetTypeImage.sprite = Icons.instance.targetTypeSprites[(int) skill.target];
 
             // Atualiza a lista de efeitos

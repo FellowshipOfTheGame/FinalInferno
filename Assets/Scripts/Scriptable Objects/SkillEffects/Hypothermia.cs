@@ -10,7 +10,7 @@ namespace FinalInferno{
         // value2 = DoT duration
         public override string Description2{ get {return " turns";} }
         public override void Apply(BattleUnit source, BattleUnit target) {
-            target.AddEffect(new DamagingOverTime(source, target, value1, Element.Ice, (int)value2));
+            target.AddEffect(new DamagingOverTime(source, target, value1, Element.Water, (int)value2));
         }
     }
 }
