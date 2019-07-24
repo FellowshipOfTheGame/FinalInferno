@@ -9,7 +9,7 @@ namespace FinalInferno{
     public class Skeleton : Enemy{
         //funcao que escolhe o ataque a ser utilizado
         public override Skill AttackDecision(){
-            float rand = Random.Range(0.0f, 1.0f);
+            float rand = Random.Range(0.0f, 1.0f); //gera um numero aleatorio entre 0 e 1
 
             if(rand < 0.9f)
                 return skills[0]; //decide usar primeira habilidade

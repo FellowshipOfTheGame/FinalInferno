@@ -23,6 +23,9 @@ namespace FinalInferno{
         public UnitsLives[] unitsLives;
 
         public EnemyContent enemyContent;
+        public int enemyBuff; //numero de buffs ativos dos inimigos
+        public int enemyDebuff; //numero de debuffs ativos dos inimigos
+
 
         void Awake() {
             // Singleton
@@ -34,6 +37,8 @@ namespace FinalInferno{
             queue = new BattleQueue();
             units = new List<Unit>();
             battleUnits = new List<BattleUnit>();
+            enemyBuff = 0;
+            enemyDebuff = 0;
         }
 
         public void StartBattle(){

@@ -76,10 +76,10 @@ namespace FinalInferno{
         }
 
         //funcao que escolhe qual acao sera feita no proprio turno
-        public virtual Skill SkillDecision(float percentualDefense){
+        public virtual Skill SkillDecision(float percentageNotDefense){
             float rand = Random.Range(0.0f, 1.0f); //gera um numero aleatorio entre 0 e 1
 
-            if(rand < percentualDefense);
+            if(rand < percentageNotDefense);
                 return AttackDecision(); //decide atacar
             
             return defenseSkill; //decide defender
@@ -101,7 +101,7 @@ namespace FinalInferno{
             //calcula quanto porecento de vida o inimigo atual tem em relacao a media de vida do grupo de inimigos
             percentualHP = BattleManager.instance.currentUnit.CurHP/average;
             
-            skill = SkillDecision(Mathf.Sqrt(percentualHP)+0.05f*percentualHP); //parametro passado calcula a porcentagem do inimigo defender, baseado no percentual de vida
+            skill = SkillDecision(Mathf.Sqrt(percentualHP)+0.05f*percentualHP); //parametro passado calcula o complementar da porcentagem do inimigo defender, baseado no percentual de vida
             
             BattleSkillManager.currentSkill = skill;
             BattleSkillManager.currentUser = BattleManager.instance.currentUnit;
