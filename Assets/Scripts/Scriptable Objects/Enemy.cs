@@ -66,15 +66,30 @@ namespace FinalInferno{
             return attackSkill;
         }
 
-        public virtual Skill SkillDecision(){
-            return AttackDecision();
+        public virtual Skill SkillDecision(float percentualDefense){
+            float rand = Random.Range(0.0f, 1.0f);
+
+            if(rand < percentualDefense);
+                return AttackDecision();
+            
+            return defenseSkill;
         }
 
         //inteligencia atificial do inimigo na batalha
         public virtual void AIEnemy(){
             Skill skill;
+            List<BattleUnit> team = BattleManager.instance.GetTeam(UnitType.Enemy);
+            float average = 0.0f;
+            float percentualHP;
+
+            foreach (BattleUnit unit in team){
+                average += unit.CurHP;
+            }
+            average /= team.Count;
+
+            percentualHP = BattleManager.instance.currentUnit.CurHP/average;
             
-            skill = SkillDecision();
+            skill = SkillDecision(Mathf.Sqrt(percentualHP)+0.05f*percentualHP);
             
             BattleSkillManager.currentSkill = skill;
             BattleSkillManager.currentUser = BattleManager.instance.currentUnit;

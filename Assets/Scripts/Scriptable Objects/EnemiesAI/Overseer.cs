@@ -15,14 +15,14 @@ namespace FinalInferno{
             return attackSkill;
         }
 
-        public override Skill SkillDecision(){
+        public override Skill SkillDecision(float percentualDefense){
             float rand = Random.Range(0.0f, 1.0f);
 
-            if(rand < 0.6f)
-                return AttackDecision();
-
-            if(rand < 0.9f)
+            if(rand < 0.3f)
                 return skills[1]; 
+
+            if(rand < percentualDefense)
+                return AttackDecision();
 
             return defenseSkill;
         }

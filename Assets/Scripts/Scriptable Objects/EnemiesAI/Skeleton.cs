@@ -14,14 +14,5 @@ namespace FinalInferno{
             
             return attackSkill;
         }
-
-        public override Skill SkillDecision(){
-            float rand = Random.Range(0.0f, 1.0f);
-
-            if(rand < 0.9f)
-                return AttackDecision();
-            
-            return defenseSkill;
-        }
     }
 }
