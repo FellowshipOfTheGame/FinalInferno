@@ -21,14 +21,13 @@ namespace FinalInferno{
             get{ return level; }
             set{
                 if(value != level){
-                    level = Mathf.Clamp(value, 1, Table.Rows.Count);
+                    level = Mathf.Clamp(value, Table.Rows[0].Field<int>("Level"), Table.Rows[Table.Rows.Count-1].Field<int>("Level"));
                     LevelUp();
                 }
             }
         }
 
         void Awake(){
-            table = null;
             table = DynamicTable.Create(skillTable);
             Level = -1;
         }

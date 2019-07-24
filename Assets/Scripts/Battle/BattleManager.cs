@@ -12,7 +12,7 @@ namespace FinalInferno{
         public static BattleManager instance;
 
         public List<Unit> units;
-        private List<BattleUnit> battleUnits;
+        public List<BattleUnit> battleUnits;
         public BattleQueue queue;
         public BattleQueueUI queueUI;
 

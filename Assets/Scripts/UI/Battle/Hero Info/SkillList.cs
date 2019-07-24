@@ -107,9 +107,8 @@ namespace FinalInferno.UI.Battle.SkillMenu
                 if (skill.active)
                 {
                     // Instancia um novo item e o coloca no content
-                    GameObject newSkill = Instantiate(skillObject);
+                    GameObject newSkill = Instantiate(skillObject, skillsContent);
                     newSkill.GetComponent<SkillElement>().skill = skill;
-                    newSkill.transform.SetParent(skillsContent);
 
                     // Define este script como responsável pelo item criado
                     SkillListItem newSkillListItem = newSkill.GetComponent<SkillListItem>();
@@ -192,9 +191,8 @@ namespace FinalInferno.UI.Battle.SkillMenu
             foreach (SkillEffectTuple effect in effects)
             {
                 // Instancia um novo item e o coloca no content
-                GameObject newEffect = Instantiate(effectObject);
+                GameObject newEffect = Instantiate(effectObject, effectsContent);
                 newEffect.GetComponent<EffectElement>().UpdateEffect(effect);
-                newEffect.transform.SetParent(effectsContent);
 
                 // Define este script como responsável pelo item criado
                 EffectListItem newEffectItem = newEffect.GetComponent<EffectListItem>();

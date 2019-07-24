@@ -184,9 +184,15 @@ namespace FinalInferno{
             int returnValue = Mathf.FloorToInt(lostHPPercent * MaxHP);
 
             MaxHP = Mathf.Max(Mathf.FloorToInt((1.0f - lostHPPercent) * MaxHP), 1);
+            if(lostHPPercent < 0) // Para usar a mesma função para aumentar hp maximo, o aumento é adicionado como cura
+                CurHP += returnValue;
             CurHP = CurHP;
 
             return returnValue;
+        }
+
+        public void ResetMaxHP(){ // Funcao que deve ser chamada no final da batalha
+            MaxHP = unit.hpMax;
         }
 
         public void AddEffect(StatusEffect statusEffect, bool ignoreCallback = false){

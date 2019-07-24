@@ -17,6 +17,9 @@ namespace FinalInferno.UI.FSM
         /// <param name="controller"> O controlador da máquina de estados. </param>
         public override void Act(StateController controller)
         {
+            foreach(BattleUnit battleUnit in BattleManager.instance.battleUnits){
+                battleUnit.ResetMaxHP();
+            }
             foreach(BattleUnit battleUnit in BattleManager.instance.queue.list){
                 if(battleUnit.OnEndBattle != null)
                     battleUnit.OnEndBattle(battleUnit, BattleManager.instance.GetTeam(UnitType.Hero, true));
