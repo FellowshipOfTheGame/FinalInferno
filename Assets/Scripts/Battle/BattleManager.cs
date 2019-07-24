@@ -37,11 +37,16 @@ namespace FinalInferno{
         }
 
         public void StartBattle(){
+            BattleProgress.ResetInfo(Party.Instance);
+
             foreach(Unit unit in units){
                 BattleUnit newUnit = BattleUnitsUI.instance.LoadUnit(unit);
                 battleUnits.Add(newUnit);
                 queue.Enqueue(newUnit, -newUnit.curSpeed);
                 // Debug.Log("Carregou " + unit.name);
+
+                if(unit.IsHero)
+                    BattleProgress.addHeroSkills((Hero)unit);
             }
             List<BattleUnit> auxList = new List<BattleUnit>(queue.list);
             foreach(BattleUnit unit in queue.list){

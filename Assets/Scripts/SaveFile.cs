@@ -53,7 +53,9 @@ namespace FinalInferno{
                 saves[Slot].heroSkills[i].skills = new SkillInfo[Party.Instance.characters[i].archetype.skills.Count];
                 
                 for (int j = 0; j < Party.Instance.characters[i].archetype.skills.Count; j++){
-                    saves[Slot].heroSkills[i].skills[j].xp = ((PlayerSkill)Party.Instance.characters[i].archetype.skills[j]).XpCumulative;
+                    // Esse construtor deve funcionar mas não foi testado ainda
+                    //saves[Slot].heroSkills[i].skills[j] = new SkillInfo((PlayerSkill)Party.Instance.characters[i].archetype.skills[j]);
+                    saves[Slot].heroSkills[i].skills[j].xpCumulative = ((PlayerSkill)Party.Instance.characters[i].archetype.skills[j]).XpCumulative;
                     saves[Slot].heroSkills[i].skills[j].active = ((PlayerSkill)Party.Instance.characters[i].archetype.skills[j]).active;
                 }
             }
@@ -82,7 +84,7 @@ namespace FinalInferno{
                 Party.Instance.characters[i].position = saves[Slot].position[i];
                 
                 for (int j = 0; j < saves[Slot].heroSkills[i].skills.Length; j++){//SkillInfo skill in saves[Slot].skills[i]){
-                    ((PlayerSkill)Party.Instance.characters[i].archetype.skills[j]).GiveExp(saves[Slot].heroSkills[i].skills[j].xp);
+                    ((PlayerSkill)Party.Instance.characters[i].archetype.skills[j]).GiveExp(saves[Slot].heroSkills[i].skills[j].xpCumulative);
                     ((PlayerSkill)Party.Instance.characters[i].archetype.skills[j]).active = saves[Slot].heroSkills[i].skills[j].active;
                 }
             }
