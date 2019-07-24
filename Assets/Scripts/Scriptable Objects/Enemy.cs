@@ -8,7 +8,7 @@ using System.Data;
 
 namespace FinalInferno{
     //engloba os inimigos do jogador
-    [CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObject/Enemy", order = 3)]
+    [CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObject/Enemy/Basic", order = 0)]
     public class Enemy : Unit{
         public override Color DialogueColor { get { return color; } }
         public override string DialogueName { get { return (name == null)? "" : name; } }
@@ -38,41 +38,51 @@ namespace FinalInferno{
 
         }
 
+        //funcao que escolhe o alvo de um ataque baseado na ameaca que herois representam
         public int TargetDecision(List<BattleUnit> team){
             return Random.Range(0, team.Count);
 
-            /*float sumTotal = 0.0f;
+            /*
+            float sumTotal = 0.0f;
             Vector<float> percentual;
 
+            //soma a ameca de todos os herois
             foreach (BattleUnit unit in team){
                 sumTotal += unit.aggro;
             }
         
+            //calcula a porcentagem que cada heroi represent da soma total das ameacas
             foreach (BattleUnit unit in team){
                 percentual.Add(unit.aggro/sumTotal);
             }
 
+            //gera um numero aleatorio entre 0 e 1
             float rand = Random.Range(0.0f, 1.0f);
 
+            //escolhe o alvo com probabilidades baseadas na porcentagem que cada heroi representa da soma total das ameacas
             for(int i = 0; i < team.Count; i++){
                 if(rand <= percentual[i])
-                    return i;
+                    return i; //decide atacar o heroi i
                 
                 rand -= percentual[i];
-            }*/
+            }
+            
+            */
         }
 
+        //funcao que escolhe o ataque a ser utilizado
         public virtual Skill AttackDecision(){
-            return attackSkill;
+            return attackSkill; //decide usar ataque basico
         }
 
+        //funcao que escolhe qual acao sera feita no proprio turno
         public virtual Skill SkillDecision(float percentualDefense){
-            float rand = Random.Range(0.0f, 1.0f);
+            float rand = Random.Range(0.0f, 1.0f); //gera um numero aleatorio entre 0 e 1
 
             if(rand < percentualDefense);
-                return AttackDecision();
+                return AttackDecision(); //decide atacar
             
-            return defenseSkill;
+            return defenseSkill; //decide defender
         }
 
         //inteligencia atificial do inimigo na batalha
@@ -82,14 +92,16 @@ namespace FinalInferno{
             float average = 0.0f;
             float percentualHP;
 
+            //calcula a media de vida do grupo de inimigos
             foreach (BattleUnit unit in team){
                 average += unit.CurHP;
             }
             average /= team.Count;
 
+            //calcula quanto porecento de vida o inimigo atual tem em relacao a media de vida do grupo de inimigos
             percentualHP = BattleManager.instance.currentUnit.CurHP/average;
             
-            skill = SkillDecision(Mathf.Sqrt(percentualHP)+0.05f*percentualHP);
+            skill = SkillDecision(Mathf.Sqrt(percentualHP)+0.05f*percentualHP); //parametro passado calcula a porcentagem do inimigo defender, baseado no percentual de vida
             
             BattleSkillManager.currentSkill = skill;
             BattleSkillManager.currentUser = BattleManager.instance.currentUnit;
