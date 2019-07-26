@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: StartingArea02
-  positionOnLoad: {x: 0, y: 0}
+  positionOnLoad: {x: -2.5, y: 13}
   isCutscene: 0
   dialogues: []
 --- !u!66 &510557496
@@ -420,7 +420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: StartingArea04
-  positionOnLoad: {x: 0, y: 0}
+  positionOnLoad: {x: -0.5, y: -8}
   isCutscene: 0
   dialogues: []
 --- !u!66 &582841910
@@ -1088,6 +1088,9 @@ MonoBehaviour:
   - quest: {fileID: 11400000, guid: bb0791dbfe37dc647ad7ce1c40f3c45c, type: 2}
     eventFlag: '2nd Met '
     dialogue: {fileID: 11400000, guid: 23d1d0aa24905a64fb922dbf4a7f61d9, type: 2}
+  - quest: {fileID: 11400000, guid: bb0791dbfe37dc647ad7ce1c40f3c45c, type: 2}
+    eventFlag: Crazyvision_1
+    dialogue: {fileID: 0}
 --- !u!66 &1236854338
 CompositeCollider2D:
   m_ObjectHideFlags: 0
@@ -12498,12 +12501,12 @@ PrefabInstance:
     - target: {fileID: 7368697977539947562, guid: 97bb1111fe13f7c4094653080794d8f2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7368697977539947562, guid: 97bb1111fe13f7c4094653080794d8f2,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -13
       objectReference: {fileID: 0}
     - target: {fileID: 7368697977539947562, guid: 97bb1111fe13f7c4094653080794d8f2,
         type: 3}
@@ -12549,6 +12552,27 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 387202435019534482, guid: 97bb1111fe13f7c4094653080794d8f2,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ae64b8cc44390934e9d9f3d496a6c8fa,
+        type: 3}
+    - target: {fileID: 387202435019534482, guid: 97bb1111fe13f7c4094653080794d8f2,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 387202435019534482, guid: 97bb1111fe13f7c4094653080794d8f2,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 387202435019534482, guid: 97bb1111fe13f7c4094653080794d8f2,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97bb1111fe13f7c4094653080794d8f2, type: 3}
