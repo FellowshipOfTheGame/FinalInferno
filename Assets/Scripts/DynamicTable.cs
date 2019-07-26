@@ -55,6 +55,12 @@ namespace FinalInferno{
                     Color newColor = new Color();
                     ColorUtility.TryParseHtmlString(description, out newColor);
                     return (T)(object)newColor;
+                }else if(typeof(T) == typeof(Element) || typeof(T) == typeof(DamageType)){
+                    int value = int.Parse(description, CultureInfo.InvariantCulture.NumberFormat);
+                    if(typeof(T) == typeof(Element))
+                        return (T)(object)(Element)value;
+                    else
+                        return (T)(object)(DamageType)value;
                 }else{
                     return (T)(object)AssetManager.LoadAsset(description, typeof(T));
                 }
@@ -62,7 +68,7 @@ namespace FinalInferno{
         }
 
         // Variaveis/Proriedades -------------------------
-        private const char splitCharacter = ',';
+        private const char splitCharacter = ';';
         [SerializeField] private string[] colTypes;
         [SerializeField] private ColDescription Col;
         [SerializeField] private TableRow[] rows;
@@ -104,6 +110,10 @@ namespace FinalInferno{
                     return typeof(Party).AssemblyQualifiedName;
                 case "Skill":
                     return typeof(Skill).AssemblyQualifiedName;
+                case "Element":
+                    return typeof(Element).AssemblyQualifiedName;
+                case "DamageType":
+                    return typeof(DamageType).AssemblyQualifiedName;
                 default:
                     return typeof(string).AssemblyQualifiedName;
             }

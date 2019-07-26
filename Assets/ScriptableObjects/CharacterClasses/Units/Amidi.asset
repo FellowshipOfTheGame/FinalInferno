@@ -19,9 +19,18 @@ MonoBehaviour:
   baseDef: 10
   baseMagicDef: 9
   baseSpeed: 8
+  elementalResistance:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
   color: {r: 0.8584906, g: 0.14983091, b: 0.14983091, a: 1}
   skills:
   - {fileID: 11400000, guid: d1dfa69ae0800ed48820d859d36d9962, type: 2}
+  - {fileID: 11400000, guid: 3f064401f4f88004eb3d4651c796b505, type: 2}
+  - {fileID: 11400000, guid: 78819aff25442334db7295c5af3b21e0, type: 2}
+  - {fileID: 11400000, guid: 5f72e851454fcf74b85cce7a775190db, type: 2}
   attackSkill: {fileID: 11400000, guid: 6e6df82ee366da349991345d594ba30e, type: 2}
   defenseSkill: {fileID: 11400000, guid: 91ee493282c723147a741a8ac23970d9, type: 2}
   animator: {fileID: 9100000, guid: c9e8385d60ec93a419b4e96310a76447, type: 2}
@@ -33,8 +42,11 @@ MonoBehaviour:
   skillBG: {fileID: 0}
   InitialsSkills:
   - {fileID: 11400000, guid: d1dfa69ae0800ed48820d859d36d9962, type: 2}
+  - {fileID: 11400000, guid: 3f064401f4f88004eb3d4651c796b505, type: 2}
+  - {fileID: 11400000, guid: 78819aff25442334db7295c5af3b21e0, type: 2}
+  - {fileID: 11400000, guid: 5f72e851454fcf74b85cce7a775190db, type: 2}
   skillsToUpdate: []
-  heroTable: {fileID: 4900000, guid: d7bbf077d22837b448a88b414951444f, type: 3}
+  heroTable: {fileID: 4900000, guid: ec36bd18194dd7c4c878df0341fec704, type: 3}
   table:
     colTypes:
     - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -68,20 +80,20 @@ MonoBehaviour:
       reqReferences: {fileID: 0}
       isExpanded: 0
       _keyValues:
-      - Nome
+      - Name
       - Level
       - HP
-      - Dano
-      - Defesa
-      - "Resist\xEAncia"
+      - Damage
+      - Defense
+      - Resistance
       - Speed
       _keys:
-      - Nome
+      - Name
       - Level
       - HP
-      - Dano
-      - Defesa
-      - "Resist\xEAncia"
+      - Damage
+      - Defense
+      - Resistance
       - Speed
       _values: 00000000010000000200000003000000040000000500000006000000
     rows:
@@ -125,20 +137,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -181,20 +193,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -237,20 +249,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -293,20 +305,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -349,20 +361,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -405,20 +417,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -461,20 +473,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -517,20 +529,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -573,20 +585,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -629,20 +641,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -685,20 +697,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -741,20 +753,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -797,20 +809,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -853,20 +865,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -909,20 +921,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -965,20 +977,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -1021,20 +1033,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -1077,20 +1089,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -1133,20 +1145,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -1189,20 +1201,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -1245,20 +1257,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -1301,20 +1313,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -1357,20 +1369,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -1413,20 +1425,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -1469,20 +1481,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -1525,20 +1537,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -1581,20 +1593,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -1637,20 +1649,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -1693,20 +1705,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -1749,20 +1761,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -1805,20 +1817,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -1861,20 +1873,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -1917,20 +1929,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -1973,20 +1985,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -2029,20 +2041,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -2085,20 +2097,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -2141,20 +2153,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -2197,20 +2209,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -2253,20 +2265,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -2309,20 +2321,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -2365,20 +2377,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -2421,20 +2433,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -2477,20 +2489,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -2533,20 +2545,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -2589,20 +2601,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -2645,20 +2657,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -2701,20 +2713,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -2757,26 +2769,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 49
-      - 1001
+      - 1,001
       - 148
       - 189
       - 174
@@ -2813,26 +2825,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 50
-      - 1042
+      - 1,042
       - 152
       - 194
       - 180
@@ -2869,26 +2881,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 51
-      - 1086
+      - 1,086
       - 157
       - 200
       - 185
@@ -2925,26 +2937,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 52
-      - 1131
+      - 1,131
       - 161
       - 206
       - 191
@@ -2981,26 +2993,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 53
-      - 1179
+      - 1,179
       - 166
       - 213
       - 196
@@ -3037,26 +3049,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 54
-      - 1228
+      - 1,228
       - 170
       - 219
       - 202
@@ -3093,26 +3105,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 55
-      - 1280
+      - 1,280
       - 175
       - 225
       - 208
@@ -3149,26 +3161,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 56
-      - 1334
+      - 1,334
       - 180
       - 232
       - 214
@@ -3205,26 +3217,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 57
-      - 1391
+      - 1,391
       - 185
       - 239
       - 220
@@ -3261,26 +3273,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 58
-      - 1450
+      - 1,450
       - 190
       - 246
       - 226
@@ -3317,26 +3329,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 59
-      - 1512
+      - 1,512
       - 195
       - 253
       - 232
@@ -3373,26 +3385,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 60
-      - 1576
+      - 1,576
       - 200
       - 260
       - 239
@@ -3429,26 +3441,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 61
-      - 1643
+      - 1,643
       - 205
       - 267
       - 245
@@ -3485,26 +3497,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 62
-      - 1714
+      - 1,714
       - 211
       - 274
       - 252
@@ -3541,26 +3553,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 63
-      - 1787
+      - 1,787
       - 216
       - 282
       - 259
@@ -3597,26 +3609,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 64
-      - 1864
+      - 1,864
       - 221
       - 290
       - 266
@@ -3653,26 +3665,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 65
-      - 1945
+      - 1,945
       - 227
       - 298
       - 273
@@ -3709,26 +3721,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 66
-      - 2029
+      - 2,029
       - 233
       - 306
       - 280
@@ -3765,26 +3777,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 67
-      - 2116
+      - 2,116
       - 239
       - 314
       - 287
@@ -3821,26 +3833,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 68
-      - 2208
+      - 2,208
       - 245
       - 322
       - 295
@@ -3877,26 +3889,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 69
-      - 2304
+      - 2,304
       - 251
       - 331
       - 302
@@ -3933,26 +3945,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 70
-      - 2404
+      - 2,404
       - 257
       - 339
       - 310
@@ -3989,26 +4001,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 71
-      - 2508
+      - 2,508
       - 263
       - 348
       - 318
@@ -4045,26 +4057,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 72
-      - 2617
+      - 2,617
       - 269
       - 357
       - 326
@@ -4101,26 +4113,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 73
-      - 2731
+      - 2,731
       - 276
       - 367
       - 334
@@ -4157,26 +4169,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 74
-      - 2851
+      - 2,851
       - 282
       - 376
       - 343
@@ -4213,26 +4225,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 75
-      - 2975
+      - 2,975
       - 289
       - 386
       - 351
@@ -4269,26 +4281,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 76
-      - 3105
+      - 3,105
       - 296
       - 396
       - 360
@@ -4325,26 +4337,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 77
-      - 3241
+      - 3,241
       - 303
       - 406
       - 369
@@ -4381,26 +4393,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 78
-      - 3383
+      - 3,383
       - 310
       - 416
       - 378
@@ -4437,26 +4449,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 79
-      - 3532
+      - 3,532
       - 317
       - 426
       - 387
@@ -4493,26 +4505,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 80
-      - 3687
+      - 3,687
       - 324
       - 437
       - 397
@@ -4549,26 +4561,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 81
-      - 3849
+      - 3,849
       - 331
       - 448
       - 406
@@ -4605,26 +4617,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 82
-      - 4018
+      - 4,018
       - 339
       - 459
       - 416
@@ -4661,26 +4673,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 83
-      - 4195
+      - 4,195
       - 347
       - 470
       - 426
@@ -4717,26 +4729,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 84
-      - 4380
+      - 4,380
       - 354
       - 482
       - 436
@@ -4773,26 +4785,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 85
-      - 4573
+      - 4,573
       - 362
       - 494
       - 446
@@ -4829,26 +4841,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 86
-      - 4774
+      - 4,774
       - 370
       - 506
       - 457
@@ -4885,26 +4897,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 87
-      - 4985
+      - 4,985
       - 379
       - 518
       - 468
@@ -4941,26 +4953,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 88
-      - 5205
+      - 5,205
       - 387
       - 530
       - 479
@@ -4997,26 +5009,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 89
-      - 5435
+      - 5,435
       - 395
       - 543
       - 490
@@ -5053,26 +5065,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 90
-      - 5676
+      - 5,676
       - 404
       - 556
       - 501
@@ -5109,26 +5121,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 91
-      - 5927
+      - 5,927
       - 413
       - 569
       - 513
@@ -5165,26 +5177,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 92
-      - 6189
+      - 6,189
       - 422
       - 583
       - 524
@@ -5221,26 +5233,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 93
-      - 6463
+      - 6,463
       - 431
       - 597
       - 537
@@ -5277,26 +5289,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 94
-      - 6750
+      - 6,750
       - 440
       - 611
       - 549
@@ -5333,26 +5345,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 95
-      - 7049
+      - 7,049
       - 450
       - 625
       - 561
@@ -5389,26 +5401,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 96
-      - 7362
+      - 7,362
       - 459
       - 640
       - 574
@@ -5445,26 +5457,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 97
-      - 7689
+      - 7,689
       - 469
       - 655
       - 587
@@ -5501,26 +5513,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 98
-      - 8030
+      - 8,030
       - 479
       - 670
       - 600
@@ -5557,26 +5569,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 99
-      - 8387
+      - 8,387
       - 489
       - 686
       - 614
@@ -5613,26 +5625,26 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Amidi
       - 100
-      - 8759
+      - 8,759
       - 499
       - 701
       - 628
@@ -5669,19 +5681,19 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _keys:
-        - Nome
+        - Name
         - Level
         - HP
-        - Dano
-        - Defesa
-        - "Resist\xEAncia"
+        - Damage
+        - Defense
+        - Resistance
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
