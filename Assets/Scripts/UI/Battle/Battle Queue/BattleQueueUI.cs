@@ -55,13 +55,13 @@ namespace FinalInferno.UI.Battle.QueueMenu
             
             // Coloca o personagem que se encontra em seu turno atual no local específico.
             GameObject newItem = Instantiate(QueueObject, currentTurnContent);
-            newItem.GetComponentsInChildren<Image>()[2].sprite = BattleManager.instance.currentUnit.unit.queueSprite;
+            newItem.GetComponentsInChildren<Image>()[1].sprite = BattleManager.instance.currentUnit.unit.queueSprite;
 
             // Coloca o restante dos personagens na fila.
             foreach (BattleUnit unit in BattleManager.instance.queue.list)
             {
                 newItem = Instantiate(QueueObject, content);
-                newItem.GetComponentsInChildren<Image>()[2].sprite = unit.unit.queueSprite;
+                newItem.GetComponentsInChildren<Image>()[1].sprite = unit.unit.queueSprite;
             }
         }
 
