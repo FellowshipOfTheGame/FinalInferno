@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f047c6ee540e16a4ab3c4c4d3bf866a3, type: 3}
+  m_Name: Load Game
+  m_EditorClassIdentifier: 
+  transitions:
+  - decisions:
+    - {fileID: 11400000, guid: ef9479cbe1fb41d479f09ed6feffc984, type: 2}
+    nextState: {fileID: 11400000, guid: c581cfdf6a204ea4f8f5cf898ca6a47f, type: 2}
+    actions:
+    - {fileID: 11400000, guid: ee9dc04e710720b4d910ca08623240db, type: 2}
+    - {fileID: 11400000, guid: 736cf43860981134fb4ce9caf8816558, type: 2}
+    - {fileID: 11400000, guid: fb71e80d4a6f12646834be334534c1f1, type: 2}
+  - decisions:
+    - {fileID: 11400000, guid: ef0d8043df2b8dd48a49a6bfec3a1c68, type: 2}
+    - {fileID: 11400000, guid: 4e15adbc3c4acce47ad6da0d216d7822, type: 2}
+    - {fileID: 11400000, guid: e1ac23804184c8f4eadb19a38eb6c3fd, type: 2}
+    nextState: {fileID: 11400000}
+    actions: []
+  - decisions:
+    - {fileID: 11400000, guid: 4e15adbc3c4acce47ad6da0d216d7822, type: 2}
+    - {fileID: 11400000, guid: e1ac23804184c8f4eadb19a38eb6c3fd, type: 2}
+    nextState: {fileID: 11400000, guid: 89dc607e4bfe5ef4a91cbceda29340a8, type: 2}
+    actions:
+    - {fileID: 11400000, guid: c8bd1abb2862c894296853177cfe6d65, type: 2}
