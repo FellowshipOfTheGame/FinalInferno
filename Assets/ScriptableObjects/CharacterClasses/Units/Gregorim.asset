@@ -19,38 +19,24 @@ MonoBehaviour:
   baseDef: 9
   baseMagicDef: 9
   baseSpeed: 8
-  elementalResistance:
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
   color: {r: 0.1509434, g: 0.12032752, b: 0.12032752, a: 1}
   skills:
   - {fileID: 11400000, guid: e0a3cf6667f30454f8cfb2ffd7357dd4, type: 2}
   - {fileID: 11400000, guid: 2553025485ef6014db812ae57d46bf00, type: 2}
-  - {fileID: 11400000, guid: 8b53236f7f4782c4c97833a42662c173, type: 2}
-  - {fileID: 11400000, guid: 3584cab9d6f57e943997103ae321edd5, type: 2}
-  - {fileID: 11400000, guid: 119f98d3dde04604cb731b7ca6107340, type: 2}
-  - {fileID: 11400000, guid: f6d06b9212f30134e8de2c3338c66ce2, type: 2}
   attackSkill: {fileID: 11400000, guid: 5f42b63c7cdcdba46a14c396542d7bce, type: 2}
   defenseSkill: {fileID: 11400000, guid: 91ee493282c723147a741a8ac23970d9, type: 2}
   animator: {fileID: 9100000, guid: cd6f966d38cb49c4989d26a0a37ccdbd, type: 2}
-  portrait: {fileID: 21300002, guid: 4e9df02b9f8f42d48a6e13b3d75a1523, type: 3}
+  portrait: {fileID: 21300000, guid: 4e9df02b9f8f42d48a6e13b3d75a1523, type: 3}
   battleSprite: {fileID: 21300000, guid: 4e9df02b9f8f42d48a6e13b3d75a1523, type: 3}
-  queueSprite: {fileID: 21300002, guid: 4e9df02b9f8f42d48a6e13b3d75a1523, type: 3}
+  queueSprite: {fileID: 21300000, guid: 4e9df02b9f8f42d48a6e13b3d75a1523, type: 3}
   spriteOW: {fileID: 21300000, guid: ecb9eeba6e7e23c479fa2bd5a73e1087, type: 3}
   animatorOW: {fileID: 9100000, guid: f193fad2b9da5eb4f92ef2f39f0e3bda, type: 2}
   skillBG: {fileID: 0}
   InitialsSkills:
   - {fileID: 11400000, guid: e0a3cf6667f30454f8cfb2ffd7357dd4, type: 2}
   - {fileID: 11400000, guid: 2553025485ef6014db812ae57d46bf00, type: 2}
-  - {fileID: 11400000, guid: 8b53236f7f4782c4c97833a42662c173, type: 2}
-  - {fileID: 11400000, guid: 3584cab9d6f57e943997103ae321edd5, type: 2}
-  - {fileID: 11400000, guid: 119f98d3dde04604cb731b7ca6107340, type: 2}
-  - {fileID: 11400000, guid: f6d06b9212f30134e8de2c3338c66ce2, type: 2}
   skillsToUpdate: []
-  heroTable: {fileID: 4900000, guid: 175b9fe79508c224f914b6d0264e7f37, type: 3}
+  heroTable: {fileID: 4900000, guid: 4c613d2bcf06687419f722b8e57771a8, type: 3}
   table:
     colTypes:
     - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -84,20 +70,20 @@ MonoBehaviour:
       reqReferences: {fileID: 0}
       isExpanded: 0
       _keyValues:
-      - Name
+      - Nome
       - Level
       - HP
-      - Damage
-      - Defense
-      - Resistance
+      - Dano
+      - Defesa
+      - "Resist\xEAncia"
       - Speed
       _keys:
-      - Name
+      - Nome
       - Level
       - HP
-      - Damage
-      - Defense
-      - Resistance
+      - Dano
+      - Defesa
+      - "Resist\xEAncia"
       - Speed
       _values: 00000000010000000200000003000000040000000500000006000000
     rows:
@@ -141,20 +127,20 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
@@ -164,6 +150,62 @@ MonoBehaviour:
       - 14
       - 11
       - 11
+      - 8
+      colTypes:
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      Col:
+        reorderableList:
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
+          isExpanded: 0
+          label:
+            m_Text: 
+            m_Image: {fileID: 0}
+            m_Tooltip: 
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
+          elementDisplayType: 0
+          elementNameProperty: 
+          elementNameOverride: 
+          elementIcon: {fileID: 0}
+        reqReferences: {fileID: 0}
+        isExpanded: 0
+        _keyValues:
+        - Nome
+        - Level
+        - HP
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
+        - Speed
+        _keys:
+        - Nome
+        - Level
+        - HP
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
+        - Speed
+        _values: 00000000010000000200000003000000040000000500000006000000
+    - elements:
+      - Gregorin
+      - 3
+      - 163
+      - 16
+      - 13
+      - 13
       - 10
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -197,29 +239,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 3
-      - 163
+      - 4
+      - 168
+      - 18
       - 16
-      - 13
-      - 13
+      - 16
       - 12
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -253,29 +295,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 4
-      - 168
+      - 5
+      - 173
+      - 21
       - 18
-      - 16
-      - 16
+      - 18
       - 14
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -309,29 +351,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 5
-      - 173
-      - 21
-      - 18
-      - 18
+      - 6
+      - 178
+      - 24
+      - 20
+      - 20
       - 16
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -365,29 +407,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 6
-      - 178
-      - 24
-      - 20
-      - 20
+      - 7
+      - 183
+      - 26
+      - 22
+      - 22
       - 18
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -421,29 +463,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 7
-      - 183
-      - 26
-      - 22
-      - 22
+      - 8
+      - 189
+      - 29
+      - 25
+      - 25
       - 21
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -477,29 +519,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 8
-      - 189
-      - 29
-      - 25
-      - 25
+      - 9
+      - 195
+      - 32
+      - 27
+      - 27
       - 23
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -533,29 +575,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 9
-      - 195
-      - 32
-      - 27
-      - 27
+      - 10
+      - 201
+      - 34
+      - 30
+      - 30
       - 25
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -589,29 +631,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 10
-      - 201
-      - 34
-      - 30
-      - 30
+      - 11
+      - 207
+      - 37
+      - 32
+      - 32
       - 28
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -645,29 +687,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 11
-      - 207
-      - 37
-      - 32
-      - 32
+      - 12
+      - 213
+      - 40
+      - 35
+      - 35
       - 30
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -701,29 +743,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 12
-      - 213
-      - 40
-      - 35
-      - 35
+      - 13
+      - 220
+      - 43
+      - 37
+      - 37
       - 32
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -757,29 +799,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 13
-      - 220
-      - 43
-      - 37
-      - 37
+      - 14
+      - 227
+      - 46
+      - 40
+      - 40
       - 35
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -813,29 +855,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 14
-      - 227
-      - 46
-      - 40
-      - 40
+      - 15
+      - 234
+      - 49
+      - 43
+      - 43
       - 37
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -869,29 +911,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 15
-      - 234
-      - 49
-      - 43
-      - 43
+      - 16
+      - 241
+      - 52
+      - 46
+      - 46
       - 40
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -925,29 +967,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 16
-      - 241
-      - 52
-      - 46
-      - 46
+      - 17
+      - 249
+      - 55
+      - 48
+      - 48
       - 42
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -981,29 +1023,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 17
-      - 249
-      - 55
-      - 48
-      - 48
+      - 18
+      - 257
+      - 59
+      - 51
+      - 51
       - 45
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1037,29 +1079,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 18
-      - 257
-      - 59
-      - 51
-      - 51
+      - 19
+      - 266
+      - 62
+      - 54
+      - 54
       - 48
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1093,29 +1135,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 19
-      - 266
-      - 62
-      - 54
-      - 54
+      - 20
+      - 274
+      - 65
+      - 57
+      - 57
       - 50
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1149,29 +1191,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 20
-      - 274
-      - 65
-      - 57
-      - 57
+      - 21
+      - 283
+      - 69
+      - 60
+      - 60
       - 53
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1205,29 +1247,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 21
-      - 283
-      - 69
-      - 60
-      - 60
+      - 22
+      - 293
+      - 73
+      - 63
+      - 63
       - 56
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1261,29 +1303,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 22
-      - 293
-      - 73
-      - 63
-      - 63
+      - 23
+      - 302
+      - 76
+      - 67
+      - 67
       - 59
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1317,29 +1359,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 23
-      - 302
-      - 76
-      - 67
-      - 67
+      - 24
+      - 313
+      - 80
+      - 70
+      - 70
       - 62
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1373,29 +1415,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 24
-      - 313
-      - 80
-      - 70
-      - 70
+      - 25
+      - 323
+      - 84
+      - 73
+      - 73
       - 65
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1429,29 +1471,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 25
-      - 323
-      - 84
-      - 73
-      - 73
+      - 26
+      - 334
+      - 88
+      - 77
+      - 77
       - 68
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1485,29 +1527,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 26
-      - 334
-      - 88
-      - 77
-      - 77
+      - 27
+      - 345
+      - 92
+      - 80
+      - 80
       - 71
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1541,29 +1583,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 27
-      - 345
-      - 92
-      - 80
-      - 80
+      - 28
+      - 357
+      - 96
+      - 83
+      - 83
       - 74
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1597,29 +1639,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 28
-      - 357
-      - 96
-      - 83
-      - 83
+      - 29
+      - 369
+      - 100
+      - 87
+      - 87
       - 78
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1653,29 +1695,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 29
-      - 369
-      - 100
-      - 87
-      - 87
+      - 30
+      - 382
+      - 104
+      - 91
+      - 91
       - 81
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1709,29 +1751,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 30
-      - 382
-      - 104
-      - 91
-      - 91
+      - 31
+      - 395
+      - 108
+      - 94
+      - 94
       - 84
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1765,29 +1807,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 31
-      - 395
-      - 108
-      - 94
-      - 94
+      - 32
+      - 409
+      - 113
+      - 98
+      - 98
       - 88
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1821,29 +1863,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 32
-      - 409
-      - 113
-      - 98
-      - 98
+      - 33
+      - 423
+      - 117
+      - 102
+      - 102
       - 91
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1877,29 +1919,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 33
-      - 423
-      - 117
-      - 102
-      - 102
+      - 34
+      - 438
+      - 122
+      - 106
+      - 106
       - 95
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1933,29 +1975,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 34
-      - 438
-      - 122
-      - 106
-      - 106
+      - 35
+      - 453
+      - 126
+      - 110
+      - 110
       - 98
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1989,29 +2031,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 35
-      - 453
-      - 126
-      - 110
-      - 110
+      - 36
+      - 469
+      - 131
+      - 114
+      - 114
       - 102
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -2045,29 +2087,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 36
-      - 469
-      - 131
-      - 114
-      - 114
+      - 37
+      - 486
+      - 136
+      - 118
+      - 118
       - 106
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -2101,29 +2143,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 37
-      - 486
-      - 136
-      - 118
-      - 118
+      - 38
+      - 503
+      - 141
+      - 122
+      - 122
       - 109
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -2157,29 +2199,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 38
-      - 503
-      - 141
-      - 122
-      - 122
+      - 39
+      - 521
+      - 146
+      - 127
+      - 127
       - 113
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -2213,29 +2255,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 39
-      - 521
-      - 146
-      - 127
-      - 127
+      - 40
+      - 540
+      - 151
+      - 131
+      - 131
       - 117
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -2269,29 +2311,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 40
-      - 540
-      - 151
-      - 131
-      - 131
+      - 41
+      - 559
+      - 157
+      - 135
+      - 135
       - 121
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -2325,29 +2367,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 41
-      - 559
-      - 157
-      - 135
-      - 135
+      - 42
+      - 579
+      - 162
+      - 140
+      - 140
       - 125
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -2381,29 +2423,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 42
-      - 579
-      - 162
-      - 140
-      - 140
+      - 43
+      - 600
+      - 168
+      - 145
+      - 145
       - 129
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -2437,29 +2479,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 43
-      - 600
-      - 168
-      - 145
-      - 145
+      - 44
+      - 622
+      - 173
+      - 149
+      - 149
       - 134
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -2493,29 +2535,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 44
-      - 622
-      - 173
-      - 149
-      - 149
+      - 45
+      - 644
+      - 179
+      - 154
+      - 154
       - 138
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -2549,29 +2591,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 45
-      - 644
-      - 179
-      - 154
-      - 154
+      - 46
+      - 668
+      - 185
+      - 159
+      - 159
       - 142
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -2605,29 +2647,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 46
-      - 668
-      - 185
-      - 159
-      - 159
+      - 47
+      - 692
+      - 191
+      - 164
+      - 164
       - 147
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -2661,29 +2703,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 47
-      - 692
-      - 191
-      - 164
-      - 164
+      - 48
+      - 717
+      - 197
+      - 169
+      - 169
       - 151
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -2717,29 +2759,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 48
-      - 717
-      - 197
-      - 169
-      - 169
+      - 49
+      - 744
+      - 203
+      - 174
+      - 174
       - 156
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -2773,29 +2815,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 49
-      - 744
-      - 203
-      - 174
-      - 174
+      - 50
+      - 771
+      - 210
+      - 180
+      - 180
       - 161
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -2829,29 +2871,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 50
-      - 771
-      - 210
-      - 180
-      - 180
+      - 51
+      - 799
+      - 216
+      - 185
+      - 185
       - 166
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -2885,29 +2927,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 51
-      - 799
-      - 216
-      - 185
-      - 185
+      - 52
+      - 829
+      - 223
+      - 191
+      - 191
       - 170
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -2941,29 +2983,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 52
-      - 829
-      - 223
-      - 191
-      - 191
+      - 53
+      - 859
+      - 230
+      - 196
+      - 196
       - 175
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -2997,29 +3039,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 53
-      - 859
-      - 230
-      - 196
-      - 196
+      - 54
+      - 891
+      - 237
+      - 202
+      - 202
       - 181
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -3053,29 +3095,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 54
-      - 891
-      - 237
-      - 202
-      - 202
+      - 55
+      - 924
+      - 244
+      - 208
+      - 208
       - 186
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -3109,29 +3151,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 55
-      - 924
-      - 244
-      - 208
-      - 208
+      - 56
+      - 958
+      - 251
+      - 214
+      - 214
       - 191
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -3165,29 +3207,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 56
-      - 958
-      - 251
-      - 214
-      - 214
+      - 57
+      - 994
+      - 259
+      - 220
+      - 220
       - 196
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -3221,29 +3263,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 57
-      - 994
-      - 259
-      - 220
-      - 220
+      - 58
+      - 1031
+      - 266
+      - 226
+      - 226
       - 202
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -3277,29 +3319,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 58
-      - 1,031
-      - 266
-      - 226
-      - 226
+      - 59
+      - 1069
+      - 274
+      - 232
+      - 232
       - 207
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -3333,29 +3375,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 59
-      - 1,069
-      - 274
-      - 232
-      - 232
+      - 60
+      - 1109
+      - 282
+      - 239
+      - 239
       - 213
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -3389,29 +3431,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 60
-      - 1,109
-      - 282
-      - 239
-      - 239
+      - 61
+      - 1151
+      - 290
+      - 245
+      - 245
       - 219
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -3445,29 +3487,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 61
-      - 1,151
-      - 290
-      - 245
-      - 245
+      - 62
+      - 1194
+      - 298
+      - 252
+      - 252
       - 225
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -3501,29 +3543,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 62
-      - 1,194
-      - 298
-      - 252
-      - 252
+      - 63
+      - 1239
+      - 307
+      - 259
+      - 259
       - 231
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -3557,29 +3599,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 63
-      - 1,239
-      - 307
-      - 259
-      - 259
+      - 64
+      - 1285
+      - 315
+      - 266
+      - 266
       - 237
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -3613,29 +3655,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 64
-      - 1,285
-      - 315
-      - 266
-      - 266
+      - 65
+      - 1333
+      - 324
+      - 273
+      - 273
       - 243
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -3669,29 +3711,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 65
-      - 1,333
-      - 324
-      - 273
-      - 273
+      - 66
+      - 1383
+      - 333
+      - 280
+      - 280
       - 249
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -3725,29 +3767,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 66
-      - 1,383
-      - 333
-      - 280
-      - 280
+      - 67
+      - 1436
+      - 342
+      - 287
+      - 287
       - 256
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -3781,29 +3823,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 67
-      - 1,436
-      - 342
-      - 287
-      - 287
+      - 68
+      - 1490
+      - 352
+      - 295
+      - 295
       - 262
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -3837,29 +3879,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 68
-      - 1,490
-      - 352
-      - 295
-      - 295
+      - 69
+      - 1546
+      - 361
+      - 302
+      - 302
       - 269
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -3893,29 +3935,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 69
-      - 1,546
-      - 361
-      - 302
-      - 302
+      - 70
+      - 1604
+      - 371
+      - 310
+      - 310
       - 276
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -3949,29 +3991,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 70
-      - 1,604
-      - 371
-      - 310
-      - 310
+      - 71
+      - 1665
+      - 381
+      - 318
+      - 318
       - 283
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -4005,29 +4047,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 71
-      - 1,665
-      - 381
-      - 318
-      - 318
+      - 72
+      - 1728
+      - 391
+      - 326
+      - 326
       - 290
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -4061,29 +4103,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 72
-      - 1,728
-      - 391
-      - 326
-      - 326
+      - 73
+      - 1794
+      - 401
+      - 334
+      - 334
       - 297
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -4117,29 +4159,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 73
-      - 1,794
-      - 401
-      - 334
-      - 334
+      - 74
+      - 1862
+      - 412
+      - 343
+      - 343
       - 304
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -4173,29 +4215,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 74
-      - 1,862
-      - 412
-      - 343
-      - 343
+      - 75
+      - 1933
+      - 423
+      - 351
+      - 351
       - 311
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -4229,29 +4271,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 75
-      - 1,933
-      - 423
-      - 351
-      - 351
+      - 76
+      - 2006
+      - 434
+      - 360
+      - 360
       - 319
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -4285,29 +4327,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 76
-      - 2,006
-      - 434
-      - 360
-      - 360
+      - 77
+      - 2082
+      - 445
+      - 369
+      - 369
       - 327
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -4341,29 +4383,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 77
-      - 2,082
-      - 445
-      - 369
-      - 369
+      - 78
+      - 2162
+      - 457
+      - 378
+      - 378
       - 335
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -4397,29 +4439,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 78
-      - 2,162
-      - 457
-      - 378
-      - 378
+      - 79
+      - 2244
+      - 468
+      - 387
+      - 387
       - 343
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -4453,29 +4495,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 79
-      - 2,244
-      - 468
-      - 387
-      - 387
+      - 80
+      - 2330
+      - 481
+      - 397
+      - 397
       - 351
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -4509,29 +4551,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 80
-      - 2,330
-      - 481
-      - 397
-      - 397
+      - 81
+      - 2419
+      - 493
+      - 406
+      - 406
       - 359
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -4565,29 +4607,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 81
-      - 2,419
-      - 493
-      - 406
-      - 406
+      - 82
+      - 2511
+      - 505
+      - 416
+      - 416
       - 367
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -4621,29 +4663,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 82
-      - 2,511
-      - 505
-      - 416
-      - 416
+      - 83
+      - 2607
+      - 518
+      - 426
+      - 426
       - 376
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -4677,29 +4719,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 83
-      - 2,607
-      - 518
-      - 426
-      - 426
+      - 84
+      - 2706
+      - 531
+      - 436
+      - 436
       - 385
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -4733,29 +4775,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 84
-      - 2,706
-      - 531
-      - 436
-      - 436
+      - 85
+      - 2810
+      - 545
+      - 446
+      - 446
       - 394
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -4789,29 +4831,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 85
-      - 2,810
-      - 545
-      - 446
-      - 446
+      - 86
+      - 2918
+      - 558
+      - 457
+      - 457
       - 403
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -4845,29 +4887,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 86
-      - 2,918
-      - 558
-      - 457
-      - 457
+      - 87
+      - 3029
+      - 572
+      - 468
+      - 468
       - 412
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -4901,29 +4943,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 87
-      - 3,029
-      - 572
-      - 468
-      - 468
+      - 88
+      - 3145
+      - 586
+      - 479
+      - 479
       - 421
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -4957,29 +4999,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 88
-      - 3,145
-      - 586
-      - 479
-      - 479
+      - 89
+      - 3266
+      - 601
+      - 490
+      - 490
       - 431
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -5013,29 +5055,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 89
-      - 3,266
-      - 601
-      - 490
-      - 490
+      - 90
+      - 3391
+      - 616
+      - 501
+      - 501
       - 441
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -5069,29 +5111,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 90
-      - 3,391
-      - 616
-      - 501
-      - 501
+      - 91
+      - 3521
+      - 631
+      - 513
+      - 513
       - 451
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -5125,29 +5167,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 91
-      - 3,521
-      - 631
-      - 513
-      - 513
+      - 92
+      - 3657
+      - 646
+      - 524
+      - 524
       - 461
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -5181,29 +5223,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 92
-      - 3,657
-      - 646
-      - 524
-      - 524
+      - 93
+      - 3797
+      - 662
+      - 537
+      - 537
       - 471
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -5237,29 +5279,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 93
-      - 3,797
-      - 662
-      - 537
-      - 537
+      - 94
+      - 3943
+      - 678
+      - 549
+      - 549
       - 481
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -5293,29 +5335,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 94
-      - 3,943
-      - 678
-      - 549
-      - 549
+      - 95
+      - 4095
+      - 695
+      - 561
+      - 561
       - 492
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -5349,29 +5391,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 95
-      - 4,095
-      - 695
-      - 561
-      - 561
+      - 96
+      - 4252
+      - 712
+      - 574
+      - 574
       - 503
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -5405,29 +5447,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 96
-      - 4,252
-      - 712
-      - 574
-      - 574
+      - 97
+      - 4416
+      - 729
+      - 587
+      - 587
       - 514
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -5461,29 +5503,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 97
-      - 4,416
-      - 729
-      - 587
-      - 587
+      - 98
+      - 4586
+      - 746
+      - 600
+      - 600
       - 525
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -5517,29 +5559,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 98
-      - 4,586
-      - 746
-      - 600
-      - 600
+      - 99
+      - 4762
+      - 764
+      - 614
+      - 614
       - 537
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -5573,29 +5615,29 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000
     - elements:
       - Gregorin
-      - 99
-      - 4,762
-      - 764
-      - 614
-      - 614
+      - 100
+      - 4946
+      - 783
+      - 628
+      - 628
       - 548
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -5629,75 +5671,19 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _keys:
-        - Name
+        - Nome
         - Level
         - HP
-        - Damage
-        - Defense
-        - Resistance
-        - Speed
-        _values: 00000000010000000200000003000000040000000500000006000000
-    - elements:
-      - Gregorin
-      - 100
-      - 4,946
-      - 783
-      - 628
-      - 628
-      - 560
-      colTypes:
-      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Name
-        - Level
-        - HP
-        - Damage
-        - Defense
-        - Resistance
-        - Speed
-        _keys:
-        - Name
-        - Level
-        - HP
-        - Damage
-        - Defense
-        - Resistance
+        - Dano
+        - Defesa
+        - "Resist\xEAncia"
         - Speed
         _values: 00000000010000000200000003000000040000000500000006000000

@@ -76,8 +76,6 @@ namespace FinalInferno.UI.Battle.SkillMenu
         /// </summary>
         [SerializeField] private Text alteredSpeedText;
 
-        [SerializeField] private List<Skill> activeSkills;
-
         [Header("Colors")]
         [SerializeField] private Color positiveColor;
         [SerializeField] private Color negativeColor;
@@ -89,7 +87,6 @@ namespace FinalInferno.UI.Battle.SkillMenu
         public void LoadInfo(BattleUnit currentUnit)
         {
             currentHero = (Hero) currentUnit.unit;
-            activeSkills = new List<Skill>(currentUnit.ActiveSkills);
 
             nameText.text = currentHero.name.ToUpper();
             nameText.color = currentHero.color;
@@ -163,7 +160,7 @@ namespace FinalInferno.UI.Battle.SkillMenu
         /// </summary>
         public List<Skill> GetCurrentHeroSkills()
         {
-            return activeSkills;
+            return currentHero.skills;
         }
     }
 

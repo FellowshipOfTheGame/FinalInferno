@@ -10,7 +10,6 @@ namespace FinalInferno{
         public static int nTargets;
         private static int counter = 0;
         void UseSkill(){
-            Debug.Log("Chamou o use skill pela animação");
             BattleSkillManager.currentSkill.Use(BattleSkillManager.currentUser, transform.parent.GetComponent<BattleUnit>());
         }
         void DestroySkillObject()
@@ -21,7 +20,7 @@ namespace FinalInferno{
                 nTargets = -1;
                 FinalInferno.UI.FSM.AnimationEnded.EndAnimation();
             }
-            Destroy(gameObject);
+            Destroy(this);
         }
     }
 }

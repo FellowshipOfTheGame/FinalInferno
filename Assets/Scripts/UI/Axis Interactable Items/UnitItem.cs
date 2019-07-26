@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using FinalInferno.UI.Battle;
-using UnityEngine.UI;
 
 namespace FinalInferno.UI.AII
 {
@@ -20,8 +19,6 @@ namespace FinalInferno.UI.AII
         /// Referência ao item da lista.
         /// </summary>
         [SerializeField] private AxisInteractableItem item;
-
-        public LayoutElement layout;
 
         private bool showingTarget = false;
 

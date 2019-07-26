@@ -12,7 +12,7 @@ namespace FinalInferno{
         public static BattleManager instance;
 
         public List<Unit> units;
-        public List<BattleUnit> battleUnits;
+        private List<BattleUnit> battleUnits;
         public BattleQueue queue;
         public BattleQueueUI queueUI;
 
@@ -37,16 +37,11 @@ namespace FinalInferno{
         }
 
         public void StartBattle(){
-            BattleProgress.ResetInfo(Party.Instance);
-
             foreach(Unit unit in units){
                 BattleUnit newUnit = BattleUnitsUI.instance.LoadUnit(unit);
                 battleUnits.Add(newUnit);
                 queue.Enqueue(newUnit, -newUnit.curSpeed);
                 // Debug.Log("Carregou " + unit.name);
-
-                if(unit.IsHero)
-                    BattleProgress.addHeroSkills((Hero)unit);
             }
             List<BattleUnit> auxList = new List<BattleUnit>(queue.list);
             foreach(BattleUnit unit in queue.list){
@@ -128,7 +123,7 @@ namespace FinalInferno{
             List<BattleUnit> team = new List<BattleUnit>();
 
             if(!countDead){
-                if (currentUnit != null && GetUnitType(currentUnit.unit) == type)
+                if (GetUnitType(currentUnit.unit) == type)
                     team.Add(currentUnit);
 
                 foreach(BattleUnit unit in queue.list){
@@ -136,7 +131,7 @@ namespace FinalInferno{
                         team.Add(unit);
                 }
             }else{
-                if (currentUnit != null && GetUnitType(currentUnit.unit) == type && !deadOnly)
+                if (GetUnitType(currentUnit.unit) == type && !deadOnly)
                     team.Add(currentUnit);
 
                 foreach(BattleUnit unit in battleUnits){

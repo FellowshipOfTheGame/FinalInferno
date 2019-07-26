@@ -16,8 +16,8 @@ namespace FinalInferno{
                     case Element.Fire:
                         value += "Fire";
                         break;
-                    case Element.Water:
-                        value += "Water";
+                    case Element.Ice:
+                        value += "Ice";
                         break;
                     case Element.Wind:
                         value += "Wind";

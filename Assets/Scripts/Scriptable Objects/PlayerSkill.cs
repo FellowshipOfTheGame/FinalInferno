@@ -18,7 +18,7 @@ namespace FinalInferno{
         public List<int> prerequisiteSkillsLevel; //level que a skill de pre requisito precisa estar para essa skill destravar
         public int prerequisiteHeroLevel; //level que o heroi precisa estar para essa skill destravar
         [SerializeField] private TextAsset skillTable;
-        [SerializeField] private DynamicTable table = null;
+        [SerializeField] private DynamicTable table;
         private DynamicTable Table {
             get {
                 if(table == null)
@@ -28,7 +28,6 @@ namespace FinalInferno{
         }
 
         void Awake(){
-            table = null;
             table = DynamicTable.Create(skillTable);
             level = 0;
             xp = 0;
@@ -45,16 +44,18 @@ namespace FinalInferno{
                 SkillEffectTuple modifyEffect = effects[i];
                 Debug.Log("levelapo a " + name);
 
-                modifyEffect.value1 = Table.Rows[level-1].Field<float>("SkillEffect" + i + "Value0");
+                modifyEffect.value1 = Table.Rows[level-1].Field<float>("Skill Effect " + i + " Value 0");
                 Debug.Log("Mvalue1: " + modifyEffect.value1);
                 
-                modifyEffect.value2 = Table.Rows[level-1].Field<float>("SkillEffect" + i + "Value1");
+                modifyEffect.value2 = Table.Rows[level-1].Field<float>("Skill Effect " + i + " Value 1");
                 Debug.Log("Mvalue2: " + modifyEffect.value2);
 
                 effects[i] = modifyEffect;
                 Debug.Log("value1: " + effects[i].value1);
                 Debug.Log("value2: " + effects[i].value2);
             }
+
+            cost = Table.Rows[level-1].Field<float>("Cost");
         }
 
         //Adiciona os pontos de experiência ao utilizar a skill
@@ -82,7 +83,7 @@ namespace FinalInferno{
             foreach(BattleUnit target in targets){
                 expValue += target.unit.SkillExp;
             }
-            expValue /= Mathf.Max(targets.Count, 1);
+            expValue /= targets.Count;
 
             return GiveExp(expValue);
         }

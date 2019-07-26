@@ -58,12 +58,14 @@ namespace FinalInferno{
             if (Random.Range(0.0f, 100.0f) < curEncounterRate * (distance)) {
                 // Quando encontrar uma batalha
                 //Debug.Log("Found random encounter");
-                // Impede que o player se movimente
-                CharacterOW.PartyCanMove = false;
                 // Diminui a taxa de encontro para metade do valor base
                 // Isso reduz a chance de batalhas consecutivos (atualmente isso n serve pra nada)
                 curEncounterRate = baseEncounterRate/2;
+                // Impede que o player se movimente
+                playerObj.GetComponent<Movable>().CanMove = false;
+                // Salvar a posição atual de cada player dentro do seu respectivo SO
                 // Usar a tabela de encontros aleatorios para definir a lista de inimigos
+                // To do
                 Enemy[] enemies= new Enemy[Random.Range(minNumberEnemies, maxNumberEnemies+1)];
                 //Debug.Log("About to fight " + enemies.Length + " enemies");
                 for(int i = 0; i < enemies.Length; i++){
@@ -77,19 +79,6 @@ namespace FinalInferno{
                     }
                     //Debug.Log(enemies[i]);
                 }
-                // Calcula o level dos inimigos
-                // Avalia os parametros das quests
-                int questParam = 0;
-                if(AssetManager.LoadAsset<Quest>("MainQuest").events["CerberusDead"]) questParam++;
-
-                int enemyLevel = questParam * 10;
-                if(Mathf.Clamp(Party.Instance.level - (questParam * 10), 0, 10) >= 5)
-                enemyLevel += 5;
-                Debug.Log("Nível dos inimigos calculado(unclamped) = " + enemyLevel);
-                foreach(Enemy enemy in (new HashSet<Enemy>(enemies)) ){
-                    enemy.LevelEnemy(enemyLevel);
-                }
-
                 SceneLoader.LoadBattleScene(enemies, BattleBG, BattleBGM);
             } else {
                 // Caso nao encontre uma batalha
