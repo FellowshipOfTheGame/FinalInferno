@@ -42,5 +42,20 @@ namespace Fog.Dialogue
                 Fog.Dialogue.DialogueHandler.instance.StartDialogue(selectedDialogue, agent, movingAgent);
             }
         }
+
+        public void OnTriggerEnter2D(Collider2D col){
+            Agent agent = col.GetComponent<Agent>();
+            if(agent){
+                agent.collidingInteractables.Add(this);
+            }
+        }
+
+        public void OnTriggerExit2D(Collider2D col){
+            Agent agent = col.GetComponent<Agent>();
+            if(agent){
+                agent.collidingInteractables.Remove(this);
+            }
+        }
+
     }
 }
