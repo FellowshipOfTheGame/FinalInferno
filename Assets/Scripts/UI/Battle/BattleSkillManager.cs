@@ -12,6 +12,10 @@ namespace FinalInferno.UI.Battle
 
         public static void UseSkill()
         {
+            if(currentSkill == null){
+                Debug.Log("Deu null!");
+                return; // Nao sei pq isso e necessario, mas essa funcao ta sendo chamada no inicio da batalha pra todas as unidades
+            }
             //currentSkill.Use(currentUser, currentTargets);
             SkillVFX.nTargets = currentTargets.Count;
             if(currentSkill.GetType() == typeof(PlayerSkill)){

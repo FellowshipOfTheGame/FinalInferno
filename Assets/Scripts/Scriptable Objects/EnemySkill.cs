@@ -9,7 +9,7 @@ namespace FinalInferno{
         // TO DO: Revisão de tabelas (nao sabemos o nome definitivo da coluna)
         public string description; //descricao da "skill" que aparecera para o jogador durante a batalha
         [SerializeField] private TextAsset skillTable;
-        [SerializeField] private DynamicTable table;
+        [SerializeField] private DynamicTable table = null;
         private DynamicTable Table {
             get {
                 if(table == null)
@@ -21,7 +21,7 @@ namespace FinalInferno{
             get{ return level; }
             set{
                 if(value != level){
-                    level = value;
+                    level = Mathf.Clamp(value, Table.Rows[0].Field<int>("Level"), Table.Rows[Table.Rows.Count-1].Field<int>("Level"));
                     LevelUp();
                 }
             }
@@ -29,7 +29,7 @@ namespace FinalInferno{
 
         void Awake(){
             table = DynamicTable.Create(skillTable);
-            level = 0;
+            Level = -1;
         }
 
         //atualiza o value dos efeitos, se for necessario.
@@ -42,22 +42,20 @@ namespace FinalInferno{
                 SkillEffectTuple modifyEffect = effects[i];
                 Debug.Log("levelapo a " + name);
 
-                modifyEffect.value1 = Table.Rows[level-1].Field<float>("Skill Effect " + i + " Value 0");
+                modifyEffect.value1 = Table.Rows[Level-1].Field<float>("SkillEffect" + i + "Value0");
                 Debug.Log("Mvalue1: " + modifyEffect.value1);
                 
-                modifyEffect.value2 = Table.Rows[level-1].Field<float>("Skill Effect " + i + " Value 1");
+                modifyEffect.value2 = Table.Rows[Level-1].Field<float>("SkillEffect" + i + "Value1");
                 Debug.Log("Mvalue2: " + modifyEffect.value2);
 
                 effects[i] = modifyEffect;
                 Debug.Log("value1: " + effects[i].value1);
                 Debug.Log("value2: " + effects[i].value2);
             }
-
-            cost = Table.Rows[level-1].Field<float>("Cost");
         }
 
         public override void ResetSkill(){
-            level = 0;
+            Level = 0;
             Debug.Log("Skill resetada");
         }
         
