@@ -6,13 +6,13 @@ using UnityEditor;
 namespace FinalInferno
 {
     public enum DamageType {
-        Physical,
+        Physical = 1, // O enum começa em 1 para a tabela ficar mais human friendly
         Magical,
-        None
+        None // None deve sempre ser o ultimo
     }
     public enum Element {
-        Fire = 1, // O primeiro elemento deve ter valor = 1
-        Ice,
+        Fire = 1, // O primeiro elemento deve ter valor = 1 (mesmo motivo de DamageType)
+        Water,
         Wind,
         Earth,
         Neutral // Neutral deve sempre ser o ultimo
@@ -69,8 +69,23 @@ namespace FinalInferno
 
     [System.Serializable]
      public struct SkillInfo{
+        [SerializeField] public int level;
         [SerializeField] public long xp;
+        [SerializeField] public long xpCumulative;
         [SerializeField] public bool active;
+        public SkillInfo(PlayerSkill skill){
+            if(skill == null){
+                level = 1;
+                xp = 0;
+                xpCumulative = 0;
+                active = false;
+            }else{
+                level = skill.Level;
+                xp = skill.xp;
+                xpCumulative = skill.XpCumulative;
+                active = skill.active;
+            }
+        }
     }
 
     [System.Serializable]

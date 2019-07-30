@@ -137,7 +137,7 @@ namespace FinalInferno{
             animator.SetTrigger("TakeDamage");
             float atkDifference = atk - ( (type == DamageType.Physical)? curDef : ((type == DamageType.Magical)? curMagicDef : 0));
             atkDifference = Mathf.Max(atkDifference, 1);
-            int damage = Mathf.FloorToInt(atkDifference * multiplier * elementalResistance[(int)element] * (Mathf.Clamp(1.0f - damageResistance, 0.0f, 1.0f))/* * 10 */);
+            int damage = Mathf.FloorToInt(atkDifference * multiplier * elementalResistance[(int)element - (int)Element.Fire] * (Mathf.Clamp(1.0f - damageResistance, 0.0f, 1.0f))/* * 10 */);
             if(damage > 0 && CurHP <= 0)
                 return 0;
             CurHP -= damage;
@@ -184,9 +184,15 @@ namespace FinalInferno{
             int returnValue = Mathf.FloorToInt(lostHPPercent * MaxHP);
 
             MaxHP = Mathf.Max(Mathf.FloorToInt((1.0f - lostHPPercent) * MaxHP), 1);
+            if(lostHPPercent < 0) // Para usar a mesma função para aumentar hp maximo, o aumento é adicionado como cura
+                CurHP += returnValue;
             CurHP = CurHP;
 
             return returnValue;
+        }
+
+        public void ResetMaxHP(){ // Funcao que deve ser chamada no final da batalha
+            MaxHP = unit.hpMax;
         }
 
         public void AddEffect(StatusEffect statusEffect, bool ignoreCallback = false){
