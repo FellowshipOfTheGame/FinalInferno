@@ -7,17 +7,19 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8eba336bc1b05d04ea164ca3fec05874, type: 3}
   m_Name: InstillFear
   m_EditorClassIdentifier: 
   name: Instill Fear
-  level: 0
   cost: 20
   target: 1
-  attribute: 4
+  attribute: 5
   effects:
+  - effect: {fileID: 11400000, guid: fc18994d50656f94b8e2afdc05ecdee0, type: 2}
+    value1: 0
+    value2: 0
   - effect: {fileID: 11400000, guid: 8cb5d695331ec94409f87134f782e68f, type: 2}
     value1: 0.2
     value2: 2
@@ -36,15 +38,10 @@ MonoBehaviour:
   prerequisiteSkills: []
   prerequisiteSkillsLevel: 
   prerequisiteHeroLevel: 0
-  skillTable: {fileID: 4900000, guid: 56fa27ceb94669245a30782203b8e10b, type: 3}
+  skillTable: {fileID: 4900000, guid: e67ce20b2775af34b9b0520e7efcfc94, type: 3}
   table:
     colTypes:
-    - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     Col:
       reorderableList:
         canAdd: 1
@@ -69,35 +66,17 @@ MonoBehaviour:
       reqReferences: {fileID: 0}
       isExpanded: 0
       _keyValues:
-      - Level
-      - Skill Effect 0 Value 0
-      - Skill Effect 0 Value 1
-      - Skill Effect 1 Value 0
-      - Skill Effect 1 Value 1
-      - Cost
+      - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value 0,Skill
+        Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
       _keys:
-      - Level
-      - Skill Effect 0 Value 0
-      - Skill Effect 0 Value 1
-      - Skill Effect 1 Value 0
-      - Skill Effect 1 Value 1
-      - Cost
-      _values: 000000000100000002000000030000000400000005000000
+      - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value 0,Skill
+        Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+      _values: 00000000
     rows:
     - elements:
-      - 1
-      - 0.020
-      - 2
-      - 0.010
-      - 2
-      - 0.1
+      - 1,0,0,0.020,2,0.010,2,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -122,34 +101,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 2
-      - 0.021
-      - 2
-      - 0.011
-      - 2
-      - 0.1
+      - 2,0,0,0.021,2,0.011,2,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -174,34 +135,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 3
-      - 0.022
-      - 2
-      - 0.011
-      - 2
-      - 0.1
+      - 3,0,0,0.022,2,0.011,2,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -226,34 +169,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 4
-      - 0.023
-      - 2
-      - 0.012
-      - 2
-      - 0.1
+      - 4,0,0,0.023,2,0.012,2,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -278,34 +203,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 5
-      - 0.025
-      - 2
-      - 0.013
-      - 2
-      - 0.1
+      - 5,0,0,0.025,2,0.013,2,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -330,34 +237,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 6
-      - 0.026
-      - 2
-      - 0.013
-      - 2
-      - 0.1
+      - 6,0,0,0.026,2,0.013,2,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -382,34 +271,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 7
-      - 0.027
-      - 2
-      - 0.014
-      - 2
-      - 0.1
+      - 7,0,0,0.027,2,0.014,2,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -434,34 +305,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 8
-      - 0.028
-      - 2
-      - 0.014
-      - 2
-      - 0.1
+      - 8,0,0,0.028,2,0.014,2,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -486,34 +339,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 9
-      - 0.029
-      - 2
-      - 0.015
-      - 2
-      - 0.1
+      - 9,0,0,0.029,2,0.015,2,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -538,34 +373,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 10
-      - 0.031
-      - 2
-      - 0.016
-      - 2
-      - 0.1
+      - 10,0,0,0.031,2,0.016,2,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -590,34 +407,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 11
-      - 0.032
-      - 2
-      - 0.016
-      - 2
-      - 0.1
+      - 11,0,0,0.032,2,0.016,2,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -642,34 +441,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 12
-      - 0.033
-      - 2
-      - 0.017
-      - 2
-      - 0.1
+      - 12,0,0,0.033,2,0.017,2,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -694,34 +475,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 13
-      - 0.034
-      - 2
-      - 0.017
-      - 2
-      - 0.1
+      - 13,0,0,0.034,2,0.017,2,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -746,34 +509,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 14
-      - 0.035
-      - 2
-      - 0.018
-      - 2
-      - 0.1
+      - 14,0,0,0.035,2,0.018,2,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -798,34 +543,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 15
-      - 0.037
-      - 2
-      - 0.019
-      - 2
-      - 0.1
+      - 15,0,0,0.037,2,0.019,2,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -850,34 +577,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 16
-      - 0.038
-      - 2
-      - 0.019
-      - 2
-      - 0.1
+      - 16,0,0,0.038,2,0.019,2,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -902,34 +611,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 17
-      - 0.039
-      - 2
-      - 0.020
-      - 2
-      - 0.1
+      - 17,0,0,0.039,2,0.020,2,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -954,34 +645,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 18
-      - 0.040
-      - 2
-      - 0.020
-      - 2
-      - 0.1
+      - 18,0,0,0.040,2,0.020,2,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -1006,34 +679,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 19
-      - 0.041
-      - 2
-      - 0.021
-      - 2
-      - 0.1
+      - 19,0,0,0.041,2,0.021,2,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -1058,34 +713,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 20
-      - 0.042
-      - 3
-      - 0.021
-      - 3
-      - 0.1
+      - 20,0,0,0.042,3,0.021,3,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -1110,34 +747,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 21
-      - 0.043
-      - 3
-      - 0.022
-      - 3
-      - 0.1
+      - 21,0,0,0.043,3,0.022,3,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -1162,34 +781,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 22
-      - 0.044
-      - 3
-      - 0.022
-      - 3
-      - 0.1
+      - 22,0,0,0.044,3,0.022,3,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -1214,34 +815,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 23
-      - 0.045
-      - 3
-      - 0.023
-      - 3
-      - 0.1
+      - 23,0,0,0.045,3,0.023,3,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -1266,34 +849,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 24
-      - 0.046
-      - 3
-      - 0.023
-      - 3
-      - 0.1
+      - 24,0,0,0.046,3,0.023,3,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -1318,34 +883,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 25
-      - 0.048
-      - 3
-      - 0.024
-      - 3
-      - 0.1
+      - 25,0,0,0.048,3,0.024,3,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -1370,34 +917,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 26
-      - 0.049
-      - 3
-      - 0.025
-      - 3
-      - 0.1
+      - 26,0,0,0.049,3,0.025,3,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -1422,34 +951,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 27
-      - 0.050
-      - 3
-      - 0.025
-      - 3
-      - 0.1
+      - 27,0,0,0.050,3,0.025,3,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -1474,34 +985,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 28
-      - 0.051
-      - 3
-      - 0.026
-      - 3
-      - 0.1
+      - 28,0,0,0.051,3,0.026,3,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -1526,34 +1019,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 29
-      - 0.052
-      - 3
-      - 0.026
-      - 3
-      - 0.1
+      - 29,0,0,0.052,3,0.026,3,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -1578,34 +1053,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 30
-      - 0.054
-      - 3
-      - 0.027
-      - 3
-      - 0.1
+      - 30,0,0,0.054,3,0.027,3,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -1630,34 +1087,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 31
-      - 0.055
-      - 3
-      - 0.028
-      - 3
-      - 0.1
+      - 31,0,0,0.055,3,0.028,3,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -1682,34 +1121,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 32
-      - 0.056
-      - 3
-      - 0.028
-      - 3
-      - 0.1
+      - 32,0,0,0.056,3,0.028,3,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -1734,34 +1155,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 33
-      - 0.057
-      - 3
-      - 0.029
-      - 3
-      - 0.1
+      - 33,0,0,0.057,3,0.029,3,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -1786,34 +1189,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 34
-      - 0.058
-      - 3
-      - 0.029
-      - 3
-      - 0.1
+      - 34,0,0,0.058,3,0.029,3,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -1838,34 +1223,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 35
-      - 0.060
-      - 3
-      - 0.030
-      - 3
-      - 0.1
+      - 35,0,0,0.060,3,0.030,3,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -1890,34 +1257,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 36
-      - 0.061
-      - 3
-      - 0.031
-      - 3
-      - 0.1
+      - 36,0,0,0.061,3,0.031,3,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -1942,34 +1291,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 37
-      - 0.062
-      - 3
-      - 0.031
-      - 3
-      - 0.1
+      - 37,0,0,0.062,3,0.031,3,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -1994,34 +1325,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 38
-      - 0.063
-      - 3
-      - 0.032
-      - 3
-      - 0.1
+      - 38,0,0,0.063,3,0.032,3,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -2046,34 +1359,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 39
-      - 0.064
-      - 3
-      - 0.032
-      - 3
-      - 0.1
+      - 39,0,0,0.064,3,0.032,3,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -2098,34 +1393,16 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000
     - elements:
-      - 40
-      - 0.065
-      - 4
-      - 0.033
-      - 4
-      - 0.1
+      - 40,0,0,0.065,4,0.033,4,0.1
       colTypes:
-      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
           canAdd: 1
@@ -2150,17 +1427,9 @@ MonoBehaviour:
         reqReferences: {fileID: 0}
         isExpanded: 0
         _keyValues:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
         _keys:
-        - Level
-        - Skill Effect 0 Value 0
-        - Skill Effect 0 Value 1
-        - Skill Effect 1 Value 0
-        - Skill Effect 1 Value 1
-        - Cost
-        _values: 000000000100000002000000030000000400000005000000
+        - Level,Skill Effect 0 Value 0,Skill Effect 0 Value 1,Skill Effect 1 Value
+          0,Skill Effect 1 Value 1,Skill Effect 2 Value 1,Skill Effect 2 Value 2,Cost
+        _values: 00000000

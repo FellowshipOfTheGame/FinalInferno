@@ -9,7 +9,7 @@ namespace FinalInferno{
     //representa todos os buffs/debuffs, dano etc que essa unidade recebe
     [RequireComponent(typeof(Animator)),RequireComponent(typeof(SpriteRenderer)),RequireComponent(typeof(FinalInferno.UI.AII.UnitItem))]
     public class BattleUnit : MonoBehaviour{
-        public delegate void SkillDelegate(BattleUnit user, List<BattleUnit> targets, bool shouldOverride = false, float value1 = 0f, float value2 = 0f);
+        public delegate void SkillDelegate(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f);
         public Unit unit; //referencia para os atributos base dessa unidade
         public int MaxHP { private set; get; }
         private int curHP; //vida atual dessa unidade, descontando dano da vida maxima
@@ -25,13 +25,23 @@ namespace FinalInferno{
             }
         }
         public int actionPoints; //define a posicao em que essa unidade agira no combate
-        public float DebuffResistance { get; private set; } // resistencia a debuffs em geral
+        public int stuns;
+        public bool CanAct{ get{ return (stuns <= 0); } }
+        public float aggro;
+        public float statusResistance; // resistencia a debuffs em geral
         private float damageResistance = 0.0f; // resistencia a danos em geral
+        public float[] elementalResistance = new float[(int)Element.Neutral];
         public List<StatusEffect> effects; //lista de status fazendo efeito nessa unidade
         private List<Skill> activeSkills; // lista de skills ativas que essa unidade pode usar
         public ReadOnlyCollection<Skill> ActiveSkills { get{ return activeSkills.AsReadOnly(); } }
         public SkillDelegate OnEndBattle = null;
         public SkillDelegate OnStartBattle = null;
+        //public SkillDelegate OnGiveBuff = null;
+        public SkillDelegate OnReceiveBuff = null;
+        //public SkillDelegate OnGiveDebuff = null;
+        public SkillDelegate OnReceiveDebuff = null;
+        public SkillDelegate OnTakeDamage = null;
+        public SkillDelegate OnDeath = null;
         public UnitItem battleItem;
 
         private Animator animator;
@@ -72,6 +82,7 @@ namespace FinalInferno{
             curDef = unit.baseDef;
             curMagicDef = unit.baseMagicDef;
             curSpeed = unit.baseSpeed;
+            unit.elementalResistance.CopyTo(elementalResistance, 0);
             actionPoints = 0; 
 
             effects = new List<StatusEffect>();
@@ -84,7 +95,7 @@ namespace FinalInferno{
                         break;
                     case SkillType.PassiveOnSpawn:
                         // Aplica o efeito das skills relevantes na unidade
-                        // TO DO
+                        skill.Use(this, this);
                         break;
                     case SkillType.PassiveOnStart:
                         // Adiciona a skill no callback de inicio de batalha
@@ -94,41 +105,114 @@ namespace FinalInferno{
                         // Adiciona a skill no callback de fim de batalha
                         OnEndBattle += skill.Use;
                         break;
+                    case SkillType.PassiveOnTakeDamage:
+                        // Adiciona a skill no callback de dano tomado
+                        OnTakeDamage += skill.Use;
+                        break;
+                    case SkillType.PassiveOnReceiveBuff:
+                        // Adiciona a skill no callback de buff recebido
+                        OnReceiveBuff += skill.Use;
+                        break;
+                    case SkillType.PassiveOnReceiveDebuff:
+                        // Adiciona a skill no callback de debuff recebido
+                        OnReceiveDebuff += skill.Use;
+                        break;
+                    case SkillType.PassiveOnDeath:
+                        // Adiciona a skill no callback de morte
+                        OnDeath += skill.Use;
+                        break;
                 }
             }
         }
 
         public void UpdateStatusEffects(){
             foreach (StatusEffect effect in effects.ToArray()){
-                effect.Update();
+                if(effect.Update())
+                    effects.Remove(effect);
             }
         }
 
-        public void TakeDamage(int atk, float multiplier, DamageType type, Element element) {
+        // TO DO: Criar polimorfismo para dano porcentual de hp e cura, e revisar todos os skill effects relevantes
+        public int TakeDamage(int atk, float multiplier, DamageType type, Element element, BattleUnit attacker = null) {
             animator.SetTrigger("TakeDamage");
             float atkDifference = atk - ( (type == DamageType.Physical)? curDef : ((type == DamageType.Magical)? curMagicDef : 0));
             atkDifference = Mathf.Max(atkDifference, 1);
-            int damage = Mathf.FloorToInt(atkDifference * multiplier * 1/*elementmultiplier*/ * (Mathf.Clamp(1.0f - damageResistance, 0.0f, 1.0f)) * 10);
+            int damage = Mathf.FloorToInt(atkDifference * multiplier * elementalResistance[(int)element - (int)Element.Fire] * (Mathf.Clamp(1.0f - damageResistance, 0.0f, 1.0f))/* * 10 */);
+            if(damage > 0 && CurHP <= 0)
+                return 0;
             CurHP -= damage;
+            // Aplica o aggro pra dano e cura
+            if(attacker != null){
+                if(damage > 0)
+                    attacker.aggro += 0.5f * 100f * damage / (1.0f * MaxHP);
+                else if(damage < 0)
+                    attacker.aggro += 0.7f * 100f * damage / (1.0f * MaxHP);
+            }
 
             if(CurHP <= 0){
                 BattleManager.instance.Kill(this);
-                animator.SetTrigger("IsDead");
-                //Destroy(this);
+                // Se houver algum callback de morte que, por exemplo, ressucita a unidade ele já vai ter sido chamado aqui
+                // Tira os buffs e debuffs
+                foreach(StatusEffect effect in effects.ToArray()){
+                    if(effect.Duration >= 0 && effect.Type != StatusType.None){
+                        effect.Remove();
+                        effects.Remove(effect);
+                    }
+                }
+                if(CurHP <= 0){
+                    //Se a unidade ainda estiver morta, anima a morte
+                    animator.SetTrigger("IsDead");
+                }
+            }else if(OnTakeDamage != null && damage > 0){
+            // Chama a funcao de callback de dano tomado
+                List<BattleUnit> aux = new List<BattleUnit>();
+                aux.Add(this);
+                OnTakeDamage(attacker, aux, true, damage, true, (int)element);
             }
-
-            // else
-            // TO DO: Chama a funcao de callback de dano tomado
+            return damage;
         }
 
-        public void AddEffect(StatusEffect statusEffect){
+        public void Revive(){
+            if(CurHP <= 0){
+                curHP = 1;
+                stuns = 0;
+                BattleManager.instance.Revive(this);
+            }
+        }
+
+        public int DecreaseHP(float lostHPPercent){
+            int returnValue = Mathf.FloorToInt(lostHPPercent * MaxHP);
+
+            MaxHP = Mathf.Max(Mathf.FloorToInt((1.0f - lostHPPercent) * MaxHP), 1);
+            if(lostHPPercent < 0) // Para usar a mesma função para aumentar hp maximo, o aumento é adicionado como cura
+                CurHP += returnValue;
+            CurHP = CurHP;
+
+            return returnValue;
+        }
+
+        public void ResetMaxHP(){ // Funcao que deve ser chamada no final da batalha
+            MaxHP = unit.hpMax;
+        }
+
+        public void AddEffect(StatusEffect statusEffect, bool ignoreCallback = false){
+            if(statusEffect.Failed)
+                return;
+                
             effects.Add(statusEffect);
+            statusEffect.Source.aggro += statusEffect.AggroOnApply;
+            List<BattleUnit> targets = new List<BattleUnit>();
+            targets.Add(statusEffect.Target);
             switch(statusEffect.Type){
                 case StatusType.Buff:
-                    // TO DO: chama o callback de receber buff com o status effect atual (value1 = index do status effect novo)
+                    // chama o callback de receber buff com o status effect atual (value1 = index do status effect novo)
+                    if(OnReceiveBuff != null && !ignoreCallback)
+                        OnReceiveBuff(statusEffect.Source, targets, true, effects.IndexOf(statusEffect));
                     break;
                 case StatusType.Debuff:
-                    // TO DO: chama o callback de receber debuff com o status effect atual (value1 = index do status effect novo)
+                    // chama o callback de receber debuff com o status effect atual (value1 = index do status effect novo)
+                    if(OnReceiveDebuff != null && !ignoreCallback)
+                        OnReceiveDebuff(statusEffect.Source, targets, true, effects.IndexOf(statusEffect));
                     break;
             }
         }

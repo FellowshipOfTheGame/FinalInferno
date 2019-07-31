@@ -17,10 +17,25 @@ namespace FinalInferno.UI.FSM
         /// <param name="controller"> O controlador da máquina de estados. </param>
         public override void Act(StateController controller)
         {
+            // Reseta o maxhp das unidades, desfazendo aumentos e reduções causados por skills
+            foreach(BattleUnit battleUnit in BattleManager.instance.battleUnits){
+                battleUnit.ResetMaxHP();
+            }
+
+            // Chama callback de fim de batalha para todas as unidades passando os heroes como alvos
             foreach(BattleUnit battleUnit in BattleManager.instance.queue.list){
                 if(battleUnit.OnEndBattle != null)
                     battleUnit.OnEndBattle(battleUnit, BattleManager.instance.GetTeam(UnitType.Hero, true));
             }
+
+            // Calcula a exp ganhada pela party e da a recompensa
+            long xpReward = 0;
+            foreach(BattleUnit battleUnit in BattleManager.instance.battleUnits){
+                if(!battleUnit.unit.IsHero){
+                    xpReward += ((Enemy)battleUnit.unit).BaseExp;
+                }
+            }
+            Party.Instance.GiveExp(xpReward);
         }
 
     }

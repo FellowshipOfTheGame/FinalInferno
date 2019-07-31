@@ -13,6 +13,7 @@ namespace FinalInferno{
         public int baseDef; //defesa base dessa unidade, sem status de buff/debuff
         public int baseMagicDef; //defesa magica base dessa unidade, sem status de buff/debuff
         public int baseSpeed; //velocidade base dessa unidade, sem status de buff/debuff
+        public float[] elementalResistance = new float[(int)Element.Neutral];
         public Color color; //cor dessa unidade, utilizado para inimigos que tem o mesmo sprite mas nivel de poder diferente 
         public List<Skill> skills; //lista de "skills" da unidade
         public Skill attackSkill; //habilidade basica de ataque

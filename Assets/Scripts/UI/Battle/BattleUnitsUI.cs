@@ -24,6 +24,10 @@ namespace FinalInferno.UI.Battle
         [Header("Prefab")]
         [SerializeField] private GameObject unitPrefab;
 
+        [Header("Selection Indicator")]
+        [SerializeField] private Sprite heroIndicator;
+        [SerializeField] private Sprite enemyIndicator;
+
 
         void Awake(){
             // Singleton
@@ -40,16 +44,22 @@ namespace FinalInferno.UI.Battle
         }
 
         public BattleUnit LoadUnit(Unit unit){
-            GameObject newUnit = Instantiate(unitPrefab, (unit.GetType() == typeof(Hero))? heroesContent : enemiesContent);
-            AIIManager manager = (unit.GetType() == typeof(Hero))? heroesManager : enemiesManager;
+            GameObject newUnit = Instantiate(unitPrefab, (unit.IsHero)? heroesContent : enemiesContent);
+            AIIManager manager = (unit.IsHero)? heroesManager : enemiesManager;
             
             BattleUnit battleUnit = newUnit.GetComponent<BattleUnit>();
             battleUnit.battleItem = newUnit.GetComponent<UnitItem>();
 
+            battleUnit.battleItem.layout.preferredWidth = unit.battleSprite.bounds.size.x * 64;
+            battleUnit.battleItem.layout.preferredHeight = unit.battleSprite.bounds.size.y * 64;
+
             newUnit.transform.rotation = Quaternion.identity;
             battleUnit.Configure(unit);
             // TO DO: Isso não deve ser necessário depois que todas as unidades tiverem o animator e as animações funcionando
-            newUnit.GetComponent<Image>().sprite = unit.battleSprite;
+            Image[] unitImages = newUnit.GetComponentsInChildren<Image>();
+            unitImages[0].sprite = (unit.GetType() == typeof(Hero))? heroIndicator : enemyIndicator;
+            unitImages[0].gameObject.SetActive(false);
+            unitImages[1].sprite = unit.battleSprite;
             
             // Ordena o item na lista
             AxisInteractableItem newItem = newUnit.GetComponent<AxisInteractableItem>();
@@ -112,7 +122,7 @@ namespace FinalInferno.UI.Battle
 
         public void RemoveUnit(BattleUnit unit)
         {
-            if (BattleManager.instance.GetUnitType(unit.unit) == UnitType.Hero)  
+            if (unit.unit.IsHero)  
                 RemoveUnitFromContent(unit, heroesContent, heroesManager);
             else
                 RemoveUnitFromContent(unit, enemiesContent, enemiesManager);
@@ -129,12 +139,54 @@ namespace FinalInferno.UI.Battle
                     if (item == manager.firstItem)
                         manager.firstItem = item.negativeItem;
 
-                    if (item.negativeItem != null)
+                    //if (item.negativeItem != null)
                         item.negativeItem.positiveItem = item.positiveItem;
 
-                    if (item.positiveItem != null)
+                    //if (item.positiveItem != null)
                         item.positiveItem.negativeItem = item.negativeItem;
+
+                    if (item == manager.lastItem)
+                        manager.lastItem = item.positiveItem;
                 }
+            }
+        }
+
+        public void ReinsertUnit(BattleUnit unit){
+            // Essa função só pode ser chamada se tiver certeza que a unidade foi removida com RemoveUnit
+            if (unit.unit.IsHero)  
+                ReinsertUnitInContent(unit, heroesContent, heroesManager);
+            else
+                ReinsertUnitInContent(unit, enemiesContent, enemiesManager);
+        }
+
+        private void ReinsertUnitInContent(BattleUnit unit, Transform content, AIIManager manager){
+            UnitItem[] units = content.GetComponentsInChildren<UnitItem>();
+            AxisInteractableItem thisItem = null;
+            foreach(UnitItem item in units){
+                if(item.unit == unit){
+                    thisItem = item.GetComponent<AxisInteractableItem>();
+                    break;
+                }
+            }
+            AxisInteractableItem previousItem = null;
+            AxisInteractableItem nextItem = manager.firstItem;
+
+            while(nextItem != manager.lastItem && (System.Array.IndexOf(units, nextItem.GetComponent<UnitItem>()) < System.Array.IndexOf(units, thisItem.GetComponent<UnitItem>())) ){
+                previousItem = nextItem;
+                nextItem = nextItem.negativeItem;
+            }
+
+            thisItem.positiveItem = previousItem;
+            if(previousItem == null){
+                manager.firstItem = thisItem;
+            }else{
+                previousItem.negativeItem = thisItem;
+            }
+            thisItem.negativeItem = nextItem;
+            if(nextItem == null){
+                manager.lastItem = thisItem;
+            }else{
+                thisItem.negativeItem = nextItem;
             }
         }
 

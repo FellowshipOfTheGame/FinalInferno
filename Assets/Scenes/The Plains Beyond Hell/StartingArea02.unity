@@ -127,7 +127,7 @@ PrefabInstance:
     - target: {fileID: 7368697977539947562, guid: 97bb1111fe13f7c4094653080794d8f2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 7368697977539947562, guid: 97bb1111fe13f7c4094653080794d8f2,
         type: 3}
@@ -178,6 +178,27 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 387202435019534482, guid: 97bb1111fe13f7c4094653080794d8f2,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ae64b8cc44390934e9d9f3d496a6c8fa,
+        type: 3}
+    - target: {fileID: 387202435019534482, guid: 97bb1111fe13f7c4094653080794d8f2,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 387202435019534482, guid: 97bb1111fe13f7c4094653080794d8f2,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 387202435019534482, guid: 97bb1111fe13f7c4094653080794d8f2,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97bb1111fe13f7c4094653080794d8f2, type: 3}
@@ -4288,6 +4309,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: StartingArea03
+  positionOnLoad: {x: -0.5, y: -13}
+  isCutscene: 0
+  dialogues: []
 --- !u!19719996 &662168174
 TilemapCollider2D:
   m_ObjectHideFlags: 0
@@ -4592,6 +4616,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: StartingArea01
+  positionOnLoad: {x: -24, y: 2}
+  isCutscene: 0
+  dialogues: []
 --- !u!19719996 &924718472
 TilemapCollider2D:
   m_ObjectHideFlags: 0
@@ -4848,6 +4875,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: Cerberus Gate
+  positionOnLoad: {x: 12, y: -1}
+  isCutscene: 0
+  dialogues: []
 --- !u!66 &1276942142
 CompositeCollider2D:
   m_ObjectHideFlags: 0
@@ -7794,7 +7824,7 @@ PrefabInstance:
     - target: {fileID: 5306880481323571678, guid: 4f309cf544008cb49802933745e53d0b,
         type: 3}
       propertyPath: dialogues.Array.size
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5306880481323571678, guid: 4f309cf544008cb49802933745e53d0b,
         type: 3}
@@ -7805,13 +7835,13 @@ PrefabInstance:
     - target: {fileID: 5306880481323571678, guid: 4f309cf544008cb49802933745e53d0b,
         type: 3}
       propertyPath: dialogues.Array.data[0].eventFlag
-      value: 1st Met
+      value: Default
       objectReference: {fileID: 0}
     - target: {fileID: 5306880481323571678, guid: 4f309cf544008cb49802933745e53d0b,
         type: 3}
       propertyPath: dialogues.Array.data[0].dialogue
       value: 
-      objectReference: {fileID: 11400000, guid: 7227a46ba2abe3e429c31f5f19f70c54,
+      objectReference: {fileID: 11400000, guid: 3b8309ce66572e64bb02874ba2ddc062,
         type: 2}
     - target: {fileID: 5306880481323571678, guid: 4f309cf544008cb49802933745e53d0b,
         type: 3}
@@ -7822,13 +7852,13 @@ PrefabInstance:
     - target: {fileID: 5306880481323571678, guid: 4f309cf544008cb49802933745e53d0b,
         type: 3}
       propertyPath: dialogues.Array.data[1].eventFlag
-      value: FirstBattle
+      value: '2nd Met '
       objectReference: {fileID: 0}
     - target: {fileID: 5306880481323571678, guid: 4f309cf544008cb49802933745e53d0b,
         type: 3}
       propertyPath: dialogues.Array.data[1].dialogue
       value: 
-      objectReference: {fileID: 11400000, guid: 3b8309ce66572e64bb02874ba2ddc062,
+      objectReference: {fileID: 11400000, guid: 7b0be811b4ad99841a97a8fef95b0e27,
         type: 2}
     - target: {fileID: 5306880481323571678, guid: 4f309cf544008cb49802933745e53d0b,
         type: 3}
@@ -7839,13 +7869,13 @@ PrefabInstance:
     - target: {fileID: 5306880481323571678, guid: 4f309cf544008cb49802933745e53d0b,
         type: 3}
       propertyPath: dialogues.Array.data[2].eventFlag
-      value: '2nd Met '
+      value: OrbCollected
       objectReference: {fileID: 0}
     - target: {fileID: 5306880481323571678, guid: 4f309cf544008cb49802933745e53d0b,
         type: 3}
       propertyPath: dialogues.Array.data[2].dialogue
       value: 
-      objectReference: {fileID: 11400000, guid: 7b0be811b4ad99841a97a8fef95b0e27,
+      objectReference: {fileID: 11400000, guid: 863ba6a9d3f57c54e88d322eea48f511,
         type: 2}
     - target: {fileID: 5306880481323571678, guid: 4f309cf544008cb49802933745e53d0b,
         type: 3}
@@ -7858,6 +7888,12 @@ PrefabInstance:
       propertyPath: dialogues.Array.data[3].eventFlag
       value: OrbCollected
       objectReference: {fileID: 0}
+    - target: {fileID: 5306880481323571678, guid: 4f309cf544008cb49802933745e53d0b,
+        type: 3}
+      propertyPath: dialogues.Array.data[3].dialogue
+      value: 
+      objectReference: {fileID: 11400000, guid: 863ba6a9d3f57c54e88d322eea48f511,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f309cf544008cb49802933745e53d0b, type: 3}
 --- !u!1001 &1973657358

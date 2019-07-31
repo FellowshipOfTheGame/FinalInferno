@@ -10,7 +10,10 @@ namespace FinalInferno{
         // value2 = debuff duration
         public override string Description2{ get {return " turns";} }
         public override void Apply(BattleUnit source, BattleUnit target) {
-            target.AddEffect(new DamageDown(target, value1, (int)value2));
+            if(value2 < 0)
+                target.curDmg -= (int)value1 * target.curDmg;
+            else
+                target.AddEffect(new DamageDown(source, target, value1, (int)value2));
         }
     }
 }

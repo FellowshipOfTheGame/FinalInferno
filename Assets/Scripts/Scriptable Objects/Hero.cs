@@ -26,6 +26,9 @@ namespace FinalInferno{
 
         void Awake(){
             table = DynamicTable.Create(heroTable);
+            for(int i = 0; i < elementalResistance.Length; i++){
+                elementalResistance[i] = 1.0f;
+            }
         }
 
         //funcao que ajusta todos os atributos e "skills" do persoangem quando sobe de nivel
@@ -34,9 +37,9 @@ namespace FinalInferno{
 
             level = newLevel;
             hpMax = Table.Rows[level-1].Field<int>("HP");
-            baseDmg = Table.Rows[level-1].Field<int>("Dano");
-            baseDef = Table.Rows[level-1].Field<int>("Defesa");
-            baseMagicDef = Table.Rows[level-1].Field<int>("Resistência");
+            baseDmg = Table.Rows[level-1].Field<int>("Damage");
+            baseDef = Table.Rows[level-1].Field<int>("Defense");
+            baseMagicDef = Table.Rows[level-1].Field<int>("Resistance");
             baseSpeed = Table.Rows[level-1].Field<int>("Speed");
 
             UnlockSkills();

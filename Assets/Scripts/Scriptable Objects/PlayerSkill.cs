@@ -18,7 +18,7 @@ namespace FinalInferno{
         public List<int> prerequisiteSkillsLevel; //level que a skill de pre requisito precisa estar para essa skill destravar
         public int prerequisiteHeroLevel; //level que o heroi precisa estar para essa skill destravar
         [SerializeField] private TextAsset skillTable;
-        [SerializeField] private DynamicTable table;
+        [SerializeField] private DynamicTable table = null;
         private DynamicTable Table {
             get {
                 if(table == null)
@@ -28,6 +28,7 @@ namespace FinalInferno{
         }
 
         void Awake(){
+            table = null;
             table = DynamicTable.Create(skillTable);
             level = 0;
             xp = 0;
@@ -44,18 +45,16 @@ namespace FinalInferno{
                 SkillEffectTuple modifyEffect = effects[i];
                 Debug.Log("levelapo a " + name);
 
-                modifyEffect.value1 = Table.Rows[level-1].Field<float>("Skill Effect " + i + " Value 0");
+                modifyEffect.value1 = Table.Rows[level-1].Field<float>("SkillEffect" + i + "Value0");
                 Debug.Log("Mvalue1: " + modifyEffect.value1);
                 
-                modifyEffect.value2 = Table.Rows[level-1].Field<float>("Skill Effect " + i + " Value 1");
+                modifyEffect.value2 = Table.Rows[level-1].Field<float>("SkillEffect" + i + "Value1");
                 Debug.Log("Mvalue2: " + modifyEffect.value2);
 
                 effects[i] = modifyEffect;
                 Debug.Log("value1: " + effects[i].value1);
                 Debug.Log("value2: " + effects[i].value2);
             }
-
-            cost = Table.Rows[level-1].Field<float>("Cost");
         }
 
         //Adiciona os pontos de experiência ao utilizar a skill
@@ -83,7 +82,7 @@ namespace FinalInferno{
             foreach(BattleUnit target in targets){
                 expValue += target.unit.SkillExp;
             }
-            expValue /= targets.Count;
+            expValue /= Mathf.Max(targets.Count, 1);
 
             return GiveExp(expValue);
         }
@@ -112,11 +111,11 @@ namespace FinalInferno{
             return (level >= prerequisite);
         }
 
-        //funcao que define como a skill sera usada
-        // TO DO: Se o metodo Use for alterado para ter apenas um alvo, GiveExp sera chamado na BattleUnit e isso aqui n existe mais
-        public override void Use(BattleUnit user, List<BattleUnit> targets, bool shouldOverride = false, float value1 = 0f, float value2 = 0f){
+        // Versao de callback das skills precisa ser responsavel por calcular o ganho de exp
+        public override void Use(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f){
+            targets = FilterTargets(user, targets); // Filtragem para garantir a consistencia dos callbacks de AoE
             GiveExp(targets);
-            base.Use(user, targets, shouldOverride, value1, value2);
+            base.Use(user, targets, shouldOverride1, value1, shouldOverride2, value2);
         }
 
         public override void ResetSkill(){
