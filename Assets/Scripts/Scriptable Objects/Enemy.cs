@@ -8,7 +8,7 @@ using System.Data;
 
 namespace FinalInferno{
     //engloba os inimigos do jogador
-    [CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObject/Enemy", order = 3)]
+    [CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObject/Enemy/Basic", order = 0)]
     public class Enemy : Unit{
         [SerializeField] protected Element element = Element.Neutral;
         public Element Element { get{ return element; } }
@@ -32,7 +32,7 @@ namespace FinalInferno{
         void Awake(){
             table = DynamicTable.Create(enemyTable);
             
-            name = Table.Rows[0].Field<string>("Rank");
+            //name = Table.Rows[0].Field<string>("Rank");
             level = Table.Rows[0].Field<int>("Level");
             hpMax = Table.Rows[0].Field<int>("HP");
             baseDmg = Table.Rows[0].Field<int>("Damage");
@@ -87,22 +87,74 @@ namespace FinalInferno{
             }
         }
 
+        //funcao que escolhe o alvo de um ataque baseado na ameaca que herois representam
+        public virtual int TargetDecision(List<BattleUnit> team){
+            float sumTotal = 0.0f;
+            List<float> percentual = new List<float>();
+
+            //soma a ameaca de todos os herois
+            foreach (BattleUnit unit in team){
+                sumTotal += unit.aggro;
+            }
+        
+            //calcula a porcentagem que cada heroi representa da soma total das ameacas
+            foreach (BattleUnit unit in team){
+                percentual.Add(unit.aggro/sumTotal);
+            }
+
+            //gera um numero aleatorio entre 0 e 1
+            float rand = Random.Range(0.0f, 1.0f);
+
+            //escolhe o alvo com probabilidades baseadas na porcentagem que cada heroi representa da soma total das ameacas
+            for(int i = 0; i < team.Count; i++){
+                if(rand <= percentual[i])
+                    return i; //decide atacar o heroi i
+                
+                rand -= percentual[i];
+            }
+            
+            return team.Count-1;
+        }
+
+        //funcao que escolhe o ataque a ser utilizado
+        public virtual Skill AttackDecision(){
+            return attackSkill; //decide usar ataque basico
+        }
+
+        //funcao que escolhe qual acao sera feita no proprio turno
+        public virtual Skill SkillDecision(float percentageNotDefense){
+            float rand = Random.Range(0.0f, 1.0f); //gera um numero aleatorio entre 0 e 1
+
+            if(rand < percentageNotDefense);
+                return AttackDecision(); //decide atacar
+            
+            return defenseSkill; //decide defender
+        }
+
         //inteligencia atificial do inimigo na batalha
         public virtual void AIEnemy(){
-            Skill skill = attackSkill;
-            
-            // Se rolar a chance de usar skill, usa a skill
-            if(Random.Range(0, 1) < Table.Rows[curTableRow].Field<float>("ChancetoUseSkill") && BattleManager.instance.currentUnit.ActiveSkills.Count > 0){
-                skill = BattleManager.instance.currentUnit.ActiveSkills[Random.Range(0, BattleManager.instance.currentUnit.ActiveSkills.Count-1)];
+            Skill skill;
+            List<BattleUnit> team = BattleManager.instance.GetTeam(UnitType.Enemy);
+            float average = 0.0f;
+            float percentualHP;
+
+            //calcula a media de vida do grupo dos inimigos
+            foreach (BattleUnit unit in team){
+                average += unit.CurHP;
             }
+            average /= team.Count;
+
+            //calcula quanto porecento de vida o inimigo atual tem em relacao a media de vida do grupo de inimigos
+            percentualHP = BattleManager.instance.currentUnit.CurHP/average;
+            
+            skill = SkillDecision(Mathf.Sqrt(percentualHP)+0.05f*percentualHP); //parametro passado calcula o complementar da porcentagem do inimigo defender, baseado no percentual de vida
             
             BattleSkillManager.currentSkill = skill;
             BattleSkillManager.currentUser = BattleManager.instance.currentUnit;
             BattleSkillManager.currentTargets = GetTargets(skill.target);
         }
 
-        protected virtual List<BattleUnit> GetTargets(TargetType type)
-        {
+        protected virtual List<BattleUnit> GetTargets(TargetType type){
             List<BattleUnit> targets = new List<BattleUnit>();
             List<BattleUnit> team = new List<BattleUnit>();
 
@@ -123,7 +175,7 @@ namespace FinalInferno{
                     break;
                 case TargetType.SingleEnemy:
                     team = BattleManager.instance.GetTeam(UnitType.Hero);
-                    targets.Add(team[Random.Range(0, team.Count-1)]);
+                    targets.Add(team[TargetDecision(team)]);
                     break;
             }
 
