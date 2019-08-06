@@ -5,7 +5,7 @@ using UnityEngine;
 namespace FinalInferno{
     [CreateAssetMenu(fileName = "Paralyze", menuName = "ScriptableObject/SkillEffect/Paralyze")]
     public class Paralyze : SkillEffect {
-        // value1 = chance to parayze
+        // value1 = chance to paralyze
         public override string Description1{ get {return " Chance";} }
         // value2 = duration
         public override string Description2{ get {return " turns";} }

@@ -20,5 +20,34 @@ namespace FinalInferno{
 
             return defenseSkill; //decide defender
         }
+
+        //funcao que escolhe o alvo de um ataque baseado na ameaca que herois representam
+        public override int TargetDecision(List<BattleUnit> team){
+            float sumTotal = 0.0f;
+            List<float> percentual = new List<float>();
+
+            //soma a ameaca de todos os herois
+            foreach (BattleUnit unit in team){
+                sumTotal += unit.aggro;
+            }
+        
+            //calcula a porcentagem que cada heroi representa da soma total das ameacas
+            foreach (BattleUnit unit in team){
+                percentual.Add(unit.aggro/sumTotal);
+            }
+
+            //gera um numero aleatorio entre 0 e 1
+            float rand = Random.Range(0.0f, 1.0f);
+
+            //escolhe o alvo com probabilidades baseadas na porcentagem que cada heroi representa da soma total das ameacas
+            for(int i = 0; i < team.Count; i++){
+                if(rand <= percentual[i] && !((BattleSkillManager.currentSkill == skills[1]) && !team[i].CanAct))
+                    return i; //decide atacar o heroi i
+                
+                rand -= percentual[i];
+            }
+            
+            return team.Count-1;
+        }
     }
 }

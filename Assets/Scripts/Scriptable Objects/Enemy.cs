@@ -32,7 +32,7 @@ namespace FinalInferno{
         void Awake(){
             table = DynamicTable.Create(enemyTable);
             
-            name = Table.Rows[0].Field<string>("Rank");
+            //name = Table.Rows[0].Field<string>("Rank");
             level = Table.Rows[0].Field<int>("Level");
             hpMax = Table.Rows[0].Field<int>("HP");
             baseDmg = Table.Rows[0].Field<int>("Damage");
@@ -88,19 +88,16 @@ namespace FinalInferno{
         }
 
         //funcao que escolhe o alvo de um ataque baseado na ameaca que herois representam
-        public int TargetDecision(List<BattleUnit> team){
-            return Random.Range(0, team.Count);
-
-            /*
+        public virtual int TargetDecision(List<BattleUnit> team){
             float sumTotal = 0.0f;
-            Vector<float> percentual;
+            List<float> percentual = new List<float>();
 
-            //soma a ameca de todos os herois
+            //soma a ameaca de todos os herois
             foreach (BattleUnit unit in team){
                 sumTotal += unit.aggro;
             }
         
-            //calcula a porcentagem que cada heroi represent da soma total das ameacas
+            //calcula a porcentagem que cada heroi representa da soma total das ameacas
             foreach (BattleUnit unit in team){
                 percentual.Add(unit.aggro/sumTotal);
             }
@@ -116,7 +113,7 @@ namespace FinalInferno{
                 rand -= percentual[i];
             }
             
-            */
+            return team.Count-1;
         }
 
         //funcao que escolhe o ataque a ser utilizado
@@ -141,7 +138,7 @@ namespace FinalInferno{
             float average = 0.0f;
             float percentualHP;
 
-            //calcula a media de vida do grupo de inimigos
+            //calcula a media de vida do grupo dos inimigos
             foreach (BattleUnit unit in team){
                 average += unit.CurHP;
             }
