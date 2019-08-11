@@ -19,7 +19,8 @@ namespace FinalInferno{
             Party.Instance.currentMap = SceneManager.GetActiveScene().name;
             // Armazena a posicao dos personagens no overworld dentro do SO correspondente
             for(int i = 0; i < Party.Instance.characters.Count; i++){
-                Party.Instance.characters[i].position = CharacterOW.CharacterList[i].transform.position;
+                if(CharacterOW.CharacterList[i] != null)
+                    Party.Instance.characters[i].position = CharacterOW.CharacterList[i].transform.position;
             }
             // Adicionar o setup da batalha no SceneManager.sceneLoaded
             enemies = new List<Enemy>(enemiesSelected);
@@ -159,7 +160,8 @@ namespace FinalInferno{
                 // Pegar a informação da posição dos personagens pelo SO da party
                 // Reposicionar os game objects dos players na tela
                 for(int i = 0; i < Party.Instance.characters.Count; i++){
-                    CharacterOW.CharacterList[i].transform.position = Party.Instance.characters[i].position;
+                    if(CharacterOW.CharacterList[i] != null)
+                        CharacterOW.CharacterList[i].transform.position = Party.Instance.characters[i].position;
                 }
             }
             RECalculator.encountersEnabled = true;

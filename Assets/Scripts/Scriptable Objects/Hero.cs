@@ -71,6 +71,7 @@ namespace FinalInferno{
             }
 
             skillsToUpdate = new List<PlayerSkill>(InitialsSkills);
+            level = 1;
             Debug.Log("Hero resetado");
         }
         

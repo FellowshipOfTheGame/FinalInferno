@@ -19,7 +19,8 @@ namespace FinalInferno{
         }
         
         public const int Capacity = 4;
-        public const string StartingMap = "StartingArea00";
+        public const string StartingMap = "StartingArea00_single_(first_scene)";
+        public const string StartingDialogue = "FirstLanding";
         public string currentMap = StartingMap;
         public int level; //nivel da equipe(todos os personagens tem sempre o mesmo nivel)
         public long xp; //experiencia da equipe(todos os personagens tem sempre a mesma experiencia)

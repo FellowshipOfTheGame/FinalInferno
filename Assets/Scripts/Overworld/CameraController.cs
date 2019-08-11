@@ -57,10 +57,10 @@ namespace FinalInferno{
         }
 
         void LateUpdate(){
-            float distance = Vector2.Distance(transform.position, target.position);
+            Vector2 currentPosition = new Vector2(transform.position.x, transform.position.y);
+            Vector2 targetPosition = new Vector2(target.position.x, target.position.y);
+            float distance = Vector2.Distance(currentPosition, targetPosition);
             if(distance > freedomDistance){
-                Vector2 currentPosition = new Vector2(transform.position.x, transform.position.y);
-                Vector2 targetPosition = new Vector2(target.position.x, target.position.y);
                 targetPosition -= currentPosition;
                 targetPosition.Normalize();
                 targetPosition *= (distance - freedomDistance);

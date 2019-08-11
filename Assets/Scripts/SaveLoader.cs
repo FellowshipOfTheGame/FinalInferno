@@ -86,8 +86,8 @@ namespace FinalInferno{
                     quest.events["Default"] = true;
                 }
             }
-            // Carrega a cena inicial
-            SceneLoader.LoadOWScene(Party.StartingMap);
+            // Carrega a cena inicial como cutscene
+            SceneLoader.LoadCustscene(Party.StartingMap, AssetManager.LoadAsset<Fog.Dialogue.Dialogue>(Party.StartingDialogue));
         }
 
         public static void ResetGame(){
