@@ -9,15 +9,14 @@ namespace FinalInferno{
     {
         public SceneAsset demoScene;
         public void Start(){
-            Debug.Log(typeof(Fog.Dialogue.Dialogue).Name.ToLower());
-            AssetManager.LoadAllAssets();
-            Party.Instance.currentMap = demoScene.name;
+            //Party.Instance.currentMap = demoScene.name;
             AssetManager.LoadAllAssets();
             Quest exQuest = AssetManager.LoadAsset<Quest>("AdventurerQuest");
             exQuest.events["TutorialComplete"] = false;
-            //Party.Instance.GiveExp(0);
+            Party.Instance.GiveExp(0);
             //SceneLoader.LoadOWScene(Party.Instance.currentMap);
-            SaveLoader.NewGame();
+            //SaveLoader.NewGame();
+            SceneManager.LoadScene(demoScene.name);
         }
     }
 }
