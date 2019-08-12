@@ -168,6 +168,8 @@ namespace FinalInferno{
             //lastOWSceneID = SceneManager.GetActiveScene().buildIndex;
             Party.Instance.currentMap = SceneManager.GetActiveScene().name;
             SceneManager.sceneLoaded -= OnMapLoad;
+            Quest mainQuest = AssetManager.LoadAsset<Quest>("MainQuest");
+            Debug.Log("loaded map " + map.name + "; Default flag = " + mainQuest.events["Default"]);
         }
         public static void UnlockMovement(Scene map, LoadSceneMode mode){
             CharacterOW.PartyCanMove = true;

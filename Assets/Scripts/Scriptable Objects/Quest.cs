@@ -7,22 +7,32 @@ namespace FinalInferno{
     public class Quest : ScriptableObject
     {
         public bool active;
-        [SerializeField]
         public QuestDictionary events;
-        public virtual void StartQuest(){
-            foreach(string key in events.Keys){
-                if(key == "Active")
+        public void Awake(){
+            ResetQuest();
+        }
+        private void ResetQuest(){
+            List<string> keyList = new List<string>(events.Keys);
+            foreach(string key in keyList){
+                if(key == "Active" || key == "Default")
                     events[key] = true;
                 else
                     events[key] = false;
             }
             active = true;
         }
+        public virtual void StartQuest(){
+            if(!Party.Instance.activeQuests.Contains(this)){
+                ResetQuest();
+                Party.Instance.activeQuests.Add(this);
+            }
+        }
         public virtual void CompleteQuest(){
             foreach(string key in events.Keys){
                 events[key] = true;
             }
             active = false;
+            Party.Instance.activeQuests.Remove(this);
         }
     }
 }

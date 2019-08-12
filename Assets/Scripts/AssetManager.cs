@@ -6,7 +6,7 @@ using System.IO;
 namespace FinalInferno{
     public static class AssetManager
     {
-        private static List<AssetBundle> bundleList;
+        private static List<AssetBundle> bundleList = null;
         private static List<AssetBundle> BundleList {
             get{
                 if(bundleList == null)

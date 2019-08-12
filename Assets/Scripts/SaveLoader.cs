@@ -73,19 +73,11 @@ namespace FinalInferno{
 
             Party.Instance.GiveExp(0);
 
-            List<Quest> quests = AssetManager.LoadBundleAssets<Quest>();
-            foreach(Quest quest in quests){
-                // Desativa todas as flags de quest
-                quest.active = false;
-                List<string> keyList = new List<string>(quest.events.Keys);
-                foreach(string key in keyList){
-                    quest.events[key] = false;
-                }
-                // Checa se é a quest principal, e ativa a flag padrão
-                if(quest.name == "MainQuest"){
-                    quest.events["Default"] = true;
-                }
-            }
+            Party.Instance.activeQuests.Clear();
+            Quest mainQuest = AssetManager.LoadAsset<Quest>("MainQuest");
+            mainQuest.StartQuest();
+            
+            Debug.Log("Default flag = " + mainQuest.events["Default"]);
             // Carrega a cena inicial como cutscene
             SceneLoader.LoadCustscene(Party.StartingMap, AssetManager.LoadAsset<Fog.Dialogue.Dialogue>(Party.StartingDialogue));
         }

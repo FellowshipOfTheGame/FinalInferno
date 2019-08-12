@@ -40,6 +40,7 @@ namespace FinalInferno{
         //         return i;
         //     }
         // }
+        public List<Quest> activeQuests = new List<Quest>(); // Lista das quests ativas
         [SerializeField] private TextAsset PartyXP;
         [SerializeField] private DynamicTable table;
         private DynamicTable Table {

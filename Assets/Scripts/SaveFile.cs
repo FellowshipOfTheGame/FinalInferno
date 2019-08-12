@@ -42,7 +42,7 @@ namespace FinalInferno{
             saves[Slot].hpCur = new int[Party.Instance.characters.Count];
             saves[Slot].position = new Vector2[Party.Instance.characters.Count];
             saves[Slot].heroSkills = new SkillInfoArray[Party.Instance.characters.Count];
-            List<Quest> quests = AssetManager.LoadBundleAssets<Quest>();
+            List<Quest> quests = new List<Quest>(Party.Instance.activeQuests.ToArray());
             saves[Slot].quest = new QuestInfo[quests.Count];
 
             // Salva as informações de cada personagem no slot atual
@@ -60,7 +60,7 @@ namespace FinalInferno{
                 }
             }
 
-            // Salva as informações de todas as quests do jogo
+            // Salva as informações de todas as quests ativas
             for(int i = 0; i < quests.Count; i++){
                 QuestInfo qinfo;
                 qinfo.name = quests[i].name;
@@ -89,11 +89,13 @@ namespace FinalInferno{
                 }
             }
 
+            Party.Instance.activeQuests.Clear();
             foreach(QuestInfo questInfo in saves[Slot].quest){
                 Quest quest = AssetManager.LoadAsset<Quest>(questInfo.name);
                 for(int i = 0; i < quest.events.Count; i++){
                     quest.events[questInfo.flagsNames[i]] = (questInfo.flagsTrue & (int)Mathf.Pow(2, i)) == (int)Mathf.Pow(2, i);
                 }
+                Party.Instance.activeQuests.Add(quest);
             }
 
             Party.Instance.currentMap = saves[Slot].mapName;

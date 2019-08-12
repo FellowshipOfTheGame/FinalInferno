@@ -30,7 +30,9 @@ namespace FinalInferno{
                 
             return true;
         }
-        public virtual void Remove(){}
+        public virtual void Remove(){
+            Target.effects.Remove(this);
+        }
         public virtual bool Update() {
             if(TurnsLeft == int.MinValue)
                 return false;
