@@ -6,7 +6,7 @@ using System.IO;
 namespace FinalInferno{
     public static class AssetManager
     {
-        private static List<AssetBundle> bundleList;
+        private static List<AssetBundle> bundleList = null;
         private static List<AssetBundle> BundleList {
             get{
                 if(bundleList == null)
@@ -75,12 +75,32 @@ namespace FinalInferno{
                 return quest;
             }
         }
+        private static AssetBundle dialogue = null;
+        private static AssetBundle Dialogue{
+            get{
+                if(dialogue == null || !BundleList.Contains(dialogue)){
+                    dialogue = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "dialogue"));
+                    BundleList.Add(dialogue);
+                }
+                return dialogue;
+            }
+        }
+        private static AssetBundle npc = null;
+        private static AssetBundle Npc{
+            get{
+                if(npc == null || !BundleList.Contains(npc)){
+                    npc = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "npc"));
+                    BundleList.Add(npc);
+                }
+                return npc;
+            }
+        }
 
         public static void LoadAllBundles(){
             #if UNITY_EDITOR
             return;
             #else
-            if(Party && Character && Hero && Enemy && Skill && Quest)
+            if(Party && Character && Hero && Enemy && Skill && Quest && Dialogue)
             return;
             #endif
         }
@@ -102,6 +122,10 @@ namespace FinalInferno{
                 LoadBundleAssets<Skill>();
             if(Quest)
                 LoadBundleAssets<Quest>();
+            if(Dialogue)
+                LoadBundleAssets<Fog.Dialogue.Dialogue>();
+            if(Npc)
+                LoadBundleAssets<NPC>();
             return;
             #endif
         }
@@ -126,6 +150,12 @@ namespace FinalInferno{
                     break;
                 case "quest":
                     bundle = Quest;
+                    break;
+                case "dialogue":
+                    bundle = Dialogue;
+                    break;
+                case "npc":
+                    bundle = Npc;
                     break;
                 default:
                     Debug.Log("Access to bundle " + typeName + " is not implemented");

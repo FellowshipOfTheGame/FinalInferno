@@ -57,13 +57,6 @@ namespace FinalInferno{
             animator.runtimeAnimatorController = unit.animator;
             GetComponent<FinalInferno.UI.AII.UnitItem>().unit = this;
 
-            if(unit.GetType() == typeof(Enemy)){
-                Enemy enemy = (Enemy)unit;
-                // Checa se o level do inimigo esta correto
-                // Caso nao esteja, aumenta o nivel do inimigo
-                // TO DO
-            }
-
 
             // Aplica os status base da unidade
             this.unit = unit;
@@ -156,7 +149,6 @@ namespace FinalInferno{
                 foreach(StatusEffect effect in effects.ToArray()){
                     if(effect.Duration >= 0 && effect.Type != StatusType.None){
                         effect.Remove();
-                        effects.Remove(effect);
                     }
                 }
                 if(CurHP <= 0){

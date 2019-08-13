@@ -38,6 +38,7 @@ namespace FinalInferno{
 
         public override void Remove() {
             Target.statusResistance -= resistIncrease;
+            base.Remove();
         }
     }
 }

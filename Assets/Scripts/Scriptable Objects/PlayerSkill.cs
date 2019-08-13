@@ -43,17 +43,17 @@ namespace FinalInferno{
 
             for(int i = 0; i < effects.Count; i++){
                 SkillEffectTuple modifyEffect = effects[i];
-                Debug.Log("levelapo a " + name);
+                //Debug.Log("levelapo a " + name);
 
                 modifyEffect.value1 = Table.Rows[level-1].Field<float>("SkillEffect" + i + "Value0");
-                Debug.Log("Mvalue1: " + modifyEffect.value1);
+                //Debug.Log("Mvalue1: " + modifyEffect.value1);
                 
                 modifyEffect.value2 = Table.Rows[level-1].Field<float>("SkillEffect" + i + "Value1");
-                Debug.Log("Mvalue2: " + modifyEffect.value2);
+                //Debug.Log("Mvalue2: " + modifyEffect.value2);
 
                 effects[i] = modifyEffect;
-                Debug.Log("value1: " + effects[i].value1);
-                Debug.Log("value2: " + effects[i].value2);
+                //Debug.Log("value1: " + effects[i].value1);
+                //Debug.Log("value2: " + effects[i].value2);
             }
         }
 

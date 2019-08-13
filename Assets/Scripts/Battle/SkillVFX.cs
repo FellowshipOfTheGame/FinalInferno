@@ -19,6 +19,9 @@ namespace FinalInferno{
             if(counter >= nTargets){
                 counter = 0;
                 nTargets = -1;
+                BattleSkillManager.currentTargets.Clear();
+                BattleSkillManager.currentSkill = null;
+                BattleSkillManager.currentUser = null;
                 FinalInferno.UI.FSM.AnimationEnded.EndAnimation();
             }
             Destroy(gameObject);

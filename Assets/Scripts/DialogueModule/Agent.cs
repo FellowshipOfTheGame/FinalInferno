@@ -6,7 +6,6 @@ namespace Fog.Dialogue{
     [RequireComponent(typeof(Collider2D))]
     public class Agent : MonoBehaviour
     {
-
         // Singleton
         private static Agent instance = null;
         public void Awake() {
@@ -24,6 +23,8 @@ namespace Fog.Dialogue{
         [HideInInspector]
         public bool canInteract;
         private bool isProcessingInput;
+
+        public List<IInteractable> collidingInteractables = new List<IInteractable>();
 
         // Valores padrão ao ser criado no editor
         void Reset(){
@@ -47,17 +48,18 @@ namespace Fog.Dialogue{
                 wait = nFramesCooldown;
                 if (!isProcessingInput && canInteract) {
                     isProcessingInput = true;
+                    int count = 0;
                     // Quanto o botao e apertado, obtem todos os colliders em contato
-                    Collider2D[] colliders = new Collider2D[maxInteractions];
-                    ContactFilter2D contactFilter = new ContactFilter2D();
-                    contactFilter.useTriggers = true;
-                    GetComponent<Collider2D>().OverlapCollider(contactFilter, colliders);
-                    foreach (Collider2D col in colliders) {
-                        if (col) {
-                            // Para cada collider encontrado, tenta interagir se houver o componente necessario
-                            IInteractable interact = col.GetComponent<IInteractable>();
-                            if (interact != null)
-                                interact.OnInteractAttempt(this, GetComponent<FinalInferno.Movable>());
+                    foreach(IInteractable interactable in collidingInteractables.ToArray()){
+                        // Para cada collider encontrado, tenta interagir se houver o componente necessario
+                        if(interactable != null){
+                            interactable.OnInteractAttempt(this, GetComponent<FinalInferno.Movable>());
+                            count++;
+                            if(count >= maxInteractions || !canInteract){
+                                break;
+                            }
+                        }else{
+                            collidingInteractables.Remove(interactable);
                         }
                     }
                     isProcessingInput = false;

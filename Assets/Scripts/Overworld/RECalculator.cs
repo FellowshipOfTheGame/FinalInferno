@@ -85,7 +85,7 @@ namespace FinalInferno{
                 int enemyLevel = questParam * 10;
                 if(Mathf.Clamp(Party.Instance.level - (questParam * 10), 0, 10) >= 5)
                 enemyLevel += 5;
-                Debug.Log("Nível dos inimigos calculado(unclamped) = " + enemyLevel);
+                //Debug.Log("Nível dos inimigos calculado(unclamped) = " + enemyLevel);
                 foreach(Enemy enemy in (new HashSet<Enemy>(enemies)) ){
                     enemy.LevelEnemy(enemyLevel);
                 }

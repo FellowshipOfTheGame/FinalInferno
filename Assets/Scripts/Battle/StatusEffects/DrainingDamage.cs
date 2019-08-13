@@ -50,6 +50,7 @@ namespace FinalInferno{
                     Source.AddEffect(new DamageDrained(Target, Source, multiplier, Duration));
                 }
             }
+            base.Remove();
         }
     }
 }

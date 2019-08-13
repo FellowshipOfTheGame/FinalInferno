@@ -6,8 +6,8 @@ namespace FinalInferno.UI.Battle
 {
     public static class BattleSkillManager
     {
-        public static Skill currentSkill;
-        public static BattleUnit currentUser;
+        public static Skill currentSkill = null;
+        public static BattleUnit currentUser = null;
         public static List<BattleUnit> currentTargets = new List<BattleUnit>();
 
         public static void UseSkill()
@@ -16,7 +16,7 @@ namespace FinalInferno.UI.Battle
                 Debug.Log("Deu null!");
                 return; // Nao sei pq isso e necessario, mas essa funcao ta sendo chamada no inicio da batalha pra todas as unidades
             }
-            //currentSkill.Use(currentUser, currentTargets);
+
             SkillVFX.nTargets = currentTargets.Count;
             if(currentSkill.GetType() == typeof(PlayerSkill)){
                 ((PlayerSkill)currentSkill).GiveExp(currentTargets);
