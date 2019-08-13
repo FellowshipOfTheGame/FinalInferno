@@ -19,17 +19,17 @@ namespace FinalInferno.UI.AII
         /// <summary>
         /// Referência à skill do item.
         /// </summary>
-        private PlayerSkill skill;
+        protected PlayerSkill skill;
 
         /// <summary>
         /// Referência ao retângulo do item.
         /// </summary>
-        private RectTransform rect;
+        protected RectTransform rect;
 
         /// <summary>
         /// Referência ao item da lista.
         /// </summary>
-        [SerializeField] private AxisInteractableItem item;
+        [SerializeField] protected AxisInteractableItem item;
 
         void Awake()
         {
