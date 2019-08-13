@@ -67,8 +67,8 @@ namespace FinalInferno{
             // Reseta todas as informações do jogo para um estado inicial
             ResetGame();
             foreach(Character character in Party.Instance.characters){
-                character.ResetCharacter();
                 character.archetype.ResetHero();
+                character.ResetCharacter();
             }
 
             Party.Instance.GiveExp(0);
@@ -77,7 +77,7 @@ namespace FinalInferno{
             Quest mainQuest = AssetManager.LoadAsset<Quest>("MainQuest");
             mainQuest.StartQuest();
             
-            Debug.Log("Default flag = " + mainQuest.events["Default"]);
+            //Debug.Log("Default flag = " + mainQuest.events["Default"]);
             // Carrega a cena inicial como cutscene
             SceneLoader.LoadCustscene(Party.StartingMap, AssetManager.LoadAsset<Fog.Dialogue.Dialogue>(Party.StartingDialogue));
         }

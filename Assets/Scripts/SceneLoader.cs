@@ -5,9 +5,6 @@ using UnityEngine.SceneManagement;
 
 namespace FinalInferno{
     public static class SceneLoader {
-        // Essa referencia precisa ser configurada quando o jogo for inicializado
-        //private static int lastOWSceneID = 0;
-        //public static int LastOWSceneID{ get{ return lastOWSceneID; } }
         private static List<Enemy> enemies = new List<Enemy>();
         private static bool updatePositions = false;
         private static Fog.Dialogue.Dialogue cutsceneDialogue = null;
@@ -169,7 +166,7 @@ namespace FinalInferno{
             Party.Instance.currentMap = SceneManager.GetActiveScene().name;
             SceneManager.sceneLoaded -= OnMapLoad;
             Quest mainQuest = AssetManager.LoadAsset<Quest>("MainQuest");
-            Debug.Log("loaded map " + map.name + "; Default flag = " + mainQuest.events["Default"]);
+            //Debug.Log("loaded map " + map.name + "; Default flag = " + mainQuest.events["Default"]);
         }
         public static void UnlockMovement(Scene map, LoadSceneMode mode){
             CharacterOW.PartyCanMove = true;

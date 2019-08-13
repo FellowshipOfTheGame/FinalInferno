@@ -52,17 +52,17 @@ namespace FinalInferno{
         }
 
         public void Awake(){
-            Debug.Log("sera que tem awake?");
+            //Debug.Log("sera que tem awake?");
             if(!instance)
                 instance = this;
             
-            Debug.Log("parece que tem!");
+            //Debug.Log("parece que tem!");
 
             table = DynamicTable.Create(PartyXP);
             level = 0;
             xp = 0;
             xpNext = 0;
-            Debug.Log("Iniciou");
+            //Debug.Log("Iniciou");
         }
 
         //faz todos os persoangens subirem de nivel
@@ -87,17 +87,17 @@ namespace FinalInferno{
             bool up = false;
             
             xp += value;
-            Debug.Log("Deu xp");
+            //Debug.Log("Deu xp");
 
             //testa se os persoangens subiram de nivel
-            Debug.Log(xp + ">=" + xpNext + "?");
+            //Debug.Log(xp + ">=" + xpNext + "?");
             while(xp >= xpNext && level < Table.Rows.Count-1){
-                Debug.Log("claro que upo");
+                //Debug.Log("claro que upo");
                 // TO DO: Revisão de tabelas (level tem que ser user friendly)
                 xp -= xpNext;
                 level++;
                 xpNext = Table.Rows[level-1].Field<long>("XPNextLevel");
-                Debug.Log("agora xp pro proximo level eh: " + xpNext);
+                //Debug.Log("agora xp pro proximo level eh: " + xpNext);
                 
                 up = true;
             }

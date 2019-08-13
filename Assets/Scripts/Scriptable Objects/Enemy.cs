@@ -32,7 +32,7 @@ namespace FinalInferno{
         void Awake(){
             table = DynamicTable.Create(enemyTable);
             
-            //name = Table.Rows[0].Field<string>("Rank");
+            name = Table.Rows[0].Field<string>("Rank");
             level = Table.Rows[0].Field<int>("Level");
             hpMax = Table.Rows[0].Field<int>("HP");
             baseDmg = Table.Rows[0].Field<int>("Damage");
@@ -41,15 +41,13 @@ namespace FinalInferno{
             baseSpeed = Table.Rows[0].Field<int>("Speed");
             BaseExp = Table.Rows[0].Field<int>("XP");
             for(int i = 0; i < elementalResistance.Length; i++){
-                //elementalResistance[i] = 1.0f;
-
                 elementalResistance[i] = Table.Rows[0].Field<float>(System.Enum.GetNames(typeof(Element))[i] + "Resistance");
             }
             color = Table.Rows[0].Field<Color>("Color");
             curTableRow = 0;
         }
 
-        // Funcao atualmente desnecessaria desnecessaria
+        // Funcao atualmente desnecessaria
         public int GetSkillLevel(EnemySkill skill){
             int skillIndex = skills.IndexOf(skill);
             if(skillIndex >= 0)

@@ -23,7 +23,7 @@ namespace FinalInferno{
             if(!base.Apply(force))
                 return false;
             Target.curDef += defValue;
-            return false;
+            return true;
         }
 
         public override void Remove() {

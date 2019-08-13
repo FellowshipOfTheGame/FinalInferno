@@ -53,7 +53,7 @@ namespace FinalInferno{
                 saves[Slot].heroSkills[i].skills = new SkillInfo[Party.Instance.characters[i].archetype.skills.Count];
                 
                 for (int j = 0; j < Party.Instance.characters[i].archetype.skills.Count; j++){
-                    // Esse construtor deve funcionar mas não foi testado ainda
+                    //TO DO: Esse construtor deve funcionar mas não foi testado ainda
                     //saves[Slot].heroSkills[i].skills[j] = new SkillInfo((PlayerSkill)Party.Instance.characters[i].archetype.skills[j]);
                     saves[Slot].heroSkills[i].skills[j].xpCumulative = ((PlayerSkill)Party.Instance.characters[i].archetype.skills[j]).XpCumulative;
                     saves[Slot].heroSkills[i].skills[j].active = ((PlayerSkill)Party.Instance.characters[i].archetype.skills[j]).active;

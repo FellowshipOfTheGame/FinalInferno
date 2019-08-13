@@ -17,16 +17,16 @@ namespace FinalInferno{
                 Fog.Dialogue.Dialogue selectedDialogue = null;
                 if(isCutscene){
                     foreach(DialogueEntry entry in dialogues){
-                        Debug.Log("Checking dialogue: " + entry.dialogue + " with quest " + entry.quest + " and event " + entry.eventFlag);
+                        //Debug.Log("Checking dialogue: " + entry.dialogue + " with quest " + entry.quest + " and event " + entry.eventFlag);
                         if(entry.quest.events[entry.eventFlag]){
                             selectedDialogue = entry.dialogue;
                         }else{
-                            Debug.Log("Event " + entry.eventFlag + " deu false");
+                            //Debug.Log("Event " + entry.eventFlag + " deu false");
                             break;
                         }
                     }
                 }
-                Debug.Log("Loading scene: " + sceneName + "; dialogue = " + selectedDialogue);
+                //Debug.Log("Loading scene: " + sceneName + "; dialogue = " + selectedDialogue);
                 if(!isCutscene)
                     SceneLoader.LoadOWScene(sceneName, true, positionOnLoad);
                 else

@@ -38,12 +38,12 @@ namespace FinalInferno{
                 }
                 cameraHalfHeight = camera.orthographicSize;
                 float cameraHalfWidth = cameraHalfHeight * camera.aspect;
-                Debug.Log("Camera size: " + cameraHalfWidth + "," + cameraHalfHeight);
+                //Debug.Log("Camera size: " + cameraHalfWidth + "," + cameraHalfHeight);
                 lowerBounds = new Vector2(tilemapMinX + cameraHalfWidth, tilemapMinY + cameraHalfHeight);
                 upperBounds = new Vector2(tilemapMaxX - cameraHalfWidth, tilemapMaxY - cameraHalfHeight);
                 
-                Debug.Log("lowerBounds = " + lowerBounds);
-                Debug.Log("upperBounds = " + upperBounds);
+                //Debug.Log("lowerBounds = " + lowerBounds);
+                //Debug.Log("upperBounds = " + upperBounds);
             }else{
                 lowerBounds = new Vector2(float.MinValue, float.MinValue);
                 upperBounds = new Vector2(float.MaxValue, float.MaxValue);

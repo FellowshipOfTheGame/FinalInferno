@@ -33,7 +33,7 @@ namespace FinalInferno{
 
         //funcao que ajusta todos os atributos e "skills" do persoangem quando sobe de nivel
         public int LevelUp(int newLevel){
-            Debug.Log(name + " subiu mesmo de level!");
+            //Debug.Log(name + " subiu mesmo de level!");
 
             level = newLevel;
             hpMax = Table.Rows[level-1].Field<int>("HP");
