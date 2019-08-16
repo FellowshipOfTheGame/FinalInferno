@@ -7,7 +7,7 @@ using FinalInferno.UI.AII;
 
 namespace FinalInferno{
     //representa todos os buffs/debuffs, dano etc que essa unidade recebe
-    [RequireComponent(typeof(Animator)),RequireComponent(typeof(SpriteRenderer)),RequireComponent(typeof(FinalInferno.UI.AII.UnitItem))]
+    [RequireComponent(typeof(Animator))/*,RequireComponent(typeof(SpriteRenderer))*/,RequireComponent(typeof(UnityEngine.UI.Image)),RequireComponent(typeof(FinalInferno.UI.AII.UnitItem))]
     public class BattleUnit : MonoBehaviour{
         public delegate void SkillDelegate(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f);
         public Unit unit; //referencia para os atributos base dessa unidade

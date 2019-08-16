@@ -57,9 +57,9 @@ namespace FinalInferno.UI.Battle
             battleUnit.Configure(unit);
             // TO DO: Isso não deve ser necessário depois que todas as unidades tiverem o animator e as animações funcionando
             Image[] unitImages = newUnit.GetComponentsInChildren<Image>();
-            unitImages[0].sprite = (unit.GetType() == typeof(Hero))? heroIndicator : enemyIndicator;
-            unitImages[0].gameObject.SetActive(false);
-            unitImages[1].sprite = unit.battleSprite;
+            unitImages[1].sprite = (unit.GetType() == typeof(Hero))? heroIndicator : enemyIndicator;
+            unitImages[1].gameObject.SetActive(false);
+            unitImages[0].sprite = unit.battleSprite;
             
             // Ordena o item na lista
             AxisInteractableItem newItem = newUnit.GetComponent<AxisInteractableItem>();
