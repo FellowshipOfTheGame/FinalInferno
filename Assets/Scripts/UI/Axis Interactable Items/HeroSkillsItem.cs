@@ -1,11 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using FinalInferno.UI.Victory;
 
 namespace FinalInferno.UI.AII
 {
-    public class VictoryHeroItem : MonoBehaviour
+    public class HeroSkillsItem : MonoBehaviour
     {
         [SerializeField] private AxisInteractableItem item;
         [SerializeField] private AIIManager skillsManager;
