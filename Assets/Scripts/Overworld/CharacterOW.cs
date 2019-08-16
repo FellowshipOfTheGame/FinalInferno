@@ -18,7 +18,8 @@ namespace FinalInferno{
         public static bool PartyCanMove{
             set{
                 foreach(CharacterOW character in characterList){
-                    character.GetComponent<Movable>().CanMove = value;
+                    if(character != null)
+                        character.GetComponent<Movable>().CanMove = value;
                 }
             }
         }
@@ -91,7 +92,7 @@ namespace FinalInferno{
         public void Update(){
             int sortingOrder = 4;
             foreach(CharacterOW character in characterList){
-                if(character.transform.position.y < transform.position.y)
+                if(character != null && character.transform.position.y < transform.position.y)
                     sortingOrder--;
             }
             GetComponent<SpriteRenderer>().sortingOrder =  sortingOrder;

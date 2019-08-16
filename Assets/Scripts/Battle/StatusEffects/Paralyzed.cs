@@ -32,6 +32,7 @@ namespace FinalInferno{
 
         public override void Remove() {
             Target.stuns--;
+            base.Remove();
         }
     }
 }

@@ -20,7 +20,7 @@ namespace FinalInferno{
 
         public virtual void Amplify(float modifier){/*Multiplica os valores relevantes pelo modifier*/}
         public virtual void CopyTo(BattleUnit target, float modifier = 1.0f){/*Copia o status effect para um alvo e aplica um modifier*/}
-        public virtual bool Apply(bool force = false){
+        public virtual bool Apply(bool force = false){ // Retorna true quando o status effect for aplicado de maneira bem sucedida
             if(force || Type != StatusType.Undesirable)
                 return true;
 
@@ -30,7 +30,9 @@ namespace FinalInferno{
                 
             return true;
         }
-        public virtual void Remove(){}
+        public virtual void Remove(){
+            Target.effects.Remove(this);
+        }
         public virtual bool Update() {
             if(TurnsLeft == int.MinValue)
                 return false;

@@ -40,6 +40,7 @@ namespace FinalInferno{
 
         public override void Remove() {
             Target.curDef += defValue;
+            base.Remove();
         }
     }
 }

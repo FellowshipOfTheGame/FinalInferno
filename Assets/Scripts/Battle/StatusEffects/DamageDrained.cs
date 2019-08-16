@@ -40,6 +40,7 @@ namespace FinalInferno{
 
         public override void Remove() {
             Target.curDmg += dmgValue;
+            base.Remove();
         }
     }
 }

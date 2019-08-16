@@ -139,10 +139,10 @@ namespace FinalInferno.UI.Battle
                     if (item == manager.firstItem)
                         manager.firstItem = item.negativeItem;
 
-                    //if (item.negativeItem != null)
+                    if (item.negativeItem != null)
                         item.negativeItem.positiveItem = item.positiveItem;
 
-                    //if (item.positiveItem != null)
+                    if (item.positiveItem != null)
                         item.positiveItem.negativeItem = item.negativeItem;
 
                     if (item == manager.lastItem)

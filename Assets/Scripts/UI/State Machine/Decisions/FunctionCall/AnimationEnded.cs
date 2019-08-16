@@ -13,6 +13,7 @@ namespace FinalInferno.UI.FSM
         public static void StartAnimation(){
             isWaiting = true;
         }
+        
         public static void EndAnimation(){
             if(!animationEnded && isWaiting){
                 animationEnded = true;
