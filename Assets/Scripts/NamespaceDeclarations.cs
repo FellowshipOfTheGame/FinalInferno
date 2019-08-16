@@ -18,7 +18,7 @@ namespace FinalInferno
         Neutral // Neutral deve sempre ser o ultimo
     }
     public enum TargetType {
-        SingleAlly, // Mira em um unico aliado (incluindo a sim próprio)
+        SingleAlly, // Mira em um unico aliado (incluindo a si próprio)
         MultiAlly, // Mira em todos os aliados vivos
         SingleEnemy, // Mira em um unico inimigo
         MultiEnemy, // Mira em todos os inimigos vivos
