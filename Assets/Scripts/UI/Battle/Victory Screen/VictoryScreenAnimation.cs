@@ -30,6 +30,7 @@ namespace FinalInferno.UI.Victory
         [SerializeField] private float timeBetweenSkillsShown = .4f;
         [SerializeField] private RuntimeAnimatorController HeroImageAnimator;
         [SerializeField] private GameObject UpdatedSkill;
+        [SerializeField] private SkillInfoLoader Loader;
 
 
         public void SetPartyStatus()
@@ -98,6 +99,8 @@ namespace FinalInferno.UI.Victory
             {
                 UpdatedSkill newSkill = Instantiate(UpdatedSkill, skillsContents[heroIndex]).GetComponent<UpdatedSkill>();
                 newSkill.LoadUpdatedSkill(changes.heroSkills[heroIndex][i], changes.skillReferences[heroIndex][i]);
+
+                newSkill.GetComponent<VictorySkillListItem>().loader = Loader;
 
                 AxisInteractableItem newItem = newSkill.GetComponent<AxisInteractableItem>();
                 if (lastItem != null)
