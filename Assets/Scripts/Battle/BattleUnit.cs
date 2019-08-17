@@ -45,10 +45,18 @@ namespace FinalInferno{
         public UnitItem battleItem;
 
         private Animator animator;
+        private Transform canvasTransform;
 
-        void Awake(){
+        public void Awake(){
             animator = GetComponent<Animator>();
             activeSkills = new List<Skill>();
+            canvasTransform = FindObjectOfType<Canvas>().transform;
+        }
+
+        public void Update(){
+            if(Mathf.Abs((transform.localScale.x * canvasTransform.localScale.x) - 1.0f) > float.Epsilon){
+                transform.localScale = new Vector3(-1.0f/canvasTransform.localScale.x,1.0f/canvasTransform.localScale.y,1.0f/canvasTransform.localScale.z);
+            }
         }
 
         public void Configure(Unit unit){

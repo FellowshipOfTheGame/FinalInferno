@@ -9,11 +9,13 @@ namespace FinalInferno{
     {
         public static int nTargets;
         private static int counter = 0;
-        private static GameObject particle = null;
+        private GameObject particle = null;
+
         void UseSkill(){
-            Debug.Log("Chamou o use skill pela animação");
-            BattleSkillManager.currentSkill.Use(BattleSkillManager.currentUser, transform.parent.GetComponent<BattleUnit>());
+            Debug.Log("Chamou o use skill pela animação; " + "Object: " + gameObject.name);
+            BattleSkillManager.currentSkill.Use(BattleSkillManager.currentUser, transform.parent.GetComponentInChildren<BattleUnit>());
         }
+
         void DestroySkillObject()
         {
             counter++;
