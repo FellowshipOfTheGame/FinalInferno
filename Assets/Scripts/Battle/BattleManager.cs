@@ -87,7 +87,7 @@ namespace FinalInferno{
 
         public void UpdateLives()
         {
-            queueUI.LoadQueue();
+            queueUI.UpdateQueue();
             foreach (UnitsLives lives in unitsLives)
                 lives.UpdateLives();
         }
@@ -97,6 +97,8 @@ namespace FinalInferno{
         }
 
         public void Kill(BattleUnit unit){
+            if (currentUnit == unit)
+                UpdateQueue(1000);
             queue.Remove(unit);
             unitsUI.RemoveUnit(unit);
             // chama a funcao de callback de morte da unidade

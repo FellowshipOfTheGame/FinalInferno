@@ -36,6 +36,9 @@ namespace FinalInferno.UI.Battle.QueueMenu
         /// </summary>
         [SerializeField] private HorizontalLayoutGroup layout;
 
+        private Image currentTurnBattleImage;
+        private List<Image> BattleImages;
+
         void Start()
         {
             LoadQueue();
@@ -45,23 +48,40 @@ namespace FinalInferno.UI.Battle.QueueMenu
         /// <summary>
         /// Carrega a fila de batalha.
         /// </summary>
-        public void LoadQueue()
+        private void LoadQueue()
         {
-            // Apaga os itens previamente alocados na fila
-            foreach (Image img in content.GetComponentsInChildren<Image>())
-            {
-                Destroy(img.gameObject);
-            }
-            
             // Coloca o personagem que se encontra em seu turno atual no local específico.
-            GameObject newItem = Instantiate(QueueObject, currentTurnContent);
-            newItem.GetComponentsInChildren<Image>()[1].sprite = BattleManager.instance.currentUnit.unit.queueSprite;
+            currentTurnBattleImage = Instantiate(QueueObject, currentTurnContent).GetComponentsInChildren<Image>()[1];
+            currentTurnBattleImage.sprite = BattleManager.instance.currentUnit.unit.queueSprite;
 
             // Coloca o restante dos personagens na fila.
+            BattleImages = new List<Image>();
             foreach (BattleUnit unit in BattleManager.instance.queue.list)
             {
-                newItem = Instantiate(QueueObject, content);
-                newItem.GetComponentsInChildren<Image>()[1].sprite = unit.unit.queueSprite;
+                Image newImage = Instantiate(QueueObject, content).GetComponentsInChildren<Image>()[1];
+                newImage.sprite = unit.unit.queueSprite;
+                BattleImages.Add(newImage);
+            }
+        }
+
+        /// <summary>
+        /// Atualiza a fila de batalha
+        /// </summary>
+        public void UpdateQueue()
+        {
+            // Coloca o personagem que se encontra em seu turno atual no local específico.
+            currentTurnBattleImage.sprite = BattleManager.instance.currentUnit.unit.queueSprite;
+
+            // Coloca o restante dos personagens na fila.
+            int count = 0;
+            foreach (BattleUnit unit in BattleManager.instance.queue.list)
+                BattleImages[count++].sprite = unit.unit.queueSprite;
+
+            // Destroi os objetos que não estão mais sendo utilizados (personagens que morreram)
+            for (int i = BattleImages.Count-1; i >= count ; i--)
+            {
+                Destroy(BattleImages[i].transform.parent.gameObject);
+                BattleImages.RemoveAt(i);
             }
         }
 
