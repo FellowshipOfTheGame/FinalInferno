@@ -26,7 +26,6 @@ namespace FinalInferno.UI.Battle
             foreach(BattleUnit target in currentTargets){
                 GameObject obj = GameObject.Instantiate(currentSkill.VisualEffect, target.transform.parent);
                 obj.GetComponent<SpriteRenderer>().sortingOrder = target.GetComponent<SpriteRenderer>().sortingOrder + 1;
-                obj.transform.localScale = new Vector3(1.0f/canvasTransform.localScale.x,1.0f/canvasTransform.localScale.y,1.0f/canvasTransform.localScale.z);
             }
         }
 

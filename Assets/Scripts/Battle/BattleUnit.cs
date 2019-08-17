@@ -218,8 +218,12 @@ namespace FinalInferno{
         }
 
         public void SkillSelected(){
-            animator.SetTrigger("UseSkill");
             BattleManager.instance.UpdateQueue(Mathf.FloorToInt(BattleSkillManager.currentSkill.cost * (1.0f - ActionCostReduction) ));
+            if(BattleSkillManager.currentSkill != unit.defenseSkill){
+                animator.SetTrigger("UseSkill");
+            }else{
+                UseSkill();
+            }
         }
 
         public void UseSkill(){

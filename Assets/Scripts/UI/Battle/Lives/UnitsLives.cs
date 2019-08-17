@@ -20,7 +20,7 @@ namespace FinalInferno.UI.Battle.LifeMenu
 
         void Start()
         {
-            units = BattleManager.instance.GetTeam(team);
+            units = BattleManager.instance.GetTeam(team, true);
             LoadTeam();
         }
 

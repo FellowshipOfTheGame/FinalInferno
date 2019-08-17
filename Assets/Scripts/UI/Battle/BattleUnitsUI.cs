@@ -54,10 +54,6 @@ namespace FinalInferno.UI.Battle
             battleUnit.GetComponent<SpriteRenderer>().sortingOrder = sortingLayer;
             AxisInteractableItem newItem = battleUnit.GetComponent<AxisInteractableItem>();
 
-
-            Transform canvasTransform = GameObject.FindObjectOfType<Canvas>().transform;
-
-            battleUnit.transform.localScale = new Vector3(-1.0f/canvasTransform.localScale.x,1.0f/canvasTransform.localScale.y,1.0f/canvasTransform.localScale.z);
             AIIManager manager = (unit.IsHero)? heroesManager : enemiesManager;
             
             battleUnit.battleItem = battleUnit.GetComponent<UnitItem>();
