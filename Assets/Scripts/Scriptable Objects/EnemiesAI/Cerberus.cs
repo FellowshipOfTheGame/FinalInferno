@@ -5,14 +5,33 @@ using FinalInferno;
 using FinalInferno.UI.Battle;
 
 namespace FinalInferno{
-    [CreateAssetMenu(fileName = "Banshee", menuName = "ScriptableObject/Enemy/Banshee", order = 3)]
-    public class Banshee : Enemy{
+    [CreateAssetMenu(fileName = "Overseer", menuName = "ScriptableObject/Enemy/Overseer", order = 2)]
+    public class Cerberus : Enemy{
+        private static int heads = 0;
+        private static int fearCD = 0;
+        private static int hellFireCD = 0;
+
+        //funcao que escolhe o ataque a ser utilizado
+        public override Skill AttackDecision(){
+            if(hellFireCD < 1){
+                float rand = Random.Range(0.0f, 1.0f); //gera um numero aleatorio entre 0 e 1
+
+                if(rand < 0.9f/heads){
+                    hellFireCD = heads-1; 
+                    return skills[0]; //decide usar primeira habilidade
+                }
+            }
+            else hellFireCD--;
+
+            return attackSkill; //decide usar ataque basico
+        }
+
         //funcao que escolhe qual acao sera feita no proprio turno
         public override Skill SkillDecision(float percentageNotDefense){
             float rand = Random.Range(0.0f, 1.0f); //gera um numero aleatorio entre 0 e 1
-            float percentageDebuff = Mathf.Min(0.3f, percentageNotDefense/3); //porcentagem para o inimigo usar a habilidade de debuff
+            float percentageDebuff = Mathf.Min(0.3f, percentageNotDefense/3); //porcentagem para o inimigo usar a habilidade de buff
 
-            if(rand < percentageDebuff - BattleManager.instance.enemyDebuff*percentageDebuff/3)
+            if(rand < percentageDebuff - BattleManager.instance.enemyBuff*percentageDebuff/3);
                 return skills[1]; //decide usar a segunda habilidade(debuff)
 
             if(rand < percentageNotDefense)
