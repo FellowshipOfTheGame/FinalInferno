@@ -41,7 +41,6 @@ namespace FinalInferno{
                 string description = elements[colNumber];
 
                 if(typeof(T) == typeof(int)){
-                    //Debug.Log("parsing " + description + " as int for column " + colName + " and row " + row.ToString());
                     return (T)(object)int.Parse(description, CultureInfo.InvariantCulture.NumberFormat);
                 }else if(typeof(T) == typeof(long)){
                     return (T)(object)long.Parse(description, CultureInfo.InvariantCulture.NumberFormat);
