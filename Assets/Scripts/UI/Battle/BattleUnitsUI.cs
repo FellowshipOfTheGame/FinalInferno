@@ -45,24 +45,31 @@ namespace FinalInferno.UI.Battle
 
         public BattleUnit LoadUnit(Unit unit){
             GameObject newUnit = Instantiate(unitPrefab, (unit.IsHero)? heroesContent : enemiesContent);
+            int sortingLayer = 0;
+            foreach(Transform child in ((unit.IsHero)? heroesContent : enemiesContent)){
+                sortingLayer++;
+                sortingLayer++;
+            }
+            BattleUnit battleUnit = newUnit.GetComponentInChildren<BattleUnit>();
+            battleUnit.GetComponent<SpriteRenderer>().sortingOrder = sortingLayer;
+            AxisInteractableItem newItem = battleUnit.GetComponent<AxisInteractableItem>();
+
             AIIManager manager = (unit.IsHero)? heroesManager : enemiesManager;
             
-            BattleUnit battleUnit = newUnit.GetComponent<BattleUnit>();
-            battleUnit.battleItem = newUnit.GetComponent<UnitItem>();
+            battleUnit.battleItem = battleUnit.GetComponent<UnitItem>();
 
             battleUnit.battleItem.layout.preferredWidth = unit.battleSprite.bounds.size.x * 64;
             battleUnit.battleItem.layout.preferredHeight = unit.battleSprite.bounds.size.y * 64;
 
             newUnit.transform.rotation = Quaternion.identity;
             battleUnit.Configure(unit);
-            // TO DO: Isso não deve ser necessário depois que todas as unidades tiverem o animator e as animações funcionando
+
             Image[] unitImages = newUnit.GetComponentsInChildren<Image>();
             unitImages[0].sprite = (unit.GetType() == typeof(Hero))? heroIndicator : enemyIndicator;
             unitImages[0].gameObject.SetActive(false);
             unitImages[1].sprite = unit.battleSprite;
             
             // Ordena o item na lista
-            AxisInteractableItem newItem = newUnit.GetComponent<AxisInteractableItem>();
             if (manager.lastItem != null)
             {
                 newItem.positiveItem = manager.lastItem;

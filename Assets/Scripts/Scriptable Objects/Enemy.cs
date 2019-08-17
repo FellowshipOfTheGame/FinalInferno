@@ -129,7 +129,7 @@ namespace FinalInferno{
             return defenseSkill; //decide defender
         }
 
-        //inteligencia atificial do inimigo na batalha
+        //inteligencia artificial do inimigo na batalha
         public virtual void AIEnemy(){
             Skill skill;
             List<BattleUnit> team = BattleManager.instance.GetTeam(UnitType.Enemy);

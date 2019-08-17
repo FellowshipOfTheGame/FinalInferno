@@ -7,7 +7,7 @@ using FinalInferno.UI.AII;
 
 namespace FinalInferno{
     //representa todos os buffs/debuffs, dano etc que essa unidade recebe
-    [RequireComponent(typeof(Animator)),RequireComponent(typeof(SpriteRenderer)),RequireComponent(typeof(FinalInferno.UI.AII.UnitItem))]
+    [RequireComponent(typeof(Animator))/*,RequireComponent(typeof(SpriteRenderer))*/,RequireComponent(typeof(UnityEngine.UI.Image)),RequireComponent(typeof(FinalInferno.UI.AII.UnitItem))]
     public class BattleUnit : MonoBehaviour{
         public delegate void SkillDelegate(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f);
         public Unit unit; //referencia para os atributos base dessa unidade
@@ -45,10 +45,18 @@ namespace FinalInferno{
         public UnitItem battleItem;
 
         private Animator animator;
+        private Transform canvasTransform;
 
-        void Awake(){
+        public void Awake(){
             animator = GetComponent<Animator>();
             activeSkills = new List<Skill>();
+            canvasTransform = FindObjectOfType<Canvas>().transform;
+        }
+
+        public void Update(){
+            if(Mathf.Abs((transform.localScale.x * canvasTransform.localScale.x) - 1.0f) > float.Epsilon){
+                transform.localScale = new Vector3(-1.0f/canvasTransform.localScale.x,1.0f/canvasTransform.localScale.y,1.0f/canvasTransform.localScale.z);
+            }
         }
 
         public void Configure(Unit unit){
@@ -210,8 +218,12 @@ namespace FinalInferno{
         }
 
         public void SkillSelected(){
-            animator.SetTrigger("UseSkill");
             BattleManager.instance.UpdateQueue(Mathf.FloorToInt(BattleSkillManager.currentSkill.cost * (1.0f - ActionCostReduction) ));
+            if(BattleSkillManager.currentSkill != unit.defenseSkill){
+                animator.SetTrigger("UseSkill");
+            }else{
+                UseSkill();
+            }
         }
 
         public void UseSkill(){
