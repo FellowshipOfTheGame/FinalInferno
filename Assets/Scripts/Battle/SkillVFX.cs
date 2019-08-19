@@ -11,10 +11,22 @@ namespace FinalInferno{
         private static int counter = 0;
         private GameObject particle = null;
         private static Transform canvasTransform = null;
+        private static AudioSource src = null;
+        private static List<AudioClip> effectsPlaying = new List<AudioClip>();
 
         void Awake(){
             if(canvasTransform == null)
                 canvasTransform = GameObject.FindObjectOfType<Canvas>().transform;
+
+            // Toca um efeito sonoro por skill
+            AudioSource src = GetComponent<AudioSource>();
+            if(!effectsPlaying.Contains(src.clip)){
+                effectsPlaying.Add(src.clip);
+                src.Play();
+            }else{
+                Destroy(src);
+                src = null;
+            }
         }
 
         void Start(){
@@ -24,6 +36,18 @@ namespace FinalInferno{
         void UseSkill(){
             Debug.Log("Chamou o use skill pela animação; " + "Object: " + gameObject.name);
             BattleSkillManager.currentSkill.Use(BattleSkillManager.currentUser, transform.parent.GetComponentInChildren<BattleUnit>());
+        }
+
+        void EndAnimation(){
+            if(particle != null){
+                Destroy(particle);
+            }
+
+            if(src != null){
+                effectsPlaying.Remove(src.clip);
+            }
+
+            Destroy(gameObject);
         }
 
         void DestroySkillObject()
@@ -38,10 +62,7 @@ namespace FinalInferno{
                 FinalInferno.UI.FSM.AnimationEnded.EndAnimation();
             }
 
-            if(particle != null)
-                Destroy(particle);
-
-            Destroy(gameObject);
+            EndAnimation();
         }
 
         void CreateParticles(GameObject particles)
