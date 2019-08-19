@@ -75,11 +75,19 @@ namespace Fog.Dialogue
 		}
 
 		void Update(){
-			if(isActive && Input.GetButtonDown("Interact")){
-				if(isLineDone)
-					StartCoroutine("NextLine");
-				else
-					Skip();
+			if(isActive){
+				if(Input.GetButtonDown("Interact")){
+					if(isLineDone)
+						StartCoroutine("NextLine");
+					else
+						Skip();
+				}
+				// On unity editor, adds option to skip all dialogues for quicker debugging
+				#if UNITY_EDITOR
+				if(Input.GetButtonDown("Cancel")){
+					EndDialogue();
+				}
+				#endif
 			}
 		}
 
