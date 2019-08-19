@@ -52,6 +52,10 @@ namespace FinalInferno.UI.Battle
             }
             BattleUnit battleUnit = newUnit.GetComponentInChildren<BattleUnit>();
             battleUnit.GetComponent<SpriteRenderer>().sortingOrder = sortingLayer;
+            // TODO Isso não deve ser necessário se houver um animator atualizado
+            // Talvez também caiba alguma alteração aqui para comportar o caso especial do cérbero
+            battleUnit.GetComponent<SpriteRenderer>().sprite = unit.battleSprite;
+            battleUnit.GetComponent<Image>().sprite = unit.battleSprite;
             AxisInteractableItem newItem = battleUnit.GetComponent<AxisInteractableItem>();
 
             AIIManager manager = (unit.IsHero)? heroesManager : enemiesManager;
