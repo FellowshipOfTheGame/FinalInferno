@@ -5,14 +5,13 @@ using UnityEngine;
 namespace FinalInferno.UI.FSM
 {
     /// <summary>
-    /// Ação que muda o estado de um botão.
+    /// Ação que recoloca a unidade atual na fila como se ela tivesse atacado.
     /// </summary>
     [CreateAssetMenu(menuName = "BattleUI SM/Actions/Give Action Points")]
     public class GiveActionPoints : Action
     {
         /// <summary>
         /// Executa uma ação.
-        /// Muda o estado do botão.
         /// </summary>
         /// <param name="controller"> O controlador da máquina de estados. </param>
         public override void Act(StateController controller)
