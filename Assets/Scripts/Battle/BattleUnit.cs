@@ -135,7 +135,6 @@ namespace FinalInferno{
 
         // TO DO: Criar polimorfismo para dano porcentual de hp e cura, e revisar todos os skill effects relevantes
         public int TakeDamage(int atk, float multiplier, DamageType type, Element element, BattleUnit attacker = null) {
-            animator.SetTrigger("TakeDamage");
             float atkDifference = atk - ( (type == DamageType.Physical)? curDef : ((type == DamageType.Magical)? curMagicDef : 0));
             atkDifference = Mathf.Max(atkDifference, 1);
             int damage = Mathf.FloorToInt(atkDifference * multiplier * elementalResistance[(int)element - (int)Element.Fire] * (Mathf.Clamp(1.0f - damageResistance, 0.0f, 1.0f))/* * 10 */);
@@ -144,9 +143,11 @@ namespace FinalInferno{
             CurHP -= damage;
             // Aplica o aggro pra dano e cura
             if(attacker != null){
-                if(damage > 0)
+                if(damage > 0){
+                    // Só triggera a animação de dano tomado se o dano for maior que zero
+                    animator.SetTrigger("TakeDamage");
                     attacker.aggro += 0.5f * 100f * damage / (1.0f * MaxHP);
-                else if(damage < 0)
+                }else if(damage < 0)
                     attacker.aggro += 0.7f * 100f * damage / (1.0f * MaxHP);
             }
 
