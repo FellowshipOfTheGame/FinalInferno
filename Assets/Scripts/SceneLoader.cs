@@ -8,6 +8,7 @@ namespace FinalInferno{
         private static List<Enemy> enemies = new List<Enemy>();
         private static bool updatePositions = false;
         private static Fog.Dialogue.Dialogue cutsceneDialogue = null;
+        private static AudioClip battleBGM;
 
         public static void LoadBattleScene(Enemy[] enemiesSelected, Sprite BG, AudioClip BGM) {
             RECalculator.encountersEnabled = false;
@@ -21,6 +22,8 @@ namespace FinalInferno{
             }
             // Adicionar o setup da batalha no SceneManager.sceneLoaded
             enemies = new List<Enemy>(enemiesSelected);
+            // Salva a BGM de batalha
+            battleBGM = BGM;
             SceneManager.sceneLoaded += OnBattleLoad;
             // To do: Iniciar animação de encounter caso tenha (Ex.: tela escurecendo)
             // A animação também pode ser iniciada pelo RECalculator, ante de chamar este metodo
@@ -148,6 +151,13 @@ namespace FinalInferno{
             BattleManager.instance.units.AddRange(enemies);
             // Avisa que a batalha pode começar
             BattleManager.instance.StartBattle();
+            // Adiciona a música de background no audio source da camera, caso tenha
+            AudioSource src = GameObject.FindObjectOfType<Camera>().GetComponent<AudioSource>();
+            // Se não houver música, deixa a música padrão que está configurada
+            if(battleBGM != null)
+                src.clip = battleBGM;
+            battleBGM = null;
+            src.Play();
             SceneManager.sceneLoaded -= OnBattleLoad;
         }
         public static void OnMapLoad(Scene map, LoadSceneMode mode) {
