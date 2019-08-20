@@ -152,6 +152,8 @@ namespace FinalInferno{
             }
 
             if(CurHP <= 0){
+                //Se a unidade estiver morta, anima a morte
+                animator.SetBool("IsDead", true);
                 BattleManager.instance.Kill(this);
                 // Se houver algum callback de morte que, por exemplo, ressucita a unidade ele já vai ter sido chamado aqui
                 // Tira os buffs e debuffs
@@ -159,10 +161,6 @@ namespace FinalInferno{
                     if(effect.Duration >= 0 && effect.Type != StatusType.None){
                         effect.Remove();
                     }
-                }
-                if(CurHP <= 0){
-                    //Se a unidade ainda estiver morta, anima a morte
-                    animator.SetTrigger("IsDead");
                 }
             }else if(OnTakeDamage != null && damage > 0){
             // Chama a funcao de callback de dano tomado
@@ -177,6 +175,8 @@ namespace FinalInferno{
             if(CurHP <= 0){
                 curHP = 1;
                 stuns = 0;
+                //Volta a animação de morte
+                animator.SetBool("IsDead", false);
                 BattleManager.instance.Revive(this);
             }
         }
