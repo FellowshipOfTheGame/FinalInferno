@@ -20,10 +20,10 @@ namespace FinalInferno{
 
             // Toca um efeito sonoro por skill
             AudioSource src = GetComponent<AudioSource>();
-            if(!effectsPlaying.Contains(src.clip)){
+            if(src != null && !effectsPlaying.Contains(src.clip)){
                 effectsPlaying.Add(src.clip);
                 src.Play();
-            }else{
+            }else if(src != null){
                 Destroy(src);
                 src = null;
             }

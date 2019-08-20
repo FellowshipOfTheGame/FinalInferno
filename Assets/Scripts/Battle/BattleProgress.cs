@@ -54,6 +54,7 @@ namespace FinalInferno{
         private static int currentIndex = 0;
 
         public static void ResetInfo(Party party){
+            currentIndex = 0;
             startingLevel = party.level;
             startingExp = party.xp;
             xpToNextLevel = party.xpNext;
