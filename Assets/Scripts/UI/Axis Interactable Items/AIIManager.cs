@@ -84,12 +84,14 @@ namespace FinalInferno.UI.AII
                     float direction = Input.GetAxis(orientation.ToString());
                     if (direction > .1f)
                     {
-                        ChangeItem(currentItem.positiveItem);
+                        if(currentItem!= null)
+                            ChangeItem(currentItem.positiveItem);
                         _time = 0f;
                     }
                     else if (direction < -.1f)
                     {
-                        ChangeItem(currentItem.negativeItem);
+                        if(currentItem!= null)
+                            ChangeItem(currentItem.negativeItem);
                         _time = 0f;
                     }
                 }

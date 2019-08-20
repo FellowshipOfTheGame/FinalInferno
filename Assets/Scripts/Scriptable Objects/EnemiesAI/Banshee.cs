@@ -10,9 +10,9 @@ namespace FinalInferno{
         //funcao que escolhe qual acao sera feita no proprio turno
         public override Skill SkillDecision(float percentageNotDefense){
             float rand = Random.Range(0.0f, 1.0f); //gera um numero aleatorio entre 0 e 1
-            float percentageBuff = Mathf.Min(0.3f, percentageNotDefense/3); //porcentagem para o inimigo usar a habilidade de debuff
+            float percentageDebuff = Mathf.Min(0.3f, percentageNotDefense/3); //porcentagem para o inimigo usar a habilidade de debuff
 
-            if(rand < percentageBuff - BattleManager.instance.enemyDebuff*percentageBuff/3);
+            if(rand < percentageDebuff - BattleManager.instance.enemyDebuff*percentageDebuff/3)
                 return skills[1]; //decide usar a segunda habilidade(debuff)
 
             if(rand < percentageNotDefense)

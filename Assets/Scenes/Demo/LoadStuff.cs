@@ -11,12 +11,12 @@ namespace FinalInferno{
         public SceneAsset demoScene;
         #endif
         public void Start(){
-            //Party.Instance.currentMap = demoScene.name;
             AssetManager.LoadAllAssets();
+        #if UNITY_EDITOR
             Quest exQuest = AssetManager.LoadAsset<Quest>("AdventurerQuest");
             exQuest.events["TutorialComplete"] = false;
             Party.Instance.GiveExp(0);
-        #if UNITY_EDITOR
+            //Party.Instance.currentMap = demoScene.name;
             //SceneLoader.LoadOWScene(Party.Instance.currentMap);
             //SaveLoader.NewGame();
             SceneManager.LoadScene(demoScene.name);

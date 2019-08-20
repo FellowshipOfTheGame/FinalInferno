@@ -66,10 +66,6 @@ namespace FinalInferno{
         public static void NewGame(){
             // Reseta todas as informações do jogo para um estado inicial
             ResetGame();
-            foreach(Character character in Party.Instance.characters){
-                character.archetype.ResetHero();
-                character.ResetCharacter();
-            }
 
             Party.Instance.GiveExp(0);
 

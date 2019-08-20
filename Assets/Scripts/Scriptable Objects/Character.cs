@@ -20,6 +20,7 @@ namespace FinalInferno{
         
         public void ResetCharacter(){
             position = Vector2.zero;
+            archetype.ResetHero();
             hpCur = archetype.LevelUp(1);
         }
 
