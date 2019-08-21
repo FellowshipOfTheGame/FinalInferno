@@ -19,7 +19,7 @@ namespace FinalInferno{
             Source = src;
             element = elemnt;
             valueReceived = value;
-            dmgPerTurn = Mathf.FloorToInt(Source.curDmg * value);
+            dmgPerTurn = Mathf.Max(Mathf.FloorToInt(Source.curDmg * value), 1);
             Failed = !Apply();
         }
 
@@ -28,7 +28,7 @@ namespace FinalInferno{
         }
 
         public override void Amplify(float modifier){
-            dmgPerTurn = Mathf.FloorToInt(modifier * dmgPerTurn);
+            dmgPerTurn = Mathf.Max(Mathf.FloorToInt(modifier * dmgPerTurn), 1);
         }
 
         public override bool Update(){

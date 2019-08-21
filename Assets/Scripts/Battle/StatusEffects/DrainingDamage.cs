@@ -21,7 +21,7 @@ namespace FinalInferno{
             doubleEdged = dbleEdged;
             multiplier = value;
             isPermanent = isPermnt;
-            dmgValue = Mathf.FloorToInt(trgt.curDmg * value);
+            dmgValue = Mathf.Max(Mathf.FloorToInt(trgt.curDmg * value), 1);
             Failed = !Apply();
         }
 
@@ -31,7 +31,7 @@ namespace FinalInferno{
 
         public override void Amplify(float modifier){
             Source.curDmg -= dmgValue; // Se chamar Remove pode dar problema
-            dmgValue = Mathf.FloorToInt(modifier * dmgValue);
+            dmgValue = Mathf.Max(Mathf.FloorToInt(modifier * dmgValue), 1);
             Apply(true);
         }
 

@@ -15,7 +15,7 @@ namespace FinalInferno{
             TurnsLeft = Duration;
             Target = trgt;
             Source = Target;
-            defValue = Mathf.FloorToInt(trgt.curDef * value);
+            defValue = Mathf.Max(Mathf.FloorToInt(trgt.curDef * value), 1);
             Failed = !Apply();
         }
 
