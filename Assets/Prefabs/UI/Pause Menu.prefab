@@ -152,6 +152,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 1222935430442493520}
   skillsManager: {fileID: 2032971077341614905}
+  index: 3
+  content: {fileID: 6249532072255445979}
 --- !u!1 &553516324306343566
 GameObject:
   m_ObjectHideFlags: 0
@@ -1304,6 +1306,7 @@ GameObject:
   - component: {fileID: 553516325624642332}
   - component: {fileID: 553516325624642335}
   - component: {fileID: 553516325624642334}
+  - component: {fileID: 1205843357846347878}
   m_Layer: 0
   m_Name: Pause Menu
   m_TagString: Untagged
@@ -1395,6 +1398,31 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ab21fab5f4122ed4c909bd815af35ed2, type: 2}
   - {fileID: 11400000, guid: 29cdef7f59a845c4fb0300d559c701bc, type: 2}
   - {fileID: 11400000, guid: fb28e3b86b56a784f8577c05516c0f34, type: 2}
+--- !u!114 &1205843357846347878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 553516325624642328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 670f1b89f5556b24ba1eb856bba5072e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageSprites: []
+  elementSprites:
+  - {fileID: 21300000, guid: a9fa81268f752ec4d8d22717e133276d, type: 3}
+  - {fileID: 21300000, guid: 257cc744f21aa474b82978f533c2986f, type: 3}
+  - {fileID: 21300000, guid: 3090682c04a6c5948b64cbe861a92e84, type: 3}
+  - {fileID: 21300000, guid: 5eb96270b8a6d0047867ccae76a55d4a, type: 3}
+  - {fileID: 21300000, guid: 9ae6c6713fad460448d35a51d5e69965, type: 3}
+  targetTypeSprites:
+  - {fileID: 21300000, guid: 71b44eac5cef4a142a954a08f9405672, type: 3}
+  - {fileID: 21300000, guid: 7fd274be209f04a4486fa8dd670822f1, type: 3}
+  - {fileID: 21300000, guid: 3411da718f6ac6e4980c879ed40e101e, type: 3}
+  - {fileID: 21300000, guid: e49cbbb2dc02ede409c5b81e3ff497a9, type: 3}
+  - {fileID: 0}
 --- !u!1 &553516325654480302
 GameObject:
   m_ObjectHideFlags: 0
@@ -1917,6 +1945,7 @@ GameObject:
   - component: {fileID: 1269143374749853178}
   - component: {fileID: 2622762839393729207}
   - component: {fileID: 8072961508767503884}
+  - component: {fileID: 1830890808}
   m_Layer: 0
   m_Name: Heroes Panel
   m_TagString: Untagged
@@ -1995,6 +2024,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
+--- !u!114 &1830890808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1607009730441783724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6e0910f0e9fbff4a8ed7945344169a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SkillItem: {fileID: 4173609035456596803, guid: f9d9219de110f4c40b428aed03557cf6,
+    type: 3}
+  HeroesImages:
+  - {fileID: 2258234202923784128}
+  - {fileID: 965364825611351213}
+  - {fileID: 5596544962834525544}
+  - {fileID: 4545036597769117106}
+  SkillsContents:
+  - {fileID: 6465488701102179626}
+  - {fileID: 5582880611649454660}
+  - {fileID: 2830974254645019957}
+  - {fileID: 2032971077341614905}
+  loader: {fileID: 6828119283163001934}
 --- !u!1 &2009788787254232582
 GameObject:
   m_ObjectHideFlags: 0
@@ -2191,6 +2245,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 78553678996139}
   skillsManager: {fileID: 6465488701102179626}
+  index: 0
+  content: {fileID: 6249532072255445979}
 --- !u!1 &2798953760768214814
 GameObject:
   m_ObjectHideFlags: 0
@@ -2227,7 +2283,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.3, y: 0}
   m_AnchorMax: {x: 0.95, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 956.19995, y: 0}
   m_SizeDelta: {x: 0, y: -138}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &12102371853215143
@@ -3088,6 +3144,7 @@ GameObject:
   - component: {fileID: 3780387678555588232}
   - component: {fileID: 6711267926952627640}
   - component: {fileID: 1447323928630916166}
+  - component: {fileID: 6249532072255445979}
   m_Layer: 0
   m_Name: Skills
   m_TagString: Untagged
@@ -3115,7 +3172,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -37.5}
+  m_AnchoredPosition: {x: -413.94995, y: -32.5}
   m_SizeDelta: {x: 0, y: -75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3780387678555588232
@@ -3178,6 +3235,19 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
   m_ChildControlHeight: 1
+--- !u!114 &6249532072255445979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5942226863589184594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 658a9ac046397724e8a45741cca0d595, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: {fileID: 5475370826898685788}
 --- !u!1 &6012005972710660583
 GameObject:
   m_ObjectHideFlags: 0
@@ -3469,6 +3539,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 3429552614931933388}
   skillsManager: {fileID: 5582880611649454660}
+  index: 1
+  content: {fileID: 6249532072255445979}
 --- !u!1 &6392313460678210648
 GameObject:
   m_ObjectHideFlags: 0
@@ -4463,3 +4535,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 5025529561445683748}
   skillsManager: {fileID: 2830974254645019957}
+  index: 2
+  content: {fileID: 6249532072255445979}
