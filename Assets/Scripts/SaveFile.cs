@@ -17,7 +17,8 @@ namespace FinalInferno{
                     slot = value;
             }
         }
-        [SerializeField] public bool autoSave = false;
+        // TO DO: Valor padrão deveria ser false, mas n tem menu de salvar o jogo
+        [SerializeField] public bool autoSave = true;
         // Uma array de saves inicializados com valores padrão
         public SaveInfo[] saves = new SaveInfo[nSaveSlots];
 

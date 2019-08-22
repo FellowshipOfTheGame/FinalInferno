@@ -17,7 +17,7 @@ namespace FinalInferno{
             Target = trgt;
             Source = src;
             valueReceived = value;
-            resValue = Mathf.FloorToInt(trgt.curMagicDef * value);
+            resValue = Mathf.Max(Mathf.FloorToInt(trgt.curMagicDef * value), 1);
             Failed = !Apply();
         }
 
@@ -27,7 +27,7 @@ namespace FinalInferno{
 
         public override void Amplify(float modifier){
             Remove();
-            resValue = Mathf.FloorToInt(modifier * resValue);
+            resValue = Mathf.Max(Mathf.FloorToInt(modifier * resValue), 1);
             Apply(true);
         }
 

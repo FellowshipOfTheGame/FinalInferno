@@ -18,7 +18,7 @@ namespace FinalInferno.UI.FSM
         public override void Act(StateController controller)
         {
             foreach(SpriteRenderer sr in FindObjectsOfType<SpriteRenderer>()){
-                Debug.Log("Desativando sprite do " + sr.GetComponent<BattleUnit>().unit.name);
+                // Debug.Log("Desativando sprite do " + sr.GetComponent<BattleUnit>().unit.name);
                 sr.enabled = false;
             }
         }
