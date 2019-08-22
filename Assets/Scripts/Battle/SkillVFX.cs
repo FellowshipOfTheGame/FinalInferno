@@ -11,7 +11,7 @@ namespace FinalInferno{
         private static int counter = 0;
         private GameObject particle = null;
         private static Transform canvasTransform = null;
-        private static AudioSource src = null;
+        private AudioSource src = null;
         private static List<AudioClip> effectsPlaying = new List<AudioClip>();
 
         void Awake(){
@@ -19,7 +19,7 @@ namespace FinalInferno{
                 canvasTransform = GameObject.FindObjectOfType<Canvas>().transform;
 
             // Toca um efeito sonoro por skill
-            AudioSource src = GetComponent<AudioSource>();
+            src = GetComponent<AudioSource>();
             if(src != null && !effectsPlaying.Contains(src.clip)){
                 effectsPlaying.Add(src.clip);
                 src.Play();
