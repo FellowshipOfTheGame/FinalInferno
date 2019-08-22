@@ -113,6 +113,19 @@ namespace FinalInferno{
             xp = 0;
             xpNext = 0;
             Debug.Log("Party resetada");
+            characters.Clear();
+            // Gambiarra
+            characters.Add(AssetManager.LoadAsset<Character>("Character 1"));
+            characters[characters.Count - 1].archetype = AssetManager.LoadAsset<Hero>("Amidi");
+            characters.Add(AssetManager.LoadAsset<Character>("Character 2"));
+            characters[characters.Count - 1].archetype = AssetManager.LoadAsset<Hero>("Gregorim");
+            characters.Add(AssetManager.LoadAsset<Character>("Character 3"));
+            characters[characters.Count - 1].archetype = AssetManager.LoadAsset<Hero>("Herman");
+            characters.Add(AssetManager.LoadAsset<Character>("Character 4"));
+            characters[characters.Count - 1].archetype = AssetManager.LoadAsset<Hero>("Xander");
+            foreach(Character character in characters){
+                character.ResetCharacter();
+            }
         }
 
         //salva o jogo do jogador

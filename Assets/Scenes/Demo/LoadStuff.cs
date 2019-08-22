@@ -11,8 +11,8 @@ namespace FinalInferno{
         public SceneAsset demoScene;
         #endif
         public void Start(){
-        #if UNITY_EDITOR
             AssetManager.LoadAllAssets();
+        #if UNITY_EDITOR
             Quest exQuest = AssetManager.LoadAsset<Quest>("AdventurerQuest");
             exQuest.events["TutorialComplete"] = false;
             Party.Instance.GiveExp(0);
