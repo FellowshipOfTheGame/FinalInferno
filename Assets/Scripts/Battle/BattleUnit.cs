@@ -25,6 +25,7 @@ namespace FinalInferno{
             }
         }
         public int actionPoints; //define a posicao em que essa unidade agira no combate
+        private int hpOnHold;
         public int stuns;
         public bool CanAct{ get{ return (stuns <= 0); } }
         public float aggro;
@@ -84,7 +85,8 @@ namespace FinalInferno{
             curMagicDef = unit.baseMagicDef;
             curSpeed = unit.baseSpeed;
             unit.elementalResistance.CopyTo(elementalResistance, 0);
-            actionPoints = 0; 
+            actionPoints = 0;
+            hpOnHold = 0; 
 
             effects = new List<StatusEffect>();
 
@@ -185,8 +187,11 @@ namespace FinalInferno{
             int returnValue = Mathf.FloorToInt(lostHPPercent * MaxHP);
 
             MaxHP = Mathf.Max(Mathf.FloorToInt((1.0f - lostHPPercent) * MaxHP), 1);
-            if(lostHPPercent < 0) // Para usar a mesma função para aumentar hp maximo, o aumento é adicionado como cura
+            if(lostHPPercent < 0){ // Para usar a mesma função para aumentar hp maximo, o aumento é adicionado como cura
                 CurHP += returnValue;
+            }else{
+                hpOnHold += CurHP - MaxHP;
+            }
             CurHP = CurHP;
 
             return returnValue;
@@ -194,6 +199,8 @@ namespace FinalInferno{
 
         public void ResetMaxHP(){ // Funcao que deve ser chamada no final da batalha
             MaxHP = unit.hpMax;
+            CurHP += hpOnHold;
+            hpOnHold = 0;
         }
 
         public void AddEffect(StatusEffect statusEffect, bool ignoreCallback = false){
