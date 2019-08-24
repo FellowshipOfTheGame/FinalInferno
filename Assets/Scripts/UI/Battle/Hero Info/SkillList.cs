@@ -136,6 +136,7 @@ namespace FinalInferno.UI.Battle.SkillMenu
                     lastItem = newItem;
                 }
             }
+            manager.Active();
         }
 
         /// <summary>
