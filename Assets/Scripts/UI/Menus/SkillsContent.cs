@@ -13,7 +13,7 @@ namespace FinalInferno.UI.SkillsMenu
 
         void Update()
         {
-            content.localPosition = new Vector3(Mathf.Lerp(content.localPosition.x, xPosition, .15f), 0f);
+            content.localPosition = new Vector3(Mathf.Lerp(content.localPosition.x, xPosition, .15f), content.localPosition.y);
         }
 
         public void SetContentToPosition(int index)

@@ -1423,6 +1423,13 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3411da718f6ac6e4980c879ed40e101e, type: 3}
   - {fileID: 21300000, guid: e49cbbb2dc02ede409c5b81e3ff497a9, type: 3}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &553516325654480302
 GameObject:
   m_ObjectHideFlags: 0
@@ -1965,7 +1972,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3423429836669996489}
-  - {fileID: 5475370826898685788}
+  - {fileID: 4099976600712983013}
   m_Father: {fileID: 8392415297808121522}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2062,6 +2069,7 @@ GameObject:
   - component: {fileID: 103975617781976037}
   - component: {fileID: 8426460251307205623}
   - component: {fileID: 6465488701102179626}
+  - component: {fileID: 1757209217}
   m_Layer: 0
   m_Name: Hero 1
   m_TagString: Untagged
@@ -2168,6 +2176,19 @@ MonoBehaviour:
   timeBetweenClicks: 0.1
   active: 0
   interactable: 0
+--- !u!114 &1757209217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2009788787254232582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4be22be2dad96744aa5dc25673accedf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: {fileID: 485726664538357730}
 --- !u!1 &2510065504756374615
 GameObject:
   m_ObjectHideFlags: 0
@@ -2323,6 +2344,95 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!1 &2966274065603320529
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4099976600712983013}
+  - component: {fileID: 1417675628372501263}
+  - component: {fileID: 244999162223990496}
+  - component: {fileID: 6177036109098040190}
+  m_Layer: 0
+  m_Name: Skills Mask
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4099976600712983013
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2966274065603320529}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 5475370826898685788}
+  m_Father: {fileID: 5774782628835674036}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -35}
+  m_SizeDelta: {x: 0, y: -70}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1417675628372501263
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2966274065603320529}
+  m_CullTransparentMesh: 0
+--- !u!114 &244999162223990496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2966274065603320529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+--- !u!114 &6177036109098040190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2966274065603320529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1200242548, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 1
 --- !u!1 &3101461952362014095
 GameObject:
   m_ObjectHideFlags: 0
@@ -2410,6 +2520,7 @@ GameObject:
   - component: {fileID: 3645197795240746089}
   - component: {fileID: 5624388322562197279}
   - component: {fileID: 5582880611649454660}
+  - component: {fileID: 2096027126}
   m_Layer: 0
   m_Name: Hero 2
   m_TagString: Untagged
@@ -2516,6 +2627,19 @@ MonoBehaviour:
   timeBetweenClicks: 0.1
   active: 0
   interactable: 0
+--- !u!114 &2096027126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4068046257607336041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4be22be2dad96744aa5dc25673accedf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: {fileID: 2731587840244327276}
 --- !u!1 &4068973658116703564
 GameObject:
   m_ObjectHideFlags: 0
@@ -2872,6 +2996,7 @@ GameObject:
   - component: {fileID: 9195495264928567817}
   - component: {fileID: 3538476308730450923}
   - component: {fileID: 2032971077341614905}
+  - component: {fileID: 1357451287}
   m_Layer: 0
   m_Name: Hero 4
   m_TagString: Untagged
@@ -2978,6 +3103,19 @@ MonoBehaviour:
   timeBetweenClicks: 0.1
   active: 0
   interactable: 0
+--- !u!114 &1357451287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5264673733882479999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4be22be2dad96744aa5dc25673accedf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: {fileID: 8963960593714187582}
 --- !u!1 &5647852856584142492
 GameObject:
   m_ObjectHideFlags: 0
@@ -3159,7 +3297,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5942226863589184594}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3167,13 +3305,13 @@ RectTransform:
   - {fileID: 2731587840244327276}
   - {fileID: 6127117753693050852}
   - {fileID: 8963960593714187582}
-  m_Father: {fileID: 5774782628835674036}
-  m_RootOrder: 1
+  m_Father: {fileID: 4099976600712983013}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -413.94995, y: -32.5}
-  m_SizeDelta: {x: 0, y: -75}
+  m_AnchoredPosition: {x: -413.94995, y: 2.5}
+  m_SizeDelta: {x: 0, y: -5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3780387678555588232
 CanvasRenderer:
@@ -3229,7 +3367,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 3
+  m_ChildAlignment: 0
   m_Spacing: 0
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 1
@@ -3893,6 +4031,7 @@ GameObject:
   - component: {fileID: 7912181796187602694}
   - component: {fileID: 7717018415008780633}
   - component: {fileID: 2830974254645019957}
+  - component: {fileID: 345776408}
   m_Layer: 0
   m_Name: Hero 3
   m_TagString: Untagged
@@ -3999,6 +4138,19 @@ MonoBehaviour:
   timeBetweenClicks: 0.1
   active: 0
   interactable: 0
+--- !u!114 &345776408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6980126302500115672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4be22be2dad96744aa5dc25673accedf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: {fileID: 6127117753693050852}
 --- !u!1 &7096392354333208637
 GameObject:
   m_ObjectHideFlags: 0

@@ -36,7 +36,7 @@ namespace FinalInferno.UI.SkillsMenu
                 foreach (PlayerSkill skill in hero.skills)
                 {
                     GameObject newSkill = Instantiate(SkillItem, SkillsContents[i].transform);
-                    newSkill.GetComponent<SkillsMenuSkillItem>().LoadSkill(skill, loader);
+                    newSkill.GetComponent<SkillsMenuSkillItem>().LoadSkill(skill, loader, SkillsContents[i].GetComponent<HeroSkillsContent>());
 
                     AxisInteractableItem newItem = newSkill.GetComponent<AxisInteractableItem>();
                     if (lastItem == null)

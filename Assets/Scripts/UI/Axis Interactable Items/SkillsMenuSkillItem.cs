@@ -12,18 +12,23 @@ namespace FinalInferno.UI.AII
         private PlayerSkill skill;
         private LoadSkillDescription loader;
 
+        [SerializeField] private RectTransform rect;
+        [SerializeField] private HeroSkillsContent content;
+
         [SerializeField] private Text SkillNameText;
         [SerializeField] private Image SkillImage;
 
         void Awake()
         {
             item.OnEnter += UpdateSkillDescription;
+            item.OnEnter += ClampSkillContent;
         }
 
-        public void LoadSkill(PlayerSkill mySkill, LoadSkillDescription _loader)
+        public void LoadSkill(PlayerSkill mySkill, LoadSkillDescription _loader, HeroSkillsContent _content)
         {
             skill = mySkill;
             loader = _loader;
+            content = _content;
 
             SkillNameText.text = skill.name;
             // SkillImage.sprite = skill.
@@ -32,6 +37,11 @@ namespace FinalInferno.UI.AII
         private void UpdateSkillDescription()
         {
             loader.LoadSkillInfo(skill);
+        }
+
+        private void ClampSkillContent()
+        {
+            content.ClampContent(rect);
         }
     }
 }
