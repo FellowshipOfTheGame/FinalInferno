@@ -21,7 +21,7 @@ namespace FinalInferno.UI.SkillsMenu
         public void LoadSkillInfo(PlayerSkill skill)
         {
             skillNameText.text = skill.name;
-            // skillImage.sprite = skill.
+            skillImage.sprite = skill.skillImage;
 
             skillElementImage.sprite = Icons.instance.elementSprites[(int)skill.attribute - 1];
             skillElementText.text = skill.attribute.ToString();

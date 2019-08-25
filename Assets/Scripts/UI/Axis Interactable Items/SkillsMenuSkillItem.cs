@@ -31,7 +31,7 @@ namespace FinalInferno.UI.AII
             content = _content;
 
             SkillNameText.text = skill.name;
-            // SkillImage.sprite = skill.
+            SkillImage.sprite = skill.skillImage;
         }
 
         private void UpdateSkillDescription()
