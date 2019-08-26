@@ -15,7 +15,7 @@ namespace FinalInferno{
             TurnsLeft = Duration;
             Target = trgt;
             Source = Target;
-            defValue = Mathf.FloorToInt(trgt.curDef * value);
+            defValue = Mathf.Max(Mathf.FloorToInt(trgt.curDef * value), 1);
             Failed = !Apply();
         }
 
@@ -23,11 +23,13 @@ namespace FinalInferno{
             if(!base.Apply(force))
                 return false;
             Target.curDef += defValue;
+            Target.GetComponent<Animator>().SetBool("IsDefending", true);
             return true;
         }
 
         public override void Remove() {
             Target.curDef -= defValue;
+            Target.GetComponent<Animator>().SetBool("IsDefending", false);
             base.Remove();
         }
     }

@@ -110,6 +110,8 @@ namespace FinalInferno.UI.Battle.SkillMenu
                     GameObject newSkill = Instantiate(skillObject, skillsContent);
                     newSkill.GetComponent<SkillElement>().skill = skill;
 
+                    newSkill.GetComponent<Image>().sprite = skill.skillImage;
+
                     // Define este script como responsável pelo item criado
                     SkillListItem newSkillListItem = newSkill.GetComponent<SkillListItem>();
                     newSkillListItem.skillList = this;
@@ -136,6 +138,7 @@ namespace FinalInferno.UI.Battle.SkillMenu
                     lastItem = newItem;
                 }
             }
+            manager.Active();
         }
 
         /// <summary>

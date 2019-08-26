@@ -26,6 +26,7 @@ namespace FinalInferno{
                 return table;
             }
         }
+        public Sprite skillImage;
 
         void Awake(){
             table = null;

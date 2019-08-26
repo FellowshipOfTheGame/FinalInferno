@@ -9,10 +9,47 @@ namespace FinalInferno{
     {
         public static int nTargets;
         private static int counter = 0;
-        void UseSkill(){
-            Debug.Log("Chamou o use skill pela animação");
-            BattleSkillManager.currentSkill.Use(BattleSkillManager.currentUser, transform.parent.GetComponent<BattleUnit>());
+        private GameObject particle = null;
+        private static Transform canvasTransform = null;
+        private AudioSource src = null;
+        private static List<AudioClip> effectsPlaying = new List<AudioClip>();
+
+        void Awake(){
+            if(canvasTransform == null)
+                canvasTransform = GameObject.FindObjectOfType<Canvas>().transform;
+
+            // Toca um efeito sonoro por skill
+            src = GetComponent<AudioSource>();
+            if(src != null && !effectsPlaying.Contains(src.clip)){
+                effectsPlaying.Add(src.clip);
+                src.Play();
+            }else if(src != null){
+                Destroy(src);
+                src = null;
+            }
         }
+
+        void Start(){
+            transform.localScale = new Vector3(1.0f/canvasTransform.localScale.x,1.0f/canvasTransform.localScale.y,1.0f/canvasTransform.localScale.z);
+        }
+
+        void UseSkill(){
+            Debug.Log("Chamou o use skill pela animação; " + "Object: " + gameObject.name);
+            BattleSkillManager.currentSkill.Use(BattleSkillManager.currentUser, transform.parent.GetComponentInChildren<BattleUnit>());
+        }
+
+        void EndAnimation(){
+            if(particle != null){
+                Destroy(particle);
+            }
+
+            if(src != null){
+                effectsPlaying.Remove(src.clip);
+            }
+
+            Destroy(gameObject);
+        }
+
         void DestroySkillObject()
         {
             counter++;
@@ -24,7 +61,13 @@ namespace FinalInferno{
                 BattleSkillManager.currentUser = null;
                 FinalInferno.UI.FSM.AnimationEnded.EndAnimation();
             }
-            Destroy(gameObject);
+
+            EndAnimation();
+        }
+
+        void CreateParticles(GameObject particles)
+        {
+            particle = Instantiate(particles, new Vector3(transform.position.x, transform.position.y+((GetComponent<SpriteRenderer>()).size.y/2.0f), transform.position.z), transform.rotation);
         }
     }
 }

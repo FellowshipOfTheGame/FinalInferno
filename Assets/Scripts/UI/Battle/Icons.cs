@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace FinalInferno.UI.Battle
+namespace FinalInferno.UI
 {
     public class Icons : MonoBehaviour
     {
