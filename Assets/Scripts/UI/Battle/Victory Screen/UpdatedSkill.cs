@@ -24,6 +24,7 @@ namespace FinalInferno.UI.Victory
         public void LoadUpdatedSkill(SkillInfo pSkill, PlayerSkill skill)
         {
             SkillName.text = skill.name;
+            SkillImage.sprite = skill.skillImage;
             SkillLevelText.text = pSkill.level.ToString();
             SkillLevelSlider.maxValue = skill.xpNext;
             SkillLevelSlider.value = pSkill.xp;

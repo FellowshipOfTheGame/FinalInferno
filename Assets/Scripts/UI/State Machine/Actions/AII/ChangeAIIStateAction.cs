@@ -28,7 +28,7 @@ namespace FinalInferno.UI.FSM
             else
                 manager.Active();
         }
-
+        
         /// <summary>
         /// Função chamada para pedir um componente ao provedor.
         /// Pede um AIIManager.
