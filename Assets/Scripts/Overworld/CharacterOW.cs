@@ -83,20 +83,12 @@ namespace FinalInferno{
         public void Start(){
             if(!isMain){
                 GetComponent<MoveToTarget>().target = characterList[System.Array.IndexOf(characterList, this) - 1].gameObject.transform;
+                GetComponent<SpriteRenderer>().sortingOrder = MainOWCharacter.GetComponent<SpriteRenderer>().sortingOrder;
             }
         }
 
         public void OnDestroy(){
             characterList[System.Array.IndexOf(characterList, this)] = null;
-        }
-
-        public void Update(){
-            int sortingOrder = 4;
-            foreach(CharacterOW character in characterList){
-                if(character != null && character.transform.position.y < transform.position.y)
-                    sortingOrder--;
-            }
-            GetComponent<SpriteRenderer>().sortingOrder =  sortingOrder;
         }
     }
 }
