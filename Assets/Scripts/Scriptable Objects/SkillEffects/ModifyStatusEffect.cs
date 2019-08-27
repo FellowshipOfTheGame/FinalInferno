@@ -5,6 +5,7 @@ using UnityEngine;
 namespace FinalInferno{
     [CreateAssetMenu(fileName = "ModifyStatusEffect", menuName = "ScriptableObject/SkillEffect/ModifyStatusEffect")]
     public class ModifyStatusEffect : SkillEffect {
+        public override string Description0 { get { return "Amplify effect "; } }
         // value1 = index of status effect being changed
         public override string Description1{ get {return "\bEffect number " + value1;} }
         // value1 = modifier to apply to the effect

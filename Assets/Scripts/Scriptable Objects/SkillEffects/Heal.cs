@@ -5,8 +5,9 @@ using UnityEngine;
 namespace FinalInferno{
     [CreateAssetMenu(fileName = "Heal", menuName = "ScriptableObject/SkillEffect/Heal")]
     public class Heal : SkillEffect {
+        public override string Description0 { get { return "Increase life by "; } }
         // value1 = dmg multiplier for heal
-        public override string Description1{ get {return "x";} }
+        public override string Description1{ get {return "%";} }
         // value2 = health percentage heal
         public override string Description2{ get {return "% maxHP";} }
         public override void Apply(BattleUnit source, BattleUnit target) {

@@ -5,8 +5,9 @@ using UnityEngine;
 namespace FinalInferno{
     [CreateAssetMenu(fileName = "IncreaseResistance", menuName = "ScriptableObject/SkillEffect/IncreaseResistance")]
     public class IncreaseResistance : SkillEffect {
+        public override string Description0 { get { return "Increase resistance by "; } }
         // value1 = defUp multiplier
-        public override string Description1{ get {return "x";} }
+        public override string Description1{ get {return "%";} }
         // value2 = buff duration
         public override string Description2{ get {return " turns";} }
         public override void Apply(BattleUnit source, BattleUnit target) {

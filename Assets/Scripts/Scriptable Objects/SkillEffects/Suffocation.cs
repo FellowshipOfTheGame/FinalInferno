@@ -5,6 +5,7 @@ using UnityEngine;
 namespace FinalInferno{
     [CreateAssetMenu(fileName = "Suffocation", menuName = "ScriptableObject/SkillEffect/Suffocation")]
     public class Suffocation : SkillEffect {
+        public override string Description0 { get { return "Deals "; } }
         // value1 = dmg multiplier
         public override string Description1{ get {return "x Damage";} }
         // value2 = DoT duration

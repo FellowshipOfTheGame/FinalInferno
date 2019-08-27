@@ -5,6 +5,7 @@ using UnityEngine;
 namespace FinalInferno{
     [CreateAssetMenu(fileName = "HermanTaxes", menuName = "ScriptableObject/SkillEffect/HermanTaxes")]
     public class HermanTaxes : SkillEffect {
+        public override string Description0 { get { return "Pay Herman by "; } }
         // value1 = strength of the buffs copied
         public override string Description1{ get {return "x";} }
         public override string Description2{ get {return null;} }

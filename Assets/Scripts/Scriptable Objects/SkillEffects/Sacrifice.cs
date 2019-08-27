@@ -5,6 +5,7 @@ using UnityEngine;
 namespace FinalInferno{
     [CreateAssetMenu(fileName = "Sacrifice", menuName = "ScriptableObject/SkillEffect/Sacrifice")]
     public class Sacrifice : SkillEffect {
+        public override string Description0 { get { return "Sacrify "; } }
         // value1 = percentage of max HP sacrificed
         public override string Description1{ get {return "% maxHP";} }
         // value2 = who receives the heal: 0 = target's allies; 1 = target's enemies;

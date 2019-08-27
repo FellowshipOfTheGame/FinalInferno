@@ -5,8 +5,9 @@ using UnityEngine;
 namespace FinalInferno{
     [CreateAssetMenu(fileName = "DecreasePower", menuName = "ScriptableObject/SkillEffect/DecreasePower")]
     public class DecreasePower : SkillEffect {
+        public override string Description0 { get { return "Decrease power by "; } }
         // value1 = dmgDown multiplier
-        public override string Description1{ get {return "x";} }
+        public override string Description1{ get {return "%";} }
         // value2 = debuff duration
         public override string Description2{ get {return " turns";} }
         public override void Apply(BattleUnit source, BattleUnit target) {

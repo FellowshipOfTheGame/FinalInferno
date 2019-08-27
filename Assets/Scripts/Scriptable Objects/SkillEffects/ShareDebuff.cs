@@ -5,6 +5,7 @@ using UnityEngine;
 namespace FinalInferno{
     [CreateAssetMenu(fileName = "ShareDebuff", menuName = "ScriptableObject/SkillEffect/ShareDebuff")]
     public class ShareDebuff : SkillEffect {
+        public override string Description0 { get { return "Share "; } }
         // value1 = index of status effect being shared
         public override string Description1{ get {return "\bEffect number " + value1;} }
         // value1 = modifier to apply to the effect
