@@ -151,7 +151,7 @@ namespace FinalInferno.UI.Battle.SkillMenu
             skillNameText.text = skill.name;
 
             costText.text = skill.cost.ToString();            
-            descriptionText.text = skill.description;
+            descriptionText.text = skill.shortDescription;
 
             elementImage.sprite = Icons.instance.elementSprites[(int) skill.attribute-1];
             targetTypeImage.sprite = Icons.instance.targetTypeSprites[(int) skill.target];
@@ -222,7 +222,7 @@ namespace FinalInferno.UI.Battle.SkillMenu
         /// <param name="effects"> Efeito selecionado. </param>
         public void UpdateEffectDescription(SkillEffect effect)
         {
-            // effectDescriptionText.text = effect.description;
+            effectDescriptionText.text = effect.FullDescription;
         }
 
     }

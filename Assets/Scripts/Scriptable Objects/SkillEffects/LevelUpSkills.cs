@@ -5,6 +5,7 @@ using UnityEngine;
 namespace FinalInferno{
     [CreateAssetMenu(fileName = "LevelUpSkills", menuName = "ScriptableObject/SkillEffect/LevelUpSkills")]
     public class LevelUpSkills : SkillEffect {
+        public override string Description0 { get { return "Level up skills "; } }
         // value1 = dmg multiplier
         public override string Description1{ get{ return "x Damage"; } }
         public override string Description2{ get{ return null; } }

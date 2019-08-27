@@ -5,6 +5,7 @@ using UnityEngine;
 namespace FinalInferno{
     [CreateAssetMenu(fileName = "Hide", menuName = "ScriptableObject/SkillEffect/Hide")]
     public class Hide : SkillEffect {
+        public override string Description0 { get { return "Decrease "; } }
         // value1 = Negative aggro each turn
         public override string Description1{ get {return " aggro";} }
         // value2 = status duration

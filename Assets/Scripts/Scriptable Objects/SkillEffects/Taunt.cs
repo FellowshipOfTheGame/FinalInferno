@@ -5,6 +5,7 @@ using UnityEngine;
 namespace FinalInferno{
     [CreateAssetMenu(fileName = "Taunt", menuName = "ScriptableObject/SkillEffect/Taunt")]
     public class Taunt : SkillEffect {
+        public override string Description0 { get { return "Gain "; } }
         // value1 = Aggro gain per turn
         public override string Description1{ get {return " aggro";} }
         // value2 = status duration

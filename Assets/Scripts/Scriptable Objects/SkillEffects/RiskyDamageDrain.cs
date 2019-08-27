@@ -5,6 +5,7 @@ using UnityEngine;
 namespace FinalInferno{
     [CreateAssetMenu(fileName = "RiskyDamageDrain", menuName = "ScriptableObject/SkillEffect/RiskyDamageDrain")]
     public class RiskyDamageDrain : SkillEffect {
+        public override string Description0 { get { return "Drain "; } }
         // value1 = dmgDrain multiplier
         public override string Description1{ get {return "x";} }
         // value2 = debuff duration

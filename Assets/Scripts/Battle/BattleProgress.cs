@@ -30,7 +30,6 @@ namespace FinalInferno{
                 newSkills = new List<PlayerSkill>[Party.Capacity];
                 for(int i = 0; i < Party.Capacity; i++){
                     heroes[i] = BattleProgress.heroes[i];
-                    Debug.Log(heroes[i]);
                     heroSkills[i] = new List<SkillInfo>();
                     skillReferences[i] = new List<PlayerSkill>();
                     newSkills[i] = new List<PlayerSkill>();
@@ -39,6 +38,7 @@ namespace FinalInferno{
                         if(BattleProgress.skillReferences[i][j].XpCumulative != BattleProgress.heroSkills[i][j].xpCumulative){
                             heroSkills[i].Add(BattleProgress.heroSkills[i][j]);
                             skillReferences[i].Add(BattleProgress.skillReferences[i][j]);
+                            Debug.Log("Skill atualizada: " + BattleProgress.skillReferences[i][j].name);
                         }
                     }
 

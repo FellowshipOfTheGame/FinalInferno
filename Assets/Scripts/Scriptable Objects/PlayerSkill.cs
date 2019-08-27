@@ -12,6 +12,8 @@ namespace FinalInferno{
         // TO DO: Revisão de tabelas (nao sabemos o nome definitivo da coluna)
         public long XpCumulative { get { return ( (table == null)? 0 : xp/*(xp +  ((level <= 1)? 0 : (table.Rows[level-2].Field<long>("XPAcumulada"))) ) */ ); } }
         public string description; //descricao da "skill" que aparecera para o jogador durante a batalha
+        [SerializeField] private string ShortDescription; //descricao mais curta da skill para casos onde a descricao completa é muito longa
+        public string shortDescription { get { return (ShortDescription != "" && ShortDescription != null) ? ShortDescription : description; } }
         public List<PlayerSkill> skillsToUpdate; //lista de skills que podem ser destravadas com o level dessa skill
         public List<PlayerSkill> prerequisiteSkills; //lista de skills que sao pre requisitos para essa skill destravar
         public List<int> prerequisiteSkillsLevel; //level que a skill de pre requisito precisa estar para essa skill destravar
