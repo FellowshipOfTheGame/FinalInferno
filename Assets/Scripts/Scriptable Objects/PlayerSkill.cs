@@ -88,6 +88,18 @@ namespace FinalInferno{
             return GiveExp(expValue);
         }
 
+        public bool GiveExp(List<Unit> units){
+            long expValue = 0;
+
+            foreach(Unit unit in units){
+                if(!unit.IsHero)
+                    expValue += unit.SkillExp;
+            }
+            expValue /= Mathf.Max(units.Count, 1);
+
+            return GiveExp(expValue);
+        }
+
         // checa se todos os pre requisitos foram cumpridos para essa skill ser destravada,
         // em caso positivo destrava a skill e retorna TRUE, caso contrario retorna FALSE
         public bool CheckUnlock(int heroLevel){

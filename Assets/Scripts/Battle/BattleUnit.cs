@@ -108,6 +108,8 @@ namespace FinalInferno{
                     case SkillType.PassiveOnSpawn:
                         // Aplica o efeito das skills relevantes na unidade
                         skill.Use(this, this);
+                        if(unit.IsHero)
+                            (skill as PlayerSkill).GiveExp(BattleManager.instance.units);
                         break;
                     case SkillType.PassiveOnStart:
                         // Adiciona a skill no callback de inicio de batalha
