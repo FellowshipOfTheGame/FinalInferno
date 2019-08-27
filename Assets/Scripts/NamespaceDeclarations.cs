@@ -71,6 +71,7 @@ namespace FinalInferno
      public struct SkillInfo{
         [SerializeField] public int level;
         [SerializeField] public long xp;
+        [SerializeField] public long xpToNextLevel;
         [SerializeField] public long xpCumulative;
         [SerializeField] public bool active;
         public SkillInfo(PlayerSkill skill){
@@ -79,11 +80,13 @@ namespace FinalInferno
                 xp = 0;
                 xpCumulative = 0;
                 active = false;
+                xpToNextLevel = 0;
             }else{
                 level = skill.Level;
                 xp = skill.xp;
                 xpCumulative = skill.XpCumulative;
                 active = skill.active;
+                xpToNextLevel = skill.xpNext;
             }
         }
     }

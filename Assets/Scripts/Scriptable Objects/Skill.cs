@@ -10,6 +10,7 @@ namespace FinalInferno{
         protected int level; //nivel da "skill"
         public virtual int Level { get{ return level; } set {} }
         public float cost; //tempo que a "skill" custara ao conjurador, em porcentagem da sua velocidade
+        public bool active = true; //sinaliza se a "skill" esta ativa ou nao
         public TargetType target; //tipo de alvo da "skill"
         public Element attribute; //elemento da "skill"
         public List<SkillEffectTuple> effects; //lista de efeitos que a "skill" causa e seus valores associados

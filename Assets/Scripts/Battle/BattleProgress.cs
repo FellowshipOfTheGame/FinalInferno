@@ -42,9 +42,9 @@ namespace FinalInferno{
                         }
                     }
 
-                    foreach(PlayerSkill skill in heroes[i].skills){
-                        if(skill.active && !BattleProgress.skillReferences[i].Contains(skill)){
-                            newSkills[i].Add(skill);
+                    for(int j = 0; j < BattleProgress.heroSkills.Length; j++){
+                        if(BattleProgress.skillReferences[i][j].active && !(BattleProgress.heroSkills[i][j].active)){
+                            newSkills[i].Add(BattleProgress.skillReferences[i][j]);
                         }
                     }
                 }
@@ -75,7 +75,7 @@ namespace FinalInferno{
         }
 
         private static void addSkill(PlayerSkill skill){
-            if(skill.active){
+            if(skill.active || skill.Type == SkillType.Active){
                 heroSkills[currentIndex].Add(new SkillInfo(skill));
                 skillReferences[currentIndex].Add(skill);
             }

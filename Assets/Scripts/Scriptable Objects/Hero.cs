@@ -64,17 +64,18 @@ namespace FinalInferno{
         //verifica se todas as skills que tem como pre requisito o level do heroi para destravar e tem todas as skills pai destravadas, podem ser destravdas
         public void UnlockSkills(){
             //foreach (PlayerSkill skill in skillsToUpdate)
-            for(int i = 0; i < skillsToUpdate.Count; i++){
+            foreach(PlayerSkill skill in skillsToUpdate.ToArray()){
                 
                 //se a skill for destrava esta eh removida da lista e suas skills filhas sao adicionadas
-                if(skillsToUpdate[i].CheckUnlock(level)){  
+                if(skill.CheckUnlock(level)){  
                     //skills filhas sao adicionadas a lista
-                    foreach(PlayerSkill child in skillsToUpdate[i].skillsToUpdate){
+                    foreach(PlayerSkill child in skill.skillsToUpdate){
                         skillsToUpdate.Add(child);
                     }
+                    // Ativa a skill que foi liberada
+                    skill.active = true;
                     
-                    skillsToUpdate.RemoveAt(i); //skill eh removida da lista
-                    i--;
+                    skillsToUpdate.Remove(skill); //skill eh removida da lista
                 }
             }
         }
@@ -85,6 +86,10 @@ namespace FinalInferno{
             }
 
             skillsToUpdate = new List<PlayerSkill>(InitialsSkills);
+            foreach(Skill skill in InitialsSkills){
+                skill.active = true;
+            }
+            
             level = 1;
             Debug.Log("Hero resetado");
         }

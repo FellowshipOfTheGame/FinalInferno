@@ -34,6 +34,7 @@ namespace FinalInferno{
                 table = DynamicTable.Create(skillTable);
                 Level = -1;
             }
+            active = true;
         }
 
         //atualiza o value dos efeitos, se for necessario.
@@ -64,6 +65,7 @@ namespace FinalInferno{
 
         public override void ResetSkill(){
             Level = 0;
+            active = true;
             Debug.Log("Skill resetada");
         }
         
