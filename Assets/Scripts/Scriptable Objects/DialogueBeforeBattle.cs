@@ -4,13 +4,14 @@ using UnityEngine;
 
 namespace FinalInferno{
     [CreateAssetMenu(fileName = "NewBattleDialogue", menuName = "ScriptableObject/DialogueSystem/DialogueBeforeBattle")]
-    public class DialogueBeforeBattle : Fog.Dialogue.Dialogue
+    public class DialogueBeforeBattle : DialogueEventTrigger
     {
         [SerializeField] private Sprite battleBG;
         [SerializeField] private AudioClip battleBGM;
         [SerializeField] private Enemy[] battleEnemies;
         
         public override void AfterDialogue(){
+            base.AfterDialogue();
             SceneLoader.LoadBattleScene(battleEnemies, battleBG, battleBGM);
         }
     }
