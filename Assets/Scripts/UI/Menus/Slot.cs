@@ -42,7 +42,7 @@ namespace FinalInferno.UI.Saves
                 InfosText.text = "Level " + info.level + "\n" + info.mapName;
 
                 for (int i = 0; i < 4; i++)
-                    HeroesImages[i].sprite = info.heroes[i].queueSprite;
+                    HeroesImages[i].sprite = info.heroes[i].QueueSprite;
             }
 
             slotNumber = number;

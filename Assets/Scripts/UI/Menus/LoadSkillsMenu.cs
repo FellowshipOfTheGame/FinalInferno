@@ -23,7 +23,7 @@ namespace FinalInferno.UI.SkillsMenu
             for (int i = 0; i < Party.Instance.characters.Count; i++)
             {
                 Hero hero = Party.Instance.characters[i].archetype;
-                HeroesImages[i].sprite = hero.portrait;
+                HeroesImages[i].sprite = hero.Portrait;
 
                 foreach (SkillsMenuSkillItem item in SkillsContents[i].transform.GetComponentsInChildren<SkillsMenuSkillItem>())
                 {

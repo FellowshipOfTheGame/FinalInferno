@@ -12,15 +12,17 @@ namespace FinalInferno{
         [SerializeField] private DynamicTable table = null;
         private DynamicTable Table {
             get {
-                if(table == null)
+                if(table == null && skillTable != null)
                     table = DynamicTable.Create(skillTable);
+                else
+                    table = null;
                 return table;
             }
         }
         public override int Level{
             get{ return level; }
             set{
-                if(value != level){
+                if(value != level && Table != null){
                     level = Mathf.Clamp(value, Table.Rows[0].Field<int>("Level"), Table.Rows[Table.Rows.Count-1].Field<int>("Level"));
                     LevelUp();
                 }
@@ -28,12 +30,18 @@ namespace FinalInferno{
         }
 
         void Awake(){
-            table = DynamicTable.Create(skillTable);
-            Level = -1;
+            if(Table != null){
+                table = DynamicTable.Create(skillTable);
+                Level = -1;
+            }
         }
 
         //atualiza o value dos efeitos, se for necessario.
         public void LevelUp(){
+            if(Table == null){
+                Debug.Log("This skill(" + name + ") has no table to load");
+                return;
+            }
             // int i = 0;
             // effects[i].effect.value1 = Table.Rows[level-1].Field<float>("Effect0Value0");
             // effects[i].effect.value2 = Table.Rows[level-1].Field<float>("Effect0Value1");

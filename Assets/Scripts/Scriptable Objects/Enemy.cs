@@ -16,12 +16,14 @@ namespace FinalInferno{
         public DamageType DamageFocus { get{ return damageFocus; } }
         public override Color DialogueColor { get { return color; } }
         public override string DialogueName { get { return (name == null)? "" : name; } }
-        [SerializeField] protected TextAsset enemyTable;
-        [SerializeField] protected DynamicTable table;
+        [SerializeField] protected TextAsset enemyTable = null;
+        [SerializeField] protected DynamicTable table = null;
         protected DynamicTable Table {
             get {
-                if(table == null)
+                if(table == null && enemyTable != null)
                     table = DynamicTable.Create(enemyTable);
+                else
+                    table = null;
                 return table;
             }
         }
@@ -30,21 +32,23 @@ namespace FinalInferno{
         public long BaseExp { get; protected set; } // Quanta exp o inimigo dá pra party ao final da batalha
 
         void Awake(){
-            table = DynamicTable.Create(enemyTable);
-            
-            name = Table.Rows[0].Field<string>("Rank");
-            level = Table.Rows[0].Field<int>("Level");
-            hpMax = Table.Rows[0].Field<int>("HP");
-            baseDmg = Table.Rows[0].Field<int>("Damage");
-            baseDef = Table.Rows[0].Field<int>("Defense");
-            baseMagicDef = Table.Rows[0].Field<int>("Resistance");
-            baseSpeed = Table.Rows[0].Field<int>("Speed");
-            BaseExp = Table.Rows[0].Field<int>("XP");
-            for(int i = 0; i < elementalResistance.Length; i++){
-                elementalResistance[i] = Table.Rows[0].Field<float>(System.Enum.GetNames(typeof(Element))[i] + "Resistance");
+            if(Table != null && Table.Rows.Count > 0){
+                table = DynamicTable.Create(enemyTable);
+                
+                name = Table.Rows[0].Field<string>("Rank");
+                level = Table.Rows[0].Field<int>("Level");
+                hpMax = Table.Rows[0].Field<int>("HP");
+                baseDmg = Table.Rows[0].Field<int>("Damage");
+                baseDef = Table.Rows[0].Field<int>("Defense");
+                baseMagicDef = Table.Rows[0].Field<int>("Resistance");
+                baseSpeed = Table.Rows[0].Field<int>("Speed");
+                BaseExp = Table.Rows[0].Field<int>("XP");
+                for(int i = 0; i < elementalResistance.Length; i++){
+                    elementalResistance[i] = Table.Rows[0].Field<float>(System.Enum.GetNames(typeof(Element))[i] + "Resistance");
+                }
+                color = Table.Rows[0].Field<Color>("Color");
+                curTableRow = 0;
             }
-            color = Table.Rows[0].Field<Color>("Color");
-            curTableRow = 0;
         }
 
         // Funcao atualmente desnecessaria
@@ -57,6 +61,11 @@ namespace FinalInferno{
 
         // Função que atualiza os status do inimigo para um novo level e seta o nível das skills
         public void LevelEnemy(int newLevel){
+            if(Table == null){
+                Debug.Log("This enemy(" + name + ") has no table to load");
+                return;
+            }
+
             level = Mathf.Clamp(newLevel, Table.Rows[0].Field<int>("Level"), Table.Rows[Table.Rows.Count-1].Field<int>("Level"));
 
             int i = -1;
@@ -123,7 +132,7 @@ namespace FinalInferno{
         public virtual Skill SkillDecision(float percentageNotDefense){
             float rand = Random.Range(0.0f, 1.0f); //gera um numero aleatorio entre 0 e 1
 
-            if(rand < percentageNotDefense);
+            if(rand < percentageNotDefense)
                 return AttackDecision(); //decide atacar
             
             return defenseSkill; //decide defender

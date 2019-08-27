@@ -7,7 +7,7 @@ using FinalInferno.UI.AII;
 
 namespace FinalInferno{
     //representa todos os buffs/debuffs, dano etc que essa unidade recebe
-    [RequireComponent(typeof(Animator))/*,RequireComponent(typeof(SpriteRenderer))*/,RequireComponent(typeof(UnityEngine.UI.Image)),RequireComponent(typeof(FinalInferno.UI.AII.UnitItem))]
+    [RequireComponent(typeof(Animator)),RequireComponent(typeof(SpriteRenderer)),RequireComponent(typeof(UnityEngine.UI.Image)),RequireComponent(typeof(FinalInferno.UI.AII.UnitItem))]
     public class BattleUnit : MonoBehaviour{
         public delegate void SkillDelegate(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f);
         public Unit unit; //referencia para os atributos base dessa unidade
@@ -47,6 +47,10 @@ namespace FinalInferno{
 
         private Animator animator;
         private Transform canvasTransform;
+        private Sprite portrait;
+        public Sprite Portrait { get => portrait; }
+        private Sprite queueSprite;
+        public Sprite QueueSprite { get => queueSprite; }
 
         public void Awake(){
             animator = GetComponent<Animator>();
@@ -61,14 +65,19 @@ namespace FinalInferno{
         }
 
         public void Configure(Unit unit){
+            this.unit = unit;
+            this.name = unit.name;
+
             // Seta configuracoes de renderizacao
-            GetComponent<SpriteRenderer>().sprite = unit.battleSprite;
-            animator.runtimeAnimatorController = unit.animator;
+            GetComponent<SpriteRenderer>().sprite = unit.BattleSprite;
+            GetComponent<UnityEngine.UI.Image>().sprite = GetComponent<SpriteRenderer>().sprite;
+            animator.runtimeAnimatorController = unit.Animator;
+            queueSprite = unit.QueueSprite;
+            portrait = unit.Portrait;
             GetComponent<FinalInferno.UI.AII.UnitItem>().unit = this;
 
 
             // Aplica os status base da unidade
-            this.unit = unit;
             MaxHP = unit.hpMax;
             if(unit.IsHero){
                 foreach(Character character in Party.Instance.characters){
@@ -199,7 +208,9 @@ namespace FinalInferno{
 
         public void ResetMaxHP(){ // Funcao que deve ser chamada no final da batalha
             MaxHP = unit.hpMax;
-            CurHP += hpOnHold;
+            if(curHP > 0){
+                CurHP += hpOnHold;
+            }
             hpOnHold = 0;
         }
 

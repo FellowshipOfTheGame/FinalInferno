@@ -96,7 +96,7 @@ namespace FinalInferno.UI.Battle.SkillMenu
             nameText.text = currentHero.name.ToUpper();
             nameText.color = currentHero.color;
 
-            heroImage.sprite = currentHero.portrait;
+            heroImage.sprite = currentUnit.Portrait;
 
             hpSlider.maxValue = currentHero.hpMax;
             hpSlider.value = currentUnit.CurHP;

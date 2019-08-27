@@ -46,7 +46,7 @@ namespace FinalInferno.UI.Battle.LifeMenu
             nameText.text = thisEnemy.name.ToUpper();
             nameText.color = thisEnemy.color;
 
-            enemyImage.sprite = thisEnemy.portrait;
+            enemyImage.sprite = thisUnit.Portrait;
 
             hpSlider.maxValue = thisEnemy.hpMax;
             hpSlider.value = thisUnit.CurHP;

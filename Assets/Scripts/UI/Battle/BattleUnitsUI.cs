@@ -52,26 +52,24 @@ namespace FinalInferno.UI.Battle
             }
             BattleUnit battleUnit = newUnit.GetComponentInChildren<BattleUnit>();
             battleUnit.GetComponent<SpriteRenderer>().sortingOrder = sortingLayer;
-            // TODO Isso não deve ser necessário se houver um animator atualizado
-            // Talvez também caiba alguma alteração aqui para comportar o caso especial do cérbero
-            battleUnit.GetComponent<SpriteRenderer>().sprite = unit.battleSprite;
-            battleUnit.GetComponent<Image>().sprite = unit.battleSprite;
+            battleUnit.Configure(unit);
+            Sprite unitSprite = battleUnit.GetComponent<SpriteRenderer>().sprite;
             AxisInteractableItem newItem = battleUnit.GetComponent<AxisInteractableItem>();
 
             AIIManager manager = (unit.IsHero)? heroesManager : enemiesManager;
             
             battleUnit.battleItem = battleUnit.GetComponent<UnitItem>();
 
-            battleUnit.battleItem.layout.preferredWidth = unit.battleSprite.bounds.size.x * 64;
-            battleUnit.battleItem.layout.preferredHeight = unit.battleSprite.bounds.size.y * 64;
+            
+            battleUnit.battleItem.layout.preferredWidth = unit.BoundsSizeX * 64;
+            battleUnit.battleItem.layout.preferredHeight = unit.BoundsSizeY * 64;
 
             newUnit.transform.rotation = Quaternion.identity;
-            battleUnit.Configure(unit);
 
             Image[] unitImages = newUnit.GetComponentsInChildren<Image>();
             unitImages[0].sprite = (unit.GetType() == typeof(Hero))? heroIndicator : enemyIndicator;
             unitImages[0].gameObject.SetActive(false);
-            unitImages[1].sprite = unit.battleSprite;
+            unitImages[1].sprite = unitSprite;
             
             // Ordena o item na lista
             if (manager.lastItem != null)
@@ -112,9 +110,7 @@ namespace FinalInferno.UI.Battle
 
                 newUnit.GetComponent<Image>().color = unit.unit.color;
 
-                newUnit.GetComponent<Animator>().runtimeAnimatorController = unit.unit.animator;
-
-                newUnit.GetComponent<SpriteRenderer>().sprite = unit.unit.battleSprite;
+                unit.Configure(unit.unit);
 
                 // Ordena o item na lista
                 AxisInteractableItem newItem = newUnit.GetComponent<AxisInteractableItem>();

@@ -52,14 +52,14 @@ namespace FinalInferno.UI.Battle.QueueMenu
         {
             // Coloca o personagem que se encontra em seu turno atual no local específico.
             currentTurnBattleImage = Instantiate(QueueObject, currentTurnContent).GetComponentsInChildren<Image>()[1];
-            currentTurnBattleImage.sprite = BattleManager.instance.currentUnit.unit.queueSprite;
+            currentTurnBattleImage.sprite = BattleManager.instance.currentUnit.QueueSprite;
 
             // Coloca o restante dos personagens na fila.
             BattleImages = new List<Image>();
             foreach (BattleUnit unit in BattleManager.instance.queue.list)
             {
                 Image newImage = Instantiate(QueueObject, content).GetComponentsInChildren<Image>()[1];
-                newImage.sprite = unit.unit.queueSprite;
+                newImage.sprite = unit.QueueSprite;
                 BattleImages.Add(newImage);
             }
         }
@@ -70,12 +70,12 @@ namespace FinalInferno.UI.Battle.QueueMenu
         public void UpdateQueue()
         {
             // Coloca o personagem que se encontra em seu turno atual no local específico.
-            currentTurnBattleImage.sprite = BattleManager.instance.currentUnit.unit.queueSprite;
+            currentTurnBattleImage.sprite = BattleManager.instance.currentUnit.QueueSprite;
 
             // Coloca o restante dos personagens na fila.
             int count = 0;
             foreach (BattleUnit unit in BattleManager.instance.queue.list)
-                BattleImages[count++].sprite = unit.unit.queueSprite;
+                BattleImages[count++].sprite = unit.QueueSprite;
 
             // Destroi os objetos que não estão mais sendo utilizados (personagens que morreram)
             for (int i = BattleImages.Count-1; i >= count ; i--)

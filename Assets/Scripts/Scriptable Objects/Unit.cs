@@ -21,9 +21,19 @@ namespace FinalInferno{
         public virtual bool IsHero{ get{ return false; } }
         public abstract long SkillExp {get;}
         //public StatsTable statsTable; //tabela com as statisticas de atributos da unidade baseadas no nivel da unidade
-        public RuntimeAnimatorController animator; //"animator" dessa unidade 
-        public Sprite portrait; //
-        public Sprite battleSprite;
-        public Sprite queueSprite;
+        [SerializeField]
+        protected RuntimeAnimatorController animator; //"animator" dessa unidade 
+        public virtual RuntimeAnimatorController Animator { get => animator; }
+        [SerializeField]
+        protected Sprite portrait; //
+        public virtual Sprite Portrait { get => portrait; }
+        [SerializeField]
+        protected Sprite battleSprite;
+        public virtual Sprite BattleSprite { get => battleSprite; }
+        public virtual float BoundsSizeX { get => BattleSprite.bounds.size.x; }
+        public virtual float BoundsSizeY { get => BattleSprite.bounds.size.y; }
+        [SerializeField]
+        protected Sprite queueSprite;
+        public virtual Sprite QueueSprite { get => queueSprite; }
     }
 }

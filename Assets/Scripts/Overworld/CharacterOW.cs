@@ -52,6 +52,7 @@ namespace FinalInferno{
                     if(!sr)
                         sr = gameObject.AddComponent<SpriteRenderer>();
                     sr.sprite = hero.spriteOW;
+                    sr.spriteSortPoint = SpriteSortPoint.Pivot;
                     Animator anim = GetComponent<Animator>();
                     if(!anim)
                         anim = gameObject.AddComponent<Animator>();

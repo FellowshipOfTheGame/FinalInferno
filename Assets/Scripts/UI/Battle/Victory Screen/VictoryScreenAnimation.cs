@@ -89,7 +89,7 @@ namespace FinalInferno.UI.Victory
 
         private IEnumerator HeroSkill(int heroIndex)
         {
-            heroesImages[heroIndex].sprite = changes.heroes[heroIndex].portrait;
+            heroesImages[heroIndex].sprite = changes.heroes[heroIndex].Portrait;
             heroesImages[heroIndex].GetComponent<Animator>().runtimeAnimatorController = HeroImageAnimator;
 
             AIIManager manager = skillsContents[heroIndex].GetComponent<AIIManager>();
