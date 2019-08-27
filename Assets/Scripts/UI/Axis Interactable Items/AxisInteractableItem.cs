@@ -36,14 +36,24 @@ namespace FinalInferno.UI.AII
         public event ItemAction OnAct;
 
         /// <summary>
-        /// Referência para o item da posição negativa (esquerda/baixo).
+        /// Referência para o item da esquerda.
         /// </summary>
-        public AxisInteractableItem negativeItem;
+        public AxisInteractableItem leftItem;
 
         /// <summary>
-        /// Referência para o item da posição positiva (direita/cima).
+        /// Referência para o item da direita.
         /// </summary>
-        public AxisInteractableItem positiveItem;
+        public AxisInteractableItem rightItem;
+
+        /// <summary>
+        /// Referência para o item de baixo.
+        /// </summary>
+        public AxisInteractableItem downItem;
+
+        /// <summary>
+        /// Referência para o item de cima.
+        /// </summary>
+        public AxisInteractableItem upItem;
 
         void Awake()
         {

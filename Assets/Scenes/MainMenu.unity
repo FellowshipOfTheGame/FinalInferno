@@ -519,7 +519,8 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: "Desenvolvimento (Development):\n\t\xCDtalo Tobler\n\tGabriel \"Graja\xFA\"
     Salgueiro\n\tGiuliano \"Psy\" Louren\xE7on.\nArte (Art):\n\tGabriel \"Lombardi\"
-    Arantes\n\tEleazar Fernando \"Sortudo\" Braga\n\tEike"
+    Arantes\n\tEleazar Fernando \"Sortudo\" Braga\n\tEike\nM\xFAsico (Musician):\n\tMateus
+    Paludetti"
 --- !u!222 &94291285
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -640,8 +641,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeReference: {fileID: 1811898574}
-  negativeItem: {fileID: 0}
-  positiveItem: {fileID: 1928150508}
+  leftItem: {fileID: 0}
+  rightItem: {fileID: 1928150508}
+  downItem: {fileID: 0}
+  upItem: {fileID: 0}
 --- !u!114 &141756977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1080,8 +1083,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeReference: {fileID: 708434181}
-  negativeItem: {fileID: 1897065573}
-  positiveItem: {fileID: 0}
+  leftItem: {fileID: 1897065573}
+  rightItem: {fileID: 0}
+  downItem: {fileID: 0}
+  upItem: {fileID: 0}
 --- !u!114 &301276136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1246,6 +1251,16 @@ PrefabInstance:
       propertyPath: positiveItem
       value: 
       objectReference: {fileID: 934508921}
+    - target: {fileID: 8311188756635331224, guid: 2e028e5f89b52484791dcd87ab16a9f6,
+        type: 3}
+      propertyPath: upItem
+      value: 
+      objectReference: {fileID: 934508921}
+    - target: {fileID: 8311188756635331224, guid: 2e028e5f89b52484791dcd87ab16a9f6,
+        type: 3}
+      propertyPath: downItem
+      value: 
+      objectReference: {fileID: 1092545468}
     - target: {fileID: 3782204377167408919, guid: 2e028e5f89b52484791dcd87ab16a9f6,
         type: 3}
       propertyPath: BCD
@@ -1732,8 +1747,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeReference: {fileID: 2042504632}
-  negativeItem: {fileID: 0}
-  positiveItem: {fileID: 1819115004}
+  leftItem: {fileID: 1819115004}
+  rightItem: {fileID: 0}
+  downItem: {fileID: 0}
+  upItem: {fileID: 647698526}
 --- !u!114 &586231215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2176,8 +2193,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeReference: {fileID: 1320359023}
-  negativeItem: {fileID: 1819115004}
-  positiveItem: {fileID: 1474424006}
+  leftItem: {fileID: 0}
+  rightItem: {fileID: 0}
+  downItem: {fileID: 1819115004}
+  upItem: {fileID: 1474424006}
 --- !u!114 &647698527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2850,8 +2869,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeReference: {fileID: 1086708192}
-  negativeItem: {fileID: 1474424006}
-  positiveItem: {fileID: 0}
+  leftItem: {fileID: 0}
+  rightItem: {fileID: 0}
+  downItem: {fileID: 1474424006}
+  upItem: {fileID: 0}
 --- !u!1 &895606734
 GameObject:
   m_ObjectHideFlags: 0
@@ -3113,9 +3134,7 @@ MonoBehaviour:
   currentItem: {fileID: 888352715}
   firstItem: {fileID: 888352715}
   lastItem: {fileID: 0}
-  orientation: 1
   activatorAxis: Submit
-  timeBetweenClicks: 0.1
   active: 0
   interactable: 0
 --- !u!1 &910693860
@@ -3200,9 +3219,7 @@ MonoBehaviour:
   currentItem: {fileID: 0}
   firstItem: {fileID: 1754240636}
   lastItem: {fileID: 0}
-  orientation: 1
   activatorAxis: Submit
-  timeBetweenClicks: 0.1
   active: 0
   interactable: 1
 --- !u!222 &910693864
@@ -3354,6 +3371,16 @@ PrefabInstance:
       propertyPath: positiveItem
       value: 
       objectReference: {fileID: 1152949720}
+    - target: {fileID: 8311188756635331224, guid: 2e028e5f89b52484791dcd87ab16a9f6,
+        type: 3}
+      propertyPath: upItem
+      value: 
+      objectReference: {fileID: 1152949720}
+    - target: {fileID: 8311188756635331224, guid: 2e028e5f89b52484791dcd87ab16a9f6,
+        type: 3}
+      propertyPath: downItem
+      value: 
+      objectReference: {fileID: 1817139965}
     - target: {fileID: 3782204377167408919, guid: 2e028e5f89b52484791dcd87ab16a9f6,
         type: 3}
       propertyPath: BCD
@@ -3726,6 +3753,16 @@ PrefabInstance:
     - target: {fileID: 8311188756635331224, guid: 2e028e5f89b52484791dcd87ab16a9f6,
         type: 3}
       propertyPath: negativeItem
+      value: 
+      objectReference: {fileID: 934508921}
+    - target: {fileID: 8311188756635331224, guid: 2e028e5f89b52484791dcd87ab16a9f6,
+        type: 3}
+      propertyPath: upItem
+      value: 
+      objectReference: {fileID: 1754240636}
+    - target: {fileID: 8311188756635331224, guid: 2e028e5f89b52484791dcd87ab16a9f6,
+        type: 3}
+      propertyPath: downItem
       value: 
       objectReference: {fileID: 934508921}
     - target: {fileID: 3782204377167408919, guid: 2e028e5f89b52484791dcd87ab16a9f6,
@@ -4619,6 +4656,11 @@ PrefabInstance:
       propertyPath: positiveItem
       value: 
       objectReference: {fileID: 1817139965}
+    - target: {fileID: 8311188756635331224, guid: 2e028e5f89b52484791dcd87ab16a9f6,
+        type: 3}
+      propertyPath: upItem
+      value: 
+      objectReference: {fileID: 1817139965}
     - target: {fileID: 3782204377167408919, guid: 2e028e5f89b52484791dcd87ab16a9f6,
         type: 3}
       propertyPath: BCD
@@ -4837,8 +4879,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeReference: {fileID: 1844122495}
-  negativeItem: {fileID: 647698526}
-  positiveItem: {fileID: 888352715}
+  leftItem: {fileID: 0}
+  rightItem: {fileID: 0}
+  downItem: {fileID: 647698526}
+  upItem: {fileID: 888352715}
 --- !u!114 &1474424007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4967,9 +5011,7 @@ MonoBehaviour:
   currentItem: {fileID: 0}
   firstItem: {fileID: 141756976}
   lastItem: {fileID: 0}
-  orientation: 0
   activatorAxis: Submit
-  timeBetweenClicks: 0.1
   active: 0
   interactable: 1
 --- !u!114 &1538375935
@@ -5405,8 +5447,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeReference: {fileID: 497821237}
-  negativeItem: {fileID: 586231214}
-  positiveItem: {fileID: 647698526}
+  leftItem: {fileID: 0}
+  rightItem: {fileID: 586231214}
+  downItem: {fileID: 0}
+  upItem: {fileID: 647698526}
 --- !u!114 &1819115005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5650,8 +5694,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeReference: {fileID: 1027197893}
-  negativeItem: {fileID: 0}
-  positiveItem: {fileID: 301276135}
+  leftItem: {fileID: 0}
+  rightItem: {fileID: 301276135}
+  downItem: {fileID: 0}
+  upItem: {fileID: 0}
 --- !u!114 &1897065574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5867,8 +5913,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeReference: {fileID: 265671066}
-  negativeItem: {fileID: 141756976}
-  positiveItem: {fileID: 0}
+  leftItem: {fileID: 141756976}
+  rightItem: {fileID: 0}
+  downItem: {fileID: 0}
+  upItem: {fileID: 0}
 --- !u!114 &1928150509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5977,9 +6025,7 @@ MonoBehaviour:
   currentItem: {fileID: 0}
   firstItem: {fileID: 1897065573}
   lastItem: {fileID: 0}
-  orientation: 0
   activatorAxis: Submit
-  timeBetweenClicks: 0.1
   active: 0
   interactable: 0
 --- !u!114 &1958569975
@@ -6598,6 +6644,11 @@ PrefabInstance:
     - target: {fileID: 8311188756635331224, guid: 2e028e5f89b52484791dcd87ab16a9f6,
         type: 3}
       propertyPath: negativeItem
+      value: 
+      objectReference: {fileID: 1152949720}
+    - target: {fileID: 8311188756635331224, guid: 2e028e5f89b52484791dcd87ab16a9f6,
+        type: 3}
+      propertyPath: downItem
       value: 
       objectReference: {fileID: 1152949720}
     - target: {fileID: 3782204377167408919, guid: 2e028e5f89b52484791dcd87ab16a9f6,

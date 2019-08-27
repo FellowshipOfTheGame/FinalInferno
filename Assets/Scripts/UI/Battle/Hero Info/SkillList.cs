@@ -128,8 +128,8 @@ namespace FinalInferno.UI.Battle.SkillMenu
                     AxisInteractableItem newItem = newSkill.GetComponent<AxisInteractableItem>();
                     if (lastItem != null)
                     {
-                        newItem.positiveItem = lastItem;
-                        lastItem.negativeItem = newItem;
+                        newItem.upItem = lastItem;
+                        lastItem.downItem = newItem;
                     }
                     else
                     {
@@ -205,8 +205,8 @@ namespace FinalInferno.UI.Battle.SkillMenu
                 AxisInteractableItem newItem = newEffect.GetComponent<AxisInteractableItem>();
                 if (lastItem != null)
                 {
-                    newItem.negativeItem = lastItem;
-                    lastItem.positiveItem = newItem;
+                    newItem.leftItem = lastItem;
+                    lastItem.rightItem = newItem;
                 }
                 else
                 {

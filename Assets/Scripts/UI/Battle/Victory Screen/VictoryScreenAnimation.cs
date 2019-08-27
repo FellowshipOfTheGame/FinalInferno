@@ -105,8 +105,8 @@ namespace FinalInferno.UI.Victory
                 AxisInteractableItem newItem = newSkill.GetComponent<AxisInteractableItem>();
                 if (lastItem != null)
                 {
-                    newItem.positiveItem = lastItem;
-                    lastItem.negativeItem = newItem;
+                    newItem.upItem = lastItem;
+                    lastItem.downItem = newItem;
                 }
                 else
                 {
@@ -126,8 +126,8 @@ namespace FinalInferno.UI.Victory
                 AxisInteractableItem newItem = newSkill.GetComponent<AxisInteractableItem>();
                 if (lastItem != null)
                 {
-                    newItem.positiveItem = lastItem;
-                    lastItem.negativeItem = newItem;
+                    newItem.upItem = lastItem;
+                    lastItem.downItem = newItem;
                 }
                 else
                 {

@@ -74,8 +74,8 @@ namespace FinalInferno.UI.Battle
             // Ordena o item na lista
             if (manager.lastItem != null)
             {
-                newItem.positiveItem = manager.lastItem;
-                manager.lastItem.negativeItem = newItem;
+                newItem.upItem = manager.lastItem;
+                manager.lastItem.downItem = newItem;
             }
             else
             {
@@ -116,8 +116,8 @@ namespace FinalInferno.UI.Battle
                 AxisInteractableItem newItem = newUnit.GetComponent<AxisInteractableItem>();
                 if (lastItem != null)
                 {
-                    newItem.positiveItem = lastItem;
-                    lastItem.negativeItem = newItem;
+                    newItem.upItem = lastItem;
+                    lastItem.downItem = newItem;
                 }
                 else
                 {
@@ -144,16 +144,16 @@ namespace FinalInferno.UI.Battle
                     AxisInteractableItem item = units[i].GetComponent<AxisInteractableItem>();
 
                     if (item == manager.firstItem)
-                        manager.firstItem = item.negativeItem;
+                        manager.firstItem = item.downItem;
 
-                    if (item.negativeItem != null)
-                        item.negativeItem.positiveItem = item.positiveItem;
+                    if (item.downItem != null)
+                        item.downItem.upItem = item.upItem;
 
-                    if (item.positiveItem != null)
-                        item.positiveItem.negativeItem = item.negativeItem;
+                    if (item.upItem != null)
+                        item.upItem.downItem = item.downItem;
 
                     if (item == manager.lastItem)
-                        manager.lastItem = item.positiveItem;
+                        manager.lastItem = item.upItem;
                 }
             }
         }
@@ -180,20 +180,20 @@ namespace FinalInferno.UI.Battle
 
             while(nextItem != manager.lastItem && (System.Array.IndexOf(units, nextItem.GetComponent<UnitItem>()) < System.Array.IndexOf(units, thisItem.GetComponent<UnitItem>())) ){
                 previousItem = nextItem;
-                nextItem = nextItem.negativeItem;
+                nextItem = nextItem.downItem;
             }
 
-            thisItem.positiveItem = previousItem;
+            thisItem.upItem = previousItem;
             if(previousItem == null){
                 manager.firstItem = thisItem;
             }else{
-                previousItem.negativeItem = thisItem;
+                previousItem.downItem = thisItem;
             }
-            thisItem.negativeItem = nextItem;
+            thisItem.downItem = nextItem;
             if(nextItem == null){
                 manager.lastItem = thisItem;
             }else{
-                thisItem.negativeItem = nextItem;
+                thisItem.downItem = nextItem;
             }
         }
 
