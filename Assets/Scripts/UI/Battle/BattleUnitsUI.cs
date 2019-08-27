@@ -68,7 +68,6 @@ namespace FinalInferno.UI.Battle
 
             Image[] unitImages = newUnit.GetComponentsInChildren<Image>();
             unitImages[0].sprite = (unit.GetType() == typeof(Hero))? heroIndicator : enemyIndicator;
-            unitImages[0].gameObject.SetActive(false);
             unitImages[1].sprite = unitSprite;
             
             // Ordena o item na lista
