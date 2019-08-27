@@ -7,6 +7,7 @@ namespace FinalInferno{
         public override StatusType Type { get{ return StatusType.Buff; } }
         public override float Value { get{ return defValue; } }
         private int defValue;
+        private int resValue;
 
         public Defending(BattleUnit trgt, float value, int dur = 1) {
             if(dur < 0)
@@ -16,6 +17,7 @@ namespace FinalInferno{
             Target = trgt;
             Source = Target;
             defValue = Mathf.Max(Mathf.FloorToInt(trgt.curDef * value), 1);
+            resValue = Mathf.Max(Mathf.FloorToInt(trgt.curMagicDef * value), 1);
             Failed = !Apply();
         }
 
@@ -23,12 +25,14 @@ namespace FinalInferno{
             if(!base.Apply(force))
                 return false;
             Target.curDef += defValue;
+            Target.curMagicDef += resValue;
             Target.GetComponent<Animator>().SetBool("IsDefending", true);
             return true;
         }
 
         public override void Remove() {
             Target.curDef -= defValue;
+            Target.curMagicDef -= resValue;
             Target.GetComponent<Animator>().SetBool("IsDefending", false);
             base.Remove();
         }
