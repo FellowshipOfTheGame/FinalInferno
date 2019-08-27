@@ -21,6 +21,7 @@ namespace FinalInferno{
             //SaveLoader.NewGame();
             SceneManager.LoadScene(demoScene.name);
         #else
+            Cursor.visible = false;
             SceneManager.LoadScene("MainMenu");
         #endif
         }
