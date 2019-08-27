@@ -44,12 +44,16 @@ namespace FinalInferno{
 
         public static void SaveGame(){
             // Falha em salvar o jogo caso não esteja numa situação na qual isso é permitido
-            if(!CanSaveGame)
+            if(!CanSaveGame){
+                Debug.Log("Attempted to save the game when it shouldn't be possible");
                 return;
+            }
             // Avalia a situação atual do jogo e salva todas as informações necessarias
+            Debug.Log("Saving game...");
             saveFile.Save();
             // Escreve as informações no arquivo de save
             dataSaver.SaveData(saveFile);
+            Debug.Log("Game saved (...probably)");
         }
 
         public static void LoadGame(){
@@ -64,6 +68,9 @@ namespace FinalInferno{
         }
 
         public static void NewGame(){
+            // Failsage para garantir que saveFile não seja null
+            if(saveFile == null)
+                saveFile = new SaveFile();
             // Reseta todas as informações do jogo para um estado inicial
             ResetGame();
 
