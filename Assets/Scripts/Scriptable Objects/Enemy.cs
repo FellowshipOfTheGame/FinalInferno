@@ -22,7 +22,7 @@ namespace FinalInferno{
             get {
                 if(table == null && enemyTable != null)
                     table = DynamicTable.Create(enemyTable);
-                else
+                else if (enemyTable == null)
                     table = null;
                 return table;
             }
