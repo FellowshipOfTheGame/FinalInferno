@@ -17,8 +17,12 @@ namespace FinalInferno.UI.FSM
         /// <param name="controller"> O controlador da máquina de estados. </param>
         public override void Act(StateController controller)
         {
+            // Revive todos os heroes para garantir que as funções de callback serão chamadas propriamente
             // Reseta o maxhp das unidades, desfazendo aumentos e reduções causados por skills
             foreach(BattleUnit battleUnit in BattleManager.instance.battleUnits){
+                if(battleUnit.unit.IsHero && battleUnit.CurHP <= 0){
+                    BattleManager.instance.Revive(battleUnit);
+                }
                 battleUnit.ResetMaxHP();
             }
 
