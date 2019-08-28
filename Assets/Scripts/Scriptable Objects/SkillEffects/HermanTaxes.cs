@@ -17,10 +17,9 @@ namespace FinalInferno{
             }
         }
 
-        public void PayHerman(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f){
-            if(targets.Count < 1) return;
+        public void PayHerman(BattleUnit target, List<BattleUnit> units, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f){
+            if(units.Count < 1) return;
 
-            BattleUnit target = targets[0];
             BattleUnit herman = null;
             foreach(BattleUnit unit in BattleManager.instance.GetTeam(target)){
                 if(unit.unit.name == "Herman"){

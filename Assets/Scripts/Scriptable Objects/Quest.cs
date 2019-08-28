@@ -7,6 +7,7 @@ namespace FinalInferno{
     public class Quest : ScriptableObject
     {
         public bool active;
+        // O número máximo de eventos permitidos é 62 por medida de segurança
         public QuestDictionary events;
         public void Awake(){
             ResetQuest();

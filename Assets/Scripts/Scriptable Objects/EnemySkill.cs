@@ -14,7 +14,7 @@ namespace FinalInferno{
             get {
                 if(table == null && skillTable != null)
                     table = DynamicTable.Create(skillTable);
-                else
+                else if (skillTable == null)
                     table = null;
                 return table;
             }

@@ -97,14 +97,25 @@ namespace FinalInferno{
         }
 
         public void Kill(BattleUnit unit){
-            if (currentUnit == unit)
-                UpdateQueue(1000);
-            queue.Remove(unit);
-            unitsUI.RemoveUnit(unit);
             // chama a funcao de callback de morte da unidade
             if(unit.OnDeath != null){
                 unit.OnDeath(unit, new List<BattleUnit>(battleUnits));
                 unit.OnDeath = null;
+            }
+            // Se a unidade ainda estiver morta atualiza a fila
+            if(unit.CurHP <= 0){
+                queue.Remove(unit);
+                unitsUI.RemoveUnit(unit);
+
+                // Se a unidade que morreu era a unidade atual, anda a fila
+                if (currentUnit == unit){
+                    currentUnit = null;
+                    if (CheckEnd() == VictoryType.Nobody)
+                    {
+                        UpdateTurn();
+                        UpdateLives();
+                    }
+                }
             }
         }
 
@@ -155,8 +166,16 @@ namespace FinalInferno{
             return team;
         }
 
-        public List<BattleUnit> GetTeam(BattleUnit battleUnit){
-            return GetTeam(GetUnitType(battleUnit.unit));
+        public List<BattleUnit> GetTeam(BattleUnit battleUnit, bool countDead = false, bool deadOnly = false){
+            return GetTeam(GetUnitType(battleUnit.unit), countDead, deadOnly);
+        }
+
+        public List<BattleUnit> GetEnemies(BattleUnit battleUnit, bool countDead = false, bool deadOnly = false){
+            return GetTeam(((battleUnit.unit.IsHero)? UnitType.Enemy : UnitType.Hero), countDead, deadOnly);
+        }
+
+        public List<BattleUnit> GetEnemies(UnitType type, bool countDead = false, bool deadOnly = false){
+            return GetTeam(((type == UnitType.Enemy)? UnitType.Hero : UnitType.Enemy), countDead, deadOnly);
         }
 
         public BattleUnit GetBattleUnit(Unit unit){

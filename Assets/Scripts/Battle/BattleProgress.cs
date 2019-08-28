@@ -42,7 +42,7 @@ namespace FinalInferno{
                         }
                     }
 
-                    for(int j = 0; j < BattleProgress.heroSkills.Length; j++){
+                    for(int j = 0; j < BattleProgress.heroSkills[i].Count; j++){
                         if(BattleProgress.skillReferences[i][j].active && !(BattleProgress.heroSkills[i][j].active)){
                             newSkills[i].Add(BattleProgress.skillReferences[i][j]);
                         }

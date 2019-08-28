@@ -54,10 +54,7 @@ namespace FinalInferno{
                 saves[Slot].heroSkills[i].skills = new SkillInfo[Party.Instance.characters[i].archetype.skills.Count];
                 
                 for (int j = 0; j < Party.Instance.characters[i].archetype.skills.Count; j++){
-                    //TO DO: Esse construtor deve funcionar mas não foi testado ainda
-                    //saves[Slot].heroSkills[i].skills[j] = new SkillInfo((PlayerSkill)Party.Instance.characters[i].archetype.skills[j]);
-                    saves[Slot].heroSkills[i].skills[j].xpCumulative = ((PlayerSkill)Party.Instance.characters[i].archetype.skills[j]).XpCumulative;
-                    saves[Slot].heroSkills[i].skills[j].active = ((PlayerSkill)Party.Instance.characters[i].archetype.skills[j]).active;
+                    saves[Slot].heroSkills[i].skills[j] = new SkillInfo((PlayerSkill)Party.Instance.characters[i].archetype.skills[j]);
                 }
             }
 
@@ -71,8 +68,10 @@ namespace FinalInferno{
                 System.Array.Sort(qinfo.flagsNames);
 
                 qinfo.flagsTrue = 0;
+                ulong bitValue = 1;
                 for(int j = 0; j < quests[i].events.Count; j++){
-                    qinfo.flagsTrue = qinfo.flagsTrue & ((int)Mathf.Pow(2, j) * ((quests[i].events[qinfo.flagsNames[j]])? 1 : 0));
+                    qinfo.flagsTrue = qinfo.flagsTrue | (bitValue * ((quests[i].events[qinfo.flagsNames[j]])? (ulong)1 : (ulong)0));
+                    bitValue =  bitValue << 1;
                 }
                 saves[Slot].quest[i] = qinfo;
             }
@@ -93,8 +92,10 @@ namespace FinalInferno{
             Party.Instance.activeQuests.Clear();
             foreach(QuestInfo questInfo in saves[Slot].quest){
                 Quest quest = AssetManager.LoadAsset<Quest>(questInfo.name);
+                ulong bitValue = 1;
                 for(int i = 0; i < quest.events.Count; i++){
-                    quest.events[questInfo.flagsNames[i]] = (questInfo.flagsTrue & (int)Mathf.Pow(2, i)) == (int)Mathf.Pow(2, i);
+                    quest.events[questInfo.flagsNames[i]] = (questInfo.flagsTrue & bitValue) != 0;
+                    bitValue =  bitValue << 1;
                 }
                 Party.Instance.activeQuests.Add(quest);
             }

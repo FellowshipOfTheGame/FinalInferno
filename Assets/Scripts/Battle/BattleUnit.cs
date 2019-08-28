@@ -226,18 +226,27 @@ namespace FinalInferno{
                 
             effects.Add(statusEffect);
             statusEffect.Source.aggro += statusEffect.AggroOnApply;
+            
             List<BattleUnit> targets = new List<BattleUnit>();
             targets.Add(statusEffect.Target);
+            targets.Add(statusEffect.Source);
+            foreach(BattleUnit unit in BattleManager.instance.queue.list){
+                if(!targets.Contains(unit))
+                    targets.Add(unit);
+            }
+
             switch(statusEffect.Type){
                 case StatusType.Buff:
                     // chama o callback de receber buff com o status effect atual (value1 = index do status effect novo)
-                    if(OnReceiveBuff != null && !ignoreCallback)
-                        OnReceiveBuff(statusEffect.Source, targets, true, effects.IndexOf(statusEffect));
+                    if(OnReceiveBuff != null && !ignoreCallback){
+                        OnReceiveBuff(statusEffect.Target, targets, true, effects.IndexOf(statusEffect));
+                    }
                     break;
                 case StatusType.Debuff:
                     // chama o callback de receber debuff com o status effect atual (value1 = index do status effect novo)
-                    if(OnReceiveDebuff != null && !ignoreCallback)
-                        OnReceiveDebuff(statusEffect.Source, targets, true, effects.IndexOf(statusEffect));
+                    if(OnReceiveDebuff != null && !ignoreCallback){
+                        OnReceiveDebuff(statusEffect.Target, targets, true, effects.IndexOf(statusEffect));
+                    }
                     break;
             }
         }

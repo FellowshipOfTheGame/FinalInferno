@@ -95,7 +95,7 @@ namespace FinalInferno
     public struct QuestInfo{
         [SerializeField] public string name;
         [SerializeField] public string[] flagsNames;
-        [SerializeField] public int flagsTrue;
+        [SerializeField] public ulong flagsTrue;
     }
 
     [System.Serializable]

@@ -23,9 +23,37 @@ namespace FinalInferno.UI.FSM
         public override bool Decide(StateController controller)
         {
             bool desiredType = false;
+            bool hasValidTargets = true;
+            TargetType currentSkillType = BattleSkillManager.GetSkillType();
+
             foreach (TargetType type in desiredTypes)
             {
-                desiredType = desiredType || (BattleSkillManager.GetSkillType() == type);
+                hasValidTargets = false;
+                if(currentSkillType == type){
+                    switch(type){
+                        case TargetType.AllAllies:
+                        case TargetType.AllEnemies:
+                        case TargetType.MultiAlly:
+                        case TargetType.MultiEnemy:
+                        case TargetType.Self:
+                        case TargetType.SingleAlly:
+                        case TargetType.SingleEnemy:
+                            hasValidTargets = true;
+                            break;
+                        case TargetType.DeadAllies:
+                        case TargetType.DeadAlly:
+                            List<BattleUnit> deadAllies = BattleManager.instance.GetTeam(BattleManager.instance.currentUnit, true, true);
+                            hasValidTargets = deadAllies.Count > 0;
+                            break;
+                        case TargetType.DeadEnemies:
+                        case TargetType.DeadEnemy:
+                            List<BattleUnit> deadEnemies = BattleManager.instance.GetEnemies(BattleManager.instance.currentUnit, true, true);
+                            hasValidTargets = deadEnemies.Count > 0;
+                            break;
+                    }
+                }
+
+                desiredType = desiredType || hasValidTargets;
             }
             return desiredType;
         }
