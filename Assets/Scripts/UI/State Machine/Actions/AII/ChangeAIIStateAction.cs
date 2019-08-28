@@ -24,7 +24,7 @@ namespace FinalInferno.UI.FSM
         public override void Act(StateController controller)
         {
             if (manager.active)
-                manager.Desactive();
+                manager.Deactive();
             else
                 manager.Active();
         }
