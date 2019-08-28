@@ -18,8 +18,13 @@ namespace FinalInferno{
 
 		// Update is called once per frame
 		void Update() {
-			input.x = Input.GetAxisRaw("Horizontal");
-			input.y = Input.GetAxisRaw("Vertical");
+			if (!PauseMenu.isPaused)
+			{
+				input.x = Input.GetAxisRaw("Horizontal");
+				input.y = Input.GetAxisRaw("Vertical");
+			}
+			else
+				input = Vector2.zero;
 		}
 }
 }
