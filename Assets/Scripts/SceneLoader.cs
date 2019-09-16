@@ -161,6 +161,7 @@ namespace FinalInferno{
             SceneManager.sceneLoaded -= OnBattleLoad;
         }
         public static void OnMapLoad(Scene map, LoadSceneMode mode) {
+            // To Do: Animação da tela preta sumindo
             if(updatePositions){
                 // Desativa o calculo de encontrar batalhas para "teleportar" os personagens
                 RECalculator.encountersEnabled = false;

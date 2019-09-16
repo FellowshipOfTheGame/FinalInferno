@@ -158,7 +158,7 @@ namespace FinalInferno{
                     team.Add(currentUnit);
 
                 foreach(BattleUnit unit in battleUnits){
-                    if(unit != currentUnit && (GetUnitType(unit.unit) == type) && ( !deadOnly ||(deadOnly && unit.CurHP < 0)))
+                    if(unit != currentUnit && (GetUnitType(unit.unit) == type) && ( !deadOnly ||(deadOnly && unit.CurHP <= 0)))
                         team.Add(unit);
                 }
             }

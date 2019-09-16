@@ -18,7 +18,6 @@ namespace FinalInferno.UI.FSM
         /// <param name="controller"> O controlador da máquina de estados. </param>
         public override void Act(StateController controller)
         {
-            // TO DO: setar o trigger do animator ao inves de chamar a funcao diretamente
             BattleManager.instance.currentUnit.SkillSelected();
         }
 
