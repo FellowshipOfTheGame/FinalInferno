@@ -45,8 +45,8 @@ namespace FinalInferno.UI.SkillsMenu
                     }
                     else
                     {
-                        lastItem.negativeItem = newItem;
-                        newItem.positiveItem = lastItem;
+                        lastItem.downItem = newItem;
+                        newItem.upItem = lastItem;
                     }
                     lastItem = newItem;
                 }

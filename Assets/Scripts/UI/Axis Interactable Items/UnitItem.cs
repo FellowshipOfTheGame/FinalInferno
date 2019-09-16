@@ -52,9 +52,9 @@ namespace FinalInferno.UI.AII
         public void ShowThisAsATarget()
         {
             if(showingTarget)
-                item.DisableGO();
+                item.DisableReference();
             else
-                item.EnableGO();
+                item.EnableReference();
             showingTarget = !showingTarget;
         }
 

@@ -27,7 +27,7 @@ namespace FinalInferno.UI.AII
 
         private void DisableSkills()
         {
-            skillsManager.Desactive();
+            skillsManager.Deactive();
         }
 
         private void UpdateSkillsContentPosition()

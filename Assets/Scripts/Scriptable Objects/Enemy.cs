@@ -159,6 +159,7 @@ namespace FinalInferno{
             BattleSkillManager.currentSkill = skill;
             BattleSkillManager.currentUser = BattleManager.instance.currentUnit;
             BattleSkillManager.currentTargets = GetTargets(skill.target);
+            Console.Instance.UpdateConsole();
         }
 
         protected virtual List<BattleUnit> GetTargets(TargetType type){

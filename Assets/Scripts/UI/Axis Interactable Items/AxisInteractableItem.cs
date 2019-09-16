@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace FinalInferno.UI.AII
 {
@@ -13,7 +14,7 @@ namespace FinalInferno.UI.AII
         /// <summary>
         /// Referência que se mostra visível quando o item está ativo.
         /// </summary>
-        [SerializeField] private GameObject activeReference;
+        [SerializeField] private UIBehaviour activeReference;
 
         /// <summary>
         /// Base para as ações do item.
@@ -36,19 +37,29 @@ namespace FinalInferno.UI.AII
         public event ItemAction OnAct;
 
         /// <summary>
-        /// Referência para o item da posição negativa (esquerda/baixo).
+        /// Referência para o item da esquerda.
         /// </summary>
-        public AxisInteractableItem negativeItem;
+        public AxisInteractableItem leftItem;
 
         /// <summary>
-        /// Referência para o item da posição positiva (direita/cima).
+        /// Referência para o item da direita.
         /// </summary>
-        public AxisInteractableItem positiveItem;
+        public AxisInteractableItem rightItem;
+
+        /// <summary>
+        /// Referência para o item de baixo.
+        /// </summary>
+        public AxisInteractableItem downItem;
+
+        /// <summary>
+        /// Referência para o item de cima.
+        /// </summary>
+        public AxisInteractableItem upItem;
 
         void Awake()
         {
-            OnEnter += EnableGO;
-            OnExit += DisableGO;
+            OnEnter += EnableReference;
+            OnExit += DisableReference;
         }
 
         /// <summary>
@@ -78,17 +89,17 @@ namespace FinalInferno.UI.AII
         /// <summary>
         /// Ativa a referência do item.
         /// </summary>
-        public void EnableGO()
+        public void EnableReference()
         {
-            activeReference.SetActive(true);
+            activeReference.enabled = true;
         }
 
         /// <summary>
         /// Desativa a referência do item.
         /// </summary>
-        public void DisableGO()
+        public void DisableReference()
         {
-            activeReference.SetActive(false);
+            activeReference.enabled = false;
         }
     }
 
