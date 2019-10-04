@@ -260,20 +260,22 @@ namespace FinalInferno
 
     [System.Serializable]
     public class ChangeRule{
-        [SerializeField] public Quest quest = null;
-        [SerializeField] public string eventFlag = "";
-        [SerializeField] public string animationFlag = "";
+        public Quest quest = null;
+        public string eventFlag = "";
+        public string animationFlag = "";
+        public bool newValue = false;
     }
     #if UNITY_EDITOR
     // PropertyDrawer necessario para exibir e editar ChangeRule no editor da unity
     [CustomPropertyDrawer(typeof(ChangeRule))]
     public class ChangeRuleDrawer : PropertyDrawer{
 
-        private SerializedProperty quest, eventFlag, animationFlag;
+        private SerializedProperty quest, eventFlag, animationFlag, toggleValue;
         private int index, index2;
+        private bool toggle;
         private Rect questRect;
         private Rect eventRect;
-        private Rect animRect; 
+        private Rect animRect;
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label){
             SerializedProperty _quest = property.FindPropertyRelative("quest");
@@ -291,6 +293,8 @@ namespace FinalInferno
             quest = property.FindPropertyRelative("quest");
             eventFlag = property.FindPropertyRelative("eventFlag");
             animationFlag = property.FindPropertyRelative("animationFlag");
+            toggleValue = property.FindPropertyRelative("newValue");
+            toggle = toggleValue.boolValue;
             // Cria o campo para a referencia de quest
             EditorGUI.PropertyField(questRect, quest);
             // Se a referencia de quest for nula, pula o campo de eventFlag, copiando a posicao do campo de quest
@@ -317,7 +321,8 @@ namespace FinalInferno
                 animationFlag.stringValue = "";
                 anim = null;
             }else{
-                animRect = new Rect(new Vector2(eventRect.x, eventRect.y + eventRect.height), new Vector2(position.size.x, EditorGUIUtility.singleLineHeight));
+                animRect = new Rect(new Vector2(eventRect.x, eventRect.y + eventRect.height), new Vector2(position.size.x - 40, EditorGUIUtility.singleLineHeight));
+                Rect toggleRect = new Rect(new Vector2(animRect.xMax, animRect.position.y), new Vector2(position.size.x - animRect.size.x, EditorGUIUtility.singleLineHeight));
                 AnimatorControllerParameter[] allParamaters = anim.parameters;
                 List<string> parameters = new List<string>();
                 foreach(AnimatorControllerParameter param in allParamaters){
@@ -327,6 +332,8 @@ namespace FinalInferno
                 index2 = Mathf.Clamp(parameters.IndexOf(animationFlag.stringValue), 0, Mathf.Max(parameters.Count-1, 0));
                 index2 = EditorGUI.Popup(animRect, "Animation flag", index2, parameters.ToArray());
                 animationFlag.stringValue = (parameters.Count > 0)? parameters[index2] : "";
+                toggle = EditorGUI.Toggle(toggleRect, "", toggle);
+                toggleValue.boolValue = toggle;
                 anim = null;
             }
 
