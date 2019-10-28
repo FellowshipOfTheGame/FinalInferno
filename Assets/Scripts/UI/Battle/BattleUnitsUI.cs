@@ -66,9 +66,9 @@ namespace FinalInferno.UI.Battle
 
             newUnit.transform.rotation = Quaternion.identity;
 
-            Image[] unitImages = newUnit.GetComponentsInChildren<Image>();
-            unitImages[0].sprite = (unit.GetType() == typeof(Hero))? heroIndicator : enemyIndicator;
-            unitImages[1].sprite = unitSprite;
+            // Image[] unitImages = newUnit.GetComponentsInChildren<Image>();
+            // unitImages[0].sprite = (unit.GetType() == typeof(Hero))? heroIndicator : enemyIndicator;
+            // unitImages[1].sprite = unitSprite;
             
             // Ordena o item na lista
             if (manager.lastItem != null)
