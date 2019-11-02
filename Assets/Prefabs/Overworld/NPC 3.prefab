@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 8421942436192390834}
   - component: {fileID: 5306880481323571678}
   - component: {fileID: 7132723220423496021}
+  - component: {fileID: 6698256218099554501}
+  - component: {fileID: 3831282140027601807}
   m_Layer: 10
   m_Name: NPC 3
   m_TagString: Untagged
@@ -147,3 +149,36 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.6465342, y: 0.5647578}
   m_EdgeRadius: 0
+--- !u!95 &6698256218099554501
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217886418326592680}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3831282140027601807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217886418326592680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d255e984bd7e6b42bb6425734eae59c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 6698256218099554501}
+  changeRules: []

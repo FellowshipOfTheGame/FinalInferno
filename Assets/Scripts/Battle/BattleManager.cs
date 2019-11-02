@@ -122,6 +122,10 @@ namespace FinalInferno{
         public void Revive(BattleUnit unit){
             queue.Enqueue(unit, 0);
             unitsUI.ReinsertUnit(unit);
+            
+            queueUI.UpdateQueue();
+            foreach (UnitsLives lives in unitsLives)
+                lives.UpdateLives();
         }
 
         public UnitType GetUnitType(Unit unit){
@@ -146,19 +150,13 @@ namespace FinalInferno{
             List<BattleUnit> team = new List<BattleUnit>();
 
             if(!countDead){
-                if (currentUnit != null && GetUnitType(currentUnit.unit) == type)
-                    team.Add(currentUnit);
-
-                foreach(BattleUnit unit in queue.list){
-                    if (unit != currentUnit && GetUnitType(unit.unit) == type)
+                foreach(BattleUnit unit in battleUnits){
+                    if (unit.CurHP > 0 && GetUnitType(unit.unit) == type)
                         team.Add(unit);
                 }
             }else{
-                if (currentUnit != null && GetUnitType(currentUnit.unit) == type && !deadOnly)
-                    team.Add(currentUnit);
-
                 foreach(BattleUnit unit in battleUnits){
-                    if(unit != currentUnit && (GetUnitType(unit.unit) == type) && ( !deadOnly ||(deadOnly && unit.CurHP <= 0)))
+                    if((GetUnitType(unit.unit) == type) && ( !deadOnly ||(deadOnly && unit.CurHP <= 0)))
                         team.Add(unit);
                 }
             }
