@@ -40,7 +40,8 @@ namespace FinalInferno
 
     public enum UnitType {
         Hero,
-        Enemy
+        Enemy,
+        Null
     }
 
     public enum SkillType {
