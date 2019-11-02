@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using FinalInferno.UI.Battle;
+using FinalInferno.UI.AII;
 
 namespace FinalInferno.UI.FSM
 {
@@ -24,6 +25,10 @@ namespace FinalInferno.UI.FSM
                 BattleManager.instance.UpdateQueue(Mathf.FloorToInt(currentUnit.unit.attackSkill.cost * (1.0f - currentUnit.ActionCostReduction) ));
             }else{
                 BattleManager.instance.UpdateQueue(Mathf.FloorToInt(BattleSkillManager.currentSkill.cost * (1.0f - currentUnit.ActionCostReduction) ));
+            }
+
+            foreach(BattleUnit battleUnit in BattleSkillManager.currentTargets){
+                battleUnit.GetComponent<AxisInteractableItem>().DisableReference();
             }
 
             BattleSkillManager.currentTargets.Clear();
