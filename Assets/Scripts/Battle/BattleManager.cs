@@ -93,6 +93,9 @@ namespace FinalInferno{
         }
 
         public UnitType Turn(){
+            if(currentUnit == null){
+                return UnitType.Null;
+            }
             return GetUnitType(currentUnit.unit);
         }
 

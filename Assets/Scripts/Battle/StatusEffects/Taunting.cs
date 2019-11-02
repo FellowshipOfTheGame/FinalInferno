@@ -24,13 +24,13 @@ namespace FinalInferno{
             target.AddEffect(new Taunting(Source, target, aggroIncrease * modifier, Duration), true);
         }
 
-        public override bool Apply(bool force = false){
-            if(!base.Apply())
-                return false;
+        // public override bool Apply(bool force = false){
+        //     if(!base.Apply())
+        //         return false;
 
-            Target.aggro += aggroIncrease;
-            return true;
-        }
+        //     Target.aggro += aggroIncrease;
+        //     return true;
+        // }
 
         public override void Amplify(float modifier){
             aggroIncrease *= modifier;

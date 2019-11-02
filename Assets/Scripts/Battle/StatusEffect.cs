@@ -38,7 +38,7 @@ namespace FinalInferno{
                 return false;
 
             TurnsLeft--;
-            if (TurnsLeft <= 0){
+            if (TurnsLeft < 0){
                 Remove();
                 return true;
             }

@@ -12,7 +12,7 @@ namespace FinalInferno.UI.Battle.QueueMenu
     {
         void Update()
         {
-            skill = BattleManager.instance.currentUnit.unit.attackSkill;
+            skill = (BattleManager.instance.currentUnit != null)? BattleManager.instance.currentUnit.unit.attackSkill : null;
         }
     }
 

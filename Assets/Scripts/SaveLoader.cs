@@ -57,14 +57,18 @@ namespace FinalInferno{
         }
 
         public static void LoadGame(){
-            ResetGame();
-            // Teoricamente não é necessario reler o arquivo, mas faremos isso como medida de segurança,
-            // assim evitamos que a variavel saveFile tenha sido alterada de alguma maneira em runtime
-            saveFile = dataSaver.LoadData();
-            // Aplica a situação do save slot atual nos arquivos do jogo
-            saveFile.Load();
-            // Carrega a nova cena
-            SceneLoader.LoadOWScene(Party.Instance.currentMap, true);
+            if(!saveFile.HasCheckPoint){
+                NewGame();
+            }else{
+                ResetGame();
+                // Teoricamente não é necessario reler o arquivo, mas faremos isso como medida de segurança,
+                // assim evitamos que a variavel saveFile tenha sido alterada de alguma maneira em runtime
+                saveFile = dataSaver.LoadData();
+                // Aplica a situação do save slot atual nos arquivos do jogo
+                saveFile.Load();
+                // Carrega a nova cena
+                SceneLoader.LoadOWScene(Party.Instance.currentMap, true);
+            }
         }
 
         public static void NewGame(){

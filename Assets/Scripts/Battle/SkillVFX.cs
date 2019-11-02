@@ -56,9 +56,13 @@ namespace FinalInferno{
             if(counter >= nTargets){
                 counter = 0;
                 nTargets = -1;
-                BattleSkillManager.currentTargets.Clear();
-                BattleSkillManager.currentSkill = null;
-                BattleSkillManager.currentUser = null;
+
+                // Chama o callback de quando se usa a skill
+                // O usuario atual esta salvo como current user e os alvos da ultima skill estao em currenttargets
+                if(BattleSkillManager.currentUser.OnSkillUsed != null){
+                    BattleSkillManager.currentUser.OnSkillUsed(BattleSkillManager.currentUser, BattleManager.instance.battleUnits);
+                }
+
                 FinalInferno.UI.FSM.AnimationEnded.EndAnimation();
             }
 
