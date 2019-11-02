@@ -74,14 +74,15 @@ namespace FinalInferno.UI.Battle.QueueMenu
 
             // Coloca o restante dos personagens na fila.
             int count = 0;
-            foreach (BattleUnit unit in BattleManager.instance.queue.list)
+            foreach (BattleUnit unit in BattleManager.instance.queue.list){
+                BattleImages[count].transform.parent.gameObject.SetActive(true);
                 BattleImages[count++].sprite = unit.QueueSprite;
+            }
 
             // Destroi os objetos que não estão mais sendo utilizados (personagens que morreram)
             for (int i = BattleImages.Count-1; i >= count ; i--)
             {
-                Destroy(BattleImages[i].transform.parent.gameObject);
-                BattleImages.RemoveAt(i);
+                BattleImages[i].transform.parent.gameObject.SetActive(false);
             }
         }
 
