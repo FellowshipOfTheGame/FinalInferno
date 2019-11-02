@@ -22,7 +22,7 @@ namespace FinalInferno.UI.Battle
                 ((PlayerSkill)currentSkill).GiveExp(currentTargets);
             }
 
-            Transform canvasTransform = GameObject.FindObjectOfType<Canvas>().transform;
+            // Transform canvasTransform = GameObject.FindObjectOfType<Canvas>().transform;
             foreach(BattleUnit target in currentTargets){
                 GameObject obj = GameObject.Instantiate(currentSkill.VisualEffect, target.transform.parent);
                 obj.GetComponent<SpriteRenderer>().sortingOrder = target.GetComponent<SpriteRenderer>().sortingOrder + 1;

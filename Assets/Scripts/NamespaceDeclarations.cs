@@ -48,16 +48,17 @@ namespace FinalInferno
         PassiveOnSpawn,
         PassiveOnStart,
         PassiveOnEnd,
-       // PassiveOnGiveBuff,
         PassiveOnReceiveBuff,
         PassiveOnReceiveBuffAll,
-        //PassiveOnGiveDebuff,
         PassiveOnReceiveDebuff,
         PassiveOnReceiveDebuffAll,
-        //PassiveOnDealDamage,
         PassiveOnTakeDamage,
         PassiveOnTakeDamageAll,
-        PassiveOnDeath
+        PassiveOnDeath,
+        //PassiveOnGiveBuff,
+        //PassiveOnGiveDebuff,
+        //PassiveOnDealDamage,
+        PassiveOnSkillUsed
     }
 
     public enum StatusType {

@@ -43,6 +43,7 @@ namespace FinalInferno{
         public SkillDelegate OnReceiveDebuff = null;
         public SkillDelegate OnTakeDamage = null;
         public SkillDelegate OnDeath = null;
+        public SkillDelegate OnSkillUsed = null;
         public UnitItem battleItem;
 
         private Animator animator;
@@ -138,6 +139,10 @@ namespace FinalInferno{
                     case SkillType.PassiveOnDeath:
                         // Adiciona a skill no callback de morte
                         OnDeath += skill.Use;
+                        break;
+                    case SkillType.PassiveOnSkillUsed:
+                        // Adiciona a skill no callback de morte
+                        OnSkillUsed += skill.Use;
                         break;
                 }
             }
@@ -252,7 +257,7 @@ namespace FinalInferno{
         }
 
         public void SkillSelected(){
-            BattleManager.instance.UpdateQueue(Mathf.FloorToInt(BattleSkillManager.currentSkill.cost * (1.0f - ActionCostReduction) ));
+            // BattleManager.instance.UpdateQueue(Mathf.FloorToInt(BattleSkillManager.currentSkill.cost * (1.0f - ActionCostReduction) ));
             if(BattleSkillManager.currentSkill != unit.defenseSkill){
                 animator.SetTrigger("UseSkill");
             }else{
