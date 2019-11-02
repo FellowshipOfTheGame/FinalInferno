@@ -114,6 +114,15 @@ namespace FinalInferno.UI.AII
             active = false;
         }
 
+        public void ClearItems(){
+            if(currentItem != null){
+                currentItem.Exit();
+            }
+            currentItem = null;
+            firstItem = null;
+            lastItem = null;
+        }
+
         /// <summary>
         /// Muda o item atualmente ativado para o próximo.
         /// </summary>

@@ -85,6 +85,50 @@ namespace FinalInferno.UI.Battle
             return battleUnit;
         }
 
+        public void UpdateTargetList(){
+            AIIManager manager;
+            Unit currentUnit = BattleSkillManager.currentUser.unit;
+            Skill currentSkill = BattleSkillManager.currentSkill;
+            bool useOwnManager = (currentSkill.target == TargetType.AllAllies ||
+                                  currentSkill.target == TargetType.DeadAllies ||
+                                  currentSkill.target == TargetType.DeadAlly ||
+                                  currentSkill.target == TargetType.MultiAlly ||
+                                  currentSkill.target == TargetType.Self ||
+                                  currentSkill.target == TargetType.SingleAlly);
+            manager = ((currentUnit.IsHero && useOwnManager) || (!currentUnit.IsHero && !useOwnManager))? heroesManager : enemiesManager;
+
+            // Obtem a lista de possiveis alvos para a skill em questão
+            List<BattleUnit> targetUnits;
+            if(useOwnManager){
+                bool checkDead = (currentSkill.target == TargetType.DeadAllies) || (currentSkill.target == TargetType.DeadAlly) || (currentSkill.target == TargetType.AllAllies);
+                bool deadOnly = (currentSkill.target == TargetType.DeadAllies)  || (currentSkill.target == TargetType.DeadAlly);
+                targetUnits = BattleManager.instance.GetTeam(BattleSkillManager.currentUser, checkDead, deadOnly);
+            }else{
+                bool checkDead = (currentSkill.target == TargetType.DeadEnemies) || (currentSkill.target == TargetType.DeadEnemy) || (currentSkill.target == TargetType.AllEnemies);
+                bool deadOnly = (currentSkill.target == TargetType.DeadEnemies)  || (currentSkill.target == TargetType.DeadEnemy);
+                targetUnits = BattleManager.instance.GetEnemies(BattleSkillManager.currentUser, checkDead, deadOnly);
+            }
+
+            manager.ClearItems();
+            foreach(BattleUnit unit in targetUnits){
+                AxisInteractableItem newItem = unit.GetComponent<AxisInteractableItem>();
+                newItem.upItem = null;
+                newItem.downItem = null;
+
+                // Ordena o item na lista
+                if (manager.lastItem != null)
+                {
+                    newItem.upItem = manager.lastItem;
+                    manager.lastItem.downItem = newItem;
+                }
+                else
+                {
+                    manager.firstItem = newItem;
+                }
+                manager.lastItem = newItem;
+            }
+        }
+
         private void LoadTeam(UnitType team, Transform content, AIIManager manager)
         {
             List<BattleUnit> units = BattleManager.instance.GetTeam(team);
