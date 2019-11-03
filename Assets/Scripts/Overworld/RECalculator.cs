@@ -30,6 +30,8 @@ namespace FinalInferno{
         private float curEncounterRate;
         private Vector2 lastPosition;
 
+        [SerializeField] private FinalInferno.UI.FSM.ButtonClickDecision decision;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -100,7 +102,12 @@ namespace FinalInferno{
                     enemy.LevelEnemy(enemyLevel);
                 }
 
-                SceneLoader.LoadBattleScene(enemies, BattleBG, BattleBGM);
+                FinalInferno.UI.ChangeSceneUI.isBattle = true;
+                FinalInferno.UI.ChangeSceneUI.battleBG = BattleBG;
+                FinalInferno.UI.ChangeSceneUI.battleBGM = BattleBGM;
+                FinalInferno.UI.ChangeSceneUI.battleEnemies = (Enemy[])enemies.Clone();
+
+                decision.Click();
             } else {
                 // Caso nao encontre uma batalha
                 //Debug.Log("Did not find random encounter");

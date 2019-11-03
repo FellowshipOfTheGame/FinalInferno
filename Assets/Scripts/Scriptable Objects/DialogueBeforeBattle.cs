@@ -9,10 +9,17 @@ namespace FinalInferno{
         [SerializeField] private Sprite battleBG;
         [SerializeField] private AudioClip battleBGM;
         [SerializeField] private Enemy[] battleEnemies;
+        [SerializeField] private FinalInferno.UI.FSM.ButtonClickDecision decision;
         
         public override void AfterDialogue(){
             base.AfterDialogue();
-            SceneLoader.LoadBattleScene(battleEnemies, battleBG, battleBGM);
+
+            FinalInferno.UI.ChangeSceneUI.isBattle = true;
+            FinalInferno.UI.ChangeSceneUI.battleBG = battleBG;
+            FinalInferno.UI.ChangeSceneUI.battleBGM = battleBGM;
+            FinalInferno.UI.ChangeSceneUI.battleEnemies = (Enemy[])battleEnemies.Clone();
+
+            decision.Click();
         }
     }
 }
