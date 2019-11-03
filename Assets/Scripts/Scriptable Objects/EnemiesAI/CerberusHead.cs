@@ -8,7 +8,7 @@ namespace FinalInferno{
     [CreateAssetMenu(fileName = "CerberusHead", menuName = "ScriptableObject/Enemy/CerberusHead", order = 4)]
     public class CerberusHead : Enemy{
         private const int maxHeads = 3;
-        private static int heads = 0;
+        public static int heads = 0;
         private static int hellFireCD = 0;
         private static List<GameObject> battleUnits = new List<GameObject>();
 

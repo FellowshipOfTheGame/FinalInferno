@@ -7,6 +7,10 @@ namespace FinalInferno.UI
 
     public class ChangeSceneUI : MonoBehaviour
     {
+        private Animator Anim;
+
+        [SerializeField] private LoadEnemiesPreview loadEnemiesPreview;
+
         public static bool isBattle = false;
 
         public static Sprite battleBG;
@@ -18,17 +22,33 @@ namespace FinalInferno.UI
         public static bool isCutscene;
         public static Fog.Dialogue.Dialogue selectedDialogue;
 
-        private void ChangeSceneOnTrigger()
+        private void Awake()
         {
-            if (isBattle)
-            {
-                isBattle = false;
-                SceneLoader.LoadBattleScene(battleEnemies, battleBG, battleBGM);
-            }
-            else if (!isCutscene)
+            Anim = GetComponent<Animator>();
+        }
+
+        private void Update()
+        {
+            Anim.SetBool("IsBattle", isBattle);
+        }
+
+        private void ChangeMap()
+        {
+            if (!isCutscene)
                 SceneLoader.LoadOWScene(sceneName, true, positionOnLoad);
             else
                 SceneLoader.LoadCustscene(sceneName, selectedDialogue);
+        }
+
+        private void LoadPreview()
+        {
+            loadEnemiesPreview.LoadPreview();
+        }
+
+        private void StartBattle()
+        {
+            isBattle = false;
+            SceneLoader.LoadBattleScene(battleEnemies, battleBG, battleBGM);
         }
 
         private void MainMenu()
