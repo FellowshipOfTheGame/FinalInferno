@@ -25,13 +25,13 @@ namespace FinalInferno{
             target.AddEffect(new Hiding(Source, target, negativeAggro * modifier, Duration), true);
         }
 
-        public override bool Apply(bool force = false){
-            if(!base.Apply())
-                return false;
+        // public override bool Apply(bool force = false){
+        //     if(!base.Apply())
+        //         return false;
 
-            Target.aggro = -negativeAggro;
-            return true;
-        }
+        //     Target.aggro = -negativeAggro;
+        //     return true;
+        // }
 
         public override void Amplify(float modifier){
             negativeAggro *= modifier;

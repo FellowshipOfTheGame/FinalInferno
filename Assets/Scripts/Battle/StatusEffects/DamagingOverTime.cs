@@ -32,8 +32,12 @@ namespace FinalInferno{
         }
 
         public override bool Update(){
-            Target.TakeDamage(dmgPerTurn, 1.0f, DamageType.None, element);
-            return base.Update();
+            if(base.Update()){
+                return true;
+            }else{
+                Target.TakeDamage(dmgPerTurn, 1.0f, DamageType.None, element);
+                return false;
+            }
         }
     }
 }

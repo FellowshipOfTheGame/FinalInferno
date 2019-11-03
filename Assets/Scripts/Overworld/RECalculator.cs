@@ -30,6 +30,8 @@ namespace FinalInferno{
         private float curEncounterRate;
         private Vector2 lastPosition;
 
+        [SerializeField] private FinalInferno.UI.FSM.ButtonClickDecision decision;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -67,14 +69,22 @@ namespace FinalInferno{
                 Enemy[] enemies= new Enemy[Random.Range(minNumberEnemies, maxNumberEnemies+1)];
                 //Debug.Log("About to fight " + enemies.Length + " enemies");
                 for(int i = 0; i < enemies.Length; i++){
-                    float roll = Random.Range(0f, 100.0f);
-                    for(int j = 0; j < Table.Rows.Count; j++){
+                    enemies[i] = null;
+
+                    for(int j = 0; j < Table.Rows.Count && enemies[i] == null; j++){
+                        float roll = Random.Range(0f, 100.0f);
                         //Debug.Log("Rolled a " + roll + " for " + (Enemy)Table.Rows[j]["Enemy"] + " with chance of " + (float)Table.Rows[j]["Chance"]);
                         if(roll <= Table.Rows[j].Field<float>("Chance")){
                             enemies[i] = Table.Rows[j].Field<Enemy>("Enemy");
-                            break;
                         }
                     }
+
+                    if(enemies[i] == null){
+                        // O ultimo inimigo da tabela deve sempre ser o inimigo mais comum com 100% de encounter
+                        // Essa condicional é uma precaução para garantir que isso aconteça
+                        enemies[i] = Table.Rows[Table.Rows.Count-1].Field<Enemy>("Enemy");
+                    }
+
                     //Debug.Log(enemies[i]);
                 }
                 // Calcula o level dos inimigos
@@ -85,12 +95,19 @@ namespace FinalInferno{
                 int enemyLevel = questParam * 10;
                 if(Mathf.Clamp(Party.Instance.level - (questParam * 10), 0, 10) >= 5)
                 enemyLevel += 5;
+
+                // Cria um hashshet para ignorar repetições e aplica o nível dos inimigos
                 //Debug.Log("Nível dos inimigos calculado(unclamped) = " + enemyLevel);
                 foreach(Enemy enemy in (new HashSet<Enemy>(enemies)) ){
                     enemy.LevelEnemy(enemyLevel);
                 }
 
-                SceneLoader.LoadBattleScene(enemies, BattleBG, BattleBGM);
+                FinalInferno.UI.ChangeSceneUI.isBattle = true;
+                FinalInferno.UI.ChangeSceneUI.battleBG = BattleBG;
+                FinalInferno.UI.ChangeSceneUI.battleBGM = BattleBGM;
+                FinalInferno.UI.ChangeSceneUI.battleEnemies = (Enemy[])enemies.Clone();
+
+                decision.Click();
             } else {
                 // Caso nao encontre uma batalha
                 //Debug.Log("Did not find random encounter");

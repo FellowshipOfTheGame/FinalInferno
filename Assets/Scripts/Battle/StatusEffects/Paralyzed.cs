@@ -6,13 +6,13 @@ namespace FinalInferno{
     public class Paralyzed : StatusEffect {
         public override StatusType Type { get{ return StatusType.Undesirable; } }
         public override float Value { get{ return Duration; } }
-        public override int TurnsLeft { protected set{ base.TurnsLeft = value; } get{ return (base.TurnsLeft > int.MinValue)? base.TurnsLeft-1 : 99;} }
+        public override int TurnsLeft { protected set{ base.TurnsLeft = value; } get{ return (base.TurnsLeft > int.MinValue)? base.TurnsLeft : 99;} }
 
         public Paralyzed(BattleUnit src, BattleUnit trgt, float value, int dur = 1) {
             if(dur < 0)
                 dur = int.MinValue;
             Duration = dur;
-            TurnsLeft = Duration + 1;
+            TurnsLeft = Duration;
             Target = trgt;
             Source = src;
             rollValue = value;

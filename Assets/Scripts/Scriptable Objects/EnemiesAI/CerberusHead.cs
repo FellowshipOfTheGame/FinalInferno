@@ -8,7 +8,7 @@ namespace FinalInferno{
     [CreateAssetMenu(fileName = "CerberusHead", menuName = "ScriptableObject/Enemy/CerberusHead", order = 4)]
     public class CerberusHead : Enemy{
         private const int maxHeads = 3;
-        private static int heads = 0;
+        public static int heads = 0;
         private static int hellFireCD = 0;
         private static List<GameObject> battleUnits = new List<GameObject>();
 
@@ -84,22 +84,30 @@ namespace FinalInferno{
                             }
                         }
                         //TO DO fazer os sprites ficarem na mesma posição
-                        //battleUnits[0].transform.position = battleUnits[1].transform.position;
-                        //RectTransform aux = battleUnits[0].GetComponent<UnityEngine.UI.Image>().rectTransform;
+                        // battleUnits[0].transform.position = battleUnits[1].transform.position;
+                        // RectTransform aux = battleUnits[0].GetComponent<UnityEngine.UI.Image>().rectTransform;
                         //RectTransform parent = aux.parent as RectTransform;
-                        //RectTransform middleParent = battleUnits[1].GetComponent<UnityEngine.UI.Image>().rectTransform.parent as RectTransform;
+                        RectTransform middleParent = battleUnits[1].GetComponent<UnityEngine.UI.Image>().rectTransform.parent as RectTransform;
                         //Camera camera = FindObjectOfType<Camera>();
                         
                         //aux.position = camera.WorldToScreenPoint(camera.ScreenToWorldPoint(battleUnits[1].GetComponent<UnityEngine.UI.Image>().rectTransform.position));
-                        //aux.SetParent(middleParent);
+                        // aux.SetParent(middleParent);
+                        // aux.position = Vector3.zero;
                         //aux.anchoredPosition = battleUnits[1].GetComponent<UnityEngine.UI.Image>().rectTransform.anchoredPosition;
                         //aux.SetParent(parent, true);
 
-                        //battleUnits[2].transform.position = battleUnits[1].transform.position;
-                        //aux = battleUnits[2].GetComponent<UnityEngine.UI.Image>().rectTransform;
+                        // battleUnits[2].transform.position = battleUnits[1].transform.position;
+                        // aux = battleUnits[2].GetComponent<UnityEngine.UI.Image>().rectTransform;
                         //parent = aux.parent as RectTransform;
                         //aux.position = camera.WorldToScreenPoint(camera.ScreenToWorldPoint(battleUnits[1].GetComponent<UnityEngine.UI.Image>().rectTransform.position));
-                        //aux.SetParent(middleParent);
+                        foreach (GameObject aux in battleUnits)
+                        {
+                            RectTransform auxRect = aux.GetComponent<UnityEngine.UI.Image>().rectTransform;
+                            auxRect.SetParent(middleParent);
+                            auxRect.localPosition = Vector3.zero;
+                        }
+                        // aux.SetParent(middleParent);
+                        // aux.position = Vector3.zero;
                         //aux.anchoredPosition = battleUnits[1].GetComponent<UnityEngine.UI.Image>().rectTransform.anchoredPosition;
                         //aux.SetParent(parent, true);
                         return battleSpriteFrontHead;

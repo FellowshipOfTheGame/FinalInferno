@@ -11,6 +11,7 @@ namespace FinalInferno{
         [SerializeField] private Vector2 positionOnLoad = new Vector2(0,0);
         [SerializeField] private bool isCutscene = false;
         [SerializeField] private List<DialogueEntry> dialogues = new List<DialogueEntry>();
+        [SerializeField] private FinalInferno.UI.FSM.ButtonClickDecision decision;
         
         protected override void TriggerAction(Fog.Dialogue.Agent agent){
             if(sceneName != null && sceneName != ""){
@@ -27,10 +28,12 @@ namespace FinalInferno{
                     }
                 }
                 //Debug.Log("Loading scene: " + sceneName + "; dialogue = " + selectedDialogue);
-                if(!isCutscene)
-                    SceneLoader.LoadOWScene(sceneName, true, positionOnLoad);
-                else
-                    SceneLoader.LoadCustscene(sceneName, selectedDialogue);
+                FinalInferno.UI.ChangeSceneUI.sceneName = sceneName;
+                FinalInferno.UI.ChangeSceneUI.positionOnLoad = positionOnLoad;
+                FinalInferno.UI.ChangeSceneUI.isCutscene = isCutscene;
+                FinalInferno.UI.ChangeSceneUI.selectedDialogue = selectedDialogue;
+
+                decision.Click();
             }
         }
     }
@@ -65,8 +68,10 @@ namespace FinalInferno{
             if(sceneObj != null){
                 SerializedProperty positionOnLoad = serializedObject.FindProperty("positionOnLoad");
                 SerializedProperty isCutscene = serializedObject.FindProperty("isCutscene");
+                SerializedProperty decision = serializedObject.FindProperty("decision");
                 EditorGUILayout.PropertyField(positionOnLoad);
                 EditorGUILayout.PropertyField(isCutscene);
+                EditorGUILayout.PropertyField(decision);
                 if(isCutscene.boolValue){
                     SerializedProperty dialogues = serializedObject.FindProperty("dialogues");
                     EditorGUILayout.PropertyField(dialogues, includeChildren:true);
