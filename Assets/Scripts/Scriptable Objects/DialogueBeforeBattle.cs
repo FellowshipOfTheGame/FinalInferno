@@ -13,6 +13,7 @@ namespace FinalInferno{
         
         public override void AfterDialogue(){
             base.AfterDialogue();
+            CharacterOW.PartyCanMove = false;
 
             FinalInferno.UI.ChangeSceneUI.isBattle = true;
             FinalInferno.UI.ChangeSceneUI.battleBG = battleBG;

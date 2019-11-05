@@ -49,7 +49,7 @@ namespace Fog.Dialogue
 		private Queue<DialogueLine> dialogueLines = new Queue<DialogueLine>();
 		private DialogueLine currentLine;
 		private bool isLineDone;
-		private bool isActive;
+		public bool IsActive { get; private set; }
 		private Agent agent;
 		private FinalInferno.Movable movingAgent;
 		private string titleAux;
@@ -69,13 +69,13 @@ namespace Fog.Dialogue
 				else if(instance != this)
 					Destroy(this);
 			}
-			isActive = false;
+			IsActive = false;
 			agent = null;
 			movingAgent = null;
 		}
 
 		void Update(){
-			if(isActive){
+			if(IsActive){
 				if(Input.GetButtonDown("Interact")){
 					if(isLineDone)
 						StartCoroutine("NextLine");
@@ -111,7 +111,7 @@ namespace Fog.Dialogue
 
 			OnDialogueStart?.Invoke();
 
-			if(isActive)
+			if(IsActive)
 				EndDialogue();
 
             if(pauseDuringDialogue)
@@ -120,7 +120,7 @@ namespace Fog.Dialogue
 			foreach(var line in dialogue.lines)
 				dialogueLines.Enqueue(line);
 
-			isActive = true;
+			IsActive = true;
 			dialogueBox.gameObject.SetActive(true);
 			StartCoroutine("NextLine");
 		}
@@ -189,7 +189,7 @@ namespace Fog.Dialogue
 		/// </summary>
 		public void Skip()
 		{
-			if(isActive)
+			if(IsActive)
 			{
 				StopAllCoroutines();
 				if(fillInBeforeSkip && !isLineDone)
@@ -246,7 +246,7 @@ namespace Fog.Dialogue
 			StopAllCoroutines();
 
 			currentLine = null;
-			isActive = false;
+			IsActive = false;
 
             if(pauseDuringDialogue)
                 Time.timeScale = 1f;

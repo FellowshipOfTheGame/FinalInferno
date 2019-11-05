@@ -15,6 +15,8 @@ namespace FinalInferno{
         
         protected override void TriggerAction(Fog.Dialogue.Agent agent){
             if(sceneName != null && sceneName != ""){
+                CharacterOW.PartyCanMove = false;
+
                 Fog.Dialogue.Dialogue selectedDialogue = null;
                 if(isCutscene){
                     foreach(DialogueEntry entry in dialogues){

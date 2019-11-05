@@ -13,7 +13,7 @@ namespace FinalInferno{
         public override void Apply(BattleUnit source, BattleUnit target) {
             bool isDraining = false;
             foreach(StatusEffect effect in target.effects){
-                if(effect.GetType() == typeof(DamageDrained)){
+                if(effect.GetType() == typeof(DamageDrained) && effect.Source == source){
                     isDraining = true;
                     break;
                 }

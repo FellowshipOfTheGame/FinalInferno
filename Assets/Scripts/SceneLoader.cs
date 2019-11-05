@@ -46,7 +46,7 @@ namespace FinalInferno{
                 SaveLoader.SaveGame();
 
             SceneManager.sceneLoaded += OnMapLoad;
-            SceneManager.sceneLoaded += UnlockMovement;
+            // SceneManager.sceneLoaded += UnlockMovement;
             SceneManager.LoadScene(map.buildIndex);
         }
         public static void LoadOWScene(string map, bool shouldUpdate = false, Vector2? newPosition = null) {
@@ -63,7 +63,7 @@ namespace FinalInferno{
                 SaveLoader.SaveGame();
 
             SceneManager.sceneLoaded += OnMapLoad;
-            SceneManager.sceneLoaded += UnlockMovement;
+            // SceneManager.sceneLoaded += UnlockMovement;
             SceneManager.LoadScene(map);
         }
         public static void LoadOWScene(int mapID, bool shouldUpdate = false, Vector2? newPosition = null) {
@@ -80,7 +80,7 @@ namespace FinalInferno{
                 SaveLoader.SaveGame();
 
             SceneManager.sceneLoaded += OnMapLoad;
-            SceneManager.sceneLoaded += UnlockMovement;
+            // SceneManager.sceneLoaded += UnlockMovement;
             SceneManager.LoadScene(mapID);
         }
 
@@ -105,7 +105,7 @@ namespace FinalInferno{
                 SceneManager.LoadScene(map.buildIndex);
             }else{
                 SceneManager.sceneLoaded += OnMapLoad;
-                SceneManager.sceneLoaded += UnlockMovement;
+                // SceneManager.sceneLoaded += UnlockMovement;
                 SceneManager.LoadScene(map.buildIndex);
             }
         }
@@ -129,7 +129,7 @@ namespace FinalInferno{
                 SceneManager.LoadScene(map);
             }else{
                 SceneManager.sceneLoaded += OnMapLoad;
-                SceneManager.sceneLoaded += UnlockMovement;
+                // SceneManager.sceneLoaded += UnlockMovement;
                 SceneManager.LoadScene(map);
             }
         }

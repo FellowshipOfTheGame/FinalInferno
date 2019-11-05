@@ -40,6 +40,11 @@ namespace FinalInferno.UI
                 SceneLoader.LoadCustscene(sceneName, selectedDialogue);
         }
 
+        public void UnlockMovement(){
+            if(!Fog.Dialogue.DialogueHandler.instance.IsActive)
+                CharacterOW.PartyCanMove = true;
+        }
+
         private void LoadPreview()
         {
             loadEnemiesPreview.LoadPreview();
