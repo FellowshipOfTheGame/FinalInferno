@@ -9,9 +9,9 @@ namespace FinalInferno{
         private int defValue;
         private int resValue;
 
-        public Defending(BattleUnit trgt, float value, int dur = 1) {
+        public Defending(BattleUnit trgt, float value, int dur = 0) {
             if(dur < 0)
-                dur = 1;
+                dur = 0;
             Duration = dur;
             TurnsLeft = Duration;
             Target = trgt;

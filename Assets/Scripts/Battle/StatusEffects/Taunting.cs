@@ -6,13 +6,14 @@ namespace FinalInferno{
     public class Taunting : StatusEffect {
         public override StatusType Type { get{ return StatusType.None; } }
         public override float Value { get{ return aggroIncrease; } }
-        public override int TurnsLeft { protected set{ base.TurnsLeft = value; } get{ return (base.TurnsLeft > int.MinValue)? base.TurnsLeft-1 : 99;} }
         private float aggroIncrease;
 
         public Taunting(BattleUnit src, BattleUnit trgt, float value, int dur = 1) {
             if(dur < 0)
                 dur = int.MinValue;
-            Duration = dur;
+            // Como o efeito é aplicado pela primeira vez no apply ao inves do primeiro update
+            // o valor de Duration precisa ser decrementado imediatamente
+            Duration = (dur == int.MinValue)? dur : dur-1;
             TurnsLeft = Duration;
             Target = trgt;
             Source = src;
@@ -24,13 +25,13 @@ namespace FinalInferno{
             target.AddEffect(new Taunting(Source, target, aggroIncrease * modifier, Duration), true);
         }
 
-        // public override bool Apply(bool force = false){
-        //     if(!base.Apply())
-        //         return false;
+        public override bool Apply(bool force = false){
+            if(!base.Apply())
+                return false;
 
-        //     Target.aggro += aggroIncrease;
-        //     return true;
-        // }
+            Target.aggro += aggroIncrease;
+            return true;
+        }
 
         public override void Amplify(float modifier){
             aggroIncrease *= modifier;

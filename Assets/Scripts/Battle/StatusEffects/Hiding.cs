@@ -7,13 +7,14 @@ namespace FinalInferno{
         public override StatusType Type { get{ return StatusType.None; } }
         public override float Value { get{ return negativeAggro; } }
         private int turnsLeft;
-        public override int TurnsLeft { protected set{ base.TurnsLeft = value; } get{ return (base.TurnsLeft > int.MinValue)? base.TurnsLeft-1 : 99;} }
         private float negativeAggro;
 
         public Hiding(BattleUnit src, BattleUnit trgt, float value, int dur = 1) {
             if(dur < 0)
                 dur = int.MinValue;
-            Duration = dur;
+            // Como o efeito é aplicado pela primeira vez no apply ao inves do primeiro update
+            // o valor de Duration precisa ser decrementado imediatamente
+            Duration = (dur == int.MinValue)? dur : dur-1;
             TurnsLeft = Duration;
             Target = trgt;
             Source = src;
@@ -25,13 +26,13 @@ namespace FinalInferno{
             target.AddEffect(new Hiding(Source, target, negativeAggro * modifier, Duration), true);
         }
 
-        // public override bool Apply(bool force = false){
-        //     if(!base.Apply())
-        //         return false;
+        public override bool Apply(bool force = false){
+            if(!base.Apply())
+                return false;
 
-        //     Target.aggro = -negativeAggro;
-        //     return true;
-        // }
+            Target.aggro = -negativeAggro;
+            return true;
+        }
 
         public override void Amplify(float modifier){
             negativeAggro *= modifier;

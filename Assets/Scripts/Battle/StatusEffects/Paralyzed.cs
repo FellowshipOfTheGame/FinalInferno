@@ -6,7 +6,6 @@ namespace FinalInferno{
     public class Paralyzed : StatusEffect {
         public override StatusType Type { get{ return StatusType.Undesirable; } }
         public override float Value { get{ return Duration; } }
-        public override int TurnsLeft { protected set{ base.TurnsLeft = value; } get{ return (base.TurnsLeft > int.MinValue)? base.TurnsLeft : 99;} }
 
         public Paralyzed(BattleUnit src, BattleUnit trgt, float value, int dur = 1) {
             if(dur < 0)
