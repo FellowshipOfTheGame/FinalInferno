@@ -9,11 +9,8 @@ namespace FinalInferno{
 
         [SerializeField] private Sprite icon;
         public Sprite Icon { get{ return icon; } }
-        public abstract string Description0 { get; }
+        public abstract string Description { get; }
         public float value1, value2;
-        public abstract string Description1 { get; }
-        public abstract string Description2 { get; }
-        public string FullDescription { get { return ((Description0 == null) ? "" : (Description0 + value1)) + Description1 + ((Description2 == null) ? "" : (" for " + value2 + Description2)); } }
 
         public abstract void Apply(BattleUnit source, BattleUnit target);
     }

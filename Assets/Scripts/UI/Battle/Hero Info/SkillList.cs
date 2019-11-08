@@ -222,7 +222,7 @@ namespace FinalInferno.UI.Battle.SkillMenu
         /// <param name="effects"> Efeito selecionado. </param>
         public void UpdateEffectDescription(SkillEffect effect)
         {
-            effectDescriptionText.text = effect.FullDescription;
+            effectDescriptionText.text = effect.Description;
         }
 
     }

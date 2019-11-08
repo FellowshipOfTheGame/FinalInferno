@@ -5,11 +5,10 @@ using UnityEngine;
 namespace FinalInferno{
     [CreateAssetMenu(fileName = "Hypothermia", menuName = "ScriptableObject/SkillEffect/Hypothermia")]
     public class Hypothermia : SkillEffect {
-        public override string Description0 { get { return "Deals "; } }
         // value1 = dmg multiplier
-        public override string Description1{ get {return "x Damage";} }
         // value2 = DoT duration
-        public override string Description2{ get {return " turns";} }
+        public override string Description { get { return "Deals " + value1 + "x water damage for " + value2 + " turns"; } }
+
         public override void Apply(BattleUnit source, BattleUnit target) {
             target.AddEffect(new DamagingOverTime(source, target, value1, Element.Water, (int)value2));
         }

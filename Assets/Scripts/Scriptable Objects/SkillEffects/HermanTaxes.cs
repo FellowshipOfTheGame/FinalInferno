@@ -5,10 +5,9 @@ using UnityEngine;
 namespace FinalInferno{
     [CreateAssetMenu(fileName = "HermanTaxes", menuName = "ScriptableObject/SkillEffect/HermanTaxes")]
     public class HermanTaxes : SkillEffect {
-        public override string Description0 { get { return "Pay Herman by "; } }
         // value1 = strength of the buffs copied
-        public override string Description1{ get {return "x";} }
-        public override string Description2{ get {return null;} }
+        public override string Description { get { return "Herman receives " + value1*100 + "% of buffs received by allies"; } }
+        
         public override void Apply(BattleUnit source, BattleUnit target) {
             List<BattleUnit> allies = BattleManager.instance.GetTeam(target);
             foreach(BattleUnit unit in allies){

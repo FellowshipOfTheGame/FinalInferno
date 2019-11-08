@@ -5,11 +5,10 @@ using UnityEngine;
 namespace FinalInferno{
     [CreateAssetMenu(fileName = "RiskyDamageDrain", menuName = "ScriptableObject/SkillEffect/RiskyDamageDrain")]
     public class RiskyDamageDrain : SkillEffect {
-        public override string Description0 { get { return "Drain "; } }
         // value1 = dmgDrain multiplier
-        public override string Description1{ get {return "x";} }
         // value2 = debuff duration
-        public override string Description2{ get {return " turns";} }
+        public override string Description { get { return "Drain " + value1*100 + "% damage for " + value2 + " turns"; } }
+        
         public override void Apply(BattleUnit source, BattleUnit target) {
             bool isDraining = false;
             foreach(StatusEffect effect in target.effects){
