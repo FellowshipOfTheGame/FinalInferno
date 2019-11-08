@@ -5,11 +5,10 @@ using UnityEngine;
 namespace FinalInferno{
     [CreateAssetMenu(fileName = "DamageOverTime", menuName = "ScriptableObject/SkillEffect/DamageOverTime")]
     public class DamageOverTime : SkillEffect {
-        public override string Description0{ get {return "Deals ";} }
         // value1 = dmg multiplier
-        public override string Description1{ get {return "x Damage";} }
         // value2 = DoT duration
-        public override string Description2{ get {return " turns";} }
+        public override string Description { get {return "Deals " + value1 + "x damage for " + value2 + " turns"; } }
+
         public override void Apply(BattleUnit source, BattleUnit target) {
             target.AddEffect(new DamagingOverTime(source, target, value1, Element.Neutral, (int)value2));
         }

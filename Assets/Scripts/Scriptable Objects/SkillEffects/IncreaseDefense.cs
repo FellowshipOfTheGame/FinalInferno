@@ -5,11 +5,10 @@ using UnityEngine;
 namespace FinalInferno{
     [CreateAssetMenu(fileName = "IncreaseDefense", menuName = "ScriptableObject/SkillEffect/IncreaseDefense")]
     public class IncreaseDefense : SkillEffect {
-        public override string Description0 { get { return "Increase defense by "; } }
         // value1 = defUp multiplier
-        public override string Description1{ get {return "%";} }
         // value2 = buff duration
-        public override string Description2{ get {return " turns";} }
+        public override string Description { get { return "Increase defense by " + value1 * 100 + "% for " + value2 + " turns"; } }
+
         public override void Apply(BattleUnit source, BattleUnit target) {
             if(value2 < 0)
                 target.curDef += (int)value1 * target.curDef;

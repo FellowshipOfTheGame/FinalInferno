@@ -5,11 +5,11 @@ using UnityEngine;
 namespace FinalInferno{
     [CreateAssetMenu(fileName = "Sacrifice", menuName = "ScriptableObject/SkillEffect/Sacrifice")]
     public class Sacrifice : SkillEffect {
-        public override string Description0 { get { return "Sacrify "; } }
         // value1 = percentage of max HP sacrificed
-        public override string Description1{ get {return "% maxHP";} }
         // value2 = who receives the heal: 0 = target's allies; 1 = target's enemies;
-        public override string Description2{ get {return "\bHeal target's " +( (((int)value2 % 2) == 0)? "allies" : "enemies" ); } }
+        public override string Description { get { return "Sacrify " + value1*100 + "% max HP and heal all " + HealTargets; } }
+        
+        private string HealTargets{ get {return ( (((int)value2 % 2) == 0)? "allies" : "enemies" ); } }
         public override void Apply(BattleUnit source, BattleUnit target) {
             int damage = target.DecreaseHP(value1);
             List<BattleUnit> allies = BattleManager.instance.GetTeam(target);
