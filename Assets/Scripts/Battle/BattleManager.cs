@@ -106,9 +106,11 @@ namespace FinalInferno{
                 unit.OnDeath = null;
             }
             // Se a unidade ainda estiver morta atualiza a fila
-            if(unit.CurHP <= 0){
+            if(unit.CurHP <= 0 && unit.effects.Count <= 0){
                 queue.Remove(unit);
                 unitsUI.RemoveUnit(unit);
+
+                queueUI.UpdateQueue();
 
                 // Se a unidade que morreu era a unidade atual, anda a fila
                 if (currentUnit == unit){
@@ -122,11 +124,13 @@ namespace FinalInferno{
             }
         }
 
-        public void Revive(BattleUnit unit){
-            queue.Enqueue(unit, 0);
-            unitsUI.ReinsertUnit(unit);
-            
-            queueUI.UpdateQueue();
+        public void Revive(BattleUnit unit, bool isCallback = false){
+            if(!isCallback){
+                queue.Enqueue(unit, 0);
+                unitsUI.ReinsertUnit(unit);
+                
+                queueUI.UpdateQueue();
+            }
             foreach (UnitsLives lives in unitsLives)
                 lives.UpdateLives();
         }

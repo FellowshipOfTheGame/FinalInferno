@@ -66,13 +66,18 @@ namespace FinalInferno{
         // A versão da função com lista é usada para skills de callback, e invoca o efeito visual
         public virtual void Use(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f){
             foreach (BattleUnit trgt in targets) {
+                
+                if(visualEffect){
+                    GameObject obj = GameObject.Instantiate(visualEffect, trgt.transform.parent);
+                    obj.GetComponent<SpriteRenderer>().sortingOrder = trgt.GetComponent<SpriteRenderer>().sortingOrder + 1;
+                }
+
                 foreach (SkillEffectTuple skillEffect in effects) {
                     skillEffect.effect.value1 = (shouldOverride1)? value1 : skillEffect.value1;
                     skillEffect.effect.value2 = (shouldOverride2)? value2 : skillEffect.value2;
                     
+
                     skillEffect.effect.Apply(user, trgt);
-                    if(visualEffect)
-                        GameObject.Instantiate(visualEffect, trgt.transform);
                 }
             }
         }

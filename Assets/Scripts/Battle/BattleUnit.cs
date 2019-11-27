@@ -27,7 +27,7 @@ namespace FinalInferno{
         public int actionPoints; //define a posicao em que essa unidade agira no combate
         private int hpOnHold;
         public int stuns;
-        public bool CanAct{ get{ return (stuns <= 0); } }
+        public bool CanAct{ get{ return (CurHP > 0 && stuns <= 0); } }
         public float aggro;
         public float statusResistance; // resistencia a debuffs em geral
         private float damageResistance = 0.0f; // resistencia a danos em geral
@@ -141,7 +141,7 @@ namespace FinalInferno{
                         OnDeath += skill.Use;
                         break;
                     case SkillType.PassiveOnSkillUsed:
-                        // Adiciona a skill no callback de morte
+                        // Adiciona a skill no callback de Skill utilizada
                         OnSkillUsed += skill.Use;
                         break;
                 }
@@ -176,14 +176,15 @@ namespace FinalInferno{
             if(CurHP <= 0){
                 //Se a unidade estiver morta, anima a morte
                 animator.SetBool("IsDead", true);
-                BattleManager.instance.Kill(this);
-                // Se houver algum callback de morte que, por exemplo, ressucita a unidade ele já vai ter sido chamado aqui
                 // Tira os buffs e debuffs
                 foreach(StatusEffect effect in effects.ToArray()){
                     if(effect.Duration >= 0 && effect.Type != StatusType.None){
                         effect.Remove();
                     }
                 }
+
+                BattleManager.instance.Kill(this);
+                // Se houver algum callback de morte que, por exemplo, ressucita a unidade ele já vai ter sido chamado aqui
             }else if(OnTakeDamage != null && damage > 0){
             // Chama a funcao de callback de dano tomado
                 List<BattleUnit> aux = new List<BattleUnit>();
@@ -193,13 +194,13 @@ namespace FinalInferno{
             return damage;
         }
 
-        public void Revive(){
+        public void Revive(bool isCallback = false){
             if(CurHP <= 0){
                 curHP = 1;
                 stuns = 0;
                 //Volta a animação de morte
                 animator.SetBool("IsDead", false);
-                BattleManager.instance.Revive(this);
+                BattleManager.instance.Revive(this, isCallback);
             }
         }
 
