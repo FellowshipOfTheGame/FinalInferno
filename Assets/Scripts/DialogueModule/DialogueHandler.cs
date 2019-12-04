@@ -49,7 +49,7 @@ namespace Fog.Dialogue
 		private Queue<DialogueLine> dialogueLines = new Queue<DialogueLine>();
 		private DialogueLine currentLine;
 		private bool isLineDone;
-		public bool IsActive { get; private set; }
+		public bool IsActive { get; private set; } = false;
 		private Agent agent;
 		private FinalInferno.Movable movingAgent;
 		private string titleAux;

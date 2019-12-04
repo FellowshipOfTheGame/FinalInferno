@@ -58,7 +58,7 @@ namespace FinalInferno{
         // Start is called before the first frame update
         void Start()
         {
-            target = CharacterOW.MainOWCharacter.transform;
+            target = CharacterOW.MainOWCharacter?.transform;
         }
 
         void LateUpdate(){
@@ -66,22 +66,29 @@ namespace FinalInferno{
             if(cameraHalfHeight != camera.orthographicSize)
                 UpdateBounds();
 
-            Vector2 currentPosition = new Vector2(transform.position.x, transform.position.y);
-            Vector2 targetPosition = new Vector2(target.position.x, target.position.y);
-            Vector2 newPosition;
-            float distance = Vector2.Distance(currentPosition, targetPosition);
-            if(distance > freedomDistance){
-                targetPosition -= currentPosition;
-                targetPosition.Normalize();
-                targetPosition *= (distance - freedomDistance);
-                targetPosition += currentPosition;
-                newPosition = Vector2.Lerp(currentPosition, targetPosition, smoothing);
+            if(target == null){
+                Vector2 samePosition = new Vector2(transform.position.x, transform.position.y);
+                samePosition.x = Mathf.Clamp(samePosition.x, lowerBounds.x, upperBounds.x);
+                samePosition.y = Mathf.Clamp(samePosition.y, lowerBounds.y, upperBounds.y);
+                transform.position = new Vector3(samePosition.x, samePosition.y, transform.position.z);
             }else{
-                newPosition = currentPosition;
+                Vector2 currentPosition = new Vector2(transform.position.x, transform.position.y);
+                Vector2 targetPosition = new Vector2(target.position.x, target.position.y);
+                Vector2 newPosition;
+                float distance = Vector2.Distance(currentPosition, targetPosition);
+                if(distance > freedomDistance){
+                    targetPosition -= currentPosition;
+                    targetPosition.Normalize();
+                    targetPosition *= (distance - freedomDistance);
+                    targetPosition += currentPosition;
+                    newPosition = Vector2.Lerp(currentPosition, targetPosition, smoothing);
+                }else{
+                    newPosition = currentPosition;
+                }
+                newPosition.x = Mathf.Clamp(newPosition.x, lowerBounds.x, upperBounds.x);
+                newPosition.y = Mathf.Clamp(newPosition.y, lowerBounds.y, upperBounds.y);
+                transform.position = new Vector3(newPosition.x, newPosition.y, transform.position.z);
             }
-            newPosition.x = Mathf.Clamp(newPosition.x, lowerBounds.x, upperBounds.x);
-            newPosition.y = Mathf.Clamp(newPosition.y, lowerBounds.y, upperBounds.y);
-            transform.position = new Vector3(newPosition.x, newPosition.y, transform.position.z);
         }
     }
 }

@@ -18,9 +18,16 @@ namespace FinalInferno{
         public static bool PartyCanMove{
             set{
                 foreach(CharacterOW character in characterList){
-                    if(character != null)
+                    if(character != null){
                         character.GetComponent<Movable>().CanMove = value;
+                    }
                 }
+            }
+            get{
+                if(characterList[0] != null)
+                    return characterList[0].GetComponent<Movable>().CanMove;
+                    
+                return false;
             }
         }
 

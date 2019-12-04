@@ -37,12 +37,17 @@ namespace FinalInferno.UI
             if (!isCutscene)
                 SceneLoader.LoadOWScene(sceneName, true, positionOnLoad);
             else
-                SceneLoader.LoadCustscene(sceneName, selectedDialogue);
+                SceneLoader.LoadCustscene(sceneName, selectedDialogue, positionOnLoad);
         }
 
         public void UnlockMovement(){
             if(!Fog.Dialogue.DialogueHandler.instance.IsActive)
                 CharacterOW.PartyCanMove = true;
+        }
+
+        public void BlockMovement(){
+            if(!Fog.Dialogue.DialogueHandler.instance.IsActive)
+                CharacterOW.PartyCanMove = false;
         }
 
         private void LoadPreview()
@@ -71,10 +76,7 @@ namespace FinalInferno.UI
 
         private void Continue()
         {
-            foreach(Character character in Party.Instance.characters){
-                character.hpCur = Mathf.Max(BattleManager.instance.GetBattleUnit(character.archetype).CurHP, 1);
-            }
-            SceneLoader.LoadOWScene(Party.Instance.currentMap, true);
+            SceneLoader.LoadOWScene(Party.Instance.currentMap, true, null, true);
         }
     }
 

@@ -32,7 +32,7 @@ namespace FinalInferno{
 
 
         // Métodos que carregam a cena desejada
-        public static void LoadOWScene(Scene map, bool shouldUpdate = false, Vector2? newPosition = null) {
+        public static void LoadOWScene(Scene map, bool shouldUpdate = false, Vector2? newPosition = null, bool dontSave = false) {
             updatePositions = shouldUpdate;
             if(newPosition != null){
                 foreach(Character character in Party.Instance.characters){
@@ -42,14 +42,14 @@ namespace FinalInferno{
             Party.Instance.currentMap = map.name;
 
             // Salva o jogo se o autosave esta ativado
-            if(SaveLoader.AutoSave)
+            if(SaveLoader.AutoSave && !dontSave)
                 SaveLoader.SaveGame();
 
             SceneManager.sceneLoaded += OnMapLoad;
             // SceneManager.sceneLoaded += UnlockMovement;
             SceneManager.LoadScene(map.buildIndex);
         }
-        public static void LoadOWScene(string map, bool shouldUpdate = false, Vector2? newPosition = null) {
+        public static void LoadOWScene(string map, bool shouldUpdate = false, Vector2? newPosition = null, bool dontSave = false) {
             updatePositions = shouldUpdate;
             if(newPosition != null){
                 foreach(Character character in Party.Instance.characters){
@@ -59,14 +59,14 @@ namespace FinalInferno{
             Party.Instance.currentMap = map;
 
             // Salva o jogo se o autosave esta ativado
-            if(SaveLoader.AutoSave)
+            if(SaveLoader.AutoSave && !dontSave)
                 SaveLoader.SaveGame();
 
             SceneManager.sceneLoaded += OnMapLoad;
             // SceneManager.sceneLoaded += UnlockMovement;
             SceneManager.LoadScene(map);
         }
-        public static void LoadOWScene(int mapID, bool shouldUpdate = false, Vector2? newPosition = null) {
+        public static void LoadOWScene(int mapID, bool shouldUpdate = false, Vector2? newPosition = null, bool dontSave = false) {
             updatePositions = shouldUpdate;
             if(newPosition != null){
                 foreach(Character character in Party.Instance.characters){
@@ -76,7 +76,7 @@ namespace FinalInferno{
             Party.Instance.currentMap = SceneManager.GetSceneByBuildIndex(mapID).name;
 
             // Salva o jogo se o autosave esta ativado
-            if(SaveLoader.AutoSave)
+            if(SaveLoader.AutoSave && !dontSave)
                 SaveLoader.SaveGame();
 
             SceneManager.sceneLoaded += OnMapLoad;
@@ -184,8 +184,8 @@ namespace FinalInferno{
             SceneManager.sceneLoaded -= UnlockMovement;
         }
         public static void StartDialogue(Scene map, LoadSceneMode mode){
-            Fog.Dialogue.Agent agent = CharacterOW.MainOWCharacter.GetComponent<Fog.Dialogue.Agent>();
-            Fog.Dialogue.DialogueHandler.instance.StartDialogue(cutsceneDialogue, agent, agent.GetComponent<Movable>());
+            Fog.Dialogue.Agent agent = CharacterOW.MainOWCharacter?.GetComponent<Fog.Dialogue.Agent>();
+            Fog.Dialogue.DialogueHandler.instance.StartDialogue(cutsceneDialogue, agent, agent?.GetComponent<Movable>());
             cutsceneDialogue = null;
             SceneManager.sceneLoaded -= StartDialogue;
         }

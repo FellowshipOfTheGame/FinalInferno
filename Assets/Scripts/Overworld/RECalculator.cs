@@ -43,7 +43,7 @@ namespace FinalInferno{
         // Update is called once per frame
         void Update()
         {
-            if (encountersEnabled) {
+            if (encountersEnabled && CharacterOW.PartyCanMove) {
                 // Calcula a distancia entre a posicao atual e a distance no ultimo update
                 float distance = Vector2.Distance(lastPosition, new Vector2(playerObj.position.x, playerObj.position.y));
                 if (distance > 0) {
