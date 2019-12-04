@@ -7,7 +7,9 @@ namespace FinalInferno{
     {
         // Start is called before the first frame update
         void Awake(){
+            Cursor.visible = false;
             AssetManager.LoadAllAssets();
+            SceneLoader.LoadMainMenu();
         }
     }
 }
