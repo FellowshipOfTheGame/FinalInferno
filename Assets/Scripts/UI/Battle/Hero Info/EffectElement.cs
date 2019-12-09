@@ -13,7 +13,7 @@ namespace FinalInferno.UI.Battle.SkillMenu
         /// <summary>
         /// Scriptable object do efeito.
         /// </summary>
-        public SkillEffect effect {get; private set;}
+        public SkillEffectTuple effect {get; private set;}
 
         [Header("UI elements")]
         /// <summary>
@@ -27,8 +27,8 @@ namespace FinalInferno.UI.Battle.SkillMenu
         /// <param name="newEffect"> Efeito a ser inicializado. </param>
         public void UpdateEffect(SkillEffectTuple newEffect)
         {
-            effect = newEffect.effect;
-            effectImage.sprite = effect.Icon;
+            effect = newEffect;
+            effectImage.sprite = effect.effect.Icon;
         }
 
     }
