@@ -76,7 +76,7 @@ namespace Fog.Dialogue
 
 		void Update(){
 			if(IsActive){
-				if(Input.GetButtonDown("Interact")){
+				if(Input.GetButtonDown("Submit")){
 					if(isLineDone)
 						StartCoroutine("NextLine");
 					else

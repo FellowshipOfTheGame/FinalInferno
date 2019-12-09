@@ -44,7 +44,7 @@ namespace Fog.Dialogue{
         void Update()
         {
             // Esse botao precisa ser declarado nos inputs do projeto
-            if (Input.GetButtonDown("Interact") && wait <= 0) {
+            if (Input.GetButtonDown("Submit") && wait <= 0) {
                 wait = nFramesCooldown;
                 if (!isProcessingInput && canInteract) {
                     isProcessingInput = true;
