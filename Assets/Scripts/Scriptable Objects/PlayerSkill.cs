@@ -131,7 +131,7 @@ namespace FinalInferno{
             GiveExp(targets);
             base.Use(user, targets, shouldOverride1, value1, shouldOverride2, value2);
         }
-
+        
         public override void ResetSkill(){
             level = 0;
             xp = 0;
