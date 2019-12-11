@@ -71,8 +71,6 @@ namespace FinalInferno{
 
             // Seta configuracoes de renderizacao
             GetComponent<SpriteRenderer>().sprite = unit.BattleSprite;
-            // Change color according to rank
-            GetComponent<SpriteRenderer>().color = unit.color;
             GetComponent<UnityEngine.UI.Image>().sprite = GetComponent<SpriteRenderer>().sprite;
             animator.runtimeAnimatorController = unit.Animator;
             queueSprite = unit.QueueSprite;
@@ -264,6 +262,7 @@ namespace FinalInferno{
             if(BattleSkillManager.currentSkill != unit.defenseSkill){
                 animator.SetTrigger("UseSkill");
             }else{
+
                 UseSkill();
             }
         }
@@ -275,6 +274,14 @@ namespace FinalInferno{
         public void ShowThisAsATarget()
         {
             battleItem.ShowThisAsATarget();
+        }
+
+        public void ChangeColor()
+        {
+            // Change color according to rank
+            if (name.Equals("Dummy"))
+                unit.color.a = 0.7f;
+            GetComponent<SpriteRenderer>().color = unit.color;
         }
     }
 }

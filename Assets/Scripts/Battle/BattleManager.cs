@@ -50,8 +50,10 @@ namespace FinalInferno{
                 queue.Enqueue(newUnit, -newUnit.curSpeed);
                 // Debug.Log("Carregou " + unit.name);
 
-                if(unit.IsHero)
+                if (unit.IsHero)
                     BattleProgress.addHeroSkills((Hero)unit);
+                else
+                    newUnit.ChangeColor();
             }
             List<BattleUnit> auxList = new List<BattleUnit>(queue.list);
             foreach(BattleUnit unit in queue.list){
