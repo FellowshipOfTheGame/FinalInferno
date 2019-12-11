@@ -19,6 +19,13 @@ namespace FinalInferno {
                 else
                     colliders.Add(col);
             }
+
+            for(int i = 0; i < changeRules.Count; i++){
+                Quest actualQuest = StaticReferences.instance.activeQuests.Find(x => x.name == changeRules[i].quest.name);
+                if(actualQuest != null){
+                    changeRules[i] = new ChangeRule(actualQuest, changeRules[i].eventFlag, changeRules[i].animationFlag, changeRules[i].newValue);
+                }
+            }
         }
 
         public void Reset(){

@@ -154,6 +154,11 @@ namespace FinalInferno
         public Quest quest;
         public string eventFlag;
         public Fog.Dialogue.Dialogue dialogue;
+        public DialogueEntry(Quest _quest, string _eventFlag, Fog.Dialogue.Dialogue _dialogue){
+            quest = _quest;
+            eventFlag = _eventFlag;
+            dialogue = _dialogue;
+        }
     }
     #if UNITY_EDITOR
     // PropertyDrawer necessario para exibir e editar DialogueEntry no editor da unity
@@ -261,11 +266,17 @@ namespace FinalInferno
     #endif
 
     [System.Serializable]
-    public class ChangeRule{
-        public Quest quest = null;
-        public string eventFlag = "";
-        public string animationFlag = "";
-        public bool newValue = false;
+    public struct ChangeRule{
+        public Quest quest;
+        public string eventFlag;
+        public string animationFlag;
+        public bool newValue;
+        public ChangeRule(Quest _quest, string _eventFlag, string _animationFlag, bool _newValue){
+            quest = _quest;
+            eventFlag = _eventFlag;
+            animationFlag = _animationFlag;
+            newValue = _newValue;
+        }
     }
     #if UNITY_EDITOR
     // PropertyDrawer necessario para exibir e editar ChangeRule no editor da unity

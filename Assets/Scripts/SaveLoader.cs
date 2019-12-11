@@ -81,6 +81,7 @@ namespace FinalInferno{
             Party.Instance.GiveExp(0);
 
             Party.Instance.activeQuests.Clear();
+            StaticReferences.instance.activeQuests.Clear();
             Quest mainQuest = AssetManager.LoadAsset<Quest>("MainQuest");
             mainQuest.StartQuest();
             

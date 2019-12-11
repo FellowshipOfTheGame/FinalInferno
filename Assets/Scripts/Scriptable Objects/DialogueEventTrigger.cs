@@ -10,8 +10,13 @@ namespace FinalInferno{
 
         public override void AfterDialogue(){
             foreach(QuestEvent _event in eventsTriggered){
-                if(_event.quest){
-                    _event.quest.events[_event.eventFlag] = true;
+                Quest actualQuest = StaticReferences.instance.activeQuests.Find(x => x.name == _event.quest.name);
+                if(actualQuest == null)
+                    actualQuest = _event.quest;
+
+                if(actualQuest != null){
+                    actualQuest.events[_event.eventFlag] = true;
+                    Debug.Log("Dialogo triggerou evento " + _event.eventFlag + " da quest " + actualQuest);
                 }
             }
         }

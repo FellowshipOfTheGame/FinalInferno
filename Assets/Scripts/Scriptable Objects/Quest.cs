@@ -26,6 +26,7 @@ namespace FinalInferno{
             if(!Party.Instance.activeQuests.Contains(this)){
                 ResetQuest();
                 Party.Instance.activeQuests.Add(this);
+                StaticReferences.instance.activeQuests.Add(this);
             }
         }
         public virtual void CompleteQuest(){
@@ -34,6 +35,7 @@ namespace FinalInferno{
             }
             active = false;
             Party.Instance.activeQuests.Remove(this);
+            StaticReferences.instance.activeQuests.Remove(this);
         }
     }
 }
