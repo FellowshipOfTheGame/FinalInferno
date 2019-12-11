@@ -71,6 +71,8 @@ namespace FinalInferno{
 
             // Seta configuracoes de renderizacao
             GetComponent<SpriteRenderer>().sprite = unit.BattleSprite;
+            // Change color according to rank
+            GetComponent<SpriteRenderer>().color = unit.color;
             GetComponent<UnityEngine.UI.Image>().sprite = GetComponent<SpriteRenderer>().sprite;
             animator.runtimeAnimatorController = unit.Animator;
             queueSprite = unit.QueueSprite;
