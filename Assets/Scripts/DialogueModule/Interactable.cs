@@ -9,6 +9,36 @@ namespace Fog.Dialogue
     public class Interactable : MonoBehaviour, IInteractable
     {
         [SerializeField] private List<DialogueEntry> dialogues = new List<DialogueEntry>();
+        private Dialogue selectedDialogue = null;
+        private int currentIndex = -1;
+
+        void Awake(){
+            for(int i = 0; i < dialogues.Count; i++){
+                if(dialogues[i].quest.StaticReference != null){
+                    dialogues[i] = new DialogueEntry(dialogues[i].quest.StaticReference, dialogues[i].eventFlag, dialogues[i].dialogue);
+                }
+            }
+        }
+
+        void Start(){
+            for(int i = 0; i < dialogues.Count; i++){
+                if(dialogues[i].quest.events[dialogues[i].eventFlag]){
+                    selectedDialogue = dialogues[i].dialogue;
+                    currentIndex = i;
+                }else
+                    break;
+            }
+        }
+
+        void Update(){
+            for(int i = currentIndex; i < dialogues.Count; i++){
+                if(dialogues[i].quest.events[dialogues[i].eventFlag]){
+                    selectedDialogue = dialogues[i].dialogue;
+                    currentIndex = i;
+                }else
+                    break;
+            }
+        }
 
         public void Reset(){
             int nColliders = GetComponents<Collider2D>().Length;
@@ -30,14 +60,6 @@ namespace Fog.Dialogue
         }
 
         public void OnInteractAttempt(Agent agent, FinalInferno.Movable movingAgent = null){
-            Fog.Dialogue.Dialogue selectedDialogue = null;
-
-            foreach(DialogueEntry entry in dialogues){
-                if(entry.quest.events[entry.eventFlag])
-                    selectedDialogue = entry.dialogue;
-                else
-                    break;
-            }
             if(selectedDialogue != null){
                 Fog.Dialogue.DialogueHandler.instance.StartDialogue(selectedDialogue, agent, movingAgent);
             }

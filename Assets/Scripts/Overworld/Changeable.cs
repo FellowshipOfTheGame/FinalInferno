@@ -21,9 +21,8 @@ namespace FinalInferno {
             }
 
             for(int i = 0; i < changeRules.Count; i++){
-                Quest actualQuest = StaticReferences.instance.activeQuests.Find(x => x.name == changeRules[i].quest.name);
-                if(actualQuest != null){
-                    changeRules[i] = new ChangeRule(actualQuest, changeRules[i].eventFlag, changeRules[i].animationFlag, changeRules[i].newValue);
+                if(changeRules[i].quest.StaticReference != null){
+                    changeRules[i] = new ChangeRule(changeRules[i].quest.StaticReference, changeRules[i].eventFlag, changeRules[i].animationFlag, changeRules[i].newValue);
                 }
             }
         }

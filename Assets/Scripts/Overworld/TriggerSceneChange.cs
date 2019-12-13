@@ -12,6 +12,14 @@ namespace FinalInferno{
         [SerializeField] private bool isCutscene = false;
         [SerializeField] private List<DialogueEntry> dialogues = new List<DialogueEntry>();
         [SerializeField] private FinalInferno.UI.FSM.ButtonClickDecision decision;
+
+        void Awake(){
+            for(int i = 0; i < dialogues.Count; i++){
+                if(dialogues[i].quest.StaticReference != null){
+                    dialogues[i] = new DialogueEntry(dialogues[i].quest.StaticReference, dialogues[i].eventFlag, dialogues[i].dialogue);
+                }
+            }
+        }
         
         protected override void TriggerAction(Fog.Dialogue.Agent agent){
             if(sceneName != null && sceneName != ""){

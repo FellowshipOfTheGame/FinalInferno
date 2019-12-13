@@ -9,6 +9,16 @@ namespace FinalInferno{
         public bool active;
         // O número máximo de eventos permitidos é 62 por medida de segurança
         public QuestDictionary events;
+        public Quest PartyReference{
+            get{
+                return Party.Instance.activeQuests.Find(quest => quest.name == name);
+            }
+        }
+        public Quest StaticReference{
+            get{
+                return StaticReferences.instance.activeQuests.Find(quest => quest.name == name);
+            }
+        }
         public void Awake(){
             ResetQuest();
         }
@@ -23,10 +33,12 @@ namespace FinalInferno{
             active = true;
         }
         public virtual void StartQuest(){
-            if(!Party.Instance.activeQuests.Contains(this)){
+            if((PartyReference == null) && (StaticReference == null)){
                 ResetQuest();
                 Party.Instance.activeQuests.Add(this);
                 StaticReferences.instance.activeQuests.Add(this);
+            }else{
+                Debug.Log("Quest has already begun");
             }
         }
         public virtual void CompleteQuest(){
@@ -34,8 +46,8 @@ namespace FinalInferno{
                 events[key] = true;
             }
             active = false;
-            Party.Instance.activeQuests.Remove(this);
-            StaticReferences.instance.activeQuests.Remove(this);
+            Party.Instance.activeQuests.Remove(PartyReference);
+            StaticReferences.instance.activeQuests.Remove(StaticReference);
         }
     }
 }
