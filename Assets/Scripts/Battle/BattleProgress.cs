@@ -38,7 +38,7 @@ namespace FinalInferno{
                         if(BattleProgress.skillReferences[i][j].XpCumulative != BattleProgress.heroSkills[i][j].xpCumulative){
                             heroSkills[i].Add(BattleProgress.heroSkills[i][j]);
                             skillReferences[i].Add(BattleProgress.skillReferences[i][j]);
-                            Debug.Log("Skill atualizada: " + BattleProgress.skillReferences[i][j].name);
+                            // Debug.Log("Skill atualizada: " + BattleProgress.skillReferences[i][j].name);
                         }
                     }
 

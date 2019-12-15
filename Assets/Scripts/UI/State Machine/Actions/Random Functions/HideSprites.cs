@@ -17,8 +17,9 @@ namespace FinalInferno.UI.FSM
         /// <param name="controller"> O controlador da máquina de estados. </param>
         public override void Act(StateController controller)
         {
-            foreach(SpriteRenderer sr in FindObjectsOfType<SpriteRenderer>()){
+            foreach(BattleUnit bu in FindObjectsOfType<BattleUnit>()){
                 // Debug.Log("Desativando sprite do " + sr.GetComponent<BattleUnit>().unit.name);
+                SpriteRenderer sr = bu.GetComponent<SpriteRenderer>();
                 sr.enabled = false;
             }
         }

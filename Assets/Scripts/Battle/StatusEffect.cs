@@ -39,6 +39,7 @@ namespace FinalInferno{
                 return false;
 
             TurnsLeft--;
+            Source.aggro += AggroOnUpdate;
             if (TurnsLeft < 0){
                 Remove();
                 return true;

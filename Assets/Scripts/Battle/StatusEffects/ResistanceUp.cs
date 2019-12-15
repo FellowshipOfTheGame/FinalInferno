@@ -9,7 +9,7 @@ namespace FinalInferno{
         private int resValue;
         private float valueReceived;
 
-        public ResistanceUp(BattleUnit src, BattleUnit trgt, float value, int dur = 1) {
+        public ResistanceUp(BattleUnit src, BattleUnit trgt, float value, int dur = 1, bool force = false) {
             if(dur < 0)
                 dur = int.MinValue;
             Duration = dur;
@@ -18,7 +18,7 @@ namespace FinalInferno{
             Source = src;
             valueReceived = value;
             resValue = Mathf.Max(Mathf.FloorToInt(trgt.curMagicDef * value), 1);
-            Failed = !Apply();
+            Failed = !Apply(force);
         }
 
         public override void CopyTo(BattleUnit target, float modifier = 1.0f){

@@ -9,7 +9,7 @@ namespace FinalInferno{
         private int dmgValue;
         private float valueReceived;
 
-        public DamageDrained(BattleUnit src, BattleUnit trgt, float value, int dur = 1) {
+        public DamageDrained(BattleUnit src, BattleUnit trgt, float value, int dur = 1, bool force = false) {
             if(dur < 0)
                 dur = int.MinValue;
             Duration = dur;
@@ -18,7 +18,7 @@ namespace FinalInferno{
             Source = src;
             valueReceived = value;
             dmgValue = Mathf.Max(Mathf.FloorToInt(trgt.curDmg * value), 1);
-            Failed = !Apply();
+            Failed = !Apply(force);
         }
 
         public override void CopyTo(BattleUnit target, float modifier = 1.0f){

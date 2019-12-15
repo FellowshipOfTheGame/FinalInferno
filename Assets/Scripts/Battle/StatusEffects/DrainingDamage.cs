@@ -11,7 +11,7 @@ namespace FinalInferno{
         private bool doubleEdged;
         private bool isPermanent;
 
-        public DrainingDamage(BattleUnit src, BattleUnit trgt, float value, int dur = 1, bool dbleEdged = false, bool isPermnt = false) {
+        public DrainingDamage(BattleUnit src, BattleUnit trgt, float value, int dur = 1, bool force = false, bool dbleEdged = false, bool isPermnt = false) {
             // src é quem drena, trgt é quem é drenado
             // Isso conta como um buff que trgt aplica em src mesmo que src cause a aplicação do buff
             // Target então dever ser src e Source deve ser trgt
@@ -25,7 +25,7 @@ namespace FinalInferno{
             multiplier = value;
             isPermanent = isPermnt;
             dmgValue = Mathf.Max(Mathf.FloorToInt(Source.curDmg * value), 1);
-            Failed = !Apply();
+            Failed = !Apply(force);
         }
 
         public override void CopyTo(BattleUnit target, float modifier = 1.0f){

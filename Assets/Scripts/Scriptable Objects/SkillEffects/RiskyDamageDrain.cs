@@ -19,7 +19,7 @@ namespace FinalInferno{
             }
             if(!isDraining){
                 target.AddEffect(new DamageDrained(source, target, value1, (int)value2));
-                source.AddEffect(new DrainingDamage(source, target, value1, (int)value2, true, true));
+                source.AddEffect(new DrainingDamage(source, target, value1, (int)value2, false, true, true));
             }else{
             }
         }

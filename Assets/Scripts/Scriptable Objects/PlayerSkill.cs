@@ -27,6 +27,18 @@ namespace FinalInferno{
                 return table;
             }
         }
+        private bool ShouldCalculateMean{
+            get{
+                switch(Type){
+                    case SkillType.PassiveOnEnd:
+                    case SkillType.PassiveOnSpawn:
+                    case SkillType.PassiveOnStart:
+                        return false;
+                    default:
+                        return true;
+                }
+            }
+        }
         public Sprite skillImage;
 
         void Awake(){
@@ -84,7 +96,8 @@ namespace FinalInferno{
             foreach(BattleUnit target in targets){
                 expValue += target.unit.SkillExp;
             }
-            expValue /= Mathf.Max(targets.Count, 1);
+            if(ShouldCalculateMean)
+                expValue /= Mathf.Max(targets.Count, 1);
 
             return GiveExp(expValue);
         }
@@ -96,7 +109,8 @@ namespace FinalInferno{
                 if(!unit.IsHero)
                     expValue += unit.SkillExp;
             }
-            expValue /= Mathf.Max(units.Count, 1);
+            if(ShouldCalculateMean)
+                expValue /= Mathf.Max(units.Count, 1);
 
             return GiveExp(expValue);
         }

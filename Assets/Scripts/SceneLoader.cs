@@ -150,7 +150,7 @@ namespace FinalInferno{
             // Adiciona os inimigos desejados para a lista de unidades da batalha
             BattleManager.instance.units.AddRange(enemies);
             // Avisa que a batalha pode começar
-            BattleManager.instance.StartBattle();
+            BattleManager.instance.PrepareBattle();
             // Adiciona a música de background no audio source da camera, caso tenha
             AudioSource src = GameObject.FindObjectOfType<Camera>().GetComponent<AudioSource>();
             // Se não houver música, deixa a música padrão que está configurada

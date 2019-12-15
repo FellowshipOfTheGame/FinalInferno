@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace FinalInferno{
+    using UI.Battle.QueueMenu;
+
     public class BattleQueue{
-        public List<BattleUnit> list;
+        private BattleQueueUI queueUI;
+        private List<BattleUnit> list;
 
         //construtor
-        public BattleQueue(){
+        public BattleQueue(BattleQueueUI ui){
+            queueUI = ui;
             list = new List<BattleUnit>();
         }
 
@@ -19,6 +23,7 @@ namespace FinalInferno{
             for(i = 0; i < list.Count && element.actionPoints >= list[i].actionPoints; i++);
 
             list.Insert(i, element);
+            queueUI.UpdateQueue(BattleManager.instance.currentUnit);
         }
 
         //calcula a posição que o heroi ira entrar na fila pelo valor de actionPoints
@@ -26,7 +31,12 @@ namespace FinalInferno{
             int i;
             for(i = 0; i < list.Count && actionPoints >= list[i].actionPoints; i++);
 
+            queueUI.StartPreview(i);
             return i;
+        }
+
+        public void StopPreview(){
+            queueUI.StopPreview();
         }
 
         //retira e retorna a proxima BattleUnit que agira no combate
@@ -37,6 +47,8 @@ namespace FinalInferno{
                 bUnit.actionPoints -= currentActionPoints;
             }
             list.RemoveAt(0);
+
+            queueUI.UpdateQueue(bU);
             return bU;
         }
 
@@ -52,33 +64,35 @@ namespace FinalInferno{
 
         public void Remove(BattleUnit unit){
             list.Remove(unit);
+            queueUI.UpdateQueue(BattleManager.instance.currentUnit);
         }
 
         //esvazia a fila
         public void Clear(){
             list.Clear();
+            queueUI.UpdateQueue(BattleManager.instance.currentUnit);
         }
 
         public void Sort(){
             list.Sort(CompareUnits);
+            queueUI.UpdateQueue(BattleManager.instance.currentUnit);
         }
 
         private int CompareUnits(BattleUnit x, BattleUnit y){
             return x.actionPoints - y.actionPoints;
         }
 
-        // public void Print(){
-        //     Debug.Log("INICIO:");
-        //     foreach(BattleUnit bU in list){
-        //         Debug.Log();
-        //     }
-
-        //     Debug.Log("FIM:");
-        // }
-
         //retorna a quantidade de BattleUnit na fila
-        public int Count(){
-            return list.Count;
+        public int Count{
+            get => list.Count;
+        }
+
+        public IEnumerator<BattleUnit> GetEnumerator(){
+            return list.GetEnumerator();
+        }
+
+        public BattleUnit[] ToArray(){
+            return list.ToArray();
         }
     }
 }

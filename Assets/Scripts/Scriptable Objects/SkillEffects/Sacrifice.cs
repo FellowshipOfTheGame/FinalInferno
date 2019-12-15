@@ -13,6 +13,7 @@ namespace FinalInferno{
         public override void Apply(BattleUnit source, BattleUnit target) {
             int damage = target.DecreaseHP(value1);
             List<BattleUnit> allies = BattleManager.instance.GetTeam(target);
+            List<BattleUnit> enemies = BattleManager.instance.GetEnemies(target);
             int healValue;
             switch((int)value2 % 2){
                 case 0: // If the heal is to allies
@@ -23,11 +24,9 @@ namespace FinalInferno{
                     }
                     break;
                 case 1: // If the heal is to enemies
-                    int nEnemies = (BattleManager.instance.queue.Count() - allies.Count);
-                    healValue = (nEnemies > 0)? damage / nEnemies : 0;
-                    foreach(BattleUnit unit in BattleManager.instance.queue.list){
-                        if(!allies.Contains(unit))
-                            unit.TakeDamage(healValue, -1.0f, DamageType.None, Element.Neutral, target);
+                    healValue = (enemies.Count > 0)? damage / (enemies.Count) : 0;
+                    foreach(BattleUnit unit in enemies){
+                        unit.TakeDamage(healValue, -1.0f, DamageType.None, Element.Neutral, target);
                     }
                     break;
             }

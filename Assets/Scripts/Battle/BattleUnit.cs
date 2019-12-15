@@ -25,11 +25,11 @@ namespace FinalInferno{
             }
         }
         public int actionPoints; //define a posicao em que essa unidade agira no combate
-        private int hpOnHold;
-        public int stuns;
+        private int hpOnHold = 0;
+        public int stuns = 0;
         public bool CanAct{ get{ return (CurHP > 0 && stuns <= 0); } }
-        public float aggro;
-        public float statusResistance; // resistencia a debuffs em geral
+        public float aggro = 0;
+        public float statusResistance = 0; // resistencia a debuffs em geral
         private float damageResistance = 0.0f; // resistencia a danos em geral
         public float[] elementalResistance = new float[(int)Element.Neutral];
         public List<StatusEffect> effects; //lista de status fazendo efeito nessa unidade
@@ -66,6 +66,11 @@ namespace FinalInferno{
         }
 
         public void Configure(Unit unit){
+            // Talvez isso conserte as particulas sendo spawnadas em um ponto aleatorio da tela no começo
+            if(Mathf.Abs((transform.localScale.x * canvasTransform.localScale.x) - 1.0f) > float.Epsilon){
+                transform.localScale = new Vector3(-1.0f/canvasTransform.localScale.x,1.0f/canvasTransform.localScale.y,1.0f/canvasTransform.localScale.z);
+            }
+
             this.unit = unit;
             this.name = unit.name;
 
@@ -113,8 +118,14 @@ namespace FinalInferno{
                     case SkillType.PassiveOnSpawn:
                         // Aplica o efeito das skills relevantes na unidade
                         skill.Use(this, this);
-                        if(unit.IsHero)
-                            (skill as PlayerSkill).GiveExp(BattleManager.instance.units);
+                        // Da exp para a skill
+                        if(unit.IsHero){
+                            foreach(Unit _unit in BattleManager.instance.units){
+                                if(!_unit.IsHero){
+                                    (skill as PlayerSkill).GiveExp(_unit.SkillExp);
+                                }
+                            }
+                        }
                         break;
                     case SkillType.PassiveOnStart:
                         // Adiciona a skill no callback de inicio de batalha
@@ -174,14 +185,16 @@ namespace FinalInferno{
             }
 
             if(CurHP <= 0){
-                //Se a unidade estiver morta, anima a morte
+                // Se a unidade estiver morta, anima a morte
                 animator.SetBool("IsDead", true);
                 // Tira os buffs e debuffs
                 foreach(StatusEffect effect in effects.ToArray()){
-                    if(effect.Duration >= 0 && effect.Type != StatusType.None){
+                    if(effect.Duration > 0 && effect.Type != StatusType.None){
                         effect.Remove();
                     }
                 }
+                // Reseta o aggro
+                aggro = 0;
 
                 BattleManager.instance.Kill(this);
                 // Se houver algum callback de morte que, por exemplo, ressucita a unidade ele já vai ter sido chamado aqui
@@ -236,7 +249,7 @@ namespace FinalInferno{
             List<BattleUnit> targets = new List<BattleUnit>();
             targets.Add(statusEffect.Target);
             targets.Add(statusEffect.Source);
-            foreach(BattleUnit unit in BattleManager.instance.queue.list){
+            foreach(BattleUnit unit in BattleManager.instance.queue){
                 if(!targets.Contains(unit))
                     targets.Add(unit);
             }
@@ -262,7 +275,6 @@ namespace FinalInferno{
             if(BattleSkillManager.currentSkill != unit.defenseSkill){
                 animator.SetTrigger("UseSkill");
             }else{
-
                 UseSkill();
             }
         }

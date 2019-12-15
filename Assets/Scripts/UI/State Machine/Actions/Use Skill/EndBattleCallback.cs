@@ -21,13 +21,14 @@ namespace FinalInferno.UI.FSM
             // Reseta o maxhp das unidades, desfazendo aumentos e reduções causados por skills
             foreach(BattleUnit battleUnit in BattleManager.instance.battleUnits){
                 if(battleUnit.unit.IsHero && battleUnit.CurHP <= 0){
-                    battleUnit.Revive();
+                    battleUnit.Revive(true);
                 }
                 battleUnit.ResetMaxHP();
             }
 
             // Chama callback de fim de batalha para todas as unidades passando os heroes como alvos
-            foreach(BattleUnit battleUnit in BattleManager.instance.queue.list){
+            foreach(BattleUnit battleUnit in BattleManager.instance.battleUnits){
+                // Debug.Log("Chamando o callback da unidade " + battleUnit.name);
                 if(battleUnit.OnEndBattle != null)
                     battleUnit.OnEndBattle(battleUnit, BattleManager.instance.GetTeam(UnitType.Hero, true));
             }

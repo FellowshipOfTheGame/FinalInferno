@@ -90,6 +90,7 @@ namespace FinalInferno{
                 
                 skillEffect.effect.Apply(user, target);
             }
+            Debug.Log("Skill utilizada: " + name);
         }
 
         public virtual void ResetSkill(){Debug.Log("Reseto skill errado");} 

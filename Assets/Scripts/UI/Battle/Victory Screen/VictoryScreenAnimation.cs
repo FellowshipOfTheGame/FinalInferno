@@ -33,6 +33,12 @@ namespace FinalInferno.UI.Victory
         [SerializeField] private SkillInfoLoader Loader;
 
 
+        void Awake(){
+            foreach(Image img in heroesImages){
+                img.color = Color.clear;
+            }
+        }
+
         public void SetPartyStatus()
         {
             partyLevelSlider.maxValue = /*BattleProgress.startingExp +*/ BattleProgress.xpToNextLevel;
@@ -90,6 +96,7 @@ namespace FinalInferno.UI.Victory
         private IEnumerator HeroSkill(int heroIndex)
         {
             heroesImages[heroIndex].sprite = changes.heroes[heroIndex].Portrait;
+            heroesImages[heroIndex].color = Color.white;
             heroesImages[heroIndex].GetComponent<Animator>().runtimeAnimatorController = HeroImageAnimator;
 
             AIIManager manager = skillsContents[heroIndex].GetComponent<AIIManager>();
