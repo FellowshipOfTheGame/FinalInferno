@@ -14,11 +14,6 @@ namespace FinalInferno{
                 return Party.Instance.activeQuests.Find(quest => quest.name == name);
             }
         }
-        public Quest StaticReference{
-            get{
-                return StaticReferences.instance.activeQuests.Find(quest => quest.name == name);
-            }
-        }
         public void Awake(){
             ResetQuest();
         }
@@ -30,13 +25,13 @@ namespace FinalInferno{
                 else
                     events[key] = false;
             }
-            active = true;
+            active = false;
         }
         public virtual void StartQuest(){
-            if((PartyReference == null) && (StaticReference == null)){
+            if(PartyReference == null){
                 ResetQuest();
                 Party.Instance.activeQuests.Add(this);
-                StaticReferences.instance.activeQuests.Add(this);
+                active = true;
             }else{
                 Debug.Log("Quest has already begun");
             }
@@ -47,7 +42,6 @@ namespace FinalInferno{
             }
             active = false;
             Party.Instance.activeQuests.Remove(PartyReference);
-            StaticReferences.instance.activeQuests.Remove(StaticReference);
         }
     }
 }

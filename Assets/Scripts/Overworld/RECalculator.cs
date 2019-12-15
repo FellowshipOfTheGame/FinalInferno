@@ -23,8 +23,9 @@ namespace FinalInferno{
         }
         [SerializeField] private int minNumberEnemies;
         [SerializeField] private int maxNumberEnemies;
-        [SerializeField] public Sprite BattleBG;
-        [SerializeField] private AudioClip BattleBGM;
+        [SerializeField] public Sprite battleBG;
+        [SerializeField] private AudioClip battleBGM;
+        [SerializeField] private AudioClip overworldBGM;
         [SerializeField] private float baseEncounterRate = 5.0f;
         [SerializeField] private float rateIncreaseFactor = 0.05f;
         private float curEncounterRate;
@@ -36,8 +37,12 @@ namespace FinalInferno{
         void Start()
         {
             table = DynamicTable.Create(encounterTable);
-            playerObj = CharacterOW.MainOWCharacter.transform;
-            lastPosition = new Vector2(playerObj.position.x, playerObj.position.y);
+            playerObj = CharacterOW.MainOWCharacter?.transform;
+            if(playerObj)
+                lastPosition = new Vector2(playerObj.position.x, playerObj.position.y);
+            else
+                lastPosition = Vector2.zero;
+            StaticReferences.instance.BGM.PlaySong(overworldBGM);
         }
 
         // Update is called once per frame
@@ -103,8 +108,8 @@ namespace FinalInferno{
                 }
 
                 FinalInferno.UI.ChangeSceneUI.isBattle = true;
-                FinalInferno.UI.ChangeSceneUI.battleBG = BattleBG;
-                FinalInferno.UI.ChangeSceneUI.battleBGM = BattleBGM;
+                FinalInferno.UI.ChangeSceneUI.battleBG = battleBG;
+                FinalInferno.UI.ChangeSceneUI.battleBGM = battleBGM;
                 FinalInferno.UI.ChangeSceneUI.battleEnemies = (Enemy[])enemies.Clone();
 
                 decision.Click();

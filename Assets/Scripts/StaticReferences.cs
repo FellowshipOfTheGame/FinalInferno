@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using FinalInferno;
 
+[RequireComponent(typeof(Jukebox))]
 public class StaticReferences : MonoBehaviour
 {
     public static StaticReferences instance = null;
-    [SerializeField] private Party party;
-    public List<Quest> activeQuests;
+    public Jukebox BGM;
+    public AudioClip mainMenuBGM;
     // Start is called before the first frame update
     void Awake()
     {
@@ -17,5 +18,7 @@ public class StaticReferences : MonoBehaviour
         }else{
             Destroy(this);
         }
+
+        BGM = GetComponent<Jukebox>();
     }
 }

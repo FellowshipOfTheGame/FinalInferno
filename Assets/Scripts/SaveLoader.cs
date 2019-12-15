@@ -5,7 +5,7 @@ using UnityEngine;
 namespace FinalInferno{
     public static class SaveLoader{
         private const string fileName = "SaveFile";
-        private static DataSaver<SaveFile> dataSaver = new DataSaver<SaveFile>(fileName, false);
+        private static DataSaver<SaveFile> dataSaver = new DataSaver<SaveFile>(fileName, true);
         private static SaveFile saveFile = dataSaver.LoadData();
         public static int SaveSlot { get{ return saveFile.Slot; } set{ saveFile.Slot = value; }}
         public static bool AutoSave {
@@ -81,7 +81,6 @@ namespace FinalInferno{
             Party.Instance.GiveExp(0);
 
             Party.Instance.activeQuests.Clear();
-            StaticReferences.instance.activeQuests.Clear();
             Quest mainQuest = AssetManager.LoadAsset<Quest>("MainQuest");
             mainQuest.StartQuest();
             

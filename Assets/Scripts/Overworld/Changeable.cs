@@ -21,8 +21,8 @@ namespace FinalInferno {
             }
 
             for(int i = 0; i < changeRules.Count; i++){
-                if(changeRules[i].quest.StaticReference != null){
-                    changeRules[i] = new ChangeRule(changeRules[i].quest.StaticReference, changeRules[i].eventFlag, changeRules[i].animationFlag, changeRules[i].newValue);
+                if(changeRules[i].quest.PartyReference != null){
+                    changeRules[i] = new ChangeRule(changeRules[i].quest.PartyReference, changeRules[i].eventFlag, changeRules[i].animationFlag, changeRules[i].newValue);
                 }
             }
         }

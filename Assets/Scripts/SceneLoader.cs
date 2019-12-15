@@ -137,6 +137,7 @@ namespace FinalInferno{
         public static void LoadMainMenu(){
             // Simplesmente carregar a cena não deveria dar nenhum problema
             // Mas a função intermediaria ficara aqui para o caso de querermos fazer algo diferente
+            SceneManager.sceneLoaded += OnMainMenuLoad;
             SceneManager.LoadScene("MainMenu");
         }
 
@@ -151,14 +152,16 @@ namespace FinalInferno{
             BattleManager.instance.units.AddRange(enemies);
             // Avisa que a batalha pode começar
             BattleManager.instance.PrepareBattle();
-            // Adiciona a música de background no audio source da camera, caso tenha
-            AudioSource src = GameObject.FindObjectOfType<Camera>().GetComponent<AudioSource>();
             // Se não houver música, deixa a música padrão que está configurada
+            StaticReferences.instance.BGM.Stop();
             if(battleBGM != null)
-                src.clip = battleBGM;
+                StaticReferences.instance.BGM.PlaySong(battleBGM);
             battleBGM = null;
-            src.Play();
             SceneManager.sceneLoaded -= OnBattleLoad;
+        }
+        public static void OnMainMenuLoad(Scene map, LoadSceneMode mode){
+            StaticReferences.instance.BGM.PlaySong(StaticReferences.instance.mainMenuBGM);
+            SceneManager.sceneLoaded -= OnMainMenuLoad;
         }
         public static void OnMapLoad(Scene map, LoadSceneMode mode) {
             // To Do: Animação da tela preta sumindo
