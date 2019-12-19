@@ -34,7 +34,7 @@ namespace FinalInferno{
         }
 
         void UseSkill(){
-            Debug.Log("Chamou o use skill pela animação; " + "Object: " + gameObject.name);
+            // Debug.Log("Chamou o use skill pela animação; " + "Object: " + gameObject.name);
             BattleSkillManager.currentSkill.Use(BattleSkillManager.currentUser, transform.parent.GetComponentInChildren<BattleUnit>());
         }
 

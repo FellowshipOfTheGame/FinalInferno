@@ -22,6 +22,7 @@ namespace FinalInferno{
                             expValue += bUnit.unit.SkillExp;
                         }
                         expValue /= enemies.Count;
+                        return expValue;
                     }
                 }
                 return Mathf.Max(10, (Mathf.FloorToInt(Mathf.Sqrt(Party.Instance.XpCumulative))));

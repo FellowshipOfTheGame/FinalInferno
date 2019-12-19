@@ -7,7 +7,7 @@ namespace FinalInferno{
         public override StatusType Type { get{ return StatusType.Undesirable; } }
         public override float Value { get{ return Duration; } }
 
-        public Paralyzed(BattleUnit src, BattleUnit trgt, float value, int dur = 1) {
+        public Paralyzed(BattleUnit src, BattleUnit trgt, float value, int dur = 1, bool force = false) {
             if(dur < 0)
                 dur = int.MinValue;
             Duration = dur;
@@ -15,7 +15,7 @@ namespace FinalInferno{
             Target = trgt;
             Source = src;
             rollValue = value;
-            Failed = !Apply();
+            Failed = !Apply(force);
         }
 
         public override void CopyTo(BattleUnit target, float modifier = 1.0f){

@@ -11,10 +11,11 @@ namespace FinalInferno{
         
         public static BattleManager instance;
 
+        public FinalInferno.UI.FSM.BoolDecision isBattleReady;
         public List<Unit> units;
         public List<BattleUnit> battleUnits;
         public BattleQueue queue;
-        public BattleQueueUI queueUI;
+        [SerializeField] private BattleQueueUI queueUI;
 
         public BattleUnit currentUnit {get; private set;}
 
@@ -34,31 +35,34 @@ namespace FinalInferno{
             else if (instance != this)
                 Destroy(this);
 
-            queue = new BattleQueue();
+            queue = new BattleQueue(queueUI);
             units = new List<Unit>();
             battleUnits = new List<BattleUnit>();
             enemyBuff = 0;
             enemyDebuff = 0;
+            BattleProgress.ResetInfo(Party.Instance);
         }
 
-        public void StartBattle(){
-            BattleProgress.ResetInfo(Party.Instance);
-
+        public void PrepareBattle(){
             foreach(Unit unit in units){
+                if (unit.IsHero)
+                    BattleProgress.addHeroSkills((Hero)unit);
+
                 BattleUnit newUnit = BattleUnitsUI.instance.LoadUnit(unit);
                 battleUnits.Add(newUnit);
                 queue.Enqueue(newUnit, -newUnit.curSpeed);
                 // Debug.Log("Carregou " + unit.name);
 
-                if (unit.IsHero)
-                    BattleProgress.addHeroSkills((Hero)unit);
-                else
+                if(!unit.IsHero)
                     newUnit.ChangeColor();
             }
-            List<BattleUnit> auxList = new List<BattleUnit>(queue.list);
-            foreach(BattleUnit unit in queue.list){
+            isBattleReady.UpdateValue(true);
+        }
+
+        public void StartBattle(){
+            foreach(BattleUnit unit in queue.ToArray()){
                 if(unit.OnStartBattle != null)
-                    unit.OnStartBattle(unit, auxList);
+                    unit.OnStartBattle(unit, new List<BattleUnit>(queue.ToArray()));
             }
             UpdateTurn();
         }
@@ -84,12 +88,14 @@ namespace FinalInferno{
             {
                 UpdateTurn();
                 UpdateLives();
+            }else{
+                // Só pra fazer com que nao fique uma unidade duplicada na fila
+                queue.Sort();
             }
         }
 
         public void UpdateLives()
         {
-            queueUI.UpdateQueue();
             foreach (UnitsLives lives in unitsLives)
                 lives.UpdateLives();
         }
@@ -107,12 +113,15 @@ namespace FinalInferno{
                 unit.OnDeath(unit, new List<BattleUnit>(battleUnits));
                 unit.OnDeath = null;
             }
+            int nValidEffects = 0;
+            foreach(StatusEffect effect in unit.effects){
+                if(effect.Duration > 0 && effect.Type != StatusType.None)
+                    nValidEffects++;
+            }
             // Se a unidade ainda estiver morta atualiza a fila
-            if(unit.CurHP <= 0 && unit.effects.Count <= 0){
+            if(unit.CurHP <= 0 && nValidEffects == 0){
                 queue.Remove(unit);
                 unitsUI.RemoveUnit(unit);
-
-                queueUI.UpdateQueue();
 
                 // Se a unidade que morreu era a unidade atual, anda a fila
                 if (currentUnit == unit){
@@ -130,8 +139,6 @@ namespace FinalInferno{
             if(!isCallback){
                 queue.Enqueue(unit, 0);
                 unitsUI.ReinsertUnit(unit);
-                
-                queueUI.UpdateQueue();
             }
             foreach (UnitsLives lives in unitsLives)
                 lives.UpdateLives();
@@ -142,17 +149,13 @@ namespace FinalInferno{
         }
 
         public VictoryType CheckEnd(){
-            int quantityAll = queue.Count();
-            int quantityHeros = 0;
+            List<BattleUnit> team = GetTeam(UnitType.Enemy);
+            if(team.Count <= 0) return VictoryType.Heroes;
 
-            for(int i = 0; i < quantityAll; i++){
-                if((queue.Peek(i).unit).IsHero) quantityHeros++;
-            }
-            if (currentUnit && currentUnit.unit.IsHero) quantityHeros++;
+            team = GetTeam(UnitType.Hero);
+            if(team.Count <= 0) return VictoryType.Enemys;
 
-            if(quantityHeros == quantityAll+1) return VictoryType.Heroes;
-            if(quantityHeros == 0) return VictoryType.Enemys;
-            else return VictoryType.Nobody;
+            return VictoryType.Nobody;
         }
 
         public List<BattleUnit> GetTeam(UnitType type, bool countDead = false, bool deadOnly = false){

@@ -8,7 +8,7 @@ namespace FinalInferno{
         public override float Value { get{ return aggroIncrease; } }
         private float aggroIncrease;
 
-        public Taunting(BattleUnit src, BattleUnit trgt, float value, int dur = 1) {
+        public Taunting(BattleUnit src, BattleUnit trgt, float value, int dur = 1, bool force = false) {
             if(dur < 0)
                 dur = int.MinValue;
             // Como o efeito é aplicado pela primeira vez no apply ao inves do primeiro update
@@ -18,7 +18,7 @@ namespace FinalInferno{
             Target = trgt;
             Source = src;
             aggroIncrease = value;
-            Failed = !Apply();
+            Failed = !Apply(force);
         }
 
         public override void CopyTo(BattleUnit target, float modifier = 1.0f){

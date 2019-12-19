@@ -10,7 +10,7 @@ namespace FinalInferno{
         private float valueReceived;
         private Element element;
 
-        public DamagingOverTime(BattleUnit src, BattleUnit trgt, float value, Element elemnt, int dur = 1) {
+        public DamagingOverTime(BattleUnit src, BattleUnit trgt, float value, Element elemnt, int dur = 1, bool force = false) {
             if(dur < 0)
                 dur = int.MinValue;
             Duration = dur;
@@ -20,7 +20,7 @@ namespace FinalInferno{
             element = elemnt;
             valueReceived = value;
             dmgPerTurn = Mathf.Max(Mathf.FloorToInt(Source.curDmg * value), 1);
-            Failed = !Apply();
+            Failed = !Apply(force);
         }
 
         public override void CopyTo(BattleUnit target, float modifier = 1.0f){

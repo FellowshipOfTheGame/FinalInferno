@@ -10,7 +10,7 @@ namespace FinalInferno{
 
         public override void AfterDialogue(){
             foreach(QuestEvent _event in eventsTriggered){
-                Quest actualQuest = StaticReferences.instance.activeQuests.Find(x => x.name == _event.quest.name);
+                Quest actualQuest = Party.Instance.activeQuests.Find(x => x.name == _event.quest.name);
                 if(actualQuest == null)
                     actualQuest = _event.quest;
 

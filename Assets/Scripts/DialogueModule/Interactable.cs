@@ -12,8 +12,8 @@ namespace Fog.Dialogue
 
         void Awake(){
             for(int i = 0; i < dialogues.Count; i++){
-                if(dialogues[i].quest.StaticReference != null){
-                    dialogues[i] = new DialogueEntry(dialogues[i].quest.StaticReference, dialogues[i].eventFlag, dialogues[i].dialogue);
+                if(dialogues[i].quest.PartyReference != null){
+                    dialogues[i] = new DialogueEntry(dialogues[i].quest.PartyReference, dialogues[i].eventFlag, dialogues[i].dialogue);
                 }
             }
         }

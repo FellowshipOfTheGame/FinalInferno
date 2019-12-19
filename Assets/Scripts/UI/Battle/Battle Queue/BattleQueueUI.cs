@@ -39,50 +39,42 @@ namespace FinalInferno.UI.Battle.QueueMenu
         private Image currentTurnBattleImage;
         private List<Image> BattleImages;
 
-        void Start()
+        void Awake()
         {
-            LoadQueue();
-            PreviewObject.gameObject.SetActive(false);
-        }
-
-        /// <summary>
-        /// Carrega a fila de batalha.
-        /// </summary>
-        private void LoadQueue()
-        {
-            // Coloca o personagem que se encontra em seu turno atual no local específico.
-            currentTurnBattleImage = Instantiate(QueueObject, currentTurnContent).GetComponentsInChildren<Image>()[1];
-            currentTurnBattleImage.sprite = BattleManager.instance.currentUnit.QueueSprite;
-
-            // Coloca o restante dos personagens na fila.
             BattleImages = new List<Image>();
-            foreach (BattleUnit unit in BattleManager.instance.queue.list)
-            {
-                Image newImage = Instantiate(QueueObject, content).GetComponentsInChildren<Image>()[1];
-                newImage.sprite = unit.QueueSprite;
-                BattleImages.Add(newImage);
-            }
+            PreviewObject.gameObject.SetActive(false);
+            currentTurnBattleImage = Instantiate(QueueObject, currentTurnContent).GetComponentsInChildren<Image>()[1];
         }
 
         /// <summary>
         /// Atualiza a fila de batalha
         /// </summary>
-        public void UpdateQueue()
+        public void UpdateQueue(BattleUnit currentUnit)
         {
-            // Coloca o personagem que se encontra em seu turno atual no local específico.
-            currentTurnBattleImage.sprite = BattleManager.instance.currentUnit.QueueSprite;
-
-            // Coloca o restante dos personagens na fila.
-            int count = 0;
-            foreach (BattleUnit unit in BattleManager.instance.queue.list){
-                BattleImages[count].transform.parent.gameObject.SetActive(true);
-                BattleImages[count++].sprite = unit.QueueSprite;
+            while(BattleImages.Count < BattleManager.instance.queue.Count){
+                Image newImage = Instantiate(QueueObject, content).GetComponentsInChildren<Image>()[1];
+                BattleImages.Add(newImage);
+            }
+            while(BattleImages.Count > BattleManager.instance.queue.Count){
+                Destroy(BattleImages[BattleImages.Count-1].transform.parent.gameObject);
+                BattleImages.RemoveAt(BattleImages.Count-1);
             }
 
-            // Destroi os objetos que não estão mais sendo utilizados (personagens que morreram)
-            for (int i = BattleImages.Count-1; i >= count ; i--)
-            {
-                BattleImages[i].transform.parent.gameObject.SetActive(false);
+            // Coloca o personagem que se encontra em seu turno atual no local específico.
+            currentTurnBattleImage.sprite = currentUnit?.QueueSprite;
+            if(currentTurnBattleImage.sprite != null)
+                currentTurnBattleImage.color = Color.white;
+            else
+                currentTurnBattleImage.color = Color.clear;
+
+            // Coloca o restante dos personagens na fila.
+            for(int i = 0; i < BattleManager.instance.queue.Count; i++){
+                // BattleImages[i].transform.parent.gameObject.SetActive(true);
+                BattleImages[i].sprite = BattleManager.instance.queue.Peek(i).unit.QueueSprite;
+                if(BattleImages[i].sprite != null)
+                    BattleImages[i].color = Color.white;
+                else
+                    BattleImages[i].color = Color.clear;
             }
         }
 

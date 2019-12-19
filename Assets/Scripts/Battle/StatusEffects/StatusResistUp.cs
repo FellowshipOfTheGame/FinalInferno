@@ -8,7 +8,7 @@ namespace FinalInferno{
         public override float Value { get{ return resistIncrease; } }
         private float resistIncrease;
 
-        public StatusResistUp(BattleUnit src, BattleUnit trgt, float value, int dur = 1) {
+        public StatusResistUp(BattleUnit src, BattleUnit trgt, float value, int dur = 1, bool force = false) {
             if(dur < 0)
                 dur = int.MinValue;
             Duration = dur;
@@ -16,7 +16,7 @@ namespace FinalInferno{
             Target = trgt;
             Source = src;
             resistIncrease = value;
-            Failed = !Apply();
+            Failed = !Apply(force);
         }
 
         public override void CopyTo(BattleUnit target, float modifier = 1.0f){

@@ -9,7 +9,7 @@ namespace FinalInferno{
         private int defValue;
         private float valueReceived;
 
-        public DefenseUp(BattleUnit src, BattleUnit trgt, float value, int dur = 1) {
+        public DefenseUp(BattleUnit src, BattleUnit trgt, float value, int dur = 1, bool force = false) {
             if(dur < 0)
                 dur = int.MinValue;
             Duration = dur;
@@ -18,7 +18,7 @@ namespace FinalInferno{
             Source = src;
             valueReceived = value;
             defValue = Mathf.Max(Mathf.FloorToInt(trgt.curDef * value), 1);
-            Failed = !Apply();
+            Failed = !Apply(force);
         }
 
         public override void CopyTo(BattleUnit target, float modifier = 1.0f){

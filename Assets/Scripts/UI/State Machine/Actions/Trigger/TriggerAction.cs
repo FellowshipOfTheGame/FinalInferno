@@ -28,14 +28,6 @@ namespace FinalInferno.UI.FSM
         public override void Act(StateController controller)
         {
             animator.SetTrigger(trigger);
-            AudioSource src = animator.GetComponent<AudioSource>();
-            if(trigger == "Enable" && src != null){
-                foreach(AudioSource source in FindObjectsOfType<AudioSource>()){
-                    if(source.isPlaying)
-                        source.Stop();
-                }
-                src.Play();
-            }
         }
 
         /// <summary>
