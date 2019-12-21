@@ -38,6 +38,8 @@ namespace FinalInferno.UI.AII
 
         [SerializeField] private bool interactable;
 
+        [SerializeField] private AudioSource AS;
+
 
         void Awake(){
             currentItem = null;
@@ -134,6 +136,7 @@ namespace FinalInferno.UI.AII
                 currentItem.Exit();
                 currentItem = nextItem;
                 currentItem.Enter();
+                if (AS) AS.Play();
             }
         }
     }
