@@ -16,12 +16,16 @@ namespace FinalInferno{
             get{
                 if(BattleManager.instance){
                     long expValue = 0;
-                    List<BattleUnit> enemies = BattleManager.instance.GetTeam(UnitType.Enemy, true);
-                    if(enemies.Count > 0){
-                        foreach(BattleUnit bUnit in enemies){
-                            expValue += bUnit.unit.SkillExp;
+                    int nEnemies = 0;
+                    List<Unit> units = BattleManager.instance.units;
+                    foreach(Unit u in units){
+                        if(!u.IsHero){
+                            expValue += u.SkillExp;
+                            nEnemies++;
                         }
-                        expValue /= enemies.Count;
+                    }
+                    if(nEnemies > 0){
+                        expValue /= nEnemies;
                         return expValue;
                     }
                 }

@@ -20,13 +20,13 @@ namespace FinalInferno{
                     healValue = (allies.Count > 1)? damage / (allies.Count - 1) : 0;
                     foreach(BattleUnit unit in allies){
                         if(unit != target)
-                            unit.TakeDamage(healValue, -1.0f, DamageType.None, Element.Neutral, target);
+                            unit.Heal(healValue, 1.0f, target);
                     }
                     break;
                 case 1: // If the heal is to enemies
                     healValue = (enemies.Count > 0)? damage / (enemies.Count) : 0;
                     foreach(BattleUnit unit in enemies){
-                        unit.TakeDamage(healValue, -1.0f, DamageType.None, Element.Neutral, target);
+                        unit.Heal(healValue, -1.0f, target);
                     }
                     break;
             }

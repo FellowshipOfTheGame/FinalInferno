@@ -35,7 +35,7 @@ namespace FinalInferno{
             if(base.Update()){
                 return true;
             }else{
-                Target.TakeDamage(dmgPerTurn, 1.0f, DamageType.None, element);
+                Target.TakeDamage(dmgPerTurn, 1.0f, DamageType.None, element, Source);
                 return false;
             }
         }

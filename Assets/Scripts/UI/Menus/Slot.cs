@@ -32,7 +32,7 @@ namespace FinalInferno.UI.Saves
 
         public void LoadSlot(SavePreviewInfo info, int number)
         {
-            if (emptySlot = (info.level == 0))
+            if (emptySlot = (info.level <= 0))
             {
                 EmptySlotGO.SetActive(true);
             }

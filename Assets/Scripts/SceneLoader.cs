@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 namespace FinalInferno{
     public static class SceneLoader {
@@ -9,6 +10,7 @@ namespace FinalInferno{
         private static bool updatePositions = false;
         private static Fog.Dialogue.Dialogue cutsceneDialogue = null;
         private static AudioClip battleBGM;
+        public static UnityAction beforeSceneChange = null;
 
         public static void LoadBattleScene(Enemy[] enemiesSelected, Sprite BG, AudioClip BGM) {
             RECalculator.encountersEnabled = false;
@@ -27,6 +29,8 @@ namespace FinalInferno{
             SceneManager.sceneLoaded += OnBattleLoad;
             // To do: Iniciar animação de encounter caso tenha (Ex.: tela escurecendo)
             // A animação também pode ser iniciada pelo RECalculator, ante de chamar este metodo
+            if(beforeSceneChange != null)
+                beforeSceneChange();
             SceneManager.LoadScene("Battle");
         }
 
@@ -47,6 +51,8 @@ namespace FinalInferno{
 
             SceneManager.sceneLoaded += OnMapLoad;
             // SceneManager.sceneLoaded += UnlockMovement;
+            if(beforeSceneChange != null)
+                beforeSceneChange();
             SceneManager.LoadScene(map.buildIndex);
         }
         public static void LoadOWScene(string map, bool shouldUpdate = false, Vector2? newPosition = null, bool dontSave = false) {
@@ -64,6 +70,8 @@ namespace FinalInferno{
 
             SceneManager.sceneLoaded += OnMapLoad;
             // SceneManager.sceneLoaded += UnlockMovement;
+            if(beforeSceneChange != null)
+                beforeSceneChange();
             SceneManager.LoadScene(map);
         }
         public static void LoadOWScene(int mapID, bool shouldUpdate = false, Vector2? newPosition = null, bool dontSave = false) {
@@ -81,6 +89,8 @@ namespace FinalInferno{
 
             SceneManager.sceneLoaded += OnMapLoad;
             // SceneManager.sceneLoaded += UnlockMovement;
+            if(beforeSceneChange != null)
+                beforeSceneChange();
             SceneManager.LoadScene(mapID);
         }
 
@@ -102,10 +112,14 @@ namespace FinalInferno{
             if(dialogue != null){
                 SceneManager.sceneLoaded += OnMapLoad;
                 SceneManager.sceneLoaded += StartDialogue;
+                if(beforeSceneChange != null)
+                    beforeSceneChange();
                 SceneManager.LoadScene(map.buildIndex);
             }else{
                 SceneManager.sceneLoaded += OnMapLoad;
                 // SceneManager.sceneLoaded += UnlockMovement;
+                if(beforeSceneChange != null)
+                    beforeSceneChange();
                 SceneManager.LoadScene(map.buildIndex);
             }
         }
@@ -126,10 +140,14 @@ namespace FinalInferno{
             if(dialogue != null){
                 SceneManager.sceneLoaded += OnMapLoad;
                 SceneManager.sceneLoaded += StartDialogue;
+                if(beforeSceneChange != null)
+                    beforeSceneChange();
                 SceneManager.LoadScene(map);
             }else{
                 SceneManager.sceneLoaded += OnMapLoad;
                 // SceneManager.sceneLoaded += UnlockMovement;
+                if(beforeSceneChange != null)
+                    beforeSceneChange();
                 SceneManager.LoadScene(map);
             }
         }
@@ -138,6 +156,8 @@ namespace FinalInferno{
             // Simplesmente carregar a cena não deveria dar nenhum problema
             // Mas a função intermediaria ficara aqui para o caso de querermos fazer algo diferente
             SceneManager.sceneLoaded += OnMainMenuLoad;
+            if(beforeSceneChange != null)
+                beforeSceneChange();
             SceneManager.LoadScene("MainMenu");
         }
 

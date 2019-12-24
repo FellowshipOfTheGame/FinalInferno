@@ -56,10 +56,10 @@ namespace FinalInferno
         PassiveOnTakeDamage,
         PassiveOnTakeDamageAll,
         PassiveOnDeath,
+        PassiveOnSkillUsed
         //PassiveOnGiveBuff,
         //PassiveOnGiveDebuff,
         //PassiveOnDealDamage,
-        PassiveOnSkillUsed
     }
 
     public enum StatusType {
@@ -91,6 +91,27 @@ namespace FinalInferno
                 xpToNextLevel = skill.xpNext;
             }
         }
+        public static bool operator ==(SkillInfo left, SkillInfo right){
+            return left.Equals(right);
+        }
+        public static bool operator !=(SkillInfo left, SkillInfo right){
+            return !(left == right);
+        }
+        public override bool Equals(object obj){
+            if(obj.GetType() != typeof(SkillInfo))
+                return false;
+
+            return Equals((SkillInfo)obj);
+        }
+        public bool Equals(SkillInfo other){
+            if(level != other.level || xp != other.xp || xpToNextLevel != other.xpToNextLevel || xpCumulative != other.xpCumulative || active != other.active)
+                return false;
+
+            return true;
+        }
+        public override int GetHashCode(){
+            return (3 * level.GetHashCode() + 5 * xp.GetHashCode() + 7 * xpToNextLevel.GetHashCode() + 11 * xpCumulative.GetHashCode() + 13 * active.GetHashCode());
+        }
     }
 
     [System.Serializable]
@@ -98,11 +119,75 @@ namespace FinalInferno
         [SerializeField] public string name;
         [SerializeField] public string[] flagsNames;
         [SerializeField] public ulong flagsTrue;
+        public static bool operator ==(QuestInfo left, QuestInfo right){
+            return left.Equals(right);
+        }
+        public static bool operator !=(QuestInfo left, QuestInfo right){
+            return !(left == right);
+        }
+        public override bool Equals(object obj){
+            if(obj.GetType() != typeof(QuestInfo))
+                return false;
+
+            return Equals((QuestInfo)obj);
+        }
+        public bool Equals(QuestInfo other){
+            if(name != other.name)
+                return false;
+
+            if(flagsNames != null && other.flagsNames != null){
+                if(flagsNames.Length != other.flagsNames.Length)
+                    return false;
+                for(int i = 0; i < flagsNames.Length; i++){
+                    if(flagsNames[i] != other.flagsNames[i])
+                        return false;
+                }
+            }else if(flagsNames != null || other.flagsNames != null){
+                return false;
+            }
+
+            if(flagsTrue != other.flagsTrue)
+                return false;
+
+            return true;
+        }
+        public override int GetHashCode(){
+            return (3 * name.GetHashCode() + 5 * flagsNames.GetHashCode() + 7 * flagsTrue.GetHashCode());
+        }
     }
 
     [System.Serializable]
     public struct SkillInfoArray{
         [SerializeField] public SkillInfo[] skills;
+        public static bool operator ==(SkillInfoArray left, SkillInfoArray right){
+            return left.Equals(right);
+        }
+        public static bool operator !=(SkillInfoArray left, SkillInfoArray right){
+            return !(left == right);
+        }
+        public override int GetHashCode(){
+            return skills.GetHashCode();
+        }
+        public override bool Equals(object obj){
+            if(obj.GetType() != typeof(SkillInfoArray))
+                return false;
+
+            return Equals((SkillInfoArray)obj);
+        }
+        public bool Equals(SkillInfoArray other){
+            if(skills != null && other.skills != null){
+                if(skills.Length != other.skills.Length)
+                    return false;
+                for(int i = 0; i < skills.Length; i++){
+                    if(skills[i] != other.skills[i])
+                        return false;
+                }
+            }else if(skills != null || other.skills != null){
+                return false;
+            }
+
+            return true;
+        }
     }
 
     [System.Serializable]
@@ -115,6 +200,69 @@ namespace FinalInferno
         [SerializeField] public int[] hpCur; // hp atual de cada personagem
         [SerializeField] public Vector2[] position; // posição no overworld dos personagens
         [SerializeField] public SkillInfoArray[] heroSkills; // Info de skills
+        public bool Equals(SaveInfo other){
+            if(xpParty != other.xpParty)
+                return false;
+            if(mapName != other.mapName)
+                return false;
+
+            if(quest != null && other.quest != null){
+                if(quest.Length != other.quest.Length)
+                    return false;
+                for(int i = 0; i < quest.Length; i++){
+                    if(quest[i] != other.quest[i])
+                        return false;
+                }
+            }else if(quest != null || other.quest != null){
+                return false;
+            }
+
+            if(archetype != null && other.archetype != null){
+                if(archetype.Length != other.archetype.Length)
+                    return false;
+                for(int i = 0; i < archetype.Length; i++){
+                    if(archetype[i] != other.archetype[i])
+                        return false;
+                }
+            }else if(archetype != null || other.archetype != null){
+                return false;
+            }
+
+            if(hpCur != null && other.hpCur != null){
+                if(hpCur.Length != other.hpCur.Length)
+                    return false;
+                for(int i = 0; i < hpCur.Length; i++){
+                    if(hpCur[i] != other.hpCur[i])
+                        return false;
+                }
+            }else if(hpCur != null || other.hpCur != null){
+                return false;
+            }
+
+            if(position != null && other.position != null){
+                if(position.Length != other.position.Length)
+                    return false;
+                for(int i = 0; i < position.Length; i++){
+                    if(position[i] != other.position[i])
+                        return false;
+                }
+            }else if(position != null || other.position != null){
+                return false;
+            }
+
+            if(heroSkills != null && other.heroSkills != null){
+                if(heroSkills.Length != other.heroSkills.Length)
+                    return false;
+                for(int i = 0; i < heroSkills.Length; i++){
+                    if(heroSkills[i] != other.heroSkills[i])
+                        return false;
+                }
+            }else if(heroSkills != null || other.heroSkills != null){
+                return false;
+            }
+
+            return true;
+        }
     }
 
     // Struct a ser usada para visualizar os saveSlots
@@ -124,7 +272,7 @@ namespace FinalInferno
         public List<Hero> heroes;
         public SavePreviewInfo(SaveInfo save){
             // Listas são null por default, portanto um save com uma lista nula não foi inicializado
-            if(save.archetype == null){
+            if(save.xpParty <= 0){
                 level = 0;
                 mapName = "";
                 heroes = null;

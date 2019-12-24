@@ -21,6 +21,7 @@ AudioMixerController:
     - 49a42b350fd57ed46a29e19c7eb11df7
     - d2d6e9f49df3d9d4382261370082a51e
     - f8985e8fe31d8c845b76ce139d511580
+    - ac776587dd2032c4199d003d1024fa25
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -36,6 +37,7 @@ AudioMixerGroupController:
   m_Children:
   - {fileID: 243693526855134572}
   - {fileID: 243419704567385710}
+  - {fileID: 243783522763932072}
   m_Volume: d0b821f2136e4c047b046cc680a3d133
   m_Pitch: 9c8b695558ce2ba46821259348a8fbbc
   m_Effects:
@@ -69,6 +71,7 @@ AudioMixerSnapshotController:
   m_SnapshotID: a4a4380026470c4499c837e65070a0cb
   m_FloatValues:
     b2dbf011177b98a45b74641f2cda0ad9: -7.8940816
+    b8b418d8321e15543a7e9d3a6d5bae4e: -19.928473
   m_TransitionOverrides: {}
 --- !u!243 &243419704567385710
 AudioMixerGroupController:
@@ -106,6 +109,38 @@ AudioMixerGroupController:
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
+--- !u!243 &243783522763932072
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Menu SFX
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: ac776587dd2032c4199d003d1024fa25
+  m_Children: []
+  m_Volume: b8b418d8321e15543a7e9d3a6d5bae4e
+  m_Pitch: fa123a93339ef0c4db46f72a1c4596ad
+  m_Effects:
+  - {fileID: 244322149239675864}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!244 &244322149239675864
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: bd7fd6cc7d22d61409e25912d89a7863
+  m_EffectName: Attenuation
+  m_MixLevel: 51c6c66815d02624cbbb999e95e1f6ea
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!244 &244695645104252046
 AudioMixerEffectController:
   m_ObjectHideFlags: 3

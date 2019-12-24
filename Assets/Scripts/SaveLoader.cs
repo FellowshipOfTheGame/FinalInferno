@@ -7,7 +7,7 @@ namespace FinalInferno{
         private const string fileName = "SaveFile";
         private static DataSaver<SaveFile> dataSaver = new DataSaver<SaveFile>(fileName, true);
         private static SaveFile saveFile = dataSaver.LoadData();
-        public static int SaveSlot { get{ return saveFile.Slot; } set{ saveFile.Slot = value; }}
+        public static int SaveSlot { get{ return saveFile.Slot; } set{ saveFile.Slot = value; } }
         public static bool AutoSave {
             get{
                 if(saveFile != null){
@@ -43,9 +43,19 @@ namespace FinalInferno{
         }
 
         public static void SaveGame(){
+            // // Failsafe para garantir que saveFile não seja null
+            // if(saveFile == null)
+            //     saveFile = new SaveFile();
             // Falha em salvar o jogo caso não esteja numa situação na qual isso é permitido
             if(!CanSaveGame){
                 Debug.Log("Attempted to save the game when it shouldn't be possible");
+                return;
+            }
+            // Teoricamente não é necessario reler o arquivo, mas faremos isso como medida de segurança,
+            // assim evitamos que a variavel saveFile tenha sido alterada de alguma maneira em runtime
+            if(!CheckIntegrity()){
+                Debug.LogError("Save File has been altered during gameplay");
+                Application.Quit();
                 return;
             }
             // Avalia a situação atual do jogo e salva todas as informações necessarias
@@ -63,7 +73,11 @@ namespace FinalInferno{
                 ResetGame();
                 // Teoricamente não é necessario reler o arquivo, mas faremos isso como medida de segurança,
                 // assim evitamos que a variavel saveFile tenha sido alterada de alguma maneira em runtime
-                saveFile = dataSaver.LoadData();
+                if(!CheckIntegrity()){
+                    Debug.LogError("Save File has been altered during gameplay");
+                    Application.Quit();
+                    return;
+                }
                 // Aplica a situação do save slot atual nos arquivos do jogo
                 saveFile.Load();
                 // Carrega a nova cena
@@ -72,9 +86,9 @@ namespace FinalInferno{
         }
 
         public static void NewGame(){
-            // Failsage para garantir que saveFile não seja null
-            if(saveFile == null)
-                saveFile = new SaveFile();
+            // // Failsafe para garantir que saveFile não seja null
+            // if(saveFile == null)
+            //     saveFile = new SaveFile();
             // Reseta todas as informações do jogo para um estado inicial
             ResetGame();
 
@@ -87,6 +101,11 @@ namespace FinalInferno{
             //Debug.Log("Default flag = " + mainQuest.events["Default"]);
             // Carrega a cena inicial como cutscene
             SceneLoader.LoadCustscene(Party.StartingMap, AssetManager.LoadAsset<Fog.Dialogue.Dialogue>(Party.StartingDialogue));
+        }
+
+        private static bool CheckIntegrity(){
+            SaveFile currentSaved = dataSaver.LoadData();
+            return saveFile.Equals(currentSaved);
         }
 
         public static void ResetGame(){

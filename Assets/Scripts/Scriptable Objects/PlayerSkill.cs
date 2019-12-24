@@ -106,8 +106,7 @@ namespace FinalInferno{
             long expValue = 0;
 
             foreach(Unit unit in units){
-                if(!unit.IsHero)
-                    expValue += unit.SkillExp;
+                expValue += unit.SkillExp;
             }
             if(ShouldCalculateMean)
                 expValue /= Mathf.Max(units.Count, 1);

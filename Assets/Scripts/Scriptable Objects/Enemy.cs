@@ -28,7 +28,7 @@ namespace FinalInferno{
             }
         }
         protected int curTableRow;
-        public override long SkillExp { get { return BaseExp/2; } } // Quanta exp o inimigo dá pra skill quando ela é usada nele
+        public override long SkillExp { get { return BaseExp/5; } } // Quanta exp o inimigo dá pra skill quando ela é usada nele
         public long BaseExp { get; protected set; } // Quanta exp o inimigo dá pra party ao final da batalha
 
         void Awake(){

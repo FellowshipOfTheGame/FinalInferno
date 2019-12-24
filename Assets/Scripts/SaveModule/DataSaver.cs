@@ -47,6 +47,7 @@ public class DataSaver<T> where T : new()
                 using (TextReader reader = File.OpenText(this.config))
                 {
                     this.numberOfSaves = int.Parse(reader.ReadLine());
+                    reader.Close();
                 }
             }
         }
@@ -81,6 +82,7 @@ public class DataSaver<T> where T : new()
         localFilePath = System.IO.Path.Combine(this.prePath, localFilePath);
 		using (StreamWriter streamWriter = File.CreateText (localFilePath)){
             streamWriter.Write (jsonString);
+            streamWriter.Close();
 		}
     }
 
@@ -117,6 +119,7 @@ public class DataSaver<T> where T : new()
                         }
                         data = JsonUtility.FromJson<T> (jsonString);
                     }
+                    streamReader.Close();
                 }
             }
             catch {
@@ -228,10 +231,11 @@ public class DataSaver<T> where T : new()
     void UpdateConfig(){
         using (StreamWriter streamWriter = File.CreateText (this.config)){
             streamWriter.Write (this.numberOfSaves);
+            streamWriter.Close();
         }
     }
 
-    // Encrypt and descrypt json from file
+    // Encrypt and decrypt json from file
     private string EncryptDecrypt(string szPlainText){
         StringBuilder szInputStringBuild = new StringBuilder(szPlainText);
         StringBuilder szOutStringBuild = new StringBuilder(szPlainText.Length);

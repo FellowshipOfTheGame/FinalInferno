@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace FinalInferno{
     [CreateAssetMenu(fileName = "NewBattleDialogue", menuName = "ScriptableObject/DialogueSystem/DialogueBeforeBattle")]
@@ -12,7 +13,7 @@ namespace FinalInferno{
         [SerializeField] private FinalInferno.UI.FSM.ButtonClickDecision decision;
         
         public override void AfterDialogue(){
-            base.AfterDialogue();
+            SceneLoader.beforeSceneChange += SetFlags;
             CharacterOW.PartyCanMove = false;
 
             FinalInferno.UI.ChangeSceneUI.isBattle = true;
@@ -21,6 +22,11 @@ namespace FinalInferno{
             FinalInferno.UI.ChangeSceneUI.battleEnemies = (Enemy[])battleEnemies.Clone();
 
             decision.Click();
+        }
+
+        public void SetFlags(){
+            base.AfterDialogue();
+            SceneLoader.beforeSceneChange -= SetFlags;
         }
     }
 }
