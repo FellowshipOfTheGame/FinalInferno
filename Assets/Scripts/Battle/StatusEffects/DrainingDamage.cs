@@ -50,7 +50,7 @@ namespace FinalInferno{
                 Target.curDmg -= dmgValue;
                 if(doubleEdged && Source.CurHP > 0){
                     // Remove o debuff que foi aplicado quando começou a drenar o dano, caso ainda exista
-                    DamageDrained myDebuff = (DamageDrained)Source.effects.Find(debuff => debuff.GetType() == typeof(DamageDrained) && debuff.Source == Target && debuff.Target == Source);
+                    DamageDrained myDebuff = (DamageDrained)Source.effects.Find(debuff => (debuff.GetType() == typeof(DamageDrained) && debuff.Source == Target && debuff.Target == Source));
                     if(myDebuff != null) myDebuff.Remove();
 
                     // Aplica o dreno de dano ao contrario

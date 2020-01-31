@@ -6,7 +6,7 @@ namespace FinalInferno{
     [CreateAssetMenu(fileName = "ShareDebuff", menuName = "ScriptableObject/SkillEffect/ShareDebuff")]
     public class ShareDebuff : SkillEffect {
         // value1 = index of status effect being shared
-        // value1 = modifier to apply to the effect
+        // value2 = modifier to apply to the effect
         public override string Description { get { return "Share " + value2*100 + "% of effect number " + value1 + " to allies"; } }
         
         public override void Apply(BattleUnit source, BattleUnit target) {

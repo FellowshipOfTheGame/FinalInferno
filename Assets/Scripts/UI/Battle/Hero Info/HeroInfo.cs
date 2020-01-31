@@ -102,7 +102,7 @@ namespace FinalInferno.UI.Battle.SkillMenu
             hpSlider.value = currentUnit.CurHP;
             hpText.text = currentUnit.CurHP + "/" + currentUnit.MaxHP;
 
-            damageText.text = currentUnit.curDmg.ToString();
+            damageText.text = currentUnit.unit.baseDmg.ToString();
             if (currentUnit.curDmg > currentUnit.unit.baseDmg)
             {
                 alteredDamageText.text = "(+" + (currentUnit.curDmg - currentUnit.unit.baseDmg).ToString() + ")";
@@ -116,7 +116,7 @@ namespace FinalInferno.UI.Battle.SkillMenu
             else
                 alteredDamageText.text = "";
                 
-            resistanceText.text = currentUnit.curDef.ToString();
+            resistanceText.text = currentUnit.unit.baseDef.ToString();
             if (currentUnit.curDef > currentUnit.unit.baseDef)
             {
                 alteredResistanceText.text = "(+" +(currentUnit.curDef - currentUnit.unit.baseDef).ToString() + ")";
@@ -130,7 +130,7 @@ namespace FinalInferno.UI.Battle.SkillMenu
             else
                 alteredResistanceText.text = "";
 
-            magicResistanceText.text = currentUnit.curMagicDef.ToString();
+            magicResistanceText.text = currentUnit.unit.baseMagicDef.ToString();
             if (currentUnit.curMagicDef > currentUnit.unit.baseMagicDef)
             {
                 alteredMagicResistanceText.text = "(+" + (currentUnit.curMagicDef - currentUnit.unit.baseMagicDef).ToString() + ")";
@@ -144,7 +144,7 @@ namespace FinalInferno.UI.Battle.SkillMenu
             else
                 alteredMagicResistanceText.text = "";
 
-            speedText.text = currentUnit.curSpeed.ToString();
+            speedText.text = currentUnit.unit.baseSpeed.ToString();
             if (currentUnit.curSpeed > currentUnit.unit.baseSpeed)
             {
                 alteredSpeedText.text = "(+" +(currentUnit.curSpeed - currentUnit.unit.baseSpeed).ToString() + ")";

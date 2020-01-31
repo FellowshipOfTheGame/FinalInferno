@@ -80,7 +80,8 @@ namespace FinalInferno{
             //testa se a skill subiu de nivel
             while(xp >= xpNext && level < Table.Rows.Count-1){
                 level++;
-                xpNext = level * 100;
+                // TO DO: Tabela externa com os valores de xpnext para cada level
+                xpNext = (level < 10)? 30 : (level < 25)?  60 : 100;
                 
                 up = true;
             }
