@@ -51,13 +51,14 @@ namespace FinalInferno{
                 Debug.Log("Attempted to save the game when it shouldn't be possible");
                 return;
             }
-            // Teoricamente não é necessario reler o arquivo, mas faremos isso como medida de segurança,
-            // assim evitamos que a variavel saveFile tenha sido alterada de alguma maneira em runtime
-            if(!CheckIntegrity()){
-                Debug.LogError("Save File has been altered during gameplay");
-                Application.Quit();
-                return;
-            }
+            // // Teoricamente não é necessario reler o arquivo, mas faremos isso como medida de segurança,
+            // // assim evitamos que a variavel saveFile tenha sido alterada de alguma maneira em runtime
+            // if(!CheckIntegrity()){
+            //     // BUG: Crashando o jogo no primeiro save, quando o arquivo não existe
+            //     Debug.LogError("Save File has been altered during gameplay");
+            //     Application.Quit();
+            //     return;
+            // }
             // Avalia a situação atual do jogo e salva todas as informações necessarias
             Debug.Log("Saving game...");
             saveFile.Save();
@@ -71,13 +72,13 @@ namespace FinalInferno{
                 NewGame();
             }else{
                 ResetGame();
-                // Teoricamente não é necessario reler o arquivo, mas faremos isso como medida de segurança,
-                // assim evitamos que a variavel saveFile tenha sido alterada de alguma maneira em runtime
-                if(!CheckIntegrity()){
-                    Debug.LogError("Save File has been altered during gameplay");
-                    Application.Quit();
-                    return;
-                }
+                // // Teoricamente não é necessario reler o arquivo, mas faremos isso como medida de segurança,
+                // // assim evitamos que a variavel saveFile tenha sido alterada de alguma maneira em runtime
+                // if(!CheckIntegrity()){
+                //     Debug.LogError("Save File has been altered during gameplay");
+                //     Application.Quit();
+                //     return;
+                // }
                 // Aplica a situação do save slot atual nos arquivos do jogo
                 saveFile.Load();
                 // Carrega a nova cena
