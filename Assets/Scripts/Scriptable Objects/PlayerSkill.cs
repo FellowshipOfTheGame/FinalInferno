@@ -81,7 +81,7 @@ namespace FinalInferno{
             while(xp >= xpNext && level < Table.Rows.Count-1){
                 level++;
                 // TO DO: Tabela externa com os valores de xpnext para cada level
-                xpNext = level * 400;
+                xpNext = level * 350;
                 
                 up = true;
             }
