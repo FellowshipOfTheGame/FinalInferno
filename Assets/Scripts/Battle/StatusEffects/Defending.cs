@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace FinalInferno{
     public class Defending : StatusEffect {
-        public override StatusType Type { get{ return StatusType.Buff; } }
+        public override StatusType Type { get{ return StatusType.None; } }
         public override float Value { get{ return defValue; } }
         private int defValue;
         private int resValue;

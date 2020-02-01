@@ -70,7 +70,7 @@ namespace FinalInferno.UI.Battle.QueueMenu
             // Coloca o restante dos personagens na fila.
             for(int i = 0; i < BattleManager.instance.queue.Count; i++){
                 // BattleImages[i].transform.parent.gameObject.SetActive(true);
-                BattleImages[i].sprite = BattleManager.instance.queue.Peek(i).unit.QueueSprite;
+                BattleImages[i].sprite = BattleManager.instance.queue.Peek(i).QueueSprite;
                 if(BattleImages[i].sprite != null)
                     BattleImages[i].color = Color.white;
                 else

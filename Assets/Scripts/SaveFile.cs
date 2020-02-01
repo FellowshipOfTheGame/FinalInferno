@@ -27,6 +27,15 @@ namespace FinalInferno{
         // Uma array de saves inicializados com valores padrão
         public SaveInfo[] saves = new SaveInfo[nSaveSlots];
 
+        public SaveFile(){
+            slot = 0;
+            autoSave = true;
+            saves = new SaveInfo[nSaveSlots];
+            for(int i = 0; i < nSaveSlots; i++){
+                saves[i] = new SaveInfo();
+            }
+        }
+
         public SavePreviewInfo Preview(int slotNumber){
             slotNumber = Mathf.Clamp(slotNumber, 0, nSaveSlots);
             return new SavePreviewInfo(saves[slotNumber]);
@@ -38,6 +47,14 @@ namespace FinalInferno{
                 previews[i] = new SavePreviewInfo(saves[i]);
             }
             return previews;
+        }
+
+        public bool Equals(SaveFile otherFile){
+            for(int i = 0; i < NSaveSlots; i++){
+                if(!saves[i].Equals(otherFile.saves[i]))
+                    return false;
+            }
+            return true;
         }
 
         public void Save(){

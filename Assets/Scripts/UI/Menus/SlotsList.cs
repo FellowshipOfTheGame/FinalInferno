@@ -33,15 +33,17 @@ namespace FinalInferno.UI.Saves
         /// </summary>
         [SerializeField] private ButtonClickDecision clickDecision;
 
+        [SerializeField] private LoadPreviews loadPreviewsActions;
+
         void Awake()
         {
-            UpdateSlotsContent(SaveLoader.PreviewAllSlots());
+            loadPreviewsActions.list = this;
         }
 
         public void UpdateSlotsContent(SavePreviewInfo[] slots)
         {
             // Passa por todas as skills da lista, adicionando as ativas no menu e as ordenando
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < SaveFile.NSaveSlots && i < slotObjects.Length && i < slots.Length; i++)
             {
                 SavePreviewInfo slot = slots[i];
                 GameObject slotGO = slotObjects[i];

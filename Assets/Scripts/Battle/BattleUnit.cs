@@ -120,11 +120,12 @@ namespace FinalInferno{
                         skill.Use(this, this);
                         // Da exp para a skill
                         if(unit.IsHero){
-                            foreach(Unit _unit in BattleManager.instance.units){
-                                if(!_unit.IsHero){
-                                    (skill as PlayerSkill).GiveExp(_unit.SkillExp);
-                                }
+                            List<Unit> enemies = new List<Unit>();
+                            foreach(Unit u in BattleManager.instance.units){
+                                if(!u.IsHero)
+                                    enemies.Add(u);
                             }
+                            (skill as PlayerSkill).GiveExp(enemies);
                         }
                         break;
                     case SkillType.PassiveOnStart:
@@ -166,45 +167,69 @@ namespace FinalInferno{
             }
         }
 
-        // TO DO: Criar polimorfismo para dano porcentual de hp e cura, e revisar todos os skill effects relevantes
+        public int Heal(int atk, float multiplier, BattleUnit healer = null){
+            int damage = Mathf.FloorToInt(atk * -multiplier *  (Mathf.Clamp(1.0f - damageResistance, 0.0f, 1.0f))/* * 10 */);
+            if(CurHP <= 0)
+                return 0;
+            CurHP -= damage;
+            if(damage > 0){
+                // Só triggera a animação de dano tomado se o dano for maior que zero
+                animator.SetTrigger("TakeDamage");
+            }
+
+            // Aplica o aggro pra cura
+            if(healer != null){
+                healer.aggro += 0.7f * 100f * damage / (1.0f * MaxHP);
+            }
+
+            if(CurHP <= 0){
+                Kill();
+            }
+
+            return damage;
+        }
+
         public int TakeDamage(int atk, float multiplier, DamageType type, Element element, BattleUnit attacker = null) {
             float atkDifference = atk - ( (type == DamageType.Physical)? curDef : ((type == DamageType.Magical)? curMagicDef : 0));
             atkDifference = Mathf.Max(atkDifference, 1);
             int damage = Mathf.FloorToInt(atkDifference * multiplier * elementalResistance[(int)element - (int)Element.Fire] * (Mathf.Clamp(1.0f - damageResistance, 0.0f, 1.0f))/* * 10 */);
-            if(damage > 0 && CurHP <= 0)
+            if(CurHP <= 0)
                 return 0;
             CurHP -= damage;
-            // Aplica o aggro pra dano e cura
+            if(damage > 0){
+                // Só triggera a animação de dano tomado se o dano for maior que zero
+                animator.SetTrigger("TakeDamage");
+            }
+            // Aplica o aggro pra dano
             if(attacker != null){
-                if(damage > 0){
-                    // Só triggera a animação de dano tomado se o dano for maior que zero
-                    animator.SetTrigger("TakeDamage");
-                    attacker.aggro += 0.5f * 100f * damage / (1.0f * MaxHP);
-                }else if(damage < 0)
-                    attacker.aggro += 0.7f * 100f * damage / (1.0f * MaxHP);
+                attacker.aggro += 0.5f * 100f * damage / (1.0f * MaxHP);
             }
 
             if(CurHP <= 0){
-                // Se a unidade estiver morta, anima a morte
-                animator.SetBool("IsDead", true);
-                // Tira os buffs e debuffs
-                foreach(StatusEffect effect in effects.ToArray()){
-                    if(effect.Duration > 0 && effect.Type != StatusType.None){
-                        effect.Remove();
-                    }
-                }
-                // Reseta o aggro
-                aggro = 0;
-
-                BattleManager.instance.Kill(this);
-                // Se houver algum callback de morte que, por exemplo, ressucita a unidade ele já vai ter sido chamado aqui
+                Kill();
             }else if(OnTakeDamage != null && damage > 0){
-            // Chama a funcao de callback de dano tomado
+                // Chama a funcao de callback de dano tomado
                 List<BattleUnit> aux = new List<BattleUnit>();
                 aux.Add(this);
                 OnTakeDamage(attacker, aux, true, damage, true, (int)element);
             }
             return damage;
+        }
+
+        public void Kill(){
+            // Anima a morte
+            animator.SetBool("IsDead", true);
+            // Tira os buffs e debuffs
+            foreach(StatusEffect effect in effects.ToArray()){
+                if(effect.Duration > 0 && effect.Type != StatusType.None){
+                    effect.Remove();
+                }
+            }
+            // Reseta o aggro
+            aggro = 0;
+
+            BattleManager.instance.Kill(this);
+            // Se houver algum callback de morte que, por exemplo, ressucita a unidade ele já vai ter sido chamado aqui
         }
 
         public void Revive(bool isCallback = false){
@@ -218,7 +243,7 @@ namespace FinalInferno{
         }
 
         public int DecreaseHP(float lostHPPercent){
-            int returnValue = Mathf.FloorToInt(lostHPPercent * MaxHP);
+            int returnValue = Mathf.Min(MaxHP - 1,  Mathf.FloorToInt(lostHPPercent * MaxHP));
 
             MaxHP = Mathf.Max(Mathf.FloorToInt((1.0f - lostHPPercent) * MaxHP), 1);
             if(lostHPPercent < 0){ // Para usar a mesma função para aumentar hp maximo, o aumento é adicionado como cura
@@ -249,10 +274,13 @@ namespace FinalInferno{
             List<BattleUnit> targets = new List<BattleUnit>();
             targets.Add(statusEffect.Target);
             targets.Add(statusEffect.Source);
-            foreach(BattleUnit unit in BattleManager.instance.queue){
-                if(!targets.Contains(unit))
-                    targets.Add(unit);
+            foreach(BattleUnit bUnit in BattleManager.instance.battleUnits){
+                if(!targets.Contains(bUnit))
+                    targets.Add(bUnit);
             }
+            // targets.AddRange(BattleManager.instance.GetTeam(UnitType.Hero));
+            // targets.AddRange(BattleManager.instance.GetTeam(UnitType.Enemy));
+            // targets.AddRange(BattleManager.instance.battleUnits);
 
             switch(statusEffect.Type){
                 case StatusType.Buff:

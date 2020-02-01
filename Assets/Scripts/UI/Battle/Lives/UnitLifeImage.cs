@@ -17,7 +17,7 @@ namespace FinalInferno.UI.Battle.LifeMenu
         /// </summary>
         public override void UpdateUnitLife()
         {
-            unitImage.sprite = thisUnit.unit.Portrait;
+            unitImage.sprite = thisUnit.Portrait;
             lifeText.text = " - " + thisUnit.CurHP + "/" + thisUnit.MaxHP;
             lifeText.color = thisUnit.unit.color;
         }
