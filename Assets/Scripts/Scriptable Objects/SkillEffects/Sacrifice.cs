@@ -26,7 +26,7 @@ namespace FinalInferno{
                 case 1: // If the heal is to enemies
                     healValue = (enemies.Count > 0)? damage / (enemies.Count) : 0;
                     foreach(BattleUnit unit in enemies){
-                        unit.Heal(healValue, -1.0f, target);
+                        unit.Heal(healValue, 1.0f, target);
                     }
                     break;
             }

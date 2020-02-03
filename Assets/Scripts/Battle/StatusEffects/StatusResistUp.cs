@@ -24,7 +24,7 @@ namespace FinalInferno{
         }
 
         public override void Amplify(float modifier){
-            Remove();
+            Target.statusResistance -= resistIncrease;
             resistIncrease *= modifier;
             Apply(true);
         }

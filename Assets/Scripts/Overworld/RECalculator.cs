@@ -92,20 +92,21 @@ namespace FinalInferno{
 
                     //Debug.Log(enemies[i]);
                 }
-                // Calcula o level dos inimigos
-                // Avalia os parametros das quests
-                int questParam = 0;
-                if(AssetManager.LoadAsset<Quest>("MainQuest").events["CerberusDead"]) questParam++;
+                // Calculo de level foi movido para a criação da preview de batalha
+                // // Calcula o level dos inimigos
+                // // Avalia os parametros das quests
+                // int questParam = 0;
+                // if(AssetManager.LoadAsset<Quest>("MainQuest").PartyReference.events["CerberusDead"]) questParam++;
 
-                int enemyLevel = questParam * 10;
-                if(Mathf.Clamp(Party.Instance.level - (questParam * 10), 0, 10) >= 5)
-                enemyLevel += 5;
+                // int enemyLevel = questParam * 10;
+                // if(Mathf.Clamp(Party.Instance.level - (questParam * 10), 0, 10) > 5)
+                //     enemyLevel += 5;
 
-                // Cria um hashshet para ignorar repetições e aplica o nível dos inimigos
-                //Debug.Log("Nível dos inimigos calculado(unclamped) = " + enemyLevel);
-                foreach(Enemy enemy in (new HashSet<Enemy>(enemies)) ){
-                    enemy.LevelEnemy(enemyLevel);
-                }
+                // // Cria um hashshet para ignorar repetições e aplica o nível dos inimigos
+                // //Debug.Log("Nível dos inimigos calculado(unclamped) = " + enemyLevel);
+                // foreach(Enemy enemy in (new HashSet<Enemy>(enemies)) ){
+                //     enemy.LevelEnemy(enemyLevel);
+                // }
 
                 FinalInferno.UI.ChangeSceneUI.isBattle = true;
                 FinalInferno.UI.ChangeSceneUI.battleBG = battleBG;

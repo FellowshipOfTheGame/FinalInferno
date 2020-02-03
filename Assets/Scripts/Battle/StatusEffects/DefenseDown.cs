@@ -26,7 +26,7 @@ namespace FinalInferno{
         }
 
         public override void Amplify(float modifier){
-            Remove();
+            Target.curDef += defValue;
             defValue = Mathf.Max(Mathf.FloorToInt(modifier * defValue), 1);
             Apply(true);
         }

@@ -269,8 +269,10 @@ namespace FinalInferno{
         public void AddEffect(StatusEffect statusEffect, bool ignoreCallback = false){
             if(statusEffect.Failed)
                 return;
+
+            if(BattleManager.instance.currentUnit != this) 
+                BattleManager.instance.Revive(this); // Se certifica que unidades com status effects aparecem na fila, mesmo mortas
                 
-            BattleManager.instance.Revive(this); // Se certifica que unidades com status effects aparecem na fila, mesmo mortas
             effects.Add(statusEffect);
             statusEffect.Source.aggro += statusEffect.AggroOnApply;
             

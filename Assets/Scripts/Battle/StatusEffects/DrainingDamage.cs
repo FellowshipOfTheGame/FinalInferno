@@ -33,7 +33,7 @@ namespace FinalInferno{
         }
 
         public override void Amplify(float modifier){
-            Target.curDmg -= dmgValue; // Se chamar Remove pode dar problema
+            Target.curDmg -= dmgValue;
             dmgValue = Mathf.Max(Mathf.FloorToInt(modifier * dmgValue), 1);
             Apply(true);
         }
