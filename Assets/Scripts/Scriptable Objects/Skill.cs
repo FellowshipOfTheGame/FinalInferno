@@ -11,6 +11,7 @@ namespace FinalInferno{
         public virtual int Level { get{ return level; } set {} }
         public float cost; //tempo que a "skill" custara ao conjurador, em porcentagem da sua velocidade
         public bool active = true; //sinaliza se a "skill" esta ativa ou nao
+        [SerializeField] private int callbackDelay = 0;
         public TargetType target; //tipo de alvo da "skill"
         public Element attribute; //elemento da "skill"
         public List<SkillEffectTuple> effects; //lista de efeitos que a "skill" causa e seus valores associados
@@ -19,7 +20,7 @@ namespace FinalInferno{
         [SerializeField] private GameObject visualEffect; // Prefab contendo uma animação da skill
         public GameObject VisualEffect { get{ return visualEffect; } }
 
-        protected List<BattleUnit> FilterTargets(BattleUnit source, List<BattleUnit> oldList){
+        public List<BattleUnit> FilterTargets(BattleUnit source, List<BattleUnit> oldList){
             List<BattleUnit> newList = new List<BattleUnit>(oldList);
             List<BattleUnit> allies = BattleManager.instance.GetTeam(source);
             foreach(BattleUnit unit in oldList){
@@ -65,6 +66,18 @@ namespace FinalInferno{
         // funcao que define como a skill sera usada
         // A versão da função com lista é usada para skills de callback, e invoca o efeito visual
         public virtual void Use(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f){
+            if(callbackDelay <= 0){
+                Debug.Log("Chamou a skill " + name + " como callback sem delay");
+                UseCallback(user, targets, shouldOverride1, value1, shouldOverride2, value2);
+            }else{
+                Debug.Log("Chamou a skill " + name + " como callback com delay de " + callbackDelay);
+                foreach(BattleUnit target in targets){
+                    target.AddEffect(new DelayedSkill(UseCallback, user, target, shouldOverride1, value1, shouldOverride2, value2, callbackDelay));
+                }
+            }
+        }
+
+        protected virtual void UseCallback(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f){
             foreach (BattleUnit trgt in targets) {
                 
                 if(visualEffect){

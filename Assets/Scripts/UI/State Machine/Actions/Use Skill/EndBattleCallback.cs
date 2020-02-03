@@ -21,7 +21,7 @@ namespace FinalInferno.UI.FSM
             // Reseta o maxhp das unidades, desfazendo aumentos e reduções causados por skills
             foreach(BattleUnit battleUnit in BattleManager.instance.battleUnits){
                 if(battleUnit.unit.IsHero && battleUnit.CurHP <= 0){
-                    battleUnit.Revive(true);
+                    battleUnit.Revive();
                 }
                 battleUnit.ResetMaxHP();
             }

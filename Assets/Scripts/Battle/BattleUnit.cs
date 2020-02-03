@@ -6,10 +6,11 @@ using FinalInferno.UI.Battle;
 using FinalInferno.UI.AII;
 
 namespace FinalInferno{
+    public delegate void SkillDelegate(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f);
+    
     //representa todos os buffs/debuffs, dano etc que essa unidade recebe
     [RequireComponent(typeof(Animator)),RequireComponent(typeof(SpriteRenderer)),RequireComponent(typeof(UnityEngine.UI.Image)),RequireComponent(typeof(FinalInferno.UI.AII.UnitItem))]
     public class BattleUnit : MonoBehaviour{
-        public delegate void SkillDelegate(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f);
         public Unit unit; //referencia para os atributos base dessa unidade
         public int MaxHP { private set; get; }
         private int curHP; //vida atual dessa unidade, descontando dano da vida maxima
@@ -221,24 +222,25 @@ namespace FinalInferno{
             animator.SetBool("IsDead", true);
             // Tira os buffs e debuffs
             foreach(StatusEffect effect in effects.ToArray()){
-                if(effect.Duration > 0 && effect.Type != StatusType.None){
+                // TO DO: Considerar se vale a pena retirar a checagem de status type
+                if(effect.Duration >= 0 && effect.Type != StatusType.None){
                     effect.Remove();
                 }
             }
             // Reseta o aggro
             aggro = 0;
+            stuns = 0;
 
             BattleManager.instance.Kill(this);
             // Se houver algum callback de morte que, por exemplo, ressucita a unidade ele já vai ter sido chamado aqui
         }
 
-        public void Revive(bool isCallback = false){
+        public void Revive(){
             if(CurHP <= 0){
                 curHP = 1;
-                stuns = 0;
                 //Volta a animação de morte
                 animator.SetBool("IsDead", false);
-                BattleManager.instance.Revive(this, isCallback);
+                BattleManager.instance.Revive(this);
             }
         }
 
@@ -268,6 +270,7 @@ namespace FinalInferno{
             if(statusEffect.Failed)
                 return;
                 
+            BattleManager.instance.Revive(this); // Se certifica que unidades com status effects aparecem na fila, mesmo mortas
             effects.Add(statusEffect);
             statusEffect.Source.aggro += statusEffect.AggroOnApply;
             

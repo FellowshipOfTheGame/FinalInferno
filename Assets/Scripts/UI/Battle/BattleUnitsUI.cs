@@ -98,16 +98,18 @@ namespace FinalInferno.UI.Battle
             manager = ((currentUnit.IsHero && useOwnManager) || (!currentUnit.IsHero && !useOwnManager))? heroesManager : enemiesManager;
 
             // Obtem a lista de possiveis alvos para a skill em questão
-            List<BattleUnit> targetUnits;
-            if(useOwnManager){
-                bool checkDead = (currentSkill.target == TargetType.DeadAllies) || (currentSkill.target == TargetType.DeadAlly) || (currentSkill.target == TargetType.AllAllies);
-                bool deadOnly = (currentSkill.target == TargetType.DeadAllies)  || (currentSkill.target == TargetType.DeadAlly);
-                targetUnits = BattleManager.instance.GetTeam(BattleSkillManager.currentUser, checkDead, deadOnly);
-            }else{
-                bool checkDead = (currentSkill.target == TargetType.DeadEnemies) || (currentSkill.target == TargetType.DeadEnemy) || (currentSkill.target == TargetType.AllEnemies);
-                bool deadOnly = (currentSkill.target == TargetType.DeadEnemies)  || (currentSkill.target == TargetType.DeadEnemy);
-                targetUnits = BattleManager.instance.GetEnemies(BattleSkillManager.currentUser, checkDead, deadOnly);
-            }
+            List<BattleUnit> targetUnits = new List<BattleUnit>(BattleManager.instance.battleUnits);
+            targetUnits = BattleSkillManager.currentSkill.FilterTargets(BattleSkillManager.currentUser, targetUnits);
+            // Debug.Log("Possible targets: " + string.Join(", ", targetUnits));
+            // if(useOwnManager){
+            //     bool checkDead = (currentSkill.target == TargetType.DeadAllies) || (currentSkill.target == TargetType.DeadAlly) || (currentSkill.target == TargetType.AllAllies);
+            //     bool deadOnly = (currentSkill.target == TargetType.DeadAllies)  || (currentSkill.target == TargetType.DeadAlly);
+            //     targetUnits = BattleManager.instance.GetTeam(BattleSkillManager.currentUser, checkDead, deadOnly);
+            // }else{
+            //     bool checkDead = (currentSkill.target == TargetType.DeadEnemies) || (currentSkill.target == TargetType.DeadEnemy) || (currentSkill.target == TargetType.AllEnemies);
+            //     bool deadOnly = (currentSkill.target == TargetType.DeadEnemies)  || (currentSkill.target == TargetType.DeadEnemy);
+            //     targetUnits = BattleManager.instance.GetEnemies(BattleSkillManager.currentUser, checkDead, deadOnly);
+            // }
 
             manager.ClearItems();
             foreach(BattleUnit unit in targetUnits){

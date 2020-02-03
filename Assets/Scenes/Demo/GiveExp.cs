@@ -7,8 +7,8 @@ namespace FinalInferno{
     {
         public PlayerSkill skill;
 
+        #if UNITY_EDITOR
         void Update(){
-            #if UNITY_EDITOR
             if(Input.GetKeyDown(KeyCode.X)){
                 Party.Instance.GiveExp(5000);
             }
@@ -18,10 +18,12 @@ namespace FinalInferno{
             }
 
             if(Input.GetKeyDown(KeyCode.E)){
+                if(skill != null)
                 skill.GiveExp(500);
             }
 
             if(Input.GetKeyDown(KeyCode.R)){
+                if(skill != null)
                 skill.GiveExp(50);
             }
 
@@ -36,7 +38,7 @@ namespace FinalInferno{
             if(Input.GetKeyDown(KeyCode.L)){
                 SaveLoader.LoadGame();
             }
-            #endif
         }
+        #endif
     }
 }

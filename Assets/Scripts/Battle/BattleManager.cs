@@ -109,17 +109,14 @@ namespace FinalInferno{
 
         public void Kill(BattleUnit unit){
             // chama a funcao de callback de morte da unidade
+            int nEffectsBefore = unit.effects.Count;
             if(unit.OnDeath != null){
                 unit.OnDeath(unit, new List<BattleUnit>(battleUnits));
                 unit.OnDeath = null;
             }
-            int nValidEffects = 0;
-            foreach(StatusEffect effect in unit.effects){
-                if(effect.Duration > 0 && effect.Type != StatusType.None)
-                    nValidEffects++;
-            }
+            int nNewEffects = unit.effects.Count - nEffectsBefore;
             // Se a unidade ainda estiver morta atualiza a fila
-            if(unit.CurHP <= 0 && nValidEffects == 0){
+            if(unit.CurHP <= 0 && nNewEffects <= 0){
                 queue.Remove(unit);
                 unitsUI.RemoveUnit(unit);
 
@@ -135,8 +132,8 @@ namespace FinalInferno{
             }
         }
 
-        public void Revive(BattleUnit unit, bool isCallback = false){
-            if(!isCallback){
+        public void Revive(BattleUnit unit){
+            if(!queue.Contains(unit)){
                 queue.Enqueue(unit, 0);
                 unitsUI.ReinsertUnit(unit);
             }

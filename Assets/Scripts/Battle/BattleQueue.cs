@@ -39,6 +39,10 @@ namespace FinalInferno{
             queueUI.StopPreview();
         }
 
+        public bool Contains(BattleUnit unit){
+            return list.Contains(unit);
+        }
+
         //retira e retorna a proxima BattleUnit que agira no combate
         public BattleUnit Dequeue(){
             BattleUnit bU = list[0];
