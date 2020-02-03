@@ -22,7 +22,7 @@ namespace FinalInferno{
 
         public List<BattleUnit> FilterTargets(BattleUnit source, List<BattleUnit> oldList){
             List<BattleUnit> newList = new List<BattleUnit>(oldList);
-            List<BattleUnit> allies = BattleManager.instance.GetTeam(source);
+            List<BattleUnit> allies = BattleManager.instance.GetTeam(source, true);
             foreach(BattleUnit unit in oldList){
                 switch(target){
                     case TargetType.Null:
@@ -32,12 +32,12 @@ namespace FinalInferno{
                         break;
                     case TargetType.DeadAlly:
                     case TargetType.DeadAllies:
-                        if(!(allies.Contains(unit) && unit.CurHP <= 0))
+                        if(!allies.Contains(unit) || unit.CurHP > 0)
                             newList.Remove(unit);
                         break;
                     case TargetType.SingleAlly:
                     case TargetType.MultiAlly:
-                        if(!(allies.Contains(unit) && unit.CurHP > 0))
+                        if(!allies.Contains(unit) || unit.CurHP <= 0)
                             newList.Remove(unit);
                         break;
                     case TargetType.AllAllies:

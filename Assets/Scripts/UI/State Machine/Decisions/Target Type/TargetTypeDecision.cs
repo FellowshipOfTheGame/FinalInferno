@@ -29,7 +29,9 @@ namespace FinalInferno.UI.FSM
             foreach (TargetType type in desiredTypes)
             {
                 hasValidTargets = false;
+                bool hasThisType = false;
                 if(currentSkillType == type){
+                    hasThisType = true;
                     switch(type){
                         case TargetType.AllAllies:
                         case TargetType.AllEnemies:
@@ -53,7 +55,7 @@ namespace FinalInferno.UI.FSM
                     }
                 }
 
-                desiredType = desiredType || hasValidTargets;
+                desiredType = desiredType || (hasValidTargets && hasThisType);
             }
             return desiredType;
         }

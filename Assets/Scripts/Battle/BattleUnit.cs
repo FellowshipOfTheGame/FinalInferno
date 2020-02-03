@@ -76,12 +76,12 @@ namespace FinalInferno{
             this.name = unit.name;
 
             // Seta configuracoes de renderizacao
+            GetComponent<FinalInferno.UI.AII.UnitItem>().unit = this;
             GetComponent<SpriteRenderer>().sprite = unit.BattleSprite;
             GetComponent<UnityEngine.UI.Image>().sprite = GetComponent<SpriteRenderer>().sprite;
             animator.runtimeAnimatorController = unit.Animator;
             queueSprite = unit.QueueSprite;
             portrait = unit.Portrait;
-            GetComponent<FinalInferno.UI.AII.UnitItem>().unit = this;
 
 
             // Aplica os status base da unidade

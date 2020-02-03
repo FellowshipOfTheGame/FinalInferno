@@ -11,6 +11,9 @@ namespace FinalInferno{
         public static int heads = 0;
         private static int hellFireCD = 0;
         private static List<GameObject> battleUnits = new List<GameObject>();
+        private static RectTransform topHead = null;
+        private static RectTransform middleHead = null;
+        private static RectTransform bottomHead = null;
 
         [SerializeField] private RuntimeAnimatorController animatorMiddleHead;
         [SerializeField] private RuntimeAnimatorController animatorFrontHead;
@@ -60,6 +63,7 @@ namespace FinalInferno{
                             if(bUnit.unit == this){
                                 bUnit.name += (" " + heads);
                                 battleUnits.Add(bUnit.gameObject);
+                                topHead = bUnit.transform as RectTransform;
                                 break;
                             }
                         }
@@ -70,6 +74,7 @@ namespace FinalInferno{
                             if(bUnit.unit == this){
                                 bUnit.name += (" " + heads);
                                 battleUnits.Add(bUnit.gameObject);
+                                middleHead = bUnit.transform as RectTransform;
                                 break;
                             }
                         }
@@ -80,36 +85,18 @@ namespace FinalInferno{
                             if(bUnit.unit == this){
                                 bUnit.name += (" " + heads);
                                 battleUnits.Add(bUnit.gameObject);
+                                bottomHead = bUnit.transform as RectTransform;
                                 break;
                             }
                         }
-                        //TO DO fazer os sprites ficarem na mesma posição
-                        // battleUnits[0].transform.position = battleUnits[1].transform.position;
-                        // RectTransform aux = battleUnits[0].GetComponent<UnityEngine.UI.Image>().rectTransform;
-                        //RectTransform parent = aux.parent as RectTransform;
-                        RectTransform middleParent = battleUnits[1].GetComponent<UnityEngine.UI.Image>().rectTransform.parent as RectTransform;
-                        //Camera camera = FindObjectOfType<Camera>();
-                        
-                        //aux.position = camera.WorldToScreenPoint(camera.ScreenToWorldPoint(battleUnits[1].GetComponent<UnityEngine.UI.Image>().rectTransform.position));
-                        // aux.SetParent(middleParent);
-                        // aux.position = Vector3.zero;
-                        //aux.anchoredPosition = battleUnits[1].GetComponent<UnityEngine.UI.Image>().rectTransform.anchoredPosition;
-                        //aux.SetParent(parent, true);
+                        //Faz os sprites ficarem na mesma posição
+                        RectTransform middleParent = middleHead.parent as RectTransform;
+                        middleParent.parent.GetComponent<UnityEngine.UI.VerticalLayoutGroup>().spacing = 0f;
 
-                        // battleUnits[2].transform.position = battleUnits[1].transform.position;
-                        // aux = battleUnits[2].GetComponent<UnityEngine.UI.Image>().rectTransform;
-                        //parent = aux.parent as RectTransform;
-                        //aux.position = camera.WorldToScreenPoint(camera.ScreenToWorldPoint(battleUnits[1].GetComponent<UnityEngine.UI.Image>().rectTransform.position));
-                        foreach (GameObject aux in battleUnits)
-                        {
-                            RectTransform auxRect = aux.GetComponent<UnityEngine.UI.Image>().rectTransform;
-                            auxRect.SetParent(middleParent);
-                            auxRect.localPosition = Vector3.zero;
-                        }
-                        // aux.SetParent(middleParent);
-                        // aux.position = Vector3.zero;
-                        //aux.anchoredPosition = battleUnits[1].GetComponent<UnityEngine.UI.Image>().rectTransform.anchoredPosition;
-                        //aux.SetParent(parent, true);
+                        UI.AII.CompensateParentOffset aux = topHead.gameObject.AddComponent<UI.AII.CompensateParentOffset>();
+                        aux.followTarget = middleHead;
+                        aux = bottomHead.gameObject.AddComponent<UI.AII.CompensateParentOffset>();
+                        aux.followTarget = middleHead;
                         return battleSpriteFrontHead;
                 }
             }

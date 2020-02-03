@@ -150,9 +150,6 @@ namespace FinalInferno.UI.Battle
                 GameObject newUnit = Instantiate(unitPrefab, content);
                 newUnit.transform.rotation = Quaternion.identity;
 
-                unit.battleItem = newUnit.GetComponent<UnitItem>();
-                unit.battleItem.unit = unit;
-
                 newUnit.GetComponent<Image>().color = unit.unit.color;
 
                 unit.Configure(unit.unit);
