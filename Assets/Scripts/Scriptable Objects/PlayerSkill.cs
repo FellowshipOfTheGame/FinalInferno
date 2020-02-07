@@ -142,7 +142,12 @@ namespace FinalInferno{
         // Versao de callback das skills precisa ser responsavel por calcular o ganho de exp
         public override void Use(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f){
             targets = FilterTargets(user, targets); // Filtragem para garantir a consistencia dos callbacks de AoE
-            GiveExp(targets);
+
+            if(Type == SkillType.PassiveOnStart){ // Passivas do tipo OnStart estavam recebendo muito pouca experiencia
+                GiveExp(BattleManager.instance.GetEnemies(user));
+            }else
+                GiveExp(targets);
+
             base.Use(user, targets, shouldOverride1, value1, shouldOverride2, value2);
         }
         
