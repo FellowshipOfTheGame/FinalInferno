@@ -58,6 +58,9 @@ namespace FinalInferno{
         // Start is called before the first frame update
         void Start()
         {
+            // Pixel Perfect camera altera o tamanho da camera depois do awake, então essa checagem é necessaria
+            if(cameraHalfHeight != camera.orthographicSize)
+                UpdateBounds();
             target = CharacterOW.MainOWCharacter?.transform;
         }
 

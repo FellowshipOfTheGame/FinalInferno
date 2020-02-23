@@ -41,6 +41,7 @@ namespace FinalInferno{
                 events[key] = true;
             }
             active = false;
+            // TO DO: Quest não repetitiveis não devem ser removidas daqui
             Party.Instance.activeQuests.Remove(PartyReference);
         }
     }

@@ -11,11 +11,10 @@ namespace FinalInferno{
         private static Fog.Dialogue.Dialogue cutsceneDialogue = null;
         private static AudioClip battleBGM;
         public static UnityAction beforeSceneChange = null;
+        public static UnityAction onSceneLoad = null;
 
         public static void LoadBattleScene(Enemy[] enemiesSelected, Sprite BG, AudioClip BGM) {
             RECalculator.encountersEnabled = false;
-            // Essa atualização do mapa so e necessaria para a demo
-            //lastOWSceneID = SceneManager.GetActiveScene().buildIndex;
             Party.Instance.currentMap = SceneManager.GetActiveScene().name;
             // Armazena a posicao dos personagens no overworld dentro do SO correspondente
             for(int i = 0; i < Party.Instance.characters.Count; i++){
@@ -26,9 +25,10 @@ namespace FinalInferno{
             enemies = new List<Enemy>(enemiesSelected);
             // Salva a BGM de batalha
             battleBGM = BGM;
+            // O callback de batalha deve usar o callback do scene manager padrão,
+            // porque a primeira transição da maquina de estado espera que isso seja chamado
             SceneManager.sceneLoaded += OnBattleLoad;
-            // To do: Iniciar animação de encounter caso tenha (Ex.: tela escurecendo)
-            // A animação também pode ser iniciada pelo RECalculator, ante de chamar este metodo
+
             if(beforeSceneChange != null)
                 beforeSceneChange();
             SceneManager.LoadScene("Battle");
@@ -50,7 +50,7 @@ namespace FinalInferno{
                 SaveLoader.SaveGame();
 
             SceneManager.sceneLoaded += OnMapLoad;
-            // SceneManager.sceneLoaded += UnlockMovement;
+            onSceneLoad += UnlockMovement;
             if(beforeSceneChange != null)
                 beforeSceneChange();
             SceneManager.LoadScene(map.buildIndex);
@@ -69,7 +69,7 @@ namespace FinalInferno{
                 SaveLoader.SaveGame();
 
             SceneManager.sceneLoaded += OnMapLoad;
-            // SceneManager.sceneLoaded += UnlockMovement;
+            onSceneLoad += UnlockMovement;
             if(beforeSceneChange != null)
                 beforeSceneChange();
             SceneManager.LoadScene(map);
@@ -88,7 +88,7 @@ namespace FinalInferno{
                 SaveLoader.SaveGame();
 
             SceneManager.sceneLoaded += OnMapLoad;
-            // SceneManager.sceneLoaded += UnlockMovement;
+            onSceneLoad += UnlockMovement;
             if(beforeSceneChange != null)
                 beforeSceneChange();
             SceneManager.LoadScene(mapID);
@@ -111,13 +111,13 @@ namespace FinalInferno{
 
             if(dialogue != null){
                 SceneManager.sceneLoaded += OnMapLoad;
-                SceneManager.sceneLoaded += StartDialogue;
+                onSceneLoad += StartDialogue;
                 if(beforeSceneChange != null)
                     beforeSceneChange();
                 SceneManager.LoadScene(map.buildIndex);
             }else{
                 SceneManager.sceneLoaded += OnMapLoad;
-                // SceneManager.sceneLoaded += UnlockMovement;
+                onSceneLoad += UnlockMovement;
                 if(beforeSceneChange != null)
                     beforeSceneChange();
                 SceneManager.LoadScene(map.buildIndex);
@@ -139,13 +139,13 @@ namespace FinalInferno{
 
             if(dialogue != null){
                 SceneManager.sceneLoaded += OnMapLoad;
-                SceneManager.sceneLoaded += StartDialogue;
+                onSceneLoad += StartDialogue;
                 if(beforeSceneChange != null)
                     beforeSceneChange();
                 SceneManager.LoadScene(map);
             }else{
                 SceneManager.sceneLoaded += OnMapLoad;
-                // SceneManager.sceneLoaded += UnlockMovement;
+                onSceneLoad += UnlockMovement;
                 if(beforeSceneChange != null)
                     beforeSceneChange();
                 SceneManager.LoadScene(map);
@@ -153,8 +153,6 @@ namespace FinalInferno{
         }
 
         public static void LoadMainMenu(){
-            // Simplesmente carregar a cena não deveria dar nenhum problema
-            // Mas a função intermediaria ficara aqui para o caso de querermos fazer algo diferente
             SceneManager.sceneLoaded += OnMainMenuLoad;
             if(beforeSceneChange != null)
                 beforeSceneChange();
@@ -176,6 +174,9 @@ namespace FinalInferno{
             StaticReferences.instance.BGM.Stop();
             if(battleBGM != null)
                 StaticReferences.instance.BGM.PlaySong(battleBGM);
+            else
+                StaticReferences.instance.BGM.Resume();
+
             battleBGM = null;
             SceneManager.sceneLoaded -= OnBattleLoad;
         }
@@ -184,7 +185,6 @@ namespace FinalInferno{
             SceneManager.sceneLoaded -= OnMainMenuLoad;
         }
         public static void OnMapLoad(Scene map, LoadSceneMode mode) {
-            // To Do: Animação da tela preta sumindo
             if(updatePositions){
                 // Desativa o calculo de encontrar batalhas para "teleportar" os personagens
                 RECalculator.encountersEnabled = false;
@@ -196,21 +196,18 @@ namespace FinalInferno{
                 }
             }
             RECalculator.encountersEnabled = true;
-            //lastOWSceneID = SceneManager.GetActiveScene().buildIndex;
             Party.Instance.currentMap = SceneManager.GetActiveScene().name;
             SceneManager.sceneLoaded -= OnMapLoad;
-            Quest mainQuest = AssetManager.LoadAsset<Quest>("MainQuest");
-            //Debug.Log("loaded map " + map.name + "; Default flag = " + mainQuest.events["Default"]);
         }
-        public static void UnlockMovement(Scene map, LoadSceneMode mode){
+        public static void UnlockMovement(){
             CharacterOW.PartyCanMove = true;
-            SceneManager.sceneLoaded -= UnlockMovement;
+            onSceneLoad -= UnlockMovement;
         }
-        public static void StartDialogue(Scene map, LoadSceneMode mode){
+        public static void StartDialogue(){
             Fog.Dialogue.Agent agent = CharacterOW.MainOWCharacter?.GetComponent<Fog.Dialogue.Agent>();
             Fog.Dialogue.DialogueHandler.instance.StartDialogue(cutsceneDialogue, agent, agent?.GetComponent<Movable>());
             cutsceneDialogue = null;
-            SceneManager.sceneLoaded -= StartDialogue;
+            onSceneLoad -= StartDialogue;
         }
     }
 }

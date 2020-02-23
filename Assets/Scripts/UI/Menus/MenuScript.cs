@@ -15,6 +15,11 @@ namespace FinalInferno.UI
         #endif
         }
 
+        public void SceneLoadCallback(){
+            if(SceneLoader.onSceneLoad != null )
+                SceneLoader.onSceneLoad();
+        }
+
         public void NewGame()
         {
             SaveLoader.NewGame();

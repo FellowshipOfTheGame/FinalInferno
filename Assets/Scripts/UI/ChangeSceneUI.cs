@@ -40,6 +40,11 @@ namespace FinalInferno.UI
                 SceneLoader.LoadCustscene(sceneName, selectedDialogue, positionOnLoad);
         }
 
+        public void SceneLoadCallback(){
+            if(SceneLoader.onSceneLoad != null )
+                SceneLoader.onSceneLoad();
+        }
+
         public void UnlockMovement(){
             if(!Fog.Dialogue.DialogueHandler.instance.IsActive)
                 CharacterOW.PartyCanMove = true;
@@ -64,14 +69,11 @@ namespace FinalInferno.UI
         private void MainMenu()
         {
             SceneLoader.LoadMainMenu();
-            //SceneLoader.LoadOWScene("DemoStart");
         }
 
         private void ReturnCheckpoint()
         {
-            // TO DO: Carrega o jogo salvo no slot atual
             SaveLoader.LoadGame();
-            //SceneLoader.LoadOWScene("DemoStart");
         }
 
         private void Continue()
