@@ -196,7 +196,6 @@ namespace FinalInferno{
                 }
             }
             RECalculator.encountersEnabled = true;
-            PauseMenu.isPaused = false;
             Party.Instance.currentMap = SceneManager.GetActiveScene().name;
             SceneManager.sceneLoaded -= OnMapLoad;
         }

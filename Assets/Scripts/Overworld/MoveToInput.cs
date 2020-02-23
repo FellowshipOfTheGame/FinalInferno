@@ -18,7 +18,7 @@ namespace FinalInferno{
 
 		// Update is called once per frame
 		void Update() {
-			if (!PauseMenu.isPaused)
+			if (!PauseMenu.IsPaused)
 			{
 				input.x = Input.GetAxisRaw("Horizontal");
 				input.y = Input.GetAxisRaw("Vertical");

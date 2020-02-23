@@ -10,7 +10,7 @@ namespace FinalInferno.UI.FSM
     {
         public override void Act(StateController controller)
         {
-            PauseMenu.ChangePauseState();
+            PauseMenu.Instance.ChangePauseState();
         }
 
     }

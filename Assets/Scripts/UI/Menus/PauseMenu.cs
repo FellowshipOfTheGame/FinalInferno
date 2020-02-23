@@ -4,15 +4,28 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
-    public static bool isPaused = false;
+    public static PauseMenu Instance { get; private set; } = null;
+    public static bool IsPaused { get; private set; } = false;
 
-    private void Start()
+    private void Awake()
     {
-        isPaused = false;
+        if(Instance == null){
+            Instance = this;
+        }else{
+            Destroy(this);
+        }
+
+        IsPaused = false;
     }
 
-    public static void ChangePauseState()
+    public void ChangePauseState()
     {
-        isPaused = !isPaused;
+        IsPaused = !IsPaused;
+    }
+
+    public void OnDestroy(){
+        if(Instance == this){
+            Instance = null;
+        }
     }
 }

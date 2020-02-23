@@ -45,16 +45,6 @@ namespace FinalInferno.UI
                 SceneLoader.onSceneLoad();
         }
 
-        public void UnlockMovement(){
-            if(!Fog.Dialogue.DialogueHandler.instance.IsActive)
-                CharacterOW.PartyCanMove = true;
-        }
-
-        public void BlockMovement(){
-            if(!Fog.Dialogue.DialogueHandler.instance.IsActive)
-                CharacterOW.PartyCanMove = false;
-        }
-
         private void LoadPreview()
         {
             loadEnemiesPreview.LoadPreview();
