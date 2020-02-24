@@ -51,7 +51,7 @@ namespace FinalInferno{
             if (encountersEnabled && CharacterOW.PartyCanMove) {
                 // Calcula a distancia entre a posicao atual e a distance no ultimo update
                 float distance = Vector2.Distance(lastPosition, new Vector2(playerObj.position.x, playerObj.position.y));
-                if (distance > 0) {
+                if (distance > float.Epsilon) {
                     // Caso o player tenha se movido, verifica se encontrou batalha
                     CheckEncounter(distance);
                     // Atualiza lastPosition
