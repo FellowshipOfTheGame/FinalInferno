@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using FinalInferno.UI.Battle;
+using FinalInferno.UI.FSM;
 using UnityEngine.UI;
 
 namespace FinalInferno.UI.AII
@@ -20,16 +21,22 @@ namespace FinalInferno.UI.AII
         /// Referência ao item da lista.
         /// </summary>
         [SerializeField] private AxisInteractableItem item;
+        [SerializeField] private HeroInfoLoader infoLoader;
 
         public LayoutElement layout;
 
         private bool showingTarget = false;
 
-        void Awake()
+        public void Setup()
         {
-            item.OnEnter += UpdateEnemyContent;
+            if(unit.unit.IsHero){
+                item.OnEnter += UpdateHeroContent;
+                item.OnExit += ResetHeroContent;
+            }else{
+                item.OnEnter += UpdateEnemyContent;
+                item.OnExit += ResetEnemyContent;
+            }
             item.OnAct += SetTarget;
-            item.OnExit += ResetEnemyContent;
         }
 
         private void SetTarget()
@@ -44,9 +51,17 @@ namespace FinalInferno.UI.AII
             BattleManager.instance.enemyContent.ShowEnemyInfo(unit);
         }
 
+        private void UpdateHeroContent(){
+            infoLoader.Info.LoadInfo(unit);
+        }
+
         private void ResetEnemyContent()
         {
             BattleManager.instance.enemyContent.ShowAllLives();
+        }
+
+        private void ResetHeroContent(){
+            // Feito atraves da maquina de estados, ação GetHeroesLivesTrigger
         }
 
         public void ShowThisAsATarget()

@@ -50,6 +50,13 @@ namespace FinalInferno.UI.SkillsMenu
                     }
                     lastItem = newItem;
                 }
+
+                // Por algum motivo a ancoragem ficava errada, e precisa ser consertada aqui
+                Vector3 curPos = (manager.transform as RectTransform).localPosition;
+                (manager.transform as RectTransform).anchorMax = new Vector2(1, 1);
+                (manager.transform as RectTransform).anchorMin = new Vector2(0, 1);
+                (manager.transform as RectTransform).pivot = new Vector2(0.5f, 1f);
+                (manager.transform as RectTransform).localPosition = new Vector3(curPos.x, 0f, curPos.z);
             }
         }
     }

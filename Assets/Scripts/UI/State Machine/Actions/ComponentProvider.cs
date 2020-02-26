@@ -16,8 +16,13 @@ namespace FinalInferno.UI.FSM
 
         void Awake()
         {
+            UpdateComponent();
+        }
+
+        public void UpdateComponent(GameObject target = null){
+            if(target == null) target = gameObject;
             foreach (ComponentRequester requester in requesters)
-                requester.RequestComponent(gameObject);
+                requester.RequestComponent(target);
         }
     }
 

@@ -10,6 +10,8 @@ namespace FinalInferno.UI.SkillsMenu
         [SerializeField] private RectTransform content;
 
         private float xPosition = 0f;
+        private const float skillListWidth = 360f;
+        private const float skillListsSpacing = 0f;
 
         void Update()
         {
@@ -18,7 +20,7 @@ namespace FinalInferno.UI.SkillsMenu
 
         public void SetContentToPosition(int index)
         {
-            xPosition = -index * 413.95f;
+            xPosition = -index * skillListWidth -(index * skillListsSpacing);
         }
     }
 

@@ -157,9 +157,7 @@ namespace FinalInferno{
             skill = SkillDecision(Mathf.Sqrt(percentualHP)+0.05f*percentualHP); //parametro passado calcula o complementar da porcentagem do inimigo defender, baseado no percentual de vida
             
             BattleSkillManager.currentSkill = skill;
-            BattleSkillManager.currentUser = BattleManager.instance.currentUnit;
             BattleSkillManager.currentTargets = GetTargets(skill.target);
-            Console.Instance.UpdateConsole();
         }
 
         protected virtual List<BattleUnit> GetTargets(TargetType type){

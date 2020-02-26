@@ -82,6 +82,7 @@ namespace FinalInferno{
             animator.runtimeAnimatorController = unit.Animator;
             queueSprite = unit.QueueSprite;
             portrait = unit.Portrait;
+            battleItem.Setup();
 
 
             // Aplica os status base da unidade

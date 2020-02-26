@@ -31,12 +31,15 @@ namespace FinalInferno.UI.Battle.SkillMenu
         /// Referência para o local onde todas as skills serão armazenadas e mostradas para o jogador.
         /// </summary>
         [SerializeField] private RectTransform skillsContent;
+        
+        [SerializeField] private RectTransform viewportRect;
 
         /// <summary>
         /// Referência para o local onde os efeitos da skill selecionada serão armazenados 
         /// e mostrados para o jogador.
         /// </summary>
         [SerializeField] private RectTransform effectsContent;
+
 
         [Header("Managers")]
         /// <summary>
@@ -169,10 +172,13 @@ namespace FinalInferno.UI.Battle.SkillMenu
         {
             // Salva a posição vertical do item em relação ao content
             float itemPos = currentTrans.localPosition.y;
+            float curPos = skillsContent.localPosition.y;
+            float itemHeight = currentTrans.rect.height;
+            float viewportHeight = viewportRect.rect.height;
 
             // Adapta a posição vertical do content para melhor visualização da lista
             skillsContent.localPosition = new Vector3(skillsContent.localPosition.x, 
-                                        Mathf.Clamp(skillsContent.localPosition.y, -itemPos-239, -itemPos-92));
+                                        Mathf.Clamp(skillsContent.localPosition.y, -viewportHeight - itemPos +itemHeight/2, -itemPos - itemHeight/2));
         }
 
         /// <summary>

@@ -16,7 +16,7 @@ namespace FinalInferno{
                 return false;
             }
             set{
-                if(saveFile != null && CanSaveGame){
+                if(saveFile != null){
                     saveFile.autoSave = value;
                 }
             }

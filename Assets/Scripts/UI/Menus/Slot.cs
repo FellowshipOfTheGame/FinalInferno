@@ -50,8 +50,8 @@ namespace FinalInferno.UI.Saves
 
         private void SetSlotTypeValue()
         {
-            decision.UpdateValue(emptySlot);
             SaveLoader.SaveSlot = slotNumber;
+            decision.UpdateValue(emptySlot);
         }
     }
 }

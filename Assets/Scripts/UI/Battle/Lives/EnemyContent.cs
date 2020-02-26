@@ -10,6 +10,9 @@ namespace FinalInferno.UI.Battle.LifeMenu
         [SerializeField] private RectTransform content;
         private List<UnitLife> lives = new List<UnitLife>();
 
+        private const float contentWidth = 297;
+        private const float spacing = 10;
+
         private float xPosition = 0f;
 
         void Update()
@@ -40,7 +43,7 @@ namespace FinalInferno.UI.Battle.LifeMenu
 
         private void SetContentToPosition(int index)
         {
-            xPosition = -index * 317;
+            xPosition = -index * 297 -(index * spacing);
         }
     }
 

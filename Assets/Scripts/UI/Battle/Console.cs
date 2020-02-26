@@ -20,9 +20,13 @@ namespace FinalInferno.UI.Battle
 
         public void UpdateConsole()
         {
-            if (BattleSkillManager.currentSkill == null) return;
-            ConsoleText.text = "<color=#" + ColorUtility.ToHtmlStringRGBA(BattleSkillManager.currentUser.unit.color) + ">"
-                     + BattleSkillManager.currentUser.unit.name + "</color> used " + BattleSkillManager.currentSkill.name;
+            if (BattleSkillManager.currentSkill == null){
+                ConsoleText.text = "<color=#" + ColorUtility.ToHtmlStringRGBA(BattleSkillManager.currentUser.unit.color) + ">"
+                        + BattleSkillManager.currentUser.unit.name + "</color> cannot act";
+            }else{
+                ConsoleText.text = "<color=#" + ColorUtility.ToHtmlStringRGBA(BattleSkillManager.currentUser.unit.color) + ">"
+                        + BattleSkillManager.currentUser.unit.name + "</color> used " + BattleSkillManager.currentSkill.name;
+            }
         }
     }
 }

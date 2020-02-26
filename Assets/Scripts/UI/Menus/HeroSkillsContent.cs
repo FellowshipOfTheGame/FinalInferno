@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace FinalInferno.UI.SkillsMenu
@@ -8,13 +9,18 @@ namespace FinalInferno.UI.SkillsMenu
     public class HeroSkillsContent : MonoBehaviour
     {
         [SerializeField] private RectTransform content;
+        [SerializeField] private RectTransform viewport;
+        private bool descriptionSelected = false;
 
         public void ClampContent(RectTransform rect)
         {
             float itemPos = rect.localPosition.y;
+            float curPos = content.localPosition.y;
+            float itemHeight = rect.rect.height;
+            float viewportHeight = viewport.rect.height;
 
             content.localPosition = new Vector3(content.localPosition.x,
-                                        Mathf.Clamp(content.localPosition.y, -itemPos - 139, -itemPos + 189));
+                                        Mathf.Clamp(content.localPosition.y, -viewportHeight - itemPos +itemHeight/2, -itemPos - itemHeight/2));
         }
     }
 

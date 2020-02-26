@@ -79,10 +79,12 @@ namespace FinalInferno{
             enemyContent.ShowEnemyInfo(currentUnit);
         }
 
-        public void UpdateQueue(int cost)
+        public void UpdateQueue(int cost, bool ignoreCurrentUnit = false)
         {
-            queue.Enqueue(currentUnit, cost);
-            currentUnit = null;
+            if(!ignoreCurrentUnit){
+                queue.Enqueue(currentUnit, cost);
+                currentUnit = null;
+            }
 
             if (CheckEnd() == VictoryType.Nobody)
             {
@@ -123,17 +125,17 @@ namespace FinalInferno{
                 // Se a unidade que morreu era a unidade atual, anda a fila
                 if (currentUnit == unit){
                     currentUnit = null;
-                    if (CheckEnd() == VictoryType.Nobody)
-                    {
-                        UpdateTurn();
-                        UpdateLives();
-                    }
+                    // if (CheckEnd() == VictoryType.Nobody)
+                    // {
+                    //     UpdateTurn();
+                    //     UpdateLives();
+                    // }
                 }
             }
         }
 
         public void Revive(BattleUnit unit){
-            if(!queue.Contains(unit)){
+            if(!queue.Contains(unit) && currentUnit != unit){
                 queue.Enqueue(unit, 0);
                 unitsUI.ReinsertUnit(unit);
             }
