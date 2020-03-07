@@ -7,7 +7,7 @@ namespace FinalInferno{
     public class MagicalDamage : SkillEffect {
         // value1 = dmg multiplier
         // value2 = element of the damage
-        public override string Description { get { return "Deals " + value1 + " " + DmgType + " magical damage"; } }
+        public override string Description { get { return "Deals " + value1 + "x " + DmgType + " magical damage"; } }
         private string DmgType{
             get{
                 string value = "\b";

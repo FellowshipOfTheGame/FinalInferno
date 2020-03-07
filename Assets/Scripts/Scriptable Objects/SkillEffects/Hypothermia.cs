@@ -7,7 +7,7 @@ namespace FinalInferno{
     public class Hypothermia : SkillEffect {
         // value1 = dmg multiplier
         // value2 = DoT duration
-        public override string Description { get { return "Deals " + value1 + "x water damage for " + value2 + " turns"; } }
+        public override string Description { get { return "Deals " + value1 + "x Water damage for " + value2 + " turns"; } }
 
         public override void Apply(BattleUnit source, BattleUnit target) {
             target.AddEffect(new DamagingOverTime(source, target, value1, Element.Water, (int)value2));

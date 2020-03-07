@@ -7,7 +7,7 @@ namespace FinalInferno{
     public class ShareDebuff : SkillEffect {
         // value1 = index of status effect being shared
         // value2 = modifier to apply to the effect
-        public override string Description { get { return "Share " + value2*100 + "% of effect number " + value1 + " to allies"; } }
+        public override string Description { get { return "Share " + value2*100 + "% of selected status effect to allies"; } }
         
         public override void Apply(BattleUnit source, BattleUnit target) {
             List<BattleUnit> allies = BattleManager.instance.GetTeam(target);

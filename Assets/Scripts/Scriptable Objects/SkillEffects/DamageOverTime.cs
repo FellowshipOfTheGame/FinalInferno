@@ -7,7 +7,7 @@ namespace FinalInferno{
     public class DamageOverTime : SkillEffect {
         // value1 = dmg multiplier
         // value2 = DoT duration
-        public override string Description { get {return "Deals " + value1*100 + "% damage for " + value2 + " turns"; } }
+        public override string Description { get {return "Deals " + value1*100 + "x Neutral damage for " + value2 + " turns"; } }
 
         public override void Apply(BattleUnit source, BattleUnit target) {
             target.AddEffect(new DamagingOverTime(source, target, value1, Element.Neutral, (int)value2));

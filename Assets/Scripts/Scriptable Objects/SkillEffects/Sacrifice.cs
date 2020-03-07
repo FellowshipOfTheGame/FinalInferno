@@ -7,7 +7,7 @@ namespace FinalInferno{
     public class Sacrifice : SkillEffect {
         // value1 = percentage of max HP sacrificed
         // value2 = who receives the heal: 0 = target's allies; 1 = target's enemies;
-        public override string Description { get { return "Sacrify " + value1*100 + "% max HP and heal all " + HealTargets; } }
+        public override string Description { get { return "Sacrifice " + value1*100 + "% max HP of target and heal all " + HealTargets + " for that amount in total"; } }
         
         private string HealTargets{ get {return ( (((int)value2 % 2) == 0)? "allies" : "enemies" ); } }
         public override void Apply(BattleUnit source, BattleUnit target) {

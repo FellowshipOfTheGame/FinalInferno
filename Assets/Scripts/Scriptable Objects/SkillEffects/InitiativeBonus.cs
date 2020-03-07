@@ -7,7 +7,16 @@ namespace FinalInferno{
     public class InitiativeBonus : SkillEffect {
         // value1 = absolute points decrease
         // value2 = percentage speed to decrease points
-        public override string Description { get { return "Decrease " + value1 + " + " + value2*100 + "% speed points"; } }
+        public override string Description {
+            get {
+                string desc = "Decrease  ";
+                desc += (value1 != 0)? (value1 + " ") : "";
+                desc += (value1 != 0 && value2 != 0)? " + " : "";
+                desc += (value2 != 0)? value2*100 + "% speed " : "";
+                desc += "action points";
+                return desc;
+            }
+        }
         
         public override void Apply(BattleUnit source, BattleUnit target) {
             target.actionPoints -= Mathf.FloorToInt(value1);
