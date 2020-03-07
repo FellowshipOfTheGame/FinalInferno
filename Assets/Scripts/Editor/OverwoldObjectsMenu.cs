@@ -8,12 +8,24 @@ namespace FinalInferno{
     {
         [MenuItem("GameObject/FinalInferno/Overworld Objects", false, 48)]
         static void CreateOverworldObjects(MenuCommand menuCommand){
-            GameObject[] objectList = new GameObject[6];
-            objectList[5] = GameObject.FindObjectOfType<CameraController>()?.gameObject;
-            if(!objectList[5]){
-                objectList[5] = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Overworld/Main Camera.prefab", typeof(GameObject));
-                if(!objectList[5])
+            GameObject[] objectList = new GameObject[7];
+            objectList[6] = GameObject.FindObjectOfType<CameraController>()?.gameObject;
+            if(!objectList[6]){
+                objectList[6] = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Overworld/Main Camera.prefab", typeof(GameObject));
+                if(!objectList[6])
                     Debug.Log("Could not load Assets/Prefabs/Overworld/Main Camera.prefab");
+            }else
+                objectList[6] = null;
+
+            objectList[5] = GameObject.FindObjectOfType<Canvas>()?.gameObject;
+            if(!objectList[5]){
+                objectList[5] = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Overworld/Canvas.prefab", typeof(GameObject));
+                if(!objectList[5]){
+                    Debug.Log("Could not load Assets/Prefabs/Overworld/Canvas.prefab");
+                }else{
+                    Canvas canvas = objectList[5].GetComponent<Canvas>();
+                    if(canvas) canvas.worldCamera = GameObject.FindObjectOfType<Camera>();
+                }
             }else
                 objectList[5] = null;
 

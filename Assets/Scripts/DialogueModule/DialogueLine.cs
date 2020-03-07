@@ -18,6 +18,7 @@ namespace Fog.Dialogue
 
         public string Title { get { return (speaker == null)? null : speaker.DialogueName; } }
         public Color Color { get {return (speaker == null)? Color.white : speaker.DialogueColor; } }
+        public Sprite Portrait { get { return (speaker == null)? null : speaker.DialoguePortrait; } }
         public string Text { get { return text; } }
     }
 }

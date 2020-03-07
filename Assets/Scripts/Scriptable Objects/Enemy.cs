@@ -10,12 +10,16 @@ namespace FinalInferno{
     //engloba os inimigos do jogador
     [CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObject/Enemy/Basic", order = 0)]
     public class Enemy : Unit{
+        [Space(10)]
+        [Header("Enemy Info")]
         [SerializeField] protected Element element = Element.Neutral;
         public Element Element { get{ return element; } }
         [SerializeField] protected DamageType damageFocus = DamageType.None;
         public DamageType DamageFocus { get{ return damageFocus; } }
         public override Color DialogueColor { get { return color; } }
         public override string DialogueName { get { return (name == null)? "" : name; } }
+        [Space(10)]
+        [Header("Table")]
         [SerializeField] protected TextAsset enemyTable = null;
         [SerializeField] protected DynamicTable table = null;
         protected DynamicTable Table {

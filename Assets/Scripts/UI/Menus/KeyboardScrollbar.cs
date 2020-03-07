@@ -42,7 +42,7 @@ public class KeyboardScrollbar : MonoBehaviour
     void Update()
     {
         if(active){
-            float axis = Input.GetAxis("Vertical");
+            float axis = Input.GetAxisRaw("Vertical");
             scrollbar.value = Mathf.Clamp(scrollbar.value + speed * axis * ratio * Time.deltaTime, 0, 1);
         }
     }

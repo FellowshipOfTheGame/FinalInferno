@@ -10,6 +10,8 @@ namespace FinalInferno{
         public Sprite spriteOW; //"sprite" do heroi no "Over Wolrd"
         public RuntimeAnimatorController animatorOW; //"animator" do "Over World"
         public Sprite skillBG; //"sprite" de fundo da arvore de "skills"  
+        [Space(10)]
+        [Header("Hero Info")]
         [SerializeField] private List<PlayerSkill> InitialsSkills = new List<PlayerSkill>();
         public List<PlayerSkill> skillsToUpdate; //lista de skills que podem ser destravadas com o level do personagem
         public override long SkillExp {
@@ -32,6 +34,8 @@ namespace FinalInferno{
                 return Mathf.Max(10, (Mathf.FloorToInt(Mathf.Sqrt(Party.Instance.XpCumulative))));
             }
         }
+        [Space(10)]
+        [Header("Table")]
         [SerializeField] private TextAsset heroTable;
         [SerializeField] private DynamicTable table;
         private DynamicTable Table {

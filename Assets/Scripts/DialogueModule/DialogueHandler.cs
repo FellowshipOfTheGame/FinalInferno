@@ -24,6 +24,10 @@ namespace Fog.Dialogue
 		[SerializeField] public bool useTitles = false;
 		[Tooltip("Reference to the TMPro text component of the title/name display.")]
 		[SerializeField] [HideInInspectorIfNot(nameof(useTitles))] public TextMeshProUGUI titleText = null;
+		[Tooltip("Whether or not the dialogue has a portrait.")]
+		[SerializeField] public bool usePortraits = false;
+		[Tooltip("Reference to the Image component of the portrait to display.")]
+		[SerializeField] [HideInInspectorIfNot(nameof(usePortraits))] public Image portrait = null;
 		[Tooltip("Current dialogue script to be displayed. To create a new dialogue, go to Assets->Create->Anathema->Dialogue.")]
 		[SerializeField] public Dialogue dialogue;
 		[Tooltip("Game object that contains the chat box to be enabled/disabled")]
@@ -76,6 +80,10 @@ namespace Fog.Dialogue
 
 		void Update(){
 			if(IsActive){
+				if(isLineDone){
+					// For a smoother scrolling, GetAxis should be used instead
+					dialogueBox.Scroll(Input.GetAxisRaw("Vertical") * Time.deltaTime);
+				}
 				if(Input.GetButtonDown("Submit")){
 					if(isLineDone)
 						StartCoroutine("NextLine");
@@ -85,6 +93,7 @@ namespace Fog.Dialogue
 				// On unity editor, adds option to skip all dialogues for quicker debugging
 				#if UNITY_EDITOR
 				if(Input.GetButtonDown("Cancel")){
+					dialogueLines.Clear();
 					EndDialogue();
 				}
 				#endif
@@ -106,7 +115,6 @@ namespace Fog.Dialogue
 			if(_movingAgent){
 				movingAgent = _movingAgent;
 				FinalInferno.CharacterOW.PartyCanMove = false;
-				//movingAgent.CanMove = false;
 			}
 
 			OnDialogueStart?.Invoke();
@@ -156,7 +164,13 @@ namespace Fog.Dialogue
 					panelImg.color = currentLine.Color;
 				}
 
+				portrait.sprite = null;
+				if(usePortraits && portrait != null){
+					portrait.sprite = currentLine.Portrait;
+				}
+
 				dialogueText.text = "";
+				titleText.text = "";
 				if(useTitles && currentLine.Title != null){
 					titleText.text = "";
 					if(titleText == dialogueText)
@@ -239,8 +253,10 @@ namespace Fog.Dialogue
 			dialogueBox.gameObject.SetActive(false);
 
 			dialogueText.text = "";
-			if(titleText){
-				titleText.text = "";
+			titleText.text = "";
+
+			if(portrait?.sprite){
+				portrait.sprite = null;
 			}
 
 			StopAllCoroutines();
@@ -261,7 +277,6 @@ namespace Fog.Dialogue
 			}
 			if(movingAgent){
 				FinalInferno.CharacterOW.PartyCanMove = true;
-				//movingAgent.CanMove = true;
 			}
 			agent = null;
 			movingAgent = null;

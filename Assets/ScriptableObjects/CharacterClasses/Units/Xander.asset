@@ -25,7 +25,6 @@ MonoBehaviour:
   - 1
   - 1
   - 1
-  color: {r: 0.951, g: 0.951, b: 0.951, a: 1}
   skills:
   - {fileID: 11400000, guid: 61b4ce536dd3a0f4db29221345a2121b, type: 2}
   - {fileID: 11400000, guid: 28b507e27020566428ea6178facfc5fe, type: 2}
@@ -33,8 +32,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 139c8013cbcd44a4caf3da90c87c4447, type: 2}
   attackSkill: {fileID: 11400000, guid: 5f42b63c7cdcdba46a14c396542d7bce, type: 2}
   defenseSkill: {fileID: 11400000, guid: 91ee493282c723147a741a8ac23970d9, type: 2}
+  color: {r: 0.951, g: 0.951, b: 0.951, a: 1}
   animator: {fileID: 9100000, guid: 651da4b40b77bd84db88f05755a3da87, type: 2}
   portrait: {fileID: 21300002, guid: 8ab7404d2c4392448912cb4109b7ae0b, type: 3}
+  dialoguePortrait: {fileID: 21300002, guid: 8ab7404d2c4392448912cb4109b7ae0b, type: 3}
   battleSprite: {fileID: 21300000, guid: 8ab7404d2c4392448912cb4109b7ae0b, type: 3}
   queueSprite: {fileID: 21300002, guid: 8ab7404d2c4392448912cb4109b7ae0b, type: 3}
   spriteOW: {fileID: 21300000, guid: 23482fe5b84512e4db8f8aa19b6b10e1, type: 3}
@@ -58,27 +59,27 @@ MonoBehaviour:
     - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     Col:
       reorderableList:
-        canAdd: 1
-        canRemove: 1
-        draggable: 1
-        expandable: 1
-        multipleSelection: 1
-        isExpanded: 1
+        canAdd: 0
+        canRemove: 0
+        draggable: 0
+        expandable: 0
+        multipleSelection: 0
+        isExpanded: 0
         label:
-          m_Text: Keys
+          m_Text: 
           m_Image: {fileID: 0}
           m_Tooltip: 
-        headerHeight: 18
-        footerHeight: 13
-        slideEasing: 0.15
-        verticalSpacing: 2
-        showDefaultBackground: 1
+        headerHeight: 0
+        footerHeight: 0
+        slideEasing: 0
+        verticalSpacing: 0
+        showDefaultBackground: 0
         elementDisplayType: 0
         elementNameProperty: 
         elementNameOverride: 
         elementIcon: {fileID: 0}
       reqReferences: {fileID: 0}
-      isExpanded: 1
+      isExpanded: 0
       _keyValues:
       - Name
       - Level
@@ -5649,56 +5650,6 @@ MonoBehaviour:
       - 499
       - 872
       - 701
-      colTypes:
-      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Name
-        - Level
-        - HP
-        - Damage
-        - Defense
-        - Resistance
-        - Speed
-        _keys:
-        - Name
-        - Level
-        - HP
-        - Damage
-        - Defense
-        - Resistance
-        - Speed
-        _values: 00000000010000000200000003000000040000000500000006000000
-    - elements:
-      - 
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089

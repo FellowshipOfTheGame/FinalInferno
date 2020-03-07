@@ -41,6 +41,11 @@ namespace Fog.Dialogue{
                 contentIsText = false;
         }
 
+        public void Scroll(float axis){
+            RectTransform rectTransform = transform as RectTransform;
+            verticalNormalizedPosition = Mathf.Clamp(verticalNormalizedPosition + axis * scrollSpeed * (rectTransform.rect.height / content.rect.height), 0f, 1f);
+        }
+
         public void JumpToEnd(){
             StopCoroutine("ScrollingDown");
             Canvas.ForceUpdateCanvases();
