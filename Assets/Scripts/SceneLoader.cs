@@ -156,6 +156,15 @@ namespace FinalInferno{
             SceneManager.sceneLoaded += OnMainMenuLoad;
             if(beforeSceneChange != null)
                 beforeSceneChange();
+
+            // Salva o jogo se o autosave esta ativado
+            if(SaveLoader.AutoSave && SaveLoader.CanSaveGame){
+                for(int i = 0; i < Party.Capacity; i++){
+                    Party.Instance.characters[i].position = new Vector2(CharacterOW.CharacterList[i].transform.position.x, CharacterOW.CharacterList[i].transform.position.y);
+                }
+                SaveLoader.SaveGame();
+            }
+                
             SceneManager.LoadScene("MainMenu");
         }
 
