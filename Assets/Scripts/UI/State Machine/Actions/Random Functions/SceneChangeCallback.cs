@@ -17,8 +17,7 @@ namespace FinalInferno.UI.FSM
 
         public override void Act(StateController controller)
         {
-            if(SceneLoader.onSceneLoad != null)
-                SceneLoader.onSceneLoad();
+            SceneLoader.onSceneLoad?.Invoke();
         }
 
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace FinalInferno{
     [CreateAssetMenu(fileName = "NewEventDialogue", menuName = "ScriptableObject/DialogueSystem/EventDialogue")]
-    public class DialogueEventTrigger : Fog.Dialogue.Dialogue
+    public class DialogueEventTrigger : DialogueFI
     {
         public QuestEvent[] eventsTriggered;
 
@@ -19,6 +19,9 @@ namespace FinalInferno{
                     Debug.Log("Dialogo triggerou evento " + _event.eventFlag + " da quest " + quest);
                 }
             }
+
+            base.AfterDialogue();
+            Fog.Dialogue.DialogueHandler.instance.OnDialogueStart -= AfterDialogue;
         }
     }
 }

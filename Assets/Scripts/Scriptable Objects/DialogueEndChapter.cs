@@ -5,8 +5,8 @@ namespace FinalInferno{
     [CreateAssetMenu(fileName = "EndChapterDialogue", menuName = "ScriptableObject/DialogueSystem/DialogueEndChapter")]
     public class DialogueEndChapter : Fog.Dialogue.Dialogue
     {
+        public override void BeforeDialogue(){}
         public override void AfterDialogue(){
-            base.AfterDialogue();
             Fog.Dialogue.DialogueHandler.instance.StartCoroutine(WaitToGoBack());
         }
 

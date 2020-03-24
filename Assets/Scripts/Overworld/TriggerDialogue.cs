@@ -25,7 +25,7 @@ namespace FinalInferno{
             }
 
             if(selectedDialogue != null){
-                Fog.Dialogue.DialogueHandler.instance.StartDialogue(selectedDialogue, agent, agent.GetComponent<Movable>());
+                Fog.Dialogue.DialogueHandler.instance.StartDialogue(selectedDialogue);
             }
         }
     }

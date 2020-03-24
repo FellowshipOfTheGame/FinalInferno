@@ -54,8 +54,6 @@ namespace Fog.Dialogue
 		private DialogueLine currentLine;
 		private bool isLineDone;
 		public bool IsActive { get; private set; } = false;
-		private Agent agent;
-		private FinalInferno.Movable movingAgent;
 		private string titleAux;
 
 		public delegate void DialogueAction();
@@ -74,8 +72,6 @@ namespace Fog.Dialogue
 					Destroy(this);
 			}
 			IsActive = false;
-			agent = null;
-			movingAgent = null;
 		}
 
 		void Update(){
@@ -105,18 +101,8 @@ namespace Fog.Dialogue
 		/// 	This overload is supposed to be used when there is a default dialogue sequence, since it uses the last set dialogue as the current dialogue.
 		/// 	Otherwise, use the StartDialogue(Dialogue dialogue) overload.
 		/// </summary>
-		public void StartDialogue(Agent _agent = null, FinalInferno.Movable _movingAgent = null)
+		public void StartDialogue()
 		{
-			// If an agent or movable is passed as parameter, they must have interactions and movement blocked
-			if(_agent){
-				agent = _agent;
-				agent.canInteract = false;
-			}
-			if(_movingAgent){
-				movingAgent = _movingAgent;
-				FinalInferno.CharacterOW.PartyCanMove = false;
-			}
-
 			OnDialogueStart?.Invoke();
 
 			if(IsActive)
@@ -138,10 +124,12 @@ namespace Fog.Dialogue
 		/// 	In case of a default dialogue (that repeats), you can also set the dialogue and use the StartDialogue() overload instead.
 		/// </summary>
 		/// <param name="dialogue"> The current dialogue scriptable object. </param>
-		public void StartDialogue(Dialogue dialogue, Agent _agent = null, FinalInferno.Movable _movingAgent = null)
+		public void StartDialogue(Dialogue dialogue)
 		{
+			OnDialogueStart += dialogue.BeforeDialogue;
+			OnDialogueEnd += dialogue.AfterDialogue;
 			this.dialogue = dialogue;
-			StartDialogue(_agent, _movingAgent);
+			StartDialogue();
 		}
 
 		/// <summary>
@@ -268,21 +256,6 @@ namespace Fog.Dialogue
                 Time.timeScale = 1f;
 
 			OnDialogueEnd?.Invoke();
-
-			// If an agent or movable was blocked, sets them free
-			if(agent){
-				// Input cooldown is needed because it uses the same "Interactable" button
-				agent.InputCooldown();
-				agent.canInteract = true;
-			}
-			if(movingAgent){
-				FinalInferno.CharacterOW.PartyCanMove = true;
-			}
-			agent = null;
-			movingAgent = null;
-
-			// Triggers dialogue AfterDialogue method
-			dialogue.AfterDialogue();
 		}
 
 		/// <summary>

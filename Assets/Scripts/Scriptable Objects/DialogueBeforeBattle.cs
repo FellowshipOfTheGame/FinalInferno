@@ -14,7 +14,7 @@ namespace FinalInferno{
         
         public override void AfterDialogue(){
             SceneLoader.beforeSceneChange += SetFlags;
-            CharacterOW.PartyCanMove = false;
+            shouldUnlockMovement = false;
 
             FinalInferno.UI.ChangeSceneUI.isBattle = true;
             FinalInferno.UI.ChangeSceneUI.battleBG = battleBG;
@@ -22,6 +22,8 @@ namespace FinalInferno{
             FinalInferno.UI.ChangeSceneUI.battleEnemies = (Enemy[])battleEnemies.Clone();
 
             decision.Click();
+
+            Fog.Dialogue.DialogueHandler.instance.OnDialogueStart -= AfterDialogue;
         }
 
         public void SetFlags(){

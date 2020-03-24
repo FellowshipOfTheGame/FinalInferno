@@ -7,12 +7,17 @@ namespace Fog.Dialogue{
     public class Agent : MonoBehaviour
     {
         // Singleton
-        private static Agent instance = null;
+        public static Agent Instance { get; private set; } = null;
         public void Awake() {
-            if (!instance) {
-                instance = this;
+            if (!Instance) {
+                Instance = this;
             } else
                 Destroy(this);
+        }
+        public void OnDestroy(){
+            if(Instance == this){
+                Instance = null;
+            }
         }
 
         [SerializeField]
@@ -53,7 +58,7 @@ namespace Fog.Dialogue{
                     foreach(IInteractable interactable in collidingInteractables.ToArray()){
                         // Para cada collider encontrado, tenta interagir se houver o componente necessario
                         if(interactable != null){
-                            interactable.OnInteractAttempt(this, GetComponent<FinalInferno.Movable>());
+                            interactable.OnInteractAttempt();
                             count++;
                             if(count >= maxInteractions || !canInteract){
                                 break;

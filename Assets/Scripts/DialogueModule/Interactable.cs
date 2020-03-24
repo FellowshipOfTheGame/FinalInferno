@@ -37,7 +37,7 @@ namespace Fog.Dialogue
             }
         }
 
-        public void OnInteractAttempt(Agent agent, FinalInferno.Movable movingAgent = null){
+        public void OnInteractAttempt(){
             Dialogue selectedDialogue = null;
             foreach(DialogueEntry entry in dialogues){
                 if(entry.quest != null && entry.quest.events[entry.eventFlag]){
@@ -46,7 +46,7 @@ namespace Fog.Dialogue
                     break;
             }
             if(selectedDialogue != null){
-                Fog.Dialogue.DialogueHandler.instance.StartDialogue(selectedDialogue, agent, movingAgent);
+                DialogueHandler.instance.StartDialogue(selectedDialogue);
             }
         }
 

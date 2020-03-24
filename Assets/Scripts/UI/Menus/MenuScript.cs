@@ -16,8 +16,7 @@ namespace FinalInferno.UI
         }
 
         public void SceneLoadCallback(){
-            if(SceneLoader.onSceneLoad != null )
-                SceneLoader.onSceneLoad();
+            SceneLoader.onSceneLoad?.Invoke();
         }
 
         public void NewGame()

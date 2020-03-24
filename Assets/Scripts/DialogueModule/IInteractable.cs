@@ -6,6 +6,6 @@ namespace Fog.Dialogue
 {
     public interface IInteractable
     {
-        void OnInteractAttempt(Agent agent, FinalInferno.Movable movingAgent);
+        void OnInteractAttempt();
     }
 }

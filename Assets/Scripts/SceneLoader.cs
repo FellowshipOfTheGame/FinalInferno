@@ -29,8 +29,7 @@ namespace FinalInferno{
             // porque a primeira transição da maquina de estado espera que isso seja chamado
             SceneManager.sceneLoaded += OnBattleLoad;
 
-            if(beforeSceneChange != null)
-                beforeSceneChange();
+            beforeSceneChange?.Invoke();
             SceneManager.LoadScene("Battle");
         }
 
@@ -51,8 +50,7 @@ namespace FinalInferno{
 
             SceneManager.sceneLoaded += OnMapLoad;
             onSceneLoad += UnlockMovement;
-            if(beforeSceneChange != null)
-                beforeSceneChange();
+            beforeSceneChange?.Invoke();
             SceneManager.LoadScene(map.buildIndex);
         }
         public static void LoadOWScene(string map, bool shouldUpdate = false, Vector2? newPosition = null, bool dontSave = false) {
@@ -70,8 +68,7 @@ namespace FinalInferno{
 
             SceneManager.sceneLoaded += OnMapLoad;
             onSceneLoad += UnlockMovement;
-            if(beforeSceneChange != null)
-                beforeSceneChange();
+            beforeSceneChange?.Invoke();
             SceneManager.LoadScene(map);
         }
         public static void LoadOWScene(int mapID, bool shouldUpdate = false, Vector2? newPosition = null, bool dontSave = false) {
@@ -89,8 +86,7 @@ namespace FinalInferno{
 
             SceneManager.sceneLoaded += OnMapLoad;
             onSceneLoad += UnlockMovement;
-            if(beforeSceneChange != null)
-                beforeSceneChange();
+            beforeSceneChange?.Invoke();
             SceneManager.LoadScene(mapID);
         }
 
@@ -112,14 +108,12 @@ namespace FinalInferno{
             if(dialogue != null){
                 SceneManager.sceneLoaded += OnMapLoad;
                 onSceneLoad += StartDialogue;
-                if(beforeSceneChange != null)
-                    beforeSceneChange();
+                beforeSceneChange?.Invoke();
                 SceneManager.LoadScene(map.buildIndex);
             }else{
                 SceneManager.sceneLoaded += OnMapLoad;
                 onSceneLoad += UnlockMovement;
-                if(beforeSceneChange != null)
-                    beforeSceneChange();
+                beforeSceneChange?.Invoke();
                 SceneManager.LoadScene(map.buildIndex);
             }
         }
@@ -140,22 +134,19 @@ namespace FinalInferno{
             if(dialogue != null){
                 SceneManager.sceneLoaded += OnMapLoad;
                 onSceneLoad += StartDialogue;
-                if(beforeSceneChange != null)
-                    beforeSceneChange();
+                beforeSceneChange?.Invoke();
                 SceneManager.LoadScene(map);
             }else{
                 SceneManager.sceneLoaded += OnMapLoad;
                 onSceneLoad += UnlockMovement;
-                if(beforeSceneChange != null)
-                    beforeSceneChange();
+                beforeSceneChange?.Invoke();
                 SceneManager.LoadScene(map);
             }
         }
 
         public static void LoadMainMenu(){
             SceneManager.sceneLoaded += OnMainMenuLoad;
-            if(beforeSceneChange != null)
-                beforeSceneChange();
+            beforeSceneChange?.Invoke();
 
             // Salva o jogo se o autosave esta ativado
             if(SaveLoader.AutoSave && SaveLoader.CanSaveGame){
@@ -214,7 +205,7 @@ namespace FinalInferno{
         }
         public static void StartDialogue(){
             Fog.Dialogue.Agent agent = CharacterOW.MainOWCharacter?.GetComponent<Fog.Dialogue.Agent>();
-            Fog.Dialogue.DialogueHandler.instance.StartDialogue(cutsceneDialogue, agent, agent?.GetComponent<Movable>());
+            Fog.Dialogue.DialogueHandler.instance.StartDialogue(cutsceneDialogue);
             cutsceneDialogue = null;
             onSceneLoad -= StartDialogue;
         }
