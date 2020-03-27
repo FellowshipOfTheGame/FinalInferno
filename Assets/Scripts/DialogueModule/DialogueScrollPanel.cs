@@ -8,15 +8,12 @@ namespace Fog.Dialogue{
     public class DialogueScrollPanel : ScrollRect
     {
         public bool smoothScrolling;
-        private bool contentIsText;
-        [Fog.Editor.HideInInspectorIfNot(nameof(smoothScrolling))]
         public float scrollSpeed;
-        public float marginSize; // To do
+        // To do: Change this so it also works with horizontal scrolling
 
         protected void Reset(){
             smoothScrolling = false;
             scrollSpeed = 10f;
-            marginSize = 0f;
             content = null;
             horizontal = false;
             vertical = true;
@@ -35,10 +32,22 @@ namespace Fog.Dialogue{
 
         protected void Start(){
             base.Start();
-            if(content){
-                contentIsText = (content.GetComponent<TMPro.TextMeshProUGUI>() != null) || (content.GetComponent<Text>() != null);
-            }else
-                contentIsText = false;
+        }
+
+        public float NormalizedTopPosition(RectTransform rect){
+            float contenHeight = content.rect.height;
+            float viewportHeight = viewport.rect.height;
+            float distance = content.rect.yMin - rect.rect.yMin;
+
+            return Mathf.Clamp((distance - viewportHeight) / (contenHeight - viewportHeight), 0f, 1f);
+        }
+
+        public float NormalizedBottomPosition(RectTransform rect){
+            float contenHeight = content.rect.height;
+            float viewportHeight = viewport.rect.height;
+            float distance = content.rect.yMin - rect.rect.yMin;
+
+            return Mathf.Clamp((distance) / (contenHeight - viewportHeight), 0f, 1f);
         }
 
         public void Scroll(float axis){
@@ -47,22 +56,74 @@ namespace Fog.Dialogue{
         }
 
         public void JumpToEnd(){
-            StopCoroutine("ScrollingDown");
-            Canvas.ForceUpdateCanvases();
+            if(smoothScrolling){
+                StopAllCoroutines();
+                Canvas.ForceUpdateCanvases();
+            }
             verticalNormalizedPosition = 0f;
+        }
+
+        public void JumpToStart(){
+            if(smoothScrolling){
+                StopAllCoroutines();
+                Canvas.ForceUpdateCanvases();
+            }
+            verticalNormalizedPosition = 1f;
+        }
+
+        public void JumpToPosition(float targetNormalPosition){
+            if(smoothScrolling){
+                StopAllCoroutines();
+                Canvas.ForceUpdateCanvases();
+            }
+            verticalNormalizedPosition = Mathf.Clamp(targetNormalPosition, 0f, 1f);
         }
 
         public void ScrollToEnd(){
             if(smoothScrolling){
-                StopCoroutine("ScrollingDown");
-                StartCoroutine("ScrollingDown");
+                StopAllCoroutines();
+                StartCoroutine(ScrollingDown());
             }else
                 JumpToEnd();
         }
 
-        private IEnumerator ScrollingDown(){
+        public void ScrollToStart(){
+            if(smoothScrolling){
+                StopAllCoroutines();
+                StartCoroutine(ScrollingUp());
+            }else
+                JumpToStart();
+        }
+
+        public void ScrollToPosition(float targetNormalPosition){
+            targetNormalPosition = Mathf.Clamp(targetNormalPosition, 0f, 1f);
+            if(smoothScrolling){
+                if(targetNormalPosition < verticalNormalizedPosition - Mathf.Epsilon){
+                    StopAllCoroutines();
+                    StartCoroutine(ScrollingDown(targetNormalPosition));
+                }else if(targetNormalPosition > verticalNormalizedPosition + Mathf.Epsilon){
+                    StopAllCoroutines();
+                    StartCoroutine(ScrollingUp(targetNormalPosition));
+                }
+            }else{
+                JumpToPosition(targetNormalPosition);
+            }
+        }
+
+        private IEnumerator ScrollingUp(float targetPosition = 1f){
             yield return new WaitForEndOfFrame();
-            while(verticalNormalizedPosition > Mathf.Epsilon){
+            while(verticalNormalizedPosition < (targetPosition - Mathf.Epsilon)){
+                Canvas.ForceUpdateCanvases();
+                verticalNormalizedPosition += (Time.deltaTime * scrollSpeed * 10)/(content.rect.height);
+                yield return new WaitForEndOfFrame();
+            }
+            verticalNormalizedPosition = 0f;
+            velocity = Vector2.zero;
+        }
+
+        private IEnumerator ScrollingDown(float targetPosition = 0f){
+            yield return new WaitForEndOfFrame();
+            while(verticalNormalizedPosition > (targetPosition + Mathf.Epsilon)){
                 Canvas.ForceUpdateCanvases();
                 verticalNormalizedPosition -= (Time.deltaTime * scrollSpeed * 10)/(content.rect.height);
                 yield return new WaitForEndOfFrame();

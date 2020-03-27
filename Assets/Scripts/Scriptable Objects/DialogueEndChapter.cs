@@ -2,7 +2,7 @@
 using UnityEngine;
 
 namespace FinalInferno{
-    [CreateAssetMenu(fileName = "EndChapterDialogue", menuName = "ScriptableObject/DialogueSystem/DialogueEndChapter")]
+    [CreateAssetMenu(fileName = "EndChapterDialogue", menuName = "ScriptableObject/DialogueSystem/FinalInferno/DialogueEndChapter")]
     public class DialogueEndChapter : Fog.Dialogue.Dialogue
     {
         public override void BeforeDialogue(){}

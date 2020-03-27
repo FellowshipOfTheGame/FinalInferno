@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace FinalInferno{
-    [CreateAssetMenu(fileName = "NewEndQuestDialogue", menuName = "ScriptableObject/DialogueSystem/EndQuestDialogue")]
+    [CreateAssetMenu(fileName = "NewEndQuestDialogue", menuName = "ScriptableObject/DialogueSystem/FinalInferno/EndQuestDialogue")]
     public class DialogueEndQuest : DialogueEventTrigger
     {
         [SerializeField] private Quest questToEnd;

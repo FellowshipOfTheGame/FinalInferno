@@ -13,6 +13,8 @@ namespace Fog.Dialogue{
                 Instance = this;
             } else
                 Destroy(this);
+
+            nFramesCooldown = Mathf.Max(nFramesCooldown, 1);
         }
         public void OnDestroy(){
             if(Instance == this){

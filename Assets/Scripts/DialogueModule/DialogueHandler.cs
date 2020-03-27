@@ -32,6 +32,8 @@ namespace Fog.Dialogue
 		[SerializeField] public Dialogue dialogue;
 		[Tooltip("Game object that contains the chat box to be enabled/disabled")]
 		[SerializeField] public DialogueScrollPanel dialogueBox = null;
+		[Tooltip("Game object that handles choosing dialogue options")]
+		[SerializeField] private OptionHandler optionHandler = null;
 
 		[Space(10)]
 
@@ -72,6 +74,13 @@ namespace Fog.Dialogue
 					Destroy(this);
 			}
 			IsActive = false;
+		}
+
+		void OnDestroy(){
+			if(isSingleton){
+				if(instance == this)
+					instance = null;
+			}
 		}
 
 		void Update(){
@@ -130,6 +139,51 @@ namespace Fog.Dialogue
 			OnDialogueEnd += dialogue.AfterDialogue;
 			this.dialogue = dialogue;
 			StartDialogue();
+		}
+
+		public void DisplayOptions(DialogueLine question, DialogueOptionInfo[] options){
+			currentLine = question;
+			if(IsActive)
+				EndDialogue(true);
+
+            if(pauseDuringDialogue)
+			    Time.timeScale = 0f;
+
+			IsActive = false;
+			isLineDone = false;
+			dialogueBox.gameObject.SetActive(true);
+			StartCoroutine(PresentQuestion(options));
+		}
+
+		private IEnumerator PresentQuestion(DialogueOptionInfo[] options){
+			// Change dialogue box color to the one given by speaker
+			Image panelImg = dialogueBox.GetComponent<Image>();
+			if(panelImg){
+				panelImg.color = currentLine.Color;
+			}
+
+			portrait.sprite = null;
+			if(usePortraits && portrait != null){
+				portrait.sprite = currentLine.Portrait;
+			}
+
+			dialogueText.text = "";
+			titleText.text = "";
+			if(useTitles && currentLine.Title != null){
+				titleText.text = "";
+				if(titleText == dialogueText)
+						titleText.text += "<size=" + (dialogueText.fontSize+3) + ">";
+				titleText.text += "<b>" + currentLine.Title + "</b>";
+				if(titleText == dialogueText){
+					titleText.text += "</size>";
+					titleText.text += "\n";
+					titleAux = titleText.text;
+				}
+			}
+
+			yield return FillInText();
+
+			optionHandler.CreateOptions(options);
 		}
 
 		/// <summary>
@@ -235,7 +289,7 @@ namespace Fog.Dialogue
 		/// 	This method is called automatically once the dialogue line queue is empty, but it can be called to end the dialogue abruptly.
 		///		calls the OnDialogueEnd event, unpauses the game (if the setting is on) and disables the dialogue box.
 		/// </summary>
-		public void EndDialogue()
+		public void EndDialogue(bool ignoreCallback = false)
 		{
 			
 			dialogueBox.gameObject.SetActive(false);
@@ -255,7 +309,8 @@ namespace Fog.Dialogue
             if(pauseDuringDialogue)
                 Time.timeScale = 1f;
 
-			OnDialogueEnd?.Invoke();
+			if(!ignoreCallback)
+				OnDialogueEnd?.Invoke();
 		}
 
 		/// <summary>

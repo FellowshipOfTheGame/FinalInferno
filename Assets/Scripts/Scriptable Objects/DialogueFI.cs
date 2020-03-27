@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace FinalInferno{
-    [CreateAssetMenu(fileName = "NewDialogue", menuName = "ScriptableObject/DialogueSystem/FinalInfernoDialogue")]
+    [CreateAssetMenu(fileName = "NewDialogue", menuName = "ScriptableObject/DialogueSystem/FinalInferno/Dialogue")]
     public class DialogueFI : Fog.Dialogue.Dialogue {
         protected bool shouldUnlockMovement = true;
 
