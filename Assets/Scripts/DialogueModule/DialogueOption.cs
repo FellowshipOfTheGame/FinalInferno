@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
 
@@ -15,8 +16,8 @@ namespace Fog.Dialogue
     [RequireComponent(typeof(RectTransform))]
     public class DialogueOption : MonoBehaviour
     {
-        [SerializeField] private TextMeshPro textField;
-        [SerializeField] private GameObject focusIndicator;
+        [SerializeField] private TextMeshProUGUI textField;
+        [SerializeField] private Image focusIndicator;
         public Dialogue NextDialogue { get; private set; }
 
         public UnityAction OnSelect = null;
@@ -25,7 +26,7 @@ namespace Fog.Dialogue
 
         void Awake(){
             if(focusIndicator){
-                focusIndicator.SetActive(false);
+                focusIndicator.enabled = false;
                 OnFocus += ToggleFocus;
                 OnExit += ToggleFocus;
             }
@@ -38,7 +39,7 @@ namespace Fog.Dialogue
 
         private void ToggleFocus(){
             if(focusIndicator){
-                focusIndicator.SetActive(!focusIndicator.activeSelf);
+                focusIndicator.enabled = (!focusIndicator.enabled);
             }
         }
     }

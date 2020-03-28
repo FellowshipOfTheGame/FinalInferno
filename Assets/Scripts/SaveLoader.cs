@@ -104,6 +104,26 @@ namespace FinalInferno{
             SceneLoader.LoadCustscene(Party.StartingMap, AssetManager.LoadAsset<Fog.Dialogue.Dialogue>(Party.StartingDialogue));
         }
 
+        public static void StartDemo(){
+            // // Failsafe para garantir que saveFile não seja null
+            // if(saveFile == null)
+            //     saveFile = new SaveFile();
+            // Reseta todas as informações do jogo para um estado inicial
+            ResetGame();
+
+            Party.Instance.GiveExp(0);
+
+            Party.Instance.activeQuests.Clear();
+            Quest mainQuest = AssetManager.LoadAsset<Quest>("AdventurerQuest");
+            mainQuest.StartQuest();
+            mainQuest = AssetManager.LoadAsset<Quest>("MainQuest");
+            mainQuest.StartQuest();
+            
+            //Debug.Log("Default flag = " + mainQuest.events["Default"]);
+            // Carrega a cena inicial como cutscene
+            SceneLoader.LoadOWScene("Demo");
+        }
+
         private static bool CheckIntegrity(){
             SaveFile currentSaved = dataSaver.LoadData();
             return saveFile.Equals(currentSaved);

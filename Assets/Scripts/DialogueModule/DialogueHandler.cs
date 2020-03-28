@@ -254,8 +254,8 @@ namespace Fog.Dialogue
 					if(dialogueText == titleText)
 						dialogueText.text += titleAux;
 					dialogueText.text += currentLine.Text;
-					isLineDone = true;
 					dialogueBox.JumpToEnd();
+					isLineDone = true;
 				}
 				else
 					StartCoroutine("NextLine");

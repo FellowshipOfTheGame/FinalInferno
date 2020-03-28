@@ -14,18 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Pwner
   level: 1
-  hpMax: 600
-  baseDmg: 50
-  baseDef: 50
-  baseMagicDef: 50
-  baseSpeed: 50
+  hpMax: 140
+  baseDmg: 55
+  baseDef: 14
+  baseMagicDef: 14
+  baseSpeed: 22
   elementalResistance:
-  - 0.3
-  - 0.3
-  - 0.3
-  - 0.3
-  - 0.3
-  color: {r: 1, g: 0, b: 0, a: 1}
+  - 1.9
+  - 1
+  - 1
+  - 1
+  - 1
   skills:
   - {fileID: 11400000, guid: 2c3021b87d1b78a458264d0c93f382d1, type: 2}
   - {fileID: 11400000, guid: c7f8ca5a99d6a8240a8df51799499057, type: 2}
@@ -35,8 +34,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0aabb7711250c0043a60cdb4a6f69917, type: 2}
   attackSkill: {fileID: 11400000, guid: 95407fd86bf202049848deeb79956196, type: 2}
   defenseSkill: {fileID: 11400000, guid: 91ee493282c723147a741a8ac23970d9, type: 2}
+  color: {r: 1, g: 0, b: 0, a: 1}
   animator: {fileID: 9100000, guid: 9138085ccd5524f4f852449efbd932c8, type: 2}
   portrait: {fileID: 21300002, guid: 5959357f3f25e2e418d3fcad1413dfdc, type: 3}
+  dialoguePortrait: {fileID: 21300002, guid: 5959357f3f25e2e418d3fcad1413dfdc, type: 3}
   battleSprite: {fileID: 21300000, guid: 5959357f3f25e2e418d3fcad1413dfdc, type: 3}
   queueSprite: {fileID: 21300002, guid: 5959357f3f25e2e418d3fcad1413dfdc, type: 3}
   element: 5
@@ -68,21 +69,21 @@ MonoBehaviour:
     - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     Col:
       reorderableList:
-        canAdd: 1
-        canRemove: 1
-        draggable: 1
-        expandable: 1
-        multipleSelection: 1
+        canAdd: 0
+        canRemove: 0
+        draggable: 0
+        expandable: 0
+        multipleSelection: 0
         isExpanded: 0
         label:
-          m_Text: Keys
+          m_Text: 
           m_Image: {fileID: 0}
           m_Tooltip: 
-        headerHeight: 18
-        footerHeight: 13
-        slideEasing: 0.15
-        verticalSpacing: 2
-        showDefaultBackground: 1
+        headerHeight: 0
+        footerHeight: 0
+        slideEasing: 0
+        verticalSpacing: 0
+        showDefaultBackground: 0
         elementDisplayType: 0
         elementNameProperty: 
         elementNameOverride: 
@@ -138,18 +139,18 @@ MonoBehaviour:
     - elements:
       - Pwner
       - 1
-      - 600
-      - 50
-      - 50
-      - 50
-      - 50
-      - '#FF0000'
-      - 0.3
-      - 0.3
-      - 0.3
-      - 0.3
-      - 0.3
+      - 140
+      - 55
+      - 14
+      - 14
       - 22
+      - '#FF0000'
+      - 1.9
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+      - 2000
       - 0
       - 1
       - 1
@@ -182,21 +183,21 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
@@ -295,21 +296,21 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 

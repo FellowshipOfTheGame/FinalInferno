@@ -9,8 +9,10 @@ namespace Fog.Dialogue
     {
         [SerializeField] private DialogueScrollPanel scrollPanel = null;
         [SerializeField] private RectTransform container = null;
+        [SerializeField] private RectTransform optionList = null;
         [SerializeField] private GameObject optionPrefab = null;
-        [SerializeField] private float inputCooldown = 0.5f;
+        [SerializeField] private float inputCooldown = 0.1f;
+        [SerializeField] private float activationTime = 0.5f;
         private float timer;
         private AudioSource source;
         [SerializeField] private AudioClip changeOption;
@@ -24,6 +26,7 @@ namespace Fog.Dialogue
         void Awake(){
             source = GetComponent<AudioSource>();
             IsActive = false;
+            container.gameObject.SetActive(false);
             inputCooldown = Mathf.Max(0f, inputCooldown);
             if(!optionPrefab){
                 Debug.Log("No prefab detected");
@@ -40,27 +43,42 @@ namespace Fog.Dialogue
             if(infos.Length > 0){
                 container.gameObject.SetActive(true);
                 foreach(DialogueOptionInfo info in infos){
-                    GameObject go = Instantiate(optionPrefab, container);
+                    GameObject go = Instantiate(optionPrefab, optionList);
                     DialogueOption newOption = go.GetComponentInChildren<DialogueOption>();
                     newOption.Configure(info);
                     newOption.OnSelect += SelectOption;
                     newOption.OnFocus += FocusOption;
+                    options.Add(newOption);
                 }
-                currentOption = 0;
-                options[0].OnFocus?.Invoke();
-                timer = 0f;
-                IsActive = true;
+                // See Activate method comment
+                StartCoroutine(DelayedActivate(0.5f));                
+            }else{
+                Debug.Log("Passed empty option array to Dialogue Handler");
+                SelectOption();
             }
+        }
+
+        private IEnumerator DelayedActivate(float delay){
+            yield return new WaitForSeconds(delay);
+
+            Activate();
+        }
+
+        // This can be called from animation instead of coroutine, for better visual effect
+        public void Activate(){
+            currentOption = 0;
+            options[currentOption].OnFocus?.Invoke();
+            IsActive = true;
         }
 
         private void FocusOption(){
             float normalizedTop = scrollPanel.NormalizedTopPosition(options[currentOption].GetComponent<RectTransform>());
             float normalizedBottom = scrollPanel.NormalizedBottomPosition(options[currentOption].GetComponent<RectTransform>());
 
-            if(scrollPanel.verticalNormalizedPosition > normalizedTop 
+            if(scrollPanel.verticalNormalizedPosition < normalizedTop 
             || scrollPanel.viewport.rect.height <= options[currentOption].GetComponent<RectTransform>().rect.height){
                 scrollPanel.ScrollToPosition(normalizedTop);
-            }else if (scrollPanel.verticalNormalizedPosition < normalizedBottom){
+            }else if (scrollPanel.verticalNormalizedPosition > normalizedBottom){
                 scrollPanel.ScrollToPosition(normalizedBottom);
             }
         }
@@ -69,12 +87,18 @@ namespace Fog.Dialogue
             IsActive = false;
             timer = 0f;
             source.PlayOneShot(selectOption);
-            Dialogue selectedDialogue = options[currentOption].NextDialogue;
-            foreach(RectTransform transform in container){
+            Dialogue selectedDialogue = (currentOption >= 0)? options[currentOption].NextDialogue : null;
+            foreach(RectTransform transform in optionList){
                 Destroy(transform.gameObject);
             }
+            options.Clear();
+            currentOption = -1;
             container.gameObject.SetActive(false);
-            DialogueHandler.instance.StartDialogue(selectedDialogue);
+            if(selectedDialogue){
+                DialogueHandler.instance.StartDialogue(selectedDialogue);
+            }else{
+                DialogueHandler.instance.EndDialogue(true);
+            }
         }
 
         // Update is called once per frame

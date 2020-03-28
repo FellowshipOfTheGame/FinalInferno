@@ -37,7 +37,14 @@ namespace Fog.Dialogue{
         public float NormalizedTopPosition(RectTransform rect){
             float contenHeight = content.rect.height;
             float viewportHeight = viewport.rect.height;
-            float distance = content.rect.yMin - rect.rect.yMin;
+
+            Vector3[] corners = new Vector3[4];
+            content.GetWorldCorners(corners);
+            float contentBottom = corners[0].y;
+
+            rect.GetWorldCorners(corners);
+            float rectTop = corners[1].y;
+            float distance = rectTop - contentBottom;
 
             return Mathf.Clamp((distance - viewportHeight) / (contenHeight - viewportHeight), 0f, 1f);
         }
@@ -45,7 +52,14 @@ namespace Fog.Dialogue{
         public float NormalizedBottomPosition(RectTransform rect){
             float contenHeight = content.rect.height;
             float viewportHeight = viewport.rect.height;
-            float distance = content.rect.yMin - rect.rect.yMin;
+            
+            Vector3[] corners = new Vector3[4];
+            content.GetWorldCorners(corners);
+            float contentBottom = corners[0].y;
+
+            rect.GetWorldCorners(corners);
+            float rectBottom = corners[0].y;
+            float distance = rectBottom - contentBottom;
 
             return Mathf.Clamp((distance) / (contenHeight - viewportHeight), 0f, 1f);
         }
@@ -58,24 +72,24 @@ namespace Fog.Dialogue{
         public void JumpToEnd(){
             if(smoothScrolling){
                 StopAllCoroutines();
-                Canvas.ForceUpdateCanvases();
             }
+            Canvas.ForceUpdateCanvases();
             verticalNormalizedPosition = 0f;
         }
 
         public void JumpToStart(){
             if(smoothScrolling){
                 StopAllCoroutines();
-                Canvas.ForceUpdateCanvases();
             }
+            Canvas.ForceUpdateCanvases();
             verticalNormalizedPosition = 1f;
         }
 
         public void JumpToPosition(float targetNormalPosition){
             if(smoothScrolling){
                 StopAllCoroutines();
-                Canvas.ForceUpdateCanvases();
             }
+            Canvas.ForceUpdateCanvases();
             verticalNormalizedPosition = Mathf.Clamp(targetNormalPosition, 0f, 1f);
         }
 

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27de41f14c7733a57aa521d686383767, type: 3}
+  m_Name: ExampleOptionsDialogue
+  m_EditorClassIdentifier: 
+  lines:
+    array:
+    - speaker: {fileID: 11400000, guid: d8cc656cb282bf94fa35a46f902a38b6, type: 2}
+      text: Here you have two choices, take the red pill and face your enemies or
+        take the blue pill and keep going with your life
+  question:
+    speaker: {fileID: 11400000, guid: d8cc656cb282bf94fa35a46f902a38b6, type: 2}
+    text: What will you choose?
+  options:
+  - text: Take the red pill
+    nextDialogue: {fileID: 11400000, guid: e29ecb6688906974d936435564823eb7, type: 2}
+  - text: Take the blue pill
+    nextDialogue: {fileID: 11400000, guid: 07a6c33b248c37609847594b5c92e635, type: 2}
