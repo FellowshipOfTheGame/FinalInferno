@@ -22,8 +22,7 @@ namespace FinalInferno{
                 return (saves[Slot].mapName != null && saves[Slot].mapName != "");
             }
         }
-        // TO DO: Valor padrão deveria ser false, mas n tem menu de salvar o jogo
-        [SerializeField] public bool autoSave = true;
+        [SerializeField] public bool autoSave = false;
         // Uma array de saves inicializados com valores padrão
         public SaveInfo[] saves = new SaveInfo[nSaveSlots];
 

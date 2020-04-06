@@ -35,9 +35,11 @@ namespace FinalInferno.UI.Saves
             if (emptySlot = (info.level <= 0))
             {
                 EmptySlotGO.SetActive(true);
+                PreviewInfoGO.SetActive(false);
             }
             else
             {
+                EmptySlotGO.SetActive(false);
                 PreviewInfoGO.SetActive(true);
                 InfosText.text = "Level " + info.level + "\n" + info.mapName;
 
