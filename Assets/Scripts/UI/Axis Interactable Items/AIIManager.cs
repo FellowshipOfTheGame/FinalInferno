@@ -38,19 +38,19 @@ namespace FinalInferno.UI.AII
 
         [SerializeField] private bool interactable;
 
-        [SerializeField] private AudioSource AS;
+        [SerializeField] protected AudioSource AS;
 
 
-        void Awake(){
+        public void Awake(){
             currentItem = null;
         }
 
-        void Start()
+        public void Start()
         {
             active = false;
         }
 
-        void Update()
+        public void Update()
         {
             if (active)
             {
@@ -129,7 +129,7 @@ namespace FinalInferno.UI.AII
         /// Muda o item atualmente ativado para o próximo.
         /// </summary>
         /// <param name="nextItem"> Próximo item a ser ativado, se existir. </param>
-        private void ChangeItem(AxisInteractableItem nextItem)
+        protected void ChangeItem(AxisInteractableItem nextItem)
         {
             if (currentItem != null && nextItem != null)
             {

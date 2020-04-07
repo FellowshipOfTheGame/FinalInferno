@@ -56,7 +56,7 @@ namespace FinalInferno.UI.AII
         /// </summary>
         public AxisInteractableItem upItem;
 
-        void Awake()
+        public virtual void Awake()
         {
             OnEnter += EnableReference;
             OnExit += DisableReference;
