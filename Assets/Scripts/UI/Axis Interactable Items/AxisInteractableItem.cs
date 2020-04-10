@@ -58,8 +58,10 @@ namespace FinalInferno.UI.AII
 
         public virtual void Awake()
         {
-            OnEnter += EnableReference;
-            OnExit += DisableReference;
+            if(activeReference){
+                OnEnter += EnableReference;
+                OnExit += DisableReference;
+            }
         }
 
         /// <summary>

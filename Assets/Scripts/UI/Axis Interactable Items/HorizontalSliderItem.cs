@@ -12,9 +12,8 @@ namespace FinalInferno.UI.AII{
         private float timer;
 
         public override void Awake(){
-            OnEnter += EnableReference;
+            base.Awake();
             OnEnter += Activate;
-            OnExit += DisableReference;
             OnExit += Deactivate;
             timer = 0f;
         }

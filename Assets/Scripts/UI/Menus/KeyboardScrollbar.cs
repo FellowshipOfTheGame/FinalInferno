@@ -7,16 +7,14 @@ using UnityEngine.UI;
 public class KeyboardScrollbar : MonoBehaviour
 {
     [SerializeField] private Scrollbar scrollbar;
-    [SerializeField] private RectTransform rect;
+    public float Value { get => scrollbar.value; }
     private bool active;
     public bool Active{
         get{
             return active;
         }
         set{
-            if(value){
-                ratio = scrollbar.GetComponent<RectTransform>().rect.height / rect.rect.height;
-            }else{
+            if(!value){
                 scrollbar.value = 1;
             }
             scrollbar.interactable = value;
@@ -24,12 +22,17 @@ public class KeyboardScrollbar : MonoBehaviour
         }
     }
     [SerializeField] private float speed = 0.1f;
-    [SerializeField] private RectTransform variableContent;
-    private float ratio;
 
     void Reset(){
         scrollbar = GetComponent<Scrollbar>();
-        rect = GetComponent<RectTransform>();
+    }
+
+    public float SetValue(float newValue){
+        float previousValue = scrollbar.value;
+
+        scrollbar.value = Mathf.Clamp(newValue, 0f, 1f);
+
+        return previousValue;
     }
 
     // Start is called before the first frame update
@@ -43,7 +46,7 @@ public class KeyboardScrollbar : MonoBehaviour
     {
         if(active){
             float axis = Input.GetAxisRaw("Vertical");
-            scrollbar.value = Mathf.Clamp(scrollbar.value + speed * axis * ratio * Time.deltaTime, 0, 1);
+            scrollbar.value = Mathf.Clamp(scrollbar.value + speed * axis * scrollbar.size * Time.deltaTime, 0f, 1f);
         }
     }
 }

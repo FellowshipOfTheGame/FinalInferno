@@ -94,7 +94,7 @@ namespace FinalInferno.UI.AII
         /// <summary>
         /// Ativa o gerenciador e o item atual.
         /// </summary>
-        public void Active()
+        public virtual void Active()
         {
             active = true;
             currentItem = firstItem;
@@ -107,7 +107,7 @@ namespace FinalInferno.UI.AII
         /// <summary>
         /// Desativa o item atual e o gerenciador.
         /// </summary>
-        public void Deactive()
+        public virtual void Deactive()
         {
             if (currentItem != null)
             {

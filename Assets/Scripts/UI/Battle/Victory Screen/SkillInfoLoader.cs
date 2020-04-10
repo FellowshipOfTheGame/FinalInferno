@@ -19,7 +19,7 @@ namespace FinalInferno.UI.Victory
             skillImage.sprite = skill.skillImage ?? defaultSprite;
             skillElementImage.sprite = Icons.instance.elementSprites[(int)skill.attribute - 1] ?? defaultSprite;
             skillTargetTypeImage.sprite = Icons.instance.targetTypeSprites[(int)skill.target] ?? defaultSprite;
-            skillDescription.text = skill.shortDescription;
+            skillDescription.text = skill.ShortDescription;
         }
     }
 }

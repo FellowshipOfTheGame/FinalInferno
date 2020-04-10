@@ -17,9 +17,8 @@ namespace FinalInferno.UI.AII{
         private bool isOn = false;
 
         public override void Awake(){
-            OnEnter += EnableReference;
+            base.Awake();
             OnEnter += Activate;
-            OnExit += DisableReference;
             OnExit += Deactivate;
             OnAct += Toggle;
             timer = 0f;
