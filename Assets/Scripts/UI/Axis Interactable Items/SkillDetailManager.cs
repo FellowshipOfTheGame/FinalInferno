@@ -45,11 +45,6 @@ namespace FinalInferno.UI.AII{
             toggle.OnToggle += ToggleSkillActive;
         }
 
-        new void Start(){
-            active = false;
-            int i = 0;
-        }
-
         private void ToggleSkillActive(){
             currentSkill.active = !currentSkill.active;
             if(AS) AS.Play();
@@ -58,7 +53,6 @@ namespace FinalInferno.UI.AII{
         public void FocusOn(int index){
             index = Mathf.Clamp(index, 0, detailPages.Count-1);
             if(index != currentIndex){
-                currentValues[currentIndex] = scrollbar.Value;
 
                 scrollRect.content = detailPages[index].GetComponent<RectTransform>();
                 foreach(SkillsMenu.SkillDetailPage page in detailPages){
@@ -70,10 +64,18 @@ namespace FinalInferno.UI.AII{
                         rect.anchoredPosition = Vector2.zero;
                     }
                 }
-                scrollbar.SetValue(currentValues[index]);
+                currentValues[currentIndex] = scrollbar.SetValue(currentValues[index]);
 
                 currentIndex = index;
             }
+        }
+
+        public void HideToggle(){
+            toggle.Hide();
+        }
+
+        public void ShowToggle(){
+            toggle.Show();
         }
 
         public override void Active(){
@@ -91,6 +93,7 @@ namespace FinalInferno.UI.AII{
             for(int i = 0; i < currentValues.Count; i++){
                 currentValues[i] = 1f;
             }
+            scrollbar.SetValue(1f);
 
             base.Deactive();
         }

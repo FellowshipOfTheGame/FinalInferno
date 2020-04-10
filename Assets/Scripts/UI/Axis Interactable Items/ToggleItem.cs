@@ -8,6 +8,8 @@ using TMPro;
 namespace FinalInferno.UI.AII{
     public class ToggleItem : AxisInteractableItem
     {
+        [Header("Toggle")]
+        [SerializeField] private GameObject hideObject;
         [SerializeField] private TextMeshProUGUI textIndicator;
         [SerializeField] private Image imageIndicator;
         [SerializeField] private float inputCooldown = 0.15f;
@@ -39,6 +41,18 @@ namespace FinalInferno.UI.AII{
                 if(timer < inputCooldown){
                     timer += Time.deltaTime;
                 }
+            }
+        }
+
+        public void Show(){
+            if(hideObject){
+                hideObject.SetActive(true);
+            }
+        }
+
+        public void Hide(){
+            if(hideObject){
+                hideObject.SetActive(false);
             }
         }
 

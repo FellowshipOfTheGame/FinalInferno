@@ -16,6 +16,7 @@ namespace FinalInferno.UI.SkillsMenu
         [SerializeField] private Image skillTargetTypeImage;
         [SerializeField] private Text skillTargetTypeText;
 
+        [SerializeField] private Text skillTypeText;
         [SerializeField] private Text skillDescriptionText;
         [SerializeField] private Text skillLevelInfoText;
 
@@ -35,6 +36,7 @@ namespace FinalInferno.UI.SkillsMenu
             skillTargetTypeImage.sprite = Icons.instance.targetTypeSprites[(int)skill.target];
             skillTargetTypeText.text = skill.target.ToString();
 
+            skillTypeText.text = skill.TypeString;
             skillDescriptionText.text = skill.description;
             string levelInfo = "Current Level: " + skill.Level + "\n";
             levelInfo += "Exp to next level: " + (skill.xpNext - skill.xp);
@@ -55,6 +57,13 @@ namespace FinalInferno.UI.SkillsMenu
                     skill.effects[i].effect.value2 = skill.effects[i].value2;
                     child.ShowEffect(skill.effects[i].effect);
                 }
+            }
+
+            detailManager.interactable = skill.Type != SkillType.Active;
+            if(detailManager.interactable){
+                detailManager.ShowToggle();
+            }else{
+                detailManager.HideToggle();
             }
             detailManager.CurrentSkill = skill;
         }

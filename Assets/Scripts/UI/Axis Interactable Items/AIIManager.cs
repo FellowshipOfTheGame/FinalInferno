@@ -36,7 +36,7 @@ namespace FinalInferno.UI.AII
 
         private bool enableInput = true;
 
-        [SerializeField] private bool interactable;
+        public bool interactable;
 
         [SerializeField] protected AudioSource AS;
 

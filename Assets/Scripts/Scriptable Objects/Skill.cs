@@ -16,6 +16,32 @@ namespace FinalInferno{
         public Element attribute; //elemento da "skill"
         public List<SkillEffectTuple> effects; //lista de efeitos que a "skill" causa e seus valores associados
         [SerializeField] private SkillType type; // Tipo da skill (ativa/passiva e qual tipo de passiva)
+        public string TypeString{
+            get{
+                switch(type){
+                    case SkillType.Active:
+                        return "Active Skill";
+                    case SkillType.PassiveOnDeath:
+                        return "Passive Triggered on Death";
+                    case SkillType.PassiveOnEnd:
+                        return "Passive Triggered when Battle Ends";
+                    case SkillType.PassiveOnReceiveBuff:
+                        return "Passive Triggered when Buffed";
+                    case SkillType.PassiveOnReceiveDebuff:
+                        return "Passive Triggered when Debuffed";
+                    case SkillType.PassiveOnSkillUsed:
+                        return "Passive Triggered after Skill Usage";
+                    case SkillType.PassiveOnSpawn:
+                        return "Base Status Changes";
+                    case SkillType.PassiveOnStart:
+                        return "Passive Triggered at Start of Battle";
+                    case SkillType.PassiveOnTakeDamage:
+                        return "Passive Triggered when Damage Taken";
+                    default:
+                        return "";
+                }
+            }
+        }
         public SkillType Type{ get { return type; } }
         [SerializeField] private GameObject visualEffect; // Prefab contendo uma animação da skill
         public GameObject VisualEffect { get{ return visualEffect; } }
