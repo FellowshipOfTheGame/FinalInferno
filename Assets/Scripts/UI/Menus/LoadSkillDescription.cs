@@ -19,11 +19,14 @@ namespace FinalInferno.UI.SkillsMenu
         [SerializeField] private Text skillTypeText;
         [SerializeField] private Text skillDescriptionText;
         [SerializeField] private Text skillLevelInfoText;
+        [SerializeField] private Text listDescriptionText;
 
         [SerializeField] private AII.SkillDetailManager detailManager;
 
         [SerializeField] private VerticalLayoutGroup effectList;
-        [SerializeField] private SkillEffectItem prefab;
+        [SerializeField] private VerticalLayoutGroup requirementList;
+        [SerializeField] private SkillEffectItem effectPrefab;
+        [SerializeField] private SkillRequirementItem requirementPrefab;
 
         public void LoadSkillInfo(PlayerSkill skill)
         {
@@ -38,28 +41,56 @@ namespace FinalInferno.UI.SkillsMenu
 
             skillTypeText.text = skill.TypeString;
             skillDescriptionText.text = skill.description;
-            string levelInfo = "Current Level: " + skill.Level + "\n";
-            levelInfo += "Exp to next level: " + (skill.xpNext - skill.xp);
-            skillLevelInfoText.text = levelInfo;
+            if(skill.Level > 0){
+                string levelInfo = "Current Level: " + skill.Level + "\n";
+                levelInfo += "Exp to next level: " + (skill.xpNext - skill.xp);
+                skillLevelInfoText.text = levelInfo;
+                listDescriptionText.text = "\nEffects:";
+                effectList.gameObject.SetActive(true);
+                requirementList.gameObject.SetActive(false);
 
-            SkillEffectItem[] children = effectList.GetComponentsInChildren<SkillEffectItem>();
-            for(int i = 0; i < skill.effects.Count || i < children.Length; i++){
-                if(i >= skill.effects.Count){
-                    Destroy(children[i].gameObject);
-                }else{
-                    SkillEffectItem child = null;
-                    if(i >= children.Length){
-                        child = Instantiate(prefab, effectList.GetComponent<RectTransform>());
+                SkillEffectItem[] children = effectList.GetComponentsInChildren<SkillEffectItem>();
+                for(int i = 0; i < skill.effects.Count || i < children.Length; i++){
+                    if(i >= skill.effects.Count){
+                        Destroy(children[i].gameObject);
                     }else{
-                        child = children[i];
+                        SkillEffectItem child = null;
+                        if(i >= children.Length){
+                            child = Instantiate(effectPrefab, effectList.GetComponent<RectTransform>());
+                        }else{
+                            child = children[i];
+                        }
+                        skill.effects[i].effect.value1 = skill.effects[i].value1;
+                        skill.effects[i].effect.value2 = skill.effects[i].value2;
+                        child.ShowEffect(skill.effects[i].effect);
                     }
-                    skill.effects[i].effect.value1 = skill.effects[i].value1;
-                    skill.effects[i].effect.value2 = skill.effects[i].value2;
-                    child.ShowEffect(skill.effects[i].effect);
+                }
+            }else{
+                string unlockInfo = "Skill unlocks at party level ";
+                unlockInfo += (Party.Instance.level >= skill.prerequisiteHeroLevel)? "<color=#006400>" : "<color=#840000>";
+                unlockInfo += skill.prerequisiteHeroLevel + "</color>";
+                skillLevelInfoText.text = unlockInfo;
+                listDescriptionText.text = "\nSkill Requirements:" + ((skill.prerequisiteSkills.Count > 0)? "" : " None");
+                effectList.gameObject.SetActive(false);
+                requirementList.gameObject.SetActive(true);
+
+                SkillRequirementItem[] children = requirementList.GetComponentsInChildren<SkillRequirementItem>();
+                for(int i = 0; i < skill.prerequisiteSkills.Count || i < children.Length; i++){
+                    if(i >= skill.prerequisiteSkills.Count){
+                        Destroy(children[i].gameObject);
+                    }else{
+                        SkillRequirementItem child = null;
+                        if(i >= children.Length){
+                            child = Instantiate(requirementPrefab, requirementList.GetComponent<RectTransform>());
+                        }else{
+                            child = children[i];
+                        }
+                        child.ShowRequirement(skill.prerequisiteSkills[i], skill.prerequisiteSkillsLevel[i]);
+                    }
                 }
             }
 
-            detailManager.interactable = skill.Type != SkillType.Active;
+            detailManager.interactable = (skill.Level > 0 && skill.Type != SkillType.Active);
             if(detailManager.interactable){
                 detailManager.ShowToggle();
             }else{

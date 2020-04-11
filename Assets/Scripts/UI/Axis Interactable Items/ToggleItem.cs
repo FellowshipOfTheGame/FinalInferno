@@ -68,7 +68,7 @@ namespace FinalInferno.UI.AII{
 
             isOn = value ?? !isOn;
             if(textIndicator){
-                textIndicator.text = (isOn)? "<color=green>On</color>" : "<color=red>Off</color>";
+                textIndicator.text = (isOn)? "<color=#006400>On</color>" : "<color=#840000>Off</color>";
             }
             if(imageIndicator){
                 imageIndicator.enabled = isOn;

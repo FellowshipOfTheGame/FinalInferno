@@ -79,7 +79,9 @@ namespace FinalInferno{
                 if(skill.CheckUnlock(level)){  
                     //skills filhas sao adicionadas a lista
                     foreach(PlayerSkill child in skill.skillsToUpdate){
-                        skillsToUpdate.Add(child);
+                        if(!skillsToUpdate.Contains(child)){
+                            skillsToUpdate.Add(child);
+                        }
                     }
                     // Ativa a skill que foi liberada
                     skill.active = true;

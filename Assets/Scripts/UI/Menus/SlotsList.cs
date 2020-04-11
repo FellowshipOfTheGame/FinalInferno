@@ -41,12 +41,11 @@ namespace FinalInferno.UI.Saves
 
         void Update(){
             if(textMesh != null){
-                string autoSaveStatus = (SaveLoader.AutoSave)? "on" : "off";
+                string autoSaveStatus = (SaveLoader.AutoSave)? "<color=#006400>on</color>" : "<color=#840000>off</color>";
                 string currentSlot = "" + (SaveLoader.SaveSlot + 1);
-                textMesh.text = "";
-                textMesh.text += "Autosave is " + autoSaveStatus;
+                textMesh.text = "<color=#840000>Autosave is </color>" + autoSaveStatus;
                 if(SaveLoader.AutoSave){
-                    textMesh.text += ", curent slot is " + currentSlot;
+                    textMesh.text += "<color=#840000>, curent slot is " + currentSlot + "</color>";
                 }
             }
         }

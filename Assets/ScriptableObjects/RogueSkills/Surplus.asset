@@ -15,24 +15,25 @@ MonoBehaviour:
   name: Surplus
   cost: 0
   active: 1
+  callbackDelay: 0
   target: 4
   attribute: 5
   effects:
   - effect: {fileID: 11400000, guid: e7102a7af7a69e3498974a3e20ed0f68, type: 2}
     value1: 0
-    value2: 0.02
+    value2: 1.02
   type: 4
   visualEffect: {fileID: 5434996350183651868, guid: 4c6fc6c7981053447a73e9befab53aea,
     type: 3}
-  xp: 20
-  xpNext: 100
+  xp: 0
+  xpNext: 350
   description: Herman uses his skills to get the best of every chance. Buffs have
     increased effect on him.
-  ShortDescription: 
+  shortDescription: 
   skillsToUpdate: []
   prerequisiteSkills: []
   prerequisiteSkillsLevel: 
-  prerequisiteHeroLevel: 0
+  prerequisiteHeroLevel: 1
   skillTable: {fileID: 4900000, guid: 89fe09b0660d22749a13d25d0459cc90, type: 3}
   table:
     colTypes:
@@ -75,7 +76,7 @@ MonoBehaviour:
     - elements:
       - 1
       - 0.000
-      - 0.020
+      - 1.020
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -115,7 +116,7 @@ MonoBehaviour:
     - elements:
       - 2
       - 0.000
-      - 0.021
+      - 1.021
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -155,7 +156,7 @@ MonoBehaviour:
     - elements:
       - 3
       - 0.000
-      - 0.022
+      - 1.022
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -195,7 +196,7 @@ MonoBehaviour:
     - elements:
       - 4
       - 0.000
-      - 0.023
+      - 1.023
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -235,7 +236,7 @@ MonoBehaviour:
     - elements:
       - 5
       - 0.000
-      - 0.025
+      - 1.025
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -275,7 +276,7 @@ MonoBehaviour:
     - elements:
       - 6
       - 0.000
-      - 0.026
+      - 1.026
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -315,7 +316,7 @@ MonoBehaviour:
     - elements:
       - 7
       - 0.000
-      - 0.027
+      - 1.027
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -355,7 +356,7 @@ MonoBehaviour:
     - elements:
       - 8
       - 0.000
-      - 0.028
+      - 1.028
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -395,7 +396,7 @@ MonoBehaviour:
     - elements:
       - 9
       - 0.000
-      - 0.029
+      - 1.029
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -435,7 +436,7 @@ MonoBehaviour:
     - elements:
       - 10
       - 0.000
-      - 0.031
+      - 1.031
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -475,7 +476,7 @@ MonoBehaviour:
     - elements:
       - 11
       - 0.000
-      - 0.032
+      - 1.032
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -515,7 +516,7 @@ MonoBehaviour:
     - elements:
       - 12
       - 0.000
-      - 0.033
+      - 1.033
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -555,7 +556,7 @@ MonoBehaviour:
     - elements:
       - 13
       - 0.000
-      - 0.034
+      - 1.034
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -595,7 +596,7 @@ MonoBehaviour:
     - elements:
       - 14
       - 0.000
-      - 0.035
+      - 1.035
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -635,7 +636,7 @@ MonoBehaviour:
     - elements:
       - 15
       - 0.000
-      - 0.037
+      - 1.037
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -675,7 +676,7 @@ MonoBehaviour:
     - elements:
       - 16
       - 0.000
-      - 0.038
+      - 1.038
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -715,7 +716,7 @@ MonoBehaviour:
     - elements:
       - 17
       - 0.000
-      - 0.039
+      - 1.039
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -755,7 +756,7 @@ MonoBehaviour:
     - elements:
       - 18
       - 0.000
-      - 0.040
+      - 1.040
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -795,7 +796,7 @@ MonoBehaviour:
     - elements:
       - 19
       - 0.000
-      - 0.041
+      - 1.041
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -835,7 +836,7 @@ MonoBehaviour:
     - elements:
       - 20
       - 0.000
-      - 0.042
+      - 1.042
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -875,7 +876,7 @@ MonoBehaviour:
     - elements:
       - 21
       - 0.000
-      - 0.043
+      - 1.043
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -915,7 +916,7 @@ MonoBehaviour:
     - elements:
       - 22
       - 0.000
-      - 0.044
+      - 1.044
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -955,7 +956,7 @@ MonoBehaviour:
     - elements:
       - 23
       - 0.000
-      - 0.045
+      - 1.045
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -995,7 +996,7 @@ MonoBehaviour:
     - elements:
       - 24
       - 0.000
-      - 0.046
+      - 1.046
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1035,7 +1036,7 @@ MonoBehaviour:
     - elements:
       - 25
       - 0.000
-      - 0.048
+      - 1.048
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1075,7 +1076,7 @@ MonoBehaviour:
     - elements:
       - 26
       - 0.000
-      - 0.049
+      - 1.049
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1115,7 +1116,7 @@ MonoBehaviour:
     - elements:
       - 27
       - 0.000
-      - 0.050
+      - 1.050
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1155,7 +1156,7 @@ MonoBehaviour:
     - elements:
       - 28
       - 0.000
-      - 0.051
+      - 1.051
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1195,7 +1196,7 @@ MonoBehaviour:
     - elements:
       - 29
       - 0.000
-      - 0.052
+      - 1.052
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1235,7 +1236,7 @@ MonoBehaviour:
     - elements:
       - 30
       - 0.000
-      - 0.054
+      - 1.054
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1275,7 +1276,7 @@ MonoBehaviour:
     - elements:
       - 31
       - 0.000
-      - 0.055
+      - 1.055
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1315,7 +1316,7 @@ MonoBehaviour:
     - elements:
       - 32
       - 0.000
-      - 0.056
+      - 1.056
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1355,7 +1356,7 @@ MonoBehaviour:
     - elements:
       - 33
       - 0.000
-      - 0.057
+      - 1.057
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1395,7 +1396,7 @@ MonoBehaviour:
     - elements:
       - 34
       - 0.000
-      - 0.058
+      - 1.058
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1435,7 +1436,7 @@ MonoBehaviour:
     - elements:
       - 35
       - 0.000
-      - 0.060
+      - 1.060
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1475,7 +1476,7 @@ MonoBehaviour:
     - elements:
       - 36
       - 0.000
-      - 0.061
+      - 1.061
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1515,7 +1516,7 @@ MonoBehaviour:
     - elements:
       - 37
       - 0.000
-      - 0.062
+      - 1.062
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1555,7 +1556,7 @@ MonoBehaviour:
     - elements:
       - 38
       - 0.000
-      - 0.063
+      - 1.063
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1595,7 +1596,7 @@ MonoBehaviour:
     - elements:
       - 39
       - 0.000
-      - 0.064
+      - 1.064
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -1635,7 +1636,7 @@ MonoBehaviour:
     - elements:
       - 40
       - 0.000
-      - 0.065
+      - 1.065
       colTypes:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089

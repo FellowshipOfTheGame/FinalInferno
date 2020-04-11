@@ -43,6 +43,7 @@ namespace FinalInferno{
         //public SkillDelegate OnGiveDebuff = null;
         public SkillDelegate OnReceiveDebuff = null;
         public SkillDelegate OnTakeDamage = null;
+        public SkillDelegate OnHeal = null;
         public SkillDelegate OnDeath = null;
         public SkillDelegate OnSkillUsed = null;
         public UnitItem battleItem;
@@ -186,6 +187,11 @@ namespace FinalInferno{
 
             if(CurHP <= 0){
                 Kill();
+            }else if(OnHeal != null && damage < 0){
+                // Chama a funcao de callback de cura
+                List<BattleUnit> aux = new List<BattleUnit>();
+                aux.Add(this);
+                OnHeal(healer, aux, true, -damage);
             }
 
             return damage;
