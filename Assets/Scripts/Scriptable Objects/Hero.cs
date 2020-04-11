@@ -58,7 +58,7 @@ namespace FinalInferno{
         public int LevelUp(int newLevel){
             //Debug.Log(name + " subiu mesmo de level!");
 
-            level = newLevel;
+            level = Mathf.Clamp(newLevel, 1, Table.Rows.Count);
             hpMax = Table.Rows[level-1].Field<int>("HP");
             baseDmg = Table.Rows[level-1].Field<int>("Damage");
             baseDef = Table.Rows[level-1].Field<int>("Defense");

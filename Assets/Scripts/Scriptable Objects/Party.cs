@@ -58,6 +58,7 @@ namespace FinalInferno{
             
             //Debug.Log("parece que tem!");
 
+            table = null;
             table = DynamicTable.Create(PartyXP);
             level = 0;
             xp = 0;
@@ -86,7 +87,7 @@ namespace FinalInferno{
 
         //Adiciona os pontos de experiência conquistado pelo jogador
         public bool GiveExp(long value){
-            table = DynamicTable.Create(PartyXP);
+            //table = DynamicTable.Create(PartyXP);
             bool up = false;
             
             xp += value;
@@ -94,7 +95,7 @@ namespace FinalInferno{
 
             //testa se os persoangens subiram de nivel
             //Debug.Log(xp + ">=" + xpNext + "?");
-            while(xp >= xpNext && level < Table.Rows.Count-1){
+            while(xp >= xpNext && level < Table.Rows.Count+1){
                 //Debug.Log("claro que upo");
                 // TO DO: Revisão de tabelas (level tem que ser user friendly)
                 xp -= xpNext;

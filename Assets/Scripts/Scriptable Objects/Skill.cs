@@ -6,15 +6,14 @@ namespace FinalInferno{
     //engloba todas as "skills"
     [CreateAssetMenu(fileName = "Skill", menuName = "ScriptableObject/Skill", order = 4)]
     public class Skill : ScriptableObject{
+        [Header("Skill")]
         public new string name; //nome da "skill"
         protected int level; //nivel da "skill"
         public virtual int Level { get{ return level; } set {} }
         public float cost; //tempo que a "skill" custara ao conjurador, em porcentagem da sua velocidade
         public bool active = true; //sinaliza se a "skill" esta ativa ou nao
-        [SerializeField] private int callbackDelay = 0;
         public TargetType target; //tipo de alvo da "skill"
         public Element attribute; //elemento da "skill"
-        public List<SkillEffectTuple> effects; //lista de efeitos que a "skill" causa e seus valores associados
         [SerializeField] private SkillType type; // Tipo da skill (ativa/passiva e qual tipo de passiva)
         public string TypeString{
             get{
@@ -43,6 +42,9 @@ namespace FinalInferno{
             }
         }
         public SkillType Type{ get { return type; } }
+        [SerializeField] private int callbackDelay = 0;
+        public List<SkillEffectTuple> effects; //lista de efeitos que a "skill" causa e seus valores associados
+        [Space(15)]
         [SerializeField] private GameObject visualEffect; // Prefab contendo uma animação da skill
         public GameObject VisualEffect { get{ return visualEffect; } }
 

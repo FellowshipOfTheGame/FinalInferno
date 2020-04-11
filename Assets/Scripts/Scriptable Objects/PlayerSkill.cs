@@ -7,6 +7,7 @@ namespace FinalInferno{
     //engloba todas as "skills" dos personagens do jogador, que ganham nivel
     [CreateAssetMenu(fileName = "PlayerSkill", menuName = "ScriptableObject/PlayerSkill", order = 5)]
     public class PlayerSkill : Skill{
+        [Header("Player Skill")]
         public long xp; //experiencia da "skill"
         public long xpNext; //experiencia necessaria para a "skill" subir de nivel
         // TO DO: Revisão de tabelas (nao sabemos o nome definitivo da coluna)
@@ -15,10 +16,12 @@ namespace FinalInferno{
         public string description; //descricao da "skill" que aparecera para o jogador durante a batalha
         [SerializeField, TextArea] private string shortDescription; //descricao mais curta da skill para casos onde a descricao completa é muito longa
         public string ShortDescription { get { return (shortDescription != null && shortDescription != "") ? shortDescription : description; } }
+        [Header("Unlock Info")]
         public List<PlayerSkill> skillsToUpdate; //lista de skills que podem ser destravadas com o level dessa skill
         public List<PlayerSkill> prerequisiteSkills; //lista de skills que sao pre requisitos para essa skill destravar
         public List<int> prerequisiteSkillsLevel; //level que a skill de pre requisito precisa estar para essa skill destravar
         public int prerequisiteHeroLevel; //level que o heroi precisa estar para essa skill destravar
+        [Header("Stats Table")]
         [SerializeField] private TextAsset skillTable;
         [SerializeField] private DynamicTable table = null;
         private DynamicTable Table {
@@ -26,6 +29,16 @@ namespace FinalInferno{
                 if(table == null)
                     table = DynamicTable.Create(skillTable);
                 return table;
+            }
+        }
+        [Header("Exp Table")]
+        [SerializeField] private TextAsset expTable;
+        [SerializeField] private DynamicTable xpTable = null;
+        private DynamicTable XpTable {
+            get {
+                if(xpTable == null)
+                    xpTable = DynamicTable.Create(expTable);
+                return xpTable;
             }
         }
         private bool ShouldCalculateMean{
@@ -45,6 +58,8 @@ namespace FinalInferno{
         void Awake(){
             table = null;
             table = DynamicTable.Create(skillTable);
+            xpTable = null;
+            xpTable = DynamicTable.Create(expTable);
             level = 0;
             xp = 0;
             xpNext = 0;
@@ -79,10 +94,11 @@ namespace FinalInferno{
             xp += exp;
 
             //testa se a skill subiu de nivel
-            while(xp >= xpNext && level < Table.Rows.Count-1){
+            while(xp >= xpNext && level < Table.Rows.Count+1){
+                xp -= xpNext;
                 level++;
-                // TO DO: Tabela externa com os valores de xpnext para cada level
-                xpNext = level * 350;
+
+                xpNext = XpTable.Rows[level-1].Field<long>("XPNextLevel");
                 
                 up = true;
             }
