@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Bribery
   cost: 15
+  active: 1
+  callbackDelay: 0
   target: 0
   attribute: 5
   effects:
@@ -30,8 +32,10 @@ MonoBehaviour:
   xpNext: 0
   description: Offers a fraction of an ally's health to the enemies in order to be
     untargetable for a brief time.
-  active: 1
-  skillsToUpdate: []
+  shortDescription: 
+  skillsToUpdate:
+  - {fileID: 11400000, guid: b240aa35f24516649ad1f94be90aad55, type: 2}
+  - {fileID: 11400000, guid: 34258218c6ebd334d94716b725f0412e, type: 2}
   prerequisiteSkills: []
   prerequisiteSkillsLevel: 
   prerequisiteHeroLevel: 0

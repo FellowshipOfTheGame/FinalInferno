@@ -9,10 +9,11 @@ namespace FinalInferno{
     {
         public static int nTargets;
         private static int counter = 0;
-        private GameObject particle = null;
         private static Transform canvasTransform = null;
-        private AudioSource src = null;
         private static List<AudioClip> effectsPlaying = new List<AudioClip>();
+        private GameObject particle = null;
+        private AudioSource src = null;
+        public bool forceCallback = false;
 
         void Awake(){
             if(canvasTransform == null)
@@ -34,8 +35,10 @@ namespace FinalInferno{
         }
 
         void UseSkill(){
-            // Debug.Log("Chamou o use skill pela animação; " + "Object: " + gameObject.name);
-            BattleSkillManager.currentSkill.Use(BattleSkillManager.currentUser, transform.parent.GetComponentInChildren<BattleUnit>());
+            if(!forceCallback){
+                // Debug.Log("Chamou o use skill pela animação; " + "Object: " + gameObject.name);
+                BattleSkillManager.currentSkill.Use(BattleSkillManager.currentUser, transform.parent.GetComponentInChildren<BattleUnit>());
+            }
         }
 
         void EndAnimation(){
@@ -52,18 +55,20 @@ namespace FinalInferno{
 
         void DestroySkillObject()
         {
-            counter++;
-            if(counter >= nTargets){
-                counter = 0;
-                nTargets = -1;
+            if(!forceCallback){
+                counter++;
+                if(counter >= nTargets){
+                    counter = 0;
+                    nTargets = -1;
 
-                // Chama o callback de quando se usa a skill
-                // O usuario atual esta salvo como current user e os alvos da ultima skill estao em currenttargets
-                if(BattleSkillManager.currentUser.OnSkillUsed != null){
-                    BattleSkillManager.currentUser.OnSkillUsed(BattleSkillManager.currentUser, BattleManager.instance.battleUnits);
+                    // Chama o callback de quando se usa a skill
+                    // O usuario atual esta salvo como current user e os alvos da ultima skill estao em currenttargets
+                    if(BattleSkillManager.currentUser.OnSkillUsed != null){
+                        BattleSkillManager.currentUser.OnSkillUsed(BattleSkillManager.currentUser, BattleManager.instance.battleUnits);
+                    }
+
+                    FinalInferno.UI.FSM.AnimationEnded.EndAnimation();
                 }
-
-                FinalInferno.UI.FSM.AnimationEnded.EndAnimation();
             }
 
             EndAnimation();

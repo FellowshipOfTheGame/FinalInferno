@@ -33,6 +33,9 @@ namespace FinalInferno{
         public virtual void Remove(){
             Target.effects.Remove(this);
         }
+        public virtual void ForceRemove(){
+            Remove();
+        }
         
         public virtual bool Update() { // Retorna true quando o status effect foi removido
             if(TurnsLeft == int.MinValue)
