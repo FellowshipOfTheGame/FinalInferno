@@ -13,7 +13,7 @@ namespace FinalInferno{
         private static List<AudioClip> effectsPlaying = new List<AudioClip>();
         private GameObject particle = null;
         private AudioSource src = null;
-        public bool forceCallback = false;
+        [HideInInspector] public bool forceCallback = false;
 
         void Awake(){
             if(canvasTransform == null)
@@ -41,7 +41,7 @@ namespace FinalInferno{
             }
         }
 
-        void EndAnimation(){
+        private void EndAnimation(){
             if(particle != null){
                 Destroy(particle);
             }

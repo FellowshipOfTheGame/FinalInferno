@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Bloodspill
   cost: 0
+  active: 1
+  callbackDelay: 0
   target: 3
   attribute: 1
   effects:
@@ -21,245 +23,36 @@ MonoBehaviour:
     value1: 1.7
     value2: 1
   type: 10
-  visualEffect: {fileID: 5434996350183651868, guid: 5a3c27a5637de4b4495ba4ff9e387b33,
+  visualEffect: {fileID: 552734591061099818, guid: ae01bf57f7c000642a4e6c992bc00468,
     type: 3}
   description: Damage
   skillTable: {fileID: 0}
   table:
-    colTypes:
-    - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    colTypes: []
     Col:
       reorderableList:
-        canAdd: 1
-        canRemove: 1
-        draggable: 1
-        expandable: 1
-        multipleSelection: 1
+        canAdd: 0
+        canRemove: 0
+        draggable: 0
+        expandable: 0
+        multipleSelection: 0
         isExpanded: 0
         label:
-          m_Text: Keys
+          m_Text: 
           m_Image: {fileID: 0}
           m_Tooltip: 
-        headerHeight: 18
-        footerHeight: 13
-        slideEasing: 0.15
-        verticalSpacing: 2
-        showDefaultBackground: 1
+        headerHeight: 0
+        footerHeight: 0
+        slideEasing: 0
+        verticalSpacing: 0
+        showDefaultBackground: 0
         elementDisplayType: 0
         elementNameProperty: 
         elementNameOverride: 
         elementIcon: {fileID: 0}
       reqReferences: {fileID: 0}
       isExpanded: 0
-      _keyValues:
-      - Level
-      - SkillEffect0Value0
-      - SkillEffect0Value1
-      _keys:
-      - Level
-      - SkillEffect0Value0
-      - SkillEffect0Value1
-      _values: 000000000100000002000000
-    rows:
-    - elements:
-      - 1
-      - 1.7
-      - 1
-      colTypes:
-      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
-          isExpanded: 0
-          label:
-            m_Text: Keys
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
-    - elements:
-      - 2
-      - 2
-      - 1
-      colTypes:
-      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
-          isExpanded: 0
-          label:
-            m_Text: Keys
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
-    - elements:
-      - 3
-      - 2.3
-      - 1
-      colTypes:
-      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
-          isExpanded: 0
-          label:
-            m_Text: Keys
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
-    - elements:
-      - 4
-      - 2.6
-      - 1
-      colTypes:
-      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
-          isExpanded: 0
-          label:
-            m_Text: Keys
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
-    - elements:
-      - 5
-      - 2.9
-      - 1
-      colTypes:
-      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
-          isExpanded: 0
-          label:
-            m_Text: Keys
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+      _keyValues: []
+      _keys: []
+      _values: 
+    rows: []

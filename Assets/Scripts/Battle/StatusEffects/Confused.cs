@@ -34,12 +34,16 @@ namespace FinalInferno{
                 return true;
             }
 
-            List<BattleUnit> allies = BattleManager.instance.GetTeam(Target);
-            int selected = Random.Range(0, allies.Count);
-            List<BattleUnit> enemy = new List<BattleUnit>();
-            enemy.Add(allies[selected]);
+            // The attack is only triggered by one of the confused status effects applied
+            if(Target.effects.Find(effect => effect.GetType() == typeof(Confused)) == this){
 
-            Target.unit.attackSkill.Use(Target, enemy);
+                List<BattleUnit> allies = BattleManager.instance.GetTeam(Target);
+                int selected = Random.Range(0, allies.Count);
+                List<BattleUnit> enemy = new List<BattleUnit>();
+                enemy.Add(allies[selected]);
+
+                Target.unit.attackSkill.Use(Target, enemy);
+            }
 
             return false;
         }
