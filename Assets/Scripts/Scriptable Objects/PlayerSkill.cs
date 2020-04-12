@@ -10,8 +10,7 @@ namespace FinalInferno{
         [Header("Player Skill")]
         public long xp; //experiencia da "skill"
         public long xpNext; //experiencia necessaria para a "skill" subir de nivel
-        // TO DO: Revisão de tabelas (nao sabemos o nome definitivo da coluna)
-        public long XpCumulative { get { return ( (table == null)? 0 : xp/*(xp +  ((level <= 1)? 0 : (table.Rows[level-2].Field<long>("XPAcumulada"))) ) */ ); } }
+        public long XpCumulative { get { return ( (table == null)? 0 : (xp +  ((level <= 1)? 0 : (XpTable.Rows[level-2].Field<long>("XPAccumulated"))) ) ); } }
         [TextArea]
         public string description; //descricao da "skill" que aparecera para o jogador durante a batalha
         [SerializeField, TextArea] private string shortDescription; //descricao mais curta da skill para casos onde a descricao completa é muito longa
@@ -94,7 +93,7 @@ namespace FinalInferno{
             xp += exp;
 
             //testa se a skill subiu de nivel
-            while(xp >= xpNext && level < Table.Rows.Count+1){
+            while(xp >= xpNext && level < Table.Rows.Count){
                 xp -= xpNext;
                 level++;
 
@@ -135,6 +134,8 @@ namespace FinalInferno{
         // checa se todos os pre requisitos foram cumpridos para essa skill ser destravada,
         // em caso positivo destrava a skill e retorna TRUE, caso contrario retorna FALSE
         public bool CheckUnlock(int heroLevel){
+            if(level > 0) return true;
+
             bool check = true;
 
             if(heroLevel >= prerequisiteHeroLevel){
@@ -144,7 +145,10 @@ namespace FinalInferno{
                 }
 
                 //se todos os pre requisitos foram atendidos, destrava a skill
-                if(check) GiveExp(0);
+                if(check){
+                    GiveExp(0);
+                    active = true;
+                }
             }
             else check = false;
 

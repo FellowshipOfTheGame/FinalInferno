@@ -52,6 +52,7 @@ namespace FinalInferno{
             for(int i = 0; i < elementalResistance.Length; i++){
                 elementalResistance[i] = 1.0f;
             }
+            ResetHero();
         }
 
         //funcao que ajusta todos os atributos e "skills" do persoangem quando sobe de nivel
@@ -83,8 +84,6 @@ namespace FinalInferno{
                             skillsToUpdate.Add(child);
                         }
                     }
-                    // Ativa a skill que foi liberada
-                    skill.active = true;
                     
                     skillsToUpdate.Remove(skill); //skill eh removida da lista
                 }
@@ -97,11 +96,8 @@ namespace FinalInferno{
             }
 
             skillsToUpdate = new List<PlayerSkill>(InitialsSkills);
-            foreach(Skill skill in InitialsSkills){
-                skill.active = true;
-            }
+            LevelUp(1);
             
-            level = 1;
             Debug.Log("Hero resetado");
         }
         

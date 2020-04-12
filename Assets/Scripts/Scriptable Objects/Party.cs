@@ -95,7 +95,7 @@ namespace FinalInferno{
 
             //testa se os persoangens subiram de nivel
             //Debug.Log(xp + ">=" + xpNext + "?");
-            while(xp >= xpNext && level < Table.Rows.Count+1){
+            while(xp >= xpNext && level < Table.Rows.Count){
                 //Debug.Log("claro que upo");
                 // TO DO: Revisão de tabelas (level tem que ser user friendly)
                 xp -= xpNext;

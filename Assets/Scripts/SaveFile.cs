@@ -99,6 +99,8 @@ namespace FinalInferno{
         }
 
         public void Load(){
+            Party.Instance.GiveExp(saves[Slot].xpParty);
+
             for(int i = 0; i < Party.Instance.characters.Count; i++){
                 Party.Instance.characters[i].archetype = AssetManager.LoadAsset<Hero>(saves[Slot].archetype[i]);
                 Party.Instance.characters[i].hpCur = saves[Slot].hpCur[i];
@@ -108,6 +110,14 @@ namespace FinalInferno{
                     ((PlayerSkill)Party.Instance.characters[i].archetype.skills[j]).GiveExp(saves[Slot].heroSkills[i].skills[j].xpCumulative);
                     ((PlayerSkill)Party.Instance.characters[i].archetype.skills[j]).active = saves[Slot].heroSkills[i].skills[j].active;
                 }
+
+                Party.Instance.characters[i].archetype.skillsToUpdate.Clear();
+                foreach(PlayerSkill skill in Party.Instance.characters[i].archetype.skills){
+                    if(skill.Level > 0){
+                        Party.Instance.characters[i].archetype.skillsToUpdate.Add(skill);
+                    }
+                }
+                Party.Instance.characters[i].archetype.UnlockSkills();
             }
 
             Party.Instance.activeQuests.Clear();
@@ -122,7 +132,6 @@ namespace FinalInferno{
             }
 
             Party.Instance.currentMap = saves[Slot].mapName;
-            Party.Instance.GiveExp(saves[Slot].xpParty);
         }
     }
 }
