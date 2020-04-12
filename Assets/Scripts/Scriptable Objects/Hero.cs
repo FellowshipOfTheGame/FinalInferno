@@ -52,7 +52,8 @@ namespace FinalInferno{
             for(int i = 0; i < elementalResistance.Length; i++){
                 elementalResistance[i] = 1.0f;
             }
-            ResetHero();
+
+            skillsToUpdate = new List<PlayerSkill>(InitialsSkills);
         }
 
         //funcao que ajusta todos os atributos e "skills" do persoangem quando sobe de nivel

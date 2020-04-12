@@ -7,6 +7,7 @@ namespace FinalInferno.UI.SkillsMenu
 {
     public class LoadSkillDescription : MonoBehaviour
     {
+        private Hero currentHero;
         [SerializeField] private Text skillNameText;
         [SerializeField] private Image skillImage;
 
@@ -15,6 +16,9 @@ namespace FinalInferno.UI.SkillsMenu
 
         [SerializeField] private Image skillTargetTypeImage;
         [SerializeField] private Text skillTargetTypeText;
+
+        [SerializeField] private Text skillSpeedText;
+        [SerializeField] private Gradient gradient;
 
         [SerializeField] private Text skillTypeText;
         [SerializeField] private Text skillDescriptionText;
@@ -28,7 +32,11 @@ namespace FinalInferno.UI.SkillsMenu
         [SerializeField] private SkillEffectItem effectPrefab;
         [SerializeField] private SkillRequirementItem requirementPrefab;
 
-        public void LoadSkillInfo(PlayerSkill skill)
+        void Awake(){
+            currentHero = Party.Instance.characters[0].archetype;
+        }
+
+        public void LoadSkillInfo(PlayerSkill skill, int heroIndex)
         {
             skillNameText.text = skill.name;
             skillImage.sprite = skill.skillImage;
@@ -38,6 +46,13 @@ namespace FinalInferno.UI.SkillsMenu
 
             skillTargetTypeImage.sprite = Icons.instance.targetTypeSprites[(int)skill.target];
             skillTargetTypeText.text = skill.target.ToString();
+
+            heroIndex = Mathf.Clamp(heroIndex, 0, Party.Instance.characters.Count-1);
+            currentHero = Party.Instance.characters[heroIndex].archetype;
+            float attackCost = currentHero? currentHero.attackSkill.cost : 10f;
+            skillSpeedText.text = (skill.cost / attackCost).ToString();
+            float timeKey = ((Mathf.Clamp((skill.cost/attackCost), 0.8f, 2f)) - 0.8f) / 1.2f;
+            skillSpeedText.color = gradient.Evaluate(timeKey);
 
             skillTypeText.text = skill.TypeString;
             skillDescriptionText.text = skill.description;

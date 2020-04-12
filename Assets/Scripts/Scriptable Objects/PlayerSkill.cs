@@ -93,7 +93,7 @@ namespace FinalInferno{
             xp += exp;
 
             //testa se a skill subiu de nivel
-            while(xp >= xpNext && level < Table.Rows.Count){
+            while(xp >= xpNext && level < XpTable.Rows.Count){
                 xp -= xpNext;
                 level++;
 
