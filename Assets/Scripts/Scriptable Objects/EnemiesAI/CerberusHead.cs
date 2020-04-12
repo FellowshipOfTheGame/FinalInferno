@@ -51,7 +51,7 @@ namespace FinalInferno{
         [SerializeField] private Sprite battleSpriteFrontHead;
         public override Sprite BattleSprite {
             get{
-                Debug.Log("Usou o getter certo");
+                //Debug.Log("Usou o getter certo");
                 switch(heads){
                     default:
                     case 0:
@@ -126,11 +126,11 @@ namespace FinalInferno{
                 float rand = Random.Range(0.0f, 1.0f); //gera um numero aleatorio entre 0 e 1
 
                 if(rand < 0.9f/heads){
-                    hellFireCD = heads-1; 
+                    hellFireCD = (heads-1); 
                     return skills[0]; //decide usar primeira habilidade
                 }
-            }
-            else hellFireCD--;
+            } else
+                hellFireCD--;
 
             return attackSkill; //decide usar ataque basico
         }
@@ -138,8 +138,8 @@ namespace FinalInferno{
         //funcao que escolhe qual acao sera feita no proprio turno
         public override Skill SkillDecision(float percentageNotDefense){
             float rand = Random.Range(0.0f, 1.0f); //gera um numero aleatorio entre 0 e 1
-            float percentageDebuff = Mathf.Min(0.3f, percentageNotDefense/3); //porcentagem para o inimigo usar a habilidade de buff
-            List<BattleUnit> team = new List<BattleUnit>();
+            float percentageDebuff = Mathf.Min((1f/3f), percentageNotDefense/3f); //porcentagem para o inimigo usar a habilidade de buff
+            List<BattleUnit> team;
             bool fearCD = false;
 
             team = BattleManager.instance.GetTeam(UnitType.Enemy);
@@ -150,7 +150,7 @@ namespace FinalInferno{
                 if(!hero.CanAct) fearCD = true;
             }
 
-            if(!fearCD && rand < percentageDebuff - BattleManager.instance.enemyBuff*percentageDebuff/3)
+            if(!fearCD && rand < percentageDebuff)
                 return skills[1]; //decide usar a segunda habilidade(debuff)
 
             if(rand < percentageNotDefense)
@@ -173,8 +173,11 @@ namespace FinalInferno{
                     break;
                 case TargetType.MultiEnemy:
                     team = BattleManager.instance.GetTeam(UnitType.Hero);
-                    for(int i = 0; i < heads; i++)
-                        targets.Add(team[TargetDecision(team)]);
+                    for(int i = 0; i < heads && team.Count > 0; i++){
+                        int targetIdx = TargetDecision(team);
+                        targets.Add(team[targetIdx]);
+                        team.RemoveAt(targetIdx);
+                    }
                     break;
                 case TargetType.SingleAlly:
                     team = BattleManager.instance.GetTeam(UnitType.Enemy);

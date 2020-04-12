@@ -93,6 +93,7 @@ namespace FinalInferno{
                     //Debug.Log(enemies[i]);
                 }
                 // Calculo de level foi movido para a criação da preview de batalha
+                // Assets/Scripts/UI/Menus/LoadEnemiesPreview.cs
                 // // Calcula o level dos inimigos
                 // // Avalia os parametros das quests
                 // int questParam = 0;
