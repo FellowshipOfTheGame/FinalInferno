@@ -127,6 +127,7 @@ namespace FinalInferno{
 
                 if(rand < 0.9f/heads){
                     hellFireCD = (heads-1); 
+                    skills[0].Level = 4 - heads;
                     return skills[0]; //decide usar primeira habilidade
                 }
             } else
@@ -150,8 +151,10 @@ namespace FinalInferno{
                 if(!hero.CanAct) fearCD = true;
             }
 
-            if(!fearCD && rand < percentageDebuff)
+            if(!fearCD && rand < percentageDebuff){
+                skills[1].Level = 4 - heads;
                 return skills[1]; //decide usar a segunda habilidade(debuff)
+            }
 
             if(rand < percentageNotDefense)
                 return AttackDecision(); //decide atacar

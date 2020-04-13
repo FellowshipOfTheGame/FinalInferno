@@ -42,6 +42,8 @@ namespace FinalInferno{
         }
         private bool ShouldCalculateMean{
             get{
+                return true;
+                // Code below will probably be removed soon (tm)
                 switch(Type){
                     case SkillType.PassiveOnEnd:
                     case SkillType.PassiveOnSpawn:
@@ -70,6 +72,7 @@ namespace FinalInferno{
             // effects[i].effect.value1 = Table.Rows[level-1].Field<float>("Effect0Value0");
             // effects[i].effect.value2 = Table.Rows[level-1].Field<float>("Effect0Value1");
 
+            //Debug.LogError("Skill = " + name + "; level = " + level);
             for(int i = 0; i < effects.Count; i++){
                 SkillEffectTuple modifyEffect = effects[i];
                 //Debug.Log("levelapo a " + name);

@@ -130,6 +130,7 @@ namespace FinalInferno{
             foreach(Character character in characters){
                 character.ResetCharacter();
             }
+            GiveExp(0);
         }
 
         //salva o jogo do jogador

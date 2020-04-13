@@ -105,12 +105,12 @@ namespace FinalInferno{
 
             //soma a ameaca de todos os herois
             foreach (BattleUnit unit in team){
-                sumTotal += unit.aggro;
+                sumTotal += Mathf.Clamp(unit.aggro, Mathf.Epsilon, float.MaxValue);
             }
         
             //calcula a porcentagem que cada heroi representa da soma total das ameacas
             foreach (BattleUnit unit in team){
-                percentual.Add(unit.aggro/sumTotal);
+                percentual.Add(Mathf.Clamp(unit.aggro, Mathf.Epsilon, float.MaxValue)/sumTotal);
             }
 
             //gera um numero aleatorio entre 0 e 1
