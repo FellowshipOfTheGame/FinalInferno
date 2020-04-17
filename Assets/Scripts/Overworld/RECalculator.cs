@@ -43,7 +43,7 @@ namespace FinalInferno{
                 lastPosition = new Vector2(playerObj.position.x, playerObj.position.y);
             else
                 lastPosition = Vector2.zero;
-            StaticReferences.instance.BGM.PlaySong(overworldBGM);
+            StaticReferences.BGM.PlaySong(overworldBGM);
         }
 
         // Update is called once per frame
