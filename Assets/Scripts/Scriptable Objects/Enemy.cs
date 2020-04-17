@@ -36,6 +36,7 @@ namespace FinalInferno{
         public long BaseExp { get; protected set; } // Quanta exp o inimigo dá pra party ao final da batalha
 
         void Awake(){
+            table = null;
             if(Table != null && Table.Rows.Count > 0){
                 table = DynamicTable.Create(enemyTable);
                 

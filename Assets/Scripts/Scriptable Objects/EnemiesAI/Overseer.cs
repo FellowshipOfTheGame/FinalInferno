@@ -5,7 +5,7 @@ using FinalInferno;
 using FinalInferno.UI.Battle;
 
 namespace FinalInferno{
-    [CreateAssetMenu(fileName = "Overseer", menuName = "ScriptableObject/Enemy/Overseer", order = 2)]
+    [CreateAssetMenu(fileName = "Overseer", menuName = "ScriptableObject/Enemy/Overseer")]
     public class Overseer : Enemy{
         //funcao que escolhe o ataque a ser utilizado
         public override Skill AttackDecision(){

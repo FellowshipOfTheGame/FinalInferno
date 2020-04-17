@@ -5,7 +5,7 @@ using FinalInferno;
 using FinalInferno.UI.Battle;
 
 namespace FinalInferno{
-    [CreateAssetMenu(fileName = "Banshee", menuName = "ScriptableObject/Enemy/Banshee", order = 3)]
+    [CreateAssetMenu(fileName = "Banshee", menuName = "ScriptableObject/Enemy/Banshee")]
     public class Banshee : Enemy{
         //funcao que escolhe qual acao sera feita no proprio turno
         public override Skill SkillDecision(float percentageNotDefense){
