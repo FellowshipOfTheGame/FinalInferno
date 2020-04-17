@@ -36,6 +36,7 @@ namespace FinalInferno{
         // Start is called before the first frame update
         void Start()
         {
+            table = null;
             table = DynamicTable.Create(encounterTable);
             playerObj = CharacterOW.MainOWCharacter?.transform;
             if(playerObj)
@@ -62,7 +63,7 @@ namespace FinalInferno{
 
         private void CheckEncounter(float distance) {
             // A distancia percorrida e usada para aumentar/diminuir a chance de encontro
-            if (Random.Range(0.0f, 100.0f) < curEncounterRate * (distance)) {
+            if (Random.Range(0.0f, 100.0f) < (curEncounterRate * distance)) {
                 // Quando encontrar uma batalha
                 //Debug.Log("Found random encounter");
                 // Impede que o player se movimente
@@ -71,15 +72,21 @@ namespace FinalInferno{
                 // Isso reduz a chance de batalhas consecutivos (atualmente isso n serve pra nada)
                 curEncounterRate = baseEncounterRate/2;
                 // Usar a tabela de encontros aleatorios para definir a lista de inimigos
-                Enemy[] enemies= new Enemy[Random.Range(minNumberEnemies, maxNumberEnemies+1)];
+                bool isPowerSpike = Party.Instance.level % 5 == 1;
+                int scaledMinEnemies = isPowerSpike? minNumberEnemies : Mathf.Max(minNumberEnemies-1, 1);
+                int scaledMaxEnemies = isPowerSpike? maxNumberEnemies : Mathf.Max(scaledMinEnemies, maxNumberEnemies-1);
+                Enemy[] enemies= new Enemy[Random.Range(scaledMinEnemies, scaledMaxEnemies+1)];
                 //Debug.Log("About to fight " + enemies.Length + " enemies");
                 for(int i = 0; i < enemies.Length; i++){
                     enemies[i] = null;
 
                     for(int j = 0; j < Table.Rows.Count && enemies[i] == null; j++){
                         float roll = Random.Range(0f, 100.0f);
-                        //Debug.Log("Rolled a " + roll + " for " + (Enemy)Table.Rows[j]["Enemy"] + " with chance of " + (float)Table.Rows[j]["Chance"]);
-                        if(roll <= Table.Rows[j].Field<float>("Chance")){
+                        float baseChance = Table.Rows[j].Field<float>("Chance");
+                        int index = (Party.Instance.level-1) % 5;
+                        float chance = (baseChance / 2) + ((baseChance / 2) * (index / 4.0f));
+                        //Debug.Log("Rolled a " + roll + " for " + Table.Rows[j].Field<Enemy>("Enemy") + " with chance of " + chance);
+                        if(roll <= chance){
                             enemies[i] = Table.Rows[j].Field<Enemy>("Enemy");
                         }
                     }
@@ -118,8 +125,8 @@ namespace FinalInferno{
             } else {
                 // Caso nao encontre uma batalha
                 //Debug.Log("Did not find random encounter");
-                // Aumenta a chance de encontro linearmente
-                curEncounterRate += rateIncreaseFactor;
+                // Aumenta a chance de encontro linearmente com a distancia percorrida
+                curEncounterRate += rateIncreaseFactor * distance;
             }
         }
     }
