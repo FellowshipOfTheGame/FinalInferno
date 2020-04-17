@@ -107,7 +107,9 @@ namespace FinalInferno{
                 Party.Instance.characters[i].position = saves[Slot].position[i];
                 
                 for (int j = 0; j < saves[Slot].heroSkills[i].skills.Length; j++){//SkillInfo skill in saves[Slot].skills[i]){
-                    ((PlayerSkill)Party.Instance.characters[i].archetype.skills[j]).GiveExp(saves[Slot].heroSkills[i].skills[j].xpCumulative);
+                    if(saves[Slot].heroSkills[i].skills[j].xpCumulative > 0){
+                        ((PlayerSkill)Party.Instance.characters[i].archetype.skills[j]).GiveExp(saves[Slot].heroSkills[i].skills[j].xpCumulative);
+                    }
                     ((PlayerSkill)Party.Instance.characters[i].archetype.skills[j]).active = saves[Slot].heroSkills[i].skills[j].active;
                 }
 

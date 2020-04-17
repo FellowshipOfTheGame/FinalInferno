@@ -164,6 +164,9 @@ namespace FinalInferno{
         }
 
         public void UpdateStatusEffects(){
+            // Update aggro values
+            aggro *= 0.75f;
+            // Update status effects afterwards, because some affect aggro
             foreach (StatusEffect effect in effects.ToArray()){
                 if(effect.Update())
                     effects.Remove(effect);
@@ -181,8 +184,8 @@ namespace FinalInferno{
             }
 
             // Aplica o aggro pra cura
-            if(healer != null){
-                healer.aggro += 0.7f * 100f * damage / (1.0f * MaxHP);
+            if(healer != null && (unit.IsHero == healer.unit.IsHero)){
+                healer.aggro += 0.7f * 100f * Mathf.Max(-damage, 0f) / (1.0f * MaxHP);
             }
 
             if(CurHP <= 0){
@@ -209,8 +212,8 @@ namespace FinalInferno{
                 animator.SetTrigger("TakeDamage");
             }
             // Aplica o aggro pra dano
-            if(attacker != null){
-                attacker.aggro += 0.5f * 100f * damage / (1.0f * MaxHP);
+            if(attacker != null && (unit.IsHero != attacker.unit.IsHero)){
+                attacker.aggro += 0.5f * 100f * Mathf.Max(damage, 0f) / (1.0f * MaxHP);
             }
 
             if(CurHP <= 0){
