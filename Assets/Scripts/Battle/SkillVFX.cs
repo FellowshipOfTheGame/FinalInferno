@@ -77,6 +77,12 @@ namespace FinalInferno{
         void CreateParticles(GameObject particles)
         {
             particle = Instantiate(particles, new Vector3(transform.position.x, transform.position.y+((GetComponent<SpriteRenderer>()).size.y/2.0f), transform.position.z), transform.rotation, this.transform);
+            ParticleSystemRenderer renderer = particle?.GetComponent<ParticleSystemRenderer>();
+            if(renderer){
+                renderer.sortingLayerID = GetComponent<SpriteRenderer>().sortingLayerID;
+                renderer.sortingLayerName = GetComponent<SpriteRenderer>().sortingLayerName;
+                renderer.sortingOrder = GetComponent<SpriteRenderer>().sortingOrder;
+            }
         }
     }
 }

@@ -67,7 +67,7 @@ namespace FinalInferno.UI.Victory
                 if (partyLevelSlider.value >= partyLevelSlider.maxValue)
                 {
                     LevelUp();
-                    yield return new WaitForSeconds(levelUpTime);
+                    //yield return new WaitForSeconds(levelUpTime);
                 }
                 _time += Time.fixedDeltaTime;
                 yield return new WaitForFixedUpdate();   
@@ -80,7 +80,7 @@ namespace FinalInferno.UI.Victory
             startingLevelText.text = nextLevelText.text;
             nextLevelText.text = (int.Parse(nextLevelText.text)+1).ToString();
             previousXPAmountImage.fillAmount = 0f;
-            partyLevelSlider.value = 0f;
+            partyLevelSlider.value -= partyLevelSlider.maxValue;
             partyLevelSlider.maxValue = Party.Instance.xpNext/* - partyLevelSlider.maxValue*/;
         }
 

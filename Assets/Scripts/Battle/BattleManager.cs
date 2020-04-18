@@ -39,6 +39,19 @@ namespace FinalInferno{
             BattleProgress.ResetInfo(Party.Instance);
         }
 
+        #if UNITY_EDITOR
+        public void Update(){
+            if(Input.GetAxisRaw("Pause") > 0){
+                foreach(BattleUnit bUnit in battleUnits){
+                    if(bUnit.CurHP > 0){
+                        bUnit.DecreaseHP(1.0f);
+                        UpdateLives();
+                    }
+                }
+            }
+        }
+        #endif
+
         public void PrepareBattle(){
             foreach(Unit unit in units){
                 if (unit.IsHero)
@@ -128,6 +141,7 @@ namespace FinalInferno{
                     // }
                 }
             }
+            UpdateLives();
         }
 
         public void Revive(BattleUnit unit){

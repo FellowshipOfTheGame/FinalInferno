@@ -26,11 +26,14 @@ namespace FinalInferno.UI.Victory
             SkillName.text = skill.name;
             SkillImage.sprite = skill.skillImage;
             SkillLevelText.text = pSkill.level.ToString();
-            SkillLevelSlider.maxValue = skill.xpNext;
+            SkillLevelSlider.maxValue = pSkill.xpToNextLevel;
             SkillLevelSlider.value = pSkill.xp;
-            PreviousXPAmountImage.fillAmount = pSkill.xp / (float) skill.xpNext;
+            PreviousXPAmountImage.fillAmount = pSkill.xp / (float) pSkill.xpToNextLevel;
 
             xpGained = skill.XpCumulative - pSkill.xpCumulative;
+            if(xpGained > (pSkill.xpToNextLevel - pSkill.xp)){
+                xpGained = (pSkill.xpToNextLevel - pSkill.xp) + skill.xp;
+            }
             thisSkill = skill;
         }
 
@@ -43,6 +46,7 @@ namespace FinalInferno.UI.Victory
             PreviousXPAmountImage.fillAmount = skill.xp / (float) skill.xpNext;
 
             UpdateText.text = "NEW SKILL!";
+            UpdateText.gameObject.SetActive(true);
 
             xpGained = 0;
             thisSkill = skill;
@@ -62,7 +66,7 @@ namespace FinalInferno.UI.Victory
                 if (SkillLevelSlider.value >= SkillLevelSlider.maxValue)
                 {
                     LevelUp();
-                    yield return new WaitForSeconds(levelUpTime);
+                    //yield return new WaitForSeconds(levelUpTime);
                 }
                 _time += Time.fixedDeltaTime;
                 yield return new WaitForFixedUpdate();
@@ -72,7 +76,7 @@ namespace FinalInferno.UI.Victory
 
         private void LevelUp()
         {
-            SkillLevelText.text = (int.Parse(SkillLevelText.text) + 1).ToString();
+            SkillLevelText.text = thisSkill.Level.ToString();
             PreviousXPAmountImage.fillAmount = 0f;
             SkillLevelSlider.value = 0f;
             SkillLevelSlider.maxValue = thisSkill.xpNext;

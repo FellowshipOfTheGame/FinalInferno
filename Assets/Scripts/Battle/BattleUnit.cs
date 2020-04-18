@@ -197,6 +197,8 @@ namespace FinalInferno{
                 OnHeal(healer, aux, true, -damage);
             }
 
+            BattleManager.instance.UpdateLives();
+
             return damage;
         }
 
@@ -224,6 +226,9 @@ namespace FinalInferno{
                 aux.Add(this);
                 OnTakeDamage(attacker, aux, true, damage, true, (int)element);
             }
+
+            BattleManager.instance.UpdateLives();
+
             return damage;
         }
 
@@ -265,6 +270,8 @@ namespace FinalInferno{
             }
             CurHP = CurHP;
 
+            BattleManager.instance.UpdateLives();
+
             return returnValue;
         }
 
@@ -274,6 +281,8 @@ namespace FinalInferno{
                 CurHP += hpOnHold;
             }
             hpOnHold = 0;
+
+            BattleManager.instance.UpdateLives();
         }
 
         public void AddEffect(StatusEffect statusEffect, bool ignoreCallback = false){
