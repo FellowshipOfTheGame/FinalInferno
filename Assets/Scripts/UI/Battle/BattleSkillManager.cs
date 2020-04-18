@@ -15,6 +15,7 @@ namespace FinalInferno.UI.Battle
             if(currentSkill == null){
                 Debug.Log("Deu null!");
                 return; // Nao sei pq isso e necessario, mas essa funcao ta sendo chamada no inicio da batalha pra todas as unidades
+                // Isso agora ta aqui pra quando a animação de ataque for chamada por conta do confuse
             }
 
             SkillVFX.nTargets = currentTargets.Count;

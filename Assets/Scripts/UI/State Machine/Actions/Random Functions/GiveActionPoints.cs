@@ -41,10 +41,6 @@ namespace FinalInferno.UI.FSM
             foreach(BattleUnit battleUnit in BattleSkillManager.currentTargets){
                 battleUnit.GetComponent<AxisInteractableItem>().DisableReference();
             }
-
-            BattleSkillManager.currentTargets.Clear();
-            BattleSkillManager.currentSkill = null;
-            BattleSkillManager.currentUser = null;
         }
 
     }

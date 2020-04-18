@@ -66,8 +66,10 @@ namespace FinalInferno{
         public void UpdateTurn()
         {
             currentUnit = queue.Dequeue();
+            BattleSkillManager.currentTargets.Clear();
+            BattleSkillManager.currentSkill = null;
+            BattleSkillManager.currentUser = null;
             currentUnit.UpdateStatusEffects();
-            // ShowEnemyInfo();
         }
 
         public void ShowEnemyInfo()
