@@ -334,8 +334,6 @@ namespace FinalInferno{
         public void ChangeColor()
         {
             // Change color according to rank
-            if (name.Equals("Dummy"))
-                unit.color.a = 0.7f;
             GetComponent<SpriteRenderer>().color = unit.color;
         }
     }
