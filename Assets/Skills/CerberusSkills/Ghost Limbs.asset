@@ -10,19 +10,22 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e83b954aa9df0184e9c7179d867175cd, type: 3}
-  m_Name: Multilate
+  m_Name: Ghost Limbs
   m_EditorClassIdentifier: 
-  name: Multilate
-  cost: 0
+  name: Ghost Limbs
+  cost: 12
   active: 1
-  callbackDelay: 0
-  target: 4
+  target: 1
   attribute: 5
-  effects: []
-  type: 10
+  type: 0
+  callbackDelay: 0
+  effects:
+  - effect: {fileID: 11400000, guid: 5dc9896e37ae12344883cd461a2ddc17, type: 2}
+    value1: 1
+    value2: -1
   visualEffect: {fileID: 552734591061099818, guid: c5b81c56fc50dac4c80964acddc9c909,
     type: 3}
-  description: Multilate
+  description: Ghost Limbs
   skillTable: {fileID: 0}
   table:
     colTypes: []

@@ -25,6 +25,16 @@ namespace FinalInferno{
                 return Mathf.Clamp(maxReduction * (curSpeed / (Unit.maxStatValue * 1.0f)), 0.0f, maxReduction);
             }
         }
+        private bool hasGhostAnim = false;
+        public bool Ghost{
+            set{
+                if(value && CurHP < 0 && hasGhostAnim){
+                    animator.SetBool("Ghost", true);
+                }else if (!value && hasGhostAnim){
+                    animator.SetBool("Ghost", false);
+                }
+            }
+        }
         public int actionPoints; //define a posicao em que essa unidade agira no combate
         private int hpOnHold = 0;
         public int stuns = 0;
@@ -57,6 +67,7 @@ namespace FinalInferno{
 
         public void Awake(){
             animator = GetComponent<Animator>();
+            hasGhostAnim = System.Array.Find(animator.parameters, parameter => parameter.name == "Ghost") != null;
             activeSkills = new List<Skill>();
             canvasTransform = FindObjectOfType<Canvas>().transform;
         }
@@ -81,6 +92,7 @@ namespace FinalInferno{
             GetComponent<SpriteRenderer>().sprite = unit.BattleSprite;
             GetComponent<UnityEngine.UI.Image>().sprite = GetComponent<SpriteRenderer>().sprite;
             animator.runtimeAnimatorController = unit.Animator;
+            hasGhostAnim = System.Array.Find(animator.parameters, parameter => parameter.name == "Ghost") != null;
             queueSprite = unit.QueueSprite;
             portrait = unit.Portrait;
             battleItem.Setup();
@@ -164,12 +176,19 @@ namespace FinalInferno{
         }
 
         public void UpdateStatusEffects(){
-            // Update aggro values
+            // Atualiza os valores de aggro
             aggro *= 0.75f;
-            // Update status effects afterwards, because some affect aggro
+            bool deadUnit = CurHP <= 0;
+            // Atualiza os status effects depois, pois alguns deles afetam o aggro
             foreach (StatusEffect effect in effects.ToArray()){
                 if(effect.Update())
                     effects.Remove(effect);
+            }
+            // Se uma unidade já morta não tem mais status effects, mata ela de novo
+            // Por padrão unidades mortas tem o callback OnDeath setado para null, então nada acontece
+            // Isso pode ser usado por um status effect em casos mais específicos que o DelayedSkill não cubra
+            if(deadUnit && CurHP <= 0 && effects.Count <= 0){
+                BattleManager.instance.Kill(this);
             }
         }
 

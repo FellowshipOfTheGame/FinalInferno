@@ -9,17 +9,15 @@ namespace FinalInferno{
         private static Transform canvasTransform = null;
         private GameObject particle = null;
         private Animator anim = null;
+        private bool hasTurnsParameter = false;
         public int TurnsLeft {
             set{
                 if(!anim){
                     anim = GetComponent<Animator>();
+                    hasTurnsParameter = System.Array.Find(anim.parameters, param => param.name == "turnsLeft") != null;
                 }
-                foreach (AnimatorControllerParameter parameter in anim.parameters)
-                {
-                    if(parameter.name == "turnsLeft"){
-                        anim.SetInteger("turnsLeft", value);
-                        break;
-                    }
+                if(hasTurnsParameter){
+                    anim.SetInteger("turnsLeft", value);
                 }
             }
         }
@@ -27,6 +25,10 @@ namespace FinalInferno{
         public void Awake(){
             if(canvasTransform == null)
                 canvasTransform = GameObject.FindObjectOfType<Canvas>().transform;
+            if(!anim){
+                anim = GetComponent<Animator>();
+            }
+            hasTurnsParameter = System.Array.Find(anim.parameters, param => param.name == "turnsLeft") != null;
         }
 
         public void Start(){
