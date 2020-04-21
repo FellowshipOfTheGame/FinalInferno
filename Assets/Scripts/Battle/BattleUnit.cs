@@ -41,7 +41,8 @@ namespace FinalInferno{
         public bool CanAct{ get{ return (CurHP > 0 && stuns <= 0); } }
         public float aggro = 0;
         public float statusResistance = 0; // resistencia a debuffs em geral
-        private float damageResistance = 0.0f; // resistencia a danos em geral
+        public float damageResistance = 0.0f; // resistencia a danos em geral
+        public float healResistance = 0.0f; // resistencias a curas
         public float[] elementalResistance = new float[(int)Element.Neutral];
         public List<StatusEffect> effects; //lista de status fazendo efeito nessa unidade
         private List<Skill> activeSkills; // lista de skills ativas que essa unidade pode usar
@@ -193,7 +194,8 @@ namespace FinalInferno{
         }
 
         public int Heal(int atk, float multiplier, BattleUnit healer = null){
-            int damage = Mathf.FloorToInt(atk * -multiplier *  (Mathf.Clamp(1.0f - damageResistance, 0.0f, 1.0f))/* * 10 */);
+            // healResistance pode ser usado para amplificar cura
+            int damage = Mathf.FloorToInt(atk * -multiplier *  (Mathf.Clamp(1.0f - healResistance, -1.0f, 1.0f)));
             if(CurHP <= 0)
                 return 0;
             CurHP -= damage;
@@ -222,7 +224,8 @@ namespace FinalInferno{
         public int TakeDamage(int atk, float multiplier, DamageType type, Element element, BattleUnit attacker = null) {
             float atkDifference = atk - ( (type == DamageType.Physical)? curDef : ((type == DamageType.Magical)? curMagicDef : 0));
             atkDifference = Mathf.Max(atkDifference, 1);
-            int damage = Mathf.FloorToInt(atkDifference * multiplier * elementalResistance[(int)element - (int)Element.Fire] * (Mathf.Clamp(1.0f - damageResistance, 0.0f, 1.0f))/* * 10 */);
+            // damageResistance nao pode amplificar o dano ainda por conta da maneira que iria interagir com a resistencia elemental
+            int damage = Mathf.FloorToInt(atkDifference * multiplier * elementalResistance[(int)element - (int)Element.Fire] * (Mathf.Clamp(1.0f - damageResistance, 0.0f, 1.0f)));
             if(CurHP <= 0)
                 return 0;
             CurHP -= damage;
@@ -295,9 +298,9 @@ namespace FinalInferno{
             hpOnHold = 0;
         }
 
-        public void AddEffect(StatusEffect statusEffect, bool ignoreCallback = false){
+        public StatusEffect AddEffect(StatusEffect statusEffect, bool ignoreCallback = false){
             if(statusEffect.Failed)
-                return;
+                return null;
 
             if(BattleManager.instance.currentUnit != this) 
                 BattleManager.instance.Revive(this); // Se certifica que unidades com status effects aparecem na fila, mesmo mortas
@@ -330,6 +333,8 @@ namespace FinalInferno{
                     }
                     break;
             }
+
+            return statusEffect;
         }
 
         public void SkillSelected(){
