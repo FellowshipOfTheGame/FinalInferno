@@ -34,8 +34,9 @@ namespace FinalInferno{
                 return true;
             }
 
-            // The attack is only triggered by one of the confused status effects applied
+            // Apenas um dos status effects desse tipo causa um ataque
             if(Target.effects.Find(effect => effect.GetType() == typeof(Confused)) == this){
+                Source.SkillSelected();
 
                 List<BattleUnit> allies = BattleManager.instance.GetTeam(Target);
                 int selected = Random.Range(0, allies.Count);

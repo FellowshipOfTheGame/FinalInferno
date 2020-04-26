@@ -5,7 +5,7 @@ using FinalInferno;
 using FinalInferno.UI.Battle;
 
 namespace FinalInferno{
-    [CreateAssetMenu(fileName = "Skeleton", menuName = "ScriptableObject/Enemy/Skeleton", order = 1)]
+    [CreateAssetMenu(fileName = "Skeleton", menuName = "ScriptableObject/Enemy/Skeleton")]
     public class Skeleton : Enemy{
         //funcao que escolhe o ataque a ser utilizado
         public override Skill AttackDecision(){

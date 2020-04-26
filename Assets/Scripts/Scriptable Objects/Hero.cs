@@ -48,6 +48,7 @@ namespace FinalInferno{
         public override bool IsHero{ get{ return true; } }
 
         void Awake(){
+            table = null;
             table = DynamicTable.Create(heroTable);
             for(int i = 0; i < elementalResistance.Length; i++){
                 elementalResistance[i] = 1.0f;

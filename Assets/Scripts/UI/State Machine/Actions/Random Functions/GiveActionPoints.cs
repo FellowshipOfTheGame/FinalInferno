@@ -20,6 +20,10 @@ namespace FinalInferno.UI.FSM
         [SerializeField] private bool forceAttack = false;
         public override void Act(StateController controller)
         {
+            foreach(BattleUnit battleUnit in BattleSkillManager.currentTargets){
+                battleUnit.GetComponent<AxisInteractableItem>().DisableReference();
+            }
+
             BattleUnit currentUnit = BattleManager.instance.currentUnit;
             // Quando a unidade morre por usar uma skill ou status effect currentUnit==null
             if(currentUnit == null){
@@ -37,14 +41,6 @@ namespace FinalInferno.UI.FSM
                     BattleManager.instance.UpdateQueue(Mathf.FloorToInt(BattleSkillManager.currentSkill.cost * (1.0f - currentUnit.ActionCostReduction) ));
                 }
             }
-
-            foreach(BattleUnit battleUnit in BattleSkillManager.currentTargets){
-                battleUnit.GetComponent<AxisInteractableItem>().DisableReference();
-            }
-
-            BattleSkillManager.currentTargets.Clear();
-            BattleSkillManager.currentSkill = null;
-            BattleSkillManager.currentUser = null;
         }
 
     }

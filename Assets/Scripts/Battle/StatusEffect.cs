@@ -44,7 +44,7 @@ namespace FinalInferno{
             garbageCollector.AddRange(persistentSourceVFX);
             garbageCollector.AddRange(persistentTargetVFX);
             foreach(StatusEffectVFX vfx in garbageCollector){
-                vfx.DestroyVFX();
+                vfx?.DestroyVFX();
             }
 
             // Creates removal effects; These MUST have a destroy event at the end of animation

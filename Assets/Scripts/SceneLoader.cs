@@ -171,17 +171,17 @@ namespace FinalInferno{
             // Avisa que a batalha pode começar
             BattleManager.instance.PrepareBattle();
             // Se não houver música, deixa a música padrão que está configurada
-            StaticReferences.instance.BGM.Stop();
+            StaticReferences.BGM.Stop();
             if(battleBGM != null)
-                StaticReferences.instance.BGM.PlaySong(battleBGM);
+                StaticReferences.BGM.PlaySong(battleBGM);
             else
-                StaticReferences.instance.BGM.Resume();
+                StaticReferences.BGM.Resume();
 
             battleBGM = null;
             SceneManager.sceneLoaded -= OnBattleLoad;
         }
         public static void OnMainMenuLoad(Scene map, LoadSceneMode mode){
-            StaticReferences.instance.BGM.PlaySong(StaticReferences.instance.mainMenuBGM);
+            StaticReferences.BGM.PlaySong(StaticReferences.instance.mainMenuBGM);
             SceneManager.sceneLoaded -= OnMainMenuLoad;
         }
         public static void OnMapLoad(Scene map, LoadSceneMode mode) {

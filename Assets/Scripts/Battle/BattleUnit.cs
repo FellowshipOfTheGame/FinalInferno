@@ -25,13 +25,24 @@ namespace FinalInferno{
                 return Mathf.Clamp(maxReduction * (curSpeed / (Unit.maxStatValue * 1.0f)), 0.0f, maxReduction);
             }
         }
+        private bool hasGhostAnim = false;
+        public bool Ghost{
+            set{
+                if(value && CurHP < 0 && hasGhostAnim){
+                    animator.SetBool("Ghost", true);
+                }else if (!value && hasGhostAnim){
+                    animator.SetBool("Ghost", false);
+                }
+            }
+        }
         public int actionPoints; //define a posicao em que essa unidade agira no combate
         private int hpOnHold = 0;
         public int stuns = 0;
         public bool CanAct{ get{ return (CurHP > 0 && stuns <= 0); } }
         public float aggro = 0;
         public float statusResistance = 0; // resistencia a debuffs em geral
-        private float damageResistance = 0.0f; // resistencia a danos em geral
+        public float damageResistance = 0.0f; // resistencia a danos em geral
+        public float healResistance = 0.0f; // resistencias a curas
         public float[] elementalResistance = new float[(int)Element.Neutral];
         public List<StatusEffect> effects; //lista de status fazendo efeito nessa unidade
         private List<Skill> activeSkills; // lista de skills ativas que essa unidade pode usar
@@ -57,6 +68,7 @@ namespace FinalInferno{
 
         public void Awake(){
             animator = GetComponent<Animator>();
+            hasGhostAnim = System.Array.Find(animator.parameters, parameter => parameter.name == "Ghost") != null;
             activeSkills = new List<Skill>();
             canvasTransform = FindObjectOfType<Canvas>().transform;
         }
@@ -81,6 +93,7 @@ namespace FinalInferno{
             GetComponent<SpriteRenderer>().sprite = unit.BattleSprite;
             GetComponent<UnityEngine.UI.Image>().sprite = GetComponent<SpriteRenderer>().sprite;
             animator.runtimeAnimatorController = unit.Animator;
+            hasGhostAnim = System.Array.Find(animator.parameters, parameter => parameter.name == "Ghost") != null;
             queueSprite = unit.QueueSprite;
             portrait = unit.Portrait;
             battleItem.Setup();
@@ -164,17 +177,25 @@ namespace FinalInferno{
         }
 
         public void UpdateStatusEffects(){
-            // Update aggro values
+            // Atualiza os valores de aggro
             aggro *= 0.75f;
-            // Update status effects afterwards, because some affect aggro
+            bool deadUnit = CurHP <= 0;
+            // Atualiza os status effects depois, pois alguns deles afetam o aggro
             foreach (StatusEffect effect in effects.ToArray()){
                 if(effect.Update())
                     effects.Remove(effect);
             }
+            // Se uma unidade já morta não tem mais status effects, mata ela de novo
+            // Por padrão unidades mortas tem o callback OnDeath setado para null, então nada acontece
+            // Isso pode ser usado por um status effect em casos mais específicos que o DelayedSkill não cubra
+            if(deadUnit && CurHP <= 0 && effects.Count <= 0){
+                BattleManager.instance.Kill(this);
+            }
         }
 
         public int Heal(int atk, float multiplier, BattleUnit healer = null){
-            int damage = Mathf.FloorToInt(atk * -multiplier *  (Mathf.Clamp(1.0f - damageResistance, 0.0f, 1.0f))/* * 10 */);
+            // healResistance pode ser usado para amplificar cura
+            int damage = Mathf.FloorToInt(atk * -multiplier *  (Mathf.Clamp(1.0f - healResistance, -1.0f, 1.0f)));
             if(CurHP <= 0)
                 return 0;
             CurHP -= damage;
@@ -205,7 +226,8 @@ namespace FinalInferno{
         public int TakeDamage(int atk, float multiplier, DamageType type, Element element, BattleUnit attacker = null) {
             float atkDifference = atk - ( (type == DamageType.Physical)? curDef : ((type == DamageType.Magical)? curMagicDef : 0));
             atkDifference = Mathf.Max(atkDifference, 1);
-            int damage = Mathf.FloorToInt(atkDifference * multiplier * elementalResistance[(int)element - (int)Element.Fire] * (Mathf.Clamp(1.0f - damageResistance, 0.0f, 1.0f))/* * 10 */);
+            // damageResistance nao pode amplificar o dano ainda por conta da maneira que iria interagir com a resistencia elemental
+            int damage = Mathf.FloorToInt(atkDifference * multiplier * elementalResistance[(int)element - (int)Element.Fire] * (Mathf.Clamp(1.0f - damageResistance, 0.0f, 1.0f)));
             if(CurHP <= 0)
                 return 0;
             CurHP -= damage;
@@ -285,9 +307,9 @@ namespace FinalInferno{
             BattleManager.instance.UpdateLives();
         }
 
-        public void AddEffect(StatusEffect statusEffect, bool ignoreCallback = false){
+        public StatusEffect AddEffect(StatusEffect statusEffect, bool ignoreCallback = false){
             if(statusEffect.Failed)
-                return;
+                return null;
 
             if(BattleManager.instance.currentUnit != this) 
                 BattleManager.instance.Revive(this); // Se certifica que unidades com status effects aparecem na fila, mesmo mortas
@@ -320,6 +342,8 @@ namespace FinalInferno{
                     }
                     break;
             }
+
+            return statusEffect;
         }
 
         public void SkillSelected(){
@@ -343,8 +367,6 @@ namespace FinalInferno{
         public void ChangeColor()
         {
             // Change color according to rank
-            if (name.Equals("Dummy"))
-                unit.color.a = 0.7f;
             GetComponent<SpriteRenderer>().color = unit.color;
         }
     }

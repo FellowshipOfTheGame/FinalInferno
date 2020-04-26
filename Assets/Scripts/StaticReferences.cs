@@ -7,7 +7,15 @@ using FinalInferno;
 public class StaticReferences : MonoBehaviour
 {
     public static StaticReferences instance = null;
-    public Jukebox BGM;
+    public static Jukebox BGM{
+        get{
+            if(instance){
+                return instance.bgm;
+            }
+            return null;
+        }
+    }
+    [SerializeField] private Jukebox bgm;
     public AudioClip mainMenuBGM;
     // Start is called before the first frame update
     void Awake()
@@ -19,6 +27,6 @@ public class StaticReferences : MonoBehaviour
             Destroy(this);
         }
 
-        BGM = GetComponent<Jukebox>();
+        bgm = GetComponent<Jukebox>();
     }
 }

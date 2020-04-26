@@ -5,7 +5,7 @@ using FinalInferno;
 using FinalInferno.UI.Battle;
 
 namespace FinalInferno{
-    [CreateAssetMenu(fileName = "CerberusHead", menuName = "ScriptableObject/Enemy/CerberusHead", order = 4)]
+    [CreateAssetMenu(fileName = "CerberusHead", menuName = "ScriptableObject/Enemy/CerberusHead")]
     public class CerberusHead : Enemy{
         private const int maxHeads = 3;
         public static int heads = 0;

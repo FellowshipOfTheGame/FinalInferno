@@ -14,19 +14,19 @@ namespace FinalInferno{
                 Element element = (Element)(Mathf.Clamp((int)value2, 1, (int)Element.Neutral));
                 switch(element){
                     case Element.Fire:
-                        value += "Fire";
+                        value = "Fire";
                         break;
                     case Element.Water:
-                        value += "Water";
+                        value = "Water";
                         break;
                     case Element.Wind:
-                        value += "Wind";
+                        value = "Wind";
                         break;
                     case Element.Earth:
-                        value += "Earth";
+                        value = "Earth";
                         break;
                     case Element.Neutral:
-                        value += "Neutral";
+                        value = "Neutral";
                         break;
                 }
                 return value;
