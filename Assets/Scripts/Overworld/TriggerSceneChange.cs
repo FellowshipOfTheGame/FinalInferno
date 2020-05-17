@@ -7,6 +7,7 @@ using UnityEditor;
 namespace FinalInferno{
     public class TriggerSceneChange : Triggerable
     {
+        //TO DO: Usar a struct SceneWarp aqui e atualizar o script de editor para refletir isso
         [SerializeField] private string sceneName = "Battle";
         [SerializeField] private Vector2 positionOnLoad = new Vector2(0,0);
         [SerializeField] private bool isCutscene = false;
@@ -57,8 +58,8 @@ namespace FinalInferno{
         public void OnEnable(){
             sceneName = serializedObject.FindProperty("sceneName");
             //Debug.Log("Procurando " + sceneName.stringValue +  "...");
-            string[] objectsFound = AssetDatabase.FindAssets(sceneName.stringValue, new[] {"Assets/Scenes"});
-            if(sceneName.stringValue != "" && objectsFound != null && objectsFound.Length > 0 && objectsFound[0] != ""){
+            string[] objectsFound = AssetDatabase.FindAssets(sceneName.stringValue + " t:sceneAsset", new[] {"Assets/Scenes"});
+            if(sceneName.stringValue != "" && objectsFound != null && objectsFound.Length > 0 && objectsFound[0] != null && objectsFound[0] != ""){
                 sceneObj = AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(objectsFound[0]), typeof(Object));
             }else{
                 //Debug.Log("Não achou");
