@@ -86,6 +86,7 @@ namespace FinalInferno{
             BattleSkillManager.currentTargets.Clear();
             BattleSkillManager.currentSkill = null;
             BattleSkillManager.currentUser = null;
+            BattleSkillManager.skillUsed = false;
             currentUnit.UpdateStatusEffects();
         }
 

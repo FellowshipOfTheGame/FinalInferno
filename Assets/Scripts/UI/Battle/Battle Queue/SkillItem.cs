@@ -18,9 +18,9 @@ namespace FinalInferno.UI.Battle.QueueMenu
         /// <summary>
         /// Referência ao item da lista.
         /// </summary>
-        [SerializeField] private AxisInteractableItem item;
+        [SerializeField] protected AxisInteractableItem item;
 
-        void Awake()
+        public void Awake()
         {
             item.OnEnter += StartPreview;
             item.OnExit += StopPreview;
@@ -44,7 +44,7 @@ namespace FinalInferno.UI.Battle.QueueMenu
             BattleManager.instance.queue.StopPreview();
         }
 
-        private void UseSkill()
+        protected void UseSkill()
         {
             // Debug.Log("Defesa Antes = " + BattleManager.instance.currentUnit.curDef);
             BattleSkillManager.currentSkill = skill;

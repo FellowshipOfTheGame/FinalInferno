@@ -11,7 +11,7 @@ namespace FinalInferno{
         private static int counter = 0;
         private static Transform canvasTransform = null;
         private static List<AudioClip> effectsPlaying = new List<AudioClip>();
-        private GameObject particle = null;
+        private List<GameObject> particleList = new List<GameObject>();
         private AudioSource src = null;
         [HideInInspector] public bool forceCallback = false;
 
@@ -42,8 +42,10 @@ namespace FinalInferno{
         }
 
         private void EndAnimation(){
-            if(particle != null){
-                Destroy(particle);
+            foreach(GameObject particle in particleList){
+                if(particle != null){
+                    Destroy(particle);
+                }
             }
 
             if(src != null){
@@ -76,7 +78,8 @@ namespace FinalInferno{
 
         void CreateParticles(GameObject particles)
         {
-            particle = Instantiate(particles, new Vector3(transform.position.x, transform.position.y+((GetComponent<SpriteRenderer>()).size.y/2.0f), transform.position.z), transform.rotation, this.transform);
+            GameObject particle = Instantiate(particles, new Vector3(transform.position.x, transform.position.y+((GetComponent<SpriteRenderer>()).size.y/2.0f), transform.position.z), transform.rotation, this.transform);
+            particleList.Add(particle);
             ParticleSystemRenderer renderer = particle?.GetComponent<ParticleSystemRenderer>();
             if(renderer){
                 renderer.sortingLayerID = GetComponent<SpriteRenderer>().sortingLayerID;

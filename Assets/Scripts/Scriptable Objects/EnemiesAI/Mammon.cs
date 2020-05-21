@@ -21,7 +21,7 @@ namespace FinalInferno{
             float rand = Random.Range(0.0f, 1.0f); //gera um numero aleatorio entre 0 e 1
             float percentageDebuff = Mathf.Min((1f/3f), percentageNotDefense/3f); //porcentagem para o inimigo usar a habilidade de debuff
             BattleUnit battleUnit = BattleManager.instance.GetTeam(UnitType.Enemy)[0];
-            float hpPercent = battleUnit.CurHP / battleUnit.MaxHP;
+            float hpPercent = battleUnit.CurHP / (float)battleUnit.MaxHP;
 
             // Se o hp passar do threshold, usa a skill de regen
             // habilidade pode ser usada 3 vezes, cada uso move o threshold
