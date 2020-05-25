@@ -44,6 +44,7 @@ namespace FinalInferno{
             else
                 lastPosition = Vector2.zero;
             StaticReferences.BGM.PlaySong(overworldBGM);
+            curEncounterRate = baseEncounterRate;
         }
 
         // Update is called once per frame
@@ -68,13 +69,10 @@ namespace FinalInferno{
                 //Debug.Log("Found random encounter");
                 // Impede que o player se movimente
                 CharacterOW.PartyCanMove = false;
-                // Diminui a taxa de encontro para metade do valor base
-                // Isso reduz a chance de batalhas consecutivos (atualmente isso n serve pra nada)
-                curEncounterRate = baseEncounterRate/2;
                 // Usar a tabela de encontros aleatorios para definir a lista de inimigos
                 bool isPowerSpike = Party.Instance.level % 5 == 1;
-                int scaledMinEnemies = isPowerSpike? minNumberEnemies : Mathf.Max(minNumberEnemies-1, 1);
-                int scaledMaxEnemies = isPowerSpike? maxNumberEnemies : Mathf.Max(scaledMinEnemies, maxNumberEnemies-1);
+                int scaledMinEnemies = (!isPowerSpike)? minNumberEnemies : Mathf.Max(minNumberEnemies-1, 1);
+                int scaledMaxEnemies = (!isPowerSpike)? maxNumberEnemies : Mathf.Max(scaledMinEnemies, maxNumberEnemies-1);
                 Enemy[] enemies= new Enemy[Random.Range(scaledMinEnemies, scaledMaxEnemies+1)];
                 //Debug.Log("About to fight " + enemies.Length + " enemies");
                 for(int i = 0; i < enemies.Length; i++){
