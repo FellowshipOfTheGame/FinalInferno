@@ -108,7 +108,7 @@ namespace FinalInferno{
             foreach (BattleUnit trgt in targets) {
                 
                 if(visualEffect){
-                    GameObject obj = GameObject.Instantiate(visualEffect, trgt.transform.parent);
+                    GameObject obj = GameObject.Instantiate(visualEffect, trgt.transform);
                     obj.GetComponent<SkillVFX>().forceCallback = true;
                     obj.GetComponent<SpriteRenderer>().sortingOrder = trgt.GetComponent<SpriteRenderer>().sortingOrder + 1;
                 }

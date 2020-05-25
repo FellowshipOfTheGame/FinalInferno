@@ -8,14 +8,18 @@ namespace FinalInferno{
     [CreateAssetMenu(fileName = "CerberusHead", menuName = "ScriptableObject/Enemy/CerberusHead")]
     public class CerberusHead : Enemy{
         // OBS.: A IA parte do pressuposto que as 3 cabeças do cérbero são as unicas unidades no time inimigo
+        // O posicionamento de unidades também será feito levando isso em conta
+        // O nível do cérbero deve ser incrementado de 1 em 1 para versões mais fortes
+        // O nível das habilidades do cérbero devem ser incrementadas de 3 em 3 para cada versão
         private const int maxHeads = 3;
         public static int heads = 0;
         private static int hellFireCD = 0;
         private static List<GameObject> battleUnits = new List<GameObject>();
-        private static RectTransform topHead = null;
-        private static RectTransform middleHead = null;
-        private static RectTransform bottomHead = null;
+        private static BattleUnit topHead = null;
+        private static BattleUnit middleHead = null;
+        private static BattleUnit bottomHead = null;
 
+        [SerializeField] private Sprite bodySprite;
         [SerializeField] private RuntimeAnimatorController animatorMiddleHead;
         [SerializeField] private RuntimeAnimatorController animatorFrontHead;
         public override RuntimeAnimatorController Animator {
@@ -56,15 +60,13 @@ namespace FinalInferno{
                 switch(heads){
                     default:
                     case 0:
-                        // Nesse ponto aqui reseta-se as variaveis estaticas
                         heads = 1;
-                        hellFireCD = 0;
                         battleUnits.Clear();
                         foreach(BattleUnit bUnit in FindObjectsOfType<BattleUnit>()){
                             if(bUnit.unit == this){
                                 bUnit.name += (" " + heads);
                                 battleUnits.Add(bUnit.gameObject);
-                                topHead = bUnit.transform as RectTransform;
+                                topHead = bUnit;
                                 break;
                             }
                         }
@@ -75,7 +77,7 @@ namespace FinalInferno{
                             if(bUnit.unit == this){
                                 bUnit.name += (" " + heads);
                                 battleUnits.Add(bUnit.gameObject);
-                                middleHead = bUnit.transform as RectTransform;
+                                middleHead = bUnit;
                                 break;
                             }
                         }
@@ -86,24 +88,41 @@ namespace FinalInferno{
                             if(bUnit.unit == this){
                                 bUnit.name += (" " + heads);
                                 battleUnits.Add(bUnit.gameObject);
-                                bottomHead = bUnit.transform as RectTransform;
+                                bottomHead = bUnit;
                                 break;
                             }
                         }
-                        //Faz os sprites ficarem na mesma posição
-                        RectTransform middleParent = middleHead.parent as RectTransform;
-                        middleParent.parent.GetComponent<UnityEngine.UI.VerticalLayoutGroup>().spacing = 0f;
 
-                        UI.AII.CompensateParentOffset aux = topHead.gameObject.AddComponent<UI.AII.CompensateParentOffset>();
-                        aux.followTarget = middleHead;
-                        aux = bottomHead.gameObject.AddComponent<UI.AII.CompensateParentOffset>();
-                        aux.followTarget = middleHead;
+                        //Faz os sprites ficarem na mesma posição
+                        CompositeBattleUnit composite = middleHead.gameObject.AddComponent<CompositeBattleUnit>();
+                        if(composite){
+                            composite.AddApendage(topHead);
+                            composite.AddApendage(bottomHead);
+                        }
+                        // Altera o layout group para que os elementos fiquem mais proximos
+                        UnityEngine.UI.VerticalLayoutGroup layoutGroup = middleHead.battleItem.layout.transform.parent.GetComponent<UnityEngine.UI.VerticalLayoutGroup>();
+                        if(layoutGroup){
+                            layoutGroup.spacing = 0;
+                        }
+                        // Cria um game object para ter o sprite do corpo
+                        GameObject bodyObj = new GameObject();
+                        bodyObj.name = "Cerberus's body";
+                        bodyObj.transform.SetParent(middleHead.transform);
+                        bodyObj.transform.position = Vector3.zero;
+                        bodyObj.transform.rotation = Quaternion.identity;
+                        SpriteRenderer sr = bodyObj.gameObject.AddComponent<SpriteRenderer>();
+                        if(sr){
+                            sr.sprite = bodySprite;
+                            sr.sortingOrder = 0;
+                            sr.flipX = true;
+                            sr.color = middleHead.GetComponent<SpriteRenderer>().color;
+                        }
                         return battleSpriteFrontHead;
                 }
             }
         }
-        public override float BoundsSizeX { get => (battleSprite.bounds.size.x/3f); }
-        public override float BoundsSizeY { get => (battleSprite.bounds.size.y/3f); }
+        public override float BoundsSizeX { get => (battleSprite.bounds.size.x); }
+        public override float BoundsSizeY { get => (battleSprite.bounds.size.y/8f); }
         [SerializeField] private Sprite queueSpriteMiddleHead;
         [SerializeField] private Sprite queueSpriteFrontHead;
         public override Sprite QueueSprite {
@@ -132,7 +151,7 @@ namespace FinalInferno{
 
                 if(rand < 0.9f/heads){
                     hellFireCD = (heads-1); 
-                    skills[0].Level = 4 - heads;
+                    skills[0].Level = ((level-1) * 3) + 4 - heads;
                     return skills[0]; //decide usar primeira habilidade
                 }
             } else
@@ -157,7 +176,7 @@ namespace FinalInferno{
             }
 
             if(!fearCD && rand < percentageDebuff){
-                skills[1].Level = 4 - heads;
+                skills[1].Level = ((level - 1) * 3) + 4 - heads;
                 return skills[1]; //decide usar a segunda habilidade(debuff)
             }
 

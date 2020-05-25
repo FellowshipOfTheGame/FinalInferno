@@ -36,7 +36,7 @@ namespace FinalInferno.UI.Battle
             // Debug.Log("targets = " + string.Join(", ", currentTargets));
             foreach(BattleUnit target in currentTargets){
                 // Debug.Log("instanciou skill " + currentSkill.name + " no alvo " + target.name);
-                GameObject obj = GameObject.Instantiate(currentSkill.VisualEffect, target.transform.parent);
+                GameObject obj = GameObject.Instantiate(currentSkill.VisualEffect, target.transform);
                 obj.GetComponent<SpriteRenderer>().sortingOrder = target.GetComponent<SpriteRenderer>().sortingOrder + 1;
             }
         }

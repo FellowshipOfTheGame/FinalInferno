@@ -9,7 +9,7 @@ namespace FinalInferno{
     public delegate void SkillDelegate(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f);
     
     //representa todos os buffs/debuffs, dano etc que essa unidade recebe
-    [RequireComponent(typeof(Animator)),RequireComponent(typeof(SpriteRenderer)),RequireComponent(typeof(UnityEngine.UI.Image)),RequireComponent(typeof(FinalInferno.UI.AII.UnitItem))]
+    [RequireComponent(typeof(Animator)),RequireComponent(typeof(SpriteRenderer))]
     public class BattleUnit : MonoBehaviour{
         public Unit unit; //referencia para os atributos base dessa unidade
         public int MaxHP { private set; get; }
@@ -73,30 +73,16 @@ namespace FinalInferno{
             canvasTransform = FindObjectOfType<Canvas>().transform;
         }
 
-        public void Update(){
-            if(Mathf.Abs((transform.localScale.x * canvasTransform.localScale.x) - 1.0f) > float.Epsilon){
-                transform.localScale = new Vector3(-1.0f/canvasTransform.localScale.x,1.0f/canvasTransform.localScale.y,1.0f/canvasTransform.localScale.z);
-            }
-        }
-
         public void Configure(Unit unit){
-            // Talvez isso conserte as particulas sendo spawnadas em um ponto aleatorio da tela no começo
-            if(Mathf.Abs((transform.localScale.x * canvasTransform.localScale.x) - 1.0f) > float.Epsilon){
-                transform.localScale = new Vector3(-1.0f/canvasTransform.localScale.x,1.0f/canvasTransform.localScale.y,1.0f/canvasTransform.localScale.z);
-            }
-
             this.unit = unit;
             this.name = unit.name;
 
             // Seta configuracoes de renderizacao
-            GetComponent<FinalInferno.UI.AII.UnitItem>().unit = this;
             GetComponent<SpriteRenderer>().sprite = unit.BattleSprite;
-            GetComponent<UnityEngine.UI.Image>().sprite = GetComponent<SpriteRenderer>().sprite;
             animator.runtimeAnimatorController = unit.Animator;
             hasGhostAnim = System.Array.Find(animator.parameters, parameter => parameter.name == "Ghost") != null;
             queueSprite = unit.QueueSprite;
             portrait = unit.Portrait;
-            battleItem.Setup();
 
 
             // Aplica os status base da unidade
@@ -370,6 +356,9 @@ namespace FinalInferno{
         {
             // Change color according to rank
             GetComponent<SpriteRenderer>().color = unit.color;
+            foreach(SpriteRenderer sr in gameObject.GetComponentsInChildren<SpriteRenderer>()){
+                sr.color = unit.color;
+            }
         }
     }
 }

@@ -24,8 +24,15 @@ namespace FinalInferno.UI.AII
         [SerializeField] private HeroInfoLoader infoLoader;
 
         public LayoutElement layout;
+        private RectTransform rectTransform;
+        public Vector2 CurrentOffset {get; private set;}
+        public Vector2 defaultOffset = Vector2.zero;
 
         private bool showingTarget = false;
+
+        void Awake(){
+            rectTransform = GetComponent<RectTransform>();
+        }
 
         public void Setup()
         {
@@ -37,6 +44,21 @@ namespace FinalInferno.UI.AII
                 item.OnExit += ResetEnemyContent;
             }
             item.OnAct += SetTarget;
+        }
+
+        void Update(){
+            // Posiciona o objeto com os sprites da unidade na sua posição desejada
+            CurrentOffset = Vector2.zero;
+            if(unit.gameObject != gameObject && rectTransform != null){
+                Vector3 newPosition = rectTransform.TransformPoint(rectTransform.rect.center.x, 0f, 0f);
+                newPosition += new Vector3(defaultOffset.x, defaultOffset.y, 2);
+                if(BattleManager.instance.currentUnit == unit){
+                    float xOffset = (unit.unit.IsHero)? 0.5f : -0.5f;
+                    newPosition.x += xOffset;
+                    CurrentOffset = new Vector2(xOffset, 0f);
+                }
+                unit.transform.position = newPosition;
+            }
         }
 
         private void SetTarget()

@@ -9,16 +9,12 @@ namespace FinalInferno{
     {
         public static int nTargets;
         private static int counter = 0;
-        private static Transform canvasTransform = null;
         private static List<AudioClip> effectsPlaying = new List<AudioClip>();
         private List<GameObject> particleList = new List<GameObject>();
         private AudioSource src = null;
         [HideInInspector] public bool forceCallback = false;
 
         void Awake(){
-            if(canvasTransform == null)
-                canvasTransform = GameObject.FindObjectOfType<Canvas>().transform;
-
             // Toca um efeito sonoro por skill
             src = GetComponent<AudioSource>();
             if(src != null && !effectsPlaying.Contains(src.clip)){
@@ -30,14 +26,10 @@ namespace FinalInferno{
             }
         }
 
-        void Start(){
-            transform.localScale = new Vector3(1.0f/canvasTransform.localScale.x,1.0f/canvasTransform.localScale.y,1.0f/canvasTransform.localScale.z);
-        }
-
         void UseSkill(){
             if(!forceCallback){
                 // Debug.Log("Chamou o use skill pela animação; " + "Object: " + gameObject.name);
-                BattleSkillManager.currentSkill.Use(BattleSkillManager.currentUser, transform.parent.GetComponentInChildren<BattleUnit>());
+                BattleSkillManager.currentSkill.Use(BattleSkillManager.currentUser, transform.parent.GetComponent<BattleUnit>());
             }
         }
 

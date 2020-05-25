@@ -31,10 +31,6 @@ namespace FinalInferno{
             hasTurnsParameter = System.Array.Find(anim.parameters, param => param.name == "turnsLeft") != null;
         }
 
-        public void Start(){
-            transform.localScale = new Vector3(1.0f/canvasTransform.localScale.x,1.0f/canvasTransform.localScale.y,1.0f/canvasTransform.localScale.z);
-        }
-
         public void DestroyVFX(){
             if(particle){
                 Destroy(particle);
