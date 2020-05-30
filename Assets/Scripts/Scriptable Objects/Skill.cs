@@ -94,6 +94,7 @@ namespace FinalInferno{
         // funcao que define como a skill sera usada
         // A versão da função com lista é usada para skills de callback, e invoca o efeito visual
         public virtual void Use(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f){
+            // Debug.Log("Skill utilizada(callback): " + name);
             if(callbackDelay <= 0){
                 UseCallback(user, targets, shouldOverride1, value1, shouldOverride2, value2);
             }else{
@@ -130,7 +131,7 @@ namespace FinalInferno{
                 
                 skillEffect.effect.Apply(user, target);
             }
-            Debug.Log("Skill utilizada: " + name);
+            // Debug.Log("Skill utilizada: " + name);
         }
 
         public virtual void ResetSkill(){Debug.Log("Reseto skill errado");} 

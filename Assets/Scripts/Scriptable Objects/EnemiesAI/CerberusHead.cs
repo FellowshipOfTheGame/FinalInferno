@@ -7,6 +7,7 @@ using FinalInferno.UI.Battle;
 namespace FinalInferno{
     [CreateAssetMenu(fileName = "CerberusHead", menuName = "ScriptableObject/Enemy/CerberusHead")]
     public class CerberusHead : Enemy{
+        // OBS.: A IA parte do pressuposto que as 3 cabeças do cérbero são as unicas unidades no time inimigo
         private const int maxHeads = 3;
         public static int heads = 0;
         private static int hellFireCD = 0;
@@ -118,6 +119,10 @@ namespace FinalInferno{
                         return null;
                 }
             }
+        }
+
+        public override void ResetParameters(){
+            hellFireCD = 0;
         }
 
         //funcao que escolhe o ataque a ser utilizado

@@ -10,6 +10,7 @@ namespace FinalInferno{
         [SerializeField] private Sprite battleBG;
         [SerializeField] private AudioClip battleBGM;
         [SerializeField] private Enemy[] battleEnemies;
+        [Header("Expected value = TriggerChangeScene")]
         [SerializeField] private FinalInferno.UI.FSM.ButtonClickDecision decision;
         
         public override void AfterDialogue(){

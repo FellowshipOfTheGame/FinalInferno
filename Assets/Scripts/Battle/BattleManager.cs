@@ -54,16 +54,20 @@ namespace FinalInferno{
 
         public void PrepareBattle(){
             foreach(Unit unit in units){
-                if (unit.IsHero)
+                if(unit.IsHero){
+                    // Precisa ser salvo antes do LoadUnit para registrar exp das habilidades OnSpawn
                     BattleProgress.addHeroSkills((Hero)unit);
+                }
 
                 BattleUnit newUnit = BattleUnitsUI.instance.LoadUnit(unit);
                 battleUnits.Add(newUnit);
                 queue.Enqueue(newUnit, -newUnit.curSpeed);
                 // Debug.Log("Carregou " + unit.name);
 
-                if(!unit.IsHero)
+                if(!unit.IsHero){
                     newUnit.ChangeColor();
+                    (newUnit.unit as Enemy).ResetParameters();
+                }
             }
             isBattleReady.UpdateValue(true);
         }
@@ -82,6 +86,7 @@ namespace FinalInferno{
             BattleSkillManager.currentTargets.Clear();
             BattleSkillManager.currentSkill = null;
             BattleSkillManager.currentUser = null;
+            BattleSkillManager.skillUsed = false;
             currentUnit.UpdateStatusEffects();
         }
 

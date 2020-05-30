@@ -165,6 +165,8 @@ namespace FinalInferno{
             BattleSkillManager.currentTargets = GetTargets(skill.target);
         }
 
+        public virtual void ResetParameters(){ /* Função para resetar parametros de boss por exemplo */ }
+
         protected virtual List<BattleUnit> GetTargets(TargetType type){
             List<BattleUnit> targets = new List<BattleUnit>();
             List<BattleUnit> team = new List<BattleUnit>();

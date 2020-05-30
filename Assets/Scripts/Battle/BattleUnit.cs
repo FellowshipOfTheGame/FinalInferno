@@ -348,6 +348,7 @@ namespace FinalInferno{
 
         public void SkillSelected(){
             // BattleManager.instance.UpdateQueue(Mathf.FloorToInt(BattleSkillManager.currentSkill.cost * (1.0f - ActionCostReduction) ));
+            // Debug.Log("Começou a animação de ataque");
             if(BattleSkillManager.currentSkill != unit.defenseSkill){
                 animator.SetTrigger("UseSkill");
             }else{
@@ -356,6 +357,7 @@ namespace FinalInferno{
         }
 
         public void UseSkill(){
+            // Debug.Log("Chamou o evento de animação");
             BattleSkillManager.UseSkill();
         }
 
