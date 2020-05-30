@@ -69,6 +69,7 @@ GameObject:
   - component: {fileID: 4910927149707659865}
   - component: {fileID: 6214778400234910010}
   - component: {fileID: 7741603292257487707}
+  - component: {fileID: 1079646475649025001}
   m_Layer: 5
   m_Name: Active Reference
   m_TagString: Untagged
@@ -92,8 +93,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 20.099998}
-  m_SizeDelta: {x: 100, y: 60}
+  m_AnchoredPosition: {x: 0, y: 16}
+  m_SizeDelta: {x: 100, y: 32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6214778400234910010
 CanvasRenderer:
@@ -117,13 +118,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: af0a4470f34ebac4ab0f0444764525f7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 55e5ae01232a955fbb2c6c8bcf16a16e, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -132,6 +133,25 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!95 &1079646475649025001
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125682505953195070}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fba474a592aa94dd1bcb58a3fb4ed616, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8978841047173096488
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,6 +247,7 @@ MonoBehaviour:
   item: {fileID: 8034241967565250595}
   infoLoader: {fileID: 11400000, guid: cc32bf591198ae447a8711650cf139b6, type: 2}
   layout: {fileID: 4508230415163605380}
+  defaultOffset: {x: 0, y: 0}
 --- !u!82 &4648299794538767647
 AudioSource:
   m_ObjectHideFlags: 0
