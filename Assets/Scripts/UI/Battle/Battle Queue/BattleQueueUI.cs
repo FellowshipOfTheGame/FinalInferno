@@ -85,6 +85,10 @@ namespace FinalInferno.UI.Battle.QueueMenu
         public void StartPreview(int newPosition = 0)
         {
             PreviewObject.gameObject.SetActive(true);
+            Transform image = PreviewObject.transform.Find("Image");
+            if(image){
+                image.GetComponent<Image>().sprite = currentTurnBattleImage.sprite;
+            }
             SetPreviewPosition(newPosition);
         }
 
@@ -105,6 +109,10 @@ namespace FinalInferno.UI.Battle.QueueMenu
         public void StopPreview()
         {
             PreviewObject.gameObject.SetActive(false);
+            Transform image = PreviewObject.transform.Find("Image");
+            if(image){
+                image.GetComponent<Image>().sprite = null;
+            }
         }
     }
 

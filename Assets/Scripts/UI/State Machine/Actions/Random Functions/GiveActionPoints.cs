@@ -21,7 +21,7 @@ namespace FinalInferno.UI.FSM
         public override void Act(StateController controller)
         {
             foreach(BattleUnit battleUnit in BattleSkillManager.currentTargets){
-                battleUnit.GetComponent<AxisInteractableItem>().DisableReference();
+                battleUnit.battleItem.GetComponent<AxisInteractableItem>().DisableReference();
             }
 
             BattleUnit currentUnit = BattleManager.instance.currentUnit;

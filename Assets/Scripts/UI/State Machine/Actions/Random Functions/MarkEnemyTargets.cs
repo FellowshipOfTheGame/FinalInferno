@@ -20,7 +20,7 @@ namespace FinalInferno.UI.FSM
         public override void Act(StateController controller)
         {
             foreach(BattleUnit battleUnit in BattleSkillManager.currentTargets){
-                battleUnit.GetComponent<AxisInteractableItem>().EnableReference();
+                battleUnit.battleItem.GetComponent<AxisInteractableItem>().EnableReference();
             }
         }
 

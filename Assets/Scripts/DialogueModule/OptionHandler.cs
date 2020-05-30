@@ -109,7 +109,7 @@ namespace Fog.Dialogue
                     if(Input.GetButton("Submit")){
                         options[currentOption].OnSelect?.Invoke();
                     }else{
-                        float input = Input.GetAxisRaw("Vertical");
+                        float input = Input.GetAxisRaw("Vertical") * (-1f);
                         if(input != 0){
                             int newOption = Mathf.Clamp(currentOption + ((input > 0)? 1 : -1), 0, options.Count-1);
                             if(newOption != currentOption){
