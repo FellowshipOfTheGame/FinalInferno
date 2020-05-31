@@ -48,17 +48,20 @@ namespace FinalInferno{
         public override bool IsHero{ get{ return true; } }
 
         void Awake(){
+            table = null;
             table = DynamicTable.Create(heroTable);
             for(int i = 0; i < elementalResistance.Length; i++){
                 elementalResistance[i] = 1.0f;
             }
+
+            skillsToUpdate = new List<PlayerSkill>(InitialsSkills);
         }
 
         //funcao que ajusta todos os atributos e "skills" do persoangem quando sobe de nivel
         public int LevelUp(int newLevel){
             //Debug.Log(name + " subiu mesmo de level!");
 
-            level = newLevel;
+            level = Mathf.Clamp(newLevel, 1, Table.Rows.Count);
             hpMax = Table.Rows[level-1].Field<int>("HP");
             baseDmg = Table.Rows[level-1].Field<int>("Damage");
             baseDef = Table.Rows[level-1].Field<int>("Defense");
@@ -79,10 +82,10 @@ namespace FinalInferno{
                 if(skill.CheckUnlock(level)){  
                     //skills filhas sao adicionadas a lista
                     foreach(PlayerSkill child in skill.skillsToUpdate){
-                        skillsToUpdate.Add(child);
+                        if(!skillsToUpdate.Contains(child)){
+                            skillsToUpdate.Add(child);
+                        }
                     }
-                    // Ativa a skill que foi liberada
-                    skill.active = true;
                     
                     skillsToUpdate.Remove(skill); //skill eh removida da lista
                 }
@@ -95,11 +98,7 @@ namespace FinalInferno{
             }
 
             skillsToUpdate = new List<PlayerSkill>(InitialsSkills);
-            foreach(Skill skill in InitialsSkills){
-                skill.active = true;
-            }
             
-            level = 1;
             Debug.Log("Hero resetado");
         }
         

@@ -18,8 +18,8 @@ namespace FinalInferno{
                 }
             }
             if(!isDraining){
-                target.AddEffect(new DamageDrained(source, target, value1, (int)value2));
                 source.AddEffect(new DrainingDamage(source, target, value1, (int)value2, false, true, true));
+                target.AddEffect(new DamageDrained(source, target, value1, (int)value2));
             }else{
             }
         }

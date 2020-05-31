@@ -31,9 +31,13 @@ namespace FinalInferno{
 
         public override void Remove() {
             if (TurnsLeft < 0 && callback != null){
-                Debug.Log("Chamando a skill como callback pelo status effect");
+                //Debug.Log("Chamando a skill como callback pelo status effect");
                 callback(Source, targetList, override1, value1, override2, value2);
             }
+            base.Remove();
+        }
+
+        public override void ForceRemove(){
             base.Remove();
         }
     }

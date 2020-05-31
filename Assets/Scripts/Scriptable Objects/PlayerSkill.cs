@@ -7,18 +7,20 @@ namespace FinalInferno{
     //engloba todas as "skills" dos personagens do jogador, que ganham nivel
     [CreateAssetMenu(fileName = "PlayerSkill", menuName = "ScriptableObject/PlayerSkill", order = 5)]
     public class PlayerSkill : Skill{
+        [Header("Player Skill")]
         public long xp; //experiencia da "skill"
         public long xpNext; //experiencia necessaria para a "skill" subir de nivel
-        // TO DO: Revisão de tabelas (nao sabemos o nome definitivo da coluna)
-        public long XpCumulative { get { return ( (table == null)? 0 : xp/*(xp +  ((level <= 1)? 0 : (table.Rows[level-2].Field<long>("XPAcumulada"))) ) */ ); } }
+        public long XpCumulative { get { return ( (table == null)? 0 : (xp +  ((level <= 1)? 0 : (XpTable.Rows[level-2].Field<long>("XPAccumulated"))) ) ); } }
         [TextArea]
         public string description; //descricao da "skill" que aparecera para o jogador durante a batalha
-        [SerializeField, TextArea] private string ShortDescription; //descricao mais curta da skill para casos onde a descricao completa é muito longa
-        public string shortDescription { get { return (ShortDescription != "" && ShortDescription != null) ? ShortDescription : description; } }
+        [SerializeField, TextArea] private string shortDescription; //descricao mais curta da skill para casos onde a descricao completa é muito longa
+        public string ShortDescription { get { return (shortDescription != null && shortDescription != "") ? shortDescription : description; } }
+        [Header("Unlock Info")]
         public List<PlayerSkill> skillsToUpdate; //lista de skills que podem ser destravadas com o level dessa skill
         public List<PlayerSkill> prerequisiteSkills; //lista de skills que sao pre requisitos para essa skill destravar
         public List<int> prerequisiteSkillsLevel; //level que a skill de pre requisito precisa estar para essa skill destravar
         public int prerequisiteHeroLevel; //level que o heroi precisa estar para essa skill destravar
+        [Header("Stats Table")]
         [SerializeField] private TextAsset skillTable;
         [SerializeField] private DynamicTable table = null;
         private DynamicTable Table {
@@ -28,8 +30,20 @@ namespace FinalInferno{
                 return table;
             }
         }
+        [Header("Exp Table")]
+        [SerializeField] private TextAsset expTable;
+        [SerializeField] private DynamicTable xpTable = null;
+        private DynamicTable XpTable {
+            get {
+                if(xpTable == null)
+                    xpTable = DynamicTable.Create(expTable);
+                return xpTable;
+            }
+        }
         private bool ShouldCalculateMean{
             get{
+                return true;
+                // Code below will probably be removed soon (tm)
                 switch(Type){
                     case SkillType.PassiveOnEnd:
                     case SkillType.PassiveOnSpawn:
@@ -45,6 +59,8 @@ namespace FinalInferno{
         void Awake(){
             table = null;
             table = DynamicTable.Create(skillTable);
+            xpTable = null;
+            xpTable = DynamicTable.Create(expTable);
             level = 0;
             xp = 0;
             xpNext = 0;
@@ -56,6 +72,7 @@ namespace FinalInferno{
             // effects[i].effect.value1 = Table.Rows[level-1].Field<float>("Effect0Value0");
             // effects[i].effect.value2 = Table.Rows[level-1].Field<float>("Effect0Value1");
 
+            //Debug.LogError("Skill = " + name + "; level = " + level);
             for(int i = 0; i < effects.Count; i++){
                 SkillEffectTuple modifyEffect = effects[i];
                 //Debug.Log("levelapo a " + name);
@@ -79,10 +96,11 @@ namespace FinalInferno{
             xp += exp;
 
             //testa se a skill subiu de nivel
-            while(xp >= xpNext && level < Table.Rows.Count-1){
+            while(xp >= xpNext && level < XpTable.Rows.Count){
+                xp -= xpNext;
                 level++;
-                // TO DO: Tabela externa com os valores de xpnext para cada level
-                xpNext = level * 350;
+
+                xpNext = XpTable.Rows[level-1].Field<long>("XPNextLevel");
                 
                 up = true;
             }
@@ -119,6 +137,8 @@ namespace FinalInferno{
         // checa se todos os pre requisitos foram cumpridos para essa skill ser destravada,
         // em caso positivo destrava a skill e retorna TRUE, caso contrario retorna FALSE
         public bool CheckUnlock(int heroLevel){
+            if(level > 0) return true;
+
             bool check = true;
 
             if(heroLevel >= prerequisiteHeroLevel){
@@ -128,7 +148,10 @@ namespace FinalInferno{
                 }
 
                 //se todos os pre requisitos foram atendidos, destrava a skill
-                if(check) GiveExp(0);
+                if(check){
+                    GiveExp(0);
+                    active = true;
+                }
             }
             else check = false;
 

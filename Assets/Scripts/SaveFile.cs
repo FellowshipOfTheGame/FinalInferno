@@ -22,8 +22,7 @@ namespace FinalInferno{
                 return (saves[Slot].mapName != null && saves[Slot].mapName != "");
             }
         }
-        // TO DO: Valor padrão deveria ser false, mas n tem menu de salvar o jogo
-        [SerializeField] public bool autoSave = true;
+        [SerializeField] public bool autoSave = false;
         // Uma array de saves inicializados com valores padrão
         public SaveInfo[] saves = new SaveInfo[nSaveSlots];
 
@@ -100,15 +99,27 @@ namespace FinalInferno{
         }
 
         public void Load(){
+            Party.Instance.GiveExp(saves[Slot].xpParty);
+
             for(int i = 0; i < Party.Instance.characters.Count; i++){
                 Party.Instance.characters[i].archetype = AssetManager.LoadAsset<Hero>(saves[Slot].archetype[i]);
                 Party.Instance.characters[i].hpCur = saves[Slot].hpCur[i];
                 Party.Instance.characters[i].position = saves[Slot].position[i];
                 
                 for (int j = 0; j < saves[Slot].heroSkills[i].skills.Length; j++){//SkillInfo skill in saves[Slot].skills[i]){
-                    ((PlayerSkill)Party.Instance.characters[i].archetype.skills[j]).GiveExp(saves[Slot].heroSkills[i].skills[j].xpCumulative);
+                    if(saves[Slot].heroSkills[i].skills[j].xpCumulative > 0){
+                        ((PlayerSkill)Party.Instance.characters[i].archetype.skills[j]).GiveExp(saves[Slot].heroSkills[i].skills[j].xpCumulative);
+                    }
                     ((PlayerSkill)Party.Instance.characters[i].archetype.skills[j]).active = saves[Slot].heroSkills[i].skills[j].active;
                 }
+
+                Party.Instance.characters[i].archetype.skillsToUpdate.Clear();
+                foreach(PlayerSkill skill in Party.Instance.characters[i].archetype.skills){
+                    if(skill.Level > 0){
+                        Party.Instance.characters[i].archetype.skillsToUpdate.Add(skill);
+                    }
+                }
+                Party.Instance.characters[i].archetype.UnlockSkills();
             }
 
             Party.Instance.activeQuests.Clear();
@@ -123,7 +134,6 @@ namespace FinalInferno{
             }
 
             Party.Instance.currentMap = saves[Slot].mapName;
-            Party.Instance.GiveExp(saves[Slot].xpParty);
         }
     }
 }

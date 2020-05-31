@@ -154,7 +154,7 @@ namespace FinalInferno.UI.Battle.SkillMenu
             skillNameText.text = skill.name;
 
             costText.text = skill.cost.ToString();            
-            descriptionText.text = skill.shortDescription;
+            descriptionText.text = skill.ShortDescription;
 
             elementImage.sprite = Icons.instance.elementSprites[(int) skill.attribute-1];
             targetTypeImage.sprite = Icons.instance.targetTypeSprites[(int) skill.target];

@@ -10,6 +10,7 @@ namespace FinalInferno{
         private static bool updatePositions = false;
         private static Fog.Dialogue.Dialogue cutsceneDialogue = null;
         private static AudioClip battleBGM;
+        private static Sprite BGImage;
         public static UnityAction beforeSceneChange = null;
         public static UnityAction onSceneLoad = null;
 
@@ -25,6 +26,8 @@ namespace FinalInferno{
             enemies = new List<Enemy>(enemiesSelected);
             // Salva a BGM de batalha
             battleBGM = BGM;
+            // Salva a imagem de background
+            BGImage = BG;
             // O callback de batalha deve usar o callback do scene manager padrão,
             // porque a primeira transição da maquina de estado espera que isso seja chamado
             SceneManager.sceneLoaded += OnBattleLoad;
@@ -170,18 +173,29 @@ namespace FinalInferno{
             BattleManager.instance.units.AddRange(enemies);
             // Avisa que a batalha pode começar
             BattleManager.instance.PrepareBattle();
+
+            // Coloca a imagem de fundo da batalha
+            GameObject go = GameObject.Find("BackgroundImage");
+            if(go && BGImage){
+                UnityEngine.UI.Image img = go.GetComponent<UnityEngine.UI.Image>();
+                if(img){
+                    img.sprite = BGImage;
+                }
+            }
+            BGImage = null;
+
             // Se não houver música, deixa a música padrão que está configurada
-            StaticReferences.instance.BGM.Stop();
+            StaticReferences.BGM.Stop();
             if(battleBGM != null)
-                StaticReferences.instance.BGM.PlaySong(battleBGM);
+                StaticReferences.BGM.PlaySong(battleBGM);
             else
-                StaticReferences.instance.BGM.Resume();
+                StaticReferences.BGM.Resume();
 
             battleBGM = null;
             SceneManager.sceneLoaded -= OnBattleLoad;
         }
         public static void OnMainMenuLoad(Scene map, LoadSceneMode mode){
-            StaticReferences.instance.BGM.PlaySong(StaticReferences.instance.mainMenuBGM);
+            StaticReferences.BGM.PlaySong(StaticReferences.instance.mainMenuBGM);
             SceneManager.sceneLoaded -= OnMainMenuLoad;
         }
         public static void OnMapLoad(Scene map, LoadSceneMode mode) {

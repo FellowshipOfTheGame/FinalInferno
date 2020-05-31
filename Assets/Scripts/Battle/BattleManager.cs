@@ -24,8 +24,6 @@ namespace FinalInferno{
         public UnitsLives[] unitsLives;
 
         public EnemyContent enemyContent;
-        public int enemyBuff; //numero de buffs ativos dos inimigos
-        public int enemyDebuff; //numero de debuffs ativos dos inimigos
 
 
         void Awake() {
@@ -38,23 +36,38 @@ namespace FinalInferno{
             queue = new BattleQueue(queueUI);
             units = new List<Unit>();
             battleUnits = new List<BattleUnit>();
-            enemyBuff = 0;
-            enemyDebuff = 0;
             BattleProgress.ResetInfo(Party.Instance);
         }
 
+        #if UNITY_EDITOR
+        public void Update(){
+            if(Input.GetAxisRaw("Pause") > 0){
+                foreach(BattleUnit bUnit in battleUnits){
+                    if(bUnit.CurHP > 0){
+                        bUnit.DecreaseHP(1.0f);
+                        UpdateLives();
+                    }
+                }
+            }
+        }
+        #endif
+
         public void PrepareBattle(){
             foreach(Unit unit in units){
-                if (unit.IsHero)
+                if(unit.IsHero){
+                    // Precisa ser salvo antes do LoadUnit para registrar exp das habilidades OnSpawn
                     BattleProgress.addHeroSkills((Hero)unit);
+                }
 
                 BattleUnit newUnit = BattleUnitsUI.instance.LoadUnit(unit);
                 battleUnits.Add(newUnit);
                 queue.Enqueue(newUnit, -newUnit.curSpeed);
                 // Debug.Log("Carregou " + unit.name);
 
-                if(!unit.IsHero)
+                if(!unit.IsHero){
                     newUnit.ChangeColor();
+                    (newUnit.unit as Enemy).ResetParameters();
+                }
             }
             isBattleReady.UpdateValue(true);
         }
@@ -70,8 +83,11 @@ namespace FinalInferno{
         public void UpdateTurn()
         {
             currentUnit = queue.Dequeue();
+            BattleSkillManager.currentTargets.Clear();
+            BattleSkillManager.currentSkill = null;
+            BattleSkillManager.currentUser = null;
+            BattleSkillManager.skillUsed = false;
             currentUnit.UpdateStatusEffects();
-            // ShowEnemyInfo();
         }
 
         public void ShowEnemyInfo()
@@ -132,6 +148,7 @@ namespace FinalInferno{
                     // }
                 }
             }
+            UpdateLives();
         }
 
         public void Revive(BattleUnit unit){

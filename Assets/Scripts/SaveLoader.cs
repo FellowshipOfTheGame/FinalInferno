@@ -93,8 +93,6 @@ namespace FinalInferno{
             // Reseta todas as informações do jogo para um estado inicial
             ResetGame();
 
-            Party.Instance.GiveExp(0);
-
             Party.Instance.activeQuests.Clear();
             Quest mainQuest = AssetManager.LoadAsset<Quest>("MainQuest");
             mainQuest.StartQuest();
@@ -110,8 +108,6 @@ namespace FinalInferno{
             //     saveFile = new SaveFile();
             // Reseta todas as informações do jogo para um estado inicial
             ResetGame();
-
-            Party.Instance.GiveExp(0);
 
             Party.Instance.activeQuests.Clear();
             Quest mainQuest = AssetManager.LoadAsset<Quest>("AdventurerQuest");

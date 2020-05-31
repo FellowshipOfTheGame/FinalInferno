@@ -30,6 +30,7 @@ namespace FinalInferno.UI
                     
                 GameObject newEnemy = Instantiate(EnemyImage, transform);
                 newEnemy.GetComponent<Image>().sprite = enemy.QueueSprite;
+                newEnemy.GetComponent<Image>().color = enemy.color;
             }
             CerberusHead.heads = 0;
         }

@@ -10,13 +10,14 @@ namespace FinalInferno{
     //engloba os inimigos do jogador
     [CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObject/Enemy/Basic", order = 0)]
     public class Enemy : Unit{
+        public Color dialogueColor;
         [Space(10)]
         [Header("Enemy Info")]
         [SerializeField] protected Element element = Element.Neutral;
         public Element Element { get{ return element; } }
         [SerializeField] protected DamageType damageFocus = DamageType.None;
         public DamageType DamageFocus { get{ return damageFocus; } }
-        public override Color DialogueColor { get { return color; } }
+        public override Color DialogueColor { get { return dialogueColor; } }
         public override string DialogueName { get { return (name == null)? "" : name; } }
         [Space(10)]
         [Header("Table")]
@@ -32,10 +33,11 @@ namespace FinalInferno{
             }
         }
         protected int curTableRow;
-        public override long SkillExp { get { return BaseExp/5; } } // Quanta exp o inimigo dá pra skill quando ela é usada nele
+        public override long SkillExp { get { return BaseExp; } } // Quanta exp o inimigo dá pra skill quando ela é usada nele
         public long BaseExp { get; protected set; } // Quanta exp o inimigo dá pra party ao final da batalha
 
         void Awake(){
+            table = null;
             if(Table != null && Table.Rows.Count > 0){
                 table = DynamicTable.Create(enemyTable);
                 
@@ -105,12 +107,12 @@ namespace FinalInferno{
 
             //soma a ameaca de todos os herois
             foreach (BattleUnit unit in team){
-                sumTotal += unit.aggro;
+                sumTotal += Mathf.Clamp(unit.aggro, Mathf.Epsilon, float.MaxValue);
             }
         
             //calcula a porcentagem que cada heroi representa da soma total das ameacas
             foreach (BattleUnit unit in team){
-                percentual.Add(unit.aggro/sumTotal);
+                percentual.Add(Mathf.Clamp(unit.aggro, Mathf.Epsilon, float.MaxValue)/sumTotal);
             }
 
             //gera um numero aleatorio entre 0 e 1
@@ -163,6 +165,8 @@ namespace FinalInferno{
             BattleSkillManager.currentSkill = skill;
             BattleSkillManager.currentTargets = GetTargets(skill.target);
         }
+
+        public virtual void ResetParameters(){ /* Função para resetar parametros de boss por exemplo */ }
 
         protected virtual List<BattleUnit> GetTargets(TargetType type){
             List<BattleUnit> targets = new List<BattleUnit>();

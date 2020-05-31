@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 088bc75593bfa1a459627df0fb87abd0, type: 3}
   m_Name: CerberusHead
   m_EditorClassIdentifier: 
-  name: Cerberus Head
+  name: Cerberus
   level: 1
-  hpMax: 60
-  baseDmg: 38
-  baseDef: 13
-  baseMagicDef: 13
-  baseSpeed: 12
+  hpMax: 140
+  baseDmg: 58
+  baseDef: 15
+  baseMagicDef: 15
+  baseSpeed: 30
   elementalResistance:
   - 0.5
   - 1
@@ -28,22 +28,45 @@ MonoBehaviour:
   skills:
   - {fileID: 11400000, guid: 59a8e1c9b1e65a04aaed2d03306182ec, type: 2}
   - {fileID: 11400000, guid: 2e0db51bfd992b14d94ac1a86a5d52f1, type: 2}
-  - {fileID: 11400000, guid: 92dd7a2487067044b9bbe5713737370d, type: 2}
-  - {fileID: 11400000, guid: b8c1387b78d34d240b054899ef658aa1, type: 2}
   - {fileID: 11400000, guid: 546e6255b06e7f548bca11b9ffd4dff3, type: 2}
+  - {fileID: 11400000, guid: b8c1387b78d34d240b054899ef658aa1, type: 2}
+  - {fileID: 11400000, guid: 92dd7a2487067044b9bbe5713737370d, type: 2}
   attackSkill: {fileID: 11400000, guid: 95407fd86bf202049848deeb79956196, type: 2}
   defenseSkill: {fileID: 11400000, guid: 91ee493282c723147a741a8ac23970d9, type: 2}
-  color: {r: 0.6313726, g: 0.48235297, b: 0.89019614, a: 1}
+  color: {r: 0, g: 1, b: 1, a: 1}
   animator: {fileID: 9100000, guid: 1bc20ae9aeb69a24dbd74723b2a5549f, type: 2}
   portrait: {fileID: 21300004, guid: 034571d8b8edd054e9b1c4d98a48b148, type: 3}
   dialoguePortrait: {fileID: 21300008, guid: 034571d8b8edd054e9b1c4d98a48b148, type: 3}
   battleSprite: {fileID: 21300000, guid: b037615be5a0e2b4c9dbad9d4e737e88, type: 3}
   queueSprite: {fileID: 21300004, guid: 034571d8b8edd054e9b1c4d98a48b148, type: 3}
+  dialogueColor: {r: 0.59607846, g: 0.26666668, b: 0.5529412, a: 0}
   element: 1
   damageFocus: 1
-  enemyTable: {fileID: 0}
+  enemyTable: {fileID: 4900000, guid: 6b52993fdd8bb6347934ec6f78deb9fd, type: 3}
   table:
-    colTypes: []
+    colTypes:
+    - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - UnityEngine.Color, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     Col:
       reorderableList:
         canAdd: 0
@@ -67,10 +90,166 @@ MonoBehaviour:
         elementIcon: {fileID: 0}
       reqReferences: {fileID: 0}
       isExpanded: 0
-      _keyValues: []
-      _keys: []
-      _values: 
-    rows: []
+      _keyValues:
+      - Rank
+      - Level
+      - HP
+      - Damage
+      - Defense
+      - Resistance
+      - Speed
+      - Color
+      - FireResistance
+      - WaterResistance
+      - WindResistance
+      - EarthResistance
+      - NeutralResistance
+      - XP
+      - LevelSkill0
+      - LevelSkill1
+      - LevelSkill2
+      - LevelSkill3
+      - LevelSkill4
+      - LevelSkill5
+      - ChancetoUseSkill
+      _keys:
+      - Rank
+      - Level
+      - HP
+      - Damage
+      - Defense
+      - Resistance
+      - Speed
+      - Color
+      - FireResistance
+      - WaterResistance
+      - WindResistance
+      - EarthResistance
+      - NeutralResistance
+      - XP
+      - LevelSkill0
+      - LevelSkill1
+      - LevelSkill2
+      - LevelSkill3
+      - LevelSkill4
+      - LevelSkill5
+      - ChancetoUseSkill
+      _values: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f0000001000000011000000120000001300000014000000
+    rows:
+    - elements:
+      - Cerberus
+      - 1
+      - 140
+      - 58
+      - 15
+      - 15
+      - 30
+      - '#00FFFFFF'
+      - 0.5
+      - 1.0
+      - 1.0
+      - 1.0
+      - 1.0
+      - 2331
+      - 0
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 0.4
+      colTypes:
+      - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - UnityEngine.Color, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      Col:
+        reorderableList:
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
+          isExpanded: 0
+          label:
+            m_Text: 
+            m_Image: {fileID: 0}
+            m_Tooltip: 
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
+          elementDisplayType: 0
+          elementNameProperty: 
+          elementNameOverride: 
+          elementIcon: {fileID: 0}
+        reqReferences: {fileID: 0}
+        isExpanded: 0
+        _keyValues:
+        - Rank
+        - Level
+        - HP
+        - Damage
+        - Defense
+        - Resistance
+        - Speed
+        - Color
+        - FireResistance
+        - WaterResistance
+        - WindResistance
+        - EarthResistance
+        - NeutralResistance
+        - XP
+        - LevelSkill0
+        - LevelSkill1
+        - LevelSkill2
+        - LevelSkill3
+        - LevelSkill4
+        - LevelSkill5
+        - ChancetoUseSkill
+        _keys:
+        - Rank
+        - Level
+        - HP
+        - Damage
+        - Defense
+        - Resistance
+        - Speed
+        - Color
+        - FireResistance
+        - WaterResistance
+        - WindResistance
+        - EarthResistance
+        - NeutralResistance
+        - XP
+        - LevelSkill0
+        - LevelSkill1
+        - LevelSkill2
+        - LevelSkill3
+        - LevelSkill4
+        - LevelSkill5
+        - ChancetoUseSkill
+        _values: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f0000001000000011000000120000001300000014000000
+  bodySprite: {fileID: 21300002, guid: b037615be5a0e2b4c9dbad9d4e737e88, type: 3}
   animatorMiddleHead: {fileID: 9100000, guid: 9d04a95e0f0c57547a861b4e2d04b49b, type: 2}
   animatorFrontHead: {fileID: 9100000, guid: 0346276e298f9bb429525e7e1b0bd291, type: 2}
   portraitMiddleHead: {fileID: 21300002, guid: 034571d8b8edd054e9b1c4d98a48b148, type: 3}

@@ -22,7 +22,7 @@ namespace FinalInferno.UI.FSM
 
         public override void Act(StateController controller)
         {
-            StaticReferences.instance.BGM.PlaySong(clip, loop);
+            StaticReferences.BGM.PlaySong(clip, loop);
         }
 
     }

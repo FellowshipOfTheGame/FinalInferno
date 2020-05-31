@@ -46,5 +46,10 @@ namespace FinalInferno{
                 return false;
             }
         }
+
+        public override void Remove(){
+            Target.aggro = Mathf.Max(0f, Target.aggro);
+            base.Remove();
+        }
     }
 }

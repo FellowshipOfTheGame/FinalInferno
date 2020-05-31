@@ -6,17 +6,45 @@ namespace FinalInferno{
     //engloba todas as "skills"
     [CreateAssetMenu(fileName = "Skill", menuName = "ScriptableObject/Skill", order = 4)]
     public class Skill : ScriptableObject{
+        [Header("Skill")]
         public new string name; //nome da "skill"
         protected int level; //nivel da "skill"
         public virtual int Level { get{ return level; } set {} }
         public float cost; //tempo que a "skill" custara ao conjurador, em porcentagem da sua velocidade
         public bool active = true; //sinaliza se a "skill" esta ativa ou nao
-        [SerializeField] private int callbackDelay = 0;
         public TargetType target; //tipo de alvo da "skill"
         public Element attribute; //elemento da "skill"
-        public List<SkillEffectTuple> effects; //lista de efeitos que a "skill" causa e seus valores associados
         [SerializeField] private SkillType type; // Tipo da skill (ativa/passiva e qual tipo de passiva)
+        public string TypeString{
+            get{
+                switch(type){
+                    case SkillType.Active:
+                        return "Active Skill";
+                    case SkillType.PassiveOnDeath:
+                        return "Passive Triggered on Death";
+                    case SkillType.PassiveOnEnd:
+                        return "Passive Triggered when Battle Ends";
+                    case SkillType.PassiveOnReceiveBuff:
+                        return "Passive Triggered when Buffed";
+                    case SkillType.PassiveOnReceiveDebuff:
+                        return "Passive Triggered when Debuffed";
+                    case SkillType.PassiveOnSkillUsed:
+                        return "Passive Triggered after Skill Usage";
+                    case SkillType.PassiveOnSpawn:
+                        return "Base Status Changes";
+                    case SkillType.PassiveOnStart:
+                        return "Passive Triggered at Start of Battle";
+                    case SkillType.PassiveOnTakeDamage:
+                        return "Passive Triggered when Damage Taken";
+                    default:
+                        return "";
+                }
+            }
+        }
         public SkillType Type{ get { return type; } }
+        [SerializeField] private int callbackDelay = 0;
+        public List<SkillEffectTuple> effects; //lista de efeitos que a "skill" causa e seus valores associados
+        [Space(15)]
         [SerializeField] private GameObject visualEffect; // Prefab contendo uma animação da skill
         public GameObject VisualEffect { get{ return visualEffect; } }
 
@@ -66,6 +94,7 @@ namespace FinalInferno{
         // funcao que define como a skill sera usada
         // A versão da função com lista é usada para skills de callback, e invoca o efeito visual
         public virtual void Use(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f){
+            // Debug.Log("Skill utilizada(callback): " + name);
             if(callbackDelay <= 0){
                 UseCallback(user, targets, shouldOverride1, value1, shouldOverride2, value2);
             }else{
@@ -79,7 +108,8 @@ namespace FinalInferno{
             foreach (BattleUnit trgt in targets) {
                 
                 if(visualEffect){
-                    GameObject obj = GameObject.Instantiate(visualEffect, trgt.transform.parent);
+                    GameObject obj = GameObject.Instantiate(visualEffect, trgt.transform);
+                    obj.GetComponent<SkillVFX>().forceCallback = true;
                     obj.GetComponent<SpriteRenderer>().sortingOrder = trgt.GetComponent<SpriteRenderer>().sortingOrder + 1;
                 }
 
@@ -101,7 +131,7 @@ namespace FinalInferno{
                 
                 skillEffect.effect.Apply(user, target);
             }
-            Debug.Log("Skill utilizada: " + name);
+            // Debug.Log("Skill utilizada: " + name);
         }
 
         public virtual void ResetSkill(){Debug.Log("Reseto skill errado");} 

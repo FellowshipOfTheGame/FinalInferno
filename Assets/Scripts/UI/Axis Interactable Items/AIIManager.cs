@@ -36,21 +36,21 @@ namespace FinalInferno.UI.AII
 
         private bool enableInput = true;
 
-        [SerializeField] private bool interactable;
+        public bool interactable;
 
-        [SerializeField] private AudioSource AS;
+        [SerializeField] protected AudioSource AS;
 
 
-        void Awake(){
+        public void Awake(){
             currentItem = null;
         }
 
-        void Start()
+        public void Start()
         {
             active = false;
         }
 
-        void Update()
+        public void Update()
         {
             if (active)
             {
@@ -94,7 +94,7 @@ namespace FinalInferno.UI.AII
         /// <summary>
         /// Ativa o gerenciador e o item atual.
         /// </summary>
-        public void Active()
+        public virtual void Active()
         {
             active = true;
             currentItem = firstItem;
@@ -107,7 +107,7 @@ namespace FinalInferno.UI.AII
         /// <summary>
         /// Desativa o item atual e o gerenciador.
         /// </summary>
-        public void Deactive()
+        public virtual void Deactive()
         {
             if (currentItem != null)
             {
@@ -129,7 +129,7 @@ namespace FinalInferno.UI.AII
         /// Muda o item atualmente ativado para o próximo.
         /// </summary>
         /// <param name="nextItem"> Próximo item a ser ativado, se existir. </param>
-        private void ChangeItem(AxisInteractableItem nextItem)
+        protected void ChangeItem(AxisInteractableItem nextItem)
         {
             if (currentItem != null && nextItem != null)
             {

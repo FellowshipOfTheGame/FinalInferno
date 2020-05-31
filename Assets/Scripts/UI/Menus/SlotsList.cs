@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using FinalInferno.UI.AII;
 using FinalInferno.UI.FSM;
 
@@ -34,6 +35,20 @@ namespace FinalInferno.UI.Saves
         [SerializeField] private ButtonClickDecision clickDecision;
 
         [SerializeField] private LoadPreviews loadPreviewsActions;
+
+        [Header("Autosave info")]
+        [SerializeField] private TextMeshProUGUI textMesh;
+
+        void Update(){
+            if(textMesh != null){
+                string autoSaveStatus = (SaveLoader.AutoSave)? "<color=#006400>on</color>" : "<color=#840000>off</color>";
+                string currentSlot = "" + (SaveLoader.SaveSlot + 1);
+                textMesh.text = "<color=#840000>Autosave is </color>" + autoSaveStatus;
+                if(SaveLoader.AutoSave){
+                    textMesh.text += "<color=#840000>, curent slot is " + currentSlot + "</color>";
+                }
+            }
+        }
 
         void Awake()
         {
