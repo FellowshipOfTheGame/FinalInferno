@@ -75,11 +75,11 @@ namespace FinalInferno{
 
         // Função auxiliar para preview de level baseado na informação do save file
         public int GetLevel(long cumulativeExp){
-            if(cumulativeExp == 0)
+            if(cumulativeExp <= 0)
                 return 0;
 
             int _level = 1;
-            while(cumulativeExp > Table.Rows[_level].Field<long>("XPAccumulated")){
+            while(cumulativeExp > Table.Rows[_level-1].Field<long>("XPAccumulated")){
                 _level++;
             }
             return _level;

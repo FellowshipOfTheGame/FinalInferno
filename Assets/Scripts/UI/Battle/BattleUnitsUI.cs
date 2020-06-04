@@ -75,8 +75,8 @@ namespace FinalInferno.UI.Battle
             AxisInteractableItem newItem = battleUnit.battleItem.GetComponent<AxisInteractableItem>();
             RectTransform referenceTransform = newItem.transform.parent.Find("Active Reference").GetComponent<RectTransform>();
             int ppu = Camera.main.gameObject.GetComponent<UnityEngine.U2D.PixelPerfectCamera>().assetsPPU;
-            referenceTransform.anchoredPosition += new Vector2(0f, unit.BattleSprite.bounds.size.y * ppu);
-            Debug.Log("height detected for " + unit.name + " = " + unit.BattleSprite.bounds.size.y);
+            referenceTransform.anchoredPosition += new Vector2(0f, battleUnit.GetComponent<SpriteRenderer>().sprite.bounds.size.y * ppu);
+            // Debug.Log("height detected for " + unit.name + " = " + unit.BattleSprite.bounds.size.y);
             battleUnit.battleItem.layout.preferredWidth = unit.BoundsSizeX * 64;
             battleUnit.battleItem.layout.preferredHeight = unit.BoundsSizeY * 64;
 

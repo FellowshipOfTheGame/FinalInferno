@@ -96,12 +96,15 @@ namespace Fog.Dialogue
 						Skip();
 				}
 				// On unity editor, adds option to skip all dialogues for quicker debugging
-				#if UNITY_EDITOR
-				if(Input.GetButtonDown("Cancel")){
-					dialogueLines.Clear();
-					EndDialogue();
+				// For this project only, we will use a specific boolean variable instead
+				// #if UNITY_EDITOR
+				if(StaticReferences.DebugBuild){
+					if(Input.GetButtonDown("Cancel")){
+						dialogueLines.Clear();
+						EndDialogue();
+					}
 				}
-				#endif
+				// #endif
 			}
 		}
 

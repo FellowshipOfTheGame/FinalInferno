@@ -21,14 +21,21 @@ namespace FinalInferno{
                 return table;
             }
         }
+        [Range(0, 4)]
         [SerializeField] private int minNumberEnemies;
+        [Range(0, 4)]
         [SerializeField] private int maxNumberEnemies;
         [SerializeField] public Sprite battleBG;
         [SerializeField] private AudioClip battleBGM;
         [SerializeField] private AudioClip overworldBGM;
+        [Range(0, 100)]
         [SerializeField] private float baseEncounterRate = 5.0f;
-        [SerializeField] private float rateIncreaseFactor = 0.05f;
+        [Range(0, 100)]
+        [SerializeField] private float rateIncreaseFactor = 1f;
         private float curEncounterRate;
+        private float time;
+        private float checkCooldown = 0.25f;
+        private float gracePeriod = 1f;
         private Vector2 lastPosition;
 
         [SerializeField] private FinalInferno.UI.FSM.ButtonClickDecision decision;
@@ -45,30 +52,43 @@ namespace FinalInferno{
                 lastPosition = Vector2.zero;
             StaticReferences.BGM.PlaySong(overworldBGM);
             curEncounterRate = baseEncounterRate;
+            time = -gracePeriod;
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (encountersEnabled && CharacterOW.PartyCanMove) {
-                // Calcula a distancia entre a posicao atual e a distance no ultimo update
-                float distance = Vector2.Distance(lastPosition, new Vector2(playerObj.position.x, playerObj.position.y));
-                if (distance > float.Epsilon) {
-                    // Caso o player tenha se movido, verifica se encontrou batalha
-                    CheckEncounter(distance);
-                    // Atualiza lastPosition
+            if(time > checkCooldown + float.Epsilon){
+                time -= checkCooldown;
+
+                if (encountersEnabled && CharacterOW.PartyCanMove) {
+                    // Calcula a distancia entre a posicao atual e a distance no ultimo update
+                    float distance = Vector2.Distance(lastPosition, new Vector2(playerObj.position.x, playerObj.position.y));
+                    if (distance > float.Epsilon) {
+                        // Caso o player tenha se movido, verifica se encontrou batalha
+                        CheckEncounter(distance);
+                        // Atualiza lastPosition
+                        lastPosition = new Vector2(playerObj.position.x, playerObj.position.y);
+                    }
+                }
+            }else if(time < -float.Epsilon){
+                if(playerObj){
                     lastPosition = new Vector2(playerObj.position.x, playerObj.position.y);
                 }
+            }
+
+            if(CharacterOW.PartyCanMove){
+                time += Time.deltaTime;
             }
         }
 
         private void CheckEncounter(float distance) {
-            // A distancia percorrida e usada para aumentar/diminuir a chance de encontro
-            if (Random.Range(0.0f, 100.0f) < (curEncounterRate * distance)) {
+            if (Random.Range(0.0f, 100.0f) < curEncounterRate) {
                 // Quando encontrar uma batalha
                 //Debug.Log("Found random encounter");
                 // Impede que o player se movimente
                 CharacterOW.PartyCanMove = false;
+                time = float.MinValue;
                 // Usar a tabela de encontros aleatorios para definir a lista de inimigos
                 bool isPowerSpike = Party.Instance.level % 5 == 1;
                 int scaledMinEnemies = (!isPowerSpike)? minNumberEnemies : Mathf.Max(minNumberEnemies-1, 1);
@@ -99,20 +119,6 @@ namespace FinalInferno{
                 }
                 // Calculo de level foi movido para a criação da preview de batalha
                 // Assets/Scripts/UI/Menus/LoadEnemiesPreview.cs
-                // // Calcula o level dos inimigos
-                // // Avalia os parametros das quests
-                // int questParam = 0;
-                // if(AssetManager.LoadAsset<Quest>("MainQuest").PartyReference.events["CerberusDead"]) questParam++;
-
-                // int enemyLevel = questParam * 10;
-                // if(Mathf.Clamp(Party.Instance.level - (questParam * 10), 0, 10) > 5)
-                //     enemyLevel += 5;
-
-                // // Cria um hashshet para ignorar repetições e aplica o nível dos inimigos
-                // //Debug.Log("Nível dos inimigos calculado(unclamped) = " + enemyLevel);
-                // foreach(Enemy enemy in (new HashSet<Enemy>(enemies)) ){
-                //     enemy.LevelEnemy(enemyLevel);
-                // }
 
                 FinalInferno.UI.ChangeSceneUI.isBattle = true;
                 FinalInferno.UI.ChangeSceneUI.battleBG = battleBG;

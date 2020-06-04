@@ -21,21 +21,21 @@ namespace FinalInferno{
                     case SkillType.Active:
                         return "Active Skill";
                     case SkillType.PassiveOnDeath:
-                        return "Passive Triggered on Death";
+                        return "Passive: Triggered on Death";
                     case SkillType.PassiveOnEnd:
-                        return "Passive Triggered when Battle Ends";
+                        return "Passive: Triggered when Battle Ends";
                     case SkillType.PassiveOnReceiveBuff:
-                        return "Passive Triggered when Buffed";
+                        return "Passive: Triggered when Buffed";
                     case SkillType.PassiveOnReceiveDebuff:
-                        return "Passive Triggered when Debuffed";
+                        return "Passive: Triggered when Debuffed";
                     case SkillType.PassiveOnSkillUsed:
-                        return "Passive Triggered after Skill Usage";
+                        return "Passive: Triggered after Skill Usage";
                     case SkillType.PassiveOnSpawn:
                         return "Base Status Changes";
                     case SkillType.PassiveOnStart:
-                        return "Passive Triggered at Start of Battle";
+                        return "Passive: Triggered at Start of Battle";
                     case SkillType.PassiveOnTakeDamage:
-                        return "Passive Triggered when Damage Taken";
+                        return "Passive: Triggered when Damage Taken";
                     default:
                         return "";
                 }

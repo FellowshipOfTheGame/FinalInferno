@@ -7,6 +7,17 @@ using FinalInferno;
 public class StaticReferences : MonoBehaviour
 {
     public static StaticReferences instance = null;
+    public static bool DebugBuild{
+        get{
+        #if UNITY_EDITOR
+            return true;
+        #endif
+            if(instance){
+                return instance.debugBuild;
+            }
+            return false;
+        }
+    }
     public static Jukebox BGM{
         get{
             if(instance){
@@ -15,6 +26,7 @@ public class StaticReferences : MonoBehaviour
             return null;
         }
     }
+    [SerializeField] private bool debugBuild;
     [SerializeField] private Jukebox bgm;
     public AudioClip mainMenuBGM;
     // Start is called before the first frame update
