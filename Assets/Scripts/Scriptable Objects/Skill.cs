@@ -12,6 +12,8 @@ namespace FinalInferno{
         public virtual int Level { get{ return level; } set {} }
         public float cost; //tempo que a "skill" custara ao conjurador, em porcentagem da sua velocidade
         public bool active = true; //sinaliza se a "skill" esta ativa ou nao
+        [TextArea, SerializeField] protected string shortDescription;
+        public virtual string ShortDescription { get => shortDescription; }
         public TargetType target; //tipo de alvo da "skill"
         public Element attribute; //elemento da "skill"
         [SerializeField] private SkillType type; // Tipo da skill (ativa/passiva e qual tipo de passiva)

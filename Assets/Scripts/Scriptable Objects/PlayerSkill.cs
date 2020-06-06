@@ -12,9 +12,8 @@ namespace FinalInferno{
         public long xpNext; //experiencia necessaria para a "skill" subir de nivel
         public long XpCumulative { get { return ( (table == null)? 0 : (xp +  ((level <= 1)? 0 : (XpTable.Rows[level-2].Field<long>("XPAccumulated"))) ) ); } }
         [TextArea]
-        public string description; //descricao da "skill" que aparecera para o jogador durante a batalha
-        [SerializeField, TextArea] private string shortDescription; //descricao mais curta da skill para casos onde a descricao completa é muito longa
-        public string ShortDescription { get { return (shortDescription != null && shortDescription != "") ? shortDescription : description; } }
+        public string description; //descricao da "skill" que aparecera para o jogador no menu de pause
+        public override string ShortDescription { get { return (shortDescription != null && shortDescription != "") ? shortDescription : description; } }
         [Header("Unlock Info")]
         public List<PlayerSkill> skillsToUpdate; //lista de skills que podem ser destravadas com o level dessa skill
         public List<PlayerSkill> prerequisiteSkills; //lista de skills que sao pre requisitos para essa skill destravar

@@ -10,6 +10,7 @@ namespace FinalInferno.UI.Battle.QueueMenu
 	/// </summary>
     public class AttackItem : SkillItem
     {
+        [SerializeField] private UI.Battle.SkillMenu.SkillList skillListManager;
         new void Awake(){
             item.OnEnter += GetSkill;
             base.Awake();
@@ -17,6 +18,10 @@ namespace FinalInferno.UI.Battle.QueueMenu
         void GetSkill()
         {
             skill = (BattleManager.instance.currentUnit != null)? BattleManager.instance.currentUnit.unit.attackSkill : null;
+            if(skill){
+                skillListManager.UpdateSkillDescription(skill);
+                // TO DO: mostrar o console
+            }
         }
     }
 

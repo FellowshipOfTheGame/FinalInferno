@@ -73,6 +73,8 @@ namespace FinalInferno.UI.Battle.SkillMenu
         /// </summary>
         [SerializeField] private Text effectDescriptionText;
 
+        [SerializeField] private Image skillIconImage;
+
         /// <summary>
         /// Imagem que mostrará o elemento da skill.
         /// </summary>
@@ -114,6 +116,7 @@ namespace FinalInferno.UI.Battle.SkillMenu
                     newSkill.GetComponent<SkillElement>().skill = skill;
 
                     newSkill.GetComponent<Image>().sprite = skill.skillImage;
+                    newSkill.GetComponentInChildren<Text>().text = skill.name;
 
                     // Define este script como responsável pelo item criado
                     SkillListItem newSkillListItem = newSkill.GetComponent<SkillListItem>();
@@ -148,7 +151,7 @@ namespace FinalInferno.UI.Battle.SkillMenu
         /// Mostra detalhes da skill selecionada no menu.
         /// </summary>
         /// <param name="skill"> Skill para ser mostrada no menu. </param>
-        public void UpdateSkillDescription(PlayerSkill skill)
+        public void UpdateSkillDescription(Skill skill)
         {
             // Mostra as informações básicas da skill
             skillNameText.text = skill.name;
@@ -156,6 +159,12 @@ namespace FinalInferno.UI.Battle.SkillMenu
             costText.text = skill.cost.ToString();            
             descriptionText.text = skill.ShortDescription;
 
+            if(skill.GetType() == typeof(PlayerSkill)){
+                skillIconImage.enabled = true;
+                skillIconImage.sprite = (skill as PlayerSkill).skillImage;
+            }else{
+                skillIconImage.enabled = false;
+            }
             elementImage.sprite = Icons.instance.elementSprites[(int) skill.attribute-1];
             targetTypeImage.sprite = Icons.instance.targetTypeSprites[(int) skill.target];
 
@@ -228,7 +237,7 @@ namespace FinalInferno.UI.Battle.SkillMenu
         /// <param name="effects"> Efeito selecionado. </param>
         public void UpdateEffectDescription(SkillEffect effect)
         {
-            effectDescriptionText.text = effect.Description;
+            effectDescriptionText.text = effect.name;
         }
 
     }

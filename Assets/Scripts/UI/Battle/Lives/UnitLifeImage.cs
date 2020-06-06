@@ -11,6 +11,7 @@ namespace FinalInferno.UI.Battle.LifeMenu
     /// </summary>
     public class UnitLifeImage : UnitLife
     {
+        public Image healthFillImage;
         public Image unitImage;
         /// <summary>
         /// Atualiza o campo de texto com as informações de vida do heroi e também com sua cor.
@@ -20,6 +21,9 @@ namespace FinalInferno.UI.Battle.LifeMenu
             unitImage.sprite = thisUnit.Portrait;
             lifeText.text = " - " + thisUnit.CurHP + "/" + thisUnit.MaxHP;
             lifeText.color = thisUnit.unit.color;
+            if(healthFillImage != null){
+                healthFillImage.fillAmount = Mathf.Clamp(((float)thisUnit.CurHP / (float)thisUnit.MaxHP), 0f, 1f);
+            }
         }
     }
 
