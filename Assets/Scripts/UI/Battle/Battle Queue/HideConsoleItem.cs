@@ -10,6 +10,7 @@ namespace FinalInferno.UI.Battle.QueueMenu
     public class HideConsoleItem : MonoBehaviour
     {
         [SerializeField] private AII.AxisInteractableItem item;
+        [SerializeField] private Animator consoleAnim;
         void Awake(){
             if(item == null){
                 item = GetComponent<AII.AxisInteractableItem>();
@@ -21,7 +22,10 @@ namespace FinalInferno.UI.Battle.QueueMenu
         }
         void HideConsole()
         {
-            // TO DO: Esconder o console
+            // Esconde o console
+            if(consoleAnim){
+                consoleAnim.SetTrigger("HideConsole");
+            }
         }
     }
 
