@@ -158,8 +158,7 @@ namespace FinalInferno{
                 queue.Enqueue(unit, 0);
                 unitsUI.ReinsertUnit(unit);
             }
-            foreach (UnitsLives lives in unitsLives)
-                lives.UpdateLives();
+            UpdateLives();
         }
 
         public UnitType GetUnitType(Unit unit){

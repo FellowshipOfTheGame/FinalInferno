@@ -35,7 +35,8 @@ namespace FinalInferno.UI.FSM
                     BattleManager.instance.UpdateQueue(0, true);
                 }
             }else{
-                if(forceAttack){
+                Skill skillSelected = BattleSkillManager.currentSkill;
+                if(forceAttack || skillSelected == null){
                     BattleManager.instance.UpdateQueue(Mathf.FloorToInt(currentUnit.unit.attackSkill.cost * (1.0f - currentUnit.ActionCostReduction) ));
                 }else{
                     BattleManager.instance.UpdateQueue(Mathf.FloorToInt(BattleSkillManager.currentSkill.cost * (1.0f - currentUnit.ActionCostReduction) ));

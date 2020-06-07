@@ -36,13 +36,14 @@ namespace FinalInferno.UI.AII
 
         public void Setup()
         {
-            if(unit.unit.IsHero){
-                item.OnEnter += UpdateHeroContent;
-                item.OnExit += ResetHeroContent;
-            }else{
-                item.OnEnter += UpdateEnemyContent;
-                item.OnExit += ResetEnemyContent;
-            }
+            // TO DO: No lugar disso aqui talvez colocar um outline ou indicador na lista de unidades correspondente
+            // if(unit.unit.IsHero){
+            //     item.OnEnter += UpdateHeroContent;
+            //     item.OnExit += ResetHeroContent;
+            // }else{
+            //     item.OnEnter += UpdateEnemyContent;
+            //     item.OnExit += ResetEnemyContent;
+            // }
             item.OnAct += SetTarget;
         }
 
