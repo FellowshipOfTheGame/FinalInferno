@@ -58,6 +58,7 @@ namespace FinalInferno{
         public SkillDelegate OnDeath = null;
         public SkillDelegate OnSkillUsed = null;
         public UnitItem battleItem;
+        [SerializeField] private UI.Battle.DamageIndicator damageIndicator;
 
         private Animator animator;
         private Transform canvasTransform;
@@ -79,6 +80,7 @@ namespace FinalInferno{
 
             // Seta configuracoes de renderizacao
             GetComponent<SpriteRenderer>().sprite = unit.BattleSprite;
+            damageIndicator.GetComponent<RectTransform>().anchoredPosition += new Vector2(0, GetComponent<SpriteRenderer>().sprite.bounds.size.y);
             animator.runtimeAnimatorController = unit.Animator;
             hasGhostAnim = System.Array.Find(animator.parameters, parameter => parameter.name == "Ghost") != null;
             queueSprite = unit.QueueSprite;
@@ -189,6 +191,7 @@ namespace FinalInferno{
                 // Só triggera a animação de dano tomado se o dano for maior que zero
                 animator.SetTrigger("TakeDamage");
             }
+            damageIndicator.ShowDamage(Mathf.Abs(damage), (damage <= 0));
 
             // Aplica o aggro pra cura
             if(healer != null && (unit.IsHero == healer.unit.IsHero)){
@@ -221,6 +224,8 @@ namespace FinalInferno{
                 // Só triggera a animação de dano tomado se o dano for maior que zero
                 animator.SetTrigger("TakeDamage");
             }
+            damageIndicator.ShowDamage(Mathf.Abs(damage), (damage < 0));
+
             // Aplica o aggro pra dano
             if(attacker != null && (unit.IsHero != attacker.unit.IsHero)){
                 attacker.aggro += 0.5f * 100f * Mathf.Max(damage, 0f) / (1.0f * MaxHP);

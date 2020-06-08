@@ -24,6 +24,7 @@ namespace FinalInferno.UI.Battle.QueueMenu
         {
             // Esconde o console
             if(consoleAnim){
+                consoleAnim.SetTrigger("HideSkillDetails");
                 consoleAnim.SetTrigger("HideConsole");
             }
         }

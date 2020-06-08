@@ -18,8 +18,10 @@ namespace FinalInferno{
         }
         
         public override void Apply(BattleUnit source, BattleUnit target) {
-            target.Heal(source.curDmg, value1, source);
-            target.Heal(target.unit.hpMax, value2, source);
+            if(value1 != 0)
+                target.Heal(source.curDmg, value1, source);
+            if(value2 != 0)
+                target.Heal(target.unit.hpMax, value2, source);
         }
     }
 }
