@@ -5,7 +5,7 @@ using UnityEngine;
 namespace FinalInferno.UI.FSM
 {
     /// <summary>
-    /// Ação que recoloca a unidade atual na fila como se ela tivesse atacado.
+    /// Ação que atualiza o turno, selecionando a nova unidade atual.
     /// </summary>
     [CreateAssetMenu(menuName = "BattleUI SM/Actions/Select Next Unit")]
     public class SelectNextUnit : Action
@@ -17,7 +17,7 @@ namespace FinalInferno.UI.FSM
 
         public override void Act(StateController controller)
         {
-            BattleManager.instance.UpdateQueue(0, true);
+            BattleManager.instance.UpdateTurn();
         }
 
     }

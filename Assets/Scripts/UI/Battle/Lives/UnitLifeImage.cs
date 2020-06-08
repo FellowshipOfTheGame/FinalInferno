@@ -19,7 +19,7 @@ namespace FinalInferno.UI.Battle.LifeMenu
         public override void UpdateUnitLife()
         {
             unitImage.sprite = thisUnit.Portrait;
-            lifeText.text = " - " + thisUnit.CurHP + "/" + thisUnit.MaxHP;
+            lifeText.text = thisUnit.CurHP + "/" + thisUnit.MaxHP;
             lifeText.color = thisUnit.unit.color;
             if(healthFillImage != null){
                 healthFillImage.fillAmount = Mathf.Clamp(((float)thisUnit.CurHP / (float)thisUnit.MaxHP), 0f, 1f);

@@ -82,7 +82,8 @@ namespace FinalInferno.UI.Battle.SkillMenu
         [SerializeField] private Color positiveColor;
         [SerializeField] private Color negativeColor;
 
-        [SerializeField] private FinalInferno.UI.AII.AIIManager AIISkillsList;
+        [SerializeField] private FinalInferno.UI.Battle.SkillMenu.SkillList skillList;
+        [SerializeField] private FinalInferno.UI.AII.AIIManager buttonAIIManager;
 
         /// <summary>
         /// Carrega as informações do personagem no menu.
@@ -170,7 +171,11 @@ namespace FinalInferno.UI.Battle.SkillMenu
 
         public void ChangeAIISkillsList()
         {
-            AIISkillsList.Active();
+            skillList.ActivateManager();
+        }
+
+        public void ChangeAIIButtons(){
+            buttonAIIManager.Active();
         }
     }
 

@@ -91,6 +91,8 @@ namespace FinalInferno.UI.Battle.SkillMenu
         /// </summary>
         [SerializeField] private ButtonClickDecision clickDecision;
 
+        private bool shouldActivate = false;
+
         /// <summary>
         /// Carrega todas as skills ativas do heroi que está em seu turno no menu de skills.
         /// </summary>
@@ -115,8 +117,9 @@ namespace FinalInferno.UI.Battle.SkillMenu
                     GameObject newSkill = Instantiate(skillObject, skillsContent);
                     newSkill.GetComponent<SkillElement>().skill = skill;
 
-                    newSkill.GetComponent<Image>().sprite = skill.skillImage;
-                    newSkill.GetComponentInChildren<Text>().text = skill.name;
+                    // Espera que o objeto tenha um filho Icon e um filho Text
+                    newSkill.transform.Find("Icon").GetComponent<Image>().sprite = skill.skillImage;
+                    newSkill.transform.Find("Text").GetComponent<Text>().text = skill.name;
 
                     // Define este script como responsável pelo item criado
                     SkillListItem newSkillListItem = newSkill.GetComponent<SkillListItem>();
@@ -139,13 +142,27 @@ namespace FinalInferno.UI.Battle.SkillMenu
                     }
                     else
                     {
-                        manager.firstItem = newItem;                    
+                        manager.firstItem = newItem;
+                        BattleSkillManager.currentSkill = skill;
+                        UpdateSkillDescription(skill);
                     }
                     lastItem = newItem;
                 }
             }
-            manager.Active();
+            shouldActivate = true;
         }
+
+        // Função e variavel auxiliar foram feitas para permitir chamar isso por animação
+        // Dava erro pq ou os objetos criados não tinham chamado awake ainda ou o objeto SkillList estava desativado
+        public void ActivateManager(){
+            manager.Active();
+            shouldActivate = false;
+        }
+
+        // private IEnumerator ActivateManager(){
+        //     yield return 0;
+        //     manager.Active();
+        // }
 
         /// <summary>
         /// Mostra detalhes da skill selecionada no menu.

@@ -79,17 +79,23 @@ namespace FinalInferno{
                 if(unit.OnStartBattle != null)
                     unit.OnStartBattle(unit, new List<BattleUnit>(queue.ToArray()));
             }
-            UpdateTurn();
+            UpdateTurn(true); // Status effects aplicados no começo da partida não devem perder um turno
         }
 
-        public void UpdateTurn()
-        {
-            currentUnit = queue.Dequeue();
+        public void EndTurn(){
+            currentUnit = null;
             BattleSkillManager.currentTargets.Clear();
             BattleSkillManager.currentSkill = null;
             BattleSkillManager.currentUser = null;
             BattleSkillManager.skillUsed = false;
-            currentUnit.UpdateStatusEffects();
+        }
+
+        public void UpdateTurn(bool ignoreStatusEffects = false)
+        {
+            currentUnit = queue.Dequeue();
+            if(!ignoreStatusEffects){
+                currentUnit.UpdateStatusEffects();
+            }
         }
 
         public void ShowEnemyInfo()
@@ -100,18 +106,12 @@ namespace FinalInferno{
         public void UpdateQueue(int cost, bool ignoreCurrentUnit = false)
         {
             if(!ignoreCurrentUnit){
-                queue.Enqueue(currentUnit, cost);
+                BattleUnit bu = currentUnit;
                 currentUnit = null;
+                queue.Enqueue(bu, cost);
             }
 
-            if (CheckEnd() == VictoryType.Nobody)
-            {
-                UpdateTurn();
-                UpdateLives();
-            }else{
-                // Só pra fazer com que nao fique uma unidade duplicada na fila
-                queue.Sort();
-            }
+            EndTurn();
         }
 
         public void UpdateLives()
@@ -140,14 +140,9 @@ namespace FinalInferno{
                 queue.Remove(unit);
                 unitsUI.RemoveUnit(unit);
 
-                // Se a unidade que morreu era a unidade atual, anda a fila
+                // Se a unidade que morreu era a unidade atual coloca referencia nula para unidade atual
                 if (currentUnit == unit){
                     currentUnit = null;
-                    // if (CheckEnd() == VictoryType.Nobody)
-                    // {
-                    //     UpdateTurn();
-                    //     UpdateLives();
-                    // }
                 }
             }
             UpdateLives();
