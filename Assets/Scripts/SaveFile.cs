@@ -57,6 +57,7 @@ namespace FinalInferno{
         }
 
         public void Save(){
+            saves[slot].version = Application.version;
 
             saves[Slot].xpParty = Party.Instance.XpCumulative;
             saves[Slot].mapName = Party.Instance.currentMap;

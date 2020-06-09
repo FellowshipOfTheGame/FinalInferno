@@ -200,6 +200,7 @@ namespace FinalInferno
         [SerializeField] public int[] hpCur; // hp atual de cada personagem
         [SerializeField] public Vector2[] position; // posição no overworld dos personagens
         [SerializeField] public SkillInfoArray[] heroSkills; // Info de skills
+        [SerializeField] public string version; // Versão do jogo quando o save foi criado
         public bool Equals(SaveInfo other){
             if(xpParty != other.xpParty)
                 return false;
