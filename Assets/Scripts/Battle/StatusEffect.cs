@@ -5,12 +5,8 @@ using UnityEngine;
 namespace FinalInferno{
     public abstract class StatusEffect {
         [SerializeField] virtual public Sprite Icon{ get{ return null; } }
-        private List<StatusEffectVFX> persistentSourceVFX = new List<StatusEffectVFX>();
-        private List<StatusEffectVFX> persistentTargetVFX = new List<StatusEffectVFX>();
-        public List<StatusEffectVFX> updateSourceVFX = new List<StatusEffectVFX>();
-        public List<StatusEffectVFX> updateTargetVFX = new List<StatusEffectVFX>();
-        public List<StatusEffectVFX> removeSourceVFX = new List<StatusEffectVFX>();
-        public List<StatusEffectVFX> removeTargetVFX = new List<StatusEffectVFX>();
+        public List<StatusEffectVFX> sourceVFX = new List<StatusEffectVFX>();
+        public List<StatusEffectVFX> targetVFX = new List<StatusEffectVFX>();
         private List<StatusEffectVFX> garbageCollector = new List<StatusEffectVFX>();
         protected float rollValue = 1.0f;
         public bool Failed { get; protected set; }
@@ -40,21 +36,13 @@ namespace FinalInferno{
         public virtual void Remove(){
             Target.effects.Remove(this);
 
-            // Destroy all vfx created
-            garbageCollector.AddRange(persistentSourceVFX);
-            garbageCollector.AddRange(persistentTargetVFX);
-            foreach(StatusEffectVFX vfx in garbageCollector){
-                vfx?.DestroyVFX();
+            // Os efeitos que não tem uma animação de remoção se autodestroem
+            // As animações que são chamadas com o trigger de remove dever usar o evento de destruição
+            foreach(StatusEffectVFX vfx in sourceVFX){
+                vfx?.RemoveTrigger();
             }
-
-            // Creates removal effects; These MUST have a destroy event at the end of animation
-            foreach(StatusEffectVFX vfx in removeSourceVFX){
-                StatusEffectVFX newvfx = GameObject.Instantiate(vfx, Source.transform.parent);
-                newvfx.GetComponent<SpriteRenderer>().sortingOrder = Source.GetComponent<SpriteRenderer>().sortingOrder + 1;
-            }
-            foreach(StatusEffectVFX vfx in removeTargetVFX){
-                StatusEffectVFX newvfx = GameObject.Instantiate(vfx, Target.transform.parent);
-                newvfx.GetComponent<SpriteRenderer>().sortingOrder = Target.GetComponent<SpriteRenderer>().sortingOrder + 1;
+            foreach(StatusEffectVFX vfx in targetVFX){
+                vfx?.RemoveTrigger();
             }
         }
         public virtual void ForceRemove(){
@@ -62,10 +50,20 @@ namespace FinalInferno{
         }
 
         public void AddPersistentVFX(List<StatusEffectVFX> source, List<StatusEffectVFX> target){
-            if(source != null)
-                persistentSourceVFX.AddRange(source);
-            if(target != null)
-                persistentTargetVFX.AddRange(target);
+            if(source != null){
+                sourceVFX.AddRange(source);
+            }
+            foreach(StatusEffectVFX vfx in sourceVFX){
+                // TO DO: instanciar a prefab
+                vfx.GetComponent<SpriteRenderer>().sortingOrder = Source.GetComponent<SpriteRenderer>().sortingOrder + 1;
+            }
+
+            if(target != null){
+                targetVFX.AddRange(target);
+            }
+            foreach(StatusEffectVFX vfx in targetVFX){
+                vfx.GetComponent<SpriteRenderer>().sortingOrder = Target.GetComponent<SpriteRenderer>().sortingOrder + 1;
+            }
         }
         
         public virtual bool Update() { // Retorna true quando o status effect foi removido
@@ -76,21 +74,13 @@ namespace FinalInferno{
             TurnsLeft--;
 
             // Updates or creates visual effects as needed
-            foreach(StatusEffectVFX vfx in persistentSourceVFX){
+            foreach(StatusEffectVFX vfx in sourceVFX){
                 vfx.TurnsLeft = TurnsLeft;
+                vfx.UpdateTrigger();
             }
-            foreach(StatusEffectVFX vfx in persistentTargetVFX){
+            foreach(StatusEffectVFX vfx in targetVFX){
                 vfx.TurnsLeft = TurnsLeft;
-            }
-            foreach(StatusEffectVFX vfx in updateTargetVFX){
-                StatusEffectVFX newvfx = GameObject.Instantiate(vfx, Target.transform.parent);
-                newvfx.GetComponent<SpriteRenderer>().sortingOrder = Target.GetComponent<SpriteRenderer>().sortingOrder + 1;
-                garbageCollector.Add(newvfx);
-            }
-            foreach(StatusEffectVFX vfx in updateSourceVFX){
-                StatusEffectVFX newvfx = GameObject.Instantiate(vfx, Source.transform.parent);
-                newvfx.GetComponent<SpriteRenderer>().sortingOrder = Source.GetComponent<SpriteRenderer>().sortingOrder + 1;
-                garbageCollector.Add(newvfx);
+                vfx.UpdateTrigger();
             }
 
             Source.aggro += AggroOnUpdate;

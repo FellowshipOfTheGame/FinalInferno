@@ -79,6 +79,7 @@ namespace FinalInferno{
             this.name = unit.name;
 
             // Seta configuracoes de renderizacao
+            // Essa configuração inicial serve para definir a altura dos objetos que dependem dela
             GetComponent<SpriteRenderer>().sprite = unit.BattleSprite;
             damageIndicator.GetComponent<RectTransform>().anchoredPosition += new Vector2(0, GetComponent<SpriteRenderer>().sprite.bounds.size.y);
             animator.runtimeAnimatorController = unit.Animator;

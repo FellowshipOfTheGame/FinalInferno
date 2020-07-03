@@ -70,7 +70,7 @@ namespace FinalInferno{
 
         void CreateParticles(GameObject particles)
         {
-            GameObject particle = Instantiate(particles, new Vector3(transform.position.x, transform.position.y+((GetComponent<SpriteRenderer>()).size.y/2.0f), transform.position.z), transform.rotation, this.transform);
+            GameObject particle = Instantiate(particles, this.transform);
             particleList.Add(particle);
             ParticleSystemRenderer renderer = particle?.GetComponent<ParticleSystemRenderer>();
             if(renderer){

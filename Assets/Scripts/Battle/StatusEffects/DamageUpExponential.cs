@@ -34,7 +34,8 @@ namespace FinalInferno{
         }
 
         public override bool Apply(bool force = false) {
-            if(!base.Apply(force))
+            // Esse status effect não pode ser aplicado mais de uma vez
+            if(!base.Apply(force) || Target.effects.Find(effect => effect.GetType() == typeof(DamageUpExponential)) != null)
                 return false;
 
             int increment = Mathf.Max(Mathf.FloorToInt(Target.curDmg * valueReceived), 1);

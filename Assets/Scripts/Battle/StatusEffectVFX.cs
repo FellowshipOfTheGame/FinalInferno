@@ -6,41 +6,154 @@ namespace FinalInferno{
     [RequireComponent(typeof(Animator)), RequireComponent(typeof(SpriteRenderer))]
     public class StatusEffectVFX : MonoBehaviour
     {
-        private static Transform canvasTransform = null;
-        private GameObject particle = null;
+        private List<GameObject> particles = new List<GameObject>();
+        // Referencias para os componentes que precisam ser encontradas muitas vezes
+        // A propriedade é usada para garantir que só vai chamar getcomponent uma vez
         private Animator anim = null;
-        private bool hasTurnsParameter = false;
-        public int TurnsLeft {
-            set{
+        private Animator Anim{
+            get{
                 if(!anim){
                     anim = GetComponent<Animator>();
-                    hasTurnsParameter = System.Array.Find(anim.parameters, param => param.name == "turnsLeft") != null;
                 }
-                if(hasTurnsParameter){
-                    anim.SetInteger("turnsLeft", value);
+                return anim;
+            }
+        }
+        private SpriteRenderer sr = null;
+        private SpriteRenderer SRenderer{
+            get{
+                if(!sr){
+                    sr = GetComponent<SpriteRenderer>();
                 }
+                return sr;
+            }
+        }
+
+        private bool hidden = true;
+
+        // As propriedades são usadas para só precisar procurar uma vez se o parametro existe
+        private bool? hasTurnsParameter = false;
+        private bool HasTurnsParameter{
+            get{
+                if(hasTurnsParameter == null){
+                    hasTurnsParameter = System.Array.Find(Anim.parameters, param => param.name == "turnsLeft") != null;
+                }
+                return hasTurnsParameter ?? false;
+            }
+        }
+        private bool? hasApplyTrigger = false;
+        private bool HasApplyTrigger{
+            get{
+                if(hasApplyTrigger == null){
+                    hasApplyTrigger = System.Array.Find(Anim.parameters, param => param.name == "Apply") != null;
+                }
+                return hasApplyTrigger ?? false;
+            }
+        }
+        private bool? hasUpdateTrigger = false;
+        private bool HasUpdateTrigger{
+            get{
+                if(hasUpdateTrigger == null){
+                    hasUpdateTrigger = System.Array.Find(Anim.parameters, param => param.name == "Update") != null;
+                }
+                return hasUpdateTrigger ?? false;
+            }
+        }
+        private bool? hasRemoveTrigger = false;
+        private bool HasRemoveTrigger{
+            get{
+                if(hasRemoveTrigger == null){
+                    hasRemoveTrigger = System.Array.Find(Anim.parameters, param => param.name == "Remove") != null;
+                }
+                return hasRemoveTrigger ?? false;
+            }
+        }
+        private int turnsLeft = 0;
+        public int TurnsLeft {
+            get => turnsLeft;
+            set{
+                if(HasTurnsParameter){
+                    Anim.SetInteger("turnsLeft", value);
+                }
+                turnsLeft = value;
             }
         }
 
         public void Awake(){
-            if(canvasTransform == null)
-                canvasTransform = GameObject.FindObjectOfType<Canvas>().transform;
-            if(!anim){
-                anim = GetComponent<Animator>();
-            }
-            hasTurnsParameter = System.Array.Find(anim.parameters, param => param.name == "turnsLeft") != null;
+            SRenderer.enabled = !hidden;
         }
 
-        public void DestroyVFX(){
-            if(particle){
-                Destroy(particle);
+        // Deixa o efeito visivel
+        public void Show(){
+            hidden = false;
+            SRenderer.enabled = true;
+            foreach(GameObject go in particles){
+                ParticleSystemRenderer renderer = go?.GetComponent<ParticleSystemRenderer>();
+                if(renderer){
+                    renderer.enabled = true;
+                }
             }
-            Destroy(gameObject);
         }
 
-        void CreateParticles(GameObject particles)
+        // Esconde o efeito visual
+        public void Hide(){
+            hidden = true;
+            SRenderer.enabled = false;
+            foreach(GameObject go in particles){
+                ParticleSystemRenderer renderer = go?.GetComponent<ParticleSystemRenderer>();
+                if(renderer){
+                    renderer.enabled = false;
+                }
+            }
+        }
+
+        public void UpdateTrigger(){
+            if(HasUpdateTrigger){
+                Anim.SetTrigger("Update");
+            }
+        }
+
+        public void ApplyTrigger(){
+            if(HasApplyTrigger){
+                Anim.SetTrigger("Apply");
+            }
+        }
+
+        public void RemoveTrigger(){
+            if(HasRemoveTrigger){
+                // As animações que são chamadas com o trigger de remove dever usar o evento de destruição
+                Anim.SetTrigger("Remove");
+            }else{
+                DestroyVFX();
+            }
+        }
+
+        // Função para instanciar um objeto de particula durante a animação
+        void CreateParticles(GameObject particle)
         {
-            particle = Instantiate(particles, new Vector3(transform.position.x, transform.position.y+((GetComponent<SpriteRenderer>()).size.y/2.0f), transform.position.z), transform.rotation, this.transform);
+            GameObject newParticle = Instantiate(particle, new Vector3(transform.position.x, transform.position.y+(SRenderer.sprite.bounds.size.y/2.0f), transform.position.z), transform.rotation, this.transform);
+            particles.Add(newParticle);
+            ParticleSystemRenderer renderer = newParticle?.GetComponent<ParticleSystemRenderer>();
+            if(renderer){
+                renderer.enabled = !hidden;
+                renderer.sortingLayerID = SRenderer.sortingLayerID;
+                renderer.sortingLayerName = SRenderer.sortingLayerName;
+                renderer.sortingOrder = SRenderer.sortingOrder;
+            }
+        }
+
+        // Função para destruir as particulas criadas
+        void DestroyParticles(){
+            foreach(GameObject particle in particles){
+                if(particle){
+                    Destroy(particle);
+                }
+            }
+        }
+
+        // Função para destruir o objeto inteiro
+        public void DestroyVFX(){
+            DestroyParticles();
+            Destroy(gameObject);
         }
     }
 }
