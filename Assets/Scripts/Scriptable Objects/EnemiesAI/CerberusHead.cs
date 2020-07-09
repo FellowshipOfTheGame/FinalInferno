@@ -15,10 +15,12 @@ namespace FinalInferno{
         public static int heads = 0;
         private static int hellFireCD = 0;
         private static List<GameObject> battleUnits = new List<GameObject>();
-        private static BattleUnit topHead = null;
+        private static BattleUnit backHead = null;
         private static BattleUnit middleHead = null;
-        private static BattleUnit bottomHead = null;
+        private static BattleUnit frontHead = null;
 
+        [Space(10)]
+        [Header("It has 3 heads")]
         [SerializeField] private Sprite bodySprite;
         [SerializeField] private RuntimeAnimatorController animatorMiddleHead;
         [SerializeField] private RuntimeAnimatorController animatorFrontHead;
@@ -52,8 +54,36 @@ namespace FinalInferno{
                 }
             }
         }
+        [Space(10)]
         [SerializeField] private Sprite battleSpriteMiddleHead;
+        [Header("    Middle Head Status Effect Position")]
+        [Space(-10)]
+        [SerializeField, Range(0, 1f)]
+        private float xOffsetMiddle = 0;
+        [SerializeField, Range(0, 1f)]
+        private float yOffsetMiddle = 0;
+        [Space(7)]
         [SerializeField] private Sprite battleSpriteFrontHead;
+        [Header("    Front Head Status Effect Position")]
+        [Space(-10)]
+        [SerializeField, Range(0, 1f)]
+        private float xOffsetFront = 0;
+        [SerializeField, Range(0, 1f)]
+        private float yOffsetFront = 0;
+        public override Vector2 effectsRelativePosition {
+            get{
+                switch(heads){
+                    case 1:
+                        return new Vector2(xOffset, yOffset);
+                    case 2:
+                        return new Vector2(xOffsetMiddle, yOffsetMiddle);
+                    case 3:
+                        return new Vector2(xOffsetFront, yOffsetFront);
+                    default:
+                        return new Vector2(0.5f, 1f);
+                }
+            }
+        }
         public override Sprite BattleSprite {
             get{
                 //Debug.Log("Usou o getter certo");
@@ -66,7 +96,7 @@ namespace FinalInferno{
                             if(bUnit.unit == this && bUnit.name == this.name){
                                 bUnit.name += (" " + heads);
                                 battleUnits.Add(bUnit.gameObject);
-                                topHead = bUnit;
+                                backHead = bUnit;
                                 break;
                             }
                         }
@@ -88,7 +118,7 @@ namespace FinalInferno{
                             if(bUnit.unit == this && bUnit.name == this.name){
                                 bUnit.name += (" " + heads);
                                 battleUnits.Add(bUnit.gameObject);
-                                bottomHead = bUnit;
+                                frontHead = bUnit;
                                 break;
                             }
                         }
@@ -96,8 +126,8 @@ namespace FinalInferno{
                         //Faz os sprites ficarem na mesma posição
                         CompositeBattleUnit composite = middleHead.gameObject.AddComponent<CompositeBattleUnit>();
                         if(composite){
-                            composite.AddApendage(topHead);
-                            composite.AddApendage(bottomHead);
+                            composite.AddApendage(backHead);
+                            composite.AddApendage(frontHead);
                         }
                         // Altera o layout group para que os elementos fiquem mais proximos
                         UnityEngine.UI.VerticalLayoutGroup layoutGroup = middleHead.battleItem.layout.transform.parent.GetComponent<UnityEngine.UI.VerticalLayoutGroup>();
@@ -123,6 +153,7 @@ namespace FinalInferno{
         }
         public override float BoundsSizeX { get => (battleSprite.bounds.size.x); }
         public override float BoundsSizeY { get => (battleSprite.bounds.size.y/8f); }
+        [Space(10)]
         [SerializeField] private Sprite queueSpriteMiddleHead;
         [SerializeField] private Sprite queueSpriteFrontHead;
         public override Sprite QueueSprite {

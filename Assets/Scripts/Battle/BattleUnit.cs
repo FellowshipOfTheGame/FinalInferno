@@ -80,8 +80,13 @@ namespace FinalInferno{
 
             // Seta configuracoes de renderizacao
             // Essa configuração inicial serve para definir a altura dos objetos que dependem dela
-            GetComponent<SpriteRenderer>().sprite = unit.BattleSprite;
-            damageIndicator.GetComponent<RectTransform>().anchoredPosition += new Vector2(0, GetComponent<SpriteRenderer>().sprite.bounds.size.y);
+            SpriteRenderer sr = GetComponent<SpriteRenderer>();
+            sr.sprite = unit.BattleSprite;
+            damageIndicator.GetComponent<RectTransform>().anchoredPosition += new Vector2(0, sr.sprite.bounds.size.y);
+            // TO DO: mover o objeto de status effects
+            // O eixo x dos sprites esta invertido
+            // x -= (sr.sprite.bounds.size.x * unit.effectsRelativePosition.x) - (sr.sprite.pivot.x / sr.sprite.pixelsPerUnit)
+            // y += (sr.sprite.bounds.size.x * unit.effectsRelativePosition.x) - (sr.sprite.pivot.x / sr.sprite.pixelsPerUnit)
             animator.runtimeAnimatorController = unit.Animator;
             hasGhostAnim = System.Array.Find(animator.parameters, parameter => parameter.name == "Ghost") != null;
             queueSprite = unit.QueueSprite;

@@ -65,18 +65,20 @@ namespace FinalInferno.UI.Battle
 
             // Define as configurações de renderização
             int sortingLayer = 0;
+            SpriteRenderer sr = battleUnit.GetComponent<SpriteRenderer>();
             foreach(Transform child in ((unit.IsHero)? heroesContent : enemiesContent)){
                 sortingLayer++;
                 sortingLayer++;
             }
-            battleUnit.GetComponent<SpriteRenderer>().sortingOrder = sortingLayer;
+            sr.sortingOrder = sortingLayer;
             battleUnit.Configure(unit);
             battleItem.Setup();
+            // Nesse ponto aqui sr.sprite corresponde a um sprite de batalha da unidade
+            // Reposiciona o indicador da unidade de acordo com o tamanho do sprite de batalha
             AxisInteractableItem newItem = battleUnit.battleItem.GetComponent<AxisInteractableItem>();
             RectTransform referenceTransform = newItem.transform.parent.Find("Active Reference").GetComponent<RectTransform>();
-            int ppu = Camera.main.gameObject.GetComponent<UnityEngine.U2D.PixelPerfectCamera>().assetsPPU;
-            referenceTransform.anchoredPosition += new Vector2(0f, battleUnit.GetComponent<SpriteRenderer>().sprite.bounds.size.y * ppu);
-            // Debug.Log("height detected for " + unit.name + " = " + unit.BattleSprite.bounds.size.y);
+            //int ppu = Camera.main.gameObject.GetComponent<UnityEngine.U2D.PixelPerfectCamera>().assetsPPU;
+            referenceTransform.anchoredPosition += new Vector2(0f, sr.sprite.bounds.size.y * sr.sprite.pixelsPerUnit);
             battleUnit.battleItem.layout.preferredWidth = unit.BoundsSizeX * 64;
             battleUnit.battleItem.layout.preferredHeight = unit.BoundsSizeY * 64;
 

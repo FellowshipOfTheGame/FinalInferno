@@ -41,6 +41,13 @@ namespace FinalInferno{
         public virtual Sprite BattleSprite { get => battleSprite; }
         public virtual float BoundsSizeX { get => BattleSprite.bounds.size.x; }
         public virtual float BoundsSizeY { get => BattleSprite.bounds.size.y; }
+        [Header("    Status Effect Position (read the tooltips)")]
+        [Space(-10)]
+        [SerializeField, Range(0, 1f), Tooltip("X axis indicator for the relative position of where status effects show on top of the unit battle sprite. Left margin is 0, right margin is 1, sprites will have the X axis inverted when actually in battle but this value should ignore that")]
+        protected float xOffset = 0;
+        [SerializeField, Range(0, 1f), Tooltip("Y axis indicator for the relative position of where status effects show on top of the unit battle sprite. Bottom is 0, top is 1, the Y axis behaves normally in battle")]
+        protected float yOffset = 0;
+        public virtual Vector2 effectsRelativePosition { get => new Vector2(xOffset, yOffset); }
         [SerializeField]
         protected Sprite queueSprite;
         public virtual Sprite QueueSprite { get => queueSprite; }
