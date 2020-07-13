@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace FinalInferno{
     public class VengefulGhost : StatusEffect {
+        public override StatusEffectVisuals VFXID { get => StatusEffectVisuals.VengefulGhost; }
         public override StatusType Type { get{ return StatusType.None; } }
         public override float Value { get{ return Duration; } }
         private float dmgModifier;
@@ -64,7 +65,7 @@ namespace FinalInferno{
                 List<BattleUnit> enemy = new List<BattleUnit>();
                 enemy.Add(enemies[selected]);
 
-                Target.unit.attackSkill.Use(Target, enemy);
+                Target.Unit.attackSkill.Use(Target, enemy);
             }
 
             return false;

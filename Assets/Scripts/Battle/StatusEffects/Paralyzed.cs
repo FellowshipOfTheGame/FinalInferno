@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace FinalInferno{
     public class Paralyzed : StatusEffect {
+        public override StatusEffectVisuals VFXID { get => StatusEffectVisuals.Paralyzed; }
         public override StatusType Type { get{ return StatusType.Undesirable; } }
         public override float Value { get{ return Duration; } }
 

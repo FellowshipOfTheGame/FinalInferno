@@ -33,7 +33,7 @@ namespace FinalInferno.UI.FSM
                     Debug.Log("Unidade morreu por conta de counter ou algo do tipo");
                     // Eu acho que seria impossível chegar aqui e currentSkill ser null, mas fica a precaução
                     if(BattleSkillManager.currentSkill == null){
-                        BattleSkillManager.currentSkill = currentUnit.unit.attackSkill;
+                        BattleSkillManager.currentSkill = currentUnit.Unit.attackSkill;
                     }
                     currentUnit.actionPoints += Mathf.FloorToInt(BattleSkillManager.currentSkill.cost * (1.0f - currentUnit.ActionCostReduction));
                     BattleManager.instance.UpdateQueue(0, true);
@@ -41,7 +41,7 @@ namespace FinalInferno.UI.FSM
             }else{
                 Skill skillSelected = BattleSkillManager.currentSkill;
                 if(forceAttack || skillSelected == null){
-                    BattleManager.instance.UpdateQueue(Mathf.FloorToInt(currentUnit.unit.attackSkill.cost * (1.0f - currentUnit.ActionCostReduction) ));
+                    BattleManager.instance.UpdateQueue(Mathf.FloorToInt(currentUnit.Unit.attackSkill.cost * (1.0f - currentUnit.ActionCostReduction) ));
                 }else{
                     BattleManager.instance.UpdateQueue(Mathf.FloorToInt(BattleSkillManager.currentSkill.cost * (1.0f - currentUnit.ActionCostReduction) ));
                 }

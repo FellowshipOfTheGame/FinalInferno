@@ -93,7 +93,7 @@ namespace FinalInferno{
                         heads = 1;
                         battleUnits.Clear();
                         foreach(BattleUnit bUnit in FindObjectsOfType<BattleUnit>()){
-                            if(bUnit.unit == this && bUnit.name == this.name){
+                            if(bUnit.Unit == this && bUnit.name == this.name){
                                 bUnit.name += (" " + heads);
                                 battleUnits.Add(bUnit.gameObject);
                                 backHead = bUnit;
@@ -104,7 +104,7 @@ namespace FinalInferno{
                     case 1:
                         heads++;
                         foreach(BattleUnit bUnit in FindObjectsOfType<BattleUnit>()){
-                            if(bUnit.unit == this && bUnit.name == this.name){
+                            if(bUnit.Unit == this && bUnit.name == this.name){
                                 bUnit.name += (" " + heads);
                                 battleUnits.Add(bUnit.gameObject);
                                 middleHead = bUnit;
@@ -115,7 +115,7 @@ namespace FinalInferno{
                     case 2:
                         heads++;
                         foreach(BattleUnit bUnit in FindObjectsOfType<BattleUnit>()){
-                            if(bUnit.unit == this && bUnit.name == this.name){
+                            if(bUnit.Unit == this && bUnit.name == this.name){
                                 bUnit.name += (" " + heads);
                                 battleUnits.Add(bUnit.gameObject);
                                 frontHead = bUnit;

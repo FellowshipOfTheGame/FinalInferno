@@ -112,7 +112,7 @@ namespace FinalInferno{
                 if(visualEffect){
                     GameObject obj = GameObject.Instantiate(visualEffect, trgt.transform);
                     obj.GetComponent<SkillVFX>().forceCallback = true;
-                    obj.GetComponent<SpriteRenderer>().sortingOrder = trgt.GetComponent<SpriteRenderer>().sortingOrder + 1;
+                    obj.GetComponent<SpriteRenderer>().sortingOrder = trgt.GetComponent<SpriteRenderer>().sortingOrder + 2;
                 }
 
                 foreach (SkillEffectTuple skillEffect in effects) {

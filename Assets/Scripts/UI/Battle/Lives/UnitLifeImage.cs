@@ -20,7 +20,7 @@ namespace FinalInferno.UI.Battle.LifeMenu
         {
             unitImage.sprite = thisUnit.Portrait;
             lifeText.text = thisUnit.CurHP + "/" + thisUnit.MaxHP;
-            lifeText.color = thisUnit.unit.color;
+            lifeText.color = thisUnit.Unit.color;
             if(healthFillImage != null){
                 healthFillImage.fillAmount = Mathf.Clamp(((float)thisUnit.CurHP / (float)thisUnit.MaxHP), 0f, 1f);
             }

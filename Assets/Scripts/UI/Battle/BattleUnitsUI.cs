@@ -54,7 +54,7 @@ namespace FinalInferno.UI.Battle
             }
         }
 
-        public BattleUnit LoadUnit(Unit unit){
+        public BattleUnit LoadUnit(Unit unit, int ppu = 64){
             // Instancia os objetos de UI e normais e faz um referenciar o outro
             GameObject newUnit = Instantiate(unitPrefab, null);
             GameObject newUnitItem = Instantiate(unitItemPrefab, (unit.IsHero)? heroesContent : enemiesContent);
@@ -67,8 +67,8 @@ namespace FinalInferno.UI.Battle
             int sortingLayer = 0;
             SpriteRenderer sr = battleUnit.GetComponent<SpriteRenderer>();
             foreach(Transform child in ((unit.IsHero)? heroesContent : enemiesContent)){
-                sortingLayer++;
-                sortingLayer++;
+                // 1 layer pra unidade, 1 pros status effects e 1 pra skill sendo usada na unidade
+                sortingLayer += 3;
             }
             sr.sortingOrder = sortingLayer;
             battleUnit.Configure(unit);
@@ -77,10 +77,9 @@ namespace FinalInferno.UI.Battle
             // Reposiciona o indicador da unidade de acordo com o tamanho do sprite de batalha
             AxisInteractableItem newItem = battleUnit.battleItem.GetComponent<AxisInteractableItem>();
             RectTransform referenceTransform = newItem.transform.parent.Find("Active Reference").GetComponent<RectTransform>();
-            //int ppu = Camera.main.gameObject.GetComponent<UnityEngine.U2D.PixelPerfectCamera>().assetsPPU;
-            referenceTransform.anchoredPosition += new Vector2(0f, sr.sprite.bounds.size.y * sr.sprite.pixelsPerUnit);
-            battleUnit.battleItem.layout.preferredWidth = unit.BoundsSizeX * 64;
-            battleUnit.battleItem.layout.preferredHeight = unit.BoundsSizeY * 64;
+            referenceTransform.anchoredPosition += (sr.sprite.pixelsPerUnit * battleUnit.OverheadPosition);
+            battleUnit.battleItem.layout.preferredWidth = unit.BoundsSizeX * ppu;
+            battleUnit.battleItem.layout.preferredHeight = unit.BoundsSizeY * ppu;
 
             AIIManager manager = (unit.IsHero)? heroesManager : enemiesManager;
             
@@ -101,7 +100,7 @@ namespace FinalInferno.UI.Battle
 
         public void UpdateTargetList(){
             AIIManager manager;
-            Unit currentUnit = BattleSkillManager.currentUser.unit;
+            Unit currentUnit = BattleSkillManager.currentUser.Unit;
             Skill currentSkill = BattleSkillManager.currentSkill;
             bool useOwnManager = (currentSkill.target == TargetType.AllAllies ||
                                   currentSkill.target == TargetType.DeadAllies ||
@@ -155,9 +154,9 @@ namespace FinalInferno.UI.Battle
                 GameObject newUnit = Instantiate(unitPrefab, content);
                 newUnit.transform.rotation = Quaternion.identity;
 
-                newUnit.GetComponent<Image>().color = unit.unit.color;
+                newUnit.GetComponent<Image>().color = unit.Unit.color;
 
-                unit.Configure(unit.unit);
+                unit.Configure(unit.Unit);
 
                 // Ordena o item na lista
                 AxisInteractableItem newItem = newUnit.GetComponent<AxisInteractableItem>();
@@ -176,7 +175,7 @@ namespace FinalInferno.UI.Battle
 
         public void RemoveUnit(BattleUnit unit)
         {
-            if (unit.unit.IsHero)  
+            if (unit.Unit.IsHero)  
                 RemoveUnitFromContent(unit, heroesContent, heroesManager);
             else
                 RemoveUnitFromContent(unit, enemiesContent, enemiesManager);
@@ -207,7 +206,7 @@ namespace FinalInferno.UI.Battle
 
         public void ReinsertUnit(BattleUnit unit){
             // Essa função só pode ser chamada se tiver certeza que a unidade foi removida com RemoveUnit
-            if (unit.unit.IsHero)  
+            if (unit.Unit.IsHero)  
                 ReinsertUnitInContent(unit, heroesContent, heroesManager);
             else
                 ReinsertUnitInContent(unit, enemiesContent, enemiesManager);

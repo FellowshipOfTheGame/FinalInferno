@@ -20,7 +20,7 @@ namespace FinalInferno.UI.FSM
             // Revive todos os heroes para garantir que as funções de callback serão chamadas propriamente
             // Reseta o maxhp das unidades, desfazendo aumentos e reduções causados por skills
             foreach(BattleUnit battleUnit in BattleManager.instance.battleUnits){
-                if(battleUnit.unit.IsHero && battleUnit.CurHP <= 0){
+                if(battleUnit.Unit.IsHero && battleUnit.CurHP <= 0){
                     battleUnit.Revive();
                 }
                 battleUnit.ResetMaxHP();
@@ -36,8 +36,8 @@ namespace FinalInferno.UI.FSM
             // Calcula a exp ganhada pela party e da a recompensa
             long xpReward = 0;
             foreach(BattleUnit battleUnit in BattleManager.instance.battleUnits){
-                if(!battleUnit.unit.IsHero){
-                    xpReward += ((Enemy)battleUnit.unit).BaseExp;
+                if(!battleUnit.Unit.IsHero){
+                    xpReward += ((Enemy)battleUnit.Unit).BaseExp;
                 }
             }
             Party.Instance.GiveExp(xpReward);

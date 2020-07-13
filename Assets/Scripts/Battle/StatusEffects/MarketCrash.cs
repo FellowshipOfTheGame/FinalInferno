@@ -5,6 +5,7 @@ using UnityEngine;
 namespace FinalInferno{
     public class MarketCrash : StatusEffect
     {
+        public override StatusEffectVisuals VFXID { get => StatusEffectVisuals.MarketCrash; }
         public override StatusType Type { get{ return StatusType.None; } }
         public override float Value { get{ return currentReduction; } }
         float currentReduction;

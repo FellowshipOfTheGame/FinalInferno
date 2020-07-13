@@ -6,6 +6,19 @@ namespace FinalInferno{
     [RequireComponent(typeof(Animator)), RequireComponent(typeof(SpriteRenderer))]
     public class StatusEffectVFX : MonoBehaviour
     {
+        public enum TurnBehaviour{
+            ShowLongest,
+            ShowShortest,
+            ShowOldest,
+            ShowNewest
+        }
+        [SerializeField] private TurnBehaviour visualBehaviour;
+        public TurnBehaviour VisualBehaviour { get => visualBehaviour; }
+        // Ideia temporariamente descartada, não sei como fazer na maquina de estados
+        // [Tooltip("Should the remove animation be displayed whenever an effect ends even if a similar one is still in effect?")]
+        // [SerializeField] private bool alwaysShowRemove = false;
+        // public bool AlwaysShowRemove { get => alwaysShowRemove; }
+
         private List<GameObject> particles = new List<GameObject>();
         // Referencias para os componentes que precisam ser encontradas muitas vezes
         // A propriedade é usada para garantir que só vai chamar getcomponent uma vez
@@ -31,7 +44,7 @@ namespace FinalInferno{
         private bool hidden = true;
 
         // As propriedades são usadas para só precisar procurar uma vez se o parametro existe
-        private bool? hasTurnsParameter = false;
+        private bool? hasTurnsParameter = null;
         private bool HasTurnsParameter{
             get{
                 if(hasTurnsParameter == null){
@@ -40,7 +53,7 @@ namespace FinalInferno{
                 return hasTurnsParameter ?? false;
             }
         }
-        private bool? hasApplyTrigger = false;
+        private bool? hasApplyTrigger = null;
         private bool HasApplyTrigger{
             get{
                 if(hasApplyTrigger == null){
@@ -49,7 +62,7 @@ namespace FinalInferno{
                 return hasApplyTrigger ?? false;
             }
         }
-        private bool? hasUpdateTrigger = false;
+        private bool? hasUpdateTrigger = null;
         private bool HasUpdateTrigger{
             get{
                 if(hasUpdateTrigger == null){
@@ -58,13 +71,22 @@ namespace FinalInferno{
                 return hasUpdateTrigger ?? false;
             }
         }
-        private bool? hasRemoveTrigger = false;
+        private bool? hasRemoveTrigger = null;
         private bool HasRemoveTrigger{
             get{
                 if(hasRemoveTrigger == null){
                     hasRemoveTrigger = System.Array.Find(Anim.parameters, param => param.name == "Remove") != null;
                 }
                 return hasRemoveTrigger ?? false;
+            }
+        }
+        private bool? hasResetTrigger = null;
+        private bool HasResetTrigger{
+            get{
+                if(hasResetTrigger == null){
+                    hasResetTrigger = System.Array.Find(Anim.parameters, param => param.name == "Reset") != null;
+                }
+                return hasResetTrigger ?? false;
             }
         }
         private int turnsLeft = 0;
@@ -118,12 +140,15 @@ namespace FinalInferno{
             }
         }
 
+        public void ResetTrigger(){
+            if(HasResetTrigger){
+                Anim.SetTrigger("Reset");
+            }
+        }
+
         public void RemoveTrigger(){
             if(HasRemoveTrigger){
-                // As animações que são chamadas com o trigger de remove dever usar o evento de destruição
                 Anim.SetTrigger("Remove");
-            }else{
-                DestroyVFX();
             }
         }
 
