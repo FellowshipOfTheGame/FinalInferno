@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace FinalInferno{
     public class SpeedDown : StatusEffect {
+        public override StatusEffectVisuals VFXID { get => StatusEffectVisuals.SpeedDown; }
         public override StatusType Type { get{ return StatusType.Debuff; } }
         public override float Value { get{ return speedValue; } }
         private int speedValue;

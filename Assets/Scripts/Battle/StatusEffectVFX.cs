@@ -12,8 +12,11 @@ namespace FinalInferno{
             ShowOldest,
             ShowNewest
         }
-        [SerializeField] private TurnBehaviour visualBehaviour;
+        [SerializeField] private TurnBehaviour visualBehaviour = TurnBehaviour.ShowLongest;
         public TurnBehaviour VisualBehaviour { get => visualBehaviour; }
+        [Tooltip("If the value is set to Default, the position is not changed, otherwise, it will be set to the selected position automatically")]
+        [SerializeField] private SkillVFX.TargetPosition position = SkillVFX.TargetPosition.Default;
+        public SkillVFX.TargetPosition Position { get => position; }
         // Ideia temporariamente descartada, não sei como fazer na maquina de estados
         // [Tooltip("Should the remove animation be displayed whenever an effect ends even if a similar one is still in effect?")]
         // [SerializeField] private bool alwaysShowRemove = false;
@@ -102,6 +105,23 @@ namespace FinalInferno{
 
         public void Awake(){
             SRenderer.enabled = !hidden;
+        }
+
+        public void UpdatePosition(BattleUnit unit){
+            switch(position){
+                case SkillVFX.TargetPosition.Feet:
+                    transform.position = unit.transform.position + new Vector3(unit.FeetPosition.x, unit.FeetPosition.y);
+                    break;
+                case SkillVFX.TargetPosition.Torso:
+                    transform.position = unit.transform.position + new Vector3(unit.TorsoPosition.x, unit.TorsoPosition.y);
+                    break;
+                case SkillVFX.TargetPosition.Head:
+                    transform.position = unit.transform.position + new Vector3(unit.HeadPosition.x, unit.HeadPosition.y);
+                    break;
+                case SkillVFX.TargetPosition.Overhead:
+                    transform.position = unit.transform.position + new Vector3(unit.OverheadPosition.x, unit.OverheadPosition.y);
+                    break;
+            }
         }
 
         // Deixa o efeito visivel

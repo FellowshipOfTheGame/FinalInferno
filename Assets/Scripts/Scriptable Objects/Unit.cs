@@ -6,6 +6,13 @@ using UnityEngine.UI;
 namespace FinalInferno{
     //engloba todas as unidades que entraram em batalha
     public abstract class Unit : Fog.Dialogue.DialogueEntity {
+        public enum BodyPosition{
+            Feet = 0,
+            Torso,
+            Head,
+            Overhead
+        }
+
         public const int maxStatValue = 999;
         [Space(10)]
         [Header("Unit Stats")]
@@ -41,6 +48,8 @@ namespace FinalInferno{
         public virtual Sprite BattleSprite { get => battleSprite; }
         public virtual float BoundsSizeX { get => BattleSprite.bounds.size.x; }
         public virtual float BoundsSizeY { get => BattleSprite.bounds.size.y; }
+        [SerializeField] private BodyPosition defaultTargetPosition = BodyPosition.Feet;
+        public BodyPosition DefaultTargetPosition { get => defaultTargetPosition; }
         [Header("    Status Effect Position (read the tooltips)")]
         [Space(-10)]
         [SerializeField, Range(0, 1f), Tooltip("X axis indicator for the relative position of where status effects show on top of the unit battle sprite. Left margin is 0, right margin is 1, sprites will have the X axis inverted when actually in battle but this value should ignore that")]

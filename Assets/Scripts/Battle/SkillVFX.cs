@@ -7,9 +7,18 @@ namespace FinalInferno{
     [RequireComponent(typeof(Animator)), RequireComponent(typeof(SpriteRenderer))]
     public class SkillVFX : MonoBehaviour
     {
+        public enum TargetPosition{
+            Default = 0,
+            Feet,
+            Torso,
+            Head,
+            Overhead
+        }
         public static int nTargets;
         private static int counter = 0;
         private static List<AudioClip> effectsPlaying = new List<AudioClip>();
+
+        [SerializeField] private TargetPosition spawnPosition = TargetPosition.Default;
         private List<GameObject> particleList = new List<GameObject>();
         private AudioSource src = null;
         [HideInInspector] public bool forceCallback = false;
@@ -23,6 +32,28 @@ namespace FinalInferno{
             }else if(src != null){
                 Destroy(src);
                 src = null;
+            }
+        }
+
+        public void SetTarget(BattleUnit unit, bool isCallback = false){
+            forceCallback = isCallback;
+            GetComponent<SpriteRenderer>().sortingOrder = unit.GetComponent<SpriteRenderer>().sortingOrder + 2;
+            switch(spawnPosition){
+                case TargetPosition.Default:
+                    transform.localPosition = unit.DefaultSkillPosition;
+                    break;
+                case TargetPosition.Feet:
+                    transform.localPosition = unit.FeetPosition;
+                    break;
+                case TargetPosition.Torso:
+                    transform.localPosition = unit.TorsoPosition;
+                    break;
+                case TargetPosition.Head:
+                    transform.localPosition = unit.HeadPosition;
+                    break;
+                case TargetPosition.Overhead:
+                    transform.localPosition = unit.OverheadPosition;
+                    break;
             }
         }
 

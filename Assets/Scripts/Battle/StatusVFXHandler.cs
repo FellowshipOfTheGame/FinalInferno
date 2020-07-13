@@ -12,6 +12,8 @@ namespace FinalInferno{
         DamageDrained,
         DamageUp,
         DamageUpExponential,
+        DefenseUp,
+        DefenseDown,
         Burn,
         Hypothermia,
         Quicksand,
@@ -59,6 +61,26 @@ namespace FinalInferno{
                 }
             }
 
+            private int GetTurnsLeft(StatusEffectVFX vfx){
+                // Por precaução coloca o valor default para o de maior duração
+                int turnsLeft = turnsLeftMax;
+                switch(vfx.VisualBehaviour){
+                    case StatusEffectVFX.TurnBehaviour.ShowLongest:
+                        turnsLeft = turnsLeftMax;
+                        break;
+                    case StatusEffectVFX.TurnBehaviour.ShowShortest:
+                        turnsLeft = turnsLeftMin;
+                        break;
+                    case StatusEffectVFX.TurnBehaviour.ShowNewest:
+                        turnsLeft = effects[effects.Count-1].TurnsLeft;
+                        break;
+                    case StatusEffectVFX.TurnBehaviour.ShowOldest:
+                        turnsLeft = effects[0].TurnsLeft;
+                        break;
+                }
+                return turnsLeft;
+            }
+
             public void Remove(StatusEffect effect, Transform transform){
                 effects.Remove(effect);
                 turnsLeftMax = int.MinValue;
@@ -78,25 +100,14 @@ namespace FinalInferno{
 
                     // Atualiza o valor de turnsLeft de acordo com o comportamento do vfx
                     foreach(StatusEffectVFX vfx in transform){
-                        vfx.ResetTrigger();
-                        // Por precaução coloca o valor default para o de maior duração
-                        int turnsLeft = turnsLeftMax;
-                        switch(vfx.VisualBehaviour){
-                            case StatusEffectVFX.TurnBehaviour.ShowLongest:
-                                turnsLeft = turnsLeftMax;
-                                break;
-                            case StatusEffectVFX.TurnBehaviour.ShowShortest:
-                                turnsLeft = turnsLeftMin;
-                                break;
-                            case StatusEffectVFX.TurnBehaviour.ShowNewest:
-                                turnsLeft = effects[effects.Count-1].TurnsLeft;
-                                break;
-                            case StatusEffectVFX.TurnBehaviour.ShowOldest:
-                                turnsLeft = effects[0].TurnsLeft;
-                                break;
-                        }
+                        int turnsLeft = GetTurnsLeft(vfx);
 
-                        vfx.TurnsLeft = turnsLeft;
+                        // Se o novo valor for igual, não faz nada
+                        if(turnsLeft != vfx.TurnsLeft){
+                            // Se tiver mudado, muda para o estado de idle correto
+                            vfx.ResetTrigger();
+                            vfx.TurnsLeft = turnsLeft;
+                        }
                     }
                 }
             }
@@ -105,25 +116,14 @@ namespace FinalInferno{
                 if(triggeredUpdate){
                     // Atualiza o valor de turnsLeft de acordo com o comportamento do vfx
                     foreach(StatusEffectVFX vfx in transform){
-                        vfx.ResetTrigger();
-                        // Por precaução coloca o valor default para o de maior duração
-                        int turnsLeft = turnsLeftMax;
-                        switch(vfx.VisualBehaviour){
-                            case StatusEffectVFX.TurnBehaviour.ShowLongest:
-                                turnsLeft = turnsLeftMax;
-                                break;
-                            case StatusEffectVFX.TurnBehaviour.ShowShortest:
-                                turnsLeft = turnsLeftMin;
-                                break;
-                            case StatusEffectVFX.TurnBehaviour.ShowNewest:
-                                turnsLeft = effects[effects.Count-1].TurnsLeft;
-                                break;
-                            case StatusEffectVFX.TurnBehaviour.ShowOldest:
-                                turnsLeft = effects[0].TurnsLeft;
-                                break;
-                        }
+                        int turnsLeft = GetTurnsLeft(vfx);
 
-                        vfx.TurnsLeft = turnsLeft;
+                        // Se o novo valor for igual, não faz nada
+                        if(turnsLeft != vfx.TurnsLeft){
+                            // Se tiver mudado, muda para o estado de idle correto
+                            vfx.ResetTrigger();
+                            vfx.TurnsLeft = turnsLeft;
+                        }
                     }
                 }
                 triggeredUpdate = false;
@@ -157,10 +157,21 @@ namespace FinalInferno{
                     foreach(SpriteRenderer sr in child){
                         sr.sortingOrder = sortingOrder;
                     }
+                    foreach(StatusEffectVFX vfx in child){
+                        if(vfx.Position != SkillVFX.TargetPosition.Default){
+                            vfx.UpdatePosition(bUnit);
+                        }
+                    }
                 }else{
                     handlers[i] = null;
                 }
             }
+
+            // Os icones de mudança de status precisam ser ordenados também
+            damageChanges.GetComponent<SpriteRenderer>().sortingOrder = sortingOrder;
+            defenseChanges.GetComponent<SpriteRenderer>().sortingOrder = sortingOrder;
+            resistanceChanges.GetComponent<SpriteRenderer>().sortingOrder = sortingOrder;
+            speedChanges.GetComponent<SpriteRenderer>().sortingOrder = sortingOrder;
 
             // Pega a situação inicial da unidade e armazena os valores de status
             if(bUnit != null){
@@ -172,7 +183,30 @@ namespace FinalInferno{
             }
         }
 
+        private void CheckStats(){
+            if(unit != null){
+                if(unit.CurHP <= 0){
+                    damageChanges.Hide();
+                    defenseChanges.Hide();
+                    resistanceChanges.Hide();
+                    speedChanges.Hide();
+                }else{
+                    damageChanges.Show();
+                    defenseChanges.Show();
+                    resistanceChanges.Show();
+                    speedChanges.Show();
+                }
+                // O parametro "turnsLeft" é utilizado para indicar a variação de status
+                damageChanges.TurnsLeft = (unit.curDmg - baseDamage);
+                defenseChanges.TurnsLeft = (unit.curDef - baseDefense);
+                resistanceChanges.TurnsLeft = (unit.curMagicDef - baseResistance);
+                speedChanges.TurnsLeft = (unit.curSpeed - baseSpeed);
+            }
+        }
+
         public void AddEffect(StatusEffect effect){
+            CheckStats();
+
             int index = (int)effect.VFXID;
             if(handlers[index] == null || handlers[index].effects.Contains(effect)){
                 // Se o handler não existir é porque o efeito visual não foi implementado
@@ -204,6 +238,8 @@ namespace FinalInferno{
         }
 
         public void RemoveEffect(StatusEffect effect){
+            CheckStats();
+
             int index = (int)effect.VFXID;
             if(handlers[index] == null || !handlers[index].effects.Contains(effect)){
                 // Se o handler não existir é porque o efeito visual não foi implementado
@@ -220,28 +256,11 @@ namespace FinalInferno{
 
         public void ApplyChanges()
         {
-            if(unit != null){
-                if(unit.CurHP <= 0){
-                    damageChanges.Hide();
-                    defenseChanges.Hide();
-                    resistanceChanges.Hide();
-                    speedChanges.Hide();
-                }else{
-                    damageChanges.Show();
-                    defenseChanges.Show();
-                    resistanceChanges.Show();
-                    speedChanges.Show();
-                }
-                // O parametro "turnsLeft" é utilizado para indicar a variação de status
-                damageChanges.TurnsLeft = (unit.curDmg - baseDamage);
-                defenseChanges.TurnsLeft = (unit.curDef - baseDefense);
-                resistanceChanges.TurnsLeft = (unit.curMagicDef - baseResistance);
-                speedChanges.TurnsLeft = (unit.curSpeed - baseSpeed);
+            CheckStats();
 
-                // Aplica as alterações em cada tipo de status effect
-                for(int i = 0; i < nHandlers; i++){
-                    handlers[i]?.ApplyChanges(transform);
-                }
+            // Aplica as alterações em cada tipo de status effect
+            for(int i = 0; i < nHandlers; i++){
+                handlers[i]?.ApplyChanges(transform);
             }
         }
     }

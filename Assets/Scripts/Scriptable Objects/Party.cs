@@ -25,7 +25,6 @@ namespace FinalInferno{
         public int level; //nivel da equipe(todos os personagens tem sempre o mesmo nivel)
         public long xp; //experiencia da equipe(todos os personagens tem sempre a mesma experiencia)
         public long xpNext; //experiencia necessaria para avancar de nivel
-        // TO DO: Revisão de tabelas
         public long XpCumulative{ get{ return ( (table == null)? 0 : (xp +  ((level <= 1)? 0 : (table.Rows[level-2].Field<long>("XPAccumulated"))) ) ); } }
         public List<Character> characters = new List<Character>(); //lista dos personagens que compoe a equipe 
         // Precisaria disso pra dar suporte a salvar o jogo em situações com menos personagems que o desejado mas
@@ -97,7 +96,6 @@ namespace FinalInferno{
             //Debug.Log(xp + ">=" + xpNext + "?");
             while(xp >= xpNext && level < Table.Rows.Count){
                 //Debug.Log("claro que upo");
-                // TO DO: Revisão de tabelas (level tem que ser user friendly)
                 xp -= xpNext;
                 level++;
                 xpNext = Table.Rows[level-1].Field<long>("XPNextLevel");
