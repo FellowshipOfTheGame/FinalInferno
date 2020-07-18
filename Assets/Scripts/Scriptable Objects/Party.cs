@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 using System.Data;
 
@@ -21,11 +22,12 @@ namespace FinalInferno{
         public const int Capacity = 4;
         public const string StartingMap = "StartingArea00_single_(first_scene)";
         public const string StartingDialogue = "FirstLanding";
+
+
         public string currentMap = StartingMap;
         public int level; //nivel da equipe(todos os personagens tem sempre o mesmo nivel)
         public long xp; //experiencia da equipe(todos os personagens tem sempre a mesma experiencia)
         public long xpNext; //experiencia necessaria para avancar de nivel
-        // TO DO: Revisão de tabelas
         public long XpCumulative{ get{ return ( (table == null)? 0 : (xp +  ((level <= 1)? 0 : (table.Rows[level-2].Field<long>("XPAccumulated"))) ) ); } }
         public List<Character> characters = new List<Character>(); //lista dos personagens que compoe a equipe 
         // Precisaria disso pra dar suporte a salvar o jogo em situações com menos personagems que o desejado mas
@@ -41,6 +43,9 @@ namespace FinalInferno{
         //     }
         // }
         public List<Quest> activeQuests = new List<Quest>(); // Lista das quests ativas
+        private Dictionary<Enemy, int> bestiary = new Dictionary<Enemy, int>();
+        public ReadOnlyDictionary<Enemy, int> Bestiary { get => (new ReadOnlyDictionary<Enemy, int>(bestiary)); }
+
         [SerializeField] private TextAsset PartyXP;
         [SerializeField] private DynamicTable table;
         private DynamicTable Table {
@@ -64,6 +69,25 @@ namespace FinalInferno{
             xp = 0;
             xpNext = 0;
             //Debug.Log("Iniciou");
+        }
+
+        public void RegisterKill(Enemy enemy){
+            if(bestiary.ContainsKey(enemy)){
+                bestiary[enemy]++;
+            }else{
+                bestiary.Add(enemy, 1);
+            }
+        }
+
+        public void ReloadBestiary(BestiaryEntry[] entries){
+            bestiary.Clear();
+            if(entries != null){
+                foreach(BestiaryEntry entry in entries){
+                    if(entry.monsterName != ""){
+                        bestiary.Add(AssetManager.LoadAsset<Enemy>(entry.monsterName), entry.numberKills);
+                    }
+                }
+            }
         }
 
         //faz todos os persoangens subirem de nivel

@@ -10,6 +10,8 @@ namespace FinalInferno{
         [Space(10)]
         [Header("Unit Stats")]
         public new string name;
+        // TO DO: Testar se isso esta funcionando, especificamente para inimigos que tiveram o nome alterado
+        public string AssetName { get => base.name; }
         public int level; //nivel dessa unidade
         public int hpMax; //vida maxima dessa unidade
         public int baseDmg; //dano base dessa unidade, sem status de buff/debuff

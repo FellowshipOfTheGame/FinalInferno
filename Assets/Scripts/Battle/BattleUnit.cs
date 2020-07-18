@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Collections.ObjectModel;
+using UnityEngine;
 using FinalInferno.UI.Battle;
 using FinalInferno.UI.AII;
 
@@ -46,7 +46,7 @@ namespace FinalInferno{
         public float[] elementalResistance = new float[(int)Element.Neutral];
         public List<StatusEffect> effects; //lista de status fazendo efeito nessa unidade
         private List<Skill> activeSkills; // lista de skills ativas que essa unidade pode usar
-        public ReadOnlyCollection<Skill> ActiveSkills { get{ return activeSkills.AsReadOnly(); } }
+        public ReadOnlyCollection<Skill> ActiveSkills { get => activeSkills.AsReadOnly(); }
         public SkillDelegate OnEndBattle = null;
         public SkillDelegate OnStartBattle = null;
         //public SkillDelegate OnGiveBuff = null;
