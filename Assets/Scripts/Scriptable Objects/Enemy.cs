@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using FinalInferno;
 using FinalInferno.UI.Battle;
-using System.Data;
+// using System.Data;
 
 
 namespace FinalInferno{
@@ -19,6 +19,11 @@ namespace FinalInferno{
         public DamageType DamageFocus { get{ return damageFocus; } }
         public override Color DialogueColor { get { return dialogueColor; } }
         public override string DialogueName { get { return (name == null)? "" : name; } }
+        [SerializeField] private Sprite bestiaryPortrait;
+        public Sprite BestiaryPortrait { get => bestiaryPortrait; }
+        [TextArea]
+        [SerializeField] private string bio = "Bio";
+        public string Bio { get => bio; }
         [Space(10)]
         [Header("Table")]
         [SerializeField] protected TextAsset enemyTable = null;
@@ -49,9 +54,18 @@ namespace FinalInferno{
                 baseMagicDef = Table.Rows[0].Field<int>("Resistance");
                 baseSpeed = Table.Rows[0].Field<int>("Speed");
                 BaseExp = Table.Rows[0].Field<int>("XP");
-                for(int i = 0; i < elementalResistance.Length; i++){
-                    elementalResistance[i] = Table.Rows[0].Field<float>(System.Enum.GetNames(typeof(Element))[i] + "Resistance");
+
+                elementalResistances.Clear();
+                foreach(Element element in System.Enum.GetValues(typeof(Element))){
+                    string colName = System.Enum.GetName(typeof(Element), element) + "Resistance";
+                    if(Table.Rows[0].HasField<float>(colName)){
+                        float value = Table.Rows[0].Field<float>(colName);
+                        if(value != 1.0f){
+                            elementalResistances.Add(element, value);
+                        }
+                    }
                 }
+
                 color = Table.Rows[0].Field<Color>("Color");
                 curTableRow = 0;
             }
@@ -63,6 +77,24 @@ namespace FinalInferno{
             if(skillIndex >= 0)
                 return Table.Rows[curTableRow].Field<int>("LevelSkill" + skillIndex);
             return 0;
+        }
+
+        // Função que identifica o nível do inimigo de acordo com o progresso e ajusta como for necessário
+        public int LevelEnemy(){
+            // Calcula o level dos inimigos
+            // Avalia os parametros das quests
+            int questParam = 0;
+            if(AssetManager.LoadAsset<Quest>("MainQuest").PartyReference.events["CerberusDead"]) questParam++;
+            int enemyLevel = questParam * 10;
+
+            // Avalia o nível atual da party
+            if(Mathf.Clamp(Party.Instance.level - (questParam * 10), 0, 10) > 5)
+                enemyLevel += 5;
+
+            LevelEnemy(enemyLevel);
+
+            // O valor calculado é retornado para calcular apenas uma vez em situações de loop
+            return enemyLevel;
         }
 
         // Função que atualiza os status do inimigo para um novo level e seta o nível das skills
@@ -89,9 +121,18 @@ namespace FinalInferno{
                 baseMagicDef = Table.Rows[i].Field<int>("Resistance");
                 baseSpeed = Table.Rows[i].Field<int>("Speed");
                 BaseExp = Table.Rows[i].Field<int>("XP");
-                for(int j = 0; j < elementalResistance.Length; j++){
-                    elementalResistance[j] = Table.Rows[i].Field<float>(System.Enum.GetNames(typeof(Element))[j] + "Resistance");
+
+                elementalResistances.Clear();
+                foreach(Element element in System.Enum.GetValues(typeof(Element))){
+                    string colName = System.Enum.GetName(typeof(Element), element) + "Resistance";
+                    if(Table.Rows[i].HasField<float>(colName)){
+                        float value = Table.Rows[i].Field<float>(colName);
+                        if(value != 1.0f){
+                            elementalResistances.Add(element, value);
+                        }
+                    }
                 }
+
                 color = Table.Rows[i].Field<Color>("Color");
             }
 

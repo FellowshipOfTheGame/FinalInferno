@@ -43,7 +43,7 @@ namespace FinalInferno{
         public float statusResistance = 0; // resistencia a debuffs em geral
         public float damageResistance = 0.0f; // resistencia a danos em geral
         public float healResistance = 0.0f; // resistencias a curas
-        public float[] elementalResistance = new float[(int)Element.Neutral];
+        private Dictionary<Element, float> elementalResistances = new Dictionary<Element, float>();
         public List<StatusEffect> effects; //lista de status fazendo efeito nessa unidade
         private List<Skill> activeSkills; // lista de skills ativas que essa unidade pode usar
         public ReadOnlyCollection<Skill> ActiveSkills { get => activeSkills.AsReadOnly(); }
@@ -103,7 +103,15 @@ namespace FinalInferno{
             curDef = unit.baseDef;
             curMagicDef = unit.baseMagicDef;
             curSpeed = unit.baseSpeed;
-            unit.elementalResistance.CopyTo(elementalResistance, 0);
+
+            ReadOnlyDictionary<Element, float> baseResistances = unit.ElementalResistances;
+            foreach(Element element in System.Enum.GetValues(typeof(Element))){
+                if(baseResistances.ContainsKey(element)){
+                    elementalResistances.Add(element, baseResistances[element]);
+                }else{
+                    elementalResistances.Add(element, 1.0f);
+                }
+            }
             actionPoints = 0;
             hpOnHold = 0; 
 
@@ -216,7 +224,7 @@ namespace FinalInferno{
             float atkDifference = atk - ( (type == DamageType.Physical)? curDef : ((type == DamageType.Magical)? curMagicDef : 0));
             atkDifference = Mathf.Max(atkDifference, 1);
             // damageResistance nao pode amplificar o dano ainda por conta da maneira que iria interagir com a resistencia elemental
-            int damage = Mathf.FloorToInt(atkDifference * multiplier * elementalResistance[(int)element - (int)Element.Fire] * (Mathf.Clamp(1.0f - damageResistance, 0.0f, 1.0f)));
+            int damage = Mathf.FloorToInt(atkDifference * multiplier * elementalResistances[element] * (Mathf.Clamp(1.0f - damageResistance, 0.0f, 1.0f)));
             if(CurHP <= 0)
                 return 0;
             CurHP -= damage;

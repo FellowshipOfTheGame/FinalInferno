@@ -117,7 +117,8 @@ namespace FinalInferno{
 
                     //Debug.Log(enemies[i]);
                 }
-                // Calculo de level foi movido para a criação da preview de batalha
+                // Calculo de level foi movido para Enemy.cs
+                // A função é chamada no script de preview
                 // Assets/Scripts/UI/Menus/LoadEnemiesPreview.cs
 
                 FinalInferno.UI.ChangeSceneUI.isBattle = true;

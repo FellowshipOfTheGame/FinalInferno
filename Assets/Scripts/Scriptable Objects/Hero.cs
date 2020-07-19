@@ -50,9 +50,7 @@ namespace FinalInferno{
         void Awake(){
             table = null;
             table = DynamicTable.Create(heroTable);
-            for(int i = 0; i < elementalResistance.Length; i++){
-                elementalResistance[i] = 1.0f;
-            }
+            elementalResistances.Clear();
 
             skillsToUpdate = new List<PlayerSkill>(InitialsSkills);
         }
