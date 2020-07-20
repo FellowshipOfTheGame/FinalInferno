@@ -21,6 +21,8 @@ namespace FinalInferno{
         public override string DialogueName { get { return (name == null)? "" : name; } }
         [SerializeField] private Sprite bestiaryPortrait;
         public Sprite BestiaryPortrait { get => bestiaryPortrait; }
+        [SerializeField] private AudioClip enemyCry;
+        public AudioClip EnemyCry { get => enemyCry; }
         [TextArea]
         [SerializeField] private string bio = "Bio";
         public string Bio { get => bio; }

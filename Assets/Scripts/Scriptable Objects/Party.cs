@@ -142,6 +142,7 @@ namespace FinalInferno{
             xpNext = 0;
             Debug.Log("Party resetada");
             characters.Clear();
+            bestiary.Clear();
             // Gambiarra
             characters.Add(AssetManager.LoadAsset<Character>("Character 1"));
             characters[characters.Count - 1].archetype = AssetManager.LoadAsset<Hero>("Amidi");

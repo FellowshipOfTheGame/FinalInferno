@@ -5,10 +5,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace FinalInferno.UI.AII{
+namespace FinalInferno.UI{
     public class BestiaryMenu : MonoBehaviour
     {
-        [SerializeField] private float inputCooldown = 0.25f;
+        [SerializeField, Range(0f, 2f)] private float inputCooldown = 0.25f;
         [Header("Active References")]
         [SerializeField] private TextMeshProUGUI monsterName;
         [SerializeField] private GameObject detailsObject;
@@ -30,11 +30,21 @@ namespace FinalInferno.UI.AII{
         [SerializeField] private GameObject rightArrow;
         [SerializeField] private GameObject leftArrow;
 
+        private AudioSource source;
         private List<Enemy> enemies = new List<Enemy>();
         private ReadOnlyDictionary<Enemy, int> bestiary;
         private int currentIndex = 0;
         private bool isOpen = false;
+        private bool activatedInput = false;
         private float cooldown = 0;
+
+        public void ToggleBestiary(){
+            if(isOpen){
+                CloseBestiary();
+            }else{
+                OpenBestiary();
+            }
+        }
 
         public void OpenBestiary()
         {
@@ -49,19 +59,22 @@ namespace FinalInferno.UI.AII{
             }
             Enemy firstEntry = (enemies.Count > 0)? enemies[0] : null;
             currentIndex = 0;
-            ShowEnemy(firstEntry);
             isOpen = true;
+            ShowEnemy(firstEntry);
             cooldown = 0f;
         }
 
         public void CloseBestiary(){
             detailsObject.SetActive(false);
+            monsterName.text = "";
             bestiary = null;
             isOpen = false;
             cooldown = 0f;
+            currentIndex = 0;
+            activatedInput = false;
         }
 
-        private string getResistanceString(Enemy enemy){
+        private string GetResistanceString(Enemy enemy){
             string str = "";
             string[] elementNames = System.Enum.GetNames(typeof(Element));
             int maxLength = int.MinValue;
@@ -78,11 +91,11 @@ namespace FinalInferno.UI.AII{
                 }
 
                 // Escreve o nome do elemento
-                str += System.Enum.GetName(typeof(Element), element).PadRight(maxLength) + ":     ";
+                str += System.Enum.GetName(typeof(Element), element).PadRight(maxLength) + "  ";
 
                 // Escreve a resistencia do monstro a esse elemento, usando porcentagem e colorindo para indicar resistencia ou fraqueza
                 float value = (1.0f - enemy.ElementalResistances[element]) * 100f;
-                if(value > 0){
+                if(value < 0){
                     str += "<color=#840000>";
                 }else{
                     // valores iguais a zero não devem aparecer aqui, apenas negativos
@@ -99,51 +112,61 @@ namespace FinalInferno.UI.AII{
         }
 
         private void ShowEnemy(Enemy enemy){
+            // Se o bestiario não estiver aberto, não faz nada
+            if(!isOpen)
+                return;
+
             if(enemy != null){
                 detailsObject.SetActive(true);
                 monsterName.text = enemy.AssetName;
                 portrait.sprite = enemy.BestiaryPortrait;
                 bio.text = enemy.Bio;
-                rank.text = enemy.name;
+                rank.text = "Rank: <color=#" + ColorUtility.ToHtmlStringRGB(enemy.color) + ">" + enemy.name + "</color>";
                 damageType.sprite = Icons.instance.damageSprites[(int)enemy.DamageFocus - 1];
                 element.sprite = Icons.instance.elementSprites[(int)enemy.Element - 1];
-                HP.text = "" + enemy.hpMax;
+                HP.text = "HP: " + enemy.hpMax;
                 damage.text = "" + enemy.baseDmg;
                 speed.text = "" + enemy.baseSpeed;
                 defense.text = "" + enemy.baseDef;
                 resistance.text = "" + enemy.baseMagicDef;
-                exp.text = "" + enemy.BaseExp;
-                killCount.text = "" + bestiary[enemy];
-                elementalResistances.text = getResistanceString(enemy);
+                exp.text = "Exp: " + enemy.BaseExp;
+                killCount.text = "Kills: " + bestiary[enemy];
+                elementalResistances.text = GetResistanceString(enemy);
+                source?.PlayOneShot(enemy.EnemyCry);
             }else{
                 // Essa função só é chamada com null caso o bestiario esteja vazio
                 detailsObject.SetActive(false);
                 monsterName.text = "Empty";
             }
 
-            if(currentIndex > 0){
-                rightArrow.SetActive(true);
-            }else{
-                rightArrow.SetActive(false);
-            }
-            if(currentIndex < enemies.Count-1){
-                leftArrow.SetActive(true);
-            }else{
-                leftArrow.SetActive(false);
-            }
+            activatedInput = false;
+            rightArrow.SetActive(false);
+            leftArrow.SetActive(false);
         }
 
         void Awake(){
-            isOpen = false;
-            cooldown = 0f;
-            currentIndex = 0;
+            CloseBestiary();
+            source = GetComponent<AudioSource>();
         }
 
-        // Update is called once per frame
         void Update()
         {
             if(isOpen){
                 if(cooldown > inputCooldown){
+                    if(!activatedInput){
+                        activatedInput = true;
+                        if(currentIndex < enemies.Count-1){
+                            rightArrow.SetActive(true);
+                        }else{
+                            rightArrow.SetActive(false);
+                        }
+                        if(currentIndex > 0){
+                            leftArrow.SetActive(true);
+                        }else{
+                            leftArrow.SetActive(false);
+                        }
+                    }
+
                     float input = Input.GetAxis("Horizontal");
                     if(input > 0 && currentIndex < enemies.Count-1){
                         currentIndex++;
