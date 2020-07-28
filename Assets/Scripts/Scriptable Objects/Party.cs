@@ -12,19 +12,17 @@ namespace FinalInferno{
         private static Party instance = null;
         public static Party Instance{
             get{
-                if(!instance)
+                if(instance == null){
                     instance = AssetManager.LoadAsset<Party>("Party");
+                }
                 
                 return instance;
             }
         }
         
         public const int Capacity = 4;
-        public const string StartingMap = "StartingArea00_single_(first_scene)";
-        public const string StartingDialogue = "FirstLanding";
 
-
-        public string currentMap = StartingMap;
+        public string currentMap = StaticReferences.FirstScene;
         public int level; //nivel da equipe(todos os personagens tem sempre o mesmo nivel)
         public long xp; //experiencia da equipe(todos os personagens tem sempre a mesma experiencia)
         public long xpNext; //experiencia necessaria para avancar de nivel
@@ -57,17 +55,12 @@ namespace FinalInferno{
         }
 
         public void Awake(){
-            //Debug.Log("sera que tem awake?");
-            if(!instance)
-                instance = this;
-            
-            //Debug.Log("parece que tem!");
-
             table = null;
             table = DynamicTable.Create(PartyXP);
             level = 0;
             xp = 0;
             xpNext = 0;
+            currentMap = StaticReferences.FirstScene;
             //Debug.Log("Iniciou");
         }
 
@@ -143,6 +136,7 @@ namespace FinalInferno{
             Debug.Log("Party resetada");
             characters.Clear();
             bestiary.Clear();
+            currentMap = StaticReferences.FirstScene;
             // Gambiarra
             characters.Add(AssetManager.LoadAsset<Character>("Character 1"));
             characters[characters.Count - 1].archetype = AssetManager.LoadAsset<Hero>("Amidi");
@@ -157,15 +151,5 @@ namespace FinalInferno{
             }
             GiveExp(0);
         }
-
-        //salva o jogo do jogador
-        /*public void Save(){
-
-        }*/
-
-        //carrega o jogo do jogador
-        /*public void Load(){
-
-        }*/
     }
 }

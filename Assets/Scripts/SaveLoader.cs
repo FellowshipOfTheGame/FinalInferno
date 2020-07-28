@@ -99,7 +99,7 @@ namespace FinalInferno{
             
             //Debug.Log("Default flag = " + mainQuest.events["Default"]);
             // Carrega a cena inicial como cutscene
-            SceneLoader.LoadCustscene(Party.StartingMap, AssetManager.LoadAsset<Fog.Dialogue.Dialogue>(Party.StartingDialogue));
+            SceneLoader.LoadCustscene(StaticReferences.FirstScene, StaticReferences.FirstDialogue);
         }
 
         public static void StartDemo(){

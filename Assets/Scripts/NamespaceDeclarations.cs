@@ -556,6 +556,67 @@ namespace FinalInferno
     #endif
 
     [System.Serializable]
+    public class ScenePicker{
+        [SerializeField] private string sceneName = "";
+        [SerializeField] private string assetPath = "";
+        [SerializeField] private string guid = "";
+        public string Name { get => sceneName; private set => sceneName = value; }
+        public string Path { get => assetPath; private set => assetPath = value; }
+        public string GUID { get => guid; private set => guid = value; }
+
+        public ScenePicker(){
+            sceneName = "";
+            assetPath = "";
+            guid = "";
+        }
+    }
+    #if UNITY_EDITOR
+    [CustomPropertyDrawer(typeof(ScenePicker))]
+    public class ScenePickerEditor : PropertyDrawer{
+        SerializedProperty sceneName;
+        SerializedProperty assetPath;
+        SerializedProperty guid;
+        Rect rect;
+        Object sceneObj = null;
+
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label){
+            return EditorGUIUtility.singleLineHeight;
+        }
+
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label){
+            EditorGUI.BeginProperty(position, label, property);
+            
+            position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
+
+            rect = new Rect(position.x, position.y, position.size.x, EditorGUIUtility.singleLineHeight);
+            sceneName = property.FindPropertyRelative("sceneName");
+            assetPath = property.FindPropertyRelative("assetPath");
+            guid = property.FindPropertyRelative("guid");
+
+            if(sceneObj == null && assetPath.stringValue != ""){
+                sceneObj = AssetDatabase.LoadAssetAtPath<SceneAsset>(assetPath.stringValue);
+            }else if(assetPath.stringValue == ""){
+                sceneObj = null;
+            }
+
+            sceneObj = EditorGUI.ObjectField(rect, sceneObj, typeof(SceneAsset), false);
+
+            if(sceneObj != null){
+                sceneName.stringValue = sceneObj.name;
+                assetPath.stringValue = AssetDatabase.GetAssetPath(sceneObj.GetInstanceID());
+                guid.stringValue = AssetDatabase.AssetPathToGUID(assetPath.stringValue);
+            }else{
+                sceneName.stringValue = "";
+                assetPath.stringValue = "";
+                guid.stringValue = "";
+            }
+
+            EditorGUI.EndProperty();
+        }
+    }
+    #endif
+
+    [System.Serializable]
     public struct SceneWarp{
         public string scene;
         public Vector2 position;
