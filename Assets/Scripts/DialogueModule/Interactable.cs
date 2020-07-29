@@ -10,14 +10,6 @@ namespace Fog.Dialogue
     {
         [SerializeField] private List<DialogueEntry> dialogues = new List<DialogueEntry>();
 
-        void Awake(){
-            for(int i = 0; i < dialogues.Count; i++){
-                if(dialogues[i].quest.PartyReference != null){
-                    dialogues[i] = new DialogueEntry(dialogues[i].quest.PartyReference, dialogues[i].eventFlag, dialogues[i].dialogue);
-                }
-            }
-        }
-
         public void Reset(){
             int nColliders = GetComponents<Collider2D>().Length;
             // Se so tem um collider, se certifica que ele seja trigger

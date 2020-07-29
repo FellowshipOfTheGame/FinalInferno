@@ -42,9 +42,9 @@ public class DataSaver<T> where T : new()
         if(saveHistory){
             // This is a workaround to allow savefile persistance on itch.io WebGL builds
             #if UNITY_WEBGL
-            this.prePath = System.IO.Path.Combine(("idbfs/" + Application.productName) , fileName);
-            Directory.CreateDirectory(System.IO.Path.Combine(("idbfs/" + Application.productName), fileName));
-            this.config = System.IO.Path.Combine(("idbfs/" + Application.productName), fileName, this.config);
+            this.prePath = System.IO.Path.Combine(System.IO.Path.Combine("/idbfs", Application.productName) , fileName);
+            Directory.CreateDirectory(System.IO.Path.Combine(System.IO.Path.Combine("/idbfs", Application.productName), fileName));
+            this.config = System.IO.Path.Combine(System.IO.Path.Combine("/idbfs", Application.productName), fileName, this.config);
             #else
             
             this.prePath = System.IO.Path.Combine(Application.persistentDataPath, fileName);
@@ -61,7 +61,8 @@ public class DataSaver<T> where T : new()
         }
         else{
             #if UNITY_WEBGL
-            this.prePath = ("idbfs/" + Application.productName);
+            this.prePath = System.IO.Path.Combine("/idbfs", Application.productName);
+            Directory.CreateDirectory(prePath);
             #else
             this.prePath = Application.persistentDataPath;
             #endif

@@ -86,7 +86,7 @@ namespace FinalInferno{
             // Calcula o level dos inimigos
             // Avalia os parametros das quests
             int questParam = 0;
-            if(AssetManager.LoadAsset<Quest>("MainQuest").PartyReference.events["CerberusDead"]) questParam++;
+            if(AssetManager.LoadAsset<Quest>("MainQuest").events["CerberusDead"]) questParam++;
             int enemyLevel = questParam * 10;
 
             // Avalia o nível atual da party
