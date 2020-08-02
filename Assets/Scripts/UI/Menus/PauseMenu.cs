@@ -7,6 +7,8 @@ public class PauseMenu : MonoBehaviour
     public static PauseMenu Instance { get; private set; } = null;
     public static bool IsPaused { get; private set; } = false;
 
+    [SerializeField] FinalInferno.UI.BestiaryMenu bestiaryMenu;
+
     private void Awake()
     {
         if(Instance == null){
@@ -16,6 +18,10 @@ public class PauseMenu : MonoBehaviour
         }
 
         IsPaused = false;
+    }
+
+    public void ToggleBestiary(){
+        bestiaryMenu?.ToggleBestiary();
     }
 
     public void ChangePauseState()

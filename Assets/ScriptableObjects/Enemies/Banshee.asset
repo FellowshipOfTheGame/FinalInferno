@@ -19,12 +19,32 @@ MonoBehaviour:
   baseDef: 4
   baseMagicDef: 6
   baseSpeed: 11
-  elementalResistance:
-  - 1
-  - 0.5
-  - 1.5
-  - 1
-  - 1
+  elementalResistances:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 0
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 0
+    _keyValues: 
+    _keys: 
+    _values: []
   skills:
   - {fileID: 11400000, guid: c7f8ca5a99d6a8240a8df51799499057, type: 2}
   - {fileID: 11400000, guid: 0aabb7711250c0043a60cdb4a6f69917, type: 2}
@@ -42,6 +62,8 @@ MonoBehaviour:
   dialogueColor: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 0}
   element: 2
   damageFocus: 2
+  bestiaryPortrait: {fileID: 21300000, guid: 8f89883e8218976428ca8ca318576925, type: 3}
+  bio: Bio
   enemyTable: {fileID: 4900000, guid: 5bc989e485987c241a912dbfe838029d, type: 3}
   table:
     colTypes:

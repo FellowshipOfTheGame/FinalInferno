@@ -40,9 +40,17 @@ public class DataSaver<T> where T : new()
         this.numberOfSaves = 0;
         this.saveHistory = saveHistory;
         if(saveHistory){
+            // This is a workaround to allow savefile persistance on itch.io WebGL builds
+            #if UNITY_WEBGL
+            this.prePath = System.IO.Path.Combine(System.IO.Path.Combine("/idbfs", Application.productName) , fileName);
+            Directory.CreateDirectory(System.IO.Path.Combine(System.IO.Path.Combine("/idbfs", Application.productName), fileName));
+            this.config = System.IO.Path.Combine(System.IO.Path.Combine("/idbfs", Application.productName), fileName, this.config);
+            #else
+            
             this.prePath = System.IO.Path.Combine(Application.persistentDataPath, fileName);
             Directory.CreateDirectory(System.IO.Path.Combine(Application.persistentDataPath, fileName));
             this.config = System.IO.Path.Combine(Application.persistentDataPath, fileName, this.config);
+            #endif
             if(File.Exists(this.config)){
                 using (TextReader reader = File.OpenText(this.config))
                 {
@@ -52,7 +60,12 @@ public class DataSaver<T> where T : new()
             }
         }
         else{
+            #if UNITY_WEBGL
+            this.prePath = System.IO.Path.Combine("/idbfs", Application.productName);
+            Directory.CreateDirectory(prePath);
+            #else
             this.prePath = Application.persistentDataPath;
+            #endif
         }
         this.fileName = fileName;
         this.encrypt = encrypt;

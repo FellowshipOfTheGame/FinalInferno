@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,13 +18,16 @@ namespace FinalInferno{
         [Space(10)]
         [Header("Unit Stats")]
         public new string name;
+        // TO DO: Testar se isso esta funcionando, especificamente para inimigos que tiveram o nome alterado
+        public string AssetName { get => base.name; }
         public int level; //nivel dessa unidade
         public int hpMax; //vida maxima dessa unidade
         public int baseDmg; //dano base dessa unidade, sem status de buff/debuff
         public int baseDef; //defesa base dessa unidade, sem status de buff/debuff
         public int baseMagicDef; //defesa magica base dessa unidade, sem status de buff/debuff
         public int baseSpeed; //velocidade base dessa unidade, sem status de buff/debuff
-        public float[] elementalResistance = new float[(int)Element.Neutral];
+        [SerializeField] protected ElementResistanceDictionary elementalResistances = new ElementResistanceDictionary();
+        public ReadOnlyDictionary<Element, float> ElementalResistances { get => new ReadOnlyDictionary<Element, float>(elementalResistances); }
         [Space(10)]
         [Header("Skill Info")]
         public List<Skill> skills; //lista de "skills" da unidade

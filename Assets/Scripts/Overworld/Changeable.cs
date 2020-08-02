@@ -19,12 +19,6 @@ namespace FinalInferno {
                 else
                     colliders.Add(col);
             }
-
-            for(int i = 0; i < changeRules.Count; i++){
-                if(changeRules[i].quest.PartyReference != null){
-                    changeRules[i] = new ChangeRule(changeRules[i].quest.PartyReference, changeRules[i].eventFlag, changeRules[i].animationFlag, changeRules[i].newValue);
-                }
-            }
         }
 
         public void Reset(){

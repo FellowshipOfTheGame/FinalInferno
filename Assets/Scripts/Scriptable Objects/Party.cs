@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 using System.Data;
 
@@ -11,17 +12,17 @@ namespace FinalInferno{
         private static Party instance = null;
         public static Party Instance{
             get{
-                if(!instance)
+                if(instance == null){
                     instance = AssetManager.LoadAsset<Party>("Party");
+                }
                 
                 return instance;
             }
         }
         
         public const int Capacity = 4;
-        public const string StartingMap = "StartingArea00_single_(first_scene)";
-        public const string StartingDialogue = "FirstLanding";
-        public string currentMap = StartingMap;
+
+        public string currentMap = StaticReferences.FirstScene;
         public int level; //nivel da equipe(todos os personagens tem sempre o mesmo nivel)
         public long xp; //experiencia da equipe(todos os personagens tem sempre a mesma experiencia)
         public long xpNext; //experiencia necessaria para avancar de nivel
@@ -40,6 +41,9 @@ namespace FinalInferno{
         //     }
         // }
         public List<Quest> activeQuests = new List<Quest>(); // Lista das quests ativas
+        private Dictionary<Enemy, int> bestiary = new Dictionary<Enemy, int>();
+        public ReadOnlyDictionary<Enemy, int> Bestiary { get => (new ReadOnlyDictionary<Enemy, int>(bestiary)); }
+
         [SerializeField] private TextAsset PartyXP;
         [SerializeField] private DynamicTable table;
         private DynamicTable Table {
@@ -51,18 +55,32 @@ namespace FinalInferno{
         }
 
         public void Awake(){
-            //Debug.Log("sera que tem awake?");
-            if(!instance)
-                instance = this;
-            
-            //Debug.Log("parece que tem!");
-
             table = null;
             table = DynamicTable.Create(PartyXP);
             level = 0;
             xp = 0;
             xpNext = 0;
+            currentMap = StaticReferences.FirstScene;
             //Debug.Log("Iniciou");
+        }
+
+        public void RegisterKill(Enemy enemy){
+            if(bestiary.ContainsKey(enemy)){
+                bestiary[enemy]++;
+            }else{
+                bestiary.Add(enemy, 1);
+            }
+        }
+
+        public void ReloadBestiary(BestiaryEntry[] entries){
+            bestiary.Clear();
+            if(entries != null){
+                foreach(BestiaryEntry entry in entries){
+                    if(entry.monsterName != ""){
+                        bestiary.Add(AssetManager.LoadAsset<Enemy>(entry.monsterName), entry.numberKills);
+                    }
+                }
+            }
         }
 
         //faz todos os persoangens subirem de nivel
@@ -116,6 +134,8 @@ namespace FinalInferno{
             xpNext = 0;
             Debug.Log("Party resetada");
             characters.Clear();
+            bestiary.Clear();
+            currentMap = StaticReferences.FirstScene;
             // Gambiarra
             characters.Add(AssetManager.LoadAsset<Character>("Character 1"));
             characters[characters.Count - 1].archetype = AssetManager.LoadAsset<Hero>("Amidi");
@@ -130,15 +150,5 @@ namespace FinalInferno{
             }
             GiveExp(0);
         }
-
-        //salva o jogo do jogador
-        /*public void Save(){
-
-        }*/
-
-        //carrega o jogo do jogador
-        /*public void Load(){
-
-        }*/
     }
 }

@@ -9,11 +9,6 @@ namespace FinalInferno{
         public bool active;
         // O número máximo de eventos permitidos é 62 por medida de segurança
         public QuestDictionary events;
-        public Quest PartyReference{
-            get{
-                return Party.Instance.activeQuests.Find(quest => quest.name == name);
-            }
-        }
         public void Awake(){
             ResetQuest();
         }
@@ -28,7 +23,7 @@ namespace FinalInferno{
             active = false;
         }
         public virtual void StartQuest(){
-            if(PartyReference == null){
+            if(!active){
                 ResetQuest();
                 Party.Instance.activeQuests.Add(this);
                 active = true;
@@ -42,7 +37,7 @@ namespace FinalInferno{
             }
             active = false;
             // TO DO: Quest não repetitiveis não devem ser removidas daqui
-            Party.Instance.activeQuests.Remove(PartyReference);
+            Party.Instance.activeQuests.Remove(this);
         }
     }
 }
