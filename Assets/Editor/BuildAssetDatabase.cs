@@ -1,10 +1,18 @@
 ﻿using UnityEditor;
+using UnityEditor.Build;
+using UnityEditor.Build.Reporting;
 using System.IO;
 
-public class CreateAssetBundles
+public class CreateAssetDatabase : IPreprocessBuildWithReport
 {
+    public int callbackOrder{ get => 0; }
+
+    public void OnPreprocessBuild(BuildReport report){
+        BuildDatabase();
+    }
+
     [MenuItem("Assets/Final Inferno/Build Database")]
-    static void BuildAllAssetBundles()
+    static void BuildDatabase()
     {   
         string[] objectsFound = AssetDatabase.FindAssets("t:" + typeof(FinalInferno.AssetManager));
         int i = 0;

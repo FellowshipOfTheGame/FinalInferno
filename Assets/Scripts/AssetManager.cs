@@ -43,9 +43,9 @@ namespace FinalInferno{
                 foreach(string guid in objectsFound){
                     assets.Add(UnityEditor.AssetDatabase.LoadAssetAtPath<T>(UnityEditor.AssetDatabase.GUIDToAssetPath(guid)));
                 }
-                foreach(T obj in assets){
-                    Debug.Log(obj.name);
-                }
+                // foreach(T obj in assets){
+                //     Debug.Log(obj.name);
+                // }
             }
             #endif
 
