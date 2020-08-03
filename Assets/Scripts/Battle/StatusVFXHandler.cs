@@ -154,11 +154,15 @@ namespace FinalInferno{
                 Transform child = transform.Find(names[i]);
                 if(child != null){
                     handlers[i] = new IndividualHandler();
-                    foreach(SpriteRenderer sr in child){
-                        sr.sortingOrder = sortingOrder;
+                    foreach(Transform t in child){
+                        SpriteRenderer sr = t.GetComponent<SpriteRenderer>();
+                        if(sr != null){
+                            sr.sortingOrder = sortingOrder;
+                        }
                     }
-                    foreach(StatusEffectVFX vfx in child){
-                        if(vfx.Position != SkillVFX.TargetPosition.Default){
+                    foreach(Transform t in child){
+                        StatusEffectVFX vfx = t.GetComponent<StatusEffectVFX>();
+                        if(vfx != null && vfx.Position != SkillVFX.TargetPosition.Default){
                             vfx.UpdatePosition(bUnit);
                         }
                     }
