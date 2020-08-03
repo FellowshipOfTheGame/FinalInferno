@@ -21,7 +21,7 @@ namespace FinalInferno{
         public int curSpeed; //velocidade atual dessa unidade, contando status de buff/debuff
         public float ActionCostReduction{ // Redução porcentual do cust de ações dessa unidade
             get{
-                float maxReduction = 0.5f;
+                float maxReduction = 0.75f;
                 return Mathf.Clamp(maxReduction * (curSpeed / (Unit.maxStatValue * 1.0f)), 0.0f, maxReduction);
             }
         }

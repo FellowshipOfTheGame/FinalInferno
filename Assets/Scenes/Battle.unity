@@ -1139,6 +1139,7 @@ GameObject:
   - component: {fileID: 127055011}
   - component: {fileID: 127055010}
   - component: {fileID: 127055009}
+  - component: {fileID: 127055012}
   m_Layer: 5
   m_Name: Battle Queue
   m_TagString: Untagged
@@ -1222,6 +1223,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 127055007}
   m_CullTransparentMesh: 0
+--- !u!114 &127055012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127055007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 902fd7426cf6faf43a3c4ff3a26d5dbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requesters:
+  - {fileID: 11400000, guid: ec7d3d94d297acf43956f589b2bd514f, type: 2}
 --- !u!1 &132246232
 GameObject:
   m_ObjectHideFlags: 0
@@ -9469,7 +9484,7 @@ MonoBehaviour:
   activatorAxis: Submit
   active: 0
   interactable: 1
-  AS: {fileID: 0}
+  AS: {fileID: 1114176207}
 --- !u!1 &1125929268
 GameObject:
   m_ObjectHideFlags: 0
@@ -14719,7 +14734,7 @@ AudioSource:
   m_GameObject: {fileID: 1984505590}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 243693526855134572, guid: 28b3e2cf7270ba640a18edd4395707ff,
+  OutputAudioMixerGroup: {fileID: 243783522763932072, guid: 28b3e2cf7270ba640a18edd4395707ff,
     type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
