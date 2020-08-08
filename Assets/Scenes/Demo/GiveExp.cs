@@ -29,7 +29,7 @@ namespace FinalInferno{
 
             if(Input.GetKeyDown(KeyCode.T)){
                 foreach(Character character in Party.Instance.characters){
-                    foreach(PlayerSkill skill in character.archetype.skills){
+                    foreach(PlayerSkill skill in character.archetype.skills.ToArray()){
                         if(skill.active){
                             skill.GiveExp(5000);
                         }
@@ -39,7 +39,7 @@ namespace FinalInferno{
 
             if(Input.GetKeyDown(KeyCode.Y)){
                 foreach(Character character in Party.Instance.characters){
-                    foreach(PlayerSkill skill in character.archetype.skills){
+                    foreach(PlayerSkill skill in character.archetype.skills.ToArray()){
                         if(skill.active){
                             skill.GiveExp(500);
                         }

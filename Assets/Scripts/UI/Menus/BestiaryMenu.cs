@@ -118,7 +118,7 @@ namespace FinalInferno.UI{
 
             if(enemy != null){
                 detailsObject.SetActive(true);
-                monsterName.text = enemy.AssetName;
+                monsterName.text = (enemy is CerberusHead)? "Cerberus" : enemy.AssetName;
                 portrait.sprite = enemy.BestiaryPortrait;
                 bio.text = enemy.Bio;
                 rank.text = "Rank: <color=#" + ColorUtility.ToHtmlStringRGB(enemy.color) + ">" + enemy.name + "</color>";

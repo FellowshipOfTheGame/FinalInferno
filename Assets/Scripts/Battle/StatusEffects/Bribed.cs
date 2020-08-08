@@ -37,7 +37,7 @@ namespace FinalInferno{
 
             // Apenas um dos status effects desse tipo causa um ataque
             if(Target.effects.Find(effect => effect.GetType() == typeof(Bribed)) == this){
-                Source.SkillSelected();
+                Target.SkillSelected();
 
                 List<BattleUnit> allies = BattleManager.instance.GetTeam(Target);
                 int teamSize = BattleManager.instance.GetTeam(Target, true).Count;

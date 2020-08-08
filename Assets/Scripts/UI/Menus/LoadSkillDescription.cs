@@ -58,7 +58,11 @@ namespace FinalInferno.UI.SkillsMenu
             skillDescriptionText.text = skill.description;
             if(skill.Level > 0){
                 string levelInfo = "Current Level: " + skill.Level + "\n";
-                levelInfo += "Exp to next level: " + (skill.xpNext - skill.xp);
+                if(skill.Level < skill.MaxLevel){
+                    levelInfo += "Exp to next level: " + (skill.xpNext - skill.xp);
+                }else{
+                    levelInfo += "Max level reached!";
+                }
                 skillLevelInfoText.text = levelInfo;
                 listDescriptionText.text = "\nEffects:";
                 effectList.gameObject.SetActive(true);

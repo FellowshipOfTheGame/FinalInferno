@@ -35,11 +35,16 @@ namespace FinalInferno.UI.FSM
 
             // Calcula a exp ganhada pela party, da a recompensa e registra os inimigos mortos no bestiario
             long xpReward = 0;
+            int cerberusCount = 0;
             foreach(BattleUnit battleUnit in BattleManager.instance.battleUnits){
-                if(battleUnit.Unit is Enemy){
-                    Enemy enemy = (Enemy)battleUnit.Unit;
+                if(battleUnit.unit is Enemy){
+                    Enemy enemy = (Enemy)battleUnit.unit;
+                    if(enemy is CerberusHead) cerberusCount++;
+
                     xpReward += enemy.BaseExp;
-                    Party.Instance.RegisterKill(enemy);
+                    if(cerberusCount == 0 || (cerberusCount % 3 == 1)){
+                        Party.Instance.RegisterKill(enemy);
+                    }
                 }
             }
             Party.Instance.GiveExp(xpReward);
