@@ -47,6 +47,12 @@ namespace FinalInferno.UI.FSM
                     }
                 }
             }
+
+            // Armazena o hp atual das unidades para utilizar no inicio da proxima batalha
+            foreach(Character character in Party.Instance.characters){
+                character.hpCur = Mathf.Max(BattleManager.instance.GetBattleUnit(character.archetype).CurHP, 1);
+            }
+            // A exp e distribuida depois, pois se os personagens ganharem um nivel o hp maximo muda
             Party.Instance.GiveExp(xpReward);
         }
 
