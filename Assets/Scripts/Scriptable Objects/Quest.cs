@@ -22,8 +22,8 @@ namespace FinalInferno{
             }
             active = false;
         }
-        public virtual void StartQuest(){
-            if(!active){
+        public virtual void StartQuest(bool forceReset = false){
+            if(!active || forceReset){
                 ResetQuest();
                 Party.Instance.activeQuests.Add(this);
                 active = true;

@@ -4,11 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Fog.Dialogue{
+    // Editor class is in ScrollPanel.cs file, tried to put it here, didn't work
     [RequireComponent(typeof(Mask)), RequireComponent(typeof(Image)), RequireComponent(typeof(RectTransform))]
     public class DialogueScrollPanel : ScrollRect
     {
         public bool smoothScrolling;
         public float scrollSpeed;
+        [SerializeField] private GameObject scrollUpIndicator = null;
+        [SerializeField] private GameObject scrollDownIndicator = null;
+        [SerializeField] private GameObject skipIndicator = null;
+
         // To do: Change this so it also works with horizontal scrolling
 
         protected void Reset(){
@@ -35,7 +40,7 @@ namespace Fog.Dialogue{
         }
 
         public float NormalizedTopPosition(RectTransform rect){
-            float contenHeight = content.rect.height;
+            float contentHeight = content.rect.height;
             float viewportHeight = viewport.rect.height;
 
             Vector3[] corners = new Vector3[4];
@@ -46,11 +51,11 @@ namespace Fog.Dialogue{
             float rectTop = corners[1].y;
             float distance = rectTop - contentBottom;
 
-            return Mathf.Clamp((distance - viewportHeight) / (contenHeight - viewportHeight), 0f, 1f);
+            return Mathf.Clamp((distance - viewportHeight) / (contentHeight - viewportHeight), 0f, 1f);
         }
 
         public float NormalizedBottomPosition(RectTransform rect){
-            float contenHeight = content.rect.height;
+            float contentHeight = content.rect.height;
             float viewportHeight = viewport.rect.height;
             
             Vector3[] corners = new Vector3[4];
@@ -61,7 +66,7 @@ namespace Fog.Dialogue{
             float rectBottom = corners[0].y;
             float distance = rectBottom - contentBottom;
 
-            return Mathf.Clamp((distance) / (contenHeight - viewportHeight), 0f, 1f);
+            return Mathf.Clamp((distance) / (contentHeight - viewportHeight), 0f, 1f);
         }
 
         public void Scroll(float axis){
@@ -127,23 +132,47 @@ namespace Fog.Dialogue{
         private IEnumerator ScrollingUp(float targetPosition = 1f){
             yield return new WaitForEndOfFrame();
             while(verticalNormalizedPosition < (targetPosition - Mathf.Epsilon)){
-                Canvas.ForceUpdateCanvases();
+                // Canvas.ForceUpdateCanvases();
                 verticalNormalizedPosition += (Time.deltaTime * scrollSpeed * 10)/(content.rect.height);
                 yield return new WaitForEndOfFrame();
             }
-            verticalNormalizedPosition = 0f;
+            verticalNormalizedPosition = 1f;
             velocity = Vector2.zero;
         }
 
         private IEnumerator ScrollingDown(float targetPosition = 0f){
             yield return new WaitForEndOfFrame();
             while(verticalNormalizedPosition > (targetPosition + Mathf.Epsilon)){
-                Canvas.ForceUpdateCanvases();
+                // Canvas.ForceUpdateCanvases();
                 verticalNormalizedPosition -= (Time.deltaTime * scrollSpeed * 10)/(content.rect.height);
                 yield return new WaitForEndOfFrame();
             }
             verticalNormalizedPosition = 0f;
             velocity = Vector2.zero;
+        }
+
+        protected override void OnEnable(){
+            base.OnEnable();
+            if(skipIndicator != null){
+                skipIndicator.SetActive(true);
+            }
+        }
+
+        protected override void OnDisable(){
+            if(skipIndicator != null){
+                skipIndicator.SetActive(false);
+            }
+            base.OnDisable();
+        }
+
+        protected override void LateUpdate(){
+            base.LateUpdate();
+            if(scrollUpIndicator != null){
+                scrollUpIndicator.SetActive((verticalNormalizedPosition < (1f - float.Epsilon)) && (content.rect.height - viewport.rect.height > float.Epsilon));
+            }
+            if(scrollDownIndicator != null){
+                scrollDownIndicator.SetActive((verticalNormalizedPosition > float.Epsilon) && (content.rect.height - viewport.rect.height > float.Epsilon));
+            }
         }
     }
 }

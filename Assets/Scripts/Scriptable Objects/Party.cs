@@ -135,6 +135,7 @@ namespace FinalInferno{
             Debug.Log("Party resetada");
             characters.Clear();
             bestiary.Clear();
+            activeQuests.Clear();
             currentMap = StaticReferences.FirstScene;
             // Gambiarra
             characters.Add(AssetManager.LoadAsset<Character>("Character 1"));
