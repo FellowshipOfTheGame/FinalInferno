@@ -9,7 +9,7 @@ namespace FinalInferno{
 
     public class BattleManager : MonoBehaviour{
         
-        public static BattleManager instance;
+        public static BattleManager instance = null;
 
         public FinalInferno.UI.FSM.BoolDecision isBattleReady;
         public List<Unit> units;
@@ -37,6 +37,12 @@ namespace FinalInferno{
             units = new List<Unit>();
             battleUnits = new List<BattleUnit>();
             BattleProgress.ResetInfo(Party.Instance);
+        }
+
+        void OnDestroy(){
+            if(instance == this){
+                instance = null;
+            }
         }
 
         // #if UNITY_EDITOR

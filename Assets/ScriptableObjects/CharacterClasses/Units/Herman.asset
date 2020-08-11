@@ -19,12 +19,32 @@ MonoBehaviour:
   baseDef: 7
   baseMagicDef: 7
   baseSpeed: 12
-  elementalResistance:
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
+  elementalResistances:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 0
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 0
+    _keyValues: 
+    _keys: 
+    _values: []
   skills:
   - {fileID: 11400000, guid: 70758a650379ada4591f631394c1a92c, type: 2}
   - {fileID: 11400000, guid: f4fe5474cbca4674780f60355fd67e56, type: 2}
@@ -43,8 +63,8 @@ MonoBehaviour:
   dialoguePortrait: {fileID: 21300004, guid: 267554e42b886124b85d0cbfce4cf1e5, type: 3}
   battleSprite: {fileID: 21300000, guid: 267554e42b886124b85d0cbfce4cf1e5, type: 3}
   defaultTargetPosition: 0
-  xOffset: 0.536
-  yOffset: 0.926
+  xOffset: 0.591
+  yOffset: 0.895
   queueSprite: {fileID: 21300002, guid: 267554e42b886124b85d0cbfce4cf1e5, type: 3}
   spriteOW: {fileID: 21300000, guid: 300d5b0b797217f4d8a789f227965374, type: 3}
   animatorOW: {fileID: 9100000, guid: f8e393af4a8e732459d8a7dda65c125e, type: 2}

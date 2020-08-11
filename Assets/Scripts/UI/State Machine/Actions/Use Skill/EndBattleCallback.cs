@@ -37,8 +37,8 @@ namespace FinalInferno.UI.FSM
             long xpReward = 0;
             int cerberusCount = 0;
             foreach(BattleUnit battleUnit in BattleManager.instance.battleUnits){
-                if(battleUnit.unit is Enemy){
-                    Enemy enemy = (Enemy)battleUnit.unit;
+                if(battleUnit.Unit is Enemy){
+                    Enemy enemy = (Enemy)battleUnit.Unit;
                     if(enemy is CerberusHead) cerberusCount++;
 
                     xpReward += enemy.BaseExp;

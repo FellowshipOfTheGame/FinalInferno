@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using FinalInferno;
 using FinalInferno.UI.Battle;
-// using System.Data;
-
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace FinalInferno{
     //engloba os inimigos do jogador
@@ -239,4 +239,16 @@ namespace FinalInferno{
             return targets;
         }
     }
+
+    #if UNITY_EDITOR
+    [CustomPreview(typeof(Enemy))]
+    public class EnemyPreview : UnitPreview{
+        public override bool HasPreviewGUI(){
+            return base.HasPreviewGUI();
+        }
+        public override void OnInteractivePreviewGUI(Rect r, GUIStyle background){
+            base.OnInteractivePreviewGUI(r, background);
+        }
+    }
+    #endif
 }

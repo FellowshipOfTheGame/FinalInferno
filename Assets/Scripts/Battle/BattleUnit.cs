@@ -101,8 +101,8 @@ namespace FinalInferno{
             sr.sprite = unit.BattleSprite;
             damageIndicator.GetComponent<RectTransform>().anchoredPosition += new Vector2(0, sr.sprite.bounds.size.y);
             // FeetPosition = Vector2.zero; // Ja esta inicializado com esse valor
-            HeadPosition = new Vector2(-((sr.sprite.bounds.size.x * unit.effectsRelativePosition.x) - (sr.sprite.pivot.x / sr.sprite.pixelsPerUnit)),
-                                        ((sr.sprite.bounds.size.y * unit.effectsRelativePosition.y) - (sr.sprite.pivot.y / sr.sprite.pixelsPerUnit)) );
+            HeadPosition = new Vector2(-((sr.sprite.bounds.size.x * unit.EffectsRelativePosition.x) - (sr.sprite.pivot.x / sr.sprite.pixelsPerUnit)),
+                                        ((sr.sprite.bounds.size.y * unit.EffectsRelativePosition.y) - (sr.sprite.pivot.y / sr.sprite.pixelsPerUnit)) );
             OverheadPosition = new Vector2(FeetPosition.x, sr.sprite.bounds.size.y);
             Vector2 aux = (HeadPosition - FeetPosition) / 3;
             TorsoPosition = FeetPosition + new Vector2(2 * aux.x, aux.y);
