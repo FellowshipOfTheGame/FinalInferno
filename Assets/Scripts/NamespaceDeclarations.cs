@@ -191,11 +191,47 @@ namespace FinalInferno
     }
 
     [System.Serializable]
+    public struct BestiaryEntry{
+        [SerializeField] public string monsterName;
+        [SerializeField] public int numberKills;
+        public BestiaryEntry(Enemy enemy, int n){
+            if(enemy != null){
+                monsterName = enemy.AssetName;
+            }else{
+                monsterName = "";
+            }
+            numberKills = Mathf.Max(1, n);
+        }
+        public static bool operator ==(BestiaryEntry left, BestiaryEntry right){
+            return left.Equals(right);
+        }
+        public static bool operator !=(BestiaryEntry left, BestiaryEntry right){
+            return !(left == right);
+        }
+        public override bool Equals(object obj){
+            if(obj.GetType() != typeof(BestiaryEntry))
+                return false;
+
+            return Equals((BestiaryEntry)obj);
+        }
+        public bool Equals(BestiaryEntry other){
+            if(monsterName != other.monsterName || numberKills != other.numberKills)
+                return false;
+
+            return true;
+        }
+        public override int GetHashCode(){
+            return (3 * monsterName.GetHashCode() + 5 * numberKills.GetHashCode());
+        }
+    }
+
+    [System.Serializable]
     public struct SaveInfo{
         [SerializeField] public long xpParty; // exp acumulativa da party
         [SerializeField] public string mapName; // nome do mapa (cena de overworld) atual
         [SerializeField] public QuestInfo[] quest; // Lsta de informações das quests
         //quests de kill
+        [SerializeField] public BestiaryEntry[] bestiary;
         [SerializeField] public string[] archetype; // Lista com a ordem dos heroes
         [SerializeField] public int[] hpCur; // hp atual de cada personagem
         [SerializeField] public Vector2[] position; // posição no overworld dos personagens
@@ -215,6 +251,18 @@ namespace FinalInferno
                         return false;
                 }
             }else if(quest != null || other.quest != null){
+                return false;
+            }
+
+            if(bestiary != null && other.bestiary != null){
+                if(bestiary.Length != other.bestiary.Length){
+                    return false;
+                }
+                for(int i= 0; i < bestiary.Length; i++){
+                    if(bestiary[i] != other.bestiary[i])
+                        return false;
+                }
+            }else if(bestiary != null || other.bestiary != null){
                 return false;
             }
 
@@ -290,6 +338,9 @@ namespace FinalInferno
 
     [System.Serializable]
     public class QuestDictionary : RotaryHeart.Lib.SerializableDictionary.SerializableDictionaryBase<string, bool>{ }
+
+    [System.Serializable]
+    public class ElementResistanceDictionary : RotaryHeart.Lib.SerializableDictionary.SerializableDictionaryBase<Element, float>{ }
 
     [System.Serializable]
     public struct SkillEffectTuple{
@@ -497,6 +548,67 @@ namespace FinalInferno
                 toggle = EditorGUI.Toggle(toggleRect, "", toggle);
                 toggleValue.boolValue = toggle;
                 anim = null;
+            }
+
+            EditorGUI.EndProperty();
+        }
+    }
+    #endif
+
+    [System.Serializable]
+    public class ScenePicker{
+        [SerializeField] private string sceneName = "";
+        [SerializeField] private string assetPath = "";
+        [SerializeField] private string guid = "";
+        public string Name { get => sceneName; private set => sceneName = value; }
+        public string Path { get => assetPath; private set => assetPath = value; }
+        public string GUID { get => guid; private set => guid = value; }
+
+        public ScenePicker(){
+            sceneName = "";
+            assetPath = "";
+            guid = "";
+        }
+    }
+    #if UNITY_EDITOR
+    [CustomPropertyDrawer(typeof(ScenePicker))]
+    public class ScenePickerEditor : PropertyDrawer{
+        SerializedProperty sceneName;
+        SerializedProperty assetPath;
+        SerializedProperty guid;
+        Rect rect;
+        Object sceneObj = null;
+
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label){
+            return EditorGUIUtility.singleLineHeight;
+        }
+
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label){
+            EditorGUI.BeginProperty(position, label, property);
+            
+            position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
+
+            rect = new Rect(position.x, position.y, position.size.x, EditorGUIUtility.singleLineHeight);
+            sceneName = property.FindPropertyRelative("sceneName");
+            assetPath = property.FindPropertyRelative("assetPath");
+            guid = property.FindPropertyRelative("guid");
+
+            if(sceneObj == null && assetPath.stringValue != ""){
+                sceneObj = AssetDatabase.LoadAssetAtPath<SceneAsset>(assetPath.stringValue);
+            }else if(assetPath.stringValue == ""){
+                sceneObj = null;
+            }
+
+            sceneObj = EditorGUI.ObjectField(rect, sceneObj, typeof(SceneAsset), false);
+
+            if(sceneObj != null){
+                sceneName.stringValue = sceneObj.name;
+                assetPath.stringValue = AssetDatabase.GetAssetPath(sceneObj.GetInstanceID());
+                guid.stringValue = AssetDatabase.AssetPathToGUID(assetPath.stringValue);
+            }else{
+                sceneName.stringValue = "";
+                assetPath.stringValue = "";
+                guid.stringValue = "";
             }
 
             EditorGUI.EndProperty();

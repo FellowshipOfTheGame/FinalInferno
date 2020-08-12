@@ -6,11 +6,13 @@ using UnityEditor;
 
 namespace Fog.Dialogue{
 
+    // This shouldn't be here, it wasn't working in the DialogueScrollPanel.cs file so it's here for reasons unknown
     [CustomEditor(typeof(DialogueScrollPanel))]
     public class DialogueScrollPanelEditor : UnityEditor.UI.ScrollRectEditor{
         [SerializeField] private bool wasVerticalLast = true;
 
         public override void OnInspectorGUI(){
+            EditorGUILayout.LabelField("Custom Scroll Rect Fields", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(serializedObject.FindProperty("smoothScrolling"), new GUIContent("Smooth Scrolling"));
             SerializedProperty prop = serializedObject.FindProperty("smoothScrolling");
             if(prop != null && prop.propertyType == SerializedPropertyType.Boolean){
@@ -18,6 +20,9 @@ namespace Fog.Dialogue{
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("scrollSpeed"), new GUIContent("Scroll Speed"));
                 }
             }
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("scrollUpIndicator"), new GUIContent("Scroll Up Indicator"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("scrollDownIndicator"), new GUIContent("Scroll Down Indicator"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("skipIndicator"), new GUIContent("Skip Indicator"));
             // Trying to restrict to only one type of scrolling
             // Cant find serialized property of parent class, so doesnt work
             // SerializedProperty verticalProp = serializedObject.FindProperty("vertical");
@@ -34,7 +39,8 @@ namespace Fog.Dialogue{
             //     }
             // }
             serializedObject.ApplyModifiedProperties();
-            EditorGUILayout.Space();
+            EditorGUILayout.Separator();
+            EditorGUILayout.LabelField("Regular Scroll Rect Fields", EditorStyles.boldLabel);
             base.OnInspectorGUI();
         }
     }

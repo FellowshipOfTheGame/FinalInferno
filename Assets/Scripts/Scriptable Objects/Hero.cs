@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Data;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace FinalInferno{
     //engloba os tipos/classes de heroi, personagem do jogador
@@ -50,9 +52,7 @@ namespace FinalInferno{
         void Awake(){
             table = null;
             table = DynamicTable.Create(heroTable);
-            for(int i = 0; i < elementalResistance.Length; i++){
-                elementalResistance[i] = 1.0f;
-            }
+            elementalResistances.Clear();
 
             skillsToUpdate = new List<PlayerSkill>(InitialsSkills);
         }
@@ -105,4 +105,16 @@ namespace FinalInferno{
         public override Color DialogueColor { get { return color; } }
         public override string DialogueName { get { return (name == null)? "" : name; } }
     }
+
+    #if UNITY_EDITOR
+    [CustomPreview(typeof(Hero))]
+    public class HeroPreview : UnitPreview{
+        public override bool HasPreviewGUI(){
+            return base.HasPreviewGUI();
+        }
+        public override void OnInteractivePreviewGUI(Rect r, GUIStyle background){
+            base.OnInteractivePreviewGUI(r, background);
+        }
+    }
+    #endif
 }

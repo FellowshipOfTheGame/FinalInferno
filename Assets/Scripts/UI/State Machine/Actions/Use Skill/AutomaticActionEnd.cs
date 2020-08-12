@@ -18,6 +18,7 @@ namespace FinalInferno.UI.FSM
         /// <param name="controller"> O controlador da máquina de estados. </param>
         public override void Act(StateController controller)
         {
+            AnimationEnded.StartAnimation();
             BattleManager.instance.StartCoroutine(EndAnimationAfterSeconds(delay));
         }
 

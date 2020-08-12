@@ -21,6 +21,9 @@ namespace FinalInferno.UI.AII{
         private int currentIndex = 0;
         [SerializeField] private ScrollRect scrollRect = null;
         [SerializeField] private KeyboardScrollbar scrollbar = null;
+        [SerializeField] private GameObject rightArrow;
+        [SerializeField] private GameObject leftArrow;
+        [SerializeField] private GameObject xIndicator;
 
         void Reset(){
             scrollRect = GetComponent<ScrollRect>();
@@ -28,6 +31,8 @@ namespace FinalInferno.UI.AII{
 
         public new void Awake(){
             currentItem = null;
+            rightArrow.SetActive(false);
+            leftArrow.SetActive(false);
 
             if(!scrollRect)
                 scrollRect = GetComponent<ScrollRect>();
@@ -51,7 +56,21 @@ namespace FinalInferno.UI.AII{
         }
 
         public void FocusOn(int index){
+            Debug.Log($"Chamou focus on {index}");
             index = Mathf.Clamp(index, 0, detailPages.Count-1);
+
+            if(index < detailPages.Count-1){
+                rightArrow.SetActive(true);
+            }else{
+                rightArrow.SetActive(false);
+            }
+
+            if(index > 0){
+                leftArrow.SetActive(true);
+            }else{
+                leftArrow.SetActive(false);
+            }
+
             if(index != currentIndex){
 
                 scrollRect.content = detailPages[index].GetComponent<RectTransform>();
@@ -79,6 +98,7 @@ namespace FinalInferno.UI.AII{
         }
 
         public override void Active(){
+            xIndicator.SetActive(false);
             currentIndex = 0;
             for(int i = 0; i < currentValues.Count; i++){
                 currentValues[i] = 1f;
@@ -89,6 +109,9 @@ namespace FinalInferno.UI.AII{
 
         public override void Deactive(){
             FocusOn(0);
+            rightArrow.SetActive(false);
+            leftArrow.SetActive(false);
+            xIndicator.SetActive(true);
             currentIndex = 0;
             for(int i = 0; i < currentValues.Count; i++){
                 currentValues[i] = 1f;

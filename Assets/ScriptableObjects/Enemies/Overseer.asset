@@ -19,12 +19,34 @@ MonoBehaviour:
   baseDef: 3
   baseMagicDef: 3
   baseSpeed: 16
-  elementalResistance:
-  - 0.5
-  - 1.5
-  - 1
-  - 1
-  - 1
+  elementalResistances:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 0
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 0
+    _keyValues: 0100000002000000
+    _keys: 0100000002000000
+    _values:
+    - 0.5
+    - 1.5
   skills:
   - {fileID: 11400000, guid: 0ca2852212a68e141abd6654048cd58e, type: 2}
   - {fileID: 11400000, guid: df9ec28c727b6984db874ca73c12eba5, type: 2}
@@ -35,10 +57,22 @@ MonoBehaviour:
   portrait: {fileID: 21300004, guid: 5959357f3f25e2e418d3fcad1413dfdc, type: 3}
   dialoguePortrait: {fileID: 21300004, guid: 5959357f3f25e2e418d3fcad1413dfdc, type: 3}
   battleSprite: {fileID: 21300000, guid: 5959357f3f25e2e418d3fcad1413dfdc, type: 3}
+  defaultTargetPosition: 0
+  xOffset: 0.733
+  yOffset: 0.696
   queueSprite: {fileID: 21300002, guid: 5959357f3f25e2e418d3fcad1413dfdc, type: 3}
   dialogueColor: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 0}
   element: 1
   damageFocus: 2
+  bestiaryPortrait: {fileID: 21300000, guid: 5959357f3f25e2e418d3fcad1413dfdc, type: 3}
+  enemyCry: {fileID: 0}
+  bio: Overseers are giant floating eyes with tentacles. They were originally created
+    by Leviathan, the prince of envy, so he could spy on all his servants and stop
+    rebellions. However, Lucifer soon adopted overseers to watch over the hellish
+    dimension. Their empty minds can only process their tasks of monitoring the plains
+    beyond hell searching for stranded souls and rebel demons. When facing a strong
+    enemy, they call for the help of allies, while killing weak ones with a powerful
+    laser beam.
   enemyTable: {fileID: 4900000, guid: 453f8c7755ca59640adbd3e52df6d18f, type: 3}
   table:
     colTypes:

@@ -56,7 +56,7 @@ namespace FinalInferno.UI.AII
                 Vector3 newPosition = rectTransform.TransformPoint(rectTransform.rect.center.x, 0f, 0f);
                 newPosition += new Vector3(defaultOffset.x, defaultOffset.y, 2);
                 if(BattleManager.instance.currentUnit == unit){
-                    float xOffset = (unit.unit.IsHero)? stepSize : -stepSize;
+                    float xOffset = (unit.Unit.IsHero)? stepSize : -stepSize;
                     newPosition.x += xOffset;
                     CurrentOffset = new Vector2(xOffset, 0f);
                 }

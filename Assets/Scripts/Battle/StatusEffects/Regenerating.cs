@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace FinalInferno{
     public class Regenerating : StatusEffect {
+        public override StatusEffectVisuals VFXID { get => StatusEffectVisuals.Regenerating; }
         public override StatusType Type { get{ return StatusType.None; } }
         public override float Value { get{ return Target.MaxHP * percentageGain; } }
         private float percentageGain;

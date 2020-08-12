@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace FinalInferno{
     public class ResistanceDown : StatusEffect {
+        public override StatusEffectVisuals VFXID { get => StatusEffectVisuals.ResistanceDown; }
         public override StatusType Type { get{ return StatusType.Debuff; } }
         public override float Value { get{ return resValue; } }
         private int resValue;

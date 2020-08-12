@@ -11,19 +11,15 @@ namespace FinalInferno.UI
 
         public void LoadPreview()
         {
-            // Calcula o level dos inimigos
-            // Avalia os parametros das quests
-            int questParam = 0;
-            if(AssetManager.LoadAsset<Quest>("MainQuest").PartyReference.events["CerberusDead"]) questParam++;
-
-            int enemyLevel = questParam * 10;
-            if(Mathf.Clamp(Party.Instance.level - (questParam * 10), 0, 10) > 5)
-                enemyLevel += 5;
-
             CerberusHead.heads = 0;
+            int enemyLevel = int.MinValue;
             foreach (Enemy enemy in ChangeSceneUI.battleEnemies)
             {
-                enemy.LevelEnemy(enemyLevel);
+                if(enemyLevel == int.MinValue){
+                    enemyLevel = enemy.LevelEnemy();
+                }else{
+                    enemy.LevelEnemy(enemyLevel);
+                }
 
                 if (enemy is CerberusHead)
                     CerberusHead.heads++;

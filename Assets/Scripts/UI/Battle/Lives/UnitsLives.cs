@@ -33,7 +33,7 @@ namespace FinalInferno.UI.Battle.LifeMenu
 
         public void UpdateLives()
         {
-            OnUpdate();
+            OnUpdate?.Invoke();
         }
 
     }

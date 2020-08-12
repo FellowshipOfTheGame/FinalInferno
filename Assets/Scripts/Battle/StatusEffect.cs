@@ -3,22 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace FinalInferno{
+    /*
+    Para adicionar um novo status effect que tenha efeito visual:
+        - Adicionar o Status effect no enum do arquivo StatusVFXHandler
+        - Dar override na propriedade VFXID para o novo valor criado
+        - Criar um objeto vazio como filho do objeto com componente StatusVFXHandler no Prefab da unidade
+            - Esse objeto filho deve ter o mesmo nome que a entrada criada no enum
+        - Adicionar os objetos do tipo StatusEffectVFX como filhos desse novo objeto
+            - A posição relativa desses objetos deve evitar overlaps com outros efeitos
+            - Todos os objetos aqui receberão os parametros de animação de maneira igual
+            - Comportamentos diferentes devem ser definidos pela máquina de estados
+    */
     public abstract class StatusEffect {
         [SerializeField] virtual public Sprite Icon{ get{ return null; } }
-        private List<StatusEffectVFX> persistentSourceVFX = new List<StatusEffectVFX>();
-        private List<StatusEffectVFX> persistentTargetVFX = new List<StatusEffectVFX>();
-        public List<StatusEffectVFX> updateSourceVFX = new List<StatusEffectVFX>();
-        public List<StatusEffectVFX> updateTargetVFX = new List<StatusEffectVFX>();
-        public List<StatusEffectVFX> removeSourceVFX = new List<StatusEffectVFX>();
-        public List<StatusEffectVFX> removeTargetVFX = new List<StatusEffectVFX>();
-        private List<StatusEffectVFX> garbageCollector = new List<StatusEffectVFX>();
+        virtual public StatusEffectVisuals VFXID { get => StatusEffectVisuals.Null; }
         protected float rollValue = 1.0f;
         public bool Failed { get; protected set; }
         public abstract StatusType Type { get; }
         private int duration;
-        public virtual int Duration { protected set{ duration = value; } get{ return (duration > int.MinValue)? duration : 99;} }
+        public virtual int Duration { protected set{ duration = value; } get{ return (duration > int.MinValue)? duration : 99; } }
         private int turnsLeft;
-        public virtual int TurnsLeft { protected set{ turnsLeft = value; } get{ return (turnsLeft > int.MinValue)? turnsLeft : 99;} }
+        public virtual int TurnsLeft { protected set{ turnsLeft = value; } get{ return (turnsLeft > int.MinValue)? turnsLeft : 99; } }
         public BattleUnit Source { protected set; get; }
         public BattleUnit Target { protected set; get; }
         public abstract float Value { get; } // Valor relevante para replicacao de efeitos
@@ -38,34 +43,14 @@ namespace FinalInferno{
             return true;
         }
         public virtual void Remove(){
-            Target.effects.Remove(this);
+            Target.RemoveEffect(this);
+            // Alguns status effects, como MarketCrash, estão na lista do Source
+            // O método RemoveEffect cuida de avaliar se o efeito está na lista
+            Source.RemoveEffect(this);
 
-            // Destroy all vfx created
-            garbageCollector.AddRange(persistentSourceVFX);
-            garbageCollector.AddRange(persistentTargetVFX);
-            foreach(StatusEffectVFX vfx in garbageCollector){
-                vfx?.DestroyVFX();
-            }
-
-            // Creates removal effects; These MUST have a destroy event at the end of animation
-            foreach(StatusEffectVFX vfx in removeSourceVFX){
-                StatusEffectVFX newvfx = GameObject.Instantiate(vfx, Source.transform.parent);
-                newvfx.GetComponent<SpriteRenderer>().sortingOrder = Source.GetComponent<SpriteRenderer>().sortingOrder + 1;
-            }
-            foreach(StatusEffectVFX vfx in removeTargetVFX){
-                StatusEffectVFX newvfx = GameObject.Instantiate(vfx, Target.transform.parent);
-                newvfx.GetComponent<SpriteRenderer>().sortingOrder = Target.GetComponent<SpriteRenderer>().sortingOrder + 1;
-            }
         }
         public virtual void ForceRemove(){
             Remove();
-        }
-
-        public void AddPersistentVFX(List<StatusEffectVFX> source, List<StatusEffectVFX> target){
-            if(source != null)
-                persistentSourceVFX.AddRange(source);
-            if(target != null)
-                persistentTargetVFX.AddRange(target);
         }
         
         public virtual bool Update() { // Retorna true quando o status effect foi removido
@@ -74,24 +59,6 @@ namespace FinalInferno{
             }
 
             TurnsLeft--;
-
-            // Updates or creates visual effects as needed
-            foreach(StatusEffectVFX vfx in persistentSourceVFX){
-                vfx.TurnsLeft = TurnsLeft;
-            }
-            foreach(StatusEffectVFX vfx in persistentTargetVFX){
-                vfx.TurnsLeft = TurnsLeft;
-            }
-            foreach(StatusEffectVFX vfx in updateTargetVFX){
-                StatusEffectVFX newvfx = GameObject.Instantiate(vfx, Target.transform.parent);
-                newvfx.GetComponent<SpriteRenderer>().sortingOrder = Target.GetComponent<SpriteRenderer>().sortingOrder + 1;
-                garbageCollector.Add(newvfx);
-            }
-            foreach(StatusEffectVFX vfx in updateSourceVFX){
-                StatusEffectVFX newvfx = GameObject.Instantiate(vfx, Source.transform.parent);
-                newvfx.GetComponent<SpriteRenderer>().sortingOrder = Source.GetComponent<SpriteRenderer>().sortingOrder + 1;
-                garbageCollector.Add(newvfx);
-            }
 
             Source.aggro += AggroOnUpdate;
             if (TurnsLeft < 0){

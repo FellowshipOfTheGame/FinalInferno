@@ -11,6 +11,11 @@ namespace FinalInferno{
         public long xp; //experiencia da "skill"
         public long xpNext; //experiencia necessaria para a "skill" subir de nivel
         public long XpCumulative { get { return ( (table == null)? 0 : (xp +  ((level <= 1)? 0 : (XpTable.Rows[level-2].Field<long>("XPAccumulated"))) ) ); } }
+        public int MaxLevel{
+            get{
+                return Mathf.Min(XpTable.Rows.Count, Table.Rows.Count);
+            }
+        }
         [TextArea]
         public string description; //descricao da "skill" que aparecera para o jogador no menu de pause
         public override string ShortDescription { get { return (shortDescription != null && shortDescription != "") ? shortDescription : description; } }
@@ -86,6 +91,10 @@ namespace FinalInferno{
                 //Debug.Log("value1: " + effects[i].value1);
                 //Debug.Log("value2: " + effects[i].value2);
             }
+
+            foreach(PlayerSkill child in skillsToUpdate){
+                child.CheckUnlock(Party.Instance.level);
+            }
         }
 
         //Adiciona os pontos de experiência ao utilizar a skill
@@ -94,8 +103,9 @@ namespace FinalInferno{
             
             xp += exp;
 
-            //testa se a skill subiu de nivel
-            while(xp >= xpNext && level < XpTable.Rows.Count){
+            // testa se a skill subiu de nivel
+            // max level = XpTable.Rows.Count
+            while(xp >= xpNext && level < XpTable.Rows.Count && level < Table.Rows.Count){
                 xp -= xpNext;
                 level++;
 
@@ -113,7 +123,7 @@ namespace FinalInferno{
             long expValue = 0;
 
             foreach(BattleUnit target in targets){
-                expValue += target.unit.SkillExp;
+                expValue += target.Unit.SkillExp;
             }
             if(ShouldCalculateMean)
                 expValue /= Mathf.Max(targets.Count, 1);
@@ -138,12 +148,12 @@ namespace FinalInferno{
         public bool CheckUnlock(int heroLevel){
             if(level > 0) return true;
 
-            bool check = true;
+            bool check = (heroLevel >= prerequisiteHeroLevel);
 
-            if(heroLevel >= prerequisiteHeroLevel){
+            if(check){
                 //checa se todos os pre requisitos foram atendidos
                 for(int i = 0; i < prerequisiteSkills.Count; i++){
-                    check &= prerequisiteSkills[i].CheckLevel(prerequisiteSkillsLevel[i]);
+                    check &= (prerequisiteSkills[i].Level >= prerequisiteSkillsLevel[i]);
                 }
 
                 //se todos os pre requisitos foram atendidos, destrava a skill
@@ -152,14 +162,8 @@ namespace FinalInferno{
                     active = true;
                 }
             }
-            else check = false;
 
             return check;
-        }
-
-        //checa se o level dessa skill cumpre um pre requisito, i.e., eh maior ou igual a um certo valor
-        public bool CheckLevel(int prerequisite){
-            return (level >= prerequisite);
         }
 
         // Versao de callback das skills precisa ser responsavel por calcular o ganho de exp

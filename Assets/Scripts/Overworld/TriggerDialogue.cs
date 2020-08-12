@@ -7,14 +7,6 @@ namespace FinalInferno{
     {
         [SerializeField] private List<DialogueEntry> dialogues = new List<DialogueEntry>();
 
-        void Awake(){
-            for(int i = 0; i < dialogues.Count; i++){
-                if(dialogues[i].quest.PartyReference != null){
-                    dialogues[i] = new DialogueEntry(dialogues[i].quest.PartyReference, dialogues[i].eventFlag, dialogues[i].dialogue);
-                }
-            }
-        }
-
         protected override void TriggerAction(Fog.Dialogue.Agent agent){
             Fog.Dialogue.Dialogue selectedDialogue = null;
             foreach(DialogueEntry entry in dialogues){

@@ -19,12 +19,33 @@ MonoBehaviour:
   baseDef: 14
   baseMagicDef: 14
   baseSpeed: 22
-  elementalResistance:
-  - 1.9
-  - 1
-  - 1
-  - 1
-  - 1
+  elementalResistances:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 0
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 0
+    _keyValues: 01000000
+    _keys: 01000000
+    _values:
+    - 1.9
   skills:
   - {fileID: 11400000, guid: 2c3021b87d1b78a458264d0c93f382d1, type: 2}
   - {fileID: 11400000, guid: c7f8ca5a99d6a8240a8df51799499057, type: 2}
@@ -39,10 +60,16 @@ MonoBehaviour:
   portrait: {fileID: 21300004, guid: 5959357f3f25e2e418d3fcad1413dfdc, type: 3}
   dialoguePortrait: {fileID: 21300004, guid: 5959357f3f25e2e418d3fcad1413dfdc, type: 3}
   battleSprite: {fileID: 21300000, guid: 5959357f3f25e2e418d3fcad1413dfdc, type: 3}
+  defaultTargetPosition: 0
+  xOffset: 0.733
+  yOffset: 0.696
   queueSprite: {fileID: 21300002, guid: 5959357f3f25e2e418d3fcad1413dfdc, type: 3}
   dialogueColor: {r: 1, g: 0, b: 0, a: 0}
   element: 5
   damageFocus: 3
+  bestiaryPortrait: {fileID: 0}
+  enemyCry: {fileID: 0}
+  bio: Bio
   enemyTable: {fileID: 4900000, guid: e64e21d090f18764e98c3aba80c17a14, type: 3}
   table:
     colTypes:

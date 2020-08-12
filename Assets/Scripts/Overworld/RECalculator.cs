@@ -9,6 +9,7 @@ namespace FinalInferno{
         public static bool encountersEnabled = true;
         // To do
         // Por ser estatico nao da pra setar no inspetor, mas n faz sentido setar isso pra toda instancia de RECalculator
+        // Ou talvez faça usando uma prefab mesmo e isso deixe de ser estatico
         public static List<PlayerSkill> encounterSkils;
         [SerializeField] private Transform playerObj;
         // Tabela de encontros aleatorios pra este mapa
@@ -32,11 +33,13 @@ namespace FinalInferno{
         [SerializeField] private float baseEncounterRate = 5.0f;
         [Range(0, 100)]
         [SerializeField] private float rateIncreaseFactor = 1f;
+        [Range(1, 20)]
+        [SerializeField] private float freeWalkDistance = 3f;
+        private Fog.Dialogue.Agent agent;
         private float curEncounterRate;
-        private float time;
-        private float checkCooldown = 0.25f;
-        private float gracePeriod = 1f;
+        private Vector2 lastCheckPosition;
         private Vector2 lastPosition;
+        private float distanceWalked;
 
         [SerializeField] private FinalInferno.UI.FSM.ButtonClickDecision decision;
 
@@ -45,50 +48,54 @@ namespace FinalInferno{
         {
             table = null;
             table = DynamicTable.Create(encounterTable);
+
             playerObj = CharacterOW.MainOWCharacter?.transform;
             if(playerObj)
-                lastPosition = new Vector2(playerObj.position.x, playerObj.position.y);
+                lastCheckPosition = new Vector2(playerObj.position.x, playerObj.position.y);
             else
-                lastPosition = Vector2.zero;
+                lastCheckPosition = Vector2.zero;
+            lastPosition = lastCheckPosition;
+
+            agent = CharacterOW.MainOWCharacter?.GetComponent<Fog.Dialogue.Agent>();
+
             StaticReferences.BGM.PlaySong(overworldBGM);
             curEncounterRate = baseEncounterRate;
-            time = -gracePeriod;
+            distanceWalked = 1f - freeWalkDistance;
         }
 
-        // Update is called once per frame
-        void Update()
+        void LateUpdate()
         {
-            if(time > checkCooldown + float.Epsilon){
-                time -= checkCooldown;
-
-                if (encountersEnabled && CharacterOW.PartyCanMove) {
-                    // Calcula a distancia entre a posicao atual e a distance no ultimo update
-                    float distance = Vector2.Distance(lastPosition, new Vector2(playerObj.position.x, playerObj.position.y));
-                    if (distance > float.Epsilon) {
-                        // Caso o player tenha se movido, verifica se encontrou batalha
-                        CheckEncounter(distance);
-                        // Atualiza lastPosition
-                        lastPosition = new Vector2(playerObj.position.x, playerObj.position.y);
-                    }
-                }
-            }else if(time < -float.Epsilon){
-                if(playerObj){
-                    lastPosition = new Vector2(playerObj.position.x, playerObj.position.y);
-                }
+            if(agent == null && CharacterOW.MainOWCharacter != null){
+                agent = CharacterOW.MainOWCharacter.GetComponent<Fog.Dialogue.Agent>();
             }
-
-            if(CharacterOW.PartyCanMove){
-                time += Time.deltaTime;
+            if (encountersEnabled && (playerObj != null) && CharacterOW.PartyCanMove && (agent == null || agent.canInteract)) {
+                // Calcula a distancia entre a posicao atual e a distancia no ultimo LateUpdate
+                float distance = Vector2.Distance(lastPosition, new Vector2(playerObj.position.x, playerObj.position.y));
+                // Incrementa a distancia total entre checagens
+                distanceWalked += distance;
+                if (distanceWalked > 1.0f) {
+                    // Caso o player tenha se movido ao menos uma unidade, verifica se encontrou batalha
+                    CheckEncounter(distanceWalked);
+                    // Atualiza lastCheckPosition
+                    lastCheckPosition = new Vector2(playerObj.position.x, playerObj.position.y);
+                    distanceWalked = 0f;
+                }
+                // Atualiza o lastPosition
+                lastPosition = new Vector2(playerObj.position.x, playerObj.position.y);
             }
         }
 
+        // A chamada da função espera que o valor de distance seja 1.0f
+        // Se tiver frame drop e o jogador andar distancias maiores do que deveria sem checar, a chance de ter batalha é maior
         private void CheckEncounter(float distance) {
             if (Random.Range(0.0f, 100.0f) < curEncounterRate) {
                 // Quando encontrar uma batalha
                 //Debug.Log("Found random encounter");
                 // Impede que o player se movimente
                 CharacterOW.PartyCanMove = false;
-                time = float.MinValue;
+                if(agent != null){
+                    agent.canInteract = false;
+                }
                 // Usar a tabela de encontros aleatorios para definir a lista de inimigos
                 bool isPowerSpike = Party.Instance.level % 5 == 1;
                 int scaledMinEnemies = (!isPowerSpike)? minNumberEnemies : Mathf.Max(minNumberEnemies-1, 1);
@@ -117,7 +124,8 @@ namespace FinalInferno{
 
                     //Debug.Log(enemies[i]);
                 }
-                // Calculo de level foi movido para a criação da preview de batalha
+                // Calculo de level foi movido para Enemy.cs
+                // A função é chamada no script de preview
                 // Assets/Scripts/UI/Menus/LoadEnemiesPreview.cs
 
                 FinalInferno.UI.ChangeSceneUI.isBattle = true;

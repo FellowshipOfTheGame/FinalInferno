@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace FinalInferno{
     public class HealingOverTime : StatusEffect {
+        public override StatusEffectVisuals VFXID { get => StatusEffectVisuals.HealingOverTime; }
         public override StatusType Type { get{ return StatusType.None; } }
         public override float Value { get{ return healPerTurn; } }
         private int healPerTurn;

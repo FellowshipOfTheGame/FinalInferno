@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using FinalInferno;
 using FinalInferno.UI.Battle;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace FinalInferno{
     [CreateAssetMenu(fileName = "CerberusHead", menuName = "ScriptableObject/Enemy/CerberusHead")]
@@ -15,10 +18,12 @@ namespace FinalInferno{
         public static int heads = 0;
         private static int hellFireCD = 0;
         private static List<GameObject> battleUnits = new List<GameObject>();
-        private static BattleUnit topHead = null;
+        private static BattleUnit backHead = null;
         private static BattleUnit middleHead = null;
-        private static BattleUnit bottomHead = null;
+        private static BattleUnit frontHead = null;
 
+        [Space(10)]
+        [Header("It has 3 heads")]
         [SerializeField] private Sprite bodySprite;
         [SerializeField] private RuntimeAnimatorController animatorMiddleHead;
         [SerializeField] private RuntimeAnimatorController animatorFrontHead;
@@ -52,10 +57,42 @@ namespace FinalInferno{
                 }
             }
         }
+        [Space(10)]
         [SerializeField] private Sprite battleSpriteMiddleHead;
+        [Header("    Middle Head Status Effect Position")]
+        [Space(-10)]
+        [SerializeField, Range(0, 1f)]
+        private float xOffsetMiddle = 0;
+        [SerializeField, Range(0, 1f)]
+        private float yOffsetMiddle = 0;
+        [Space(7)]
         [SerializeField] private Sprite battleSpriteFrontHead;
+        [Header("    Front Head Status Effect Position")]
+        [Space(-10)]
+        [SerializeField, Range(0, 1f)]
+        private float xOffsetFront = 0;
+        [SerializeField, Range(0, 1f)]
+        private float yOffsetFront = 0;
+        public override Vector2 EffectsRelativePosition {
+            get{
+                switch(heads){
+                    case 1:
+                        return new Vector2(xOffset, yOffset);
+                    case 2:
+                        return new Vector2(xOffsetMiddle, yOffsetMiddle);
+                    case 3:
+                        return new Vector2(xOffsetFront, yOffsetFront);
+                    default:
+                        return new Vector2(0.5f, 1f);
+                }
+            }
+        }
         public override Sprite BattleSprite {
             get{
+                if(BattleManager.instance == null){
+                    return battleSprite;
+                }
+
                 //Debug.Log("Usou o getter certo");
                 switch(heads){
                     default:
@@ -63,10 +100,10 @@ namespace FinalInferno{
                         heads = 1;
                         battleUnits.Clear();
                         foreach(BattleUnit bUnit in FindObjectsOfType<BattleUnit>()){
-                            if(bUnit.unit == this && bUnit.name == this.name){
+                            if(bUnit.Unit == this && bUnit.name == this.name){
                                 bUnit.name += (" " + heads);
                                 battleUnits.Add(bUnit.gameObject);
-                                topHead = bUnit;
+                                backHead = bUnit;
                                 break;
                             }
                         }
@@ -74,7 +111,7 @@ namespace FinalInferno{
                     case 1:
                         heads++;
                         foreach(BattleUnit bUnit in FindObjectsOfType<BattleUnit>()){
-                            if(bUnit.unit == this && bUnit.name == this.name){
+                            if(bUnit.Unit == this && bUnit.name == this.name){
                                 bUnit.name += (" " + heads);
                                 battleUnits.Add(bUnit.gameObject);
                                 middleHead = bUnit;
@@ -85,10 +122,10 @@ namespace FinalInferno{
                     case 2:
                         heads++;
                         foreach(BattleUnit bUnit in FindObjectsOfType<BattleUnit>()){
-                            if(bUnit.unit == this && bUnit.name == this.name){
+                            if(bUnit.Unit == this && bUnit.name == this.name){
                                 bUnit.name += (" " + heads);
                                 battleUnits.Add(bUnit.gameObject);
-                                bottomHead = bUnit;
+                                frontHead = bUnit;
                                 break;
                             }
                         }
@@ -96,8 +133,8 @@ namespace FinalInferno{
                         //Faz os sprites ficarem na mesma posição
                         CompositeBattleUnit composite = middleHead.gameObject.AddComponent<CompositeBattleUnit>();
                         if(composite){
-                            composite.AddApendage(topHead);
-                            composite.AddApendage(bottomHead);
+                            composite.AddApendage(backHead);
+                            composite.AddApendage(frontHead);
                         }
                         // Altera o layout group para que os elementos fiquem mais proximos
                         UnityEngine.UI.VerticalLayoutGroup layoutGroup = middleHead.battleItem.layout.transform.parent.GetComponent<UnityEngine.UI.VerticalLayoutGroup>();
@@ -123,6 +160,7 @@ namespace FinalInferno{
         }
         public override float BoundsSizeX { get => (battleSprite.bounds.size.x); }
         public override float BoundsSizeY { get => (battleSprite.bounds.size.y/8f); }
+        [Space(10)]
         [SerializeField] private Sprite queueSpriteMiddleHead;
         [SerializeField] private Sprite queueSpriteFrontHead;
         public override Sprite QueueSprite {
@@ -220,4 +258,52 @@ namespace FinalInferno{
             return targets;
         }
     }
+
+    #if UNITY_EDITOR
+    [CustomPreview(typeof(CerberusHead))]
+    public class CerberusHeadPreview : UnitPreview{
+        public override void OnPreviewGUI(Rect r, GUIStyle background){
+            CerberusHead unit = target as CerberusHead;
+            if(unit != null){
+                if(tex == null){
+                    tex = new Texture2D(Mathf.FloorToInt(unit.BattleSprite.textureRect.width), Mathf.FloorToInt(unit.BattleSprite.textureRect.height), unit.BattleSprite.texture.format, false);
+                    Color[] colors = unit.BattleSprite.texture.GetPixels(Mathf.FloorToInt(unit.BattleSprite.textureRectOffset.x), Mathf.FloorToInt(unit.BattleSprite.textureRectOffset.y), tex.width, tex.height);
+                    tex.SetPixels(colors);
+                    tex.Apply();
+
+                    Color[] transparency = new Color[tex.width * tex.height];
+                    for(int i = 0; i < transparency.Length; i++){
+                        transparency[i] = Color.clear;
+                    }
+                    bg = new Texture2D(tex.width, tex.height, tex.format, false, false);
+                    bg.SetPixels(transparency);
+                    bg.Apply();
+                }
+
+                Rect texRect;
+                float aspectRatio = tex.height / (float)tex.width;
+                float scaledHeight = aspectRatio * 0.8f * r.width;
+
+                if(tex.width > tex.height && (r.height * 0.8f) > scaledHeight){
+                    texRect = new Rect(r.center.x - 0.4f * r.width, r.center.y - aspectRatio * 0.4f * r.width, 0.8f * r.width, aspectRatio * 0.8f * r.width);
+                }else{
+                    texRect = new Rect(r.center.x - 0.4f * r.height / aspectRatio, r.center.y - 0.4f * r.height, 0.8f * r.height / aspectRatio, 0.8f * r.height);
+                }
+
+                float rectSize = 0.1f * Mathf.Max(texRect.width, texRect.height);
+
+                EditorGUI.DrawTextureTransparent(texRect, bg, ScaleMode.StretchToFill);
+                GUI.DrawTexture(texRect, tex, ScaleMode.ScaleToFit);
+
+                int previousValue = CerberusHead.heads;
+                for(int i = 1; i <= 3; i++){
+                    CerberusHead.heads = i;
+                    Rect headRect = new Rect(texRect.x + (unit.EffectsRelativePosition.x * texRect.width) - rectSize/2, texRect.yMax - (unit.EffectsRelativePosition.y * texRect.height) - rectSize/2, rectSize, rectSize);
+                    EditorGUI.DrawRect(headRect, new Color(0f, 1f, 0f, .7f));
+                }
+                CerberusHead.heads = previousValue;
+            }
+        }
+    }
+    #endif
 }

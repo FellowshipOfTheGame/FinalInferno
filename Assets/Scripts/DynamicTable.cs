@@ -34,6 +34,10 @@ namespace FinalInferno{
                     return -1;
             }
 
+            public bool HasField<T>(string colName){
+                return (GetColNumber(colName, typeof(T).AssemblyQualifiedName) != -1);
+            }
+
             public T Field<T>(string colName){
                 int colNumber = GetColNumber(colName, typeof(T).AssemblyQualifiedName);
                 if(colNumber < 0) return default(T);

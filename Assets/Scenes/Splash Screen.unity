@@ -148,6 +148,12 @@ MonoBehaviour:
   debugBuild: 0
   bgm: {fileID: 0}
   mainMenuBGM: {fileID: 8300000, guid: 257c2a15fc9083241a15eb315821613e, type: 3}
+  firstDialogue: {fileID: 11400000, guid: b131ff06aef5d2e4d8e64ac63f25f0e1, type: 2}
+  firstScene:
+    sceneName: StartingArea00_single_(first_scene)
+    assetPath: Assets/Scenes/The Plains Beyond Hell/StartingArea00_single_(first_scene).unity
+    guid: 652176e071e3ca44aa0ac373b519f741
+  assetManager: {fileID: 11400000, guid: 4b1b927406801d048a3977fe84e67f4b, type: 2}
 --- !u!4 &26057116
 Transform:
   m_ObjectHideFlags: 0
@@ -156,7 +162,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 26057114}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.4811275, y: -0.69775444, z: 197.58594}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -295,7 +301,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 670f1b89f5556b24ba1eb856bba5072e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageSprites: []
+  damageSprites:
+  - {fileID: 21300000, guid: fae1eaedac6a6c7479703b9839eaf9ce, type: 3}
+  - {fileID: 21300000, guid: 6a6a8db06d9a54c4b9235beea2f3da35, type: 3}
+  - {fileID: 21300000, guid: 9ae6c6713fad460448d35a51d5e69965, type: 3}
   elementSprites:
   - {fileID: 21300000, guid: a9fa81268f752ec4d8d22717e133276d, type: 3}
   - {fileID: 21300000, guid: 257cc744f21aa474b82978f533c2986f, type: 3}

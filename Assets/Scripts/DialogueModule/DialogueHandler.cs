@@ -210,8 +210,14 @@ namespace Fog.Dialogue
 				}
 
 				portrait.sprite = null;
+				Color transparent = Color.white;
+				transparent.a = 0;
+
 				if(usePortraits && portrait != null){
 					portrait.sprite = currentLine.Portrait;
+					// If there is no portrait, disables the portrait object making it transparent and/or disabling the object
+					portrait.color = (portrait.sprite != null)? Color.white : transparent;
+					portrait.gameObject.SetActive(portrait.sprite != null);
 				}
 
 				dialogueText.text = "";

@@ -9,7 +9,7 @@ namespace FinalInferno{
 
     public class BattleManager : MonoBehaviour{
         
-        public static BattleManager instance;
+        public static BattleManager instance = null;
 
         public FinalInferno.UI.FSM.BoolDecision isBattleReady;
         public List<Unit> units;
@@ -39,6 +39,12 @@ namespace FinalInferno{
             BattleProgress.ResetInfo(Party.Instance);
         }
 
+        void OnDestroy(){
+            if(instance == this){
+                instance = null;
+            }
+        }
+
         // #if UNITY_EDITOR
         public void Update(){
             if(StaticReferences.DebugBuild){
@@ -55,20 +61,21 @@ namespace FinalInferno{
         // #endif
 
         public void PrepareBattle(){
+            int ppu = Camera.main.gameObject.GetComponent<UnityEngine.U2D.PixelPerfectCamera>().assetsPPU;
             foreach(Unit unit in units){
                 if(unit.IsHero){
                     // Precisa ser salvo antes do LoadUnit para registrar exp das habilidades OnSpawn
                     BattleProgress.addHeroSkills((Hero)unit);
                 }
 
-                BattleUnit newUnit = BattleUnitsUI.instance.LoadUnit(unit);
+                BattleUnit newUnit = BattleUnitsUI.instance.LoadUnit(unit, ppu);
                 battleUnits.Add(newUnit);
                 queue.Enqueue(newUnit, -newUnit.curSpeed);
                 // Debug.Log("Carregou " + unit.name);
 
                 if(!unit.IsHero){
                     newUnit.ChangeColor();
-                    (newUnit.unit as Enemy).ResetParameters();
+                    (newUnit.Unit as Enemy).ResetParameters();
                 }
             }
             isBattleReady.UpdateValue(true);
@@ -124,7 +131,7 @@ namespace FinalInferno{
             if(currentUnit == null){
                 return UnitType.Null;
             }
-            return GetUnitType(currentUnit.unit);
+            return GetUnitType(currentUnit.Unit);
         }
 
         public void Kill(BattleUnit unit){
@@ -175,12 +182,12 @@ namespace FinalInferno{
 
             if(!countDead){
                 foreach(BattleUnit unit in battleUnits){
-                    if (unit.CurHP > 0 && GetUnitType(unit.unit) == type)
+                    if (unit.CurHP > 0 && GetUnitType(unit.Unit) == type)
                         team.Add(unit);
                 }
             }else{
                 foreach(BattleUnit unit in battleUnits){
-                    if((GetUnitType(unit.unit) == type) && ( !deadOnly ||(deadOnly && unit.CurHP <= 0)))
+                    if((GetUnitType(unit.Unit) == type) && ( !deadOnly ||(deadOnly && unit.CurHP <= 0)))
                         team.Add(unit);
                 }
             }
@@ -189,11 +196,11 @@ namespace FinalInferno{
         }
 
         public List<BattleUnit> GetTeam(BattleUnit battleUnit, bool countDead = false, bool deadOnly = false){
-            return GetTeam(GetUnitType(battleUnit.unit), countDead, deadOnly);
+            return GetTeam(GetUnitType(battleUnit.Unit), countDead, deadOnly);
         }
 
         public List<BattleUnit> GetEnemies(BattleUnit battleUnit, bool countDead = false, bool deadOnly = false){
-            return GetTeam(((battleUnit.unit.IsHero)? UnitType.Enemy : UnitType.Hero), countDead, deadOnly);
+            return GetTeam(((battleUnit.Unit.IsHero)? UnitType.Enemy : UnitType.Hero), countDead, deadOnly);
         }
 
         public List<BattleUnit> GetEnemies(UnitType type, bool countDead = false, bool deadOnly = false){
@@ -202,7 +209,7 @@ namespace FinalInferno{
 
         public BattleUnit GetBattleUnit(Unit unit){
             foreach(BattleUnit bUnit in battleUnits){
-                if(bUnit.unit == unit) return bUnit;
+                if(bUnit.Unit == unit) return bUnit;
             }
             return null;
         }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace FinalInferno{
     public class Confused : StatusEffect {
+        public override StatusEffectVisuals VFXID { get => StatusEffectVisuals.Confused; }
         public override StatusType Type { get{ return StatusType.Undesirable; } }
         public override float Value { get{ return Duration; } }
 
@@ -36,14 +37,14 @@ namespace FinalInferno{
 
             // Apenas um dos status effects desse tipo causa um ataque
             if(Target.effects.Find(effect => effect.GetType() == typeof(Confused)) == this){
-                Source.SkillSelected();
+                Target.SkillSelected();
 
                 List<BattleUnit> allies = BattleManager.instance.GetTeam(Target);
                 int selected = Random.Range(0, allies.Count);
                 List<BattleUnit> enemy = new List<BattleUnit>();
                 enemy.Add(allies[selected]);
 
-                Target.unit.attackSkill.Use(Target, enemy);
+                Target.Unit.attackSkill.Use(Target, enemy);
             }
 
             return false;
