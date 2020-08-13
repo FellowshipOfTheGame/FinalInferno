@@ -45,6 +45,8 @@ namespace FinalInferno{
             public bool triggeredUpdate;
 
             public IndividualHandler(){
+                // To do: Pegar todos os StatusEffectVFX que tem no objeto relevante assim que chamar o construtor
+                // para não precisar ficar chamando getcomponent
                 effects = new List<StatusEffect>();
                 turnsLeftMax = int.MinValue;
                 turnsLeftMin = int.MaxValue;
@@ -56,8 +58,11 @@ namespace FinalInferno{
                 turnsLeftMax = Mathf.Max(turnsLeftMax, effect.TurnsLeft);
                 turnsLeftMin = Mathf.Min(turnsLeftMin, effect.TurnsLeft);
 
-                foreach(StatusEffectVFX vfx in transform){
-                    vfx.ApplyTrigger();
+                foreach(Transform t in transform){
+                    StatusEffectVFX vfx = t.GetComponent<StatusEffectVFX>();
+                    if(vfx != null){
+                        vfx.ApplyTrigger();
+                    }
                 }
             }
 
@@ -88,8 +93,11 @@ namespace FinalInferno{
 
                 if(effects.Count <= 0){
                     // Caso seja o ultimo efeito, manda o trigger de animação para remover
-                    foreach(StatusEffectVFX vfx in transform){
-                        vfx.RemoveTrigger();
+                    foreach(Transform t in transform){
+                        StatusEffectVFX vfx = t.GetComponent<StatusEffectVFX>();
+                        if(vfx != null){
+                            vfx.RemoveTrigger();
+                        }
                     }
                 }else{
                     // Caso não seja, avalia os novos valores de min/max
@@ -99,14 +107,17 @@ namespace FinalInferno{
                     }
 
                     // Atualiza o valor de turnsLeft de acordo com o comportamento do vfx
-                    foreach(StatusEffectVFX vfx in transform){
-                        int turnsLeft = GetTurnsLeft(vfx);
+                    foreach(Transform t in transform){
+                        StatusEffectVFX vfx = t.GetComponent<StatusEffectVFX>();
+                        if(vfx != null){
+                            int turnsLeft = GetTurnsLeft(vfx);
 
-                        // Se o novo valor for igual, não faz nada
-                        if(turnsLeft != vfx.TurnsLeft){
-                            // Se tiver mudado, muda para o estado de idle correto
-                            vfx.ResetTrigger();
-                            vfx.TurnsLeft = turnsLeft;
+                            // Se o novo valor for igual, não faz nada
+                            if(turnsLeft != vfx.TurnsLeft){
+                                // Se tiver mudado, muda para o estado de idle correto
+                                vfx.ResetTrigger();
+                                vfx.TurnsLeft = turnsLeft;
+                            }
                         }
                     }
                 }
@@ -115,14 +126,17 @@ namespace FinalInferno{
             public void ApplyChanges(Transform transform){
                 if(triggeredUpdate){
                     // Atualiza o valor de turnsLeft de acordo com o comportamento do vfx
-                    foreach(StatusEffectVFX vfx in transform){
-                        int turnsLeft = GetTurnsLeft(vfx);
+                    foreach(Transform t in transform){
+                        StatusEffectVFX vfx = t.GetComponent<StatusEffectVFX>();
+                        if(vfx != null){
+                            int turnsLeft = GetTurnsLeft(vfx);
 
-                        // Se o novo valor for igual, não faz nada
-                        if(turnsLeft != vfx.TurnsLeft){
-                            // Se tiver mudado, muda para o estado de idle correto
-                            vfx.ResetTrigger();
-                            vfx.TurnsLeft = turnsLeft;
+                            // Se o novo valor for igual, não faz nada
+                            if(turnsLeft != vfx.TurnsLeft){
+                                // Se tiver mudado, muda para o estado de idle correto
+                                vfx.ResetTrigger();
+                                vfx.TurnsLeft = turnsLeft;
+                            }
                         }
                     }
                 }
