@@ -8,7 +8,7 @@ using System.Data;
 namespace FinalInferno{
     //representa a equipe inteira do jogador
     [CreateAssetMenu(fileName = "Party", menuName = "ScriptableObject/Party", order = 0)]
-    public class Party : ScriptableObject{
+    public class Party : ScriptableObject, IDatabaseItem{
         private static Party instance = null;
         public static Party Instance{
             get{
@@ -44,24 +44,29 @@ namespace FinalInferno{
         private Dictionary<Enemy, int> bestiary = new Dictionary<Enemy, int>();
         public ReadOnlyDictionary<Enemy, int> Bestiary { get => (new ReadOnlyDictionary<Enemy, int>(bestiary)); }
 
-        [SerializeField] private TextAsset PartyXP;
-        [SerializeField] private DynamicTable table;
+        [SerializeField] private TextAsset partyXP;
+        [SerializeField] private DynamicTable table = null;
         private DynamicTable Table {
             get {
                 if(table == null)
-                    table = DynamicTable.Create(PartyXP);
+                    table = DynamicTable.Create(partyXP);
                 return table;
             }
         }
 
-        public void Awake(){
-            table = null;
-            table = DynamicTable.Create(PartyXP);
+        public void LoadTables(){
+            table = DynamicTable.Create(partyXP);
             level = 0;
             xp = 0;
             xpNext = 0;
             currentMap = StaticReferences.FirstScene;
-            //Debug.Log("Iniciou");
+        }
+
+        public void Preload(){
+            level = 0;
+            xp = 0;
+            xpNext = 0;
+            currentMap = StaticReferences.FirstScene;
         }
 
         public void RegisterKill(Enemy enemy){

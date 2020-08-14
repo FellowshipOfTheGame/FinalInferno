@@ -21,7 +21,7 @@ namespace FinalInferno{
 
         // Subclasse =====================================================================
         [System.Serializable]
-        private class Bundle<T> where T : ScriptableObject{
+        private class Bundle<T> where T : ScriptableObject, IDatabaseItem{
             // Lista serializavel configurada pelo editor
             // TO DO: Adicionar HideInInspector depois que tiver certeza que funciona
             [SerializeField] private List<T> assets = new List<T>();
@@ -41,26 +41,24 @@ namespace FinalInferno{
                 string[] objectsFound = UnityEditor.AssetDatabase.FindAssets("t:" + typeof(T).Name);
                 assets = new List<T>();
                 foreach(string guid in objectsFound){
-                    assets.Add(UnityEditor.AssetDatabase.LoadAssetAtPath<T>(UnityEditor.AssetDatabase.GUIDToAssetPath(guid)));
+                    T newAsset = UnityEditor.AssetDatabase.LoadAssetAtPath<T>(UnityEditor.AssetDatabase.GUIDToAssetPath(guid));
+                    newAsset.LoadTables();
+                    assets.Add(newAsset);
                 }
-                // foreach(T obj in assets){
-                //     Debug.Log(obj.name);
-                // }
             }
             #endif
 
             public void Preload(){
-                // if(!loaded){
-                    loaded = true;
-                    foreach(T asset in assets){
-                        string key = (asset is Enemy)? (asset as Enemy).AssetName : asset.name;
-                        try{
-                            dict.Add(key, asset);
-                        }catch(System.ArgumentException){
-                            Debug.LogWarning("Asset " + key + " is being added more than once");
-                        }
+                foreach(T asset in assets){
+                    string key = (asset is Enemy)? (asset as Enemy).AssetName : asset.name;
+                    try{
+                        dict.Add(key, asset);
+                        // Codigo aqui embaixo só executa se não cair no catch
+                        asset.Preload();
+                    }catch(System.ArgumentException){
+                        Debug.LogWarning("Asset " + key + " is being added more than once");
                     }
-                // }
+                }
             }
 
             public T LoadAsset(string name){
@@ -98,7 +96,7 @@ namespace FinalInferno{
         [SerializeField] private SkillBundle skills = new SkillBundle();
         [SerializeField] private QuestBundle quests = new QuestBundle();
 
-        private Bundle<T> GetBundle<T>(string typeName) where T : ScriptableObject{
+        private Bundle<T> GetBundle<T>(string typeName) where T : ScriptableObject, IDatabaseItem{
             Bundle<T> bundle = null;
             switch(typeName){
                 case "party":
@@ -190,7 +188,7 @@ namespace FinalInferno{
             // }
         }
 
-        public static T LoadAsset<T>(string name, string typeName = null) where T : ScriptableObject{
+        public static T LoadAsset<T>(string name, string typeName = null) where T : ScriptableObject, IDatabaseItem{
             if(Instance != null){
                 if(typeName == null){
                     typeName = typeof(T).Name.ToLower();
