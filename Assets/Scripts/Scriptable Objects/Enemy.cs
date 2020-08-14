@@ -45,13 +45,13 @@ namespace FinalInferno{
 
         public void LoadTables(){
             table = DynamicTable.Create(enemyTable);
-            curTableRow = 0;
-            LevelEnemy(0);
+            curTableRow = -1;
+            LevelEnemy(-1);
         }
 
         public void Preload(){
-            curTableRow = 0;
-            LevelEnemy(0);
+            curTableRow = -1;
+            LevelEnemy(-1);
         }
 
         // Funcao atualmente desnecessaria
@@ -83,7 +83,7 @@ namespace FinalInferno{
         // Função que atualiza os status do inimigo para um novo level e seta o nível das skills
         public void LevelEnemy(int newLevel){
             if(Table == null || Table.Rows.Count < 1){
-                Debug.Log("This enemy(" + name + ") has no table to load");
+                Debug.Log($"This enemy({AssetName}) has no table to load");
                 return;
             }
 

@@ -24,7 +24,7 @@ namespace FinalInferno{
         public override int Level{
             get{ return level; }
             set{
-                if(value != level && Table != null){
+                if(value != level && Table != null && Table.Rows.Count > 0){
                     level = Mathf.Clamp(value, Table.Rows[0].Field<int>("Level"), Table.Rows[Table.Rows.Count-1].Field<int>("Level"));
                     LevelUp();
                 }
@@ -57,11 +57,12 @@ namespace FinalInferno{
             }while(row < Table.Rows.Count-1 && Table.Rows[row+1].Field<int>("Level") <= Level);
 
             if(row != curTableRow){
+                curTableRow = row;
                 for(int i = 0; i < effects.Count; i++){
                     SkillEffectTuple modifyEffect = effects[i];
 
-                    modifyEffect.value1 = Table.Rows[Level-1].Field<float>("SkillEffect" + i + "Value0");
-                    modifyEffect.value2 = Table.Rows[Level-1].Field<float>("SkillEffect" + i + "Value1");
+                    modifyEffect.value1 = Table.Rows[curTableRow].Field<float>("SkillEffect" + i + "Value0");
+                    modifyEffect.value2 = Table.Rows[curTableRow].Field<float>("SkillEffect" + i + "Value1");
 
                     effects[i] = modifyEffect;
                 }

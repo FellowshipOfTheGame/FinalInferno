@@ -199,7 +199,7 @@ namespace FinalInferno{
                 // Só triggera a animação de dano tomado se o dano for maior que zero
                 animator.SetTrigger("TakeDamage");
             }
-            damageIndicator.ShowDamage(Mathf.Abs(damage), (damage <= 0));
+            damageIndicator.ShowDamage(Mathf.Abs(damage), (damage <= 0), (1.0f - healResistance));
 
             // Aplica o aggro pra cura
             if(healer != null && (unit.IsHero == healer.unit.IsHero)){
@@ -232,7 +232,7 @@ namespace FinalInferno{
                 // Só triggera a animação de dano tomado se o dano for maior que zero
                 animator.SetTrigger("TakeDamage");
             }
-            damageIndicator.ShowDamage(Mathf.Abs(damage), (damage < 0));
+            damageIndicator.ShowDamage(Mathf.Abs(damage), (damage < 0), elementalResistances[element]);
 
             // Aplica o aggro pra dano
             if(attacker != null && (unit.IsHero != attacker.unit.IsHero)){

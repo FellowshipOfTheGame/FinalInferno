@@ -109,21 +109,16 @@ namespace FinalInferno{
 
         //Adiciona os pontos de experiência conquistado pelo jogador
         public bool GiveExp(long value){
-            //table = DynamicTable.Create(PartyXP);
             bool up = false;
             
             xp += value;
-            //Debug.Log("Deu xp");
 
-            //testa se os persoangens subiram de nivel
-            //Debug.Log(xp + ">=" + xpNext + "?");
+            //testa se os persoanagens subiram de nivel
             while(xp >= xpNext && level < Table.Rows.Count){
-                //Debug.Log("claro que upo");
                 // TO DO: Revisão de tabelas (level tem que ser user friendly)
                 xp -= xpNext;
                 level++;
                 xpNext = Table.Rows[level-1].Field<long>("XPNextLevel");
-                //Debug.Log("agora xp pro proximo level eh: " + xpNext);
                 
                 up = true;
             }
@@ -143,7 +138,10 @@ namespace FinalInferno{
             bestiary.Clear();
             activeQuests.Clear();
             currentMap = StaticReferences.FirstScene;
-            // Gambiarra
+            // Gambiarra mas provavelmente tem que ser hardcoded mesmo(?)
+            // Talvez seja desnecessário ter que limpar a lista de character e achar de novo,
+            // pode ser melhor só deixar as 4 referencias fixas e definir que elas não vão ser alteradas
+            // Para os arquétipos pode ter uma configuração base e ela ser usada para construir
             characters.Add(AssetManager.LoadAsset<Character>("Character 1"));
             characters[characters.Count - 1].archetype = AssetManager.LoadAsset<Hero>("Amidi");
             characters.Add(AssetManager.LoadAsset<Character>("Character 2"));
