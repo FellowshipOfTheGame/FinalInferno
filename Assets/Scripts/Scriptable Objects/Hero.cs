@@ -8,7 +8,7 @@ using UnityEditor;
 namespace FinalInferno{
     //engloba os tipos/classes de heroi, personagem do jogador
     [CreateAssetMenu(fileName = "Hero", menuName = "ScriptableObject/Hero", order = 2)]
-    public class Hero : Unit{
+    public class Hero : Unit, IDatabaseItem{
         public Sprite spriteOW; //"sprite" do heroi no "Over Wolrd"
         public RuntimeAnimatorController animatorOW; //"animator" do "Over World"
         public Sprite skillBG; //"sprite" de fundo da arvore de "skills"  
@@ -39,7 +39,7 @@ namespace FinalInferno{
         [Space(10)]
         [Header("Table")]
         [SerializeField] private TextAsset heroTable;
-        [SerializeField] private DynamicTable table;
+        [SerializeField] private DynamicTable table = null;
         private DynamicTable Table {
             get {
                 if(table == null)
@@ -49,11 +49,14 @@ namespace FinalInferno{
         }
         public override bool IsHero{ get{ return true; } }
 
-        void Awake(){
-            table = null;
+        public void LoadTables(){
             table = DynamicTable.Create(heroTable);
             elementalResistances.Clear();
+            skillsToUpdate = new List<PlayerSkill>(InitialsSkills);
+        }
 
+        public void Preload(){
+            elementalResistances.Clear();
             skillsToUpdate = new List<PlayerSkill>(InitialsSkills);
         }
 

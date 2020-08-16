@@ -23,7 +23,7 @@ namespace FinalInferno{
                 return (saves[Slot].mapName != null && saves[Slot].mapName != "");
             }
         }
-        [SerializeField] public bool autoSave = false;
+        [SerializeField] public bool autoSave = true;
         // Uma array de saves inicializados com valores padrão
         public SaveInfo[] saves = new SaveInfo[nSaveSlots];
 

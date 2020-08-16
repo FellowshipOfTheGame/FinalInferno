@@ -7,8 +7,14 @@ namespace FinalInferno.UI.Battle{
     public class DamageIndicator : MonoBehaviour
     {
         [SerializeField] private GameObject numberPrefab;
+        [SerializeField, Range(1f, 5f)] private float critFontSize = 2f;
+        [SerializeField, Range(0.1f, 1f)] private float weakFontSize = 0.5f;
+        [SerializeField] private Color critDamageColor;
         [SerializeField] private Color damageColor;
+        [SerializeField] private Color weakDamageColor;
+        [SerializeField] private Color critHealColor;
         [SerializeField] private Color healColor;
+        [SerializeField] private Color weakHealColor;
 
         [Space(10)]
         [SerializeField, Range(0, 5)] private float intervalBetweenNumbers = 0.1f;
@@ -17,21 +23,44 @@ namespace FinalInferno.UI.Battle{
         private struct DamageEntry{
             public int value;
             public bool isHeal;
-            public DamageEntry(int val, bool heal){
+            public DamageStrength strength;
+            public DamageEntry(int val, bool heal, DamageStrength str){
                 value = val;
                 isHeal = heal;
+                strength = str;
             }
+        }
+        private enum DamageStrength{
+            Regular,
+            Weak,
+            Strong
         }
         private List<DamageEntry> queue = new List<DamageEntry>();
 
         private void InstantiateNewNumber(DamageEntry entry){
             GameObject newObj = Instantiate(numberPrefab, transform);
-            newObj.GetComponent<UnityEngine.UI.Text>().color = (entry.isHeal)? healColor : damageColor;
-            newObj.GetComponent<UnityEngine.UI.Text>().text = "" + entry.value;
+            UnityEngine.UI.Text txt = newObj.GetComponent<UnityEngine.UI.Text>();
+            if(entry.strength == DamageStrength.Strong){
+                txt.color = (entry.isHeal)? critHealColor : critDamageColor;
+                txt.fontSize = Mathf.FloorToInt(txt.fontSize * critFontSize);
+            }else if(entry.strength == DamageStrength.Weak){
+                txt.color = (entry.isHeal)? weakHealColor : weakDamageColor;
+                txt.fontSize = Mathf.FloorToInt(txt.fontSize * weakFontSize);
+            }else{
+                txt.color = (entry.isHeal)? healColor : damageColor;
+            }
+            txt.text = "" + entry.value;
         }
 
-        public void ShowDamage(int value, bool isHeal){
-            queue.Add(new DamageEntry(value, isHeal));
+        public void ShowDamage(int value, bool isHeal, float multiplier){
+            float dif = multiplier - 1.0f;
+            DamageStrength strength = DamageStrength.Regular;
+            if(dif < -float.Epsilon){
+                strength = DamageStrength.Weak;
+            }else if(dif > float.Epsilon){
+                strength = DamageStrength.Strong;
+            }
+            queue.Add(new DamageEntry(value, isHeal, strength));
         }
 
         void Awake(){

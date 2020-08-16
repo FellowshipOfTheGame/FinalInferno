@@ -60,11 +60,15 @@ namespace FinalInferno{
         }
         public Sprite skillImage;
 
-        void Awake(){
-            table = null;
+        public override void LoadTables(){
             table = DynamicTable.Create(skillTable);
-            xpTable = null;
             xpTable = DynamicTable.Create(expTable);
+            level = 0;
+            xp = 0;
+            xpNext = 0;
+        }
+
+        public override void Preload(){
             level = 0;
             xp = 0;
             xpNext = 0;
@@ -72,24 +76,15 @@ namespace FinalInferno{
 
         //atualiza o value dos efeitos, se for necessario.
         public void LevelUp(){
-            // int i = 0;
-            // effects[i].effect.value1 = Table.Rows[level-1].Field<float>("Effect0Value0");
-            // effects[i].effect.value2 = Table.Rows[level-1].Field<float>("Effect0Value1");
 
-            //Debug.LogError("Skill = " + name + "; level = " + level);
             for(int i = 0; i < effects.Count; i++){
                 SkillEffectTuple modifyEffect = effects[i];
-                //Debug.Log("levelapo a " + name);
 
                 modifyEffect.value1 = Table.Rows[level-1].Field<float>("SkillEffect" + i + "Value0");
-                //Debug.Log("Mvalue1: " + modifyEffect.value1);
                 
                 modifyEffect.value2 = Table.Rows[level-1].Field<float>("SkillEffect" + i + "Value1");
-                //Debug.Log("Mvalue2: " + modifyEffect.value2);
 
                 effects[i] = modifyEffect;
-                //Debug.Log("value1: " + effects[i].value1);
-                //Debug.Log("value2: " + effects[i].value2);
             }
 
             foreach(PlayerSkill child in skillsToUpdate){
@@ -170,8 +165,15 @@ namespace FinalInferno{
         public override void Use(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f){
             targets = FilterTargets(user, targets); // Filtragem para garantir a consistencia dos callbacks de AoE
 
-            if(Type == SkillType.PassiveOnStart){ // Passivas do tipo OnStart estavam recebendo muito pouca experiencia
-                GiveExp(BattleManager.instance.GetEnemies(user));
+            if(Type == SkillType.PassiveOnStart || Type == SkillType.PassiveOnEnd){
+                if(target != TargetType.AllAllies && target != TargetType.AllEnemies && target != TargetType.DeadAllies &&
+                   target != TargetType.DeadEnemies && target != TargetType.MultiAlly && target != TargetType.MultiEnemy){
+                    // Habilidades que não sejam em área e que só são executadas uma vez durante a batalha precisam disso
+                    // para que seu ganho de experiencia fique igual ao de outras habilidades com a mesma tabela de exp
+                    GiveExp(BattleManager.instance.GetEnemies(user, true));
+                }else{
+                    GiveExp(targets);
+                }
             }else
                 GiveExp(targets);
 

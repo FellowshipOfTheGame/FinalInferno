@@ -30,9 +30,9 @@ MonoBehaviour:
   xp: 0
   xpNext: 0
   description: Borrows power from an enemy for a limited amount of turns. If the enemy
-    is not dead at the end of said turns, Heman pays back the loan with interest equal
-    to the same amount of power borrowed plus interest, lending his own power to the
-    enemy. Works only once per target.
+    is not dead at the end of said turns, Heman pays back the loan with interest,
+    lending his own power to the enemy. Does not work if the target already has damage
+    stolen.
   skillsToUpdate:
   - {fileID: 11400000, guid: 5ef492f0f94fbdb4eac62c14393de0a4, type: 2}
   prerequisiteSkills: []
@@ -44,7 +44,7 @@ MonoBehaviour:
     - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-    Col:
+    col:
       reorderableList:
         canAdd: 0
         canRemove: 0
@@ -67,15 +67,9 @@ MonoBehaviour:
         elementIcon: {fileID: 0}
       reqReferences: {fileID: 0}
       isExpanded: 0
-      _keyValues:
-      - Level
-      - SkillEffect0Value0
-      - SkillEffect0Value1
-      _keys:
-      - Level
-      - SkillEffect0Value0
-      - SkillEffect0Value1
-      _values: 000000000100000002000000
+      _keyValues: []
+      _keys: []
+      _values: 
     rows:
     - elements:
       - 1
@@ -85,7 +79,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -108,15 +102,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 2
       - 0.051
@@ -125,7 +113,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -148,15 +136,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 3
       - 0.052
@@ -165,7 +147,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -188,15 +170,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 4
       - 0.053
@@ -205,7 +181,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -228,15 +204,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 5
       - 0.055
@@ -245,7 +215,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -268,15 +238,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 6
       - 0.056
@@ -285,7 +249,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -308,15 +272,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 7
       - 0.057
@@ -325,7 +283,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -348,15 +306,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 8
       - 0.058
@@ -365,7 +317,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -388,15 +340,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 9
       - 0.059
@@ -405,7 +351,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -428,15 +374,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 10
       - 0.061
@@ -445,7 +385,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -468,15 +408,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 11
       - 0.062
@@ -485,7 +419,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -508,15 +442,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 12
       - 0.063
@@ -525,7 +453,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -548,15 +476,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 13
       - 0.064
@@ -565,7 +487,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -588,15 +510,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 14
       - 0.065
@@ -605,7 +521,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -628,15 +544,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 15
       - 0.067
@@ -645,7 +555,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -668,15 +578,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 16
       - 0.068
@@ -685,7 +589,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -708,15 +612,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 17
       - 0.069
@@ -725,7 +623,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -748,15 +646,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 18
       - 0.070
@@ -765,7 +657,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -788,15 +680,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 19
       - 0.071
@@ -805,7 +691,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -828,15 +714,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 20
       - 0.081
@@ -845,7 +725,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -868,15 +748,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 21
       - 0.082
@@ -885,7 +759,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -908,15 +782,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 22
       - 0.083
@@ -925,7 +793,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -948,15 +816,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 23
       - 0.084
@@ -965,7 +827,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -988,15 +850,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 24
       - 0.085
@@ -1005,7 +861,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -1028,15 +884,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 25
       - 0.087
@@ -1045,7 +895,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -1068,15 +918,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 26
       - 0.088
@@ -1085,7 +929,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -1108,15 +952,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 27
       - 0.089
@@ -1125,7 +963,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -1148,15 +986,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 28
       - 0.090
@@ -1165,7 +997,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -1188,15 +1020,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 29
       - 0.091
@@ -1205,7 +1031,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -1228,15 +1054,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 30
       - 0.093
@@ -1245,7 +1065,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -1268,15 +1088,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 31
       - 0.094
@@ -1285,7 +1099,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -1308,15 +1122,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 32
       - 0.095
@@ -1325,7 +1133,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -1348,15 +1156,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 33
       - 0.096
@@ -1365,7 +1167,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -1388,15 +1190,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 34
       - 0.097
@@ -1405,7 +1201,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -1428,15 +1224,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 35
       - 0.099
@@ -1445,7 +1235,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -1468,15 +1258,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 36
       - 0.100
@@ -1485,7 +1269,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -1508,15 +1292,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 37
       - 0.101
@@ -1525,7 +1303,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -1548,15 +1326,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 38
       - 0.102
@@ -1565,7 +1337,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -1588,15 +1360,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 39
       - 0.103
@@ -1605,7 +1371,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -1628,15 +1394,9 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 40
       - 0.113
@@ -1645,7 +1405,7 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
           canAdd: 0
           canRemove: 0
@@ -1668,53 +1428,41 @@ MonoBehaviour:
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
   expTable: {fileID: 4900000, guid: e8c1b59414895b544a1750bdf0aaf3db, type: 3}
   xpTable:
     colTypes:
     - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-    Col:
+    col:
       reorderableList:
-        canAdd: 1
-        canRemove: 1
-        draggable: 1
-        expandable: 1
-        multipleSelection: 1
+        canAdd: 0
+        canRemove: 0
+        draggable: 0
+        expandable: 0
+        multipleSelection: 0
         isExpanded: 0
         label:
-          m_Text: Keys
+          m_Text: 
           m_Image: {fileID: 0}
           m_Tooltip: 
-        headerHeight: 18
-        footerHeight: 13
-        slideEasing: 0.15
-        verticalSpacing: 2
-        showDefaultBackground: 1
+        headerHeight: 0
+        footerHeight: 0
+        slideEasing: 0
+        verticalSpacing: 0
+        showDefaultBackground: 0
         elementDisplayType: 0
         elementNameProperty: 
         elementNameOverride: 
         elementIcon: {fileID: 0}
       reqReferences: {fileID: 0}
       isExpanded: 0
-      _keyValues:
-      - Level
-      - XPNextLevel
-      - XPAccumulated
-      _keys:
-      - Level
-      - XPNextLevel
-      - XPAccumulated
-      _values: 000000000100000002000000
+      _keyValues: []
+      _keys: []
+      _values: 
     rows:
     - elements:
       - 1
@@ -1724,38 +1472,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 2
       - 1665
@@ -1764,38 +1506,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 3
       - 2497.5
@@ -1804,38 +1540,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 4
       - 3330
@@ -1844,38 +1574,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 5
       - 4162.5
@@ -1884,38 +1608,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 6
       - 4995
@@ -1924,38 +1642,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 7
       - 5827.5
@@ -1964,38 +1676,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 8
       - 6660
@@ -2004,38 +1710,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 9
       - 7492.5
@@ -2044,38 +1744,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 10
       - 8325
@@ -2084,38 +1778,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 11
       - 9157.5
@@ -2124,38 +1812,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 12
       - 9990
@@ -2164,38 +1846,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 13
       - 10822.5
@@ -2204,38 +1880,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 14
       - 11655
@@ -2244,38 +1914,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 15
       - 12487.5
@@ -2284,38 +1948,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 16
       - 13320
@@ -2324,38 +1982,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 17
       - 14152.5
@@ -2364,38 +2016,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 18
       - 14985
@@ -2404,38 +2050,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 19
       - 15817.5
@@ -2444,38 +2084,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 20
       - 16650
@@ -2484,38 +2118,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 21
       - 17482.5
@@ -2524,38 +2152,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 22
       - 18315
@@ -2564,38 +2186,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 23
       - 19147.5
@@ -2604,38 +2220,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 24
       - 19980
@@ -2644,38 +2254,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 25
       - 20812.5
@@ -2684,38 +2288,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 26
       - 21645
@@ -2724,38 +2322,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 27
       - 22477.5
@@ -2764,38 +2356,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 28
       - 23310
@@ -2804,38 +2390,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 29
       - 24142.5
@@ -2844,38 +2424,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 30
       - 24975
@@ -2884,38 +2458,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 31
       - 25807.5
@@ -2924,38 +2492,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 32
       - 26640
@@ -2964,38 +2526,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 33
       - 27472.5
@@ -3004,38 +2560,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 34
       - 28305
@@ -3044,38 +2594,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 35
       - 29137.5
@@ -3084,38 +2628,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 36
       - 29970
@@ -3124,38 +2662,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 37
       - 30802.5
@@ -3164,38 +2696,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 38
       - 31635
@@ -3204,38 +2730,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 39
       - 32467.5
@@ -3244,38 +2764,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 40
       - 33300
@@ -3284,38 +2798,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 41
       - 34132.5
@@ -3324,38 +2832,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 42
       - 34965
@@ -3364,38 +2866,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 43
       - 35797.5
@@ -3404,38 +2900,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 44
       - 36630
@@ -3444,38 +2934,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 45
       - 37462.5
@@ -3484,38 +2968,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 46
       - 38295
@@ -3524,38 +3002,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 47
       - 39127.5
@@ -3564,38 +3036,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 48
       - 39960
@@ -3604,38 +3070,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 49
       - 40792.5
@@ -3644,38 +3104,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 50
       - 41625
@@ -3684,38 +3138,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 51
       - 42457.5
@@ -3724,38 +3172,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 52
       - 43290
@@ -3764,38 +3206,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 53
       - 44122.5
@@ -3804,38 +3240,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 54
       - 44955
@@ -3844,38 +3274,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 55
       - 45787.5
@@ -3884,38 +3308,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 56
       - 46620
@@ -3924,38 +3342,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 57
       - 47452.5
@@ -3964,38 +3376,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 58
       - 48285
@@ -4004,38 +3410,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 59
       - 49117.5
@@ -4044,38 +3444,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 60
       - 49950
@@ -4084,38 +3478,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 61
       - 50782.5
@@ -4124,38 +3512,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 62
       - 51615
@@ -4164,38 +3546,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 63
       - 52447.5
@@ -4204,38 +3580,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 64
       - 53280
@@ -4244,38 +3614,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 65
       - 54112.5
@@ -4284,38 +3648,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 66
       - 54945
@@ -4324,38 +3682,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 67
       - 55777.5
@@ -4364,38 +3716,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 68
       - 56610
@@ -4404,38 +3750,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 69
       - 57442.5
@@ -4444,38 +3784,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 70
       - 58275
@@ -4484,38 +3818,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 71
       - 59107.5
@@ -4524,38 +3852,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 72
       - 59940
@@ -4564,38 +3886,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 73
       - 60772.5
@@ -4604,38 +3920,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 74
       - 61605
@@ -4644,38 +3954,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 75
       - 62437.5
@@ -4684,38 +3988,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 76
       - 63270
@@ -4724,38 +4022,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 77
       - 64102.5
@@ -4764,38 +4056,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 78
       - 64935
@@ -4804,38 +4090,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 79
       - 65767.5
@@ -4844,38 +4124,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 80
       - 66600
@@ -4884,38 +4158,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 81
       - 67432.5
@@ -4924,38 +4192,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 82
       - 68265
@@ -4964,38 +4226,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 83
       - 69097.5
@@ -5004,38 +4260,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 84
       - 69930
@@ -5044,38 +4294,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 85
       - 70762.5
@@ -5084,38 +4328,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 86
       - 71595
@@ -5124,38 +4362,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 87
       - 72427.5
@@ -5164,38 +4396,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 88
       - 73260
@@ -5204,38 +4430,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 89
       - 74092.5
@@ -5244,38 +4464,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 90
       - 74925
@@ -5284,38 +4498,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 91
       - 75757.5
@@ -5324,38 +4532,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 92
       - 76590
@@ -5364,38 +4566,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 93
       - 77422.5
@@ -5404,38 +4600,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 94
       - 78255
@@ -5444,38 +4634,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 95
       - 79087.5
@@ -5484,38 +4668,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 96
       - 79920
@@ -5524,38 +4702,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 97
       - 80752.5
@@ -5564,38 +4736,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 98
       - 81585
@@ -5604,38 +4770,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 99
       - 82417.5
@@ -5644,38 +4804,32 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
     - elements:
       - 100
       - 83250
@@ -5684,36 +4838,30 @@ MonoBehaviour:
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
+      col:
         reorderableList:
-          canAdd: 1
-          canRemove: 1
-          draggable: 1
-          expandable: 1
-          multipleSelection: 1
+          canAdd: 0
+          canRemove: 0
+          draggable: 0
+          expandable: 0
+          multipleSelection: 0
           isExpanded: 0
           label:
-            m_Text: Keys
+            m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          headerHeight: 18
-          footerHeight: 13
-          slideEasing: 0.15
-          verticalSpacing: 2
-          showDefaultBackground: 1
+          headerHeight: 0
+          footerHeight: 0
+          slideEasing: 0
+          verticalSpacing: 0
+          showDefaultBackground: 0
           elementDisplayType: 0
           elementNameProperty: 
           elementNameOverride: 
           elementIcon: {fileID: 0}
         reqReferences: {fileID: 0}
         isExpanded: 0
-        _keyValues:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _keys:
-        - Level
-        - XPNextLevel
-        - XPAccumulated
-        _values: 000000000100000002000000
+        _keyValues: []
+        _keys: []
+        _values: 
   skillImage: {fileID: 21300000, guid: a1c755c6853837f4f9f079378170684b, type: 3}
