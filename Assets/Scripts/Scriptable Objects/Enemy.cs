@@ -18,7 +18,7 @@ namespace FinalInferno{
         [SerializeField] protected DamageType damageFocus = DamageType.None;
         public DamageType DamageFocus { get{ return damageFocus; } }
         public override Color DialogueColor { get { return dialogueColor; } }
-        public override string DialogueName { get { return (name == null)? "" : name; } }
+        public override string DialogueName { get { return (AssetName == null)? "" : AssetName; } }
         [SerializeField] private Sprite bestiaryPortrait;
         public Sprite BestiaryPortrait { get => bestiaryPortrait; }
         [SerializeField] private AudioClip enemyCry;

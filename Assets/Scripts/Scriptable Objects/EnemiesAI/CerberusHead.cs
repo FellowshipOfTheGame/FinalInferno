@@ -18,6 +18,7 @@ namespace FinalInferno{
         private static BattleUnit topHead = null;
         private static BattleUnit middleHead = null;
         private static BattleUnit bottomHead = null;
+        public override string DialogueName { get { return "Cerberus"; } }
 
         [SerializeField] private Sprite bodySprite;
         [SerializeField] private RuntimeAnimatorController animatorMiddleHead;

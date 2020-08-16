@@ -9,11 +9,11 @@ namespace FinalInferno{
         public static bool encountersEnabled = true;
         // To do
         // Por ser estatico nao da pra setar no inspetor, mas n faz sentido setar isso pra toda instancia de RECalculator
-        // Ou talvez faça usando uma prefab mesmo e isso deixe de ser estatico
-        public static List<PlayerSkill> encounterSkils;
-        [SerializeField] private Transform playerObj;
+        // Ou talvez faça referencias na prefab mesmo (ou um SO) e isso deixe de ser estatico
+        public static List<PlayerSkill> encounterSkils = new List<PlayerSkill>();
+        [SerializeField] private Transform playerObj = null;
         // Tabela de encontros aleatorios pra este mapa
-        [SerializeField] private TextAsset encounterTable;
+        [SerializeField] private TextAsset encounterTable = null;
         [SerializeField] private DynamicTable table = null;
         private DynamicTable Table {
             get {
@@ -23,24 +23,23 @@ namespace FinalInferno{
             }
         }
         [Range(0, 4)]
-        [SerializeField] private int minNumberEnemies;
+        [SerializeField] private int minNumberEnemies = 0;
         [Range(0, 4)]
-        [SerializeField] private int maxNumberEnemies;
-        [SerializeField] public Sprite battleBG;
-        [SerializeField] private AudioClip battleBGM;
-        [SerializeField] private AudioClip overworldBGM;
-        [Range(0, 100)]
-        [SerializeField] private float baseEncounterRate = 5.0f;
-        [Range(0, 100)]
-        [SerializeField] private float rateIncreaseFactor = 1f;
-        [Range(1, 20)]
-        [SerializeField] private float freeWalkDistance = 3f;
-        private Fog.Dialogue.Agent agent;
-        private float curEncounterRate;
-        private Vector2 lastCheckPosition;
-        private Vector2 lastPosition;
-        private float distanceWalked;
+        [SerializeField] private int maxNumberEnemies = 0;
+        [SerializeField] private EncounterRate encounterRate = null;
+        [Space]
+        [SerializeField] public Sprite battleBG = null;
+        [SerializeField] private AudioClip battleBGM = null;
+        [SerializeField] private AudioClip overworldBGM = null;
+        private float baseEncounterRate = 0f;
+        private float rateIncreaseValue = 0f;
+        private Fog.Dialogue.Agent agent = null;
+        private float curEncounterRate = 0f;
+        private Vector2 lastCheckPosition = Vector2.zero;
+        private Vector2 lastPosition = Vector2.zero;
+        private float distanceWalked = 0f;
 
+        [Header("Expected value = TriggerChangeScene")]
         [SerializeField] private FinalInferno.UI.FSM.ButtonClickDecision decision;
 
         // Start is called before the first frame update
@@ -56,18 +55,29 @@ namespace FinalInferno{
                 lastCheckPosition = Vector2.zero;
             lastPosition = lastCheckPosition;
 
-            agent = CharacterOW.MainOWCharacter?.GetComponent<Fog.Dialogue.Agent>();
+            if(agent == null && CharacterOW.MainOWCharacter != null){
+                agent = CharacterOW.MainOWCharacter.GetComponent<Fog.Dialogue.Agent>();
+            }
+
+            distanceWalked = 0f;
+            if(encounterRate != null){
+                baseEncounterRate = encounterRate.BaseEncounterRate;
+                rateIncreaseValue = encounterRate.RateIncreaseValue;
+                distanceWalked = encounterRate.MinFreeWalkDistance - encounterRate.FreeWalkDistance;
+            }
 
             StaticReferences.BGM.PlaySong(overworldBGM);
             curEncounterRate = baseEncounterRate;
-            distanceWalked = 1f - freeWalkDistance;
+
+            // Se certifica que não vai fazer nada no update quando a taxa de encontro é 0
+            // ou quando a tabela não existir
+            if((curEncounterRate < float.Epsilon && rateIncreaseValue < float.Epsilon) || table == null){
+                playerObj = null;
+            }
         }
 
         void LateUpdate()
         {
-            if(agent == null && CharacterOW.MainOWCharacter != null){
-                agent = CharacterOW.MainOWCharacter.GetComponent<Fog.Dialogue.Agent>();
-            }
             if (encountersEnabled && (playerObj != null) && CharacterOW.PartyCanMove && (agent == null || agent.canInteract)) {
                 // Calcula a distancia entre a posicao atual e a distancia no ultimo LateUpdate
                 float distance = Vector2.Distance(lastPosition, new Vector2(playerObj.position.x, playerObj.position.y));
@@ -138,7 +148,7 @@ namespace FinalInferno{
                 // Caso nao encontre uma batalha
                 //Debug.Log("Did not find random encounter");
                 // Aumenta a chance de encontro linearmente com a distancia percorrida
-                curEncounterRate += rateIncreaseFactor * distance;
+                curEncounterRate += rateIncreaseValue * distance;
             }
         }
     }
