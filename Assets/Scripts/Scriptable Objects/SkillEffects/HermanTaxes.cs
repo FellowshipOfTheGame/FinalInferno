@@ -26,7 +26,7 @@ namespace FinalInferno{
             if(herman != null){
                 herman.Heal((int)val1, value1);
                 if(visualEffect){
-                    GameObject obj = GameObject.Instantiate(visualEffect, herman.transform.parent);
+                    GameObject obj = GameObject.Instantiate(visualEffect, herman.transform);
                     obj.GetComponent<SkillVFX>().forceCallback = true;
                     obj.GetComponent<SpriteRenderer>().sortingOrder = herman.GetComponent<SpriteRenderer>().sortingOrder + 1;
                 }
@@ -40,7 +40,7 @@ namespace FinalInferno{
             if(herman != null){
                 target.effects[Mathf.Clamp(((int)val1), 0, target.effects.Count - 1)].CopyTo(herman, value1);
                 if(visualEffect){
-                    GameObject obj = GameObject.Instantiate(visualEffect, herman.transform.parent);
+                    GameObject obj = GameObject.Instantiate(visualEffect, herman.transform);
                     obj.GetComponent<SkillVFX>().forceCallback = true;
                     obj.GetComponent<SpriteRenderer>().sortingOrder = herman.GetComponent<SpriteRenderer>().sortingOrder + 1;
                 }

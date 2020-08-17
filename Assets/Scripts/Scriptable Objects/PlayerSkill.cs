@@ -88,7 +88,7 @@ namespace FinalInferno{
             }
 
             foreach(PlayerSkill child in skillsToUpdate){
-                child.CheckUnlock(Party.Instance.level);
+                child.CheckUnlock(Party.Instance.Level);
             }
         }
 

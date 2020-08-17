@@ -18,6 +18,8 @@ namespace FinalInferno{
         [SerializeField] private BattleQueueUI queueUI;
 
         public BattleUnit currentUnit {get; private set;}
+        public int MaxBaseSpeed {get; private set; } = Unit.maxStatValue;
+        public int MinBaseSpeed {get; private set; } = 0;
 
         public BattleUnitsUI unitsUI;
 
@@ -55,7 +57,12 @@ namespace FinalInferno{
         // #endif
 
         public void PrepareBattle(){
+            MaxBaseSpeed = 0;
+            MinBaseSpeed = Unit.maxStatValue;
             foreach(Unit unit in units){
+                MaxBaseSpeed = Mathf.Min(Mathf.Max(unit.baseSpeed, MaxBaseSpeed), Unit.maxStatValue);
+                MinBaseSpeed = Mathf.Max(Mathf.Min(unit.baseSpeed, MinBaseSpeed), 0);
+
                 if(unit.IsHero){
                     // Precisa ser salvo antes do LoadUnit para registrar exp das habilidades OnSpawn
                     BattleProgress.addHeroSkills((Hero)unit);
@@ -63,7 +70,7 @@ namespace FinalInferno{
 
                 BattleUnit newUnit = BattleUnitsUI.instance.LoadUnit(unit);
                 battleUnits.Add(newUnit);
-                queue.Enqueue(newUnit, -newUnit.curSpeed);
+                float initiative = newUnit.curSpeed;
                 // Debug.Log("Carregou " + unit.name);
 
                 if(!unit.IsHero){
@@ -71,6 +78,15 @@ namespace FinalInferno{
                     (newUnit.unit as Enemy).ResetParameters();
                 }
             }
+
+            foreach(BattleUnit bUnit in battleUnits){
+                float initiative = bUnit.curSpeed;
+                // As unidades são inseridas na fila como se a unidade mais lenta houvesse executado uma ação de custo (Skill.maxCost+Skill.baseCost)/2
+                // e as demais estivessem espaçadas linearmente de acordo com a diferença de speed entre a unidade mais rapida e a mais lenta
+                initiative = Mathf.Clamp( ((initiative - MinBaseSpeed) / (float)(MaxBaseSpeed - MinBaseSpeed)), 0f, 1f) * ((Skill.maxCost + Skill.baseCost) / 2.0f);
+                queue.Enqueue(bUnit, -Mathf.FloorToInt(initiative));
+            }
+
             isBattleReady.UpdateValue(true);
         }
 

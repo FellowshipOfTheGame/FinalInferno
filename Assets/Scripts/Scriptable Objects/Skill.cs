@@ -4,8 +4,10 @@ using UnityEngine;
 
 namespace FinalInferno{
     //engloba todas as "skills"
-    [CreateAssetMenu(fileName = "Skill", menuName = "ScriptableObject/Skill", order = 4)]
+    [CreateAssetMenu(fileName = "Skill", menuName = "ScriptableObject/Skill")]
     public class Skill : ScriptableObject, IDatabaseItem{
+        public const int maxCost = 20;
+        public const int baseCost = 8;
         [Header("Skill")]
         public new string name; //nome da "skill"
         protected int level; //nivel da "skill"

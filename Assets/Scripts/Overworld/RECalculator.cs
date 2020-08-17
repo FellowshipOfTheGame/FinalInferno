@@ -71,11 +71,13 @@ namespace FinalInferno{
 
             // Se certifica que não vai fazer nada no update quando a taxa de encontro é 0
             // ou quando a tabela não existir
-            if((curEncounterRate < float.Epsilon && rateIncreaseValue < float.Epsilon) || table == null){
+            // ou quando o numero de inimigos por encontro for 0
+            if((curEncounterRate < float.Epsilon && rateIncreaseValue < float.Epsilon) || table == null || (minNumberEnemies == 0 && maxNumberEnemies == 0)){
                 playerObj = null;
             }
         }
 
+        // A checagem precisa acontecer no LateUpdate para evitar conflito com o update que o sistema de dialogo usa
         void LateUpdate()
         {
             if (encountersEnabled && (playerObj != null) && CharacterOW.PartyCanMove && (agent == null || agent.canInteract)) {
@@ -83,7 +85,7 @@ namespace FinalInferno{
                 float distance = Vector2.Distance(lastPosition, new Vector2(playerObj.position.x, playerObj.position.y));
                 // Incrementa a distancia total entre checagens
                 distanceWalked += distance;
-                if (distanceWalked > 1.0f) {
+                if (distanceWalked >= 1.0f) {
                     // Caso o player tenha se movido ao menos uma unidade, verifica se encontrou batalha
                     CheckEncounter(distanceWalked);
                     // Atualiza lastCheckPosition
@@ -96,18 +98,20 @@ namespace FinalInferno{
         }
 
         // A chamada da função espera que o valor de distance seja 1.0f
-        // Se tiver frame drop e o jogador andar distancias maiores do que deveria sem checar, a chance de ter batalha é maior
+        // Se houver frame drop e o jogador andar distancias maiores do que deveria sem checar,
+        // A proxima checagem de batalha terá uma chance maior
         private void CheckEncounter(float distance) {
             if (Random.Range(0.0f, 100.0f) < curEncounterRate) {
                 // Quando encontrar uma batalha
                 //Debug.Log("Found random encounter");
-                // Impede que o player se movimente
+                // Impede que o player se movimente e interaja
                 CharacterOW.PartyCanMove = false;
                 if(agent != null){
                     agent.canInteract = false;
                 }
                 // Usar a tabela de encontros aleatorios para definir a lista de inimigos
-                bool isPowerSpike = Party.Instance.level % 5 == 1;
+                int partyLevel = Party.Instance.ScaledLevel;
+                bool isPowerSpike = partyLevel % 5 == 1;
                 int scaledMinEnemies = (!isPowerSpike)? minNumberEnemies : Mathf.Max(minNumberEnemies-1, 1);
                 int scaledMaxEnemies = (!isPowerSpike)? maxNumberEnemies : Mathf.Max(scaledMinEnemies, maxNumberEnemies-1);
                 Enemy[] enemies= new Enemy[Random.Range(scaledMinEnemies, scaledMaxEnemies+1)];
@@ -118,7 +122,7 @@ namespace FinalInferno{
                     for(int j = 0; j < Table.Rows.Count && enemies[i] == null; j++){
                         float roll = Random.Range(0f, 100.0f);
                         float baseChance = Table.Rows[j].Field<float>("Chance");
-                        int index = (Party.Instance.level-1) % 5;
+                        int index = (partyLevel-1) % 5;
                         float chance = (baseChance / 2) + ((baseChance / 2) * (index / 4.0f));
                         //Debug.Log("Rolled a " + roll + " for " + Table.Rows[j].Field<Enemy>("Enemy") + " with chance of " + chance);
                         if(roll <= chance){
@@ -134,7 +138,7 @@ namespace FinalInferno{
 
                     //Debug.Log(enemies[i]);
                 }
-                // Calculo de level foi movido para Enemy.cs
+                // Calculo de level foi movido para Enemy.cs e Party.cs
                 // A função é chamada no script de preview
                 // Assets/Scripts/UI/Menus/LoadEnemiesPreview.cs
 

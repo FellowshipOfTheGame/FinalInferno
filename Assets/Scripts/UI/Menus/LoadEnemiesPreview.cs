@@ -15,6 +15,9 @@ namespace FinalInferno.UI
             int enemyLevel = int.MinValue;
             foreach (Enemy enemy in ChangeSceneUI.battleEnemies)
             {
+                // Esse cálculo supõe que todos os inimigos dever ter o mesmo nível
+                // Caso algo complexo como inimigos tendo níveis diferentes seja necessario
+                // a condicional precisa ser removida e apenas a versão sem parametro da fução seria chamada
                 if(enemyLevel == int.MinValue){
                     enemyLevel = enemy.LevelEnemy();
                 }else{
