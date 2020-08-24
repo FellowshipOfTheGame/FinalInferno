@@ -161,7 +161,7 @@ namespace FinalInferno{
                 rand -= percentual[i];
             }
             
-            return team.Count-1;
+            return 0;
         }
 
         //funcao que escolhe o ataque a ser utilizado
@@ -225,6 +225,9 @@ namespace FinalInferno{
                 case TargetType.SingleEnemy:
                     team = BattleManager.instance.GetTeam(UnitType.Hero);
                     targets.Add(team[TargetDecision(team)]);
+                    break;
+                default:
+                    Debug.LogError("Target type not implemented for enemy targeting (Enemy.cs)");
                     break;
             }
 

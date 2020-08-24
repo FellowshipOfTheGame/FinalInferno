@@ -7,7 +7,7 @@ namespace FinalInferno.UI.Battle
 {
     public class Console : MonoBehaviour
     {
-        public static Console Instance;
+        public static Console Instance { get; private set; }
         [SerializeField] private Text ConsoleText;
 
         private void Awake()
@@ -16,6 +16,12 @@ namespace FinalInferno.UI.Battle
                 Destroy(this.gameObject);
             
             Instance = this;
+        }
+
+        void OnDestroy(){
+            if(Instance == this){
+                Instance = null;
+            }
         }
 
         public void UpdateConsole()

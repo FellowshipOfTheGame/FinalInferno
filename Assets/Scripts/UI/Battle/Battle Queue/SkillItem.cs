@@ -46,18 +46,11 @@ namespace FinalInferno.UI.Battle.QueueMenu
 
         protected void UseSkill()
         {
-            // Debug.Log("Defesa Antes = " + BattleManager.instance.currentUnit.curDef);
             BattleSkillManager.currentSkill = skill;
-            if (skill.target == TargetType.Self || skill.target == TargetType.MultiAlly || skill.target == TargetType.MultiEnemy)
-            {
-                // Debug.Log(BattleSkillManager.currentSkill);
-                BattleSkillManager.currentTargets = GetTargets(skill.target);
-                // BattleSkillManager.UseSkill();
-                // Debug.Log(BattleSkillManager.currentTargets);
-            }
-            // Debug.Log("Defesa Depois = " + BattleManager.instance.currentUnit.curDef);
+            BattleSkillManager.currentTargets = skill.FilterTargets(BattleSkillManager.currentUser, BattleManager.instance.battleUnits);
         }
 
+        // Função provavelmente obsoleta
         private List<BattleUnit> GetTargets(TargetType type)
         {
             List<BattleUnit> targets = new List<BattleUnit>();

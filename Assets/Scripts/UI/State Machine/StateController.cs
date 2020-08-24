@@ -13,6 +13,8 @@ namespace FinalInferno.UI.FSM
         /// Estado atual da máquina.
         /// </summary>
         [SerializeField] private State currentState;
+        private State nextState = null;
+        private Action[] changeActions;
 
         /// <summary>
         /// Tempo que passou desde o início do estado.
@@ -31,13 +33,23 @@ namespace FinalInferno.UI.FSM
             {
                 A.Act(this);
             }
+            nextState = null;
         }
 
         void Update()
         {
-            // Atualiza o tempo passado e verifica por transições
-            stateTimeElapsed += Time.deltaTime;
-            currentState.UpdateState(this);
+            if(nextState != null){
+                TransitionToState();
+            }else{
+                // Atualiza o tempo passado e verifica por transições
+                stateTimeElapsed += Time.deltaTime;
+                currentState.UpdateState(this);
+            }
+        }
+
+        public void SetNextState(State state, Action[] actions){
+            nextState = state;
+            changeActions = actions;
         }
 
         /// <summary>
@@ -45,11 +57,12 @@ namespace FinalInferno.UI.FSM
         /// </summary>
         /// <param name="nextState"> O próximo estado da máquina. </param>
         /// <param name="transitionActions"> Ações que serão executadas na transição. </param>
-        public void TransitionToState(State nextState, Action[] transitionActions)
+        private void TransitionToState()
         {
-            OnExitState(transitionActions);
+            OnExitState(changeActions);
             currentState = nextState;
             Debug.Log("New State: " + nextState.name);
+            nextState = null;
         }
 
         /// <summary>
