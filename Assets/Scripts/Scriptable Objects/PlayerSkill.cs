@@ -11,9 +11,14 @@ namespace FinalInferno{
         public long xp; //experiencia da "skill"
         public long xpNext; //experiencia necessaria para a "skill" subir de nivel
         public long XpCumulative { get { return ( (table == null)? 0 : (xp +  ((level <= 1)? 0 : (XpTable.Rows[level-2].Field<long>("XPAccumulated"))) ) ); } }
+        public int MinLevel{
+            get{
+                return Mathf.Max(XpTable.Rows[0].Field<int>("Level"), Table.Rows[0].Field<int>("Level"));
+            }
+        }
         public int MaxLevel{
             get{
-                return Mathf.Min(XpTable.Rows.Count, Table.Rows.Count);
+                return Mathf.Min(XpTable.Rows[XpTable.Rows.Count-1].Field<int>("Level"), Table.Rows[Table.Rows.Count-1].Field<int>("Level"));
             }
         }
         [TextArea]
@@ -26,7 +31,7 @@ namespace FinalInferno{
         public int prerequisiteHeroLevel; //level que o heroi precisa estar para essa skill destravar
         [Header("Stats Table")]
         [SerializeField] private TextAsset skillTable;
-        [SerializeField] private DynamicTable table = null;
+        [SerializeField] private DynamicTable table;
         private DynamicTable Table {
             get {
                 if(table == null)
@@ -36,7 +41,7 @@ namespace FinalInferno{
         }
         [Header("Exp Table")]
         [SerializeField] private TextAsset expTable;
-        [SerializeField] private DynamicTable xpTable = null;
+        [SerializeField] private DynamicTable xpTable;
         private DynamicTable XpTable {
             get {
                 if(xpTable == null)
@@ -63,9 +68,6 @@ namespace FinalInferno{
         public override void LoadTables(){
             table = DynamicTable.Create(skillTable);
             xpTable = DynamicTable.Create(expTable);
-            level = 0;
-            xp = 0;
-            xpNext = 0;
         }
 
         public override void Preload(){

@@ -23,7 +23,7 @@ namespace FinalInferno{
         public const int Capacity = 4;
 
         public string currentMap = StaticReferences.FirstScene;
-        private int level;
+        [SerializeField] private int level;
         public int Level { get => level; } //nivel da equipe(todos os personagens tem sempre o mesmo nivel)
         public int ScaledLevel{
             // Nível ajustado de acordo com o progresso na historia
@@ -36,7 +36,7 @@ namespace FinalInferno{
             }
         }
         // Multiplicador para aplicar penalidades ou bonus de exp
-        private float xpMultiplier = 1f;
+        [SerializeField, HideInInspector] private float xpMultiplier = 1f;
         public float XpMultiplier{
             get{
                 return xpMultiplier;
@@ -66,7 +66,7 @@ namespace FinalInferno{
         public ReadOnlyDictionary<Enemy, int> Bestiary { get => (new ReadOnlyDictionary<Enemy, int>(bestiary)); }
 
         [SerializeField] private TextAsset partyXP;
-        [SerializeField] private DynamicTable table = null;
+        [SerializeField] private DynamicTable table;
         private DynamicTable Table {
             get {
                 if(table == null)
@@ -77,10 +77,6 @@ namespace FinalInferno{
 
         public void LoadTables(){
             table = DynamicTable.Create(partyXP);
-            level = 0;
-            xp = 0;
-            xpNext = 0;
-            currentMap = StaticReferences.FirstScene;
         }
 
         public void Preload(){
@@ -155,7 +151,7 @@ namespace FinalInferno{
             xp = 0;
             xpNext = 0;
             Debug.Log("Party resetada");
-            characters.Clear();
+            // characters.Clear();
             bestiary.Clear();
             activeQuests.Clear();
             currentMap = StaticReferences.FirstScene;
@@ -163,14 +159,14 @@ namespace FinalInferno{
             // Talvez seja desnecessário ter que limpar a lista de character e achar de novo,
             // pode ser melhor só deixar as 4 referencias fixas e definir que elas não vão ser alteradas
             // Para os arquétipos pode ter uma configuração base e ela ser usada para construir
-            characters.Add(AssetManager.LoadAsset<Character>("Character 1"));
-            characters[characters.Count - 1].archetype = AssetManager.LoadAsset<Hero>("Amidi");
-            characters.Add(AssetManager.LoadAsset<Character>("Character 2"));
-            characters[characters.Count - 1].archetype = AssetManager.LoadAsset<Hero>("Gregorim");
-            characters.Add(AssetManager.LoadAsset<Character>("Character 3"));
-            characters[characters.Count - 1].archetype = AssetManager.LoadAsset<Hero>("Herman");
-            characters.Add(AssetManager.LoadAsset<Character>("Character 4"));
-            characters[characters.Count - 1].archetype = AssetManager.LoadAsset<Hero>("Xander");
+            // characters.Add(AssetManager.LoadAsset<Character>("Character 1"));
+            characters[0].archetype = AssetManager.LoadAsset<Hero>("Amidi");
+            // characters.Add(AssetManager.LoadAsset<Character>("Character 2"));
+            characters[1].archetype = AssetManager.LoadAsset<Hero>("Gregorim");
+            // characters.Add(AssetManager.LoadAsset<Character>("Character 3"));
+            characters[2].archetype = AssetManager.LoadAsset<Hero>("Herman");
+            // characters.Add(AssetManager.LoadAsset<Character>("Character 4"));
+            characters[3].archetype = AssetManager.LoadAsset<Hero>("Xander");
             foreach(Character character in characters){
                 character.ResetCharacter();
             }

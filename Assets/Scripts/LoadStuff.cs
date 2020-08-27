@@ -13,17 +13,30 @@ namespace FinalInferno{
         void Start(){
             Cursor.visible = false;
             assetsLoaded = false;
+            // TO DO add/load playerprefs to/from save files
             string[] channels = new string[] {"VolumeMaster", "VolumeBGM", "VolumeSFX", "VolumeSFXUI"};
             foreach(string channel in channels){
-                mixer.SetFloat(channel, PlayerPrefs.GetFloat(channel));
+                if(PlayerPrefs.HasKey(channel)){
+                    mixer.SetFloat(channel, PlayerPrefs.GetFloat(channel));
+                }
             }
-            SaveLoader.AutoSave = PlayerPrefs.GetString("autosave") == "true";
+            if(PlayerPrefs.HasKey("autosave")){
+                SaveLoader.AutoSave = PlayerPrefs.GetString("autosave") == "true";
+            }else{
+                SaveLoader.AutoSave = true;
+            }
             
             StartCoroutine(PreloadAsync());
         }
 
         private IEnumerator PreloadAsync(){
             yield return new WaitForEndOfFrame();
+
+            #if UNITY_EDITOR
+            // No editor recarrega as tabelas por precaução
+            StaticReferences.AssetManager.BuildDatabase();
+            #endif
+
             AssetManager.Preload();
             yield return new WaitForSeconds(2f);
             assetsLoaded = true;

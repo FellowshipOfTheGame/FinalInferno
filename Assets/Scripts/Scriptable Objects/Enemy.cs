@@ -8,7 +8,7 @@ using FinalInferno.UI.Battle;
 
 namespace FinalInferno{
     //engloba os inimigos do jogador
-    [CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObject/Enemy/Basic", order = 0)]
+    [CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObject/Enemy/Basic")]
     public class Enemy : Unit, IDatabaseItem{
         public Color dialogueColor;
         [Space(10)]
@@ -28,8 +28,8 @@ namespace FinalInferno{
         public string Bio { get => bio; }
         [Space(10)]
         [Header("Table")]
-        [SerializeField] protected TextAsset enemyTable = null;
-        [SerializeField] protected DynamicTable table = null;
+        [SerializeField] protected TextAsset enemyTable;
+        [SerializeField] protected DynamicTable table;
         protected DynamicTable Table {
             get {
                 if(table == null && enemyTable != null)
@@ -39,14 +39,12 @@ namespace FinalInferno{
                 return table;
             }
         }
-        protected int curTableRow = 0;
+        [SerializeField, HideInInspector] protected int curTableRow = 0;
         public override long SkillExp { get { return BaseExp; } } // Quanta exp o inimigo dá pra skill quando ela é usada nele
         public long BaseExp { get; protected set; } // Quanta exp o inimigo dá pra party ao final da batalha
 
         public void LoadTables(){
             table = DynamicTable.Create(enemyTable);
-            curTableRow = -1;
-            LevelEnemy(-1);
         }
 
         public void Preload(){

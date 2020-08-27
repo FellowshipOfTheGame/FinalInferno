@@ -5,10 +5,21 @@ using UnityEngine;
 namespace FinalInferno{
 	public class MoveToInput : MoveTo {
 		private Vector2 input;
+		private bool isActive;
 
 		// O objeto deve estar parado inicialmente
 		void Start(){
 			input = Vector2.zero;
+		}
+
+		public override void Activate(){
+			input = Vector2.zero;
+			isActive = true;
+		}
+
+		public override void Deactivate(){
+			input = Vector2.zero;
+			isActive = false;
 		}
 
 		// A direcao a ser seguida e determinada apenas pelo input
@@ -18,13 +29,10 @@ namespace FinalInferno{
 
 		// Update is called once per frame
 		void Update() {
-			if (!PauseMenu.IsPaused)
-			{
+			if(isActive){
 				input.x = Input.GetAxisRaw("Horizontal");
 				input.y = Input.GetAxisRaw("Vertical");
 			}
-			else
-				input = Vector2.zero;
 		}
 }
 }
