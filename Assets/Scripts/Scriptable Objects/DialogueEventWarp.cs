@@ -13,6 +13,7 @@ namespace FinalInferno{
         [SerializeField] private FinalInferno.UI.FSM.ButtonClickDecision decision;
         
         public override void AfterDialogue(){
+            Debug.Log("teste");
             if(scene.scene == null || scene.scene == "" || decision == null){
                 shouldUnlockMovement = true;
                 base.AfterDialogue();
