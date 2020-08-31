@@ -93,13 +93,12 @@ namespace FinalInferno{
             // Reseta todas as informações do jogo para um estado inicial
             ResetGame();
 
-            Party.Instance.activeQuests.Clear();
             Quest mainQuest = AssetManager.LoadAsset<Quest>("MainQuest");
-            mainQuest.StartQuest();
+            mainQuest.StartQuest(true);
             
             //Debug.Log("Default flag = " + mainQuest.events["Default"]);
             // Carrega a cena inicial como cutscene
-            SceneLoader.LoadCustscene(Party.StartingMap, AssetManager.LoadAsset<Fog.Dialogue.Dialogue>(Party.StartingDialogue));
+            SceneLoader.LoadCustscene(StaticReferences.FirstScene, StaticReferences.FirstDialogue);
         }
 
         public static void StartDemo(){
@@ -109,11 +108,10 @@ namespace FinalInferno{
             // Reseta todas as informações do jogo para um estado inicial
             ResetGame();
 
-            Party.Instance.activeQuests.Clear();
             Quest mainQuest = AssetManager.LoadAsset<Quest>("AdventurerQuest");
-            mainQuest.StartQuest();
+            mainQuest.StartQuest(true);
             mainQuest = AssetManager.LoadAsset<Quest>("MainQuest");
-            mainQuest.StartQuest();
+            mainQuest.StartQuest(true);
             
             //Debug.Log("Default flag = " + mainQuest.events["Default"]);
             // Carrega a cena inicial como cutscene
@@ -126,7 +124,7 @@ namespace FinalInferno{
         }
 
         public static void ResetGame(){
-            Debug.Log("Vamo reseta entao!!!");
+            // Debug.Log("Vamo reseta entao!!!");
             Party.Instance.ResetParty();
         }
     }

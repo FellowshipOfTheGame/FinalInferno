@@ -19,12 +19,32 @@ MonoBehaviour:
   baseDef: 4
   baseMagicDef: 5
   baseSpeed: 13
-  elementalResistance:
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
+  elementalResistances:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 0
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 0
+    _keyValues: 
+    _keys: 
+    _values: []
   skills: []
   attackSkill: {fileID: 11400000, guid: 95407fd86bf202049848deeb79956196, type: 2}
   defenseSkill: {fileID: 11400000, guid: 91ee493282c723147a741a8ac23970d9, type: 2}
@@ -34,9 +54,18 @@ MonoBehaviour:
   dialoguePortrait: {fileID: 21300004, guid: 1a6d131da3148b2418caf1d116ceb208, type: 3}
   battleSprite: {fileID: 21300000, guid: 1a6d131da3148b2418caf1d116ceb208, type: 3}
   queueSprite: {fileID: 21300002, guid: 1a6d131da3148b2418caf1d116ceb208, type: 3}
-  dialogueColor: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 0}
+  dialogueColor: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 1}
   element: 5
   damageFocus: 1
+  bestiaryPortrait: {fileID: 21300000, guid: 1a6d131da3148b2418caf1d116ceb208, type: 3}
+  enemyCry: {fileID: 0}
+  bio: "Wanderers have an extremely slim and deformed humanoid shape. The most miserable
+    souls in all Hell, they are sinners that did not sin enough to enter Hell\u2019s
+    gates.Their lives were devoid of any relevance, except for minor sins. Not possessing
+    any notable abilities and unworthy of any punishment, their destiny is to wander
+    through Hell\u2019s plains, with a void conscience, until accidentally traversing
+    the line between existing or not. Then, they may perish or come back, weaker,
+    to wander again."
   enemyTable: {fileID: 4900000, guid: fad97e4bea2fabc4192746002a560182, type: 3}
   table:
     colTypes:
@@ -58,66 +87,24 @@ MonoBehaviour:
     - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-    Col:
-      reorderableList:
-        canAdd: 0
-        canRemove: 0
-        draggable: 0
-        expandable: 0
-        multipleSelection: 0
-        isExpanded: 0
-        label:
-          m_Text: 
-          m_Image: {fileID: 0}
-          m_Tooltip: 
-        headerHeight: 0
-        footerHeight: 0
-        slideEasing: 0
-        verticalSpacing: 0
-        showDefaultBackground: 0
-        elementDisplayType: 0
-        elementNameProperty: 
-        elementNameOverride: 
-        elementIcon: {fileID: 0}
-      reqReferences: {fileID: 0}
-      isExpanded: 0
-      _keyValues:
-      - Rank
-      - Level
-      - HP
-      - Damage
-      - Defense
-      - Resistance
-      - Speed
-      - Color
-      - FireResistance
-      - WaterResistance
-      - WindResistance
-      - EarthResistance
-      - NeutralResistance
-      - XP
-      - LevelSkill0
-      - LevelSkill1
-      - ChancetoUseSkill
-      _keys:
-      - Rank
-      - Level
-      - HP
-      - Damage
-      - Defense
-      - Resistance
-      - Speed
-      - Color
-      - FireResistance
-      - WaterResistance
-      - WindResistance
-      - EarthResistance
-      - NeutralResistance
-      - XP
-      - LevelSkill0
-      - LevelSkill1
-      - ChancetoUseSkill
-      _values: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f00000010000000
+    colNames:
+    - Rank
+    - Level
+    - HP
+    - Damage
+    - Defense
+    - Resistance
+    - Speed
+    - Color
+    - FireResistance
+    - WaterResistance
+    - WindResistance
+    - EarthResistance
+    - NeutralResistance
+    - XP
+    - LevelSkill0
+    - LevelSkill1
+    - ChancetoUseSkill
     rows:
     - elements:
       - Noob Wanderer
@@ -156,66 +143,6 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Rank
-        - Level
-        - HP
-        - Damage
-        - Defense
-        - Resistance
-        - Speed
-        - Color
-        - FireResistance
-        - WaterResistance
-        - WindResistance
-        - EarthResistance
-        - NeutralResistance
-        - XP
-        - LevelSkill0
-        - LevelSkill1
-        - ChancetoUseSkill
-        _keys:
-        - Rank
-        - Level
-        - HP
-        - Damage
-        - Defense
-        - Resistance
-        - Speed
-        - Color
-        - FireResistance
-        - WaterResistance
-        - WindResistance
-        - EarthResistance
-        - NeutralResistance
-        - XP
-        - LevelSkill0
-        - LevelSkill1
-        - ChancetoUseSkill
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f00000010000000
     - elements:
       - Wanderer
       - 5
@@ -253,66 +180,6 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Rank
-        - Level
-        - HP
-        - Damage
-        - Defense
-        - Resistance
-        - Speed
-        - Color
-        - FireResistance
-        - WaterResistance
-        - WindResistance
-        - EarthResistance
-        - NeutralResistance
-        - XP
-        - LevelSkill0
-        - LevelSkill1
-        - ChancetoUseSkill
-        _keys:
-        - Rank
-        - Level
-        - HP
-        - Damage
-        - Defense
-        - Resistance
-        - Speed
-        - Color
-        - FireResistance
-        - WaterResistance
-        - WindResistance
-        - EarthResistance
-        - NeutralResistance
-        - XP
-        - LevelSkill0
-        - LevelSkill1
-        - ChancetoUseSkill
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f00000010000000
     - elements:
       - Lt. Wanderer
       - 10
@@ -350,66 +217,6 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Rank
-        - Level
-        - HP
-        - Damage
-        - Defense
-        - Resistance
-        - Speed
-        - Color
-        - FireResistance
-        - WaterResistance
-        - WindResistance
-        - EarthResistance
-        - NeutralResistance
-        - XP
-        - LevelSkill0
-        - LevelSkill1
-        - ChancetoUseSkill
-        _keys:
-        - Rank
-        - Level
-        - HP
-        - Damage
-        - Defense
-        - Resistance
-        - Speed
-        - Color
-        - FireResistance
-        - WaterResistance
-        - WindResistance
-        - EarthResistance
-        - NeutralResistance
-        - XP
-        - LevelSkill0
-        - LevelSkill1
-        - ChancetoUseSkill
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f00000010000000
     - elements:
       - Capt. Wanderer
       - 15
@@ -447,63 +254,4 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Rank
-        - Level
-        - HP
-        - Damage
-        - Defense
-        - Resistance
-        - Speed
-        - Color
-        - FireResistance
-        - WaterResistance
-        - WindResistance
-        - EarthResistance
-        - NeutralResistance
-        - XP
-        - LevelSkill0
-        - LevelSkill1
-        - ChancetoUseSkill
-        _keys:
-        - Rank
-        - Level
-        - HP
-        - Damage
-        - Defense
-        - Resistance
-        - Speed
-        - Color
-        - FireResistance
-        - WaterResistance
-        - WindResistance
-        - EarthResistance
-        - NeutralResistance
-        - XP
-        - LevelSkill0
-        - LevelSkill1
-        - ChancetoUseSkill
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f00000010000000
+  curTableRow: 0

@@ -22,7 +22,7 @@ namespace FinalInferno{
             public List<PlayerSkill>[] newSkills; // Skills que cada hero desbloqueou durante a batalha
 
             public BattleChanges(Party party){ // Ex de uso no final da batalha: BattleChanges changes = new BattleChanges(Party.Instance)
-                levelChanges = party.level - BattleProgress.startingLevel;
+                levelChanges = party.Level - BattleProgress.startingLevel;
                 xpGained = party.XpCumulative - BattleProgress.xpCumulative;
                 heroes = new Hero[Party.Capacity];
                 heroSkills = new List<SkillInfo>[Party.Capacity];
@@ -55,7 +55,7 @@ namespace FinalInferno{
 
         public static void ResetInfo(Party party){
             currentIndex = 0;
-            startingLevel = party.level;
+            startingLevel = party.Level;
             startingExp = party.xp;
             xpToNextLevel = party.xpNext;
             xpCumulative = party.XpCumulative;

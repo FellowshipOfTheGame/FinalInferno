@@ -11,8 +11,16 @@ namespace FinalInferno{
 		public bool CanMove{
 			get { return canMove; }
 			set {
-				if(value != canMove)
+				if(value != canMove){
 					rigid2D.velocity = Vector2.zero;
+					if(nextPosition != null){
+						if(value){
+							nextPosition.Activate();
+						}else{
+							nextPosition.Deactivate();
+						}
+					}
+				}
 				canMove = value;
 			}
 		}
@@ -48,6 +56,7 @@ namespace FinalInferno{
 				rigid2D.velocity = moveSpeed * direction;
 			}
 			if (anim != null) {
+				// TO DO Setar umas propriedades e usar o update para pegar as informações e atualizar o animator
 				anim.SetBool("moving", rigid2D.velocity != Vector2.zero);
 				anim.SetFloat("moveX", rigid2D.velocity.normalized.x);
 				anim.SetFloat("moveY", rigid2D.velocity.normalized.y);

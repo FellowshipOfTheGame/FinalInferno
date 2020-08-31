@@ -1,239 +1,190 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using System.IO;
 
 namespace FinalInferno{
-    public static class AssetManager
+    [CreateAssetMenu(fileName = "AssetDatabase", menuName = "ScriptableObject/Database")]
+    public class AssetManager : ScriptableObject
     {
-        private static List<AssetBundle> bundleList = null;
-        private static List<AssetBundle> BundleList {
+        // Ele é um singleton acessado por funções estáticas
+        private static AssetManager instance = null;
+        private static AssetManager Instance {
             get{
-                if(bundleList == null)
-                    bundleList = new List<AssetBundle>();
-                return bundleList;
+                if(instance == null){
+                    instance = StaticReferences.AssetManager;
+                }
+                return instance;
             }
         }
 
-        private static AssetBundle party = null;
-        private static AssetBundle Party{
-            get{
-                if(party == null || !BundleList.Contains(party)){
-                    party = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "party"));
-                    BundleList.Add(party);
-                }
-                return party;
-            }
-        }
-        private static AssetBundle hero = null;
-        private static AssetBundle Hero{
-            get{
-                if(hero == null || !BundleList.Contains(hero)){
-                    hero = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "hero"));
-                    BundleList.Add(hero);
-                }
-                return hero;
-            }
-        }
-        private static AssetBundle character = null;
-        private static AssetBundle Character{
-            get{
-                if(character == null || !BundleList.Contains(character)){
-                    character = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "character"));
-                    BundleList.Add(character);
-                }
-                return character;
-            }
-        }
-        private static AssetBundle enemy = null;
-        private static AssetBundle Enemy{
-            get{
-                if(enemy == null || !BundleList.Contains(enemy)){
-                    enemy = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "enemy"));
-                    BundleList.Add(enemy);
-                }
-                return enemy;
-            }
-        }
-        private static AssetBundle skill = null;
-        private static AssetBundle Skill{
-            get{
-                if(skill == null || !BundleList.Contains(skill)){
-                    skill = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "skill"));
-                    BundleList.Add(skill);
-                }
-                return skill;
-            }
-        }
-        private static AssetBundle quest = null;
-        private static AssetBundle Quest{
-            get{
-                if(quest == null || !BundleList.Contains(skill)){
-                    quest = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "quest"));
-                    BundleList.Add(quest);
-                }
-                return quest;
-            }
-        }
-        private static AssetBundle dialogue = null;
-        private static AssetBundle Dialogue{
-            get{
-                if(dialogue == null || !BundleList.Contains(dialogue)){
-                    dialogue = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "dialogue"));
-                    BundleList.Add(dialogue);
-                }
-                return dialogue;
-            }
-        }
-        private static AssetBundle npc = null;
-        private static AssetBundle Npc{
-            get{
-                if(npc == null || !BundleList.Contains(npc)){
-                    npc = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, "npc"));
-                    BundleList.Add(npc);
-                }
-                return npc;
-            }
-        }
+        // Subclasse =====================================================================
+        #region subclass
+        [System.Serializable]
+        private class Bundle<T> where T : ScriptableObject, IDatabaseItem{
+            // Lista serializavel configurada pelo editor
+            // TO DO: Adicionar HideInInspector depois que tiver certeza que funciona
+            [SerializeField] private List<T> assets = new List<T>();
+            // Talvez isso seja desnecessario
+            [SerializeField, HideInInspector] private string bundleName = "";
+            public string BundleName { get => bundleName; }
+            // Dicionario carregado em runtime para acesso rapido
+            private Dictionary<string, T> dict = new Dictionary<string, T>();
+            private bool loaded = false;
 
-        public static void LoadAllBundles(){
+            public Bundle(){
+                bundleName = typeof(T).Name.ToLower();
+            }
+
             #if UNITY_EDITOR
-            return;
-            #else
-            if(Party && Character && Hero && Enemy && Skill && Quest && Dialogue)
-            return;
+            public void FindAssets(){
+                string[] objectsFound = AssetDatabase.FindAssets("t:" + typeof(T).Name);
+                assets = new List<T>();
+                foreach(string guid in objectsFound){
+                    T newAsset = AssetDatabase.LoadAssetAtPath<T>(AssetDatabase.GUIDToAssetPath(guid));
+                    newAsset.LoadTables();
+                    assets.Add(newAsset);
+                }
+            }
             #endif
-        }
 
-        public static void LoadAllAssets(){
-            #if UNITY_EDITOR
-            return;
-            #else
-            LoadAllBundles();
-            if(Party)
-                LoadBundleAssets<Party>();
-            if(Character)
-                LoadBundleAssets<Character>();
-            if(Hero)
-                LoadBundleAssets<Hero>();
-            if(Enemy)
-                LoadBundleAssets<Enemy>();
-            if(Skill)
-                LoadBundleAssets<Skill>();
-            if(Quest)
-                LoadBundleAssets<Quest>();
-            if(Dialogue)
-                LoadBundleAssets<Fog.Dialogue.Dialogue>();
-            if(Npc)
-                LoadBundleAssets<NPC>();
-            return;
-            #endif
-        }
+            public void Preload(){
+                foreach(T asset in assets){
+                    string key = (asset is Enemy)? (asset as Enemy).AssetName : asset.name;
+                    try{
+                        dict.Add(key, asset);
+                        // Codigo aqui embaixo só executa se não cair no catch
+                        asset.Preload();
+                    }catch(System.ArgumentException){
+                        Debug.LogWarning("Asset " + key + " is being added more than once");
+                    }
+                }
+            }
 
-        private static AssetBundle GetBundle(string typeName){
-            AssetBundle bundle = null;
+            public T LoadAsset(string name){
+                T value = default(T);
+                try{
+                    value = dict[name];
+                }catch(KeyNotFoundException){
+                    value = default(T);
+                }
+                // O uso do dicionario é mais eficiente (~= O(1)) do que um find na lista (O(n))
+                // value = assets.Find(asset => (asset is Enemy)? ((asset as Enemy).AssetName == name) : (asset.name == name));
+                return value;
+            }
+        }
+        [System.Serializable] private class PartyBundle : Bundle<Party>{}
+        [System.Serializable] private class HeroBundle : Bundle<Hero>{}
+        [System.Serializable] private class EnemyBundle : Bundle<Enemy>{}
+        [System.Serializable] private class SkillBundle : Bundle<Skill>{}
+        [System.Serializable] private class QuestBundle : Bundle<Quest>{}
+        // Fim da subclasse =====================================================================
+        #endregion
+
+        // Unity não consegue serializar isso, oh well
+        // [SerializeField] private Bundle<Party> party = new Bundle<Party>();
+        // [SerializeField] private Bundle<Hero> heroes = new Bundle<Hero>();
+        // [SerializeField] private Bundle<Enemy> enemies = new Bundle<Enemy>();
+        // [SerializeField] private Bundle<Skill> skills = new Bundle<Skill>();
+        // [SerializeField] private Bundle<Quest> quests = new Bundle<Quest>();
+
+        [SerializeField] private PartyBundle party = new PartyBundle();
+        [SerializeField] private HeroBundle heroes = new HeroBundle();
+        [SerializeField] private EnemyBundle enemies = new EnemyBundle();
+        [SerializeField] private SkillBundle skills = new SkillBundle();
+        [SerializeField] private QuestBundle quests = new QuestBundle();
+
+        private Bundle<T> GetBundle<T>(string typeName) where T : ScriptableObject, IDatabaseItem{
+            Bundle<T> bundle = null;
             switch(typeName){
                 case "party":
-                    bundle = Party;
+                    bundle = party as Bundle<T>;
                     break;
                 case "hero":
-                    bundle = Hero;
-                    break;
-                case "character":
-                    bundle = Character;
+                    bundle = heroes as Bundle<T>;
                     break;
                 case "enemy":
-                    bundle = Enemy;
+                    bundle = enemies as Bundle<T>;
                     break;
                 case "skill":
-                    bundle = Skill;
+                    bundle = skills as Bundle<T>;
                     break;
                 case "quest":
-                    bundle = Quest;
-                    break;
-                case "dialogue":
-                    bundle = Dialogue;
-                    break;
-                case "npc":
-                    bundle = Npc;
+                    bundle = quests as Bundle<T>;
                     break;
                 default:
                     Debug.Log("Access to bundle " + typeName + " is not implemented");
                     break;
             }
+
             return bundle;
         }
 
-        public static List<T> LoadBundleAssets<T>() where T : UnityEngine.Object{
-            #if UNITY_EDITOR
-            string[] objectsFound = UnityEditor.AssetDatabase.FindAssets("t:" + typeof(T).Name);
-            List<T> newList = new List<T>();
-            foreach(string guid in objectsFound){
-                newList.Add(UnityEditor.AssetDatabase.LoadAssetAtPath<T>(UnityEditor.AssetDatabase.GUIDToAssetPath(guid)));
+        #if UNITY_EDITOR
+        [ContextMenu("Build")]
+        public void BuildDatabase(){
+            // party = new Bundle<Party>();
+            party = new PartyBundle();
+            party.FindAssets();
+            // heroes = new Bundle<Hero>();
+            heroes = new HeroBundle();
+            heroes.FindAssets();
+            // enemies = new Bundle<Enemy>();
+            enemies = new EnemyBundle();
+            enemies.FindAssets();
+            // skills = new Bundle<Skill>();
+            skills = new SkillBundle();
+            skills.FindAssets();
+            // quests = new Bundle<Quest>();
+            quests = new QuestBundle();
+            quests.FindAssets();
+        }
+        #endif
+
+        public static void Preload(){
+            if(Instance != null){
+                Instance.party.Preload();
+                Instance.heroes.Preload();
+                Instance.enemies.Preload();
+                Instance.skills.Preload();
+                Instance.quests.Preload();
+            }else{
+                Debug.LogError("No database to preload");
             }
-            return newList;
-            #else
-            string typeName = typeof(T).Name.ToLower();
-            AssetBundle bundle = GetBundle(typeName);
-            return (bundle == null)? null : new List<T>(bundle.LoadAllAssets<T>());
-            #endif
         }
 
-        public static T LoadAsset<T>(string name) where T : UnityEngine.Object{
-            Debug.Log("looking for object " + name + " of type " + typeof(T).Name);
-            #if UNITY_EDITOR
-            string[] objectsFound = UnityEditor.AssetDatabase.FindAssets(name + " t:" + typeof(T).Name);
-            if(objectsFound != null && objectsFound.Length > 0){
-                return UnityEditor.AssetDatabase.LoadAssetAtPath<T>(UnityEditor.AssetDatabase.GUIDToAssetPath(objectsFound[0]));
-            }else{
-                Debug.Log("object " + name + " not found");
-                return null;
-            }
-            #else
-            string typeName = typeof(T).Name.ToLower();
-            AssetBundle bundle = GetBundle(typeName);
-            return (bundle == null)? null : bundle.LoadAsset<T>(name);
-            #endif
-        }
-
-        public static UnityEngine.Object LoadAsset(string name, System.Type type){
-            Debug.Log("looking for object " + name + " of type " + type.Name);
-            #if UNITY_EDITOR
-            string[] objectsFound = UnityEditor.AssetDatabase.FindAssets(name + " t:" + type.Name);
-            if(objectsFound != null && objectsFound.Length > 0){
-                return UnityEditor.AssetDatabase.LoadAssetAtPath(UnityEditor.AssetDatabase.GUIDToAssetPath(objectsFound[0]), type);
-            }else{
-                Debug.Log("object " + name + " not found");
-                return null;
-            }
-            #else
+        public static ScriptableObject LoadAsset(string name, System.Type type){
             string typeName = type.Name.ToLower();
-            AssetBundle bundle = GetBundle(typeName);
-            return (bundle == null)? null : bundle.LoadAsset(name, type);
-            #endif
-        }
-
-        public static void UnloadAssets<T>(bool shouldDestroy = true){
-            #if UNITY_EDITOR
-            return;
-            #else
-            
-            string typeName = typeof(T).Name.ToLower();
-            AssetBundle bundle = GetBundle(typeName);
-            bundle.Unload(shouldDestroy);
-            BundleList.Remove(bundle);
-            #endif
-        }
-
-        public static void UnloadAllAssets(bool shouldDestroy = true){
-            #if UNITY_EDITOR
-            return;
-            #else
-            foreach(AssetBundle bundle in BundleList){
-                bundle.Unload(shouldDestroy);
+            switch(typeName){
+                case "party":
+                    return LoadAsset<Party>(name);
+                case "hero":
+                    return LoadAsset<Hero>(name);
+                case "enemy":
+                    return LoadAsset<Enemy>(name);
+                case "skill":
+                    return LoadAsset<Skill>(name);
+                case "quest":
+                    return LoadAsset<Quest>(name);
+                default:
+                    Debug.Log("Access to bundle " + typeName + " is not implemented");
+                    return null;
             }
-            BundleList.Clear();
-            #endif
+        }
+
+        public static T LoadAsset<T>(string name, string typeName = null) where T : ScriptableObject, IDatabaseItem{
+            if(Instance != null){
+                if(typeName == null){
+                    typeName = typeof(T).Name.ToLower();
+                }
+                Debug.Log("looking for object " + name + " of type " + typeName + " as " + typeof(T).Name);
+                Bundle<T> bundle = Instance.GetBundle<T>(typeName);
+                return (bundle == null)? null : bundle.LoadAsset(name);
+            }else{
+                Debug.LogError("Database has not been loaded");
+                return default(T);
+            }
         }
     }
 }

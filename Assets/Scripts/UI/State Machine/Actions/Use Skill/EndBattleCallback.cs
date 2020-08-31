@@ -33,13 +33,26 @@ namespace FinalInferno.UI.FSM
                     battleUnit.OnEndBattle(battleUnit, BattleManager.instance.GetTeam(UnitType.Hero, true));
             }
 
-            // Calcula a exp ganhada pela party e da a recompensa
+            // Calcula a exp ganhada pela party, da a recompensa e registra os inimigos mortos no bestiario
             long xpReward = 0;
+            int cerberusCount = 0;
             foreach(BattleUnit battleUnit in BattleManager.instance.battleUnits){
-                if(!battleUnit.unit.IsHero){
-                    xpReward += ((Enemy)battleUnit.unit).BaseExp;
+                if(battleUnit.unit is Enemy){
+                    Enemy enemy = (Enemy)battleUnit.unit;
+                    if(enemy is CerberusHead) cerberusCount++;
+
+                    xpReward += enemy.BaseExp;
+                    if(cerberusCount == 0 || (cerberusCount % 3 == 1)){
+                        Party.Instance.RegisterKill(enemy);
+                    }
                 }
             }
+
+            // Armazena o hp atual das unidades para utilizar no inicio da proxima batalha
+            foreach(Character character in Party.Instance.characters){
+                character.hpCur = Mathf.Max(BattleManager.instance.GetBattleUnit(character.archetype).CurHP, 1);
+            }
+            // A exp e distribuida depois, pois se os personagens ganharem um nivel o hp maximo muda
             Party.Instance.GiveExp(xpReward);
         }
 

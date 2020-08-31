@@ -98,8 +98,9 @@ namespace FinalInferno.UI.Battle.QueueMenu
         /// <param name="newPosition"> Posição do personagem se utilizar a skill. </param>
         public void SetPreviewPosition(int newPosition)
         {
-            PreviewObject.anchoredPosition = new Vector3(layout.padding.left - layout.spacing/2 +
-                                                newPosition * (75 + layout.spacing), 0f);
+            PreviewObject.anchoredPosition = new Vector2( Mathf.Min(layout.GetComponent<RectTransform>().rect.width,
+                                    layout.padding.left - layout.spacing/2 + newPosition * (75 + layout.spacing))
+                                                                    , PreviewObject.anchoredPosition.y);
         }
 
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -41,13 +42,26 @@ namespace FinalInferno.UI.Saves
             {
                 EmptySlotGO.SetActive(false);
                 PreviewInfoGO.SetActive(true);
-                InfosText.text = "Level " + info.level + "\n" + info.mapName;
+                InfosText.text = "Level " + info.level + "\n" + ParseAreaName(info.mapName);
 
                 for (int i = 0; i < 4; i++)
                     HeroesImages[i].sprite = info.heroes[i].QueueSprite;
             }
 
             slotNumber = number;
+        }
+
+        private string ParseAreaName(string saveName){
+            string actualName = saveName.Replace(" ", string.Empty);   
+            actualName = actualName.Replace("StartingArea", "PlainsBeyondHell");
+            Regex r = new Regex(@"(?<=[A-Z])(?=[A-Z][a-z])|(?<=[^A-Z])(?=[A-Z])|(?<=[A-Za-z])(?=[^A-Za-z])");
+            actualName = r.Replace(actualName, " ");
+            string[] words = actualName.Split(' ');
+            for(int i = 0; i < words.Length; i++){
+                words[i] = words[i].TrimStart('0');
+            }
+            actualName = string.Join(" ", words);
+            return actualName;
         }
 
         private void SetSlotTypeValue()

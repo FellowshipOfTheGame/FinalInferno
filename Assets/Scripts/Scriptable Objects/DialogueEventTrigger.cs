@@ -10,9 +10,7 @@ namespace FinalInferno{
 
         public override void AfterDialogue(){
             foreach(QuestEvent _event in eventsTriggered){
-                Quest quest = _event.quest.PartyReference;
-                if(quest == null)
-                    quest = _event.quest;
+                Quest quest = _event.quest;
 
                 if(quest != null){
                     quest.events[_event.eventFlag] = true;

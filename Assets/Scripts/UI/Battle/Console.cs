@@ -7,7 +7,7 @@ namespace FinalInferno.UI.Battle
 {
     public class Console : MonoBehaviour
     {
-        public static Console Instance;
+        public static Console Instance { get; private set; }
         [SerializeField] private Text ConsoleText;
 
         private void Awake()
@@ -18,14 +18,22 @@ namespace FinalInferno.UI.Battle
             Instance = this;
         }
 
+        void OnDestroy(){
+            if(Instance == this){
+                Instance = null;
+            }
+        }
+
         public void UpdateConsole()
         {
-            if (BattleSkillManager.currentSkill == null){
-                ConsoleText.text = "<color=#" + ColorUtility.ToHtmlStringRGBA(BattleSkillManager.currentUser.unit.color) + ">"
-                        + BattleSkillManager.currentUser.unit.name + "</color> cannot act";
-            }else{
-                ConsoleText.text = "<color=#" + ColorUtility.ToHtmlStringRGBA(BattleSkillManager.currentUser.unit.color) + ">"
-                        + BattleSkillManager.currentUser.unit.name + "</color> used " + BattleSkillManager.currentSkill.name;
+            if(BattleSkillManager.currentUser != null){
+                if (BattleSkillManager.currentSkill == null){
+                    ConsoleText.text = "<color=#" + ColorUtility.ToHtmlStringRGBA(BattleSkillManager.currentUser.unit.color) + ">"
+                            + BattleSkillManager.currentUser.unit.name + "</color> cannot act";
+                }else{
+                    ConsoleText.text = "<color=#" + ColorUtility.ToHtmlStringRGBA(BattleSkillManager.currentUser.unit.color) + ">"
+                            + BattleSkillManager.currentUser.unit.name + "</color> used " + BattleSkillManager.currentSkill.name;
+                }
             }
         }
     }

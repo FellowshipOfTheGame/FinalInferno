@@ -11,7 +11,7 @@ namespace FinalInferno{
         public string description; //descricao da "skill" que aparecera para o jogador durante a batalha
         [Header("Stats Table")]
         [SerializeField] private TextAsset skillTable;
-        [SerializeField] private DynamicTable table = null;
+        [SerializeField] private DynamicTable table;
         private DynamicTable Table {
             get {
                 if(table == null && skillTable != null)
@@ -24,66 +24,56 @@ namespace FinalInferno{
         public override int Level{
             get{ return level; }
             set{
-                if(value != level && Table != null){
+                if(value != level && Table != null && Table.Rows.Count > 0){
                     level = Mathf.Clamp(value, Table.Rows[0].Field<int>("Level"), Table.Rows[Table.Rows.Count-1].Field<int>("Level"));
                     LevelUp();
                 }
             }
         }
+        private int curTableRow = 0;
 
-        void Awake(){
-            if(Table != null){
-                table = DynamicTable.Create(skillTable);
-                Level = -1;
-            }
+        public override void LoadTables(){
+            table = DynamicTable.Create(skillTable);
+        }
+
+        public override void Preload(){
             active = true;
+            curTableRow = -1;
+            Level = -1; // O valor é -1 para garantir que seja diferente do default 0
         }
 
         //atualiza o value dos efeitos, se for necessario.
         public void LevelUp(){
-            if(Table == null){
-                Debug.Log("This skill(" + name + ") has no table to load");
+            if(Table == null || Table.Rows.Count < 1){
+                Debug.Log($"This skill({name}) has no table to load");
                 return;
             }
-            // int i = 0;
-            // effects[i].effect.value1 = Table.Rows[level-1].Field<float>("Effect0Value0");
-            // effects[i].effect.value2 = Table.Rows[level-1].Field<float>("Effect0Value1");
 
-            for(int i = 0; i < effects.Count; i++){
-                SkillEffectTuple modifyEffect = effects[i];
-                //Debug.Log("levelapo a " + name);
+            int row = -1;
+            do{
+                row++;
+            }while(row < Table.Rows.Count-1 && Table.Rows[row+1].Field<int>("Level") <= Level);
 
-                modifyEffect.value1 = Table.Rows[Level-1].Field<float>("SkillEffect" + i + "Value0");
-                //Debug.Log("Mvalue1: " + modifyEffect.value1);
-                
-                modifyEffect.value2 = Table.Rows[Level-1].Field<float>("SkillEffect" + i + "Value1");
-                //Debug.Log("Mvalue2: " + modifyEffect.value2);
+            if(row != curTableRow){
+                curTableRow = row;
+                for(int i = 0; i < effects.Count; i++){
+                    SkillEffectTuple modifyEffect = effects[i];
 
-                effects[i] = modifyEffect;
-                //Debug.Log("value1: " + effects[i].value1);
-                //Debug.Log("value2: " + effects[i].value2);
+                    modifyEffect.value1 = Table.Rows[curTableRow].Field<float>("SkillEffect" + i + "Value0");
+                    modifyEffect.value2 = Table.Rows[curTableRow].Field<float>("SkillEffect" + i + "Value1");
+
+                    effects[i] = modifyEffect;
+                }
             }
         }
 
         public override void ResetSkill(){
             Level = 0;
             active = true;
-            Debug.Log("Skill resetada");
+            // Debug.Log("Skill resetada");
         }
-        
-        // public override void Use(BattleUnit user, BattleUnit target, bool shouldOverride = false, float value1 = 0, float value2 = 0){
-        //     /*
-        //     if(user.unit.GetType() == typeof(Enemy)){
-        //         Level = ((Enemy)user.unit).GetSkillLevel(this);
-        //     } */
-        //     base.Use(user, target, shouldOverride, value1, value2);
-        // }
 
         public override void Use(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f){
-            /*
-            if(user.unit.GetType() == typeof(Enemy)){ // Isso aqui pode ser bem complicado de garantir nos callbacks, ja que o callback sendo chamado em uma unidade nao necessariamente foi colocado ali por ela mesma
-                Level = ((Enemy)user.unit).GetSkillLevel(this);
-            }*/
             targets = FilterTargets(user, targets); // Filtragem para garantir a consistencia dos callbacks de AoE
             base.Use(user, targets, shouldOverride1, value1, shouldOverride2, value2);
         }

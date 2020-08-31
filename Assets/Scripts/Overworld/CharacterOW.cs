@@ -11,6 +11,7 @@ namespace FinalInferno{
         public Character CharacterSO { get{ return characterSO; } }
         [SerializeField] private bool isMain;
         // Tamanho desse vetor deve ser igual a Party.Capacity
+        // To Do: Fazer esse vetor usar scriptable objects ao inves de ser uma referencia estatica
         private static CharacterOW[] characterList = new CharacterOW[]{null, null, null, null};
         public static ReadOnlyCollection<CharacterOW> CharacterList {get {return System.Array.AsReadOnly(characterList); } }
         public static CharacterOW MainOWCharacter{ get{ return characterList[0]; } }

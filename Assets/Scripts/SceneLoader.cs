@@ -195,7 +195,7 @@ namespace FinalInferno{
             SceneManager.sceneLoaded -= OnBattleLoad;
         }
         public static void OnMainMenuLoad(Scene map, LoadSceneMode mode){
-            StaticReferences.BGM.PlaySong(StaticReferences.instance.mainMenuBGM);
+            StaticReferences.BGM.PlaySong(StaticReferences.MainMenuBGM);
             SceneManager.sceneLoaded -= OnMainMenuLoad;
         }
         public static void OnMapLoad(Scene map, LoadSceneMode mode) {

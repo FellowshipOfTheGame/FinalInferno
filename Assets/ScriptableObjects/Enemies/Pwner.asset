@@ -19,12 +19,33 @@ MonoBehaviour:
   baseDef: 14
   baseMagicDef: 14
   baseSpeed: 22
-  elementalResistance:
-  - 1.9
-  - 1
-  - 1
-  - 1
-  - 1
+  elementalResistances:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 0
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 0
+    _keyValues: 01000000
+    _keys: 01000000
+    _values:
+    - 1.9
   skills:
   - {fileID: 11400000, guid: 2c3021b87d1b78a458264d0c93f382d1, type: 2}
   - {fileID: 11400000, guid: c7f8ca5a99d6a8240a8df51799499057, type: 2}
@@ -40,9 +61,12 @@ MonoBehaviour:
   dialoguePortrait: {fileID: 21300004, guid: 5959357f3f25e2e418d3fcad1413dfdc, type: 3}
   battleSprite: {fileID: 21300000, guid: 5959357f3f25e2e418d3fcad1413dfdc, type: 3}
   queueSprite: {fileID: 21300002, guid: 5959357f3f25e2e418d3fcad1413dfdc, type: 3}
-  dialogueColor: {r: 1, g: 0, b: 0, a: 0}
+  dialogueColor: {r: 1, g: 0, b: 0, a: 1}
   element: 5
   damageFocus: 3
+  bestiaryPortrait: {fileID: 0}
+  enemyCry: {fileID: 0}
+  bio: Bio
   enemyTable: {fileID: 4900000, guid: e64e21d090f18764e98c3aba80c17a14, type: 3}
   table:
     colTypes:
@@ -68,74 +92,28 @@ MonoBehaviour:
     - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-    Col:
-      reorderableList:
-        canAdd: 0
-        canRemove: 0
-        draggable: 0
-        expandable: 0
-        multipleSelection: 0
-        isExpanded: 0
-        label:
-          m_Text: 
-          m_Image: {fileID: 0}
-          m_Tooltip: 
-        headerHeight: 0
-        footerHeight: 0
-        slideEasing: 0
-        verticalSpacing: 0
-        showDefaultBackground: 0
-        elementDisplayType: 0
-        elementNameProperty: 
-        elementNameOverride: 
-        elementIcon: {fileID: 0}
-      reqReferences: {fileID: 0}
-      isExpanded: 0
-      _keyValues:
-      - Rank
-      - Level
-      - HP
-      - Damage
-      - Defense
-      - Resistance
-      - Speed
-      - Color
-      - FireResistance
-      - WaterResistance
-      - WindResistance
-      - EarthResistance
-      - NeutralResistance
-      - XP
-      - ChancetoUseSkill
-      - LevelSkill0
-      - LevelSkill1
-      - LevelSkill2
-      - LevelSkill3
-      - LevelSkill4
-      - LevelSkill5
-      _keys:
-      - Rank
-      - Level
-      - HP
-      - Damage
-      - Defense
-      - Resistance
-      - Speed
-      - Color
-      - FireResistance
-      - WaterResistance
-      - WindResistance
-      - EarthResistance
-      - NeutralResistance
-      - XP
-      - ChancetoUseSkill
-      - LevelSkill0
-      - LevelSkill1
-      - LevelSkill2
-      - LevelSkill3
-      - LevelSkill4
-      - LevelSkill5
-      _values: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f0000001000000011000000120000001300000014000000
+    colNames:
+    - Rank
+    - Level
+    - HP
+    - Damage
+    - Defense
+    - Resistance
+    - Speed
+    - Color
+    - FireResistance
+    - WaterResistance
+    - WindResistance
+    - EarthResistance
+    - NeutralResistance
+    - XP
+    - ChancetoUseSkill
+    - LevelSkill0
+    - LevelSkill1
+    - LevelSkill2
+    - LevelSkill3
+    - LevelSkill4
+    - LevelSkill5
     rows:
     - elements:
       - Pwner
@@ -182,74 +160,6 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Rank
-        - Level
-        - HP
-        - Damage
-        - Defense
-        - Resistance
-        - Speed
-        - Color
-        - FireResistance
-        - WaterResistance
-        - WindResistance
-        - EarthResistance
-        - NeutralResistance
-        - XP
-        - ChancetoUseSkill
-        - LevelSkill0
-        - LevelSkill1
-        - LevelSkill2
-        - LevelSkill3
-        - LevelSkill4
-        - LevelSkill5
-        _keys:
-        - Rank
-        - Level
-        - HP
-        - Damage
-        - Defense
-        - Resistance
-        - Speed
-        - Color
-        - FireResistance
-        - WaterResistance
-        - WindResistance
-        - EarthResistance
-        - NeutralResistance
-        - XP
-        - ChancetoUseSkill
-        - LevelSkill0
-        - LevelSkill1
-        - LevelSkill2
-        - LevelSkill3
-        - LevelSkill4
-        - LevelSkill5
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f0000001000000011000000120000001300000014000000
     - elements:
       - Stronk Pwner
       - 5
@@ -295,71 +205,4 @@ MonoBehaviour:
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Rank
-        - Level
-        - HP
-        - Damage
-        - Defense
-        - Resistance
-        - Speed
-        - Color
-        - FireResistance
-        - WaterResistance
-        - WindResistance
-        - EarthResistance
-        - NeutralResistance
-        - XP
-        - ChancetoUseSkill
-        - LevelSkill0
-        - LevelSkill1
-        - LevelSkill2
-        - LevelSkill3
-        - LevelSkill4
-        - LevelSkill5
-        _keys:
-        - Rank
-        - Level
-        - HP
-        - Damage
-        - Defense
-        - Resistance
-        - Speed
-        - Color
-        - FireResistance
-        - WaterResistance
-        - WindResistance
-        - EarthResistance
-        - NeutralResistance
-        - XP
-        - ChancetoUseSkill
-        - LevelSkill0
-        - LevelSkill1
-        - LevelSkill2
-        - LevelSkill3
-        - LevelSkill4
-        - LevelSkill5
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f0000001000000011000000120000001300000014000000
+  curTableRow: 0

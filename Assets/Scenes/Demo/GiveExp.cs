@@ -27,6 +27,26 @@ namespace FinalInferno{
                 skill.GiveExp(50);
             }
 
+            if(Input.GetKeyDown(KeyCode.T)){
+                foreach(Character character in Party.Instance.characters){
+                    foreach(PlayerSkill skill in character.archetype.skills.ToArray()){
+                        if(skill.active){
+                            skill.GiveExp(5000);
+                        }
+                    }
+                }
+            }
+
+            if(Input.GetKeyDown(KeyCode.Y)){
+                foreach(Character character in Party.Instance.characters){
+                    foreach(PlayerSkill skill in character.archetype.skills.ToArray()){
+                        if(skill.active){
+                            skill.GiveExp(500);
+                        }
+                    }
+                }
+            }
+
             if(Input.GetKeyDown(KeyCode.N)){
                 SaveLoader.NewGame();
             }

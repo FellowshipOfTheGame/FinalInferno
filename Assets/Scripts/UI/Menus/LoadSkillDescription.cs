@@ -58,7 +58,11 @@ namespace FinalInferno.UI.SkillsMenu
             skillDescriptionText.text = skill.description;
             if(skill.Level > 0){
                 string levelInfo = "Current Level: " + skill.Level + "\n";
-                levelInfo += "Exp to next level: " + (skill.xpNext - skill.xp);
+                if(skill.Level < skill.MaxLevel){
+                    levelInfo += "Exp to next level: " + (skill.xpNext - skill.xp);
+                }else{
+                    levelInfo += "Max level reached!";
+                }
                 skillLevelInfoText.text = levelInfo;
                 listDescriptionText.text = "\nEffects:";
                 effectList.gameObject.SetActive(true);
@@ -82,7 +86,7 @@ namespace FinalInferno.UI.SkillsMenu
                 }
             }else{
                 string unlockInfo = "Skill unlocks at party level ";
-                unlockInfo += (Party.Instance.level >= skill.prerequisiteHeroLevel)? "<color=#006400>" : "<color=#840000>";
+                unlockInfo += (Party.Instance.Level >= skill.prerequisiteHeroLevel)? "<color=#006400>" : "<color=#840000>";
                 unlockInfo += skill.prerequisiteHeroLevel + "</color>";
                 skillLevelInfoText.text = unlockInfo;
                 listDescriptionText.text = "\nSkill Requirements:" + ((skill.prerequisiteSkills.Count > 0)? "" : " None");

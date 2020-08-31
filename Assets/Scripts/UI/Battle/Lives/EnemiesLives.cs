@@ -8,12 +8,8 @@ namespace FinalInferno.UI.Battle.LifeMenu
     public class EnemiesLives : UnitsLives
     {
         [SerializeField] private GameObject EnemyLife;
-        [SerializeField] private GameObject EnemyInfo;
 
         [SerializeField] private RectTransform livesContent;
-        [SerializeField] private RectTransform infosContent;
-
-        [SerializeField] private EnemyContent content;
 
         void Start()
         {
@@ -21,16 +17,12 @@ namespace FinalInferno.UI.Battle.LifeMenu
             units = BattleManager.instance.GetTeam(team);
             
             LoadEnemies();
-            content.LoadLives(lives);
         }
 
         private void LoadEnemies()
         {
             foreach (UnitLife life in livesContent.GetComponentsInChildren<UnitLife>())
                 Destroy(life.gameObject);
-
-            foreach (EnemyInfo info in infosContent.GetComponentsInChildren<EnemyInfo>())
-                Destroy(info.gameObject);
 
             lives = new List<UnitLife>();
             foreach (BattleUnit unit in units)
@@ -40,11 +32,6 @@ namespace FinalInferno.UI.Battle.LifeMenu
                 newLife.thisUnit = unit;
                 newLife.AddUpdateToEvent();
 
-                EnemyInfo newInfo = Instantiate(EnemyInfo, infosContent).GetComponent<EnemyInfo>();
-                newInfo.manager = this;
-                newInfo.thisUnit = unit;
-                newInfo.AddUpdateToEvent();
-                
                 lives.Add(newLife);
             }
             UpdateLives();

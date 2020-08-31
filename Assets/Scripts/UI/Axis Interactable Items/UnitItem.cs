@@ -25,8 +25,10 @@ namespace FinalInferno.UI.AII
 
         public LayoutElement layout;
         private RectTransform rectTransform;
+
+        [SerializeField] private float stepSize = 0.5f;
         public Vector2 CurrentOffset {get; private set;}
-        public Vector2 defaultOffset = Vector2.zero;
+        [HideInInspector] public Vector2 defaultOffset = Vector2.zero;
 
         private bool showingTarget = false;
 
@@ -36,13 +38,7 @@ namespace FinalInferno.UI.AII
 
         public void Setup()
         {
-            if(unit.unit.IsHero){
-                item.OnEnter += UpdateHeroContent;
-                item.OnExit += ResetHeroContent;
-            }else{
-                item.OnEnter += UpdateEnemyContent;
-                item.OnExit += ResetEnemyContent;
-            }
+            // TO DO: No lugar disso aqui talvez colocar um outline ou indicador na lista de unidades correspondente
             item.OnAct += SetTarget;
         }
 
@@ -53,7 +49,7 @@ namespace FinalInferno.UI.AII
                 Vector3 newPosition = rectTransform.TransformPoint(rectTransform.rect.center.x, 0f, 0f);
                 newPosition += new Vector3(defaultOffset.x, defaultOffset.y, 2);
                 if(BattleManager.instance.currentUnit == unit){
-                    float xOffset = (unit.unit.IsHero)? 0.5f : -0.5f;
+                    float xOffset = (unit.unit.IsHero)? stepSize : -stepSize;
                     newPosition.x += xOffset;
                     CurrentOffset = new Vector2(xOffset, 0f);
                 }

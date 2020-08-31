@@ -73,6 +73,8 @@ namespace FinalInferno.UI.Battle.SkillMenu
         /// </summary>
         [SerializeField] private Text effectDescriptionText;
 
+        [SerializeField] private Image skillIconImage;
+
         /// <summary>
         /// Imagem que mostrará o elemento da skill.
         /// </summary>
@@ -88,6 +90,8 @@ namespace FinalInferno.UI.Battle.SkillMenu
         /// Decisão que será chamada quando a tecla de ativação for pressionada.
         /// </summary>
         [SerializeField] private ButtonClickDecision clickDecision;
+
+        // private bool shouldActivate = false;
 
         /// <summary>
         /// Carrega todas as skills ativas do heroi que está em seu turno no menu de skills.
@@ -113,7 +117,9 @@ namespace FinalInferno.UI.Battle.SkillMenu
                     GameObject newSkill = Instantiate(skillObject, skillsContent);
                     newSkill.GetComponent<SkillElement>().skill = skill;
 
-                    newSkill.GetComponent<Image>().sprite = skill.skillImage;
+                    // Espera que o objeto tenha um filho Icon e um filho Text
+                    newSkill.transform.Find("Icon").GetComponent<Image>().sprite = skill.skillImage;
+                    newSkill.transform.Find("Text").GetComponent<Text>().text = skill.name;
 
                     // Define este script como responsável pelo item criado
                     SkillListItem newSkillListItem = newSkill.GetComponent<SkillListItem>();
@@ -136,19 +142,28 @@ namespace FinalInferno.UI.Battle.SkillMenu
                     }
                     else
                     {
-                        manager.firstItem = newItem;                    
+                        manager.firstItem = newItem;
+                        // BattleSkillManager.currentSkill = skill;
+                        // UpdateSkillDescription(skill);
                     }
                     lastItem = newItem;
                 }
             }
+            // shouldActivate = true;
+        }
+
+        // Função e variavel auxiliar foram feitas para permitir chamar isso por animação
+        // Dava erro pq ou os objetos criados não tinham chamado awake ainda ou o objeto SkillList estava desativado
+        public void ActivateManager(){
             manager.Active();
+            // shouldActivate = false;
         }
 
         /// <summary>
         /// Mostra detalhes da skill selecionada no menu.
         /// </summary>
         /// <param name="skill"> Skill para ser mostrada no menu. </param>
-        public void UpdateSkillDescription(PlayerSkill skill)
+        public void UpdateSkillDescription(Skill skill)
         {
             // Mostra as informações básicas da skill
             skillNameText.text = skill.name;
@@ -156,12 +171,27 @@ namespace FinalInferno.UI.Battle.SkillMenu
             costText.text = skill.cost.ToString();            
             descriptionText.text = skill.ShortDescription;
 
+            if(skill is PlayerSkill){
+                skillIconImage.enabled = true;
+                skillIconImage.sprite = (skill as PlayerSkill).skillImage;
+            }else{
+                skillIconImage.enabled = false;
+            }
             elementImage.sprite = Icons.instance.elementSprites[(int) skill.attribute-1];
             targetTypeImage.sprite = Icons.instance.targetTypeSprites[(int) skill.target];
 
             // Atualiza a lista de efeitos
             UpdateEffectsContent(skill.effects);
-            effectsManager.Active();
+            if(skill is PlayerSkill){
+                effectsManager.Active();
+            }
+        }
+
+        public Skill GetFirstSkill(){
+            if(manager != null && manager.firstItem != null){
+                return manager.firstItem.GetComponent<SkillElement>().skill;
+            }
+            return null;
         }
 
         /// <summary>
@@ -194,14 +224,14 @@ namespace FinalInferno.UI.Battle.SkillMenu
             }
 
             // Variável auxiliar para a ordenação dos itens
-            AxisInteractableItem lastItem = null;
+            AxisInteractableItem previousItem = null;
 
             // Passa por todas os efeitos da lista, adicionando no menu e ordenando
             foreach (SkillEffectTuple effect in effects)
             {
                 // Instancia um novo item e o coloca no content
                 GameObject newEffect = Instantiate(effectObject, effectsContent);
-                newEffect.GetComponent<EffectElement>().UpdateEffect(effect);
+                newEffect.GetComponent<EffectElement>().SetEffect(effect);
 
                 // Define este script como responsável pelo item criado
                 EffectListItem newEffectItem = newEffect.GetComponent<EffectListItem>();
@@ -209,16 +239,21 @@ namespace FinalInferno.UI.Battle.SkillMenu
 
                 // Ordena o item na lista
                 AxisInteractableItem newItem = newEffect.GetComponent<AxisInteractableItem>();
-                if (lastItem != null)
+                if (previousItem != null)
                 {
-                    newItem.leftItem = lastItem;
-                    lastItem.rightItem = newItem;
+                    newItem.leftItem = previousItem;
+                    previousItem.rightItem = newItem;
                 }
                 else
                 {
                     effectsManager.firstItem = newItem;
                 }
-                lastItem = newItem;
+                previousItem = newItem;
+                effectsManager.lastItem = newItem;
+            }
+            if(effects.Count > 0){
+                effects[0].UpdateValues();
+                UpdateEffectDescription(effects[0].effect);
             }
         }
 
@@ -228,7 +263,7 @@ namespace FinalInferno.UI.Battle.SkillMenu
         /// <param name="effects"> Efeito selecionado. </param>
         public void UpdateEffectDescription(SkillEffect effect)
         {
-            effectDescriptionText.text = effect.Description;
+            effectDescriptionText.text = (effect.DisplayName != null && effect.DisplayName != "")? effect.DisplayName : effect.name;
         }
 
     }

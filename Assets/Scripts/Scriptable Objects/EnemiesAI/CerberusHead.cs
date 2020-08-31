@@ -18,6 +18,7 @@ namespace FinalInferno{
         private static BattleUnit topHead = null;
         private static BattleUnit middleHead = null;
         private static BattleUnit bottomHead = null;
+        public override string DialogueName { get { return "Cerberus"; } }
 
         [SerializeField] private Sprite bodySprite;
         [SerializeField] private RuntimeAnimatorController animatorMiddleHead;
@@ -63,7 +64,7 @@ namespace FinalInferno{
                         heads = 1;
                         battleUnits.Clear();
                         foreach(BattleUnit bUnit in FindObjectsOfType<BattleUnit>()){
-                            if(bUnit.unit == this){
+                            if(bUnit.unit == this && bUnit.name == this.name){
                                 bUnit.name += (" " + heads);
                                 battleUnits.Add(bUnit.gameObject);
                                 topHead = bUnit;
@@ -74,7 +75,7 @@ namespace FinalInferno{
                     case 1:
                         heads++;
                         foreach(BattleUnit bUnit in FindObjectsOfType<BattleUnit>()){
-                            if(bUnit.unit == this){
+                            if(bUnit.unit == this && bUnit.name == this.name){
                                 bUnit.name += (" " + heads);
                                 battleUnits.Add(bUnit.gameObject);
                                 middleHead = bUnit;
@@ -85,7 +86,7 @@ namespace FinalInferno{
                     case 2:
                         heads++;
                         foreach(BattleUnit bUnit in FindObjectsOfType<BattleUnit>()){
-                            if(bUnit.unit == this){
+                            if(bUnit.unit == this && bUnit.name == this.name){
                                 bUnit.name += (" " + heads);
                                 battleUnits.Add(bUnit.gameObject);
                                 bottomHead = bUnit;

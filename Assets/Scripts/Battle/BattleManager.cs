@@ -18,6 +18,8 @@ namespace FinalInferno{
         [SerializeField] private BattleQueueUI queueUI;
 
         public BattleUnit currentUnit {get; private set;}
+        public int MaxBaseSpeed {get; private set; } = Unit.maxStatValue;
+        public int MinBaseSpeed {get; private set; } = 0;
 
         public BattleUnitsUI unitsUI;
 
@@ -39,21 +41,28 @@ namespace FinalInferno{
             BattleProgress.ResetInfo(Party.Instance);
         }
 
-        #if UNITY_EDITOR
+        // #if UNITY_EDITOR
         public void Update(){
-            if(Input.GetAxisRaw("Pause") > 0){
-                foreach(BattleUnit bUnit in battleUnits){
-                    if(bUnit.CurHP > 0){
-                        bUnit.DecreaseHP(1.0f);
-                        UpdateLives();
+            if(StaticReferences.DebugBuild){
+                if(Input.GetAxisRaw("Pause") > 0){
+                    foreach(BattleUnit bUnit in battleUnits){
+                        if(bUnit.CurHP > 0){
+                            bUnit.DecreaseHP(1.0f);
+                            UpdateLives();
+                        }
                     }
                 }
             }
         }
-        #endif
+        // #endif
 
         public void PrepareBattle(){
+            MaxBaseSpeed = 0;
+            MinBaseSpeed = Unit.maxStatValue;
             foreach(Unit unit in units){
+                MaxBaseSpeed = Mathf.Min(Mathf.Max(unit.baseSpeed, MaxBaseSpeed), Unit.maxStatValue);
+                MinBaseSpeed = Mathf.Max(Mathf.Min(unit.baseSpeed, MinBaseSpeed), 0);
+
                 if(unit.IsHero){
                     // Precisa ser salvo antes do LoadUnit para registrar exp das habilidades OnSpawn
                     BattleProgress.addHeroSkills((Hero)unit);
@@ -61,7 +70,7 @@ namespace FinalInferno{
 
                 BattleUnit newUnit = BattleUnitsUI.instance.LoadUnit(unit);
                 battleUnits.Add(newUnit);
-                queue.Enqueue(newUnit, -newUnit.curSpeed);
+                float initiative = newUnit.curSpeed;
                 // Debug.Log("Carregou " + unit.name);
 
                 if(!unit.IsHero){
@@ -69,6 +78,15 @@ namespace FinalInferno{
                     (newUnit.unit as Enemy).ResetParameters();
                 }
             }
+
+            foreach(BattleUnit bUnit in battleUnits){
+                float initiative = bUnit.curSpeed;
+                // As unidades são inseridas na fila como se a unidade mais lenta houvesse executado uma ação de custo (Skill.maxCost+Skill.baseCost)/2
+                // e as demais estivessem espaçadas linearmente de acordo com a diferença de speed entre a unidade mais rapida e a mais lenta
+                initiative = Mathf.Clamp( ((initiative - MinBaseSpeed) / (float)(MaxBaseSpeed - MinBaseSpeed)), 0f, 1f) * ((Skill.maxCost + Skill.baseCost) / 2.0f);
+                queue.Enqueue(bUnit, -Mathf.FloorToInt(initiative));
+            }
+
             isBattleReady.UpdateValue(true);
         }
 
@@ -77,17 +95,23 @@ namespace FinalInferno{
                 if(unit.OnStartBattle != null)
                     unit.OnStartBattle(unit, new List<BattleUnit>(queue.ToArray()));
             }
-            UpdateTurn();
+            UpdateTurn(true); // Status effects aplicados no começo da partida não devem perder um turno
         }
 
-        public void UpdateTurn()
-        {
-            currentUnit = queue.Dequeue();
+        public void EndTurn(){
+            currentUnit = null;
             BattleSkillManager.currentTargets.Clear();
             BattleSkillManager.currentSkill = null;
             BattleSkillManager.currentUser = null;
             BattleSkillManager.skillUsed = false;
-            currentUnit.UpdateStatusEffects();
+        }
+
+        public void UpdateTurn(bool ignoreStatusEffects = false)
+        {
+            currentUnit = queue.Dequeue();
+            if(!ignoreStatusEffects){
+                currentUnit.UpdateStatusEffects();
+            }
         }
 
         public void ShowEnemyInfo()
@@ -98,18 +122,12 @@ namespace FinalInferno{
         public void UpdateQueue(int cost, bool ignoreCurrentUnit = false)
         {
             if(!ignoreCurrentUnit){
-                queue.Enqueue(currentUnit, cost);
+                BattleUnit bu = currentUnit;
                 currentUnit = null;
+                queue.Enqueue(bu, cost);
             }
 
-            if (CheckEnd() == VictoryType.Nobody)
-            {
-                UpdateTurn();
-                UpdateLives();
-            }else{
-                // Só pra fazer com que nao fique uma unidade duplicada na fila
-                queue.Sort();
-            }
+            EndTurn();
         }
 
         public void UpdateLives()
@@ -138,14 +156,9 @@ namespace FinalInferno{
                 queue.Remove(unit);
                 unitsUI.RemoveUnit(unit);
 
-                // Se a unidade que morreu era a unidade atual, anda a fila
+                // Se a unidade que morreu era a unidade atual coloca referencia nula para unidade atual
                 if (currentUnit == unit){
                     currentUnit = null;
-                    // if (CheckEnd() == VictoryType.Nobody)
-                    // {
-                    //     UpdateTurn();
-                    //     UpdateLives();
-                    // }
                 }
             }
             UpdateLives();
@@ -156,8 +169,7 @@ namespace FinalInferno{
                 queue.Enqueue(unit, 0);
                 unitsUI.ReinsertUnit(unit);
             }
-            foreach (UnitsLives lives in unitsLives)
-                lives.UpdateLives();
+            UpdateLives();
         }
 
         public UnitType GetUnitType(Unit unit){

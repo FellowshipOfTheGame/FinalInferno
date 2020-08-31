@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 
 namespace FinalInferno{
@@ -22,7 +23,7 @@ namespace FinalInferno{
                 return (saves[Slot].mapName != null && saves[Slot].mapName != "");
             }
         }
-        [SerializeField] public bool autoSave = false;
+        public bool autoSave = true;
         // Uma array de saves inicializados com valores padrão
         public SaveInfo[] saves = new SaveInfo[nSaveSlots];
 
@@ -57,6 +58,7 @@ namespace FinalInferno{
         }
 
         public void Save(){
+            saves[slot].version = Application.version;
 
             saves[Slot].xpParty = Party.Instance.XpCumulative;
             saves[Slot].mapName = Party.Instance.currentMap;
@@ -96,11 +98,25 @@ namespace FinalInferno{
                 }
                 saves[Slot].quest[i] = qinfo;
             }
+
+            // Salva as informações do bestiario
+            ReadOnlyDictionary<Enemy, int> bestiary = Party.Instance.Bestiary;
+            Enemy[] enemies = new Enemy[bestiary.Count];
+            bestiary.Keys.CopyTo(enemies, 0);
+
+            saves[Slot].bestiary = new BestiaryEntry[bestiary.Count];
+
+            for(int i = 0; i < bestiary.Count; i++){
+                saves[Slot].bestiary[i] = new BestiaryEntry(enemies[i], bestiary[enemies[i]]);
+            }
         }
 
         public void Load(){
+            // TO DO: Verifica se há alguma incompatibilidade entre a versão do jogo do save armazenado e versão atual
             Party.Instance.GiveExp(saves[Slot].xpParty);
+            Party.Instance.currentMap = saves[Slot].mapName;
 
+            // Carrega as informações de cada personagem
             for(int i = 0; i < Party.Instance.characters.Count; i++){
                 Party.Instance.characters[i].archetype = AssetManager.LoadAsset<Hero>(saves[Slot].archetype[i]);
                 Party.Instance.characters[i].hpCur = saves[Slot].hpCur[i];
@@ -122,18 +138,20 @@ namespace FinalInferno{
                 Party.Instance.characters[i].archetype.UnlockSkills();
             }
 
+            // Carrega as informações das quests em progresso
             Party.Instance.activeQuests.Clear();
             foreach(QuestInfo questInfo in saves[Slot].quest){
                 Quest quest = AssetManager.LoadAsset<Quest>(questInfo.name);
+                quest.StartQuest(true);
                 ulong bitValue = 1;
                 for(int i = 0; i < quest.events.Count; i++){
                     quest.events[questInfo.flagsNames[i]] = (questInfo.flagsTrue & bitValue) != 0;
                     bitValue =  bitValue << 1;
                 }
-                Party.Instance.activeQuests.Add(quest);
             }
 
-            Party.Instance.currentMap = saves[Slot].mapName;
+            // Carrega as informações do bestiario
+            Party.Instance.ReloadBestiary(saves[Slot].bestiary);
         }
     }
 }

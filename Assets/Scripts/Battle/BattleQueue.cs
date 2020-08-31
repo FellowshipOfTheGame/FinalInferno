@@ -83,6 +83,9 @@ namespace FinalInferno{
         }
 
         private int CompareUnits(BattleUnit x, BattleUnit y){
+            if(x.actionPoints == y.actionPoints){
+                return y.curSpeed - x.curSpeed;
+            }
             return x.actionPoints - y.actionPoints;
         }
 

@@ -4,14 +4,18 @@ using UnityEngine;
 
 namespace FinalInferno{
     //engloba todas as "skills"
-    [CreateAssetMenu(fileName = "Skill", menuName = "ScriptableObject/Skill", order = 4)]
-    public class Skill : ScriptableObject{
+    [CreateAssetMenu(fileName = "Skill", menuName = "ScriptableObject/Skill")]
+    public class Skill : ScriptableObject, IDatabaseItem{
+        public const int maxCost = 20;
+        public const int baseCost = 8;
         [Header("Skill")]
         public new string name; //nome da "skill"
-        protected int level; //nivel da "skill"
+        [SerializeField] protected int level; //nivel da "skill"
         public virtual int Level { get{ return level; } set {} }
         public float cost; //tempo que a "skill" custara ao conjurador, em porcentagem da sua velocidade
         public bool active = true; //sinaliza se a "skill" esta ativa ou nao
+        [TextArea, SerializeField] protected string shortDescription;
+        public virtual string ShortDescription { get => shortDescription; }
         public TargetType target; //tipo de alvo da "skill"
         public Element attribute; //elemento da "skill"
         [SerializeField] private SkillType type; // Tipo da skill (ativa/passiva e qual tipo de passiva)
@@ -21,21 +25,21 @@ namespace FinalInferno{
                     case SkillType.Active:
                         return "Active Skill";
                     case SkillType.PassiveOnDeath:
-                        return "Passive Triggered on Death";
+                        return "Passive: Triggered on Death";
                     case SkillType.PassiveOnEnd:
-                        return "Passive Triggered when Battle Ends";
+                        return "Passive: Triggered when Battle Ends";
                     case SkillType.PassiveOnReceiveBuff:
-                        return "Passive Triggered when Buffed";
+                        return "Passive: Triggered when Buffed";
                     case SkillType.PassiveOnReceiveDebuff:
-                        return "Passive Triggered when Debuffed";
+                        return "Passive: Triggered when Debuffed";
                     case SkillType.PassiveOnSkillUsed:
-                        return "Passive Triggered after Skill Usage";
+                        return "Passive: Triggered after Skill Usage";
                     case SkillType.PassiveOnSpawn:
                         return "Base Status Changes";
                     case SkillType.PassiveOnStart:
-                        return "Passive Triggered at Start of Battle";
+                        return "Passive: Triggered at Start of Battle";
                     case SkillType.PassiveOnTakeDamage:
-                        return "Passive Triggered when Damage Taken";
+                        return "Passive: Triggered when Damage Taken";
                     default:
                         return "";
                 }
@@ -47,6 +51,10 @@ namespace FinalInferno{
         [Space(15)]
         [SerializeField] private GameObject visualEffect; // Prefab contendo uma animação da skill
         public GameObject VisualEffect { get{ return visualEffect; } }
+
+        public virtual void LoadTables(){ }
+
+        public virtual void Preload(){ }
 
         public List<BattleUnit> FilterTargets(BattleUnit source, List<BattleUnit> oldList){
             List<BattleUnit> newList = new List<BattleUnit>(oldList);
