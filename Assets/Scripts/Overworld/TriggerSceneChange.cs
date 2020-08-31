@@ -10,6 +10,7 @@ namespace FinalInferno{
         //TO DO: Usar a struct SceneWarp aqui e atualizar o script de editor para refletir isso
         [SerializeField] private string sceneName = "Battle";
         [SerializeField] private Vector2 positionOnLoad = new Vector2(0,0);
+        [SerializeField] private Vector2 saveGamePosition = new Vector2(0,0);
         [SerializeField] private bool isCutscene = false;
         [SerializeField] private List<DialogueEntry> dialogues = new List<DialogueEntry>();
         [SerializeField] private FinalInferno.UI.FSM.ButtonClickDecision decision;
@@ -33,6 +34,7 @@ namespace FinalInferno{
                 //Debug.Log("Loading scene: " + sceneName + "; dialogue = " + selectedDialogue);
                 FinalInferno.UI.ChangeSceneUI.sceneName = sceneName;
                 FinalInferno.UI.ChangeSceneUI.positionOnLoad = positionOnLoad;
+                FinalInferno.UI.ChangeSceneUI.savePosition = saveGamePosition;
                 FinalInferno.UI.ChangeSceneUI.isCutscene = isCutscene;
                 FinalInferno.UI.ChangeSceneUI.selectedDialogue = selectedDialogue;
 
@@ -76,7 +78,9 @@ namespace FinalInferno{
                 EditorGUILayout.PropertyField(isCutscene);
                 EditorGUILayout.PropertyField(decision);
                 if(isCutscene.boolValue){
+                    SerializedProperty saveGamePosition = serializedObject.FindProperty("saveGamePosition");
                     SerializedProperty dialogues = serializedObject.FindProperty("dialogues");
+                    EditorGUILayout.PropertyField(saveGamePosition);
                     EditorGUILayout.PropertyField(dialogues, includeChildren:true);
                 }
             }

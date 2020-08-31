@@ -17,6 +17,11 @@ namespace FinalInferno.UI.FSM
 
         public override void Act(StateController controller)
         {
+            // Armazena a posicao dos personagens no overworld dentro do SO correspondente
+            for(int i = 0; i < Party.Instance.characters.Count; i++){
+                if(CharacterOW.CharacterList[i] != null)
+                    Party.Instance.characters[i].position = CharacterOW.CharacterList[i].transform.position;
+            }
             SaveLoader.SaveGame();
         }
 

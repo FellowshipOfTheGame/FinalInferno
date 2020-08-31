@@ -9,6 +9,21 @@ namespace FinalInferno{
         private static List<Enemy> enemies = new List<Enemy>();
         private static bool updatePositions = false;
         private static Fog.Dialogue.Dialogue cutsceneDialogue = null;
+        public static Fog.Dialogue.Dialogue CutsceneDialogue{
+            get => cutsceneDialogue;
+            set{
+                if(cutsceneDialogue == null){
+                    cutsceneDialogue = value;
+                }else{
+                    if(value == null){
+                        cutsceneDialogue = value;
+                        Debug.LogWarning("Saved cutscene has been removed");
+                    }else{
+                        Debug.LogError("A cutscene has already been set");
+                    }
+                }
+            }
+        }
         private static AudioClip battleBGM;
         private static Sprite BGImage;
         public static UnityAction beforeSceneChange = null;
@@ -39,22 +54,10 @@ namespace FinalInferno{
 
         // Métodos que carregam a cena desejada
         public static void LoadOWScene(Scene map, bool shouldUpdate = false, Vector2? newPosition = null, bool dontSave = false) {
-            updatePositions = shouldUpdate;
-            if(newPosition != null){
-                foreach(Character character in Party.Instance.characters){
-                    character.position = newPosition.Value;
-                }
-            }
-            Party.Instance.currentMap = map.name;
-
-            // Salva o jogo se o autosave esta ativado
-            if(SaveLoader.AutoSave && !dontSave)
-                SaveLoader.SaveGame();
-
-            SceneManager.sceneLoaded += OnMapLoad;
-            onSceneLoad += UnlockMovement;
-            beforeSceneChange?.Invoke();
-            SceneManager.LoadScene(map.buildIndex);
+            LoadOWScene(map.name, shouldUpdate, newPosition, dontSave);
+        }
+        public static void LoadOWScene(int mapID, bool shouldUpdate = false, Vector2? newPosition = null, bool dontSave = false) {
+            LoadOWScene(SceneManager.GetSceneByBuildIndex(mapID).name);
         }
         public static void LoadOWScene(string map, bool shouldUpdate = false, Vector2? newPosition = null, bool dontSave = false) {
             updatePositions = shouldUpdate;
@@ -74,65 +77,30 @@ namespace FinalInferno{
             beforeSceneChange?.Invoke();
             SceneManager.LoadScene(map);
         }
-        public static void LoadOWScene(int mapID, bool shouldUpdate = false, Vector2? newPosition = null, bool dontSave = false) {
+
+        // Métodos que carregam a cena e iniciam um diálogo
+        public static void LoadCustscene(Scene map, Fog.Dialogue.Dialogue dialogue, bool shouldUpdate = false, Vector2? newPosition = null, Vector2? savePosition = null, bool dontSave = false) {
+            LoadCustscene(map.name, dialogue, shouldUpdate, newPosition, savePosition, dontSave);
+        }
+        public static void LoadCustscene(string map, Fog.Dialogue.Dialogue dialogue, bool shouldUpdate = false, Vector2? newPosition = null, Vector2? savePosition = null, bool dontSave = false) {
             updatePositions = shouldUpdate;
-            if(newPosition != null){
+            cutsceneDialogue = dialogue;
+            if(savePosition != null){
                 foreach(Character character in Party.Instance.characters){
-                    character.position = newPosition.Value;
+                    character.position = savePosition.Value;
                 }
             }
-            Party.Instance.currentMap = SceneManager.GetSceneByBuildIndex(mapID).name;
+            Party.Instance.currentMap = SceneManager.GetActiveScene().name;
 
             // Salva o jogo se o autosave esta ativado
             if(SaveLoader.AutoSave && !dontSave)
                 SaveLoader.SaveGame();
 
-            SceneManager.sceneLoaded += OnMapLoad;
-            onSceneLoad += UnlockMovement;
-            beforeSceneChange?.Invoke();
-            SceneManager.LoadScene(mapID);
-        }
-
-        // Métodos que carregam a cena e iniciam um diálogo
-        public static void LoadCustscene(Scene map, Fog.Dialogue.Dialogue dialogue, Vector2? newPosition = null) {
-            updatePositions = false;
-            cutsceneDialogue = dialogue;
             if(newPosition != null){
                 foreach(Character character in Party.Instance.characters){
                     character.position = newPosition.Value;
                 }
             }
-            Party.Instance.currentMap = SceneManager.GetActiveScene().name;
-
-            // Salva o jogo se o autosave esta ativado
-            if(SaveLoader.AutoSave)
-                SaveLoader.SaveGame();
-
-            if(dialogue != null){
-                SceneManager.sceneLoaded += OnMapLoad;
-                onSceneLoad += StartDialogue;
-                beforeSceneChange?.Invoke();
-                SceneManager.LoadScene(map.buildIndex);
-            }else{
-                SceneManager.sceneLoaded += OnMapLoad;
-                onSceneLoad += UnlockMovement;
-                beforeSceneChange?.Invoke();
-                SceneManager.LoadScene(map.buildIndex);
-            }
-        }
-        public static void LoadCustscene(string map, Fog.Dialogue.Dialogue dialogue, Vector2? newPosition = null) {
-            updatePositions = false;
-            cutsceneDialogue = dialogue;
-            if(newPosition != null){
-                foreach(Character character in Party.Instance.characters){
-                    character.position = newPosition.Value;
-                }
-            }
-            Party.Instance.currentMap = SceneManager.GetActiveScene().name;
-
-            // Salva o jogo se o autosave esta ativado
-            if(SaveLoader.AutoSave)
-                SaveLoader.SaveGame();
 
             if(dialogue != null){
                 SceneManager.sceneLoaded += OnMapLoad;

@@ -7,6 +7,7 @@ namespace FinalInferno{
     [CreateAssetMenu(fileName = "NewEventWarpDialogue", menuName = "ScriptableObject/DialogueSystem/FinalInferno/DialogueEventWarp")]
     public class DialogueEventWarp : DialogueEventTrigger
     {
+        // TO DO: adicionar suporte de cutscene aqui
         [Header("Scene")]
         [SerializeField] private SceneWarp scene;
         [Header("Expected value = TriggerChangeScene")]

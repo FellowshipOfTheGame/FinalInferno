@@ -11,6 +11,7 @@ namespace FinalInferno.UI
 
         [SerializeField] private LoadEnemiesPreview loadEnemiesPreview;
 
+        // TO DO: Usar sistema de eventos ou delegate para a transição de cena ao inves desses public static
         public static bool isBattle = false;
 
         public static Sprite battleBG;
@@ -19,6 +20,7 @@ namespace FinalInferno.UI
 
         public static string sceneName;
         public static Vector2 positionOnLoad;
+        public static Vector2 savePosition;
         public static bool isCutscene;
         public static Fog.Dialogue.Dialogue selectedDialogue;
 
@@ -34,10 +36,11 @@ namespace FinalInferno.UI
 
         private void ChangeMap()
         {
-            if (!isCutscene)
+            if (!isCutscene){
                 SceneLoader.LoadOWScene(sceneName, true, positionOnLoad);
-            else
-                SceneLoader.LoadCustscene(sceneName, selectedDialogue, positionOnLoad);
+            }else{
+                SceneLoader.LoadCustscene(sceneName, selectedDialogue, false, positionOnLoad, savePosition);
+            }
         }
 
         public void SceneLoadCallback(){
@@ -67,7 +70,11 @@ namespace FinalInferno.UI
 
         private void Continue()
         {
-            SceneLoader.LoadOWScene(Party.Instance.currentMap, true, null, true);
+            if(isCutscene){
+                SceneLoader.LoadCustscene(Party.Instance.currentMap, selectedDialogue, true, null, null, true);
+            }else{
+                SceneLoader.LoadOWScene(Party.Instance.currentMap, true, null);
+            }
         }
     }
 

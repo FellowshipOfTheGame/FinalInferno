@@ -148,6 +148,7 @@ namespace FinalInferno{
                 // Assets/Scripts/UI/Menus/LoadEnemiesPreview.cs
 
                 FinalInferno.UI.ChangeSceneUI.isBattle = true;
+                FinalInferno.UI.ChangeSceneUI.isCutscene = false;
                 FinalInferno.UI.ChangeSceneUI.battleBG = battleBG;
                 FinalInferno.UI.ChangeSceneUI.battleBGM = battleBGM;
                 FinalInferno.UI.ChangeSceneUI.battleEnemies = (Enemy[])enemies.Clone();
