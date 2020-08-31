@@ -41,6 +41,15 @@ namespace FinalInferno{
                 decision.Click();
             }
         }
+
+        void OnDrawGizmosSelected(){
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(new Vector3(positionOnLoad.x, positionOnLoad.y, 0), new Vector3(1, 1, 1));
+            if(isCutscene){
+                Gizmos.color = Color.green;
+                Gizmos.DrawWireCube(new Vector3(saveGamePosition.x, saveGamePosition.y, 0), new Vector3(1, 1, 1));
+            }
+        }
     }
     #if UNITY_EDITOR
     // PropertyDrawer necessario para exibir e editar QuestEvent no editor da unity
