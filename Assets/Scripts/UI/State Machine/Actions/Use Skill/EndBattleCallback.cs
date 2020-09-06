@@ -24,6 +24,13 @@ namespace FinalInferno.UI.FSM
                     battleUnit.Revive();
                 }
                 battleUnit.ResetMaxHP();
+
+                // Remove os status effects dos inimigos
+                if(!battleUnit.unit.IsHero){
+                    foreach(StatusEffect effect in battleUnit.effects.ToArray()){
+                        effect.ForceRemove();
+                    }
+                }
             }
 
             // Chama callback de fim de batalha para todas as unidades passando os heroes como alvos

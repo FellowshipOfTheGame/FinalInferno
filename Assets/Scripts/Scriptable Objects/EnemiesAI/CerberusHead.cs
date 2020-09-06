@@ -14,6 +14,7 @@ namespace FinalInferno{
         private const int maxHeads = 3;
         public static int heads = 0;
         private static int hellFireCD = 0;
+        private static bool summonedGhosts;
         private static List<GameObject> battleUnits = new List<GameObject>();
         private static BattleUnit topHead = null;
         private static BattleUnit middleHead = null;
@@ -143,6 +144,7 @@ namespace FinalInferno{
 
         public override void ResetParameters(){
             hellFireCD = 0;
+            summonedGhosts = false;
         }
 
         //funcao que escolhe o ataque a ser utilizado
@@ -170,6 +172,12 @@ namespace FinalInferno{
 
             team = BattleManager.instance.GetTeam(UnitType.Enemy);
             heads = team.Count;
+
+            // Invoca as cabeças fantasma
+            if(heads <= 1 && !summonedGhosts){
+                summonedGhosts = true;
+                return skills[2];
+            }
 
             team = BattleManager.instance.GetTeam(UnitType.Hero);
             foreach (BattleUnit hero in team){
@@ -214,6 +222,9 @@ namespace FinalInferno{
                 case TargetType.SingleEnemy:
                     team = BattleManager.instance.GetTeam(UnitType.Hero);
                     targets.Add(team[TargetDecision(team)]);
+                    break;
+                case TargetType.DeadAllies:
+                    targets = BattleManager.instance.GetTeam(UnitType.Enemy, true, true);
                     break;
             }
 

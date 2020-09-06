@@ -28,8 +28,19 @@ namespace FinalInferno.UI.Battle
         {
             if(BattleSkillManager.currentUser != null){
                 if (BattleSkillManager.currentSkill == null){
+                    string reasonCantAct = "cannot act";
+                    StatusEffect[] array = BattleSkillManager.currentUser.effects.ToArray();
+                    if(System.Array.Find<StatusEffect>(array, effect => effect is Confused) != null){
+                        reasonCantAct = "is confused";
+                    }else if(System.Array.Find<StatusEffect>(array, effect => effect is Paralyzed) != null){
+                        reasonCantAct = "is paralyzed";
+                    }else if(System.Array.Find<StatusEffect>(array, effect => effect is VengefulGhost) != null){
+                        reasonCantAct = "<color=#" + ColorUtility.ToHtmlStringRGBA(BattleSkillManager.currentUser.unit.color) + ">"
+                        + "Ghost</color> attacks";
+                    }
+
                     ConsoleText.text = "<color=#" + ColorUtility.ToHtmlStringRGBA(BattleSkillManager.currentUser.unit.color) + ">"
-                            + BattleSkillManager.currentUser.unit.name + "</color> cannot act";
+                            + BattleSkillManager.currentUser.unit.name + "</color> " + reasonCantAct;
                 }else{
                     ConsoleText.text = "<color=#" + ColorUtility.ToHtmlStringRGBA(BattleSkillManager.currentUser.unit.color) + ">"
                             + BattleSkillManager.currentUser.unit.name + "</color> used " + BattleSkillManager.currentSkill.name;
