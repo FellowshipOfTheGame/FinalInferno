@@ -16,6 +16,7 @@ namespace FinalInferno.UI.AII
         /// Referência ao efeito do item.
         /// </summary>
         public BattleUnit unit;
+        [SerializeField] private RectTransform unitReference;
 
         /// <summary>
         /// Referência ao item da lista.
@@ -31,13 +32,15 @@ namespace FinalInferno.UI.AII
         [HideInInspector] public Vector2 defaultOffset = Vector2.zero;
 
         private bool showingTarget = false;
+        private float ppu;
 
         void Awake(){
             rectTransform = GetComponent<RectTransform>();
         }
 
-        public void Setup()
+        public void Setup(int ppuValue = 64)
         {
+            ppu = ppuValue;
             // TO DO: No lugar disso aqui talvez colocar um outline ou indicador na lista de unidades correspondente
             // if(unit.unit.IsHero){
             //     item.OnEnter += UpdateHeroContent;
@@ -61,6 +64,8 @@ namespace FinalInferno.UI.AII
                     CurrentOffset = new Vector2(xOffset, 0f);
                 }
                 unit.transform.position = newPosition;
+                Vector3 overHeadPosition = new Vector3(unit.OverheadPosition.x + CurrentOffset.x, unit.OverheadPosition.y + CurrentOffset.y, 0);
+                unitReference.localPosition = overHeadPosition * ppu;
             }
         }
 
