@@ -25,7 +25,7 @@ namespace FinalInferno.UI.Battle.SkillMenu
         /// Inicializa o item de efeito.
         /// </summary>
         /// <param name="newEffect"> Efeito a ser inicializado. </param>
-        public void UpdateEffect(SkillEffectTuple newEffect)
+        public void SetEffect(SkillEffectTuple newEffect)
         {
             effect = newEffect;
             effectImage.sprite = effect.effect.Icon;

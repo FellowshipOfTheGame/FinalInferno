@@ -86,7 +86,7 @@ namespace FinalInferno.UI.SkillsMenu
                 }
             }else{
                 string unlockInfo = "Skill unlocks at party level ";
-                unlockInfo += (Party.Instance.level >= skill.prerequisiteHeroLevel)? "<color=#006400>" : "<color=#840000>";
+                unlockInfo += (Party.Instance.Level >= skill.prerequisiteHeroLevel)? "<color=#006400>" : "<color=#840000>";
                 unlockInfo += skill.prerequisiteHeroLevel + "</color>";
                 skillLevelInfoText.text = unlockInfo;
                 listDescriptionText.text = "\nSkill Requirements:" + ((skill.prerequisiteSkills.Count > 0)? "" : " None");

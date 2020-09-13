@@ -4,11 +4,13 @@ using UnityEngine;
 
 namespace FinalInferno{
     //engloba todas as "skills"
-    [CreateAssetMenu(fileName = "Skill", menuName = "ScriptableObject/Skill", order = 4)]
-    public class Skill : ScriptableObject{
+    [CreateAssetMenu(fileName = "Skill", menuName = "ScriptableObject/Skill")]
+    public class Skill : ScriptableObject, IDatabaseItem{
+        public const int maxCost = 20;
+        public const int baseCost = 8;
         [Header("Skill")]
         public new string name; //nome da "skill"
-        protected int level; //nivel da "skill"
+        [SerializeField] protected int level; //nivel da "skill"
         public virtual int Level { get{ return level; } set {} }
         public float cost; //tempo que a "skill" custara ao conjurador, em porcentagem da sua velocidade
         public bool active = true; //sinaliza se a "skill" esta ativa ou nao
@@ -49,6 +51,10 @@ namespace FinalInferno{
         [Space(15)]
         [SerializeField] private GameObject visualEffect; // Prefab contendo uma animação da skill
         public GameObject VisualEffect { get{ return visualEffect; } }
+
+        public virtual void LoadTables(){ }
+
+        public virtual void Preload(){ }
 
         public List<BattleUnit> FilterTargets(BattleUnit source, List<BattleUnit> oldList){
             List<BattleUnit> newList = new List<BattleUnit>(oldList);

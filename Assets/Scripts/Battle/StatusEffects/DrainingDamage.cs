@@ -61,5 +61,10 @@ namespace FinalInferno{
             }
             base.Remove();
         }
+
+        public override void ForceRemove(){
+            Target.curDmg -= dmgValue;
+            base.Remove();
+        }
     }
 }

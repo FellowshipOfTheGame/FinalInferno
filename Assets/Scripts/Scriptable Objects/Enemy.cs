@@ -8,8 +8,8 @@ using UnityEditor;
 
 namespace FinalInferno{
     //engloba os inimigos do jogador
-    [CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObject/Enemy/Basic", order = 0)]
-    public class Enemy : Unit{
+    [CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObject/Enemy/Basic")]
+    public class Enemy : Unit, IDatabaseItem{
         public Color dialogueColor;
         [Space(10)]
         [Header("Enemy Info")]
@@ -18,7 +18,7 @@ namespace FinalInferno{
         [SerializeField] protected DamageType damageFocus = DamageType.None;
         public DamageType DamageFocus { get{ return damageFocus; } }
         public override Color DialogueColor { get { return dialogueColor; } }
-        public override string DialogueName { get { return (name == null)? "" : name; } }
+        public override string DialogueName { get { return (AssetName == null)? "" : AssetName; } }
         [SerializeField] private Sprite bestiaryPortrait;
         public Sprite BestiaryPortrait { get => bestiaryPortrait; }
         [SerializeField] private AudioClip enemyCry;
@@ -28,8 +28,8 @@ namespace FinalInferno{
         public string Bio { get => bio; }
         [Space(10)]
         [Header("Table")]
-        [SerializeField] protected TextAsset enemyTable = null;
-        [SerializeField] protected DynamicTable table = null;
+        [SerializeField] protected TextAsset enemyTable;
+        [SerializeField] protected DynamicTable table;
         protected DynamicTable Table {
             get {
                 if(table == null && enemyTable != null)
@@ -39,38 +39,17 @@ namespace FinalInferno{
                 return table;
             }
         }
-        protected int curTableRow;
+        [SerializeField, HideInInspector] protected int curTableRow = 0;
         public override long SkillExp { get { return BaseExp; } } // Quanta exp o inimigo dá pra skill quando ela é usada nele
         public long BaseExp { get; protected set; } // Quanta exp o inimigo dá pra party ao final da batalha
 
-        void Awake(){
-            table = null;
-            if(Table != null && Table.Rows.Count > 0){
-                table = DynamicTable.Create(enemyTable);
-                
-                name = Table.Rows[0].Field<string>("Rank");
-                level = Table.Rows[0].Field<int>("Level");
-                hpMax = Table.Rows[0].Field<int>("HP");
-                baseDmg = Table.Rows[0].Field<int>("Damage");
-                baseDef = Table.Rows[0].Field<int>("Defense");
-                baseMagicDef = Table.Rows[0].Field<int>("Resistance");
-                baseSpeed = Table.Rows[0].Field<int>("Speed");
-                BaseExp = Table.Rows[0].Field<int>("XP");
+        public void LoadTables(){
+            table = DynamicTable.Create(enemyTable);
+        }
 
-                elementalResistances.Clear();
-                foreach(Element element in System.Enum.GetValues(typeof(Element))){
-                    string colName = System.Enum.GetName(typeof(Element), element) + "Resistance";
-                    if(Table.Rows[0].HasField<float>(colName)){
-                        float value = Table.Rows[0].Field<float>(colName);
-                        if(value != 1.0f){
-                            elementalResistances.Add(element, value);
-                        }
-                    }
-                }
-
-                color = Table.Rows[0].Field<Color>("Color");
-                curTableRow = 0;
-            }
+        public void Preload(){
+            curTableRow = -1;
+            LevelEnemy(-1);
         }
 
         // Funcao atualmente desnecessaria
@@ -84,14 +63,25 @@ namespace FinalInferno{
         // Função que identifica o nível do inimigo de acordo com o progresso e ajusta como for necessário
         public int LevelEnemy(){
             // Calcula o level dos inimigos
-            // Avalia os parametros das quests
-            int questParam = 0;
-            if(AssetManager.LoadAsset<Quest>("MainQuest").events["CerberusDead"]) questParam++;
-            int enemyLevel = questParam * 10;
 
-            // Avalia o nível atual da party
-            if(Mathf.Clamp(Party.Instance.level - (questParam * 10), 0, 10) > 5)
+            int scaledLevel = Party.Instance.ScaledLevel;
+            // Debug.Log($"Calculated scaled level = {scaledLevel}");
+            // Define o tier de acordo com a historia
+            int enemyLevel = 10 * (scaledLevel / 10);
+            // O tier só deve incrementar depois que o jogador ganhar mais um nível
+            // Debug.Log($"Calculated enemy level = {enemyLevel}");
+            if(scaledLevel == enemyLevel && enemyLevel >= 10){
+                enemyLevel -= 10;
+            }
+            // Debug.Log($"Calculated enemy level = {enemyLevel}");
+
+            while(scaledLevel > 10){
+                scaledLevel -= 10;
+            }
+            // Ajusta o nível dos monstros dentro do tier de historia
+            if(scaledLevel > 5)
                 enemyLevel += 5;
+            // Debug.Log($"Calculated enemy level = {enemyLevel}");
 
             LevelEnemy(enemyLevel);
 
@@ -101,45 +91,45 @@ namespace FinalInferno{
 
         // Função que atualiza os status do inimigo para um novo level e seta o nível das skills
         public void LevelEnemy(int newLevel){
-            if(Table == null){
-                Debug.Log("This enemy(" + name + ") has no table to load");
+            if(Table == null || Table.Rows.Count < 1){
+                Debug.Log($"This enemy({AssetName}) has no table to load");
                 return;
             }
 
             level = Mathf.Clamp(newLevel, Table.Rows[0].Field<int>("Level"), Table.Rows[Table.Rows.Count-1].Field<int>("Level"));
 
-            int i = -1;
+            int row = -1;
             do{
-                i++;
-            }while(i < Table.Rows.Count-1 && Table.Rows[i+1].Field<int>("Level") <= newLevel);
+                row++;
+            }while(row < Table.Rows.Count-1 && Table.Rows[row+1].Field<int>("Level") <= newLevel);
 
-            if(i != curTableRow){
-                curTableRow = i;
-                name = Table.Rows[i].Field<string>("Rank");
-                level = Table.Rows[i].Field<int>("Level");
-                hpMax = Table.Rows[i].Field<int>("HP");
-                baseDmg = Table.Rows[i].Field<int>("Damage");
-                baseDef = Table.Rows[i].Field<int>("Defense");
-                baseMagicDef = Table.Rows[i].Field<int>("Resistance");
-                baseSpeed = Table.Rows[i].Field<int>("Speed");
-                BaseExp = Table.Rows[i].Field<int>("XP");
+            if(row != curTableRow){
+                curTableRow = row;
+                name = Table.Rows[row].Field<string>("Rank");
+                level = Table.Rows[row].Field<int>("Level");
+                hpMax = Table.Rows[row].Field<int>("HP");
+                baseDmg = Table.Rows[row].Field<int>("Damage");
+                baseDef = Table.Rows[row].Field<int>("Defense");
+                baseMagicDef = Table.Rows[row].Field<int>("Resistance");
+                baseSpeed = Table.Rows[row].Field<int>("Speed");
+                BaseExp = Table.Rows[row].Field<int>("XP");
 
                 elementalResistances.Clear();
                 foreach(Element element in System.Enum.GetValues(typeof(Element))){
                     string colName = System.Enum.GetName(typeof(Element), element) + "Resistance";
-                    if(Table.Rows[i].HasField<float>(colName)){
-                        float value = Table.Rows[i].Field<float>(colName);
+                    if(Table.Rows[row].HasField<float>(colName)){
+                        float value = Table.Rows[row].Field<float>(colName);
                         if(value != 1.0f){
                             elementalResistances.Add(element, value);
                         }
                     }
                 }
 
-                color = Table.Rows[i].Field<Color>("Color");
+                color = Table.Rows[row].Field<Color>("Color");
             }
 
-            for(int j = 0; j < skills.Count; j++){
-                skills[j].Level = Table.Rows[curTableRow].Field<int>("LevelSkill" + j);
+            for(int i = 0; i < skills.Count; i++){
+                skills[i].Level = Table.Rows[curTableRow].Field<int>("LevelSkill" + i);
             }
         }
 
@@ -169,7 +159,7 @@ namespace FinalInferno{
                 rand -= percentual[i];
             }
             
-            return team.Count-1;
+            return 0;
         }
 
         //funcao que escolhe o ataque a ser utilizado
@@ -233,6 +223,9 @@ namespace FinalInferno{
                 case TargetType.SingleEnemy:
                     team = BattleManager.instance.GetTeam(UnitType.Hero);
                     targets.Add(team[TargetDecision(team)]);
+                    break;
+                default:
+                    Debug.LogError("Target type not implemented for enemy targeting (Enemy.cs)");
                     break;
             }
 

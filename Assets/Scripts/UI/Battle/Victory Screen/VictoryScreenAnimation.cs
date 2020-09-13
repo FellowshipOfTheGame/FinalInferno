@@ -77,6 +77,7 @@ namespace FinalInferno.UI.Victory
 
         private void LevelUp()
         {
+            // TO DO: Fazer um efeito mais chamativo para indicar que o nível subiu, assim como tem pras skills
             startingLevelText.text = nextLevelText.text;
             nextLevelText.text = (int.Parse(nextLevelText.text)+1).ToString();
             previousXPAmountImage.fillAmount = 0f;
@@ -104,25 +105,27 @@ namespace FinalInferno.UI.Victory
 
             for (int i = 0; i < changes.skillReferences[heroIndex].Count; i++)
             {
-                UpdatedSkill newSkill = Instantiate(UpdatedSkill, skillsContents[heroIndex]).GetComponent<UpdatedSkill>();
-                newSkill.LoadUpdatedSkill(changes.heroSkills[heroIndex][i], changes.skillReferences[heroIndex][i]);
+                if(changes.heroSkills[heroIndex][i].level < changes.skillReferences[heroIndex][i].MaxLevel){
+                    UpdatedSkill newSkill = Instantiate(UpdatedSkill, skillsContents[heroIndex]).GetComponent<UpdatedSkill>();
+                    newSkill.LoadUpdatedSkill(changes.heroSkills[heroIndex][i], changes.skillReferences[heroIndex][i]);
 
-                newSkill.GetComponent<VictorySkillListItem>().loader = Loader;
+                    newSkill.GetComponent<VictorySkillListItem>().loader = Loader;
 
-                AxisInteractableItem newItem = newSkill.GetComponent<AxisInteractableItem>();
-                if (lastItem != null)
-                {
-                    newItem.upItem = lastItem;
-                    lastItem.downItem = newItem;
+                    AxisInteractableItem newItem = newSkill.GetComponent<AxisInteractableItem>();
+                    if (lastItem != null)
+                    {
+                        newItem.upItem = lastItem;
+                        lastItem.downItem = newItem;
+                    }
+                    else
+                    {
+                        manager.firstItem = newItem;
+                    }
+                    lastItem = newItem;
+
+                    yield return new WaitForSeconds(timeBetweenSkillsShown);
+                    newSkill.StartAnimation();
                 }
-                else
-                {
-                    manager.firstItem = newItem;
-                }
-                lastItem = newItem;
-
-                yield return new WaitForSeconds(timeBetweenSkillsShown);
-                newSkill.StartAnimation();
             }
 
             for (int i = 0; i < changes.newSkills[heroIndex].Count; i++)

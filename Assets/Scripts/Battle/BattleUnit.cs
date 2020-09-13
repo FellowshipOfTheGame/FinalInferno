@@ -64,7 +64,7 @@ namespace FinalInferno{
         private bool hasGhostAnim = false;
         public bool Ghost{
             set{
-                if(value && CurHP < 0 && hasGhostAnim){
+                if(value && CurHP <= 0 && hasGhostAnim){
                     animator.SetBool("Ghost", true);
                 }else if (!value && hasGhostAnim){
                     animator.SetBool("Ghost", false);
@@ -124,6 +124,7 @@ namespace FinalInferno{
             statusEffectHandler.transform.localPosition = new Vector3(HeadPosition.x, HeadPosition.y);
             animator.runtimeAnimatorController = unit.Animator;
             hasGhostAnim = System.Array.Find(animator.parameters, parameter => parameter.name == "Ghost") != null;
+            // Debug.Log($"Unit {name} hasGhostAnim? {hasGhostAnim}");
             QueueSprite = unit.QueueSprite;
             Portrait = unit.Portrait;
 
@@ -292,7 +293,7 @@ namespace FinalInferno{
                 // Só triggera a animação de dano tomado se o dano for maior que zero
                 animator.SetTrigger("TakeDamage");
             }
-            damageIndicator.ShowDamage(Mathf.Abs(damage), (damage <= 0));
+            damageIndicator.ShowDamage(Mathf.Abs(damage), (damage <= 0), (1.0f - healResistance));
 
             // Aplica o aggro pra cura
             if(healer != null && (Unit.IsHero == healer.Unit.IsHero)){
@@ -318,6 +319,7 @@ namespace FinalInferno{
             atkDifference = Mathf.Max(atkDifference, 1);
             // damageResistance nao pode amplificar o dano ainda por conta da maneira que iria interagir com a resistencia elemental
             int damage = Mathf.FloorToInt(atkDifference * multiplier * elementalResistances[element] * (Mathf.Clamp(1.0f - damageResistance, 0.0f, 1.0f)));
+            // Debug.Log($"Taking damage, elemental resistance = {elementalResistances[element]}");
             if(CurHP <= 0)
                 return 0;
             CurHP -= damage;
@@ -325,7 +327,7 @@ namespace FinalInferno{
                 // Só triggera a animação de dano tomado se o dano for maior que zero
                 animator.SetTrigger("TakeDamage");
             }
-            damageIndicator.ShowDamage(Mathf.Abs(damage), (damage < 0));
+            damageIndicator.ShowDamage(Mathf.Abs(damage), (damage < 0), elementalResistances[element]);
 
             // Aplica o aggro pra dano
             if(attacker != null && (Unit.IsHero != attacker.Unit.IsHero)){

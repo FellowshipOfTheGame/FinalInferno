@@ -106,12 +106,12 @@ namespace FinalInferno.UI.Battle.SkillMenu
             damageText.text = currentUnit.Unit.baseDmg.ToString();
             if (currentUnit.curDmg > currentUnit.Unit.baseDmg)
             {
-                alteredDamageText.text = "(+" + (currentUnit.curDmg - currentUnit.Unit.baseDmg).ToString() + ")";
+                alteredDamageText.text = "+" + (currentUnit.curDmg - currentUnit.Unit.baseDmg).ToString();
                 alteredDamageText.color = positiveColor;
             }
             else if (currentUnit.curDmg < currentUnit.Unit.baseDmg)
             {
-                alteredDamageText.text = "(" + (currentUnit.curDmg - currentUnit.Unit.baseDmg).ToString() + ")";
+                alteredDamageText.text = "" + (currentUnit.curDmg - currentUnit.Unit.baseDmg).ToString();
                 alteredDamageText.color = negativeColor;
             }
             else
@@ -120,12 +120,12 @@ namespace FinalInferno.UI.Battle.SkillMenu
             resistanceText.text = currentUnit.Unit.baseDef.ToString();
             if (currentUnit.curDef > currentUnit.Unit.baseDef)
             {
-                alteredResistanceText.text = "(+" +(currentUnit.curDef - currentUnit.Unit.baseDef).ToString() + ")";
+                alteredResistanceText.text = "+" +(currentUnit.curDef - currentUnit.Unit.baseDef).ToString();
                 alteredResistanceText.color = positiveColor;
             }
             else if (currentUnit.curDef < currentUnit.Unit.baseDef)
             {
-                alteredResistanceText.text = "(" + (currentUnit.curDef - currentUnit.Unit.baseDef).ToString() + ")";
+                alteredResistanceText.text = "" + (currentUnit.curDef - currentUnit.Unit.baseDef).ToString();
                 alteredResistanceText.color = negativeColor;
             }
             else
@@ -134,12 +134,12 @@ namespace FinalInferno.UI.Battle.SkillMenu
             magicResistanceText.text = currentUnit.Unit.baseMagicDef.ToString();
             if (currentUnit.curMagicDef > currentUnit.Unit.baseMagicDef)
             {
-                alteredMagicResistanceText.text = "(+" + (currentUnit.curMagicDef - currentUnit.Unit.baseMagicDef).ToString() + ")";
+                alteredMagicResistanceText.text = "+" + (currentUnit.curMagicDef - currentUnit.Unit.baseMagicDef).ToString();
                 alteredMagicResistanceText.color = positiveColor;
             }
             else if (currentUnit.curMagicDef < currentUnit.Unit.baseMagicDef)
             {
-                alteredMagicResistanceText.text = "(" + (currentUnit.curMagicDef - currentUnit.Unit.baseMagicDef).ToString() + ")";
+                alteredMagicResistanceText.text = "" + (currentUnit.curMagicDef - currentUnit.Unit.baseMagicDef).ToString();
                 alteredMagicResistanceText.color = negativeColor;
             }
             else
@@ -148,12 +148,12 @@ namespace FinalInferno.UI.Battle.SkillMenu
             speedText.text = currentUnit.Unit.baseSpeed.ToString();
             if (currentUnit.curSpeed > currentUnit.Unit.baseSpeed)
             {
-                alteredSpeedText.text = "(+" +(currentUnit.curSpeed - currentUnit.Unit.baseSpeed).ToString() + ")";
+                alteredSpeedText.text = "+" +(currentUnit.curSpeed - currentUnit.Unit.baseSpeed).ToString();
                 alteredSpeedText.color = positiveColor;
             }
             else if (currentUnit.curSpeed < currentUnit.Unit.baseSpeed)
             {
-                alteredSpeedText.text = "(" + (currentUnit.curSpeed - currentUnit.Unit.baseSpeed).ToString() + ")";
+                alteredSpeedText.text = "" + (currentUnit.curSpeed - currentUnit.Unit.baseSpeed).ToString();
                 alteredSpeedText.color = negativeColor;
             }
             else

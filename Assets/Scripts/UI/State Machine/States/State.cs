@@ -40,7 +40,8 @@ namespace FinalInferno.UI.FSM
 
                 if (decisionSucceeded)
                 {
-                    controller.TransitionToState(T.nextState, T.actions);
+                    controller.SetNextState(T.nextState, T.actions);
+                    // return;
                 }
             }
         }

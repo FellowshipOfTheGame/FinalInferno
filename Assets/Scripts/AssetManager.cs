@@ -20,8 +20,9 @@ namespace FinalInferno{
         }
 
         // Subclasse =====================================================================
+        #region subclass
         [System.Serializable]
-        private class Bundle<T> where T : ScriptableObject{
+        private class Bundle<T> where T : ScriptableObject, IDatabaseItem{
             // Lista serializavel configurada pelo editor
             // TO DO: Adicionar HideInInspector depois que tiver certeza que funciona
             [SerializeField] private List<T> assets = new List<T>();
@@ -38,29 +39,27 @@ namespace FinalInferno{
 
             #if UNITY_EDITOR
             public void FindAssets(){
-                string[] objectsFound = UnityEditor.AssetDatabase.FindAssets("t:" + typeof(T).Name);
+                string[] objectsFound = AssetDatabase.FindAssets("t:" + typeof(T).Name);
                 assets = new List<T>();
                 foreach(string guid in objectsFound){
-                    assets.Add(UnityEditor.AssetDatabase.LoadAssetAtPath<T>(UnityEditor.AssetDatabase.GUIDToAssetPath(guid)));
+                    T newAsset = AssetDatabase.LoadAssetAtPath<T>(AssetDatabase.GUIDToAssetPath(guid));
+                    newAsset.LoadTables();
+                    assets.Add(newAsset);
                 }
-                // foreach(T obj in assets){
-                //     Debug.Log(obj.name);
-                // }
             }
             #endif
 
             public void Preload(){
-                // if(!loaded){
-                    loaded = true;
-                    foreach(T asset in assets){
-                        string key = (asset is Enemy)? (asset as Enemy).AssetName : asset.name;
-                        try{
-                            dict.Add(key, asset);
-                        }catch(System.ArgumentException){
-                            Debug.LogWarning("Asset " + key + " is being added more than once");
-                        }
+                foreach(T asset in assets){
+                    string key = (asset is Enemy)? (asset as Enemy).AssetName : asset.name;
+                    try{
+                        dict.Add(key, asset);
+                        // Codigo aqui embaixo só executa se não cair no catch
+                        asset.Preload();
+                    }catch(System.ArgumentException){
+                        Debug.LogWarning("Asset " + key + " is being added more than once");
                     }
-                // }
+                }
             }
 
             public T LoadAsset(string name){
@@ -77,28 +76,26 @@ namespace FinalInferno{
         }
         [System.Serializable] private class PartyBundle : Bundle<Party>{}
         [System.Serializable] private class HeroBundle : Bundle<Hero>{}
-        [System.Serializable] private class CharacterBundle : Bundle<Character>{}
         [System.Serializable] private class EnemyBundle : Bundle<Enemy>{}
         [System.Serializable] private class SkillBundle : Bundle<Skill>{}
         [System.Serializable] private class QuestBundle : Bundle<Quest>{}
         // Fim da subclasse =====================================================================
+        #endregion
 
         // Unity não consegue serializar isso, oh well
         // [SerializeField] private Bundle<Party> party = new Bundle<Party>();
         // [SerializeField] private Bundle<Hero> heroes = new Bundle<Hero>();
-        // [SerializeField] private Bundle<Character> characters = new Bundle<Character>();
         // [SerializeField] private Bundle<Enemy> enemies = new Bundle<Enemy>();
         // [SerializeField] private Bundle<Skill> skills = new Bundle<Skill>();
         // [SerializeField] private Bundle<Quest> quests = new Bundle<Quest>();
 
         [SerializeField] private PartyBundle party = new PartyBundle();
         [SerializeField] private HeroBundle heroes = new HeroBundle();
-        [SerializeField] private CharacterBundle characters = new CharacterBundle();
         [SerializeField] private EnemyBundle enemies = new EnemyBundle();
         [SerializeField] private SkillBundle skills = new SkillBundle();
         [SerializeField] private QuestBundle quests = new QuestBundle();
 
-        private Bundle<T> GetBundle<T>(string typeName) where T : ScriptableObject{
+        private Bundle<T> GetBundle<T>(string typeName) where T : ScriptableObject, IDatabaseItem{
             Bundle<T> bundle = null;
             switch(typeName){
                 case "party":
@@ -106,9 +103,6 @@ namespace FinalInferno{
                     break;
                 case "hero":
                     bundle = heroes as Bundle<T>;
-                    break;
-                case "character":
-                    bundle = characters as Bundle<T>;
                     break;
                 case "enemy":
                     bundle = enemies as Bundle<T>;
@@ -136,9 +130,6 @@ namespace FinalInferno{
             // heroes = new Bundle<Hero>();
             heroes = new HeroBundle();
             heroes.FindAssets();
-            // characters = new Bundle<Character>();
-            characters = new CharacterBundle();
-            characters.FindAssets();
             // enemies = new Bundle<Enemy>();
             enemies = new EnemyBundle();
             enemies.FindAssets();
@@ -155,7 +146,6 @@ namespace FinalInferno{
             if(Instance != null){
                 Instance.party.Preload();
                 Instance.heroes.Preload();
-                Instance.characters.Preload();
                 Instance.enemies.Preload();
                 Instance.skills.Preload();
                 Instance.quests.Preload();
@@ -171,8 +161,6 @@ namespace FinalInferno{
                     return LoadAsset<Party>(name);
                 case "hero":
                     return LoadAsset<Hero>(name);
-                case "character":
-                    return LoadAsset<Character>(name);
                 case "enemy":
                     return LoadAsset<Enemy>(name);
                 case "skill":
@@ -183,14 +171,9 @@ namespace FinalInferno{
                     Debug.Log("Access to bundle " + typeName + " is not implemented");
                     return null;
             }
-            // if(type == typeof(ScriptableObject) || type.IsSubclassOf(typeof(ScriptableObject))){
-            //     return LoadAsset<ScriptableObject>(name, type.Name.ToLower());
-            // }else{
-            //     return null;
-            // }
         }
 
-        public static T LoadAsset<T>(string name, string typeName = null) where T : ScriptableObject{
+        public static T LoadAsset<T>(string name, string typeName = null) where T : ScriptableObject, IDatabaseItem{
             if(Instance != null){
                 if(typeName == null){
                     typeName = typeof(T).Name.ToLower();

@@ -26,7 +26,7 @@ namespace FinalInferno{
             if(herman != null){
                 herman.Heal((int)val1, value1);
                 if(visualEffect){
-                    GameObject obj = GameObject.Instantiate(visualEffect, herman.transform.parent);
+                    GameObject obj = GameObject.Instantiate(visualEffect, herman.transform);
                     obj.GetComponent<SkillVFX>().SetTarget(herman, true);
                 }
             }
@@ -39,7 +39,7 @@ namespace FinalInferno{
             if(herman != null){
                 target.effects[Mathf.Clamp(((int)val1), 0, target.effects.Count - 1)].CopyTo(herman, value1);
                 if(visualEffect){
-                    GameObject obj = GameObject.Instantiate(visualEffect, herman.transform.parent);
+                    GameObject obj = GameObject.Instantiate(visualEffect, herman.transform);
                     obj.GetComponent<SkillVFX>().SetTarget(herman, true);
                 }
             }

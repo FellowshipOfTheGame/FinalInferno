@@ -19,6 +19,8 @@ namespace FinalInferno.UI
         {
         #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
+        #elif UNITY_WEBGL
+            SceneLoader.LoadMainMenu();
         #else
             Application.Quit();
         #endif

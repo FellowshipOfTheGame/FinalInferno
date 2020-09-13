@@ -53,7 +53,7 @@ namespace FinalInferno{
 
             // Apenas um dos status effects desse tipo causa um ataque
             if(Target.effects.Find(effect => effect.GetType() == typeof(VengefulGhost)) == this){
-                Source.SkillSelected();
+                Target.SkillSelected();
 
                 List<BattleUnit> enemies = BattleManager.instance.GetEnemies(Target);
                 int selected = 0;

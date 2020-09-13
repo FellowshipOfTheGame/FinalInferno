@@ -8,7 +8,7 @@ using UnityEditor;
 namespace FinalInferno{
     //engloba os tipos/classes de heroi, personagem do jogador
     [CreateAssetMenu(fileName = "Hero", menuName = "ScriptableObject/Hero", order = 2)]
-    public class Hero : Unit{
+    public class Hero : Unit, IDatabaseItem{
         public Sprite spriteOW; //"sprite" do heroi no "Over Wolrd"
         public RuntimeAnimatorController animatorOW; //"animator" do "Over World"
         public Sprite skillBG; //"sprite" de fundo da arvore de "skills"  
@@ -49,11 +49,12 @@ namespace FinalInferno{
         }
         public override bool IsHero{ get{ return true; } }
 
-        void Awake(){
-            table = null;
+        public void LoadTables(){
             table = DynamicTable.Create(heroTable);
-            elementalResistances.Clear();
+        }
 
+        public void Preload(){
+            elementalResistances.Clear();
             skillsToUpdate = new List<PlayerSkill>(InitialsSkills);
         }
 
@@ -98,6 +99,9 @@ namespace FinalInferno{
             }
 
             skillsToUpdate = new List<PlayerSkill>(InitialsSkills);
+            // foreach(PlayerSkill skill in InitialsSkills){
+            //     skill.CheckUnlock(1);
+            // }
             
             Debug.Log("Hero resetado");
         }
