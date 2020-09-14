@@ -47,8 +47,11 @@ namespace FinalInferno.UI.AII
             unit.OnTurnEnd.AddListener(StepBack);
 
             if(unit.gameObject != gameObject && rectTransform != null){
-                Vector3 newPosition = rectTransform.localToWorldMatrix.MultiplyPoint3x4(rectTransform.anchoredPosition);
+                Vector3 newPosition = rectTransform.localToWorldMatrix.MultiplyPoint3x4(Vector3.zero);
                 UpdateUnitPosition(newPosition, true);
+                // Não sei o motivo mas as unidades tavam dando um passo pra frente
+                // Ou isso ou a posição de mundo calculada ta errada seila
+                StepBack(unit);
             }
         }
 

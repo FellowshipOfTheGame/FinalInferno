@@ -92,6 +92,7 @@ namespace FinalInferno{
             // Depois de adicionar todas as unidades força os layouts a atualizar a posição
             UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(enemiesLayout);
             UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(heroesLayout);
+            // Canvas.ForceUpdateCanvases();
 
             // Agora que as posições estão atualizadas podemos fazer esse setup
             foreach(BattleUnit bUnit in battleUnits){
