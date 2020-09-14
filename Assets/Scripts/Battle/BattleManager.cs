@@ -23,6 +23,9 @@ namespace FinalInferno{
 
         public BattleUnitsUI unitsUI;
 
+        [SerializeField] private RectTransform heroesLayout;
+        [SerializeField] private RectTransform enemiesLayout;
+
         public UnitsLives[] unitsLives;
 
         public EnemyContent enemyContent;
@@ -86,7 +89,22 @@ namespace FinalInferno{
                 }
             }
 
+            // Depois de adicionar todas as unidades força os layouts a atualizar a posição
+            UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(enemiesLayout);
+            UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(heroesLayout);
+
+            // Agora que as posições estão atualizadas podemos fazer esse setup
             foreach(BattleUnit bUnit in battleUnits){
+                bUnit.battleItem.Setup();
+            }
+
+            foreach(BattleUnit bUnit in battleUnits){
+                // Unidades compostas precisam dar override na posição inicial e nos callbacks de movimento
+                CompositeBattleUnit composite = bUnit.GetComponent<CompositeBattleUnit>();
+                if(composite != null){
+                    composite.Setup();
+                }
+
                 float initiative = bUnit.curSpeed;
                 // As unidades são inseridas na fila como se a unidade mais lenta houvesse executado uma ação de custo (Skill.maxCost+Skill.baseCost)/2
                 // e as demais estivessem espaçadas linearmente de acordo com a diferença de speed entre a unidade mais rapida e a mais lenta
@@ -116,6 +134,9 @@ namespace FinalInferno{
         public void UpdateTurn(bool ignoreStatusEffects = false)
         {
             currentUnit = queue.Dequeue();
+            if(currentUnit != null){
+                currentUnit.OnTurnStart?.Invoke(currentUnit);
+            }
             if(!ignoreStatusEffects){
                 currentUnit.UpdateStatusEffects();
             }
@@ -130,6 +151,9 @@ namespace FinalInferno{
         {
             if(!ignoreCurrentUnit){
                 BattleUnit bu = currentUnit;
+                if(currentUnit != null){
+                    currentUnit.OnTurnEnd?.Invoke(currentUnit);
+                }
                 currentUnit = null;
                 queue.Enqueue(bu, cost);
             }
@@ -165,6 +189,7 @@ namespace FinalInferno{
 
                 // Se a unidade que morreu era a unidade atual coloca referencia nula para unidade atual
                 if (currentUnit == unit){
+                    currentUnit.OnTurnEnd?.Invoke(currentUnit);
                     currentUnit = null;
                 }
             }

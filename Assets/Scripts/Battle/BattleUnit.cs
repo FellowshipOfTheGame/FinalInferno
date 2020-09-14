@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
+using UnityEngine.Events;
 using FinalInferno.UI.Battle;
 using FinalInferno.UI.AII;
 
 namespace FinalInferno{
     public delegate void SkillDelegate(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f);
+    public class BattleUnitEvent : UnityEvent<BattleUnit> {}
     
     //representa todos os buffs/debuffs, dano etc que essa unidade recebe
     [RequireComponent(typeof(Animator)),RequireComponent(typeof(SpriteRenderer))]
@@ -38,6 +40,7 @@ namespace FinalInferno{
         private Dictionary<Element, float> elementalResistances = new Dictionary<Element, float>();
         public List<StatusEffect> effects; //lista de status fazendo efeito nessa unidade
         private List<Skill> activeSkills; // lista de skills ativas que essa unidade pode usar
+
         // Callbacks da unidade
         public ReadOnlyCollection<Skill> ActiveSkills { get => activeSkills.AsReadOnly(); }
         public SkillDelegate OnEndBattle = null;
@@ -50,11 +53,17 @@ namespace FinalInferno{
         public SkillDelegate OnHeal = null;
         public SkillDelegate OnDeath = null;
         public SkillDelegate OnSkillUsed = null;
+        [HideInInspector]
+        public BattleUnitEvent OnTurnStart = new BattleUnitEvent();
+        [HideInInspector]
+        public BattleUnitEvent OnTurnEnd = new BattleUnitEvent();
 
         // Referencias para objetos na cena
         [Header("References")]
         public UnitItem battleItem;
         [SerializeField] private UI.Battle.DamageIndicator damageIndicator;
+        [SerializeField] private RectTransform reference;
+        public RectTransform Reference => reference;
         [SerializeField] private StatusVFXHandler statusEffectHandler;
         public StatusVFXHandler StatusVFXHandler { get => statusEffectHandler; }
         private Animator animator;
@@ -99,7 +108,6 @@ namespace FinalInferno{
             // Essa configuração inicial serve para definir a altura dos objetos que dependem dela
             SpriteRenderer sr = GetComponent<SpriteRenderer>();
             sr.sprite = unit.BattleSprite;
-            damageIndicator.GetComponent<RectTransform>().anchoredPosition += new Vector2(0, sr.sprite.bounds.size.y);
             // FeetPosition = Vector2.zero; // Ja esta inicializado com esse valor
             HeadPosition = new Vector2(-((sr.sprite.bounds.size.x * unit.EffectsRelativePosition.x) - (sr.sprite.pivot.x / sr.sprite.pixelsPerUnit)),
                                         ((sr.sprite.bounds.size.y * unit.EffectsRelativePosition.y) - (sr.sprite.pivot.y / sr.sprite.pixelsPerUnit)) );
@@ -120,6 +128,7 @@ namespace FinalInferno{
                     DefaultSkillPosition = OverheadPosition;
                     break;
             }
+            damageIndicator.GetComponent<RectTransform>().anchoredPosition += new Vector2(HeadPosition.x, HeadPosition.y+0.35f);
             // move o objeto de status effects para HeadPosition
             statusEffectHandler.transform.localPosition = new Vector3(HeadPosition.x, HeadPosition.y);
             animator.runtimeAnimatorController = unit.Animator;

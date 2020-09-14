@@ -27,6 +27,7 @@ namespace FinalInferno{
         [Space(10)]
         [Header("It has 3 heads")]
         [SerializeField] private Sprite bodySprite;
+        [SerializeField] private Sprite battleSpriteBackHead;
         [SerializeField] private RuntimeAnimatorController animatorMiddleHead;
         [SerializeField] private RuntimeAnimatorController animatorFrontHead;
         public override RuntimeAnimatorController Animator {
@@ -109,7 +110,7 @@ namespace FinalInferno{
                                 break;
                             }
                         }
-                        return battleSprite;
+                        return battleSpriteBackHead;
                     case 1:
                         heads++;
                         foreach(BattleUnit bUnit in FindObjectsOfType<BattleUnit>()){
@@ -137,11 +138,6 @@ namespace FinalInferno{
                         if(composite){
                             composite.AddApendage(backHead);
                             composite.AddApendage(frontHead);
-                        }
-                        // Altera o layout group para que os elementos fiquem mais proximos
-                        UnityEngine.UI.VerticalLayoutGroup layoutGroup = middleHead.battleItem.layout.transform.parent.GetComponent<UnityEngine.UI.VerticalLayoutGroup>();
-                        if(layoutGroup){
-                            layoutGroup.spacing = 0;
                         }
                         // Cria um game object para ter o sprite do corpo
                         GameObject bodyObj = new GameObject();

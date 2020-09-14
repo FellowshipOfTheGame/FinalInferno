@@ -72,12 +72,9 @@ namespace FinalInferno.UI.Battle
             }
             sr.sortingOrder = sortingLayer;
             battleUnit.Configure(unit);
-            battleItem.Setup(ppu);
             // Nesse ponto aqui sr.sprite corresponde a um sprite de batalha da unidade
             // Reposiciona o indicador da unidade de acordo com o tamanho do sprite de batalha
             AxisInteractableItem newItem = battleUnit.battleItem.GetComponent<AxisInteractableItem>();
-            RectTransform referenceTransform = newItem.transform.parent.Find("Active Reference").GetComponent<RectTransform>();
-            referenceTransform.anchoredPosition += (sr.sprite.pixelsPerUnit * battleUnit.OverheadPosition);
             battleUnit.battleItem.layout.preferredWidth = unit.BoundsSizeX * ppu;
             battleUnit.battleItem.layout.preferredHeight = unit.BoundsSizeY * ppu;
 
