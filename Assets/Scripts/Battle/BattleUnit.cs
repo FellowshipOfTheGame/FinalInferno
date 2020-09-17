@@ -128,9 +128,10 @@ namespace FinalInferno{
                     DefaultSkillPosition = OverheadPosition;
                     break;
             }
+            // move o objeto de status effects e o indicador de dano para HeadPosition
             damageIndicator.GetComponent<RectTransform>().anchoredPosition += new Vector2(HeadPosition.x, HeadPosition.y+0.35f);
-            // move o objeto de status effects para HeadPosition
-            statusEffectHandler.transform.localPosition = new Vector3(HeadPosition.x, HeadPosition.y);
+            statusEffectHandler.transform.localPosition = new Vector3(HeadPosition.x, HeadPosition.y+0.35f);
+
             animator.runtimeAnimatorController = unit.Animator;
             hasGhostAnim = System.Array.Find(animator.parameters, parameter => parameter.name == "Ghost") != null;
             // Debug.Log($"Unit {name} hasGhostAnim? {hasGhostAnim}");
