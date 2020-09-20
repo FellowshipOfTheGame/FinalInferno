@@ -16,6 +16,7 @@ namespace FinalInferno.UI.AII
         /// Referência ao efeito do item.
         /// </summary>
         public BattleUnit unit;
+        [SerializeField] private RectTransform unitReference;
 
         /// <summary>
         /// Referência ao item da lista.
@@ -34,32 +35,48 @@ namespace FinalInferno.UI.AII
 
         void Awake(){
             rectTransform = GetComponent<RectTransform>();
+            item.OnAct += SetTarget;
         }
 
         public void Setup()
         {
-            // TO DO: No lugar disso aqui talvez colocar um outline ou indicador na lista de unidades correspondente
-            // if(unit.unit.IsHero){
-            //     item.OnEnter += UpdateHeroContent;
-            //     item.OnExit += ResetHeroContent;
-            // }else{
-            //     item.OnEnter += UpdateEnemyContent;
-            //     item.OnExit += ResetEnemyContent;
-            // }
-            item.OnAct += SetTarget;
+            unitReference = unit.Reference;
+            item.ActiveReference = unitReference.GetComponent<UnityEngine.UI.Image>();
+
+            unit.OnTurnStart.AddListener(StepForward);
+            unit.OnTurnEnd.AddListener(StepBack);
+
+            if(unit.gameObject != gameObject && rectTransform != null){
+                Vector3 newPosition = rectTransform.localToWorldMatrix.MultiplyPoint3x4(Vector3.zero);
+                UpdateUnitPosition(newPosition, true);
+                // Não sei o motivo mas as unidades tavam dando um passo pra frente
+                // Ou isso ou a posição de mundo calculada ta errada seila
+                StepBack(unit);
+            }
         }
 
-        void Update(){
-            // Posiciona o objeto com os sprites da unidade na sua posição desejada
-            CurrentOffset = Vector2.zero;
-            if(unit.gameObject != gameObject && rectTransform != null){
-                Vector3 newPosition = rectTransform.TransformPoint(rectTransform.rect.center.x, 0f, 0f);
-                newPosition += new Vector3(defaultOffset.x, defaultOffset.y, 2);
-                if(BattleManager.instance.currentUnit == unit){
-                    float xOffset = (unit.Unit.IsHero)? stepSize : -stepSize;
-                    newPosition.x += xOffset;
-                    CurrentOffset = new Vector2(xOffset, 0f);
-                }
+        public void StepForward(BattleUnit battleUnit){
+            if(battleUnit != unit) return;
+            // Debug.Log($"unit {battleUnit} stepped forward");
+
+            float xOffset = (unit.Unit.IsHero)? stepSize : -stepSize;
+            Vector3 newPosition = unit.transform.position;
+            newPosition.x += xOffset;
+            UpdateUnitPosition(newPosition);
+        }
+
+        public void StepBack(BattleUnit battleUnit){
+            if(battleUnit != unit) return;
+            // Debug.Log($"unit {battleUnit} stepped back");
+
+            float xOffset = (unit.Unit.IsHero)? -stepSize : stepSize;
+            Vector3 newPosition = unit.transform.position;
+            newPosition.x += xOffset;
+            UpdateUnitPosition(newPosition);
+        }
+
+        private void UpdateUnitPosition(Vector3 newPosition, bool force = false){
+            if(force || (newPosition - unit.transform.position).magnitude > float.Epsilon){
                 unit.transform.position = newPosition;
             }
         }

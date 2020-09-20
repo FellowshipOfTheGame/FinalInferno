@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: Promise of Riches
   m_EditorClassIdentifier: 
   name: Promise of Riches
+  level: 1
   cost: 12
   active: 1
+  shortDescription: Raises power but reduces a little resistance and defense from
+    party.
   target: 1
   attribute: 5
   type: 0
@@ -35,12 +38,10 @@ MonoBehaviour:
   visualEffect: {fileID: 552734591061099818, guid: adb27ddbffd6de74fb6e34379f56176a,
     type: 3}
   xp: 0
-  xpNext: 0
+  xpNext: 333
   description: Promises a great bounty for the heads of the enemies, making your companions
     eager to kill. Raises the attack, but as they are less careful, slightly lowers
     their defenses.
-  shortDescription: Raises power but reduces a little resistance and defense from
-    party.
   skillsToUpdate:
   - {fileID: 11400000, guid: 582d7cf50d6f72647872d290a61905b9, type: 2}
   prerequisiteSkills: []
@@ -58,50 +59,16 @@ MonoBehaviour:
     - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-    Col:
-      reorderableList:
-        canAdd: 0
-        canRemove: 0
-        draggable: 0
-        expandable: 0
-        multipleSelection: 0
-        isExpanded: 0
-        label:
-          m_Text: 
-          m_Image: {fileID: 0}
-          m_Tooltip: 
-        headerHeight: 0
-        footerHeight: 0
-        slideEasing: 0
-        verticalSpacing: 0
-        showDefaultBackground: 0
-        elementDisplayType: 0
-        elementNameProperty: 
-        elementNameOverride: 
-        elementIcon: {fileID: 0}
-      reqReferences: {fileID: 0}
-      isExpanded: 0
-      _keyValues:
-      - Level
-      - SkillEffect0Value0
-      - SkillEffect0Value1
-      - SkillEffect1Value0
-      - SkillEffect1Value1
-      - SkillEffect2Value0
-      - SkillEffect2Value1
-      - SkillEffect3Value0
-      - SkillEffect3Value1
-      _keys:
-      - Level
-      - SkillEffect0Value0
-      - SkillEffect0Value1
-      - SkillEffect1Value0
-      - SkillEffect1Value1
-      - SkillEffect2Value0
-      - SkillEffect2Value1
-      - SkillEffect3Value0
-      - SkillEffect3Value1
-      _values: 000000000100000002000000030000000400000005000000060000000700000008000000
+    colNames:
+    - Level
+    - SkillEffect0Value0
+    - SkillEffect0Value1
+    - SkillEffect1Value0
+    - SkillEffect1Value1
+    - SkillEffect2Value0
+    - SkillEffect2Value1
+    - SkillEffect3Value0
+    - SkillEffect3Value1
     rows:
     - elements:
       - 1
@@ -123,50 +90,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 2
       - 0.000
@@ -187,50 +110,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 3
       - 0.000
@@ -251,50 +130,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 4
       - 0.000
@@ -315,50 +150,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 5
       - 0.000
@@ -379,50 +170,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 6
       - 0.000
@@ -443,50 +190,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 7
       - 0.000
@@ -507,50 +210,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 8
       - 0.000
@@ -571,50 +230,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 9
       - 0.000
@@ -635,50 +250,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 10
       - 0.000
@@ -699,50 +270,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 11
       - 0.000
@@ -763,50 +290,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 12
       - 0.000
@@ -827,50 +310,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 13
       - 0.000
@@ -891,50 +330,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 14
       - 0.000
@@ -955,50 +350,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 15
       - 0.000
@@ -1019,50 +370,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 16
       - 0.000
@@ -1083,50 +390,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 17
       - 0.000
@@ -1147,50 +410,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 18
       - 0.000
@@ -1211,50 +430,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 19
       - 0.000
@@ -1275,50 +450,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 20
       - 0.000
@@ -1339,50 +470,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 21
       - 0.000
@@ -1403,50 +490,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 22
       - 0.000
@@ -1467,50 +510,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 23
       - 0.000
@@ -1531,50 +530,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 24
       - 0.000
@@ -1595,50 +550,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 25
       - 0.000
@@ -1659,50 +570,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 26
       - 0.000
@@ -1723,50 +590,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 27
       - 0.000
@@ -1787,50 +610,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 28
       - 0.000
@@ -1851,50 +630,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 29
       - 0.000
@@ -1915,50 +650,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 30
       - 0.000
@@ -1979,50 +670,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 31
       - 0.000
@@ -2043,50 +690,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 32
       - 0.000
@@ -2107,50 +710,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 33
       - 0.000
@@ -2171,50 +730,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 34
       - 0.000
@@ -2235,50 +750,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 35
       - 0.000
@@ -2299,50 +770,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 36
       - 0.000
@@ -2363,50 +790,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 37
       - 0.000
@@ -2427,50 +810,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 38
       - 0.000
@@ -2491,50 +830,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 39
       - 0.000
@@ -2555,50 +850,6 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
     - elements:
       - 40
       - 0.000
@@ -2619,78 +870,815 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Col:
-        reorderableList:
-          canAdd: 0
-          canRemove: 0
-          draggable: 0
-          expandable: 0
-          multipleSelection: 0
-          isExpanded: 0
-          label:
-            m_Text: 
-            m_Image: {fileID: 0}
-            m_Tooltip: 
-          headerHeight: 0
-          footerHeight: 0
-          slideEasing: 0
-          verticalSpacing: 0
-          showDefaultBackground: 0
-          elementDisplayType: 0
-          elementNameProperty: 
-          elementNameOverride: 
-          elementIcon: {fileID: 0}
-        reqReferences: {fileID: 0}
-        isExpanded: 0
-        _keyValues:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _keys:
-        - Level
-        - SkillEffect0Value0
-        - SkillEffect0Value1
-        - SkillEffect1Value0
-        - SkillEffect1Value1
-        - SkillEffect2Value0
-        - SkillEffect2Value1
-        - SkillEffect3Value0
-        - SkillEffect3Value1
-        _values: 000000000100000002000000030000000400000005000000060000000700000008000000
   expTable: {fileID: 4900000, guid: e8c1b59414895b544a1750bdf0aaf3db, type: 3}
   xpTable:
-    colTypes: []
-    Col:
-      reorderableList:
-        canAdd: 1
-        canRemove: 1
-        draggable: 1
-        expandable: 1
-        multipleSelection: 1
-        isExpanded: 0
-        label:
-          m_Text: Keys
-          m_Image: {fileID: 0}
-          m_Tooltip: 
-        headerHeight: 18
-        footerHeight: 13
-        slideEasing: 0.15
-        verticalSpacing: 2
-        showDefaultBackground: 1
-        elementDisplayType: 0
-        elementNameProperty: 
-        elementNameOverride: 
-        elementIcon: {fileID: 0}
-      reqReferences: {fileID: 0}
-      isExpanded: 0
-      _keyValues: []
-      _keys: []
-      _values: 
-    rows: []
+    colTypes:
+    - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    colNames:
+    - Level
+    - XPNextLevel
+    - XPAccumulated
+    rows:
+    - elements:
+      - 1
+      - 333
+      - 333
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 2
+      - 666
+      - 999
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 3
+      - 999
+      - 1998
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 4
+      - 1332
+      - 3330
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 5
+      - 1665
+      - 4995
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 6
+      - 1998
+      - 6993
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 7
+      - 2331
+      - 9324
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 8
+      - 2664
+      - 11988
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 9
+      - 2997
+      - 14985
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 10
+      - 3330
+      - 18315
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 11
+      - 3663
+      - 21978
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 12
+      - 3996
+      - 25974
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 13
+      - 4329
+      - 30303
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 14
+      - 4662
+      - 34965
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 15
+      - 4995
+      - 39960
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 16
+      - 5328
+      - 45288
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 17
+      - 5661
+      - 50949
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 18
+      - 5994
+      - 56943
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 19
+      - 6327
+      - 63270
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 20
+      - 6660
+      - 69930
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 21
+      - 6993
+      - 76923
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 22
+      - 7326
+      - 84249
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 23
+      - 7659
+      - 91908
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 24
+      - 7992
+      - 99900
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 25
+      - 8325
+      - 108225
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 26
+      - 8658
+      - 116883
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 27
+      - 8991
+      - 125874
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 28
+      - 9324
+      - 135198
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 29
+      - 9657
+      - 144855
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 30
+      - 9990
+      - 154845
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 31
+      - 10323
+      - 165168
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 32
+      - 10656
+      - 175824
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 33
+      - 10989
+      - 186813
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 34
+      - 11322
+      - 198135
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 35
+      - 11655
+      - 209790
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 36
+      - 11988
+      - 221778
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 37
+      - 12321
+      - 234099
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 38
+      - 12654
+      - 246753
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 39
+      - 12987
+      - 259740
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 40
+      - 13320
+      - 273060
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 41
+      - 13653
+      - 286713
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 42
+      - 13986
+      - 300699
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 43
+      - 14319
+      - 315018
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 44
+      - 14652
+      - 329670
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 45
+      - 14985
+      - 344655
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 46
+      - 15318
+      - 359973
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 47
+      - 15651
+      - 375624
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 48
+      - 15984
+      - 391608
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 49
+      - 16317
+      - 407925
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 50
+      - 16650
+      - 424575
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 51
+      - 16983
+      - 441558
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 52
+      - 17316
+      - 458874
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 53
+      - 17649
+      - 476523
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 54
+      - 17982
+      - 494505
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 55
+      - 18315
+      - 512820
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 56
+      - 18648
+      - 531468
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 57
+      - 18981
+      - 550449
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 58
+      - 19314
+      - 569763
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 59
+      - 19647
+      - 589410
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 60
+      - 19980
+      - 609390
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 61
+      - 20313
+      - 629703
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 62
+      - 20646
+      - 650349
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 63
+      - 20979
+      - 671328
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 64
+      - 21312
+      - 692640
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 65
+      - 21645
+      - 714285
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 66
+      - 21978
+      - 736263
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 67
+      - 22311
+      - 758574
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 68
+      - 22644
+      - 781218
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 69
+      - 22977
+      - 804195
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 70
+      - 23310
+      - 827505
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 71
+      - 23643
+      - 851148
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 72
+      - 23976
+      - 875124
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 73
+      - 24309
+      - 899433
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 74
+      - 24642
+      - 924075
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 75
+      - 24975
+      - 949050
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 76
+      - 25308
+      - 974358
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 77
+      - 25641
+      - 999999
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 78
+      - 25974
+      - 1025973
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 79
+      - 26307
+      - 1052280
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 80
+      - 26640
+      - 1078920
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 81
+      - 26973
+      - 1105893
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 82
+      - 27306
+      - 1133199
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 83
+      - 27639
+      - 1160838
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 84
+      - 27972
+      - 1188810
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 85
+      - 28305
+      - 1217115
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 86
+      - 28638
+      - 1245753
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 87
+      - 28971
+      - 1274724
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 88
+      - 29304
+      - 1304028
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 89
+      - 29637
+      - 1333665
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 90
+      - 29970
+      - 1363635
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 91
+      - 30303
+      - 1393938
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 92
+      - 30636
+      - 1424574
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 93
+      - 30969
+      - 1455543
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 94
+      - 31302
+      - 1486845
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 95
+      - 31635
+      - 1518480
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 96
+      - 31968
+      - 1550448
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 97
+      - 32301
+      - 1582749
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 98
+      - 32634
+      - 1615383
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 99
+      - 32967
+      - 1648350
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - elements:
+      - 100
+      - 33300
+      - 1681650
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
   skillImage: {fileID: 21300000, guid: fab3478f615992e47b3fcffb43cda78c, type: 3}

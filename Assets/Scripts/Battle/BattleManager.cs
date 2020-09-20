@@ -18,8 +18,13 @@ namespace FinalInferno{
         [SerializeField] private BattleQueueUI queueUI;
 
         public BattleUnit currentUnit {get; private set;}
+        public int MaxBaseSpeed {get; private set; } = Unit.maxStatValue;
+        public int MinBaseSpeed {get; private set; } = 0;
 
         public BattleUnitsUI unitsUI;
+
+        [SerializeField] private RectTransform heroesLayout;
+        [SerializeField] private RectTransform enemiesLayout;
 
         public UnitsLives[] unitsLives;
 
@@ -62,7 +67,12 @@ namespace FinalInferno{
 
         public void PrepareBattle(){
             int ppu = Camera.main.gameObject.GetComponent<UnityEngine.U2D.PixelPerfectCamera>().assetsPPU;
+            MaxBaseSpeed = 0;
+            MinBaseSpeed = Unit.maxStatValue;
             foreach(Unit unit in units){
+                MaxBaseSpeed = Mathf.Min(Mathf.Max(unit.baseSpeed, MaxBaseSpeed), Unit.maxStatValue);
+                MinBaseSpeed = Mathf.Max(Mathf.Min(unit.baseSpeed, MinBaseSpeed), 0);
+
                 if(unit.IsHero){
                     // Precisa ser salvo antes do LoadUnit para registrar exp das habilidades OnSpawn
                     BattleProgress.addHeroSkills((Hero)unit);
@@ -70,7 +80,7 @@ namespace FinalInferno{
 
                 BattleUnit newUnit = BattleUnitsUI.instance.LoadUnit(unit, ppu);
                 battleUnits.Add(newUnit);
-                queue.Enqueue(newUnit, -newUnit.curSpeed);
+                float initiative = newUnit.curSpeed;
                 // Debug.Log("Carregou " + unit.name);
 
                 if(!unit.IsHero){
@@ -78,6 +88,31 @@ namespace FinalInferno{
                     (newUnit.Unit as Enemy).ResetParameters();
                 }
             }
+
+            // Depois de adicionar todas as unidades força os layouts a atualizar a posição
+            UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(enemiesLayout);
+            UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(heroesLayout);
+            // Canvas.ForceUpdateCanvases();
+
+            // Agora que as posições estão atualizadas podemos fazer esse setup
+            foreach(BattleUnit bUnit in battleUnits){
+                bUnit.battleItem.Setup();
+            }
+
+            foreach(BattleUnit bUnit in battleUnits){
+                // Unidades compostas precisam dar override na posição inicial e nos callbacks de movimento
+                CompositeBattleUnit composite = bUnit.GetComponent<CompositeBattleUnit>();
+                if(composite != null){
+                    composite.Setup();
+                }
+
+                float initiative = bUnit.curSpeed;
+                // As unidades são inseridas na fila como se a unidade mais lenta houvesse executado uma ação de custo (Skill.maxCost+Skill.baseCost)/2
+                // e as demais estivessem espaçadas linearmente de acordo com a diferença de speed entre a unidade mais rapida e a mais lenta
+                initiative = Mathf.Clamp( ((initiative - MinBaseSpeed) / (float)(MaxBaseSpeed - MinBaseSpeed)), 0f, 1f) * ((Skill.maxCost + Skill.baseCost) / 2.0f);
+                queue.Enqueue(bUnit, -Mathf.FloorToInt(initiative));
+            }
+
             isBattleReady.UpdateValue(true);
         }
 
@@ -100,6 +135,9 @@ namespace FinalInferno{
         public void UpdateTurn(bool ignoreStatusEffects = false)
         {
             currentUnit = queue.Dequeue();
+            if(currentUnit != null){
+                currentUnit.OnTurnStart?.Invoke(currentUnit);
+            }
             if(!ignoreStatusEffects){
                 currentUnit.UpdateStatusEffects();
             }
@@ -114,6 +152,9 @@ namespace FinalInferno{
         {
             if(!ignoreCurrentUnit){
                 BattleUnit bu = currentUnit;
+                if(currentUnit != null){
+                    currentUnit.OnTurnEnd?.Invoke(currentUnit);
+                }
                 currentUnit = null;
                 queue.Enqueue(bu, cost);
             }
@@ -149,6 +190,7 @@ namespace FinalInferno{
 
                 // Se a unidade que morreu era a unidade atual coloca referencia nula para unidade atual
                 if (currentUnit == unit){
+                    currentUnit.OnTurnEnd?.Invoke(currentUnit);
                     currentUnit = null;
                 }
             }

@@ -72,12 +72,9 @@ namespace FinalInferno.UI.Battle
             }
             sr.sortingOrder = sortingLayer;
             battleUnit.Configure(unit);
-            battleItem.Setup();
             // Nesse ponto aqui sr.sprite corresponde a um sprite de batalha da unidade
             // Reposiciona o indicador da unidade de acordo com o tamanho do sprite de batalha
             AxisInteractableItem newItem = battleUnit.battleItem.GetComponent<AxisInteractableItem>();
-            RectTransform referenceTransform = newItem.transform.parent.Find("Active Reference").GetComponent<RectTransform>();
-            referenceTransform.anchoredPosition += (sr.sprite.pixelsPerUnit * battleUnit.OverheadPosition);
             battleUnit.battleItem.layout.preferredWidth = unit.BoundsSizeX * ppu;
             battleUnit.battleItem.layout.preferredHeight = unit.BoundsSizeY * ppu;
 
@@ -111,8 +108,10 @@ namespace FinalInferno.UI.Battle
             manager = ((currentUnit.IsHero && useOwnManager) || (!currentUnit.IsHero && !useOwnManager))? heroesManager : enemiesManager;
 
             // Obtem a lista de possiveis alvos para a skill em questão
-            List<BattleUnit> targetUnits = new List<BattleUnit>(BattleManager.instance.battleUnits);
-            targetUnits = BattleSkillManager.currentSkill.FilterTargets(BattleSkillManager.currentUser, targetUnits);
+            List<BattleUnit> targetUnits = new List<BattleUnit>(BattleSkillManager.currentTargets);
+            // Teoricamente essa lista já foi construída usando o método FilterTargets
+            // A filtragem acontece no script SkillItem.cs
+            // targetUnits = BattleSkillManager.currentSkill.FilterTargets(BattleSkillManager.currentUser, targetUnits);
 
             manager.ClearItems();
             foreach(BattleUnit unit in targetUnits){

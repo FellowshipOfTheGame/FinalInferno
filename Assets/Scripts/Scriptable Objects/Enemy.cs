@@ -8,7 +8,7 @@ using UnityEditor;
 
 namespace FinalInferno{
     //engloba os inimigos do jogador
-    [CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObject/Enemy/Basic", order = 0)]
+    [CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObject/Enemy/Basic")]
     public class Enemy : Unit, IDatabaseItem{
         public Color dialogueColor;
         [Space(10)]
@@ -18,7 +18,7 @@ namespace FinalInferno{
         [SerializeField] protected DamageType damageFocus = DamageType.None;
         public DamageType DamageFocus { get{ return damageFocus; } }
         public override Color DialogueColor { get { return dialogueColor; } }
-        public override string DialogueName { get { return (name == null)? "" : name; } }
+        public override string DialogueName { get { return (AssetName == null)? "" : AssetName; } }
         [SerializeField] private Sprite bestiaryPortrait;
         public Sprite BestiaryPortrait { get => bestiaryPortrait; }
         [SerializeField] private AudioClip enemyCry;
@@ -28,8 +28,8 @@ namespace FinalInferno{
         public string Bio { get => bio; }
         [Space(10)]
         [Header("Table")]
-        [SerializeField] protected TextAsset enemyTable = null;
-        [SerializeField] protected DynamicTable table = null;
+        [SerializeField] protected TextAsset enemyTable;
+        [SerializeField] protected DynamicTable table;
         protected DynamicTable Table {
             get {
                 if(table == null && enemyTable != null)
@@ -39,14 +39,12 @@ namespace FinalInferno{
                 return table;
             }
         }
-        protected int curTableRow = 0;
+        [SerializeField, HideInInspector] protected int curTableRow = 0;
         public override long SkillExp { get { return BaseExp; } } // Quanta exp o inimigo dá pra skill quando ela é usada nele
         public long BaseExp { get; protected set; } // Quanta exp o inimigo dá pra party ao final da batalha
 
         public void LoadTables(){
             table = DynamicTable.Create(enemyTable);
-            curTableRow = -1;
-            LevelEnemy(-1);
         }
 
         public void Preload(){
@@ -65,14 +63,25 @@ namespace FinalInferno{
         // Função que identifica o nível do inimigo de acordo com o progresso e ajusta como for necessário
         public int LevelEnemy(){
             // Calcula o level dos inimigos
-            // Avalia os parametros das quests
-            int questParam = 0;
-            if(AssetManager.LoadAsset<Quest>("MainQuest").events["CerberusDead"]) questParam++;
-            int enemyLevel = questParam * 10;
 
-            // Avalia o nível atual da party
-            if(Mathf.Clamp(Party.Instance.level - (questParam * 10), 0, 10) > 5)
+            int scaledLevel = Party.Instance.ScaledLevel;
+            // Debug.Log($"Calculated scaled level = {scaledLevel}");
+            // Define o tier de acordo com a historia
+            int enemyLevel = 10 * (scaledLevel / 10);
+            // O tier só deve incrementar depois que o jogador ganhar mais um nível
+            // Debug.Log($"Calculated enemy level = {enemyLevel}");
+            if(scaledLevel == enemyLevel && enemyLevel >= 10){
+                enemyLevel -= 10;
+            }
+            // Debug.Log($"Calculated enemy level = {enemyLevel}");
+
+            while(scaledLevel > 10){
+                scaledLevel -= 10;
+            }
+            // Ajusta o nível dos monstros dentro do tier de historia
+            if(scaledLevel > 5)
                 enemyLevel += 5;
+            // Debug.Log($"Calculated enemy level = {enemyLevel}");
 
             LevelEnemy(enemyLevel);
 
@@ -150,7 +159,7 @@ namespace FinalInferno{
                 rand -= percentual[i];
             }
             
-            return team.Count-1;
+            return 0;
         }
 
         //funcao que escolhe o ataque a ser utilizado
@@ -214,6 +223,9 @@ namespace FinalInferno{
                 case TargetType.SingleEnemy:
                     team = BattleManager.instance.GetTeam(UnitType.Hero);
                     targets.Add(team[TargetDecision(team)]);
+                    break;
+                default:
+                    Debug.LogError("Target type not implemented for enemy targeting (Enemy.cs)");
                     break;
             }
 

@@ -23,7 +23,7 @@ namespace FinalInferno{
                 return (saves[Slot].mapName != null && saves[Slot].mapName != "");
             }
         }
-        [SerializeField] public bool autoSave = true;
+        public bool autoSave = true;
         // Uma array de saves inicializados com valores padrão
         public SaveInfo[] saves = new SaveInfo[nSaveSlots];
 
@@ -142,12 +142,12 @@ namespace FinalInferno{
             Party.Instance.activeQuests.Clear();
             foreach(QuestInfo questInfo in saves[Slot].quest){
                 Quest quest = AssetManager.LoadAsset<Quest>(questInfo.name);
+                quest.StartQuest(true);
                 ulong bitValue = 1;
                 for(int i = 0; i < quest.events.Count; i++){
                     quest.events[questInfo.flagsNames[i]] = (questInfo.flagsTrue & bitValue) != 0;
                     bitValue =  bitValue << 1;
                 }
-                Party.Instance.activeQuests.Add(quest);
             }
 
             // Carrega as informações do bestiario

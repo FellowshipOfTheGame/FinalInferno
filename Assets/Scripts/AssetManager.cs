@@ -20,6 +20,7 @@ namespace FinalInferno{
         }
 
         // Subclasse =====================================================================
+        #region subclass
         [System.Serializable]
         private class Bundle<T> where T : ScriptableObject, IDatabaseItem{
             // Lista serializavel configurada pelo editor
@@ -38,10 +39,10 @@ namespace FinalInferno{
 
             #if UNITY_EDITOR
             public void FindAssets(){
-                string[] objectsFound = UnityEditor.AssetDatabase.FindAssets("t:" + typeof(T).Name);
+                string[] objectsFound = AssetDatabase.FindAssets("t:" + typeof(T).Name);
                 assets = new List<T>();
                 foreach(string guid in objectsFound){
-                    T newAsset = UnityEditor.AssetDatabase.LoadAssetAtPath<T>(UnityEditor.AssetDatabase.GUIDToAssetPath(guid));
+                    T newAsset = AssetDatabase.LoadAssetAtPath<T>(AssetDatabase.GUIDToAssetPath(guid));
                     newAsset.LoadTables();
                     assets.Add(newAsset);
                 }
@@ -75,23 +76,21 @@ namespace FinalInferno{
         }
         [System.Serializable] private class PartyBundle : Bundle<Party>{}
         [System.Serializable] private class HeroBundle : Bundle<Hero>{}
-        [System.Serializable] private class CharacterBundle : Bundle<Character>{}
         [System.Serializable] private class EnemyBundle : Bundle<Enemy>{}
         [System.Serializable] private class SkillBundle : Bundle<Skill>{}
         [System.Serializable] private class QuestBundle : Bundle<Quest>{}
         // Fim da subclasse =====================================================================
+        #endregion
 
         // Unity não consegue serializar isso, oh well
         // [SerializeField] private Bundle<Party> party = new Bundle<Party>();
         // [SerializeField] private Bundle<Hero> heroes = new Bundle<Hero>();
-        // [SerializeField] private Bundle<Character> characters = new Bundle<Character>();
         // [SerializeField] private Bundle<Enemy> enemies = new Bundle<Enemy>();
         // [SerializeField] private Bundle<Skill> skills = new Bundle<Skill>();
         // [SerializeField] private Bundle<Quest> quests = new Bundle<Quest>();
 
         [SerializeField] private PartyBundle party = new PartyBundle();
         [SerializeField] private HeroBundle heroes = new HeroBundle();
-        [SerializeField] private CharacterBundle characters = new CharacterBundle();
         [SerializeField] private EnemyBundle enemies = new EnemyBundle();
         [SerializeField] private SkillBundle skills = new SkillBundle();
         [SerializeField] private QuestBundle quests = new QuestBundle();
@@ -104,9 +103,6 @@ namespace FinalInferno{
                     break;
                 case "hero":
                     bundle = heroes as Bundle<T>;
-                    break;
-                case "character":
-                    bundle = characters as Bundle<T>;
                     break;
                 case "enemy":
                     bundle = enemies as Bundle<T>;
@@ -134,9 +130,6 @@ namespace FinalInferno{
             // heroes = new Bundle<Hero>();
             heroes = new HeroBundle();
             heroes.FindAssets();
-            // characters = new Bundle<Character>();
-            characters = new CharacterBundle();
-            characters.FindAssets();
             // enemies = new Bundle<Enemy>();
             enemies = new EnemyBundle();
             enemies.FindAssets();
@@ -153,7 +146,6 @@ namespace FinalInferno{
             if(Instance != null){
                 Instance.party.Preload();
                 Instance.heroes.Preload();
-                Instance.characters.Preload();
                 Instance.enemies.Preload();
                 Instance.skills.Preload();
                 Instance.quests.Preload();
@@ -169,8 +161,6 @@ namespace FinalInferno{
                     return LoadAsset<Party>(name);
                 case "hero":
                     return LoadAsset<Hero>(name);
-                case "character":
-                    return LoadAsset<Character>(name);
                 case "enemy":
                     return LoadAsset<Enemy>(name);
                 case "skill":
@@ -181,11 +171,6 @@ namespace FinalInferno{
                     Debug.Log("Access to bundle " + typeName + " is not implemented");
                     return null;
             }
-            // if(type == typeof(ScriptableObject) || type.IsSubclassOf(typeof(ScriptableObject))){
-            //     return LoadAsset<ScriptableObject>(name, type.Name.ToLower());
-            // }else{
-            //     return null;
-            // }
         }
 
         public static T LoadAsset<T>(string name, string typeName = null) where T : ScriptableObject, IDatabaseItem{

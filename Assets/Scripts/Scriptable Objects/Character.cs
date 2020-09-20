@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace FinalInferno{
     //engloba os personagens do jogador
-    [CreateAssetMenu(fileName = "Character", menuName = "ScriptableObject/Character", order = 1)]
-    public class Character : ScriptableObject, IDatabaseItem{
+    [CreateAssetMenu(fileName = "Character", menuName = "ScriptableObject/Character")]
+    public class Character : ScriptableObject/*, IDatabaseItem*/{
         public Hero archetype; //classe desse personagem
         //public type skillInfo; //
         public int hpCur; //vida atual do personagem, descontando dano da vida maxima
@@ -23,12 +23,6 @@ namespace FinalInferno{
             position = Vector2.zero;
             archetype.ResetHero();
             hpCur = archetype.hpMax;
-        }
-
-        public void LoadTables(){
-        }
-
-        public void Preload(){
         }
     }
 }

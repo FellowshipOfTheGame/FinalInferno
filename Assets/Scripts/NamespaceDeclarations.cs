@@ -347,6 +347,10 @@ namespace FinalInferno
         public SkillEffect effect;
         public float value1;
         public float value2;
+        public void UpdateValues(){
+            effect.value1 = value1;
+            effect.value2 = value2;
+        }
     }
 
     [System.Serializable]

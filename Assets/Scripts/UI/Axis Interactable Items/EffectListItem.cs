@@ -19,7 +19,7 @@ namespace FinalInferno.UI.AII
         /// <summary>
         /// Referência ao efeito do item.
         /// </summary>
-        private SkillEffectTuple effect;
+        private EffectElement effectElement;
 
         /// <summary>
         /// Referência ao item da lista.
@@ -29,6 +29,7 @@ namespace FinalInferno.UI.AII
         void Awake()
         {
             item.OnEnter += UpdateEffectDescription;
+            effectElement = GetComponent<EffectElement>();
         }
 
         /// <summary>
@@ -36,10 +37,8 @@ namespace FinalInferno.UI.AII
         /// </summary>
         private void UpdateEffectDescription()
         {
-            effect = GetComponent<EffectElement>().effect;
-
-            effect.effect.UpdateValues(effect.value1, effect.value2);
-            skillList.UpdateEffectDescription(effect.effect);
+            effectElement.effect.UpdateValues();
+            skillList.UpdateEffectDescription(effectElement.effect.effect);
         }
 
     }

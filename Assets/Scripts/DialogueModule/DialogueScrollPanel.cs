@@ -156,11 +156,23 @@ namespace Fog.Dialogue{
             if(skipIndicator != null){
                 skipIndicator.SetActive(true);
             }
+            if(scrollUpIndicator != null){
+                scrollUpIndicator.SetActive(false);
+            }
+            if(scrollDownIndicator != null){
+                scrollDownIndicator.SetActive(false);
+            }
         }
 
         protected override void OnDisable(){
             if(skipIndicator != null){
                 skipIndicator.SetActive(false);
+            }
+            if(scrollUpIndicator != null){
+                scrollUpIndicator.SetActive(false);
+            }
+            if(scrollDownIndicator != null){
+                scrollDownIndicator.SetActive(false);
             }
             base.OnDisable();
         }

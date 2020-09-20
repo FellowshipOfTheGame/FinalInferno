@@ -38,6 +38,7 @@ namespace FinalInferno{
 
     public class StatusVFXHandler : MonoBehaviour
     {
+        #region subclass
         private class IndividualHandler{
             public List<StatusEffect> effects;
             public int turnsLeftMin;
@@ -143,6 +144,7 @@ namespace FinalInferno{
                 triggeredUpdate = false;
             }
         }
+        #endregion
 
         [SerializeField] private StatusEffectVFX damageChanges;
         [SerializeField] private StatusEffectVFX defenseChanges;
@@ -167,6 +169,7 @@ namespace FinalInferno{
             for(int i = 0; i < nHandlers; i++){
                 Transform child = transform.Find(names[i]);
                 if(child != null){
+                    Debug.Log($"Creating vfx handler for status effect {names[i]}");
                     handlers[i] = new IndividualHandler();
                     foreach(Transform t in child){
                         SpriteRenderer sr = t.GetComponent<SpriteRenderer>();
@@ -177,10 +180,12 @@ namespace FinalInferno{
                     foreach(Transform t in child){
                         StatusEffectVFX vfx = t.GetComponent<StatusEffectVFX>();
                         if(vfx != null && vfx.Position != SkillVFX.TargetPosition.Default){
+                            Debug.Log($"object {t.name} being positioned at {bUnit.name}'s {vfx.Position}");
                             vfx.UpdatePosition(bUnit);
                         }
                     }
                 }else{
+                    Debug.Log($"vfx handler for status effect {names[i]} is not setup");
                     handlers[i] = null;
                 }
             }

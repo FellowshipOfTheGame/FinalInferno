@@ -17,14 +17,17 @@ namespace FinalInferno{
         private const int maxHeads = 3;
         public static int heads = 0;
         private static int hellFireCD = 0;
+        private static bool summonedGhosts;
         private static List<GameObject> battleUnits = new List<GameObject>();
         private static BattleUnit backHead = null;
         private static BattleUnit middleHead = null;
         private static BattleUnit frontHead = null;
+        public override string DialogueName { get { return "Cerberus"; } }
 
         [Space(10)]
         [Header("It has 3 heads")]
         [SerializeField] private Sprite bodySprite;
+        [SerializeField] private Sprite battleSpriteBackHead;
         [SerializeField] private RuntimeAnimatorController animatorMiddleHead;
         [SerializeField] private RuntimeAnimatorController animatorFrontHead;
         public override RuntimeAnimatorController Animator {
@@ -107,7 +110,7 @@ namespace FinalInferno{
                                 break;
                             }
                         }
-                        return battleSprite;
+                        return battleSpriteBackHead;
                     case 1:
                         heads++;
                         foreach(BattleUnit bUnit in FindObjectsOfType<BattleUnit>()){
@@ -135,11 +138,6 @@ namespace FinalInferno{
                         if(composite){
                             composite.AddApendage(backHead);
                             composite.AddApendage(frontHead);
-                        }
-                        // Altera o layout group para que os elementos fiquem mais proximos
-                        UnityEngine.UI.VerticalLayoutGroup layoutGroup = middleHead.battleItem.layout.transform.parent.GetComponent<UnityEngine.UI.VerticalLayoutGroup>();
-                        if(layoutGroup){
-                            layoutGroup.spacing = 0;
                         }
                         // Cria um game object para ter o sprite do corpo
                         GameObject bodyObj = new GameObject();
@@ -180,6 +178,7 @@ namespace FinalInferno{
 
         public override void ResetParameters(){
             hellFireCD = 0;
+            summonedGhosts = false;
         }
 
         //funcao que escolhe o ataque a ser utilizado
@@ -207,6 +206,12 @@ namespace FinalInferno{
 
             team = BattleManager.instance.GetTeam(UnitType.Enemy);
             heads = team.Count;
+
+            // Invoca as cabeças fantasma
+            if(heads <= 1 && !summonedGhosts){
+                summonedGhosts = true;
+                return skills[2];
+            }
 
             team = BattleManager.instance.GetTeam(UnitType.Hero);
             foreach (BattleUnit hero in team){
@@ -251,6 +256,9 @@ namespace FinalInferno{
                 case TargetType.SingleEnemy:
                     team = BattleManager.instance.GetTeam(UnitType.Hero);
                     targets.Add(team[TargetDecision(team)]);
+                    break;
+                case TargetType.DeadAllies:
+                    targets = BattleManager.instance.GetTeam(UnitType.Enemy, true, true);
                     break;
             }
 

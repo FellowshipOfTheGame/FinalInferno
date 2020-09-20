@@ -39,7 +39,7 @@ namespace FinalInferno{
         [Space(10)]
         [Header("Table")]
         [SerializeField] private TextAsset heroTable;
-        [SerializeField] private DynamicTable table = null;
+        [SerializeField] private DynamicTable table;
         private DynamicTable Table {
             get {
                 if(table == null)
@@ -51,8 +51,6 @@ namespace FinalInferno{
 
         public void LoadTables(){
             table = DynamicTable.Create(heroTable);
-            elementalResistances.Clear();
-            skillsToUpdate = new List<PlayerSkill>(InitialsSkills);
         }
 
         public void Preload(){
@@ -101,6 +99,9 @@ namespace FinalInferno{
             }
 
             skillsToUpdate = new List<PlayerSkill>(InitialsSkills);
+            // foreach(PlayerSkill skill in InitialsSkills){
+            //     skill.CheckUnlock(1);
+            // }
             
             Debug.Log("Hero resetado");
         }

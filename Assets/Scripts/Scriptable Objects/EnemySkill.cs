@@ -10,7 +10,7 @@ namespace FinalInferno{
         public string description; //descricao da "skill" que aparecera para o jogador durante a batalha
         [Header("Stats Table")]
         [SerializeField] private TextAsset skillTable;
-        [SerializeField] private DynamicTable table = null;
+        [SerializeField] private DynamicTable table;
         private DynamicTable Table {
             get {
                 if(table == null && skillTable != null)
@@ -33,14 +33,12 @@ namespace FinalInferno{
 
         public override void LoadTables(){
             table = DynamicTable.Create(skillTable);
-            curTableRow = -1;
-            Level = -1; // O valor é -1 para garantir que seja diferente do default 0
         }
 
         public override void Preload(){
             active = true;
             curTableRow = -1;
-            Level = -1;
+            Level = -1; // O valor é -1 para garantir que seja diferente do default 0
         }
 
         //atualiza o value dos efeitos, se for necessario.
