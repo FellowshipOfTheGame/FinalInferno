@@ -44,24 +44,29 @@ namespace FinalInferno{
             public int turnsLeftMin;
             public int turnsLeftMax;
             public bool triggeredUpdate;
+            private Transform transform;
 
-            public IndividualHandler(){
+            public IndividualHandler(Transform t){
                 // To do: Pegar todos os StatusEffectVFX que tem no objeto relevante assim que chamar o construtor
                 // para não precisar ficar chamando getcomponent
                 effects = new List<StatusEffect>();
                 turnsLeftMax = int.MinValue;
                 turnsLeftMin = int.MaxValue;
                 triggeredUpdate = false;
+                transform = t;
             }
 
-            public void Add(StatusEffect effect, Transform transform){
+            public void Add(StatusEffect effect){
                 effects.Add(effect);
                 turnsLeftMax = Mathf.Max(turnsLeftMax, effect.TurnsLeft);
                 turnsLeftMin = Mathf.Min(turnsLeftMin, effect.TurnsLeft);
+                Debug.Log($"Adding effect {effect.GetType().Name}");
 
                 foreach(Transform t in transform){
+                    Debug.Log($"Checking child object {t.gameObject.name}");
                     StatusEffectVFX vfx = t.GetComponent<StatusEffectVFX>();
                     if(vfx != null){
+                        Debug.Log("Found valid effect");
                         vfx.ApplyTrigger();
                     }
                 }
@@ -87,7 +92,7 @@ namespace FinalInferno{
                 return turnsLeft;
             }
 
-            public void Remove(StatusEffect effect, Transform transform){
+            public void Remove(StatusEffect effect){
                 effects.Remove(effect);
                 turnsLeftMax = int.MinValue;
                 turnsLeftMin = int.MaxValue;
@@ -124,7 +129,7 @@ namespace FinalInferno{
                 }
             }
 
-            public void ApplyChanges(Transform transform){
+            public void ApplyChanges(){
                 if(triggeredUpdate){
                     // Atualiza o valor de turnsLeft de acordo com o comportamento do vfx
                     foreach(Transform t in transform){
@@ -170,7 +175,7 @@ namespace FinalInferno{
                 Transform child = transform.Find(names[i]);
                 if(child != null){
                     Debug.Log($"Creating vfx handler for status effect {names[i]}");
-                    handlers[i] = new IndividualHandler();
+                    handlers[i] = new IndividualHandler(child);
                     foreach(Transform t in child){
                         SpriteRenderer sr = t.GetComponent<SpriteRenderer>();
                         if(sr != null){
@@ -241,7 +246,7 @@ namespace FinalInferno{
             }
 
             // Setar esse trigger deve ser feito de maneira independente de ApplyChanges
-            handlers[index].Add(effect, transform);
+            handlers[index].Add(effect);
         }
 
         public void UpdateEffect(StatusEffect effect){
@@ -274,7 +279,7 @@ namespace FinalInferno{
             }
 
             // Setar esse trigger deve ser feito de maneira independente de ApplyChanges
-            handlers[index].Remove(effect, transform);
+            handlers[index].Remove(effect);
         }
 
         public void ApplyChanges()
@@ -283,7 +288,7 @@ namespace FinalInferno{
 
             // Aplica as alterações em cada tipo de status effect
             for(int i = 0; i < nHandlers; i++){
-                handlers[i]?.ApplyChanges(transform);
+                handlers[i]?.ApplyChanges();
             }
         }
     }

@@ -129,9 +129,11 @@ namespace FinalInferno{
             hidden = false;
             SRenderer.enabled = true;
             foreach(GameObject go in particles){
-                ParticleSystemRenderer renderer = go?.GetComponent<ParticleSystemRenderer>();
-                if(renderer){
-                    renderer.enabled = true;
+                if(go != null){
+                    ParticleSystemRenderer renderer = go.GetComponent<ParticleSystemRenderer>();
+                    if(renderer){
+                        renderer.enabled = true;
+                    }
                 }
             }
         }
@@ -141,33 +143,39 @@ namespace FinalInferno{
             hidden = true;
             SRenderer.enabled = false;
             foreach(GameObject go in particles){
-                ParticleSystemRenderer renderer = go?.GetComponent<ParticleSystemRenderer>();
-                if(renderer){
-                    renderer.enabled = false;
+                if(go != null){
+                    ParticleSystemRenderer renderer = go.GetComponent<ParticleSystemRenderer>();
+                    if(renderer){
+                        renderer.enabled = false;
+                    }
                 }
             }
         }
 
         public void UpdateTrigger(){
             if(HasUpdateTrigger){
+                Debug.Log("Chamou o trigger de animação Update");
                 Anim.SetTrigger("Update");
             }
         }
 
         public void ApplyTrigger(){
             if(HasApplyTrigger){
+                Debug.Log("Chamou o trigger de animação Apply");
                 Anim.SetTrigger("Apply");
             }
         }
 
         public void ResetTrigger(){
             if(HasResetTrigger){
+                Debug.Log("Chamou o trigger de animação Reset");
                 Anim.SetTrigger("Reset");
             }
         }
 
         public void RemoveTrigger(){
             if(HasRemoveTrigger){
+                Debug.Log("Chamou o trigger de animação Remove");
                 Anim.SetTrigger("Remove");
             }
         }
@@ -175,10 +183,10 @@ namespace FinalInferno{
         // Função para instanciar um objeto de particula durante a animação
         void CreateParticles(GameObject particle)
         {
-            GameObject newParticle = Instantiate(particle, new Vector3(transform.position.x, transform.position.y+(SRenderer.sprite.bounds.size.y/2.0f), transform.position.z), transform.rotation, this.transform);
+            GameObject newParticle = Instantiate(particle, transform.position, transform.rotation, this.transform);
             particles.Add(newParticle);
-            ParticleSystemRenderer renderer = newParticle?.GetComponent<ParticleSystemRenderer>();
-            if(renderer){
+            ParticleSystemRenderer renderer = newParticle.GetComponent<ParticleSystemRenderer>();
+            if(renderer != null){
                 renderer.enabled = !hidden;
                 renderer.sortingLayerID = SRenderer.sortingLayerID;
                 renderer.sortingLayerName = SRenderer.sortingLayerName;
@@ -193,6 +201,7 @@ namespace FinalInferno{
                     Destroy(particle);
                 }
             }
+            particles.Clear();
         }
 
         // Função para destruir o objeto inteiro
