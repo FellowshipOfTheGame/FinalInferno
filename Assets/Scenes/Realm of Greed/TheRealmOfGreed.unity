@@ -301,7 +301,7 @@ MonoBehaviour:
   dialogues:
   - quest: {fileID: 11400000, guid: 86461e150e0505f4599af049f91e27d6, type: 2}
     eventFlag: Start
-    dialogue: {fileID: 0}
+    dialogue: {fileID: 11400000, guid: 32897a9eeef7e7048826eb8f28589c89, type: 2}
   - quest: {fileID: 11400000, guid: 86461e150e0505f4599af049f91e27d6, type: 2}
     eventFlag: FeetSettled
     dialogue: {fileID: 11400000, guid: 09ea1fd827f84ee4f8d091c0f5d4cf89, type: 2}
@@ -5163,6 +5163,14 @@ CompositeCollider2D:
         Y: -90000000
       - X: 190000000
         Y: -90000000
+    - - X: 200000000
+        Y: 0
+      - X: 190000000
+        Y: 0
+      - X: 190000000
+        Y: -30000000
+      - X: 200000000
+        Y: -30000000
     - - X: 100000000
         Y: -30000000
       - X: 90000000
@@ -5237,6 +5245,10 @@ CompositeCollider2D:
       - {x: -17, y: 9}
       - {x: -17, y: -9}
       - {x: 19, y: -9}
+    - - {x: 20, y: 0}
+      - {x: 19, y: 0}
+      - {x: 19, y: -3}
+      - {x: 20, y: -3}
     - - {x: 10, y: -3}
       - {x: 9, y: -3}
       - {x: 9, y: -5}
@@ -5838,7 +5850,7 @@ Tilemap:
   - first: {x: 18, y: -4, z: 0}
     second:
       m_TileIndex: 14
-      m_TileSpriteIndex: 14
+      m_TileSpriteIndex: 15
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -5853,6 +5865,15 @@ Tilemap:
       m_ObjectToInstantiate: {fileID: 0}
       m_TileFlags: 1
       m_ColliderType: 1
+  - first: {x: 19, y: -3, z: 0}
+    second:
+      m_TileIndex: 16
+      m_TileSpriteIndex: 16
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_ObjectToInstantiate: {fileID: 0}
+      m_TileFlags: 1
+      m_ColliderType: 1
   - first: {x: -17, y: -2, z: 0}
     second:
       m_TileIndex: 11
@@ -5862,10 +5883,28 @@ Tilemap:
       m_ObjectToInstantiate: {fileID: 0}
       m_TileFlags: 1
       m_ColliderType: 1
+  - first: {x: 19, y: -2, z: 0}
+    second:
+      m_TileIndex: 16
+      m_TileSpriteIndex: 16
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_ObjectToInstantiate: {fileID: 0}
+      m_TileFlags: 1
+      m_ColliderType: 1
   - first: {x: -17, y: -1, z: 0}
     second:
       m_TileIndex: 11
       m_TileSpriteIndex: 11
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_ObjectToInstantiate: {fileID: 0}
+      m_TileFlags: 1
+      m_ColliderType: 1
+  - first: {x: 19, y: -1, z: 0}
+    second:
+      m_TileIndex: 16
+      m_TileSpriteIndex: 16
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -7129,8 +7168,8 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 5e49750772dc0f94abccfa09f4147063, type: 2}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 3
+    m_Data: {fileID: 11400000, guid: c33b09f10b4810c4a90b00fc4580f6ce, type: 2}
   - m_RefCount: 15
     m_Data: {fileID: 11400000, guid: 4ba7a18d59d9f1a4580252cf9fbadd02, type: 2}
   - m_RefCount: 1
@@ -7256,12 +7295,12 @@ Tilemap:
     m_Data: {fileID: 21300000, guid: 3f931921db24d5b48babffb7cf1a6649, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 536c750e559452148b5d57cd021982b5, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: a7cd00e3d26fede40b3b5af2b51f7497, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 3
+    m_Data: {fileID: 21300048, guid: b5a95ebdb94964b469e845ff4c6b8da6, type: 3}
   - m_RefCount: 15
     m_Data: {fileID: 21300082, guid: d4feae637af93584fa498bcb86c82b29, type: 3}
   - m_RefCount: 1
@@ -7359,7 +7398,7 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: 21300026, guid: 7c134267e886ab04190f5b5ff97dde28, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 159
+  - m_RefCount: 162
     m_Data:
       e00: 1
       e01: 0
@@ -7396,12 +7435,12 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 194
+  - m_RefCount: 197
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -17, y: -9, z: 0}
-  m_Size: {x: 36, y: 18, z: 1}
+  m_Size: {x: 37, y: 18, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -7875,6 +7914,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneName: MainHall
   positionOnLoad: {x: 1.5, y: -13.5}
+  saveGamePosition: {x: 0, y: 0}
   isCutscene: 1
   dialogues:
   - quest: {fileID: 11400000, guid: 86461e150e0505f4599af049f91e27d6, type: 2}
