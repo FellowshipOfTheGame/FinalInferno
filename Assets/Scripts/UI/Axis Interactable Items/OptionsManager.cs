@@ -8,9 +8,7 @@ namespace FinalInferno.UI.AII{
     {
         [Header("OptionItems")]
         [SerializeField] private ToggleItem autoSave;
-        [SerializeField] private AudioMixer audioMixer;
-        // Supõe que o valor minimo dos sliders é 0
-        // O valor maximo de cada slider define o volume máximo daquele canal
+        [SerializeField] private VolumeController volumeController;
         [SerializeField] private HorizontalSliderItem volumeMaster;
         [SerializeField] private HorizontalSliderItem bgmVolume;
         [SerializeField] private HorizontalSliderItem sfxVolume;
@@ -22,49 +20,33 @@ namespace FinalInferno.UI.AII{
             autoSave.Toggle(SaveLoader.AutoSave);
             autoSave.OnToggle += ToggleAutoSave;
 
-            float volume = 0f;
+            VolumeController.VolumeInfo volumeInfo = volumeController.GetInfo();
 
-            audioMixer.GetFloat("VolumeMaster", out volume);
-            volumeMaster.slider.value = Mathf.Pow(10, volume/20);
+            volumeMaster.slider.value = volumeInfo.VolumeMaster;
+            bgmVolume.slider.value = volumeInfo.VolumeBGM;
+            sfxVolume.slider.value = volumeInfo.VolumeSFX;
+            sfxVolumeUI.slider.value = volumeInfo.VolumeSFXUI;
+
             volumeMaster.slider.onValueChanged.AddListener(UpdateMaster);
-
-            audioMixer.GetFloat("VolumeBGM", out volume);
-            bgmVolume.slider.value = Mathf.Pow(10, volume/20);
             bgmVolume.slider.onValueChanged.AddListener(UpdateBGM);
-            
-            audioMixer.GetFloat("VolumeSFX", out volume);
-            sfxVolume.slider.value = Mathf.Pow(10, volume/20);
             sfxVolume.slider.onValueChanged.AddListener(UpdateVFX);
-
-            audioMixer.GetFloat("VolumeSFXUI", out volume);
-            sfxVolumeUI.slider.value = Mathf.Pow(10, volume/20);
             sfxVolumeUI.slider.onValueChanged.AddListener(UpdateVFXUI);
         }
 
         void UpdateMaster(float value){
-            float newVolume = Mathf.Log10(Mathf.Max((value), 0.0001f)) * 20f;
-            UpdateVolumeChannel("VolumeMaster", newVolume);
+            volumeController.SetMasterVolume(value);
         }
 
         void UpdateBGM(float value){
-            float newVolume = Mathf.Log10(Mathf.Max((value), 0.0001f)) * 20f;
-            UpdateVolumeChannel("VolumeBGM", newVolume);
+            volumeController.SetBGMVolume(value);
         }
 
         void UpdateVFX(float value){
-            float newVolume = Mathf.Log10(Mathf.Max((value), 0.0001f)) * 20f;
-            UpdateVolumeChannel("VolumeSFX", newVolume);
+            volumeController.SetSFXVolume(value);
         }
 
         void UpdateVFXUI(float value){
-            float newVolume = Mathf.Log10(Mathf.Max((value), 0.0001f)) * 20f;
-            UpdateVolumeChannel("VolumeSFXUI", newVolume);
-        }
-
-        void UpdateVolumeChannel(string channel, float newVolume){
-            if (AS) AS.Play();
-            audioMixer.SetFloat(channel, newVolume);
-            PlayerPrefs.SetFloat(channel, newVolume);
+            volumeController.SetSFXUIVolume(value);
         }
 
         public new void Start(){
@@ -74,7 +56,6 @@ namespace FinalInferno.UI.AII{
         void ToggleAutoSave(){
             if (AS) AS.Play();
             SaveLoader.AutoSave = !SaveLoader.AutoSave;
-            PlayerPrefs.SetString("autosave", (SaveLoader.AutoSave? "true" : "false"));
         }
 
         void OnDisable(){

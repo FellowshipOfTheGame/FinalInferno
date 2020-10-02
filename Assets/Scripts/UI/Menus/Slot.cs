@@ -28,7 +28,8 @@ namespace FinalInferno.UI.Saves
 
         void Awake()
         {
-            Item.OnEnter += SetSlotTypeValue;
+            Item.OnEnter += SetSlotType;
+            Item.OnAct += SetSlotValue;
         }
 
         public void LoadSlot(SavePreviewInfo info, int number)
@@ -64,9 +65,12 @@ namespace FinalInferno.UI.Saves
             return actualName;
         }
 
-        private void SetSlotTypeValue()
-        {
+        private void SetSlotValue(){
             SaveLoader.SaveSlot = slotNumber;
+        }
+
+        private void SetSlotType()
+        {
             decision.UpdateValue(emptySlot);
         }
     }

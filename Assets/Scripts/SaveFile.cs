@@ -23,16 +23,16 @@ namespace FinalInferno{
                 return (saves[Slot].mapName != null && saves[Slot].mapName != "");
             }
         }
-        public bool autoSave = true;
         // Uma array de saves inicializados com valores padrão
         public SaveInfo[] saves = new SaveInfo[nSaveSlots];
 
         public SaveFile(){
             slot = 0;
-            autoSave = true;
             saves = new SaveInfo[nSaveSlots];
             for(int i = 0; i < nSaveSlots; i++){
                 saves[i] = new SaveInfo();
+                // O valor padrão de autosave precisa ser diferente do valor default de bool
+                saves[i].autoSave = true;
             }
         }
 
@@ -58,7 +58,7 @@ namespace FinalInferno{
         }
 
         public void Save(){
-            saves[slot].version = Application.version;
+            saves[Slot].version = Application.version;
 
             saves[Slot].xpParty = Party.Instance.XpCumulative;
             saves[Slot].mapName = Party.Instance.currentMap;
@@ -109,10 +109,86 @@ namespace FinalInferno{
             for(int i = 0; i < bestiary.Count; i++){
                 saves[Slot].bestiary[i] = new BestiaryEntry(enemies[i], bestiary[enemies[i]]);
             }
+
+            // Salva as informações de configurações
+            saves[Slot].volumeInfo = StaticReferences.VolumeController.GetInfo();
+            saves[Slot].autoSave = SaveLoader.AutoSave;
+        }
+
+        private bool IsOlder(string file, string compare){
+            if(file == null || file == "") return true;
+
+            string[] numbers = file.Split('.');
+            if(numbers.Length < 3){
+                Debug.LogError("Save file version number is missing components");
+                return true;
+            }
+
+            string[] numbersCompare = compare.Split('.');
+            if(numbersCompare.Length < 3){
+                Debug.LogError("Compare version number is missing components");
+                return true;
+            }
+
+            int chapter;
+            int major;
+            int minor;
+            int chapterCompare;
+            int majorCompare;
+            int minorCompare;
+            try{
+                chapter = int.Parse(numbers[0]);
+                major = int.Parse(numbers[1]);
+                minor = int.Parse(numbers[2]);
+                chapterCompare = int.Parse(numbersCompare[0]);
+                majorCompare = int.Parse(numbersCompare[1]);
+                minorCompare = int.Parse(numbersCompare[2]);
+            }catch(System.Exception e){
+                Debug.LogError("Error parsing save version number");
+                return true;
+            }
+
+            if(chapter > chapterCompare){
+                return false;
+            }else if(chapter < chapterCompare){
+                return true;
+            }else{
+                if(major > majorCompare){
+                    return false;
+                }else if(major < majorCompare){
+                    return true;
+                }else{
+                    if(minor >= minorCompare){
+                        return false;
+                    }else{
+                        return true;
+                    }
+                }
+            }
+        }
+
+        public bool IsSlotEmpty(int slot){
+            // Qualquer jogo salvo tera exp, pois no minimo a exp da primeira batalha foi dada
+            if(saves[slot].xpParty <= 0)
+                return true;
+            return false;
+        }
+
+        private void UpdateSlot(){
+            if(!IsSlotEmpty(Slot) && saves[Slot].version != null && saves[Slot].version != ""){
+                // Da versão 1.6.6 pra trás a informação de autosave não existia e o valor padrão viria false
+                // mas o valor padrão precisa ser corrigido para true nesses casos
+                if(IsOlder("1.6.6", Application.version) && IsOlder(saves[Slot].version, "1.6.7")){
+                    Debug.Log($"Setting autosave to True, previous value was {saves[Slot].autoSave}");
+                    saves[Slot].autoSave = true;
+                }
+            }
         }
 
         public void Load(){
-            // TO DO: Verifica se há alguma incompatibilidade entre a versão do jogo do save armazenado e versão atual
+            // Verifica se há alguma incompatibilidade entre a versão do jogo do save armazenado e versão atual
+            UpdateSlot();
+
             Party.Instance.GiveExp(saves[Slot].xpParty);
             Party.Instance.currentMap = saves[Slot].mapName;
 
@@ -152,6 +228,10 @@ namespace FinalInferno{
 
             // Carrega as informações do bestiario
             Party.Instance.ReloadBestiary(saves[Slot].bestiary);
+
+            // Carrega as informações de configuração
+            StaticReferences.VolumeController.ResetValues(saves[Slot].volumeInfo ?? new VolumeController.VolumeInfo());
+            SaveLoader.AutoSave = saves[Slot].autoSave;
         }
     }
 }
