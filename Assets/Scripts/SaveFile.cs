@@ -85,15 +85,14 @@ namespace FinalInferno{
             for(int i = 0; i < quests.Count; i++){
                 QuestInfo qinfo;
                 qinfo.name = quests[i].name;
-                qinfo.flagsNames = new string[quests[i].events.Keys.Count];
+                qinfo.flagsNames = quests[i].FlagNames;
 
-                quests[i].events.Keys.CopyTo(qinfo.flagsNames, 0);
                 System.Array.Sort(qinfo.flagsNames);
 
                 qinfo.flagsTrue = 0;
                 ulong bitValue = 1;
-                for(int j = 0; j < quests[i].events.Count; j++){
-                    qinfo.flagsTrue = qinfo.flagsTrue | (bitValue * ((quests[i].events[qinfo.flagsNames[j]])? (ulong)1 : (ulong)0));
+                for(int j = 0; j < quests[i].EventCount; j++){
+                    qinfo.flagsTrue |= (bitValue * ( (quests[i].GetFlag(qinfo.flagsNames[j]))? (ulong)1 : (ulong)0 ));
                     bitValue =  bitValue << 1;
                 }
                 saves[Slot].quest[i] = qinfo;
@@ -145,6 +144,7 @@ namespace FinalInferno{
                 minorCompare = int.Parse(numbersCompare[2]);
             }catch(System.Exception e){
                 Debug.LogError("Error parsing save version number");
+                Debug.LogException(e);
                 return true;
             }
 
@@ -220,8 +220,8 @@ namespace FinalInferno{
                 Quest quest = AssetManager.LoadAsset<Quest>(questInfo.name);
                 quest.StartQuest(true);
                 ulong bitValue = 1;
-                for(int i = 0; i < quest.events.Count; i++){
-                    quest.events[questInfo.flagsNames[i]] = (questInfo.flagsTrue & bitValue) != 0;
+                for(int i = 0; i < quest.EventCount; i++){
+                    quest.SetFlag(questInfo.flagsNames[i], (questInfo.flagsTrue & bitValue) != 0);
                     bitValue =  bitValue << 1;
                 }
             }

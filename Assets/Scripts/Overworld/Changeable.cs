@@ -28,7 +28,7 @@ namespace FinalInferno {
 
         public void Update(){
             foreach(ChangeRule rule in changeRules){
-                if(rule.quest != null && rule.quest.events[rule.eventFlag]){
+                if(rule.quest != null && rule.quest.GetFlag(rule.eventFlag)){
                     anim.SetBool(rule.animationFlag, rule.newValue);
                 }
             }

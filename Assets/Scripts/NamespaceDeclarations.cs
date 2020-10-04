@@ -401,8 +401,7 @@ namespace FinalInferno
             if(quest.objectReferenceValue != null){
                 // Caso uma quest tenha sido referenciada, obtem a lista eventos criados nela
                 Quest _quest = (Quest)quest.objectReferenceValue;
-                string[] keys = new string[_quest.events.Keys.Count];
-                _quest.events.Keys.CopyTo(keys, 0);
+                string[] keys = _quest.FlagNames;
                 // Cria um popup com as chaves definidas pela quest referenciada
                 index = Mathf.Clamp(System.Array.IndexOf(keys, eventFlag.stringValue), 0, Mathf.Max(keys.Length-1, 0));
                 index = EditorGUI.Popup(eventRect, "Event", index, keys);
@@ -455,8 +454,7 @@ namespace FinalInferno
             if(quest.objectReferenceValue != null){
                 // Caso uma quest tenha sido referenciada, obtem a lista eventos criados nela
                 Quest _quest = (Quest)quest.objectReferenceValue;
-                string[] keys = new string[_quest.events.Keys.Count];
-                _quest.events.Keys.CopyTo(keys, 0);
+                string[] keys = _quest.FlagNames;
                 // Cria um popup com as chaves definidas pela quest referenciada
                 index = Mathf.Clamp(System.Array.IndexOf(keys, eventFlag.stringValue), 0, Mathf.Max(keys.Length-1, 0));
                 index = EditorGUI.Popup(eventRect, "Event", index, keys);
@@ -521,8 +519,7 @@ namespace FinalInferno
             if(quest.objectReferenceValue != null){
                 // Caso uma quest tenha sido referenciada, obtem a lista eventos criados nela
                 Quest _quest = (Quest)quest.objectReferenceValue;
-                string[] keys = new string[_quest.events.Keys.Count];
-                _quest.events.Keys.CopyTo(keys, 0);
+                string[] keys = _quest.FlagNames;
                 // Cria um popup com as chaves definidas pela quest referenciada
                 index = Mathf.Clamp(System.Array.IndexOf(keys, eventFlag.stringValue), 0, Mathf.Max(keys.Length-1, 0));
                 index = EditorGUI.Popup(eventRect, "Event", index, keys);

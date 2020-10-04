@@ -22,7 +22,7 @@ namespace FinalInferno{
                 if(isCutscene){
                     foreach(DialogueEntry entry in dialogues){
                         //Debug.Log("Checking dialogue: " + entry.dialogue + " with quest " + entry.quest + " and event " + entry.eventFlag);
-                        if(entry.quest.events[entry.eventFlag]){
+                        if(entry.quest.GetFlag(entry.eventFlag)){
                             selectedDialogue = entry.dialogue;
                         }else{
                             //Debug.Log("Event " + entry.eventFlag + " deu false");
