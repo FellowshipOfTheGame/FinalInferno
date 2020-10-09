@@ -28,7 +28,7 @@ namespace FinalInferno{
         private Animator anim = null;
         private Animator Anim{
             get{
-                if(!anim){
+                if(anim == null){
                     anim = GetComponent<Animator>();
                 }
                 return anim;
@@ -37,7 +37,7 @@ namespace FinalInferno{
         private SpriteRenderer sr = null;
         private SpriteRenderer SRenderer{
             get{
-                if(!sr){
+                if(sr == null){
                     sr = GetComponent<SpriteRenderer>();
                 }
                 return sr;
@@ -104,6 +104,7 @@ namespace FinalInferno{
         }
 
         public void Awake(){
+            hidden = true;
             SRenderer.enabled = !hidden;
         }
 
@@ -129,11 +130,9 @@ namespace FinalInferno{
             hidden = false;
             SRenderer.enabled = true;
             foreach(GameObject go in particles){
-                if(go != null){
-                    ParticleSystemRenderer renderer = go.GetComponent<ParticleSystemRenderer>();
-                    if(renderer){
-                        renderer.enabled = true;
-                    }
+                ParticleSystemRenderer renderer = go? go.GetComponent<ParticleSystemRenderer>() : null;
+                if(renderer != null){
+                    renderer.enabled = true;
                 }
             }
         }
@@ -143,11 +142,9 @@ namespace FinalInferno{
             hidden = true;
             SRenderer.enabled = false;
             foreach(GameObject go in particles){
-                if(go != null){
-                    ParticleSystemRenderer renderer = go.GetComponent<ParticleSystemRenderer>();
-                    if(renderer){
-                        renderer.enabled = false;
-                    }
+                ParticleSystemRenderer renderer = go? go.GetComponent<ParticleSystemRenderer>() : null;
+                if(renderer != null){
+                    renderer.enabled = false;
                 }
             }
         }
@@ -185,7 +182,7 @@ namespace FinalInferno{
         {
             GameObject newParticle = Instantiate(particle, transform.position, transform.rotation, this.transform);
             particles.Add(newParticle);
-            ParticleSystemRenderer renderer = newParticle.GetComponent<ParticleSystemRenderer>();
+            ParticleSystemRenderer renderer = newParticle? newParticle.GetComponent<ParticleSystemRenderer>() : null;
             if(renderer != null){
                 renderer.enabled = !hidden;
                 renderer.sortingLayerID = SRenderer.sortingLayerID;
@@ -197,17 +194,18 @@ namespace FinalInferno{
         // Função para destruir as particulas criadas
         void DestroyParticles(){
             foreach(GameObject particle in particles){
-                if(particle){
+                if(particle != null){
                     Destroy(particle);
                 }
             }
             particles.Clear();
         }
 
+        // Não deve mais ser chamada
         // Função para destruir o objeto inteiro
-        public void DestroyVFX(){
-            DestroyParticles();
-            Destroy(gameObject);
-        }
+        // public void DestroyVFX(){
+        //     DestroyParticles();
+        //     Destroy(gameObject);
+        // }
     }
 }
