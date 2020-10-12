@@ -136,16 +136,13 @@ namespace FinalInferno{
                         StatusEffectVFX vfx = t.GetComponent<StatusEffectVFX>();
                         if(vfx != null){
                             int turnsLeft = GetTurnsLeft(vfx);
-
-                            // Se o novo valor for igual, não faz nada
-                            if(turnsLeft != vfx.TurnsLeft){
-                                // Se tiver mudado, muda para o estado de idle correto
-                                vfx.ResetTrigger();
-                                vfx.TurnsLeft = turnsLeft;
-                            }
+                            vfx.TurnsLeft = turnsLeft;
+                            vfx.UpdateTrigger();
                         }
                     }
                 }
+                turnsLeftMax = int.MinValue;
+                turnsLeftMin = int.MaxValue;
                 triggeredUpdate = false;
             }
         }
@@ -204,10 +201,16 @@ namespace FinalInferno{
             // Pega a situação inicial da unidade e armazena os valores de status
             if(bUnit != null){
                 unit = bUnit;
-                baseDamage = bUnit.curDmg;
-                baseDefense = bUnit.curDef;
-                baseResistance = bUnit.curMagicDef;
-                baseSpeed = bUnit.curSpeed;
+                // TO DO: colocar um status base no battleunit e fazer ele ser alterado quando
+                // o skill effect tenta alterar ele antes do setup terminar (OnSpawn)
+                // baseDamage = bUnit.curDmg;
+                // baseDefense = bUnit.curDef;
+                // baseResistance = bUnit.curMagicDef;
+                // baseSpeed = bUnit.curSpeed;
+                baseDamage = bUnit.Unit.baseDmg;
+                baseDefense = bUnit.Unit.baseDef;
+                baseResistance = bUnit.Unit.baseMagicDef;
+                baseSpeed = bUnit.Unit.baseSpeed;
             }
         }
 
@@ -288,7 +291,9 @@ namespace FinalInferno{
 
             // Aplica as alterações em cada tipo de status effect
             for(int i = 0; i < nHandlers; i++){
-                handlers[i]?.ApplyChanges();
+                if(handlers[i] != null){
+                    handlers[i].ApplyChanges();
+                }
             }
         }
     }
