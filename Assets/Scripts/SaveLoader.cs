@@ -11,13 +11,13 @@ namespace FinalInferno{
         public static bool AutoSave {
             get{
                 if(saveFile != null){
-                    return saveFile.autoSave;
+                    return PlayerPrefs.GetString("autosave", "true") == "true";
                 }
                 return false;
             }
             set{
                 if(saveFile != null){
-                    saveFile.autoSave = value;
+                    PlayerPrefs.SetString("autosave", (value? "true" : "false"));
                 }
             }
         }
@@ -124,8 +124,11 @@ namespace FinalInferno{
         }
 
         public static void ResetGame(){
-            // Debug.Log("Vamo reseta entao!!!");
             Party.Instance.ResetParty();
+
+            // Pega as configurações padrão
+            SaveLoader.AutoSave = true;
+            StaticReferences.VolumeController.ResetValues();
         }
     }
 }

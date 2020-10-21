@@ -10,7 +10,7 @@ namespace FinalInferno{
         protected override void TriggerAction(Fog.Dialogue.Agent agent){
             Fog.Dialogue.Dialogue selectedDialogue = null;
             foreach(DialogueEntry entry in dialogues){
-                if(entry.quest != null && entry.quest.events[entry.eventFlag]){
+                if(entry.quest != null && entry.quest.GetFlag(entry.eventFlag)){
                     selectedDialogue = entry.dialogue;
                 }else
                     break;

@@ -13,7 +13,7 @@ namespace FinalInferno{
                 Quest quest = _event.quest;
 
                 if(quest != null){
-                    quest.events[_event.eventFlag] = true;
+                    quest.SetFlag(_event.eventFlag, true);
                     Debug.Log("Dialogo triggerou evento " + _event.eventFlag + " da quest " + quest);
                 }
             }

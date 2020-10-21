@@ -29,7 +29,7 @@ namespace FinalInferno{
             // Nível ajustado de acordo com o progresso na historia
             get{
                 int questParam = 0;
-                if(AssetManager.LoadAsset<Quest>("MainQuest").events["CerberusDead"]) questParam++;
+                if(AssetManager.LoadAsset<Quest>("MainQuest").GetFlag("CerberusDead")) questParam++;
                 int levelRange = questParam * 10;
 
                 return Mathf.Clamp(level, levelRange, levelRange+10);
@@ -153,6 +153,9 @@ namespace FinalInferno{
             Debug.Log("Party resetada");
             // characters.Clear();
             bestiary.Clear();
+            foreach(Quest quest in activeQuests){
+                quest.ResetQuest();
+            }
             activeQuests.Clear();
             currentMap = StaticReferences.FirstScene;
             // Gambiarra mas provavelmente tem que ser hardcoded mesmo(?)
