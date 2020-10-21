@@ -28,13 +28,15 @@ public class StaticReferences : MonoBehaviour
     [SerializeField] private bool debugBuild;
     [SerializeField] private Jukebox bgm;
     [SerializeField] private AudioClip mainMenuBGM;
-    public static AudioClip MainMenuBGM { get => (Instance == null)? null : Instance.mainMenuBGM; }
+    public static AudioClip MainMenuBGM { get => Instance?.mainMenuBGM; }
     [SerializeField] private Fog.Dialogue.Dialogue firstDialogue;
-    public static Fog.Dialogue.Dialogue FirstDialogue { get => (Instance == null)? null:  Instance.firstDialogue; }
+    public static Fog.Dialogue.Dialogue FirstDialogue { get => Instance?.firstDialogue; }
     [SerializeField] private FinalInferno.ScenePicker firstScene;
     public static string FirstScene { get => (Instance != null && Instance.firstScene.Name != "")? Instance.firstScene.Name : null; }
     [SerializeField] private FinalInferno.AssetManager assetManager = null;
-    public static FinalInferno.AssetManager AssetManager { get => (Instance == null)? null : Instance.assetManager; }
+    public static FinalInferno.AssetManager AssetManager { get => Instance?.assetManager; }
+    [SerializeField] private VolumeController volumeController;
+    public static VolumeController VolumeController { get => Instance?.volumeController; }
 
     // Start is called before the first frame update
     void Awake()

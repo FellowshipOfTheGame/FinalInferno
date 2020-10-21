@@ -6,9 +6,11 @@ namespace FinalInferno{
     [CreateAssetMenu(fileName = "NewQuest", menuName = "ScriptableObject/Quest")]
     public class Quest : ScriptableObject, IDatabaseItem
     {
-        public bool active;
+        [SerializeField] private bool active;
+        [SerializeField] private bool repeatable = false;
+        [SerializeField] private int expReward = 0;
         // O número máximo de eventos permitidos é 62 por medida de segurança
-        public QuestDictionary events;
+        [SerializeField] private QuestDictionary events;
 
         public void LoadTables(){
             ResetQuest();
@@ -18,10 +20,33 @@ namespace FinalInferno{
             ResetQuest();
         }
 
-        private void ResetQuest(){
+        public string[] FlagNames{
+            get{
+                string[] keys = new string[events.Keys.Count];
+                events.Keys.CopyTo(keys, 0);
+                return keys;
+            }
+        }
+
+        public int EventCount => events.Count;
+
+        public bool GetFlag(string eventName){
+            if(events.ContainsKey(eventName)){
+                return events[eventName];
+            }
+            return false;
+        }
+
+        public void SetFlag(string eventName, bool value){
+            if(active && events.ContainsKey(eventName)){
+                events[eventName] = value;
+            }
+        }
+
+        public void ResetQuest(){
             List<string> keyList = new List<string>(events.Keys);
             foreach(string key in keyList){
-                if(key == "Active" || key == "Default")
+                if(key == "Default")
                     events[key] = true;
                 else
                     events[key] = false;
@@ -32,6 +57,8 @@ namespace FinalInferno{
         public virtual void StartQuest(bool forceReset = false){
             if(!active || forceReset){
                 ResetQuest();
+                expReward = Mathf.Max(expReward, 0);
+                Party.Instance.activeQuests.Remove(this);
                 Party.Instance.activeQuests.Add(this);
                 active = true;
             }else{
@@ -40,12 +67,17 @@ namespace FinalInferno{
         }
 
         public virtual void CompleteQuest(){
-            foreach(string key in events.Keys){
-                events[key] = true;
+            if(active){
+                foreach(string key in events.Keys){
+                    events[key] = true;
+                }
+                active = false;
+                Party.Instance.GiveExp(expReward);
+                if(repeatable){
+                    Party.Instance.activeQuests.Remove(this);
+                    ResetQuest();
+                }
             }
-            active = false;
-            // TO DO: Quest não repetitiveis não devem ser removidas daqui
-            Party.Instance.activeQuests.Remove(this);
         }
     }
 }
