@@ -10,7 +10,7 @@ namespace FinalInferno{
         public override string Description { get { return "Decrease source's aggro by " + value1 + " for " + value2 + " turns"; } }
         
         public override void Apply(BattleUnit source, BattleUnit target) {
-            target.AddEffect(new Hiding(source, source, value1, (int)value2));
+            source.AddEffect(new Hiding(source, source, value1, (int)value2));
         }
     }
 }
