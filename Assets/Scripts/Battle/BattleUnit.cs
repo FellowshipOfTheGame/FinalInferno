@@ -9,7 +9,7 @@ namespace FinalInferno{
     public delegate void SkillDelegate(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f);
     
     //representa todos os buffs/debuffs, dano etc que essa unidade recebe
-    [RequireComponent(typeof(Animator)),RequireComponent(typeof(SpriteRenderer))]
+    [RequireComponent(typeof(Animator)),RequireComponent(typeof(SpriteRenderer)),RequireComponent(typeof(AudioSource))]
     public class BattleUnit : MonoBehaviour{
         public Unit unit; //referencia para os atributos base dessa unidade
         public int MaxHP { private set; get; }
@@ -61,6 +61,7 @@ namespace FinalInferno{
         [SerializeField] private UI.Battle.DamageIndicator damageIndicator;
 
         private Animator animator;
+        private AudioSource audioSource;
         private Transform canvasTransform;
         private Sprite portrait;
         public Sprite Portrait { get => portrait; }
@@ -69,6 +70,7 @@ namespace FinalInferno{
 
         public void Awake(){
             animator = GetComponent<Animator>();
+            audioSource = GetComponent<AudioSource>();
             hasGhostAnim = System.Array.Find(animator.parameters, parameter => parameter.name == "Ghost") != null;
             activeSkills = new List<Skill>();
             canvasTransform = FindObjectOfType<Canvas>().transform;
@@ -268,6 +270,9 @@ namespace FinalInferno{
             // Reseta o aggro
             aggro = 0;
             stuns = 0;
+            if(unit is Enemy){
+                audioSource.PlayOneShot((unit as Enemy)?.EnemyCry);
+            }
 
             BattleManager.instance.Kill(this);
             // Se houver algum callback de morte que, por exemplo, ressucita a unidade ele já vai ter sido chamado aqui
