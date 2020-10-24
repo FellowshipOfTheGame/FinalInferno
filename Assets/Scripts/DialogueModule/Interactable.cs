@@ -32,7 +32,7 @@ namespace Fog.Dialogue
         public void OnInteractAttempt(){
             Dialogue selectedDialogue = null;
             foreach(DialogueEntry entry in dialogues){
-                if(entry.quest != null && entry.quest.events[entry.eventFlag]){
+                if(entry.quest != null && entry.quest.GetFlag(entry.eventFlag)){
                     selectedDialogue = entry.dialogue;
                 }else
                     break;

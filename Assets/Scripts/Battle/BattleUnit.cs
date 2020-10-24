@@ -9,7 +9,7 @@ namespace FinalInferno{
     public delegate void SkillDelegate(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f);
     
     //representa todos os buffs/debuffs, dano etc que essa unidade recebe
-    [RequireComponent(typeof(Animator)),RequireComponent(typeof(SpriteRenderer))]
+    [RequireComponent(typeof(Animator)),RequireComponent(typeof(SpriteRenderer)),RequireComponent(typeof(AudioSource))]
     public class BattleUnit : MonoBehaviour{
         public Unit unit; //referencia para os atributos base dessa unidade
         public int MaxHP { private set; get; }
@@ -28,7 +28,7 @@ namespace FinalInferno{
         private bool hasGhostAnim = false;
         public bool Ghost{
             set{
-                if(value && CurHP < 0 && hasGhostAnim){
+                if(value && CurHP <= 0 && hasGhostAnim){
                     animator.SetBool("Ghost", true);
                 }else if (!value && hasGhostAnim){
                     animator.SetBool("Ghost", false);
@@ -61,6 +61,7 @@ namespace FinalInferno{
         [SerializeField] private UI.Battle.DamageIndicator damageIndicator;
 
         private Animator animator;
+        private AudioSource audioSource;
         private Transform canvasTransform;
         private Sprite portrait;
         public Sprite Portrait { get => portrait; }
@@ -69,6 +70,7 @@ namespace FinalInferno{
 
         public void Awake(){
             animator = GetComponent<Animator>();
+            audioSource = GetComponent<AudioSource>();
             hasGhostAnim = System.Array.Find(animator.parameters, parameter => parameter.name == "Ghost") != null;
             activeSkills = new List<Skill>();
             canvasTransform = FindObjectOfType<Canvas>().transform;
@@ -83,6 +85,7 @@ namespace FinalInferno{
             damageIndicator.GetComponent<RectTransform>().anchoredPosition += new Vector2(0, GetComponent<SpriteRenderer>().sprite.bounds.size.y);
             animator.runtimeAnimatorController = unit.Animator;
             hasGhostAnim = System.Array.Find(animator.parameters, parameter => parameter.name == "Ghost") != null;
+            // Debug.Log($"Unit {name} hasGhostAnim? {hasGhostAnim}");
             queueSprite = unit.QueueSprite;
             portrait = unit.Portrait;
 
@@ -225,6 +228,7 @@ namespace FinalInferno{
             atkDifference = Mathf.Max(atkDifference, 1);
             // damageResistance nao pode amplificar o dano ainda por conta da maneira que iria interagir com a resistencia elemental
             int damage = Mathf.FloorToInt(atkDifference * multiplier * elementalResistances[element] * (Mathf.Clamp(1.0f - damageResistance, 0.0f, 1.0f)));
+            // Debug.Log($"Taking damage, elemental resistance = {elementalResistances[element]}");
             if(CurHP <= 0)
                 return 0;
             CurHP -= damage;
@@ -266,6 +270,9 @@ namespace FinalInferno{
             // Reseta o aggro
             aggro = 0;
             stuns = 0;
+            if(unit is Enemy){
+                audioSource.PlayOneShot((unit as Enemy)?.EnemyCry);
+            }
 
             BattleManager.instance.Kill(this);
             // Se houver algum callback de morte que, por exemplo, ressucita a unidade ele já vai ter sido chamado aqui

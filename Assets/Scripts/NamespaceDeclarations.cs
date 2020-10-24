@@ -236,6 +236,8 @@ namespace FinalInferno
         [SerializeField] public int[] hpCur; // hp atual de cada personagem
         [SerializeField] public Vector2[] position; // posição no overworld dos personagens
         [SerializeField] public SkillInfoArray[] heroSkills; // Info de skills
+        [SerializeField] public VolumeController.VolumeInfo volumeInfo; // Configuração de volumes do usuario
+        [SerializeField] public bool autoSave; // Configuração de autosave do usuario
         [SerializeField] public string version; // Versão do jogo quando o save foi criado
         public bool Equals(SaveInfo other){
             if(xpParty != other.xpParty)
@@ -399,8 +401,7 @@ namespace FinalInferno
             if(quest.objectReferenceValue != null){
                 // Caso uma quest tenha sido referenciada, obtem a lista eventos criados nela
                 Quest _quest = (Quest)quest.objectReferenceValue;
-                string[] keys = new string[_quest.events.Keys.Count];
-                _quest.events.Keys.CopyTo(keys, 0);
+                string[] keys = _quest.FlagNames;
                 // Cria um popup com as chaves definidas pela quest referenciada
                 index = Mathf.Clamp(System.Array.IndexOf(keys, eventFlag.stringValue), 0, Mathf.Max(keys.Length-1, 0));
                 index = EditorGUI.Popup(eventRect, "Event", index, keys);
@@ -453,8 +454,7 @@ namespace FinalInferno
             if(quest.objectReferenceValue != null){
                 // Caso uma quest tenha sido referenciada, obtem a lista eventos criados nela
                 Quest _quest = (Quest)quest.objectReferenceValue;
-                string[] keys = new string[_quest.events.Keys.Count];
-                _quest.events.Keys.CopyTo(keys, 0);
+                string[] keys = _quest.FlagNames;
                 // Cria um popup com as chaves definidas pela quest referenciada
                 index = Mathf.Clamp(System.Array.IndexOf(keys, eventFlag.stringValue), 0, Mathf.Max(keys.Length-1, 0));
                 index = EditorGUI.Popup(eventRect, "Event", index, keys);
@@ -519,8 +519,7 @@ namespace FinalInferno
             if(quest.objectReferenceValue != null){
                 // Caso uma quest tenha sido referenciada, obtem a lista eventos criados nela
                 Quest _quest = (Quest)quest.objectReferenceValue;
-                string[] keys = new string[_quest.events.Keys.Count];
-                _quest.events.Keys.CopyTo(keys, 0);
+                string[] keys = _quest.FlagNames;
                 // Cria um popup com as chaves definidas pela quest referenciada
                 index = Mathf.Clamp(System.Array.IndexOf(keys, eventFlag.stringValue), 0, Mathf.Max(keys.Length-1, 0));
                 index = EditorGUI.Popup(eventRect, "Event", index, keys);
