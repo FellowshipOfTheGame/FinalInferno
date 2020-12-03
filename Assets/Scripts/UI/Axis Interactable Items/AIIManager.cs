@@ -36,7 +36,8 @@ namespace FinalInferno.UI.AII
 
         private bool enableInput = true;
 
-        public bool interactable;
+        private bool interactable;
+        public bool Interactable => interactable;
 
         [SerializeField] protected AudioSource AS;
 
@@ -114,6 +115,10 @@ namespace FinalInferno.UI.AII
                 currentItem.Exit();
             }
             active = false;
+        }
+
+        public void SetInteractable(bool value){
+            interactable = value;
         }
 
         public void ClearItems(){
