@@ -20,12 +20,10 @@ namespace FinalInferno.UI.AII
         }
 
         public void ActivatedAII(){
-            Debug.LogError("Activated something");
             Counter++;
         }
 
         public void DeactivatedAII(){
-            Debug.LogError("Deactivated something");
             Counter--;
         }
     }

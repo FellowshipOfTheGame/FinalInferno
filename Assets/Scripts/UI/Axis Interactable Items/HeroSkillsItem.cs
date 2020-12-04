@@ -13,18 +13,32 @@ namespace FinalInferno.UI.AII
 
         [SerializeField] private int index;
         [SerializeField] private SkillsContent content;
-        [SerializeField] private ComponentProvider provider;
+
+        private bool isCurrent = false;
 
         private void Awake()
         {
             item.OnEnter += EnableFirstSkillDescription;
             item.OnEnter += UpdateSkillsContentPosition;
-            item.OnEnter += UpdateAIIReference;
+            item.OnEnter += () => RegisterAsCurrent(true);
+            item.OnExit += () => RegisterAsCurrent(false);
             item.OnExit += DisableSkills;
         }
 
-        private void UpdateAIIReference(){
-            provider.UpdateComponent(skillsManager.gameObject);
+        public void LoseFocus(){
+            if(isCurrent){
+                skillsManager.SetFocus(false);
+            }
+        }
+
+        public void RegainFocus(){
+            if(isCurrent){
+                skillsManager.SetFocus(true);
+            }
+        }
+
+        private void RegisterAsCurrent(bool value){
+            isCurrent = value;
         }
 
         private void EnableFirstSkillDescription()

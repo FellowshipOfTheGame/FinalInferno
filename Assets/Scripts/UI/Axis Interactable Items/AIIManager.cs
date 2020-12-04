@@ -32,7 +32,8 @@ namespace FinalInferno.UI.AII
         /// <summary>
         /// Estado do gerenciador.
         /// </summary>
-        public bool active;
+        protected bool active;
+        public bool IsActive => active;
 
         private bool enableInput = true;
 
@@ -115,6 +116,10 @@ namespace FinalInferno.UI.AII
                 currentItem.Exit();
             }
             active = false;
+        }
+
+        public void SetFocus(bool isActive){
+            active = isActive;
         }
 
         public void SetInteractable(bool value){
