@@ -37,19 +37,23 @@ namespace FinalInferno.UI.AII
 
         private bool enableInput = true;
 
-        private bool interactable;
+        [SerializeField] private bool interactable;
         public bool Interactable => interactable;
+
+        private bool canClick;
 
         [SerializeField] protected AudioSource AS;
 
 
         public void Awake(){
             currentItem = null;
+            canClick = false;
         }
 
         public void Start()
         {
             active = false;
+            canClick = false;
         }
 
         public void Update()
@@ -86,9 +90,12 @@ namespace FinalInferno.UI.AII
                     enableInput = true;
 
                 // Executa a ação do item se o eixo for ativado.
-                if (interactable && Input.GetAxisRaw(activatorAxis) != 0)
+                if (interactable && Input.GetAxisRaw(activatorAxis) != 0 && canClick)
                 {
                     currentItem.Act();
+                    canClick = false;
+                }else if(interactable && Input.GetAxisRaw(activatorAxis) == 0){
+                    canClick = true;
                 }
             }
         }
@@ -99,6 +106,7 @@ namespace FinalInferno.UI.AII
         public virtual void Active()
         {
             active = true;
+            canClick = false;
             currentItem = firstItem;
             if (currentItem != null)
             {
@@ -116,10 +124,12 @@ namespace FinalInferno.UI.AII
                 currentItem.Exit();
             }
             active = false;
+            canClick = false;
         }
 
         public void SetFocus(bool isActive){
             active = isActive;
+            canClick = false;
         }
 
         public void SetInteractable(bool value){

@@ -316,6 +316,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 1222935430442493520}
   skillsManager: {fileID: 2032971077341614905}
+  cancelDecision: {fileID: 11400000, guid: a959cd379840463488d95955ae0e18e2, type: 2}
   index: 3
   content: {fileID: 6249532072255445979}
 --- !u!1 &310343327202553895
@@ -1253,6 +1254,7 @@ MonoBehaviour:
   firstItem: {fileID: 3324417337467984172}
   lastItem: {fileID: 0}
   activatorAxis: Submit
+  interactable: 0
   AS: {fileID: 6478886318863136460}
 --- !u!114 &526407793633136265
 MonoBehaviour:
@@ -1832,6 +1834,7 @@ MonoBehaviour:
   firstItem: {fileID: 553516324953208638}
   lastItem: {fileID: 0}
   activatorAxis: Submit
+  interactable: 0
   AS: {fileID: 4181472165557231299}
 --- !u!82 &4181472165557231299
 AudioSource:
@@ -4750,6 +4753,7 @@ MonoBehaviour:
   firstItem: {fileID: 0}
   lastItem: {fileID: 0}
   activatorAxis: 
+  interactable: 0
   AS: {fileID: 5711482612016756400}
 --- !u!114 &1757209217
 MonoBehaviour:
@@ -5365,6 +5369,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 78553678996139}
   skillsManager: {fileID: 6465488701102179626}
+  cancelDecision: {fileID: 11400000, guid: a959cd379840463488d95955ae0e18e2, type: 2}
   index: 0
   content: {fileID: 6249532072255445979}
 --- !u!1 &2512499483619589706
@@ -8011,6 +8016,7 @@ GameObject:
   - component: {fileID: 4836210968755499112}
   - component: {fileID: 7645505366265193464}
   - component: {fileID: 8001443141892735925}
+  - component: {fileID: 8216498377561686687}
   m_Layer: 0
   m_Name: Left Arrow
   m_TagString: Untagged
@@ -8074,6 +8080,25 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!95 &8216498377561686687
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3419615388218035477}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cbac3d279d317ca44923a44504b47c6e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3434093968302631107
 GameObject:
   m_ObjectHideFlags: 0
@@ -13069,6 +13094,7 @@ MonoBehaviour:
   firstItem: {fileID: 0}
   lastItem: {fileID: 0}
   activatorAxis: 
+  interactable: 0
   AS: {fileID: 5588101487366363891}
 --- !u!114 &2096027126
 MonoBehaviour:
@@ -14391,6 +14417,7 @@ GameObject:
   - component: {fileID: 8803334837036366695}
   - component: {fileID: 7425309609577070469}
   - component: {fileID: 2125076973409324660}
+  - component: {fileID: 2947438091884702432}
   m_Layer: 0
   m_Name: LeftArrow
   m_TagString: Untagged
@@ -14454,6 +14481,25 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!95 &2947438091884702432
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4830561682532315379}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cbac3d279d317ca44923a44504b47c6e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4834866640254690573
 GameObject:
   m_ObjectHideFlags: 0
@@ -14465,6 +14511,7 @@ GameObject:
   - component: {fileID: 6374501063577409376}
   - component: {fileID: 7143332394995989704}
   - component: {fileID: 783661557950108575}
+  - component: {fileID: 3691192510850942459}
   m_Layer: 0
   m_Name: RightArrow
   m_TagString: Untagged
@@ -14528,6 +14575,25 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!95 &3691192510850942459
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4834866640254690573}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 66a882972abd4454b909a4aeb85904ce, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4860036334593779122
 GameObject:
   m_ObjectHideFlags: 0
@@ -15316,6 +15382,7 @@ MonoBehaviour:
   firstItem: {fileID: 0}
   lastItem: {fileID: 0}
   activatorAxis: 
+  interactable: 0
   AS: {fileID: 3760825785322779525}
 --- !u!114 &1357451287
 MonoBehaviour:
@@ -15720,6 +15787,7 @@ MonoBehaviour:
   firstItem: {fileID: 4252702177416675262}
   lastItem: {fileID: 0}
   activatorAxis: Submit
+  interactable: 0
   AS: {fileID: 8249689256550336337}
 --- !u!82 &8249689256550336337
 AudioSource:
@@ -17292,6 +17360,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 3429552614931933388}
   skillsManager: {fileID: 5582880611649454660}
+  cancelDecision: {fileID: 11400000, guid: a959cd379840463488d95955ae0e18e2, type: 2}
   index: 1
   content: {fileID: 6249532072255445979}
 --- !u!1 &6392313460678210648
@@ -18357,6 +18426,7 @@ MonoBehaviour:
   firstItem: {fileID: 6701105997670167100}
   lastItem: {fileID: 0}
   activatorAxis: Submit
+  interactable: 0
   AS: {fileID: 6701105998342618218}
 --- !u!114 &1543471810024946337
 MonoBehaviour:
@@ -19554,6 +19624,7 @@ MonoBehaviour:
   firstItem: {fileID: 0}
   lastItem: {fileID: 0}
   activatorAxis: 
+  interactable: 0
   AS: {fileID: 6673107024168399627}
 --- !u!114 &345776408
 MonoBehaviour:
@@ -19765,6 +19836,7 @@ GameObject:
   - component: {fileID: 6789154563234304547}
   - component: {fileID: 6348100267793314395}
   - component: {fileID: 3843703472624321522}
+  - component: {fileID: 3491848910332141847}
   m_Layer: 0
   m_Name: Right Arrow
   m_TagString: Untagged
@@ -19828,6 +19900,25 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!95 &3491848910332141847
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7060910128224823088}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 66a882972abd4454b909a4aeb85904ce, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7166952502333749029
 GameObject:
   m_ObjectHideFlags: 0
@@ -21536,6 +21627,7 @@ MonoBehaviour:
   firstItem: {fileID: 1237223665468116333}
   lastItem: {fileID: 0}
   activatorAxis: Submit
+  interactable: 0
   AS: {fileID: 8895428292626247651}
   autoSave: {fileID: 1237223665468116333}
   volumeController: {fileID: 11400000, guid: 08245078b9288ac40b039c1f4b6e2e22, type: 2}
@@ -21974,6 +22066,7 @@ MonoBehaviour:
   firstItem: {fileID: 1648008122044983943}
   lastItem: {fileID: 0}
   activatorAxis: Submit
+  interactable: 0
   AS: {fileID: 2333530736151099189}
   detailPages:
   - {fileID: 3463712030243850024}
@@ -22571,7 +22664,8 @@ MonoBehaviour:
   currentItem: {fileID: 0}
   firstItem: {fileID: 78553678996139}
   lastItem: {fileID: 0}
-  activatorAxis: 
+  activatorAxis: Cancel
+  interactable: 1
   AS: {fileID: 2466774633977726092}
 --- !u!82 &2466774633977726092
 AudioSource:
@@ -23194,6 +23288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 5025529561445683748}
   skillsManager: {fileID: 2830974254645019957}
+  cancelDecision: {fileID: 11400000, guid: a959cd379840463488d95955ae0e18e2, type: 2}
   index: 2
   content: {fileID: 6249532072255445979}
 --- !u!1 &9077452676828489431

@@ -10,6 +10,7 @@ namespace FinalInferno.UI.AII
     {
         [SerializeField] private AxisInteractableItem item;
         [SerializeField] private AIIManager skillsManager;
+        [SerializeField] private ButtonClickDecision cancelDecision;
 
         [SerializeField] private int index;
         [SerializeField] private SkillsContent content;
@@ -23,6 +24,13 @@ namespace FinalInferno.UI.AII
             item.OnEnter += () => RegisterAsCurrent(true);
             item.OnExit += () => RegisterAsCurrent(false);
             item.OnExit += DisableSkills;
+            item.OnAct += OnCancel;
+        }
+
+        public void OnCancel(){
+            if(cancelDecision != null){
+                cancelDecision.Click();
+            }
         }
 
         public void LoseFocus(){
