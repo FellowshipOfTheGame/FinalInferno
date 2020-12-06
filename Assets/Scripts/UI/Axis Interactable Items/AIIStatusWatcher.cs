@@ -9,6 +9,8 @@ namespace FinalInferno.UI.AII
     {
         [SerializeField] private BoolDecision hasActiveAII;
         [SerializeField] private int counter = 0;
+
+        private List<AIIManager> managers = new List<AIIManager>();
         private int Counter{
             get => counter;
             set{
@@ -19,12 +21,18 @@ namespace FinalInferno.UI.AII
             }
         }
 
-        public void ActivatedAII(){
-            Counter++;
+        public void ActivatedAII(AIIManager manager){
+            if(!managers.Contains(manager)){
+                managers.Add(manager);
+                Counter++;
+            }
         }
 
-        public void DeactivatedAII(){
-            Counter--;
+        public void DeactivatedAII(AIIManager manager){
+            if(managers.Contains(manager)){
+                managers.Remove(manager);
+                Counter--;
+            }
         }
     }
 }
