@@ -37,6 +37,7 @@ namespace FinalInferno{
         }
         public int actionPoints; //define a posicao em que essa unidade agira no combate
         private int hpOnHold = 0;
+        public int HpOnHold => hpOnHold;
         public int stuns = 0;
         public bool CanAct{ get{ return (CurHP > 0 && stuns <= 0); } }
         public float aggro = 0;

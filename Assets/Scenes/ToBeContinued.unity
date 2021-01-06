@@ -166,6 +166,9 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   smoothScrolling: 0
   scrollSpeed: 10
+  scrollUpIndicator: {fileID: 0}
+  scrollDownIndicator: {fileID: 0}
+  skipIndicator: {fileID: 0}
 --- !u!224 &239578247
 RectTransform:
   m_ObjectHideFlags: 0
@@ -200,7 +203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.5294118, g: 0.3137255, b: 0.24705882, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -360,7 +363,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -470,7 +473,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0.7607843, b: 0.75686276, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -567,7 +570,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1004,5 +1007,11 @@ PrefabInstance:
       propertyPath: baseEncounterRate
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1116840969944616644, guid: dad01e9eb202c044185eb8fa24ac9520,
+        type: 3}
+      propertyPath: encounterRate
+      value: 
+      objectReference: {fileID: 11400000, guid: 377b3a550cca75c41b98ac351d9a19b5,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dad01e9eb202c044185eb8fa24ac9520, type: 3}
