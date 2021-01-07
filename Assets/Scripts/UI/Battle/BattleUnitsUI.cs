@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -41,7 +41,7 @@ namespace FinalInferno.UI.Battle
         void OnDestroy(){
             if(Instance == this){
                 Instance = null;
-        }
+            }
         }
 
         void Update(){
@@ -52,6 +52,15 @@ namespace FinalInferno.UI.Battle
             foreach(Transform child in enemiesManager.transform){
                 child.transform.localEulerAngles = new Vector3(child.transform.localEulerAngles.x, child.transform.localEulerAngles.y, enemiesManager.transform.localEulerAngles.z * -1f);
             }
+        }
+
+        public void UpdateBattleUnitSize(BattleUnit battleUnit){
+            RectTransform referenceTransform = battleUnit.battleItem.transform.parent.Find("Active Reference").GetComponent<RectTransform>();
+            int ppu = Camera.main.gameObject.GetComponent<UnityEngine.U2D.PixelPerfectCamera>().assetsPPU;
+            referenceTransform.anchoredPosition += new Vector2(0f, battleUnit.GetComponent<SpriteRenderer>().sprite.bounds.size.y * ppu);
+            // Debug.Log("height detected for " + unit.name + " = " + unit.BattleSprite.bounds.size.y);
+            battleUnit.battleItem.layout.preferredWidth = battleUnit.unit.BoundsSizeX * 64;
+            battleUnit.battleItem.layout.preferredHeight = battleUnit.unit.BoundsSizeY * 64;
         }
 
         public BattleUnit LoadUnit(Unit unit){
@@ -72,14 +81,9 @@ namespace FinalInferno.UI.Battle
             battleUnit.GetComponent<SpriteRenderer>().sortingOrder = sortingLayer;
             battleUnit.Configure(unit);
             battleItem.Setup();
-            AxisInteractableItem newItem = battleUnit.battleItem.GetComponent<AxisInteractableItem>();
-            RectTransform referenceTransform = newItem.transform.parent.Find("Active Reference").GetComponent<RectTransform>();
-            int ppu = Camera.main.gameObject.GetComponent<UnityEngine.U2D.PixelPerfectCamera>().assetsPPU;
-            referenceTransform.anchoredPosition += new Vector2(0f, battleUnit.GetComponent<SpriteRenderer>().sprite.bounds.size.y * ppu);
-            // Debug.Log("height detected for " + unit.name + " = " + unit.BattleSprite.bounds.size.y);
-            battleUnit.battleItem.layout.preferredWidth = unit.BoundsSizeX * 64;
-            battleUnit.battleItem.layout.preferredHeight = unit.BoundsSizeY * 64;
+            UpdateBattleUnitSize(battleUnit);
 
+            AxisInteractableItem newItem = battleUnit.battleItem.GetComponent<AxisInteractableItem>();
             AIIManager manager = (unit.IsHero)? heroesManager : enemiesManager;
             
             // Ordena o item na lista
