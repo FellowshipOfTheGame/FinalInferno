@@ -19,7 +19,7 @@ namespace FinalInferno.UI.FSM
         /// <param name="controller"> O controlador da máquina de estados. </param>
         public override void Act(StateController controller)
         {
-            BattleUnitsUI.instance.UpdateTargetList();
+            BattleUnitsUI.Instance.UpdateTargetList();
         }
     }
 

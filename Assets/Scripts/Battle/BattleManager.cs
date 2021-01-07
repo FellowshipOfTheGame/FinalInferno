@@ -68,7 +68,7 @@ namespace FinalInferno{
                     BattleProgress.addHeroSkills((Hero)unit);
                 }
 
-                BattleUnit newUnit = BattleUnitsUI.instance.LoadUnit(unit);
+                BattleUnit newUnit = BattleUnitsUI.Instance.LoadUnit(unit);
                 battleUnits.Add(newUnit);
                 float initiative = newUnit.curSpeed;
                 // Debug.Log("Carregou " + unit.name);

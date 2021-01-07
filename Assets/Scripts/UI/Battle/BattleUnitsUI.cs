@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +11,7 @@ namespace FinalInferno.UI.Battle
     /// </summary>
     public class BattleUnitsUI : MonoBehaviour
     {
-        public static BattleUnitsUI instance;
+        public static BattleUnitsUI Instance { get; private set; }
 
         [Header("Contents")]
         [SerializeField] private Transform heroesContent;
@@ -32,16 +32,16 @@ namespace FinalInferno.UI.Battle
 
         void Awake(){
             // Singleton
-            if (instance == null)
-                instance = this;
-            else if (instance != this)
+            if (Instance == null)
+                Instance = this;
+            else if (Instance != this)
                 Destroy(this);
         }
 
-        void Start()
-        {
-            //LoadTeam(UnitType.Hero, heroesContent, heroesManager);
-            //LoadTeam(UnitType.Enemy, enemiesContent, enemiesManager);
+        void OnDestroy(){
+            if(Instance == this){
+                Instance = null;
+        }
         }
 
         void Update(){
