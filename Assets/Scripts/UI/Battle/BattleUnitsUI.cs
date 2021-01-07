@@ -135,45 +135,6 @@ namespace FinalInferno.UI.Battle
             }
         }
 
-        // Função obsoleta, preciso deletar soon tm
-        private void LoadTeam(UnitType team, Transform content, AIIManager manager)
-        {
-            List<BattleUnit> units = BattleManager.instance.GetTeam(team);
-
-            foreach (AxisInteractableItem item in content.GetComponentsInChildren<AxisInteractableItem>())
-            {
-                Destroy(item.gameObject);
-            }
-
-            // Variável auxiliar para a ordenação dos itens
-            AxisInteractableItem lastItem = null;
-
-            // Passa por todas as unidades da lista, adicionando-as no menu e as ordenando
-            foreach (BattleUnit unit in units)
-            {
-                // Instancia um novo item e o coloca no content
-                GameObject newUnit = Instantiate(unitPrefab, content);
-                newUnit.transform.rotation = Quaternion.identity;
-
-                newUnit.GetComponent<Image>().color = unit.unit.color;
-
-                unit.Configure(unit.unit);
-
-                // Ordena o item na lista
-                AxisInteractableItem newItem = newUnit.GetComponent<AxisInteractableItem>();
-                if (lastItem != null)
-                {
-                    newItem.upItem = lastItem;
-                    lastItem.downItem = newItem;
-                }
-                else
-                {
-                    manager.firstItem = newItem;
-                }
-                lastItem = newItem;
-            }
-        }
-
         public void RemoveUnit(BattleUnit unit)
         {
             if (unit.unit.IsHero)  
