@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
@@ -48,6 +48,7 @@ namespace FinalInferno{
         public List<StatusEffect> effects; //lista de status fazendo efeito nessa unidade
         private List<Skill> activeSkills; // lista de skills ativas que essa unidade pode usar
         public ReadOnlyCollection<Skill> ActiveSkills { get => activeSkills.AsReadOnly(); }
+
         public SkillDelegate OnEndBattle = null;
         public SkillDelegate OnStartBattle = null;
         //public SkillDelegate OnGiveBuff = null;
@@ -77,7 +78,7 @@ namespace FinalInferno{
             canvasTransform = FindObjectOfType<Canvas>().transform;
         }
 
-        public void Configure(Unit unit){
+        public void Configure(Unit unit, bool isMorph = false, float curHPMultiplier = 1.0f){
             this.unit = unit;
             this.name = unit.name;
 
@@ -93,7 +94,7 @@ namespace FinalInferno{
 
             // Aplica os status base da unidade
             MaxHP = unit.hpMax;
-            if(unit.IsHero){
+            if(unit.IsHero && !isMorph){
                 foreach(Character character in Party.Instance.characters){
                     if(character.archetype == unit){
                         CurHP = character.hpCur;
@@ -101,7 +102,8 @@ namespace FinalInferno{
                     }
                 }
             }else{
-                CurHP = unit.hpMax;
+                curHPMultiplier = Mathf.Clamp(curHPMultiplier, 0, 1f);
+                CurHP = Mathf.Max(1, Mathf.FloorToInt(unit.hpMax * curHPMultiplier));
             }
             curDmg = unit.baseDmg;
             curDef = unit.baseDef;
@@ -116,10 +118,15 @@ namespace FinalInferno{
                     elementalResistances.Add(element, 1.0f);
                 }
             }
+
+            if(!isMorph){
             actionPoints = 0;
             hpOnHold = 0; 
 
             effects = new List<StatusEffect>();
+            }else{
+                activeSkills.Clear();
+            }
 
             // Percorre a lista de skills da unidade
             foreach(Skill skill in unit.skills){
@@ -135,7 +142,7 @@ namespace FinalInferno{
                         // Aplica o efeito das skills relevantes na unidade
                         skill.Use(this, this);
                         // Da exp para a skill
-                        if(unit.IsHero){
+                        if(unit.IsHero && !isMorph){
                             List<Unit> enemies = new List<Unit>();
                             foreach(Unit u in BattleManager.instance.units){
                                 if(!u.IsHero)
