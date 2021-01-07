@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
@@ -120,10 +120,10 @@ namespace FinalInferno{
             }
 
             if(!isMorph){
-            actionPoints = 0;
-            hpOnHold = 0; 
+                actionPoints = 0;
+                hpOnHold = 0; 
 
-            effects = new List<StatusEffect>();
+                effects = new List<StatusEffect>();
             }else{
                 activeSkills.Clear();
             }
@@ -198,6 +198,11 @@ namespace FinalInferno{
             if(deadUnit && CurHP <= 0 && effects.Count <= 0){
                 BattleManager.instance.Kill(this);
             }
+        }
+
+        public void ShowDamage(int value, bool isHeal, float multiplier){
+            // Show damage ignoring value changes and animations
+            damageIndicator?.ShowDamage(value, isHeal, multiplier);
         }
 
         public int Heal(int atk, float multiplier, BattleUnit healer = null){
