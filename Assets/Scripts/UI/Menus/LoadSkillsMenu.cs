@@ -20,6 +20,7 @@ namespace FinalInferno.UI.SkillsMenu
 
         public void LoadContents()
         {
+            bool firstSkill = true;
             for (int i = 0; i < Party.Instance.characters.Count; i++)
             {
                 Hero hero = Party.Instance.characters[i].archetype;
@@ -37,6 +38,10 @@ namespace FinalInferno.UI.SkillsMenu
                 {
                     GameObject newSkill = Instantiate(SkillItem, SkillsContents[i].transform);
                     newSkill.GetComponent<SkillsMenuSkillItem>().LoadSkill(skill, loader, SkillsContents[i].GetComponent<HeroSkillsContent>(), i);
+                    if(firstSkill){
+                        firstSkill = false;
+                        loader.LoadSkillInfo(skill, i);
+                    }
 
                     AxisInteractableItem newItem = newSkill.GetComponent<AxisInteractableItem>();
                     if (lastItem == null)

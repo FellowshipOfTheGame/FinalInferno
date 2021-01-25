@@ -14,6 +14,7 @@ namespace FinalInferno.UI.FSM
         /// Eixo a ser ativado.
         /// </summary>
         [SerializeField] private string activatorAxis;
+        public string ActivatorAxis => activatorAxis;
 
         /// <summary>
         /// Verifica se a decisão ativou.
@@ -21,7 +22,7 @@ namespace FinalInferno.UI.FSM
         /// <param name="controller"> O controlador da máquina de estados. </param>
         public override bool Decide(StateController controller)
         {
-            return (Input.GetAxisRaw(activatorAxis) != 0);
+            return Input.GetButtonDown(activatorAxis);
         }
 
     }

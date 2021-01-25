@@ -132,7 +132,8 @@ namespace FinalInferno.UI{
                 exp.text = "Exp: " + enemy.BaseExp;
                 killCount.text = "Kills: " + bestiary[enemy];
                 elementalResistances.text = GetResistanceString(enemy);
-                source?.PlayOneShot(enemy.EnemyCry);
+                if(source != null)
+                    source.PlayOneShot(enemy.EnemyCry);
             }else{
                 // Essa função só é chamada com null caso o bestiario esteja vazio
                 detailsObject.SetActive(false);
