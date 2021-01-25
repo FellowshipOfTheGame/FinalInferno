@@ -376,8 +376,8 @@ namespace FinalInferno{
             // Reseta o aggro
             aggro = 0;
             stuns = 0;
-            if(unit is Enemy){
-                audioSource.PlayOneShot((unit as Enemy)?.EnemyCry);
+            if(Unit is Enemy){
+                audioSource.PlayOneShot((Unit as Enemy)?.EnemyCry);
             }
 
             BattleManager.instance.Kill(this);

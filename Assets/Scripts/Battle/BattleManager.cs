@@ -199,7 +199,7 @@ namespace FinalInferno{
 
         public void Revive(BattleUnit unit){
             if(!queue.Contains(unit) && currentUnit != unit){
-                unit.actionPoints = Mathf.FloorToInt(unit.unit.attackSkill.cost);
+                unit.actionPoints = Mathf.FloorToInt(unit.Unit.attackSkill.cost);
                 queue.Enqueue(unit, 0);
                 unitsUI.ReinsertUnit(unit);
             }
