@@ -22,7 +22,7 @@ namespace FinalInferno{
         // [SerializeField] private bool alwaysShowRemove = false;
         // public bool AlwaysShowRemove { get => alwaysShowRemove; }
 
-        private List<GameObject> particles = new List<GameObject>();
+        private List<ParticleSystem> particleSystems;
         // Referencias para os componentes que precisam ser encontradas muitas vezes
         // A propriedade é usada para garantir que só vai chamar getcomponent uma vez
         private Animator anim = null;
@@ -106,6 +106,7 @@ namespace FinalInferno{
         public void Awake(){
             hidden = true;
             SRenderer.enabled = !hidden;
+            particleSystems = new List<ParticleSystem>(GetComponentsInChildren<ParticleSystem>(true));
         }
 
         public void UpdatePosition(BattleUnit unit){
@@ -129,24 +130,13 @@ namespace FinalInferno{
         public void Show(){
             hidden = false;
             SRenderer.enabled = true;
-            foreach(GameObject go in particles){
-                ParticleSystemRenderer renderer = go? go.GetComponent<ParticleSystemRenderer>() : null;
-                if(renderer != null){
-                    renderer.enabled = true;
-                }
-            }
         }
 
         // Esconde o efeito visual
         public void Hide(){
             hidden = true;
             SRenderer.enabled = false;
-            foreach(GameObject go in particles){
-                ParticleSystemRenderer renderer = go? go.GetComponent<ParticleSystemRenderer>() : null;
-                if(renderer != null){
-                    renderer.enabled = false;
-                }
-            }
+            StopAllParticles();
         }
 
         public void UpdateTrigger(){
@@ -177,35 +167,29 @@ namespace FinalInferno{
             }
         }
 
-        // Função para instanciar um objeto de particula durante a animação
-        void CreateParticles(GameObject particle)
-        {
-            GameObject newParticle = Instantiate(particle, transform.position, transform.rotation, this.transform);
-            particles.Add(newParticle);
-            ParticleSystemRenderer renderer = newParticle? newParticle.GetComponent<ParticleSystemRenderer>() : null;
-            if(renderer != null){
-                renderer.enabled = !hidden;
-                renderer.sortingLayerID = SRenderer.sortingLayerID;
-                renderer.sortingLayerName = SRenderer.sortingLayerName;
-                renderer.sortingOrder = SRenderer.sortingOrder;
+        void StartParticle(ParticleSystem particle){
+            if(particle != null && !particle.isPlaying){
+                particle.Play(true);
             }
         }
 
-        // Função para destruir as particulas criadas
-        void DestroyParticles(){
-            foreach(GameObject particle in particles){
-                if(particle != null){
-                    Destroy(particle);
-                }
+        void RestartParticle(ParticleSystem particle){
+            if(particle != null){
+                particle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                particle.Play(true);
             }
-            particles.Clear();
         }
 
-        // Não deve mais ser chamada
-        // Função para destruir o objeto inteiro
-        // public void DestroyVFX(){
-        //     DestroyParticles();
-        //     Destroy(gameObject);
-        // }
+        void StopParticle(ParticleSystem particle){
+            if(particle != null){
+                particle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            }
+        }
+
+        void StopAllParticles(){
+            foreach(ParticleSystem particle in particleSystems){
+                particle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            }
+        }
     }
 }
