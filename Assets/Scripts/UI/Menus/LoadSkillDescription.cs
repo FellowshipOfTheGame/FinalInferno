@@ -109,8 +109,8 @@ namespace FinalInferno.UI.SkillsMenu
                 }
             }
 
-            detailManager.interactable = (skill.Level > 0 && skill.Type != SkillType.Active);
-            if(detailManager.interactable){
+            detailManager.SetInteractable(skill.Level > 0 && skill.Type != SkillType.Active);
+            if(detailManager.Interactable){
                 detailManager.ShowToggle();
             }else{
                 detailManager.HideToggle();

@@ -11,7 +11,7 @@ namespace FinalInferno{
     public class BattleUnitEvent : UnityEvent<BattleUnit> {}
     
     //representa todos os buffs/debuffs, dano etc que essa unidade recebe
-    [RequireComponent(typeof(Animator)),RequireComponent(typeof(SpriteRenderer))]
+    [RequireComponent(typeof(Animator)),RequireComponent(typeof(SpriteRenderer)),RequireComponent(typeof(AudioSource))]
     public class BattleUnit : MonoBehaviour{
         // Status e listas necessarios para a batalha
         public Unit Unit { get; private set; } = null; //referencia para os atributos base dessa unidade
@@ -31,6 +31,7 @@ namespace FinalInferno{
         }
         public int actionPoints; //define a posicao em que essa unidade agira no combate
         private int hpOnHold = 0;
+        public int HpOnHold => hpOnHold;
         public int stuns = 0;
         public bool CanAct{ get{ return (CurHP > 0 && stuns <= 0); } }
         public float aggro = 0;
@@ -67,6 +68,7 @@ namespace FinalInferno{
         [SerializeField] private StatusVFXHandler statusEffectHandler;
         public StatusVFXHandler StatusVFXHandler { get => statusEffectHandler; }
         private Animator animator;
+        private AudioSource audioSource;
         private Transform canvasTransform;
 
         // Propriedades auxiliares
@@ -90,6 +92,7 @@ namespace FinalInferno{
 
         public void Awake(){
             animator = GetComponent<Animator>();
+            audioSource = GetComponent<AudioSource>();
             hasGhostAnim = System.Array.Find(animator.parameters, parameter => parameter.name == "Ghost") != null;
             activeSkills = new List<Skill>();
             canvasTransform = FindObjectOfType<Canvas>().transform;
@@ -373,6 +376,9 @@ namespace FinalInferno{
             // Reseta o aggro
             aggro = 0;
             stuns = 0;
+            if(Unit is Enemy){
+                audioSource.PlayOneShot((Unit as Enemy)?.EnemyCry);
+            }
 
             BattleManager.instance.Kill(this);
             // Se houver algum callback de morte que, por exemplo, ressucita a unidade ele já vai ter sido chamado aqui
