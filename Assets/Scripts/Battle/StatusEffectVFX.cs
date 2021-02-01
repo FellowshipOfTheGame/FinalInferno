@@ -167,22 +167,16 @@ namespace FinalInferno{
             }
         }
 
-        void StartParticle(ParticleSystem particle){
-            if(particle != null && !particle.isPlaying){
+        void StartAllParticles(){
+            foreach(ParticleSystem particle in particleSystems){
                 particle.Play(true);
             }
         }
 
-        void RestartParticle(ParticleSystem particle){
-            if(particle != null){
+        void RestartAllParticles(){
+            foreach(ParticleSystem particle in particleSystems){
                 particle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
                 particle.Play(true);
-            }
-        }
-
-        void StopParticle(ParticleSystem particle){
-            if(particle != null){
-                particle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             }
         }
 
