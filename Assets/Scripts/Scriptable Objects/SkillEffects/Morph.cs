@@ -33,6 +33,7 @@ namespace FinalInferno{
             float percentage = Mathf.Clamp(value2, 0, 1f);
             int previousHP = target.CurHP;
 
+            (unitIndex.UnitList[index] as Enemy)?.LevelEnemy();
             target.Configure(unitIndex.UnitList[index], true, percentage);
             UI.Battle.BattleUnitsUI.Instance.UpdateBattleUnitSize(target);
 
