@@ -110,6 +110,7 @@ namespace FinalInferno{
             curMagicDef = unit.baseMagicDef;
             curSpeed = unit.baseSpeed;
 
+            elementalResistances.Clear();
             ReadOnlyDictionary<Element, float> baseResistances = unit.ElementalResistances;
             foreach(Element element in System.Enum.GetValues(typeof(Element))){
                 if(baseResistances.ContainsKey(element)){
