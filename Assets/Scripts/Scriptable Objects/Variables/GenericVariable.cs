@@ -5,7 +5,7 @@ using UnityEngine;
 namespace FinalInferno{
     public abstract class GenericVariable<T> : ScriptableObject
     {
-        [SerializeField] private T value;
+        [SerializeField] protected T value;
         public T Value => value;
 
         public void UpdateValue(T newValue){
