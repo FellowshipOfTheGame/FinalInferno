@@ -24,7 +24,7 @@ namespace FinalInferno{
         public void Activate(){
             if(!active){
                 active = true;
-                for(int i = activationListeners.Count-1; i > 0; i--){
+                for(int i = activationListeners.Count-1; i >= 0; i--){
                     activationListeners[i]?.ActivatedSkill(this);
                 }
             }
@@ -33,7 +33,7 @@ namespace FinalInferno{
         public void Deactivate(bool ignoreCallbacks = false){
             if(active){
                 active = false;
-                for(int i = activationListeners.Count-1; i > 0; i--){
+                for(int i = activationListeners.Count-1; i >= 0; i--){
                     if(!ignoreCallbacks)
                         activationListeners[i]?.DeactivatedSkill(this);
                 }
