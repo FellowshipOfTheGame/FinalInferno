@@ -5,9 +5,10 @@ using System.Collections.ObjectModel;
 
 namespace FinalInferno{
     [RequireComponent(typeof(Movable))]
-    public class CharacterOW : MonoBehaviour
+    public class CharacterOW : MonoBehaviour, IOverworldSkillListener
     {
         [SerializeField] private Character characterSO;
+        [SerializeField] private OverworldSkill sprintSkill;
         public Character CharacterSO { get{ return characterSO; } }
         [SerializeField] private bool isMain;
 
@@ -105,5 +106,31 @@ namespace FinalInferno{
         public void OnDestroy(){
             characterSO.OverworldInstance = (characterSO.OverworldInstance == this)? null : characterSO.OverworldInstance;
         }
-    }
+
+        #region SprintCallbacks
+        public void OnEnable(){
+            sprintSkill?.AddActivationListener(this);
+        }
+
+        public void OnDisable(){
+            sprintSkill?.RemoveActivationListener(this);
+        }
+
+		public void ActivatedSkill(OverworldSkill skill)
+		{
+            if(skill == sprintSkill){
+                float moveSpeedChange = sprintSkill?.effects[0].value1 ?? 0;
+                movable.MoveSpeed += moveSpeedChange;
+            }
+		}
+
+		public void DeactivatedSkill(OverworldSkill skill)
+		{
+            if(skill == sprintSkill){
+                float moveSpeedChange = sprintSkill?.effects[0].value1 ?? 0;
+                movable.MoveSpeed -= moveSpeedChange;
+            }
+		}
+        #endregion
+	}
 }
