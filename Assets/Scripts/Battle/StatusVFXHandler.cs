@@ -45,7 +45,7 @@ namespace FinalInferno{
             public int turnsLeftMax;
             public bool triggeredUpdate;
             private Transform transform;
-            private List<StatusEffectVFX> statusEffectVFXes;
+            private List<StatusEffectVFX> statusEffectVFXes = new List<StatusEffectVFX>();
 
             public IndividualHandler(Transform t){
                 effects = new List<StatusEffect>();
