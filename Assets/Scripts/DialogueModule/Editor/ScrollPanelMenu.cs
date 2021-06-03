@@ -137,7 +137,7 @@ namespace Fog.Dialogue{
             contentObj.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
             TMPro.TextMeshProUGUI textMesh = contentObj.GetComponent<TMPro.TextMeshProUGUI>();
             textMesh.transform.localPosition = new Vector3(img.transform.localPosition.x, img.transform.localPosition.y, 0f);
-            textMesh.font = TMPro.TMP_FontAsset.defaultFontAsset;
+            // textMesh.font = TMPro.TMP_FontAsset.defaultFontAsset;
             textMesh.fontSize = 21;
             textMesh.color = Color.black;
             textMesh.alignment = TMPro.TextAlignmentOptions.TopJustified;
