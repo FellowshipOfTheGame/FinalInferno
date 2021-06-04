@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace FinalInferno{
     public class Hiding : StatusEffect {
+        public override StatusEffectVisuals VFXID { get => StatusEffectVisuals.Hiding; }
         public override StatusType Type { get{ return StatusType.None; } }
         public override float Value { get{ return negativeAggro; } }
         private int turnsLeft;

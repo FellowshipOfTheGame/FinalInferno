@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace FinalInferno{
     public class LosingHPOverTime : StatusEffect {
+        public override StatusEffectVisuals VFXID { get => StatusEffectVisuals.LosingHPOverTime; }
         public override StatusType Type { get{ return StatusType.Undesirable; } }
         public override float Value { get{ return Target.MaxHP * percentageLoss; } }
         private float percentageLoss;

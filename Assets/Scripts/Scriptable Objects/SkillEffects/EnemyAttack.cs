@@ -9,8 +9,8 @@ namespace FinalInferno{
         public override string Description { get { return ""; } }
         
         public override void Apply(BattleUnit source, BattleUnit target) {
-            DamageType dmgType = (source.unit is Enemy)? ((Enemy)source.unit).DamageFocus : DamageType.None;
-            Element element = (source.unit is Enemy)? ((Enemy)source.unit).Element : Element.Neutral;
+            DamageType dmgType = (source.Unit is Enemy)? ((Enemy)source.Unit).DamageFocus : DamageType.None;
+            Element element = (source.Unit is Enemy)? ((Enemy)source.Unit).Element : Element.Neutral;
             target.TakeDamage(source.curDmg, value1, dmgType, element, source);
         }
     }

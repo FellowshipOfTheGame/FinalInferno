@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace FinalInferno{
     public class Taunting : StatusEffect {
+        public override StatusEffectVisuals VFXID { get => StatusEffectVisuals.Taunting; }
         public override StatusType Type { get{ return StatusType.None; } }
         public override float Value { get{ return aggroIncrease; } }
         private float aggroIncrease;
