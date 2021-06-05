@@ -7,7 +7,7 @@ namespace FinalInferno{
     public class EunuchSatyr : Enemy
     {
         private bool IsDrainingSpeed(BattleUnit unit){
-            if(unit == null || !(unit.unit is EunuchSatyr)) return false;
+            if(unit == null || !(unit.Unit is EunuchSatyr)) return false;
             foreach(StatusEffect effect in unit.effects){
                 if(effect is DrainingSpeed && effect.Source == unit){
                     return true;

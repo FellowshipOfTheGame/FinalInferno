@@ -120,7 +120,7 @@ namespace FinalInferno{
             long expValue = 0;
 
             foreach(BattleUnit target in targets){
-                expValue += target.unit.SkillExp;
+                expValue += target.Unit.SkillExp;
             }
             if(ShouldCalculateMean)
                 expValue /= Mathf.Max(targets.Count, 1);

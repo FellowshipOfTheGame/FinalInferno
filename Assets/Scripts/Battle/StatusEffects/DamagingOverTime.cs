@@ -9,6 +9,24 @@ namespace FinalInferno{
         private int dmgPerTurn;
         private float valueReceived;
         private Element element;
+        public override StatusEffectVisuals VFXID {
+            get{
+                switch(element){
+                    case Element.Earth:
+                        return StatusEffectVisuals.Quicksand;
+                    case Element.Fire:
+                        return StatusEffectVisuals.Burn;
+                    case Element.Water:
+                        return StatusEffectVisuals.Hypothermia;
+                    case Element.Wind:
+                        return StatusEffectVisuals.Suffocation;
+                    case Element.Neutral:
+                        return StatusEffectVisuals.DamageOverTime;
+                    default:
+                        return StatusEffectVisuals.Null;
+                }
+            }
+        }
 
         public DamagingOverTime(BattleUnit src, BattleUnit trgt, float value, Element elemnt, int dur = 1, bool force = false) {
             if(dur < 0)

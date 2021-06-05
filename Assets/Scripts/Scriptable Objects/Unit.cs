@@ -3,10 +3,20 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.UI;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace FinalInferno{
     //engloba todas as unidades que entraram em batalha
     public abstract class Unit : Fog.Dialogue.DialogueEntity {
+        public enum BodyPosition{
+            Feet = 0,
+            Torso,
+            Head,
+            Overhead
+        }
+
         public const int maxStatValue = 999;
         [Space(10)]
         [Header("Unit Stats")]
@@ -45,8 +55,74 @@ namespace FinalInferno{
         public virtual Sprite BattleSprite { get => battleSprite; }
         public virtual float BoundsSizeX { get => BattleSprite.bounds.size.x; }
         public virtual float BoundsSizeY { get => BattleSprite.bounds.size.y; }
+        [SerializeField] private BodyPosition defaultTargetPosition = BodyPosition.Feet;
+        public BodyPosition DefaultTargetPosition { get => defaultTargetPosition; }
+        [Header("    Status Effect Position (read the tooltips)")]
+        [Space(-10)]
+        [SerializeField, Range(0, 1f), Tooltip("X axis indicator for the relative position of where status effects show on top of the unit battle sprite. Left margin is 0, right margin is 1, sprites will have the X axis inverted when actually in battle but this value should ignore that")]
+        protected float xOffset = 0;
+        [SerializeField, Range(0, 1f), Tooltip("Y axis indicator for the relative position of where status effects show on top of the unit battle sprite. Bottom is 0, top is 1, the Y axis behaves normally in battle")]
+        protected float yOffset = 0;
+        public virtual Vector2 EffectsRelativePosition { get => new Vector2(xOffset, yOffset); }
         [SerializeField]
         protected Sprite queueSprite;
         public virtual Sprite QueueSprite { get => queueSprite; }
     }
+
+    #if UNITY_EDITOR
+    [CustomPreview(typeof(Unit))]
+    public class UnitPreview : ObjectPreview{
+        protected Texture2D tex = null;
+        protected Texture2D bg = null;
+
+        public override GUIContent GetPreviewTitle(){
+            return new GUIContent("Battle Preview");
+        }
+
+        public override bool HasPreviewGUI(){
+            Unit unit = target as Unit;
+            if(unit != null){
+                return (unit.BattleSprite != null);
+            }
+            return false;
+        }
+
+        public override void OnPreviewGUI(Rect r, GUIStyle background){
+            Unit unit = target as Unit;
+            if(unit != null){
+                if(tex == null){
+                    tex = new Texture2D(Mathf.FloorToInt(unit.BattleSprite.textureRect.width), Mathf.FloorToInt(unit.BattleSprite.textureRect.height), unit.BattleSprite.texture.format, false);
+                    Color[] colors = unit.BattleSprite.texture.GetPixels(Mathf.FloorToInt(unit.BattleSprite.textureRectOffset.x), Mathf.FloorToInt(unit.BattleSprite.textureRectOffset.y), tex.width, tex.height);
+                    tex.SetPixels(colors);
+                    tex.Apply();
+
+                    Color[] transparency = new Color[tex.width * tex.height];
+                    for(int i = 0; i < transparency.Length; i++){
+                        transparency[i] = Color.clear;
+                    }
+                    bg = new Texture2D(tex.width, tex.height, tex.format, false, false);
+                    bg.SetPixels(transparency);
+                    bg.Apply();
+                }
+
+                Rect texRect;
+                float aspectRatio = tex.height / (float)tex.width;
+                float scaledHeight = aspectRatio * 0.8f * r.width;
+
+                if(tex.width > tex.height && (r.height * 0.8f) > scaledHeight){
+                    texRect = new Rect(r.center.x - 0.4f * r.width, r.center.y - aspectRatio * 0.4f * r.width, 0.8f * r.width, aspectRatio * 0.8f * r.width);
+                }else{
+                    texRect = new Rect(r.center.x - 0.4f * r.height / aspectRatio, r.center.y - 0.4f * r.height, 0.8f * r.height / aspectRatio, 0.8f * r.height);
+                }
+
+                float rectSize = 0.1f * Mathf.Max(texRect.width, texRect.height);
+                Rect headRect = new Rect(texRect.x + (unit.EffectsRelativePosition.x * texRect.width) - rectSize/2, texRect.yMax - (unit.EffectsRelativePosition.y * texRect.height) - rectSize/2, rectSize, rectSize);
+
+                EditorGUI.DrawTextureTransparent(texRect, bg, ScaleMode.StretchToFill);
+                GUI.DrawTexture(texRect, tex, ScaleMode.ScaleToFit);
+                EditorGUI.DrawRect(headRect, new Color(0f, 1f, 0f, .7f));
+            }
+        }
+    }
+    #endif
 }

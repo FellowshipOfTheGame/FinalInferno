@@ -6,7 +6,6 @@ namespace FinalInferno{
     //engloba todas as "skills" dos personagens do jogador, que ganham nivel
     [CreateAssetMenu(fileName = "EnemySkill", menuName = "ScriptableObject/EnemySkill")]
     public class EnemySkill : Skill{
-        // TO DO: Revisão de tabelas (nao sabemos o nome definitivo da coluna)
         [Header("Enemy Skill")]
         public string description; //descricao da "skill" que aparecera para o jogador durante a batalha
         [Header("Stats Table")]

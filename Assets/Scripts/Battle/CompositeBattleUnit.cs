@@ -26,46 +26,36 @@ namespace FinalInferno{
             appendages.Remove(appendage);
         }
 
-        void Align(){
+        // Precisa se certificar que isso vai ser chamado depois do Setup dos UnitItem.cs
+        public void Setup(){
+            // Remove os listeners de movimento padrão e faz com que todas as unidades se movam juntas
+            thisUnit.OnTurnStart.RemoveAllListeners();
+            thisUnit.OnTurnStart.AddListener(StepForward);
+            thisUnit.OnTurnEnd.RemoveAllListeners();
+            thisUnit.OnTurnEnd.AddListener(StepBack);
             foreach(BattleUnit appendage in appendages){
-                Vector2 offset = (thisUnit.transform.position - appendage.transform.position);
-                appendage.battleItem.defaultOffset += offset;
+                appendage.transform.position = transform.position;
+                appendage.OnTurnStart.RemoveAllListeners();
+                appendage.OnTurnStart.AddListener(StepForward);
+                appendage.OnTurnEnd.RemoveAllListeners();
+                appendage.OnTurnEnd.AddListener(StepBack);
             }
         }
 
-        void LateUpdate()
-        {
-            if(thisUnit.battleItem.CurrentOffset != Vector2.zero){
-                // Se o elemento principal tiver sido movido, move todos os apendices
-                foreach(BattleUnit unit in appendages){
-                    unit.transform.Translate(thisUnit.battleItem.CurrentOffset);
-                }
-            }else{
-                // Checa todos os apendices para ver se algum deles foi movido
-                Vector2 offset = Vector2.zero;
-                BattleUnit selected = null;
-                foreach(BattleUnit unit in appendages){
-                    if(unit.battleItem.CurrentOffset != Vector2.zero){
-                        offset = unit.battleItem.CurrentOffset;
-                        selected = unit;
-                        // Para a busca quando encontrar o primeiro elemento com offset
-                        // Faz isso porque apenas um deles deveria ter offset
-                        break;
-                    }
-                }
-                // Caso tenha sido, movimenta todos os outros elementos
-                // Se mais de um elemento tiver sido movido pode dar erro
-                // Mas isso não deve acontecer pq apenas a unidade atual é movida
-                if(offset != Vector2.zero){
-                    thisUnit.transform.Translate(offset);
-                    foreach(BattleUnit unit in appendages){
-                        if(unit != selected){
-                            unit.transform.Translate(offset);
-                        }
-                    }
-                }
+        public void StepForward(BattleUnit unit){
+            // Debug.Log($"composite unit {unit} stepped forward");
+            thisUnit.battleItem.StepForward(thisUnit);
+            foreach(BattleUnit appendage in appendages){
+                appendage.battleItem.StepForward(appendage);
             }
-            Align();
+        }
+
+        public void StepBack(BattleUnit unit){
+            // Debug.Log($"composite unit {unit} stepped back");
+            thisUnit.battleItem.StepBack(thisUnit);
+            foreach(BattleUnit appendage in appendages){
+                appendage.battleItem.StepBack(appendage);
+            }
         }
     }
 }

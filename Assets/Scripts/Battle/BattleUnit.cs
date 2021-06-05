@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
+using UnityEngine.Events;
 using FinalInferno.UI.Battle;
 using FinalInferno.UI.AII;
 
 namespace FinalInferno{
     public delegate void SkillDelegate(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f);
+    public class BattleUnitEvent : UnityEvent<BattleUnit> {}
     
     //representa todos os buffs/debuffs, dano etc que essa unidade recebe
     [RequireComponent(typeof(Animator)),RequireComponent(typeof(SpriteRenderer)),RequireComponent(typeof(AudioSource))]
     public class BattleUnit : MonoBehaviour{
-        public Unit unit; //referencia para os atributos base dessa unidade
+        // Status e listas necessarios para a batalha
+        public Unit Unit { get; private set; } = null; //referencia para os atributos base dessa unidade
         public int MaxHP { private set; get; }
+        [Header("Battle Info")]
         private int curHP; //vida atual dessa unidade, descontando dano da vida maxima
         public int CurHP { get{ return curHP; } private set{ curHP = Mathf.Clamp(value, 0, MaxHP); } }
         public int curDmg; //dano atual dessa unidade, contando status de buff/debuff
@@ -23,16 +27,6 @@ namespace FinalInferno{
             get{
                 float maxReduction = 0.75f;
                 return Mathf.Clamp(maxReduction * (curSpeed / (Unit.maxStatValue * 1.0f)), 0.0f, maxReduction);
-            }
-        }
-        private bool hasGhostAnim = false;
-        public bool Ghost{
-            set{
-                if(value && CurHP <= 0 && hasGhostAnim){
-                    animator.SetBool("Ghost", true);
-                }else if (!value && hasGhostAnim){
-                    animator.SetBool("Ghost", false);
-                }
             }
         }
         public int actionPoints; //define a posicao em que essa unidade agira no combate
@@ -47,6 +41,8 @@ namespace FinalInferno{
         private Dictionary<Element, float> elementalResistances = new Dictionary<Element, float>();
         public List<StatusEffect> effects; //lista de status fazendo efeito nessa unidade
         private List<Skill> activeSkills; // lista de skills ativas que essa unidade pode usar
+
+        // Callbacks da unidade
         public ReadOnlyCollection<Skill> ActiveSkills { get => activeSkills.AsReadOnly(); }
 
         public SkillDelegate OnEndBattle = null;
@@ -59,16 +55,41 @@ namespace FinalInferno{
         public SkillDelegate OnHeal = null;
         public SkillDelegate OnDeath = null;
         public SkillDelegate OnSkillUsed = null;
+        [HideInInspector]
+        public BattleUnitEvent OnTurnStart = new BattleUnitEvent();
+        [HideInInspector]
+        public BattleUnitEvent OnTurnEnd = new BattleUnitEvent();
+
+        // Referencias para objetos na cena
+        [Header("References")]
         public UnitItem battleItem;
         [SerializeField] private UI.Battle.DamageIndicator damageIndicator;
-
+        [SerializeField] private RectTransform reference;
+        public RectTransform Reference => reference;
+        [SerializeField] private StatusVFXHandler statusEffectHandler;
+        public StatusVFXHandler StatusVFXHandler { get => statusEffectHandler; }
         private Animator animator;
         private AudioSource audioSource;
         private Transform canvasTransform;
-        private Sprite portrait;
-        public Sprite Portrait { get => portrait; }
-        private Sprite queueSprite;
-        public Sprite QueueSprite { get => queueSprite; }
+
+        // Propriedades auxiliares
+        private bool hasGhostAnim = false;
+        public bool Ghost{
+            set{
+                if(value && CurHP <= 0 && hasGhostAnim){
+                    animator.SetBool("Ghost", true);
+                }else if (!value && hasGhostAnim){
+                    animator.SetBool("Ghost", false);
+                }
+            }
+        }
+        public Sprite Portrait { get; private set; }
+        public Sprite QueueSprite { get; private set; }
+        public Vector2 DefaultSkillPosition { get; private set; } = Vector2.zero;
+        public Vector2 HeadPosition { get; private set; } = Vector2.zero;
+        public Vector2 TorsoPosition { get; private set; } = Vector2.zero;
+        public Vector2 FeetPosition { get; private set; } = Vector2.zero;
+        public Vector2 OverheadPosition {get; private set; } = Vector2.zero;
 
         public void Awake(){
             animator = GetComponent<Animator>();
@@ -79,17 +100,47 @@ namespace FinalInferno{
         }
 
         public void Configure(Unit unit, bool isMorph = false, float curHPMultiplier = 1.0f){
-            this.unit = unit;
+            if(Unit != null && !isMorph){
+                Debug.LogError("Tentou configurar uma unidade já configurada");
+                return;
+            }
+
+            Unit = unit;
             this.name = unit.name;
 
             // Seta configuracoes de renderizacao
-            GetComponent<SpriteRenderer>().sprite = unit.BattleSprite;
-            damageIndicator.GetComponent<RectTransform>().anchoredPosition += new Vector2(0, GetComponent<SpriteRenderer>().sprite.bounds.size.y);
+            // Essa configuração inicial serve para definir a altura dos objetos que dependem dela
+            SpriteRenderer sr = GetComponent<SpriteRenderer>();
+            sr.sprite = unit.BattleSprite;
+            // FeetPosition = Vector2.zero; // Ja esta inicializado com esse valor
+            HeadPosition = new Vector2(-((sr.sprite.bounds.size.x * unit.EffectsRelativePosition.x) - (sr.sprite.pivot.x / sr.sprite.pixelsPerUnit)),
+                                        ((sr.sprite.bounds.size.y * unit.EffectsRelativePosition.y) - (sr.sprite.pivot.y / sr.sprite.pixelsPerUnit)) );
+            OverheadPosition = new Vector2(FeetPosition.x, sr.sprite.bounds.size.y);
+            Vector2 aux = (HeadPosition - FeetPosition) / 3;
+            TorsoPosition = FeetPosition + new Vector2(2 * aux.x, 2 * aux.y);
+            switch(unit.DefaultTargetPosition){
+                case Unit.BodyPosition.Feet:
+                    DefaultSkillPosition = FeetPosition;
+                    break;
+                case Unit.BodyPosition.Torso:
+                    DefaultSkillPosition = TorsoPosition;
+                    break;
+                case Unit.BodyPosition.Head:
+                    DefaultSkillPosition = HeadPosition;
+                    break;
+                case Unit.BodyPosition.Overhead:
+                    DefaultSkillPosition = OverheadPosition;
+                    break;
+            }
+            // move o objeto de status effects e o indicador de dano para HeadPosition
+            damageIndicator.GetComponent<RectTransform>().anchoredPosition += new Vector2(HeadPosition.x, HeadPosition.y+0.35f);
+            statusEffectHandler.transform.localPosition = new Vector3(HeadPosition.x, HeadPosition.y+0.35f);
+
             animator.runtimeAnimatorController = unit.Animator;
             hasGhostAnim = System.Array.Find(animator.parameters, parameter => parameter.name == "Ghost") != null;
             // Debug.Log($"Unit {name} hasGhostAnim? {hasGhostAnim}");
-            queueSprite = unit.QueueSprite;
-            portrait = unit.Portrait;
+            QueueSprite = unit.QueueSprite;
+            Portrait = unit.Portrait;
 
 
             // Aplica os status base da unidade
@@ -128,6 +179,9 @@ namespace FinalInferno{
             }else{
                 activeSkills.Clear();
             }
+
+            // Manda as configurações base para o handler de status effects
+            statusEffectHandler.Setup(this, sr.sortingOrder+1);
 
             // Percorre a lista de skills da unidade
             foreach(Skill skill in unit.skills){
@@ -190,9 +244,14 @@ namespace FinalInferno{
             bool deadUnit = CurHP <= 0;
             // Atualiza os status effects depois, pois alguns deles afetam o aggro
             foreach (StatusEffect effect in effects.ToArray()){
-                if(effect.Update())
-                    effects.Remove(effect);
+                if(!effect.Update()){
+                    statusEffectHandler.UpdateEffect(effect);
+                    // A remoção acontece automaticamente, então a condição do if foi invertida
+                    // effects.Remove(effect);
+                }
             }
+            statusEffectHandler.ApplyChanges();
+
             // Se uma unidade já morta não tem mais status effects, mata ela de novo
             // Por padrão unidades mortas tem o callback OnDeath setado para null, então nada acontece
             // Isso pode ser usado por um status effect em casos mais específicos que o DelayedSkill não cubra
@@ -204,6 +263,52 @@ namespace FinalInferno{
         public void ShowDamage(int value, bool isHeal, float multiplier){
             // Show damage ignoring value changes and animations
             damageIndicator?.ShowDamage(value, isHeal, multiplier);
+        }
+
+        public StatusEffect AddEffect(StatusEffect statusEffect, bool ignoreCallback = false){
+            if(statusEffect.Failed){
+                damageIndicator.ShowMiss();
+                return null;
+            }
+
+            if(BattleManager.instance.currentUnit != this) 
+                BattleManager.instance.Revive(this); // Se certifica que unidades com status effects aparecem na fila, mesmo mortas
+                
+            effects.Add(statusEffect);
+            statusEffectHandler.AddEffect(statusEffect);
+            statusEffect.Source.aggro += statusEffect.AggroOnApply;
+            
+            List<BattleUnit> targets = new List<BattleUnit>();
+            targets.Add(statusEffect.Target);
+            targets.Add(statusEffect.Source);
+            foreach(BattleUnit bUnit in BattleManager.instance.battleUnits){
+                if(!targets.Contains(bUnit))
+                    targets.Add(bUnit);
+            }
+
+            switch(statusEffect.Type){
+                case StatusType.Buff:
+                    // chama o callback de receber buff com o status effect atual (value1 = index do status effect novo)
+                    if(OnReceiveBuff != null && !ignoreCallback){
+                        OnReceiveBuff(statusEffect.Target, targets, true, effects.IndexOf(statusEffect));
+                    }
+                    break;
+                case StatusType.Debuff:
+                    // chama o callback de receber debuff com o status effect atual (value1 = index do status effect novo)
+                    if(OnReceiveDebuff != null && !ignoreCallback){
+                        OnReceiveDebuff(statusEffect.Target, targets, true, effects.IndexOf(statusEffect));
+                    }
+                    break;
+            }
+
+            return statusEffect;
+        }
+
+        public void RemoveEffect(StatusEffect effect){
+            if(effects.Contains(effect)){
+                effects.Remove(effect);
+                statusEffectHandler.RemoveEffect(effect);
+            }
         }
 
         public int Heal(int atk, float multiplier, BattleUnit healer = null){
@@ -219,7 +324,7 @@ namespace FinalInferno{
             damageIndicator.ShowDamage(Mathf.Abs(damage), (damage <= 0), (1.0f - healResistance));
 
             // Aplica o aggro pra cura
-            if(healer != null && (unit.IsHero == healer.unit.IsHero)){
+            if(healer != null && (Unit.IsHero == healer.Unit.IsHero)){
                 healer.aggro += 0.7f * 100f * Mathf.Max(-damage, 0f) / (1.0f * MaxHP);
             }
 
@@ -253,7 +358,7 @@ namespace FinalInferno{
             damageIndicator.ShowDamage(Mathf.Abs(damage), (damage < 0), elementalResistances[element]);
 
             // Aplica o aggro pra dano
-            if(attacker != null && (unit.IsHero != attacker.unit.IsHero)){
+            if(attacker != null && (Unit.IsHero != attacker.Unit.IsHero)){
                 attacker.aggro += 0.5f * 100f * Mathf.Max(damage, 0f) / (1.0f * MaxHP);
             }
 
@@ -284,8 +389,8 @@ namespace FinalInferno{
             // Reseta o aggro
             aggro = 0;
             stuns = 0;
-            if(unit is Enemy){
-                audioSource.PlayOneShot((unit as Enemy)?.EnemyCry);
+            if(Unit is Enemy){
+                audioSource.PlayOneShot((Unit as Enemy)?.EnemyCry);
             }
 
             BattleManager.instance.Kill(this);
@@ -318,7 +423,7 @@ namespace FinalInferno{
         }
 
         public void ResetMaxHP(){ // Funcao que deve ser chamada no final da batalha
-            MaxHP = unit.hpMax;
+            MaxHP = Unit.hpMax;
             if(curHP > 0){
                 CurHP += hpOnHold;
             }
@@ -327,49 +432,10 @@ namespace FinalInferno{
             BattleManager.instance.UpdateLives();
         }
 
-        public StatusEffect AddEffect(StatusEffect statusEffect, bool ignoreCallback = false){
-            if(statusEffect.Failed)
-                return null;
-
-            if(BattleManager.instance.currentUnit != this) 
-                BattleManager.instance.Revive(this); // Se certifica que unidades com status effects aparecem na fila, mesmo mortas
-                
-            effects.Add(statusEffect);
-            statusEffect.Source.aggro += statusEffect.AggroOnApply;
-            
-            List<BattleUnit> targets = new List<BattleUnit>();
-            targets.Add(statusEffect.Target);
-            targets.Add(statusEffect.Source);
-            foreach(BattleUnit bUnit in BattleManager.instance.battleUnits){
-                if(!targets.Contains(bUnit))
-                    targets.Add(bUnit);
-            }
-            // targets.AddRange(BattleManager.instance.GetTeam(UnitType.Hero));
-            // targets.AddRange(BattleManager.instance.GetTeam(UnitType.Enemy));
-            // targets.AddRange(BattleManager.instance.battleUnits);
-
-            switch(statusEffect.Type){
-                case StatusType.Buff:
-                    // chama o callback de receber buff com o status effect atual (value1 = index do status effect novo)
-                    if(OnReceiveBuff != null && !ignoreCallback){
-                        OnReceiveBuff(statusEffect.Target, targets, true, effects.IndexOf(statusEffect));
-                    }
-                    break;
-                case StatusType.Debuff:
-                    // chama o callback de receber debuff com o status effect atual (value1 = index do status effect novo)
-                    if(OnReceiveDebuff != null && !ignoreCallback){
-                        OnReceiveDebuff(statusEffect.Target, targets, true, effects.IndexOf(statusEffect));
-                    }
-                    break;
-            }
-
-            return statusEffect;
-        }
-
         public void SkillSelected(){
             // BattleManager.instance.UpdateQueue(Mathf.FloorToInt(BattleSkillManager.currentSkill.cost * (1.0f - ActionCostReduction) ));
             // Debug.Log("Começou a animação de ataque");
-            if(BattleSkillManager.currentSkill != unit.defenseSkill){
+            if(BattleSkillManager.currentSkill != Unit.defenseSkill){
                 animator.SetTrigger("UseSkill");
             }else{
                 UseSkill();
@@ -389,9 +455,9 @@ namespace FinalInferno{
         public void ChangeColor()
         {
             // Change color according to rank
-            GetComponent<SpriteRenderer>().color = unit.color;
+            GetComponent<SpriteRenderer>().color = Unit.color;
             foreach(SpriteRenderer sr in gameObject.GetComponentsInChildren<SpriteRenderer>()){
-                sr.color = unit.color;
+                sr.color = Unit.color;
             }
         }
     }

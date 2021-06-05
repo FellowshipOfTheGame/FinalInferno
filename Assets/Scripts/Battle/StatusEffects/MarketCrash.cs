@@ -5,6 +5,7 @@ using UnityEngine;
 namespace FinalInferno{
     public class MarketCrash : StatusEffect
     {
+        public override StatusEffectVisuals VFXID { get => StatusEffectVisuals.MarketCrash; }
         public override StatusType Type { get{ return StatusType.None; } }
         public override float Value { get{ return currentReduction; } }
         float currentReduction;
@@ -27,7 +28,9 @@ namespace FinalInferno{
         }
 
         public override bool Apply(bool force = false){
-            if(!base.Apply(force)){
+            // Esse status effect não pode ser aplicado mais de uma vez
+            // No caso de market crash ele fica na lista do Source e não do Target
+            if(!base.Apply(force) || Source.effects.Find(effect => effect.GetType() == typeof(MarketCrash)) != null){
                 return false;
             }
             Target.healResistance += currentReduction;

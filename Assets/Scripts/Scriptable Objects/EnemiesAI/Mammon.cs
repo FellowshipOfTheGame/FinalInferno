@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using FinalInferno;
 using FinalInferno.UI.Battle;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace FinalInferno{
     [CreateAssetMenu(fileName = "Mammon ", menuName = "ScriptableObject/Enemy/Mammon")]
@@ -56,4 +59,16 @@ namespace FinalInferno{
             return defenseSkill;
         }
     }
+
+    #if UNITY_EDITOR
+    [CustomPreview(typeof(Mammon))]
+    public class MammonPreview : UnitPreview{
+        public override bool HasPreviewGUI(){
+            return base.HasPreviewGUI();
+        }
+        public override void OnInteractivePreviewGUI(Rect r, GUIStyle background){
+            base.OnInteractivePreviewGUI(r, background);
+        }
+    }
+    #endif
 }

@@ -9,7 +9,7 @@ namespace FinalInferno{
         public override string Description { get { return "Level up skills"; } }
         public override void Apply(BattleUnit source, BattleUnit target) {
             List<BattleUnit> team = BattleManager.instance.GetTeam(UnitType.Enemy);
-            foreach (EnemySkill skill in team[0].unit.skills){
+            foreach (EnemySkill skill in team[0].Unit.skills){
                 skill.LevelUp();
             }
         }

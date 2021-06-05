@@ -18,7 +18,7 @@ namespace FinalInferno.UI.Battle.QueueMenu
         }
         void GetSkill()
         {
-            skill = (BattleManager.instance.currentUnit != null)? BattleManager.instance.currentUnit.unit.defenseSkill : null;
+            skill = (BattleManager.instance.currentUnit != null)? BattleManager.instance.currentUnit.Unit.defenseSkill : null;
             if(skill != null){
                 skillListManager.UpdateSkillDescription(skill);
                 // Mostra o console e pede preview de skill

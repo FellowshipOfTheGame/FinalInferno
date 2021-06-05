@@ -35,21 +35,28 @@ namespace FinalInferno.UI.Battle{
             Weak,
             Strong
         }
-        private List<DamageEntry> queue = new List<DamageEntry>();
+        private List<DamageEntry?> queue = new List<DamageEntry?>();
 
         private void InstantiateNewNumber(DamageEntry entry){
             GameObject newObj = Instantiate(numberPrefab, transform);
             UnityEngine.UI.Text txt = newObj.GetComponent<UnityEngine.UI.Text>();
             if(entry.strength == DamageStrength.Strong){
                 txt.color = (entry.isHeal)? critHealColor : critDamageColor;
-                txt.fontSize = Mathf.FloorToInt(txt.fontSize * critFontSize);
+                txt.fontSize = Mathf.CeilToInt(txt.fontSize * critFontSize);
             }else if(entry.strength == DamageStrength.Weak){
                 txt.color = (entry.isHeal)? weakHealColor : weakDamageColor;
-                txt.fontSize = Mathf.FloorToInt(txt.fontSize * weakFontSize);
+                txt.fontSize = Mathf.CeilToInt(txt.fontSize * weakFontSize);
             }else{
                 txt.color = (entry.isHeal)? healColor : damageColor;
             }
             txt.text = "" + entry.value;
+        }
+
+        private void InstantiateMissWord(){
+            GameObject newObj = Instantiate(numberPrefab, transform);
+            UnityEngine.UI.Text txt = newObj.GetComponent<UnityEngine.UI.Text>();
+            txt.color = Color.white;
+            txt.text = "miss";
         }
 
         public void ShowDamage(int value, bool isHeal, float multiplier){
@@ -63,6 +70,10 @@ namespace FinalInferno.UI.Battle{
             queue.Add(new DamageEntry(value, isHeal, strength));
         }
 
+        public void ShowMiss(){
+            queue.Add(null);
+        }
+
         void Awake(){
             GetComponent<Canvas>().worldCamera = Camera.main;
         }
@@ -73,9 +84,14 @@ namespace FinalInferno.UI.Battle{
             if(cooldown <= float.Epsilon && queue.Count > 0){
                 cooldown = intervalBetweenNumbers;
 
-                DamageEntry popped = queue[0];
+                DamageEntry? popped = queue[0];
                 queue.RemoveAt(0);
-                InstantiateNewNumber(popped);
+
+                if(popped.HasValue){
+                    InstantiateNewNumber(popped.Value);
+                }else{
+                    InstantiateMissWord();
+                }
             }else if(cooldown > 0){
                 cooldown -= Time.deltaTime;
             }

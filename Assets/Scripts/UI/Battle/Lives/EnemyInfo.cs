@@ -41,7 +41,7 @@ namespace FinalInferno.UI.Battle.LifeMenu
         /// </summary>
         public override void UpdateUnitLife()
         {
-            thisEnemy = (Enemy) thisUnit.unit;
+            thisEnemy = (Enemy) thisUnit.Unit;
 
             nameText.text = thisEnemy.name.ToUpper();
             nameText.color = thisEnemy.color;

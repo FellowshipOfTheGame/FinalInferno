@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace FinalInferno{
     public class DamageDrained : StatusEffect {
+        public override StatusEffectVisuals VFXID { get => StatusEffectVisuals.DamageDrained; }
         public override StatusType Type { get{ return StatusType.Debuff; } }
         public override float Value { get{ return dmgValue; } }
         private int dmgValue;

@@ -35,7 +35,7 @@ namespace FinalInferno{
 
             (unitIndex.UnitList[index] as Enemy)?.LevelEnemy();
             target.Configure(unitIndex.UnitList[index], true, percentage);
-            UI.Battle.BattleUnitsUI.Instance.UpdateBattleUnitSize(target);
+            UI.Battle.BattleUnitsUI.Instance.UpdateBattleUnitSize(target, BattleManager.instance.CameraPPU);
 
             int hpDifference = target.CurHP - previousHP;
             if(hpDifference != 0){
