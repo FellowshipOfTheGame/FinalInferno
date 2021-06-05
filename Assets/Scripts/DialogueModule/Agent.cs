@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Fog.Dialogue{
     [RequireComponent(typeof(Collider2D))]
@@ -30,6 +31,7 @@ namespace Fog.Dialogue{
         [HideInInspector]
         public bool canInteract;
         private bool isProcessingInput;
+        [SerializeField] private InputActionReference interactAction;
 
         public List<IInteractable> collidingInteractables = new List<IInteractable>();
 
@@ -51,7 +53,7 @@ namespace Fog.Dialogue{
         void Update()
         {
             // Esse botao precisa ser declarado nos inputs do projeto
-            if (Input.GetButtonDown("Submit") && wait <= 0) {
+            if (interactAction.action.triggered && wait <= 0) {
                 wait = nFramesCooldown;
                 if (!isProcessingInput && canInteract) {
                     isProcessingInput = true;
