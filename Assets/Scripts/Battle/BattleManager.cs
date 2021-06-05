@@ -9,7 +9,7 @@ namespace FinalInferno{
 
     public class BattleManager : MonoBehaviour{
         
-        public static BattleManager instance;
+        public static BattleManager instance = null;
 
         public FinalInferno.UI.FSM.BoolDecision isBattleReady;
         public List<Unit> units;
@@ -22,6 +22,9 @@ namespace FinalInferno{
         public int MinBaseSpeed {get; private set; } = 0;
 
         public BattleUnitsUI unitsUI;
+
+        [SerializeField] private RectTransform heroesLayout;
+        [SerializeField] private RectTransform enemiesLayout;
 
         public UnitsLives[] unitsLives;
 
@@ -41,6 +44,12 @@ namespace FinalInferno{
             BattleProgress.ResetInfo(Party.Instance);
         }
 
+        void OnDestroy(){
+            if(instance == this){
+                instance = null;
+            }
+        }
+
         // #if UNITY_EDITOR
         public void Update(){
             if(StaticReferences.DebugBuild){
@@ -57,6 +66,7 @@ namespace FinalInferno{
         // #endif
 
         public void PrepareBattle(){
+            int ppu = Camera.main.gameObject.GetComponent<UnityEngine.U2D.PixelPerfectCamera>().assetsPPU;
             MaxBaseSpeed = 0;
             MinBaseSpeed = Unit.maxStatValue;
             foreach(Unit unit in units){
@@ -68,18 +78,34 @@ namespace FinalInferno{
                     BattleProgress.addHeroSkills((Hero)unit);
                 }
 
-                BattleUnit newUnit = BattleUnitsUI.instance.LoadUnit(unit);
+                BattleUnit newUnit = BattleUnitsUI.instance.LoadUnit(unit, ppu);
                 battleUnits.Add(newUnit);
                 float initiative = newUnit.curSpeed;
                 // Debug.Log("Carregou " + unit.name);
 
                 if(!unit.IsHero){
                     newUnit.ChangeColor();
-                    (newUnit.unit as Enemy).ResetParameters();
+                    (newUnit.Unit as Enemy).ResetParameters();
                 }
             }
 
+            // Depois de adicionar todas as unidades força os layouts a atualizar a posição
+            UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(enemiesLayout);
+            UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(heroesLayout);
+            // Canvas.ForceUpdateCanvases();
+
+            // Agora que as posições estão atualizadas podemos fazer esse setup
             foreach(BattleUnit bUnit in battleUnits){
+                bUnit.battleItem.Setup();
+            }
+
+            foreach(BattleUnit bUnit in battleUnits){
+                // Unidades compostas precisam dar override na posição inicial e nos callbacks de movimento
+                CompositeBattleUnit composite = bUnit.GetComponent<CompositeBattleUnit>();
+                if(composite != null){
+                    composite.Setup();
+                }
+
                 float initiative = bUnit.curSpeed;
                 // As unidades são inseridas na fila como se a unidade mais lenta houvesse executado uma ação de custo (Skill.maxCost+Skill.baseCost)/2
                 // e as demais estivessem espaçadas linearmente de acordo com a diferença de speed entre a unidade mais rapida e a mais lenta
@@ -109,6 +135,9 @@ namespace FinalInferno{
         public void UpdateTurn(bool ignoreStatusEffects = false)
         {
             currentUnit = queue.Dequeue();
+            if(currentUnit != null){
+                currentUnit.OnTurnStart?.Invoke(currentUnit);
+            }
             if(!ignoreStatusEffects){
                 currentUnit.UpdateStatusEffects();
             }
@@ -123,6 +152,9 @@ namespace FinalInferno{
         {
             if(!ignoreCurrentUnit){
                 BattleUnit bu = currentUnit;
+                if(currentUnit != null){
+                    currentUnit.OnTurnEnd?.Invoke(currentUnit);
+                }
                 currentUnit = null;
                 queue.Enqueue(bu, cost);
             }
@@ -140,7 +172,7 @@ namespace FinalInferno{
             if(currentUnit == null){
                 return UnitType.Null;
             }
-            return GetUnitType(currentUnit.unit);
+            return GetUnitType(currentUnit.Unit);
         }
 
         public void Kill(BattleUnit unit){
@@ -158,6 +190,7 @@ namespace FinalInferno{
 
                 // Se a unidade que morreu era a unidade atual coloca referencia nula para unidade atual
                 if (currentUnit == unit){
+                    currentUnit.OnTurnEnd?.Invoke(currentUnit);
                     currentUnit = null;
                 }
             }
@@ -166,7 +199,7 @@ namespace FinalInferno{
 
         public void Revive(BattleUnit unit){
             if(!queue.Contains(unit) && currentUnit != unit){
-                unit.actionPoints = Mathf.FloorToInt(unit.unit.attackSkill.cost);
+                unit.actionPoints = Mathf.FloorToInt(unit.Unit.attackSkill.cost);
                 queue.Enqueue(unit, 0);
                 unitsUI.ReinsertUnit(unit);
             }
@@ -192,12 +225,12 @@ namespace FinalInferno{
 
             if(!countDead){
                 foreach(BattleUnit unit in battleUnits){
-                    if (unit.CurHP > 0 && GetUnitType(unit.unit) == type)
+                    if (unit.CurHP > 0 && GetUnitType(unit.Unit) == type)
                         team.Add(unit);
                 }
             }else{
                 foreach(BattleUnit unit in battleUnits){
-                    if((GetUnitType(unit.unit) == type) && ( !deadOnly ||(deadOnly && unit.CurHP <= 0)))
+                    if((GetUnitType(unit.Unit) == type) && ( !deadOnly ||(deadOnly && unit.CurHP <= 0)))
                         team.Add(unit);
                 }
             }
@@ -206,11 +239,11 @@ namespace FinalInferno{
         }
 
         public List<BattleUnit> GetTeam(BattleUnit battleUnit, bool countDead = false, bool deadOnly = false){
-            return GetTeam(GetUnitType(battleUnit.unit), countDead, deadOnly);
+            return GetTeam(GetUnitType(battleUnit.Unit), countDead, deadOnly);
         }
 
         public List<BattleUnit> GetEnemies(BattleUnit battleUnit, bool countDead = false, bool deadOnly = false){
-            return GetTeam(((battleUnit.unit.IsHero)? UnitType.Enemy : UnitType.Hero), countDead, deadOnly);
+            return GetTeam(((battleUnit.Unit.IsHero)? UnitType.Enemy : UnitType.Hero), countDead, deadOnly);
         }
 
         public List<BattleUnit> GetEnemies(UnitType type, bool countDead = false, bool deadOnly = false){
@@ -219,7 +252,7 @@ namespace FinalInferno{
 
         public BattleUnit GetBattleUnit(Unit unit){
             foreach(BattleUnit bUnit in battleUnits){
-                if(bUnit.unit == unit) return bUnit;
+                if(bUnit.Unit == unit) return bUnit;
             }
             return null;
         }

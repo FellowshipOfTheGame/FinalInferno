@@ -22,7 +22,8 @@ namespace FinalInferno{
         }
 
         public override bool Apply(bool force = false) {
-            if(!base.Apply(force))
+            // Defending não pode ser aplicado mais de uma vez
+            if(!base.Apply(force) || Target.effects.Find(effect => effect.GetType() == typeof(Defending)) != null )
                 return false;
             Target.curDef += defValue;
             Target.curMagicDef += resValue;

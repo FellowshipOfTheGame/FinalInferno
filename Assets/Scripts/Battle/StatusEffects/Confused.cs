@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace FinalInferno{
     public class Confused : StatusEffect {
+        public override StatusEffectVisuals VFXID { get => StatusEffectVisuals.Confused; }
         public override StatusType Type { get{ return StatusType.Undesirable; } }
         public override float Value { get{ return Duration; } }
 
@@ -43,7 +44,7 @@ namespace FinalInferno{
                 List<BattleUnit> enemy = new List<BattleUnit>();
                 enemy.Add(allies[selected]);
 
-                Target.unit.attackSkill.Use(Target, enemy);
+                Target.Unit.attackSkill.Use(Target, enemy);
             }
 
             return false;

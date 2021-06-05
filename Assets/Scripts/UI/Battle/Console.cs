@@ -35,15 +35,15 @@ namespace FinalInferno.UI.Battle
                     }else if(System.Array.Find<StatusEffect>(array, effect => effect is Paralyzed) != null){
                         reasonCantAct = "is paralyzed";
                     }else if(System.Array.Find<StatusEffect>(array, effect => effect is VengefulGhost) != null){
-                        reasonCantAct = "<color=#" + ColorUtility.ToHtmlStringRGBA(BattleSkillManager.currentUser.unit.color) + ">"
+                        reasonCantAct = "<color=#" + ColorUtility.ToHtmlStringRGBA(BattleSkillManager.currentUser.Unit.color) + ">"
                         + "Ghost</color> attacks";
                     }
 
-                    ConsoleText.text = "<color=#" + ColorUtility.ToHtmlStringRGBA(BattleSkillManager.currentUser.unit.color) + ">"
-                            + BattleSkillManager.currentUser.unit.name + "</color> " + reasonCantAct;
+                    ConsoleText.text = "<color=#" + ColorUtility.ToHtmlStringRGBA(BattleSkillManager.currentUser.Unit.color) + ">"
+                            + BattleSkillManager.currentUser.Unit.name + "</color> " + reasonCantAct;
                 }else{
-                    ConsoleText.text = "<color=#" + ColorUtility.ToHtmlStringRGBA(BattleSkillManager.currentUser.unit.color) + ">"
-                            + BattleSkillManager.currentUser.unit.name + "</color> used " + BattleSkillManager.currentSkill.name;
+                    ConsoleText.text = "<color=#" + ColorUtility.ToHtmlStringRGBA(BattleSkillManager.currentUser.Unit.color) + ">"
+                            + BattleSkillManager.currentUser.Unit.name + "</color> used " + BattleSkillManager.currentSkill.name;
                 }
             }
         }

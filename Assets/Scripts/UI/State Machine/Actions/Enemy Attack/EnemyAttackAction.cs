@@ -18,7 +18,7 @@ namespace FinalInferno.UI.FSM
         /// <param name="controller"> O controlador da máquina de estados. </param>
         public override void Act(StateController controller)
         {
-            Enemy currentEnemy = (Enemy) BattleManager.instance.currentUnit.unit;
+            Enemy currentEnemy = (Enemy) BattleManager.instance.currentUnit.Unit;
             currentEnemy.AIEnemy();
         }
 

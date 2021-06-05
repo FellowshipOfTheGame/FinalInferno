@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using FinalInferno;
 using FinalInferno.UI.Battle;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace FinalInferno{
     [CreateAssetMenu(fileName = "Overseer", menuName = "ScriptableObject/Enemy/Overseer")]
@@ -17,4 +20,16 @@ namespace FinalInferno{
             return attackSkill; //decide usar ataque basico
         }
     }
+
+    #if UNITY_EDITOR
+    [CustomPreview(typeof(Overseer))]
+    public class OverseerPreview : UnitPreview{
+        public override bool HasPreviewGUI(){
+            return base.HasPreviewGUI();
+        }
+        public override void OnInteractivePreviewGUI(Rect r, GUIStyle background){
+            base.OnInteractivePreviewGUI(r, background);
+        }
+    }
+    #endif
 }

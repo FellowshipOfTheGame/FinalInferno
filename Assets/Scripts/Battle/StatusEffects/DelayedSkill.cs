@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace FinalInferno{
     public class DelayedSkill : StatusEffect {
+        public override StatusEffectVisuals VFXID { get => StatusEffectVisuals.DelayedSkill; }
         SkillDelegate callback = null;
         public override StatusType Type { get{ return StatusType.None; } }
         public override float Value { get{ return value1; } }
