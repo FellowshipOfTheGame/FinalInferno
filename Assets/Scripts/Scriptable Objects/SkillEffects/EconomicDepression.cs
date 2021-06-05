@@ -10,7 +10,7 @@ namespace FinalInferno{
         // value2 = element for DoT
         public override string Description {
             get {
-                string desc = "Applies MarketCrash to the source with all enemies as targets. Each turn after applying, source damage taken and enemies' healing received are reduced, and enemies take" + value1 + "x " + DmgType + " pure damage";
+                string desc = "Applies Market Crash to the source with all enemies as targets. Each turn after applying, source damage taken and enemies' healing received are reduced, and enemies take" + value1 + "x " + DmgType + " pure damage";
                 return desc;
             }
         }

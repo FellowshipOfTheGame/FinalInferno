@@ -21,7 +21,7 @@ namespace FinalInferno{
             if(value1 != 0)
                 target.Heal(source.curDmg, value1, source);
             if(value2 != 0)
-                target.Heal(target.unit.hpMax, value2, source);
+                target.Heal(target.Unit.hpMax, value2, source);
         }
     }
 }

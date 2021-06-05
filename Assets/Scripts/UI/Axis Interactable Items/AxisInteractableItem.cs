@@ -14,7 +14,15 @@ namespace FinalInferno.UI.AII
         /// <summary>
         /// Referência que se mostra visível quando o item está ativo.
         /// </summary>
-        [SerializeField] private UIBehaviour activeReference;
+        [SerializeField] private UIBehaviour activeReference = null;
+        public UIBehaviour ActiveReference {
+            get => activeReference;
+            set{
+                if(activeReference == null){
+                    activeReference = value;
+                }
+            }
+        }
 
         /// <summary>
         /// Base para as ações do item.
@@ -58,10 +66,8 @@ namespace FinalInferno.UI.AII
 
         public virtual void Awake()
         {
-            if(activeReference){
-                OnEnter += EnableReference;
-                OnExit += DisableReference;
-            }
+            OnEnter += EnableReference;
+            OnExit += DisableReference;
         }
 
         /// <summary>
@@ -93,7 +99,9 @@ namespace FinalInferno.UI.AII
         /// </summary>
         public void EnableReference()
         {
-            activeReference.enabled = true;
+            if(activeReference){
+                activeReference.enabled = true;
+            }
         }
 
         /// <summary>
@@ -101,7 +109,9 @@ namespace FinalInferno.UI.AII
         /// </summary>
         public void DisableReference()
         {
-            activeReference.enabled = false;
+            if(activeReference){
+                activeReference.enabled = false;
+            }
         }
     }
 

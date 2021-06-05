@@ -20,13 +20,13 @@ namespace FinalInferno.UI.FSM
             // Revive todos os heroes para garantir que as funções de callback serão chamadas propriamente
             // Reseta o maxhp das unidades, desfazendo aumentos e reduções causados por skills
             foreach(BattleUnit battleUnit in BattleManager.instance.battleUnits){
-                if(battleUnit.unit.IsHero && battleUnit.CurHP <= 0){
+                if(battleUnit.Unit.IsHero && battleUnit.CurHP <= 0){
                     battleUnit.Revive();
                 }
                 battleUnit.ResetMaxHP();
 
                 // Remove os status effects dos inimigos
-                if(!battleUnit.unit.IsHero){
+                if(!battleUnit.Unit.IsHero){
                     foreach(StatusEffect effect in battleUnit.effects.ToArray()){
                         effect.ForceRemove();
                     }
@@ -44,8 +44,8 @@ namespace FinalInferno.UI.FSM
             long xpReward = 0;
             int cerberusCount = 0;
             foreach(BattleUnit battleUnit in BattleManager.instance.battleUnits){
-                if(battleUnit.unit is Enemy){
-                    Enemy enemy = (Enemy)battleUnit.unit;
+                if(battleUnit.Unit is Enemy){
+                    Enemy enemy = (Enemy)battleUnit.Unit;
                     if(enemy is CerberusHead) cerberusCount++;
 
                     xpReward += enemy.BaseExp;

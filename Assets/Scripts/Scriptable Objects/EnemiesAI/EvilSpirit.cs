@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace FinalInferno{
     [CreateAssetMenu(fileName = "Evil Spirit", menuName = "ScriptableObject/Enemy/EvilSpirit")]
@@ -15,4 +18,16 @@ namespace FinalInferno{
             return attackSkill; //decide usar ataque basico
         }
     }
+
+    #if UNITY_EDITOR
+    [CustomPreview(typeof(EvilSpirit))]
+    public class EvilSpiritPreview : UnitPreview{
+        public override bool HasPreviewGUI(){
+            return base.HasPreviewGUI();
+        }
+        public override void OnInteractivePreviewGUI(Rect r, GUIStyle background){
+            base.OnInteractivePreviewGUI(r, background);
+        }
+    }
+    #endif
 }

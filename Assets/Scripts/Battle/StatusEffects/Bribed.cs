@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace FinalInferno{
     public class Bribed : StatusEffect {
+        public override StatusEffectVisuals VFXID { get => StatusEffectVisuals.Bribed; }
         public override StatusType Type { get{ return StatusType.Undesirable; } }
         public override float Value { get{ return Duration; } }
 
@@ -43,7 +44,7 @@ namespace FinalInferno{
                 int dmgDecrease = Mathf.FloorToInt( ((teamSize-1) / (float)teamSize) * Target.curDmg);
 
                 Target.curDmg -= dmgDecrease;
-                Target.unit.attackSkill.Use(Target, allies);
+                Target.Unit.attackSkill.Use(Target, allies);
                 Target.curDmg += dmgDecrease;
             }
 
