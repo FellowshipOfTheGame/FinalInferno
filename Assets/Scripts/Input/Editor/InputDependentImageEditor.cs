@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 namespace FinalInferno.Input{
     [CustomEditor(typeof(InputDependentImage))]
+    [CanEditMultipleObjects]
     public class InputDependentImageEditor : UnityEditor.UI.ImageEditor {
         SerializedProperty inputActions;
         SerializedProperty controlSchemesNames;
