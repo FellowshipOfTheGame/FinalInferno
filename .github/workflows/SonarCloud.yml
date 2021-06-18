@@ -1,42 +1,53 @@
-name: SonarCloud
+name: CI Checks
 on: [push, pull_request]
+env:
+  SONAR_WRAPPER_URL: https://sonarcloud.io/static/cpp/build-wrapper-win-x86.zip
+  SONAR_SCANNER_URL: https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.4.0.2170-windows.zip
 jobs:
-  build:
-    name: Build
+  CIChecks:
     runs-on: windows-latest
     steps:
-      - name: Set up JDK 11
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.11
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: Cache SonarCloud packages
-        uses: actions/cache@v1
-        with:
-          path: ~\sonar\cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-      - name: Cache SonarCloud scanner
-        id: cache-sonar-scanner
-        uses: actions/cache@v1
-        with:
-          path: .\.sonar\scanner
-          key: ${{ runner.os }}-sonar-scanner
-          restore-keys: ${{ runner.os }}-sonar-scanner
-      - name: Install SonarCloud scanner
-        if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
-        shell: powershell
-        run: |
-          New-Item -Path .\.sonar\scanner -ItemType Directory
-          dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
-      - name: Build and analyze
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        shell: powershell
-        run: |
-          .\.sonar\scanner\SonarScanner.MSBuild.exe begin /k:"FellowshipOfTheGame_FinalInferno" /o:"fellowshipofthegame" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          MSBuild.exe FinalInferno.sln /t:Rebuild
-          .\.sonar\scanner\SonarScanner.MSBuild.exe end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+    - name: Checkout branch
+      uses: actions/checkout@master
+      with:
+        # Disabling shallow clone is required to report the correct blame information.
+        fetch-depth: 0
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.0.2
+    - name: Environment
+      shell: bash
+      run: |
+        mkdir -p build
+        org="$(cut -d/ -f1 <<< "$GITHUB_REPOSITORY")"
+        repo="$(cut -d/ -f2 <<< "$GITHUB_REPOSITORY")"
+        echo "SONAR_ORGANIZATION=${org}" >> "$GITHUB_ENV"
+        echo "SONAR_PROJECT_KEY=${org}_${repo}" >> "$GITHUB_ENV"
+    - name: Install Sonar Scanner
+      run: |
+        Invoke-WebRequest -Uri "${{ env.SONAR_WRAPPER_URL }}" -OutFile build/build-wrapper.zip
+        Invoke-WebRequest -Uri "${{ env.SONAR_SCANNER_URL }}" -OutFile build/sonar-scanner.zip
+        Expand-Archive -LiteralPath build/build-wrapper.zip -DestinationPath build
+        Expand-Archive -LiteralPath build/sonar-scanner.zip -DestinationPath build
+    - name: Build with Sonar Wrapper
+      shell: cmd
+      run: |
+        SET PATH=%PATH%;%cd%\build\build-wrapper-win-x86
+        build-wrapper-win-x86-64 --out-dir build\bw_output build-all.bat
+    - name: Prepare Sonar Scanner
+      shell: bash
+      run: |
+        set -x
+        cd build
+        ls -la bw_output
+        mv sonar-scanner-*-windows sonar-scanner
+    - name: Sonar Scanner
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      shell: cmd
+      run: |
+        SET PATH=%PATH%;%cd%\build\sonar-scanner\bin
+        ECHO PATH=%PATH%
+        ECHO DIR %cd%\build\bw_output\
+        DIR %cd%\build\bw_output\
+        sonar-scanner.bat -Dsonar.cfamily.build-wrapper-output=%cd%\build\bw_output
