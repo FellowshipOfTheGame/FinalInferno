@@ -116,7 +116,7 @@ namespace FinalInferno{
                                         ((sr.sprite.bounds.size.y * unit.EffectsRelativePosition.y) - (sr.sprite.pivot.y / sr.sprite.pixelsPerUnit)) );
             OverheadPosition = new Vector2(FeetPosition.x, sr.sprite.bounds.size.y);
             Vector2 aux = (HeadPosition - FeetPosition) / 3;
-            TorsoPosition = FeetPosition + new Vector2(2 * aux.x, aux.y);
+            TorsoPosition = FeetPosition + new Vector2(2 * aux.x, 2 * aux.y);
             switch(unit.DefaultTargetPosition){
                 case Unit.BodyPosition.Feet:
                     DefaultSkillPosition = FeetPosition;

@@ -249,7 +249,7 @@ namespace FinalInferno{
                 // Se o handler não existir é porque o efeito visual não foi implementado
                 // Se o efeito em questão não esta sendo mostrado aqui, ele não deveria ser atualizado aqui
                 if(handlers[index] != null){
-                    Debug.LogError("Tentou atualizar um efeito que não estava no handler");
+                    Debug.LogError($"Tentou atualizar o efeito {effect} que não estava no handler");
                 }
                 return;
             }
