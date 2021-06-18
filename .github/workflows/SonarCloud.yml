@@ -1,4 +1,4 @@
-name: Build
+name: SonarCloud
 on: [push, pull_request]
 jobs:
   build:
@@ -38,5 +38,5 @@ jobs:
         shell: powershell
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"FellowshipOfTheGame_FinalInferno" /o:"fellowshipofthegame" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          MSBuild.exe FinalInferno.sln /t:Rebuild
+          dotnet build FinalInferno.sln
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
