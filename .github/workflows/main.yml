@@ -1,6 +1,7 @@
 name: Actions
 
-on: [push, pull_request]
+on:
+  workflow_dispatch: {}
 
 jobs:
   test:
@@ -19,7 +20,9 @@ jobs:
           path: Library
           key: Library
 
-      - uses: game-ci/unity-test-runner@v2
+      # Run Unity Tests
+      - name: Run Unity Tests
+        uses: game-ci/unity-test-runner@v2
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
