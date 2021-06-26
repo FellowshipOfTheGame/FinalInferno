@@ -1,0 +1,27 @@
+name: Actions
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    name: Testing
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+
+      # Cache
+      - uses: actions/cache@v2
+        with:
+          path: Library
+          key: Library
+
+      - uses: game-ci/unity-test-runner@v2
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          customImage: 'unityci/editor:2020.3.11f1-base-0.13.0'
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
