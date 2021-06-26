@@ -5,6 +5,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+#if UNITY_EDITOR
 public class CreateAssetDatabase : IPreprocessBuildWithReport, IProcessSceneWithReport
 {
     public int callbackOrder{ get => 0; }
@@ -41,3 +42,4 @@ public class CreateAssetDatabase : IPreprocessBuildWithReport, IProcessSceneWith
         }
     }
 }
+#endif
