@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Malee.Editor {
 
+#if UNITY_EDITOR
 	[CustomPropertyDrawer(typeof(ReorderableAttribute))]
 	public class ReorderableDrawer : PropertyDrawer {
 
@@ -135,4 +136,6 @@ namespace Malee.Editor {
 			}
 		}
 	}
+
+#endif
 }
