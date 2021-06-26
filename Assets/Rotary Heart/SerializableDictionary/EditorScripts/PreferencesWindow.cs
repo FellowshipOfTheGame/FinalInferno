@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace RotaryHeart.Lib.SerializableDictionary
 {
+#if UNITY_EDITOR
     public class PreferencesWindow
     {
         #region GUIContent
@@ -62,4 +63,6 @@ namespace RotaryHeart.Lib.SerializableDictionary
             }
         }
     }
+
+#endif
 }
