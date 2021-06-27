@@ -3,6 +3,7 @@ using UnityEditor;
 
 namespace RotaryHeart.Lib.SerializableDictionary
 {
+#if UNITY_EDITOR
     [InitializeOnLoad]
     public class Definer
     {
@@ -52,4 +53,6 @@ namespace RotaryHeart.Lib.SerializableDictionary
             PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup, define);
         }
     }
+
+#endif
 }

@@ -78,11 +78,8 @@ namespace FinalInferno{
                     col.size = new Vector2(0.4f, 0.32f);
                 }
             }
-            if(isMain){
-                moveTo = gameObject.AddComponent<MoveToInput>();
-                movable.Reset();
-                moveTo.Reset();
-                gameObject.AddComponent<Fog.Dialogue.Agent>();
+            if(isMain && !MainOWCharacter){
+                gameObject.GetComponent<Movable>().Reset();
                 gameObject.GetComponent<Rigidbody2D>().useFullKinematicContacts = false;
                 gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
             }else{

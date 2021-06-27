@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 using TMPro;
 
 namespace FinalInferno.UI{
@@ -26,6 +27,7 @@ namespace FinalInferno.UI{
         [SerializeField] private TextMeshProUGUI exp;
         [SerializeField] private TextMeshProUGUI killCount;
         [SerializeField] private TextMeshProUGUI elementalResistances;
+        [SerializeField] private InputActionReference movementAction;
         [Space(10)]
         [SerializeField] private GameObject rightArrow;
         [SerializeField] private GameObject leftArrow;
@@ -168,7 +170,8 @@ namespace FinalInferno.UI{
                         }
                     }
 
-                    float input = Input.GetAxis("Horizontal");
+                    // float input = UnityEngine.Input.GetAxis("Horizontal");
+                    float input = movementAction.action.ReadValue<Vector2>().x;
                     if(input > 0 && currentIndex < enemies.Count-1){
                         currentIndex++;
                         ShowEnemy(enemies[currentIndex]);

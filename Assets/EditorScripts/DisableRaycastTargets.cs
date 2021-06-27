@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEditor.SceneManagement;
 using UnityEngine.UI;
 
+#if UNITY_EDITOR
 public static class DisableRaycastTargets
 {
     [MenuItem("Tools/Final Inferno/Disable Raycast Targets")]
@@ -25,3 +26,4 @@ public static class DisableRaycastTargets
         }
     }
 }
+#endif

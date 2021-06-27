@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor;
 
 namespace FinalInferno{
+#if UNITY_EDITOR
     public class OverworldObjectsMenu : MonoBehaviour
     {
         [MenuItem("GameObject/FinalInferno/Overworld Objects", false, 48)]
@@ -82,4 +83,6 @@ namespace FinalInferno{
             }
         }
     }
+
+#endif
 }
