@@ -6,6 +6,7 @@ using UnityEditor;
 
 namespace Fog.Dialogue{
 
+#if UNITY_EDITOR
     // This shouldn't be here, it wasn't working in the DialogueScrollPanel.cs file so it's here for reasons unknown
     [CustomEditor(typeof(DialogueScrollPanel))]
     public class DialogueScrollPanelEditor : UnityEditor.UI.ScrollRectEditor{
@@ -174,4 +175,6 @@ namespace Fog.Dialogue{
             Selection.activeObject = panelObj;
         }
     }
+
+#endif
 }

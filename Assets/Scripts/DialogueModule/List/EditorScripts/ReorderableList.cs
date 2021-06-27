@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace Malee.Editor {
 
+#if UNITY_EDITOR
 	public class ReorderableList {
 
 		private const float ELEMENT_EDGE_TOP = 1;
@@ -2720,5 +2721,6 @@ namespace Malee.Editor {
 			}
 		}
 	}
-}
 
+#endif
+}

@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using Malee;
 
 namespace Malee.Editor {
 
+#if UNITY_EDITOR
 	[CustomPropertyDrawer(typeof(ReorderableAttribute))]
 	public class ReorderableDrawer : PropertyDrawer {
 
@@ -135,4 +137,6 @@ namespace Malee.Editor {
 			}
 		}
 	}
+
+#endif
 }
