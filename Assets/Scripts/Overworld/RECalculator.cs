@@ -169,6 +169,8 @@ namespace FinalInferno{
                 // A função é chamada no script de preview
                 // Assets/Scripts/UI/Menus/LoadEnemiesPreview.cs
 
+                encounterDecreaseSkill?.Deactivate();
+                encounterIncreaseSkill?.Deactivate();
                 FinalInferno.UI.ChangeSceneUI.isBattle = true;
                 FinalInferno.UI.ChangeSceneUI.battleBG = battleBG;
                 FinalInferno.UI.ChangeSceneUI.battleBGM = battleBGM;
@@ -197,12 +199,10 @@ namespace FinalInferno{
             if(skill == encounterIncreaseSkill){
                 encounterDecreaseSkill?.Deactivate();
                 EncounterIncDistWalked = 0;
-                EncounterDecDistWalked = encounterDecDist;
                 skillModifier = skill.effects[0].value1;
             }else if(skill == encounterDecreaseSkill){
                 encounterIncreaseSkill?.Deactivate();
                 EncounterDecDistWalked = 0;
-                EncounterIncDistWalked = encounterIncDist;
                 skillModifier = skill.effects[0].value1;
             }
 		}
@@ -210,6 +210,11 @@ namespace FinalInferno{
 		public void DeactivatedSkill(OverworldSkill skill){
             if(skill == encounterDecreaseSkill || skill == encounterIncreaseSkill){
                 skillModifier = 1.0f;
+                if(skill == encounterDecreaseSkill){
+                    EncounterDecDistWalked = encounterDecDist;
+                }else{
+                    EncounterIncDistWalked = encounterIncDist;
+                }
             }
 		}
 	}
