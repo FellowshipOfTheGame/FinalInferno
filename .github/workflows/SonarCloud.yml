@@ -1,4 +1,4 @@
-name: SonarCloud
+name: Build
 
 on: [push, pull_request]
 
@@ -12,9 +12,13 @@ jobs:
 
     steps:
       - name: Activate unity
+        # exit code is 1 for manual activation
+        continue-on-error: true
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-        uses: game-ci/unity-activate@v1.3
+        run: |          
+          echo "$UNITY_LICENSE" | tr -d '\r' > UnityLicenseFile.ulf
+          unity-editor -nographics -logFile /dev/stdout -manualLicenseFile UnityLicenseFile.ulf -quit | echo "Activation finished"
 
       - name: Checkout repository
         uses: actions/checkout@v1
