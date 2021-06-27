@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace FinalInferno.UI.AII
 {
@@ -28,6 +29,8 @@ namespace FinalInferno.UI.AII
         /// Eixo que precisa ser ativado para executar a ação do item ativado.
         /// </summary>
         [SerializeField] private string activatorAxis;
+        [SerializeField] private InputActionReference movementAction;
+        [SerializeField] private InputActionReference activationAction;
 
         /// <summary>
         /// Estado do gerenciador.
@@ -40,20 +43,16 @@ namespace FinalInferno.UI.AII
         [SerializeField] private bool interactable;
         public bool Interactable => interactable;
 
-        private bool canClick;
-
         [SerializeField] protected AudioSource AS;
 
 
         public void Awake(){
             currentItem = null;
-            canClick = false;
         }
 
         public void Start()
         {
             active = false;
-            canClick = false;
         }
 
         public void Update()
@@ -61,7 +60,8 @@ namespace FinalInferno.UI.AII
             if (active)
             {
                 // Valida e altera o item ativado se necessário.
-                Vector2 direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+                // Vector2 direction = new Vector2(UnityEngine.Input.GetAxisRaw("Horizontal"), UnityEngine.Input.GetAxisRaw("Vertical"));
+                Vector2 direction = movementAction.action.ReadValue<Vector2>();
                 if (direction == Vector2.up)
                 {
                     if(currentItem!= null && enableInput)
@@ -90,12 +90,9 @@ namespace FinalInferno.UI.AII
                     enableInput = true;
 
                 // Executa a ação do item se o eixo for ativado.
-                if (interactable && Input.GetAxisRaw(activatorAxis) != 0 && canClick)
+                if (interactable && (activationAction?.action.triggered ?? false))
                 {
                     currentItem.Act();
-                    canClick = false;
-                }else if(interactable && Input.GetAxisRaw(activatorAxis) == 0){
-                    canClick = true;
                 }
             }
         }
@@ -106,7 +103,6 @@ namespace FinalInferno.UI.AII
         public virtual void Active()
         {
             active = true;
-            canClick = false;
             currentItem = firstItem;
             if (currentItem != null)
             {
@@ -124,12 +120,10 @@ namespace FinalInferno.UI.AII
                 currentItem.Exit();
             }
             active = false;
-            canClick = false;
         }
 
         public void SetFocus(bool isActive){
             active = isActive;
-            canClick = false;
         }
 
         public void SetInteractable(bool value){

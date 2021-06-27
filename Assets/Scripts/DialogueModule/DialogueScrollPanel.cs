@@ -16,7 +16,7 @@ namespace Fog.Dialogue{
 
         // To do: Change this so it also works with horizontal scrolling
 
-        protected void Reset(){
+        protected new void Reset(){
             smoothScrolling = false;
             scrollSpeed = 10f;
             content = null;
@@ -35,7 +35,7 @@ namespace Fog.Dialogue{
             onValueChanged = null;
         }
 
-        protected void Start(){
+        protected new void Start(){
             base.Start();
         }
 

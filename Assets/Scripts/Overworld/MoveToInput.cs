@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace FinalInferno{
 	public class MoveToInput : MoveTo {
 		private Vector2 input;
 		private bool isActive;
+		[SerializeField] private InputActionReference movementAction;
 
 		// O objeto deve estar parado inicialmente
 		void Start(){
@@ -30,8 +32,9 @@ namespace FinalInferno{
 		// Update is called once per frame
 		void Update() {
 			if(isActive){
-				input.x = Input.GetAxisRaw("Horizontal");
-				input.y = Input.GetAxisRaw("Vertical");
+				input = movementAction.action.ReadValue<Vector2>();
+				// input.x = UnityEngine.Input.GetAxisRaw("Horizontal");
+				// input.y = UnityEngine.Input.GetAxisRaw("Vertical");
 			}
 		}
 }

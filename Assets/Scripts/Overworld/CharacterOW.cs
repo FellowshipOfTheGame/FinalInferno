@@ -70,10 +70,7 @@ namespace FinalInferno{
                 }
             }
             if(isMain && !MainOWCharacter){
-                gameObject.AddComponent<MoveToInput>();
                 gameObject.GetComponent<Movable>().Reset();
-                gameObject.GetComponent<MoveToInput>().Reset();
-                gameObject.AddComponent<Fog.Dialogue.Agent>();
                 gameObject.GetComponent<Rigidbody2D>().useFullKinematicContacts = false;
                 gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
             }else{
