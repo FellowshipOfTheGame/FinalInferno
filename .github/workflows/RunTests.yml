@@ -63,27 +63,11 @@ jobs:
         with:
           path: "Tests/*.xml"
           access-token: ${{ secrets.GITHUB_TOKEN }}
-            
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: Release
-        uses: cycjimmy/semantic-release-action@v2
-        id: semantic
-        with:
-          extra_plugins: |
-            @semantic-release/exec
-            @semantic-release/changelog
-            @semantic-release/git
-          branch: master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Generate Solution
         run: unity-editor -nographics -logFile /dev/stdout -customBuildName FinalInferno -projectPath . -executeMethod  UnityEditor.SyncVS.SyncSolution -quit
 
-      - name: SonarQube analysis
+      - name: SonarQube Analysis
         env:
           FrameworkPathOverride: /opt/unity/Editor/Data/MonoBleedingEdge/
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
