@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine.InputSystem;
 
 namespace FinalInferno.Input{
+#if UNITY_EDITOR
     [CustomEditor(typeof(InputDependentImage))]
     [CanEditMultipleObjects]
     public class InputDependentImageEditor : UnityEditor.UI.ImageEditor {
@@ -105,4 +106,6 @@ namespace FinalInferno.Input{
             (serializedObject.targetObject as MonoBehaviour).enabled = oldEnable;
         }
     }
+
+#endif
 }
