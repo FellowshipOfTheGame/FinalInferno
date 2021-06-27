@@ -13,8 +13,8 @@ namespace FinalInferno{
         [SerializeField] private bool isMain;
 
         private SpriteRenderer spriteRenderer = null;
-        private MoveTo moveTo = null;
-        private Movable movable = null;
+        [SerializeField] private MoveTo moveTo = null;
+        [SerializeField] private Movable movable = null;
         public bool CanMove{
             get => movable? movable.CanMove : false;
             set{
@@ -78,14 +78,12 @@ namespace FinalInferno{
                     col.size = new Vector2(0.4f, 0.32f);
                 }
             }
+            movable.Reset();
+            moveTo.Reset();
             if(isMain && !MainOWCharacter){
-                gameObject.GetComponent<Movable>().Reset();
                 gameObject.GetComponent<Rigidbody2D>().useFullKinematicContacts = false;
                 gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
             }else{
-                moveTo = gameObject.AddComponent<MoveToTarget>();
-                movable.Reset();
-                moveTo.Reset();
                 gameObject.GetComponent<Rigidbody2D>().useFullKinematicContacts = false;
                 gameObject.GetComponent<Collider2D>().isTrigger = true;
             }

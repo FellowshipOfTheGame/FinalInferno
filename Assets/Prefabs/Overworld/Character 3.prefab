@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7612944157191218484}
   - component: {fileID: 3625881407930631483}
   - component: {fileID: 3136096884072691781}
+  - component: {fileID: -5767545390297386429}
   - component: {fileID: 6133781604545904906}
   - component: {fileID: 9017450633636308633}
   m_Layer: 9
@@ -50,6 +51,8 @@ MonoBehaviour:
   characterSO: {fileID: 11400000, guid: b4ea3ad78bd8e484baa48c599a5355c4, type: 2}
   sprintSkill: {fileID: 11400000, guid: e015a2414b9c8b04cbf9ae3c79970254, type: 2}
   isMain: 0
+  moveTo: {fileID: -5767545390297386429}
+  movable: {fileID: 3136096884072691781}
 --- !u!50 &3625881407930631483
 Rigidbody2D:
   serializedVersion: 4
@@ -84,7 +87,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  nextPosition: {fileID: 0}
+  nextPosition: {fileID: -5767545390297386429}
+--- !u!114 &-5767545390297386429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7612944157191218475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22cb0c2fb29d95f4ca04c3a8b5eaf07f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistance: 0.5
+  target: {fileID: 0}
 --- !u!212 &6133781604545904906
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -99,6 +116,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -110,6 +129,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
