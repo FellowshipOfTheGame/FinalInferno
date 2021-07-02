@@ -56,10 +56,11 @@ namespace FinalInferno{
         public void Preload(){
             elementalResistances.Clear();
             skillsToUpdate = new List<PlayerSkill>(InitialsSkills);
+            LevelUp(-1, true);
         }
 
         //funcao que ajusta todos os atributos e "skills" do persoangem quando sobe de nivel
-        public int LevelUp(int newLevel){
+        public int LevelUp(int newLevel, bool ignoreSkills = false){
             //Debug.Log(name + " subiu mesmo de level!");
 
             level = Mathf.Clamp(newLevel, 1, Table.Rows.Count);
@@ -69,14 +70,14 @@ namespace FinalInferno{
             baseMagicDef = Table.Rows[level-1].Field<int>("Resistance");
             baseSpeed = Table.Rows[level-1].Field<int>("Speed");
 
-            UnlockSkills();
+            if(!ignoreSkills)
+                UnlockSkills();
 
             return hpMax;
         }
         
         //verifica se todas as skills que tem como pre requisito o level do heroi para destravar e tem todas as skills pai destravadas, podem ser destravdas
         public void UnlockSkills(){
-            //foreach (PlayerSkill skill in skillsToUpdate)
             foreach(PlayerSkill skill in skillsToUpdate.ToArray()){
                 
                 //se a skill for destrava esta eh removida da lista e suas skills filhas sao adicionadas
