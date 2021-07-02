@@ -15,6 +15,8 @@ namespace FinalInferno{
         void Start(){
             if(sprintSkill == null || sprintSkill.Level < 1){
                 gameObject.SetActive(false);
+            }else if(sprintSkill != null){
+                sprintSkill.active = false;
             }
         }
 
