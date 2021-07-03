@@ -10,9 +10,8 @@ namespace FinalInferno{
 		[SerializeField] private GameObject visualEffect;
 
 		public override void Apply(BattleUnit source, BattleUnit target) {
-			BattleUnit xander = BattleManager.instance.battleUnits.Find(unit => unit.name == "Xander");
-			if(xander != null){
-				xander.OnDeath += Desecrate;
+			if(target.Unit.name == "Xander"){
+				target.OnDeath += Desecrate;
 			}
 		}
 
