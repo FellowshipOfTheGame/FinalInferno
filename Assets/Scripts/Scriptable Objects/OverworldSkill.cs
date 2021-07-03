@@ -42,12 +42,9 @@ namespace FinalInferno{
         #endregion
 
         #region SkillOverrides
-        public override void LoadTables(){}
-        public override void Preload(){}
 		public override void Use(BattleUnit user, BattleUnit target, bool shouldOverride1 = false, float value1 = 0, bool shouldOverride2 = false, float value2 = 0){}
 		public override void Use(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0, bool shouldOverride2 = false, float value2 = 0){}	
 		protected override void UseCallback(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0, bool shouldOverride2 = false, float value2 = 0){}	
-        public override void ResetSkill(){} 
         #endregion
     }
 }

@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8eba336bc1b05d04ea164ca3fec05874, type: 3}
+  m_Name: Holy Necromancy
+  m_EditorClassIdentifier: 
+  name: Holy Necromancy
+  level: 0
+  cost: 0
+  active: 1
+  shortDescription: Once per battle, if Xander dies in battle, Revives Xander.
+  target: 0
+  attribute: 5
+  type: 2
+  callbackDelay: 0
+  effects:
+  - effect: {fileID: 11400000, guid: 3e5f41fcbe6227d4ba912dda28e63707, type: 2}
+    value1: 0
+    value2: 0
+  visualEffect: {fileID: 552734591061099818, guid: c5b81c56fc50dac4c80964acddc9c909,
+    type: 3}
+  xp: 0
+  xpNext: 0
+  description: Gregorim does a favor for a once holy colleague and uses his blood
+    magic to revive his corpse when fallen in battle.
+  skillsToUpdate: []
+  prerequisiteSkills: []
+  prerequisiteSkillsLevel: 
+  prerequisiteHeroLevel: 3
+  skillTable: {fileID: 4900000, guid: 827e4456d14c272bdb7703c5df35c9ac, type: 3}
+  table:
+    colTypes:
+    - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    colNames:
+    - Level
+    - SkillEffect0Value0
+    - SkillEffect0Value1
+    rows:
+    - elements:
+      - 1
+      - 0
+      - 0
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+  expTable: {fileID: 4900000, guid: a85cd63d67d2b7a53a5dfdc2ae94c9b0, type: 3}
+  xpTable:
+    colTypes:
+    - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    colNames:
+    - Level
+    - XPNextLevel
+    - XPAccumulated
+    rows:
+    - elements:
+      - 1
+      - 0
+      - 0
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+  skillImage: {fileID: 0}

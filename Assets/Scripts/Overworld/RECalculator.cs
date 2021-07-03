@@ -51,6 +51,7 @@ namespace FinalInferno{
         private Vector2 lastCheckPosition = Vector2.zero;
         private Vector2 lastPosition = Vector2.zero;
         private float distanceWalked = 0f;
+        private bool isSafeArea = false;
 
         [Header("Expected value = TriggerChangeScene")]
         [SerializeField] private FinalInferno.UI.FSM.ButtonClickDecision decision;
@@ -92,8 +93,12 @@ namespace FinalInferno{
             // Se certifica que não vai fazer nada no update quando a taxa de encontro é 0
             // ou quando a tabela não existir
             // ou quando o numero de inimigos por encontro for 0
-            if((curEncounterRate < float.Epsilon && rateIncreaseValue < float.Epsilon) || table == null || (minNumberEnemies == 0 && maxNumberEnemies == 0)){
-                playerObj = null;
+            if((curEncounterRate < float.Epsilon && rateIncreaseValue < float.Epsilon)
+                || table == null
+                || (minNumberEnemies == 0 && maxNumberEnemies == 0)){
+                curEncounterRate = 0;
+                rateIncreaseValue = 0;
+                isSafeArea = true;
             }
         }
 
@@ -104,9 +109,9 @@ namespace FinalInferno{
         // A checagem precisa acontecer no LateUpdate para evitar conflito com o update que o sistema de dialogo usa
         void LateUpdate()
         {
-            if (encountersEnabled && (playerObj != null) && CharacterOW.PartyCanMove && (agent == null || agent.canInteract)) {
+            if (encountersEnabled && CharacterOW.PartyCanMove && (agent == null || agent.canInteract)) {
                 // Calcula a distancia entre a posicao atual e a distancia no ultimo LateUpdate
-                float distance = Vector2.Distance(lastPosition, new Vector2(playerObj.position.x, playerObj.position.y));
+                float distance = CalculateDistanceWalked();
                 // Incrementa a distancia total entre checagens
                 distanceWalked += distance;
                 if (distanceWalked >= 1.0f) {
@@ -124,10 +129,17 @@ namespace FinalInferno{
             }
         }
 
+        private float CalculateDistanceWalked(){
+            if(playerObj == null) return 0f;
+            return Vector2.Distance(lastPosition, new Vector2(playerObj.position.x, playerObj.position.y));
+        }
+
         // A chamada da função espera que o valor de distance seja 1.0f
         // Se houver frame drop e o jogador andar distancias maiores do que deveria sem checar,
         // A proxima checagem de batalha terá uma chance maior
         private void CheckEncounter(float distance) {
+            if (isSafeArea) return;
+
             if (Random.Range(0.0f, 100.0f) < (curEncounterRate * skillModifier)) {
                 // Quando encontrar uma batalha
                 //Debug.Log("Found random encounter");
@@ -177,7 +189,7 @@ namespace FinalInferno{
                 FinalInferno.UI.ChangeSceneUI.battleEnemies = (Enemy[])enemies.Clone();
 
                 decision.Click();
-            } else if(curEncounterRate * skillModifier > float.Epsilon){
+            } else {
                 // Caso nao encontre uma batalha
                 // Aumenta a chance de encontro linearmente com a distancia percorrida
                 curEncounterRate += rateIncreaseValue * distance;

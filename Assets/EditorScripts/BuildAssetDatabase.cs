@@ -1,6 +1,8 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
+#endif
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;

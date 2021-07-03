@@ -178,7 +178,8 @@ namespace FinalInferno{
             // Percorre a lista de skills da unidade
             foreach(Skill skill in unit.skills){
                 // Ignora skills passivas e inativas
-                if(skill.Type != SkillType.Active && !skill.active)
+                if( (skill.Type != SkillType.Active && !skill.active)
+                    || skill is OverworldSkill)
                     continue;
 
                 switch(skill.Type){

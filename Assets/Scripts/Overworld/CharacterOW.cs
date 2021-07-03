@@ -59,9 +59,6 @@ namespace FinalInferno{
             }
             movable = GetComponent<Movable>();
 
-            BoxCollider2D col = GetComponent<BoxCollider2D>();
-            if(!col)
-                col = gameObject.AddComponent<BoxCollider2D>();
             if(characterSO && characterSO.archetype){
                 Hero hero = characterSO.archetype;
                 if(hero.spriteOW){
@@ -74,19 +71,9 @@ namespace FinalInferno{
                     if(!anim)
                         anim = gameObject.AddComponent<Animator>();
                     anim.runtimeAnimatorController = hero.animatorOW;
-                    col.offset = new Vector2(0f, 0.16f);
-                    col.size = new Vector2(0.4f, 0.32f);
                 }
             }
-            movable.Reset();
             moveTo.Reset();
-            if(isMain && !MainOWCharacter){
-                gameObject.GetComponent<Rigidbody2D>().useFullKinematicContacts = false;
-                gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-            }else{
-                gameObject.GetComponent<Rigidbody2D>().useFullKinematicContacts = false;
-                gameObject.GetComponent<Collider2D>().isTrigger = true;
-            }
             movable.CanMove = false;
         }
 
