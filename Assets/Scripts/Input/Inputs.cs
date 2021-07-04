@@ -51,12 +51,28 @@ namespace FinalInferno.Input
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Repel Skill"",
+                    ""type"": ""Button"",
+                    ""id"": ""38124da0-080c-4ca4-9bd4-44dcc8dccc2c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Taunt Skill"",
+                    ""type"": ""Button"",
+                    ""id"": ""fbe93c03-abf3-4e4e-a7f4-1110a58e1221"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": ""WASD"",
-                    ""id"": ""38cfa2d8-b2d7-49d5-9b2e-0f237a2b7be3"",
+                    ""id"": ""583fde2a-79fd-4025-9445-ed164afac7b8"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -67,7 +83,7 @@ namespace FinalInferno.Input
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""2ac41624-42d6-4f82-9bab-12ab2fd318a4"",
+                    ""id"": ""3f30af2b-c113-496c-9853-fd7244e54a66"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -78,7 +94,7 @@ namespace FinalInferno.Input
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""f7784ac5-7ee6-4f6f-b506-f9374223c160"",
+                    ""id"": ""a7c4c7e3-6f17-471e-bab9-08fe115b7e7f"",
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -89,7 +105,7 @@ namespace FinalInferno.Input
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""77c535ca-8cbe-4bab-989e-d0221941a999"",
+                    ""id"": ""d67410d3-8a0b-4b62-9dfb-4147214fa547"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -100,7 +116,7 @@ namespace FinalInferno.Input
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""ac14617a-7251-4014-a564-f58b58d303b6"",
+                    ""id"": ""6eb5d997-cdf2-461e-b44f-58b0cb8014e8"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -251,6 +267,50 @@ namespace FinalInferno.Input
                     ""action"": ""Open Menu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""04980a88-9533-4a44-8862-4133a7683b6b"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Repel Skill"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0e2c9e9b-bcf2-4f91-aa1e-5b967ad7553d"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Repel Skill"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c17de111-2007-4f25-b509-d2f751db327d"",
+                    ""path"": ""<Keyboard>/v"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Taunt Skill"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e8f66ebd-94cf-4953-b6dc-bc7af5e25ffb"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Taunt Skill"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -294,7 +354,7 @@ namespace FinalInferno.Input
             ""bindings"": [
                 {
                     ""name"": ""WASD"",
-                    ""id"": ""726fce56-ac0d-48a8-b18a-93b98a46d45c"",
+                    ""id"": ""f32c695b-2990-4584-a05d-5ea598184738"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -305,7 +365,7 @@ namespace FinalInferno.Input
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""f2a91951-bb95-491a-bbb7-58fd9904595d"",
+                    ""id"": ""6c306756-80f9-4956-ac70-e869a0f28aa1"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -316,7 +376,7 @@ namespace FinalInferno.Input
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""3ec92b41-ccc4-4dfa-9666-57c8cf306774"",
+                    ""id"": ""9c69f2d9-7620-49ea-bff6-6459204d6443"",
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -327,7 +387,7 @@ namespace FinalInferno.Input
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""4ab91086-fee7-4a74-8940-39cfdf8b21ce"",
+                    ""id"": ""d5b8cf31-7d2c-4534-98a4-862070ec3bc6"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -338,7 +398,7 @@ namespace FinalInferno.Input
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""45dfdc4d-57c1-4753-a603-b9664c1d5b58"",
+                    ""id"": ""7323c530-8443-4ba6-9362-c7b9b6cd6a12"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -532,7 +592,7 @@ namespace FinalInferno.Input
             ""bindings"": [
                 {
                     ""name"": ""WASD"",
-                    ""id"": ""eb9ad12e-b735-4fe7-9af5-887686ed70be"",
+                    ""id"": ""0d3cdfe0-49eb-44f0-bab8-a32140aadc22"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -543,7 +603,7 @@ namespace FinalInferno.Input
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""6f4a329e-97f7-4e49-beba-f65f739f9f17"",
+                    ""id"": ""31db9678-483b-4ef5-931a-717c1643d5c4"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -554,7 +614,7 @@ namespace FinalInferno.Input
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""77aca6f2-8f72-408c-b66c-5a715f5debbc"",
+                    ""id"": ""94b10721-ba07-493d-9857-7e424695d923"",
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -565,7 +625,7 @@ namespace FinalInferno.Input
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""0f132372-7843-42f9-a2d9-456b35fd01c8"",
+                    ""id"": ""d6c2c7a8-db79-452c-8e6f-452925cf5918"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -576,7 +636,7 @@ namespace FinalInferno.Input
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""847ace3c-3359-4e75-b1ca-e6f9a09f5161"",
+                    ""id"": ""9a04a8ee-eb8b-4022-959f-329253aa90df"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -762,6 +822,8 @@ namespace FinalInferno.Input
             m_Overworld_Interact = m_Overworld.FindAction("Interact", throwIfNotFound: true);
             m_Overworld_SprintSkipDialogue = m_Overworld.FindAction("Sprint / Skip Dialogue", throwIfNotFound: true);
             m_Overworld_OpenMenu = m_Overworld.FindAction("Open Menu", throwIfNotFound: true);
+            m_Overworld_RepelSkill = m_Overworld.FindAction("Repel Skill", throwIfNotFound: true);
+            m_Overworld_TauntSkill = m_Overworld.FindAction("Taunt Skill", throwIfNotFound: true);
             // MenuNavigation
             m_MenuNavigation = asset.FindActionMap("MenuNavigation", throwIfNotFound: true);
             m_MenuNavigation_Movement = m_MenuNavigation.FindAction("Movement", throwIfNotFound: true);
@@ -827,6 +889,8 @@ namespace FinalInferno.Input
         private readonly InputAction m_Overworld_Interact;
         private readonly InputAction m_Overworld_SprintSkipDialogue;
         private readonly InputAction m_Overworld_OpenMenu;
+        private readonly InputAction m_Overworld_RepelSkill;
+        private readonly InputAction m_Overworld_TauntSkill;
         public struct OverworldActions
         {
             private @Inputs m_Wrapper;
@@ -835,6 +899,8 @@ namespace FinalInferno.Input
             public InputAction @Interact => m_Wrapper.m_Overworld_Interact;
             public InputAction @SprintSkipDialogue => m_Wrapper.m_Overworld_SprintSkipDialogue;
             public InputAction @OpenMenu => m_Wrapper.m_Overworld_OpenMenu;
+            public InputAction @RepelSkill => m_Wrapper.m_Overworld_RepelSkill;
+            public InputAction @TauntSkill => m_Wrapper.m_Overworld_TauntSkill;
             public InputActionMap Get() { return m_Wrapper.m_Overworld; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -856,6 +922,12 @@ namespace FinalInferno.Input
                     @OpenMenu.started -= m_Wrapper.m_OverworldActionsCallbackInterface.OnOpenMenu;
                     @OpenMenu.performed -= m_Wrapper.m_OverworldActionsCallbackInterface.OnOpenMenu;
                     @OpenMenu.canceled -= m_Wrapper.m_OverworldActionsCallbackInterface.OnOpenMenu;
+                    @RepelSkill.started -= m_Wrapper.m_OverworldActionsCallbackInterface.OnRepelSkill;
+                    @RepelSkill.performed -= m_Wrapper.m_OverworldActionsCallbackInterface.OnRepelSkill;
+                    @RepelSkill.canceled -= m_Wrapper.m_OverworldActionsCallbackInterface.OnRepelSkill;
+                    @TauntSkill.started -= m_Wrapper.m_OverworldActionsCallbackInterface.OnTauntSkill;
+                    @TauntSkill.performed -= m_Wrapper.m_OverworldActionsCallbackInterface.OnTauntSkill;
+                    @TauntSkill.canceled -= m_Wrapper.m_OverworldActionsCallbackInterface.OnTauntSkill;
                 }
                 m_Wrapper.m_OverworldActionsCallbackInterface = instance;
                 if (instance != null)
@@ -872,6 +944,12 @@ namespace FinalInferno.Input
                     @OpenMenu.started += instance.OnOpenMenu;
                     @OpenMenu.performed += instance.OnOpenMenu;
                     @OpenMenu.canceled += instance.OnOpenMenu;
+                    @RepelSkill.started += instance.OnRepelSkill;
+                    @RepelSkill.performed += instance.OnRepelSkill;
+                    @RepelSkill.canceled += instance.OnRepelSkill;
+                    @TauntSkill.started += instance.OnTauntSkill;
+                    @TauntSkill.performed += instance.OnTauntSkill;
+                    @TauntSkill.canceled += instance.OnTauntSkill;
                 }
             }
         }
@@ -1014,6 +1092,8 @@ namespace FinalInferno.Input
             void OnInteract(InputAction.CallbackContext context);
             void OnSprintSkipDialogue(InputAction.CallbackContext context);
             void OnOpenMenu(InputAction.CallbackContext context);
+            void OnRepelSkill(InputAction.CallbackContext context);
+            void OnTauntSkill(InputAction.CallbackContext context);
         }
         public interface IMenuNavigationActions
         {

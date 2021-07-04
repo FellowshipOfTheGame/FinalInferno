@@ -44,7 +44,14 @@ namespace FinalInferno{
                 foreach(string guid in objectsFound){
                     T newAsset = AssetDatabase.LoadAssetAtPath<T>(AssetDatabase.GUIDToAssetPath(guid));
                     newAsset.LoadTables();
+                    if(!Application.isPlaying){
+                        newAsset.Preload();
+                        EditorUtility.SetDirty(newAsset);
+                    }
                     assets.Add(newAsset);
+                }
+                if(!Application.isPlaying){
+                    AssetDatabase.SaveAssets();
                 }
             }
             #endif
@@ -74,26 +81,15 @@ namespace FinalInferno{
                 return value;
             }
         }
-        [System.Serializable] private class PartyBundle : Bundle<Party>{}
-        [System.Serializable] private class HeroBundle : Bundle<Hero>{}
-        [System.Serializable] private class EnemyBundle : Bundle<Enemy>{}
-        [System.Serializable] private class SkillBundle : Bundle<Skill>{}
-        [System.Serializable] private class QuestBundle : Bundle<Quest>{}
         // Fim da subclasse =====================================================================
         #endregion
 
         // Unity não consegue serializar isso, oh well
-        // [SerializeField] private Bundle<Party> party = new Bundle<Party>();
-        // [SerializeField] private Bundle<Hero> heroes = new Bundle<Hero>();
-        // [SerializeField] private Bundle<Enemy> enemies = new Bundle<Enemy>();
-        // [SerializeField] private Bundle<Skill> skills = new Bundle<Skill>();
-        // [SerializeField] private Bundle<Quest> quests = new Bundle<Quest>();
-
-        [SerializeField] private PartyBundle party = new PartyBundle();
-        [SerializeField] private HeroBundle heroes = new HeroBundle();
-        [SerializeField] private EnemyBundle enemies = new EnemyBundle();
-        [SerializeField] private SkillBundle skills = new SkillBundle();
-        [SerializeField] private QuestBundle quests = new QuestBundle();
+        [SerializeField] private Bundle<Party> party = new Bundle<Party>();
+        [SerializeField] private Bundle<Hero> heroes = new Bundle<Hero>();
+        [SerializeField] private Bundle<Enemy> enemies = new Bundle<Enemy>();
+        [SerializeField] private Bundle<Skill> skills = new Bundle<Skill>();
+        [SerializeField] private Bundle<Quest> quests = new Bundle<Quest>();
 
         private Bundle<T> GetBundle<T>(string typeName) where T : ScriptableObject, IDatabaseItem{
             Bundle<T> bundle = null;
@@ -124,21 +120,20 @@ namespace FinalInferno{
         #if UNITY_EDITOR
         [ContextMenu("Build")]
         public void BuildDatabase(){
-            // party = new Bundle<Party>();
-            party = new PartyBundle();
+            party = new Bundle<Party>();
             party.FindAssets();
-            // heroes = new Bundle<Hero>();
-            heroes = new HeroBundle();
+            heroes = new Bundle<Hero>();
             heroes.FindAssets();
-            // enemies = new Bundle<Enemy>();
-            enemies = new EnemyBundle();
+            enemies = new Bundle<Enemy>();
             enemies.FindAssets();
-            // skills = new Bundle<Skill>();
-            skills = new SkillBundle();
+            skills = new Bundle<Skill>();
             skills.FindAssets();
-            // quests = new Bundle<Quest>();
-            quests = new QuestBundle();
+            quests = new Bundle<Quest>();
             quests.FindAssets();
+            if(!Application.isPlaying){
+                EditorUtility.SetDirty(this);
+                AssetDatabase.SaveAssets();
+            }
         }
         #endif
 

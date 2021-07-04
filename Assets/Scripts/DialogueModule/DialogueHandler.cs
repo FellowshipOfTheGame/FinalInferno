@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
 
@@ -34,6 +35,13 @@ namespace Fog.Dialogue
 		[SerializeField] public DialogueScrollPanel dialogueBox = null;
 		[Tooltip("Game object that handles choosing dialogue options")]
 		[SerializeField] private OptionHandler optionHandler = null;
+
+		[Space(10)]
+
+		[Header("Input")]
+		[SerializeField] private InputActionReference directionsAction;
+		[SerializeField] private InputActionReference submitAction;
+		[SerializeField] private InputActionReference cancelAction;
 
 		[Space(10)]
 
@@ -87,9 +95,10 @@ namespace Fog.Dialogue
 			if(IsActive){
 				if(isLineDone){
 					// For a smoother scrolling, GetAxis should be used instead
-					dialogueBox.Scroll(Input.GetAxisRaw("Vertical") * Time.deltaTime);
+					float axisValue = directionsAction.action.ReadValue<Vector2>().y;
+					dialogueBox.Scroll(axisValue * Time.deltaTime);
 				}
-				if(Input.GetButtonDown("Submit")){
+				if(submitAction.action.triggered){
 					if(isLineDone)
 						StartCoroutine("NextLine");
 					else
@@ -99,7 +108,7 @@ namespace Fog.Dialogue
 				// For this project only, we will use a specific boolean variable instead
 				// #if UNITY_EDITOR
 				if(StaticReferences.DebugBuild){
-					if(Input.GetButtonDown("Cancel")){
+					if(cancelAction.action.triggered){
 						dialogueLines.Clear();
 						EndDialogue();
 					}
