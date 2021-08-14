@@ -12,6 +12,11 @@ namespace FinalInferno{
         public Vector2 position; //posicao do personagem no Overworld
         public Vector2 direction; // direção do personagem no Overworld
         //public bool isPresent;
+        private CharacterOW overworldInstance;
+        public CharacterOW OverworldInstance{
+            get => overworldInstance;
+            set => overworldInstance = (overworldInstance == null? value : (value == null? null : overworldInstance));
+        }
 
         //funcao que ajusta a vida atual do personagem quando sobe de nivel
         public void LevelUp(int level){

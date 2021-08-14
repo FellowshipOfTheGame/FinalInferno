@@ -146,6 +146,24 @@ namespace FinalInferno{
             return up;
         }
 
+        public void SaveOverworldPositions(){
+            foreach(Character character in characters){
+                if(character.OverworldInstance != null){
+                    Vector3 instancePosition = character.OverworldInstance.transform.position;
+                    character.position = new Vector2(instancePosition.x, instancePosition.y);
+                }
+            }
+        }
+
+        public void LoadOverworldPositions(){
+            foreach(Character character in characters){
+                if(character.OverworldInstance != null){
+                    Transform instanceTransform = character.OverworldInstance.transform;
+                    instanceTransform.position = new Vector3(character.position.x, character.position.y, instanceTransform.position.z);
+                }
+            }
+        }
+
         public void ResetParty(){
             level = 0;
             xp = 0;

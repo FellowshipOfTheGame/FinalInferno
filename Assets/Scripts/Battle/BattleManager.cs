@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FinalInferno.Input;
+using UnityEngine.InputSystem;
 
 namespace FinalInferno{
     using UI.Battle;
@@ -30,6 +32,7 @@ namespace FinalInferno{
         public UnitsLives[] unitsLives;
 
         public EnemyContent enemyContent;
+        [SerializeField] private InputActionReference debugAction;
 
 
         void Awake() {
@@ -51,10 +54,9 @@ namespace FinalInferno{
             }
         }
 
-        // #if UNITY_EDITOR
         public void Update(){
             if(StaticReferences.DebugBuild){
-                if(Input.GetAxisRaw("Pause") > 0){
+                if(debugAction.action.triggered){
                     foreach(BattleUnit bUnit in battleUnits){
                         if(bUnit.CurHP > 0){
                             bUnit.DecreaseHP(1.0f);
@@ -64,7 +66,6 @@ namespace FinalInferno{
                 }
             }
         }
-        // #endif
 
         public void PrepareBattle(){
             CameraPPU = Camera.main.gameObject.GetComponent<UnityEngine.U2D.PixelPerfectCamera>().assetsPPU;

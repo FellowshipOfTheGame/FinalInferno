@@ -6,6 +6,10 @@ namespace FinalInferno{
 	[RequireComponent(typeof(Rigidbody2D))]
 	public class Movable : MonoBehaviour {
 		[SerializeField] private float moveSpeed = 5f;
+		public float MoveSpeed{
+			get => moveSpeed;
+			set => moveSpeed = Mathf.Clamp(value, 0, float.MaxValue);
+		}
 		public MoveTo nextPosition;
 		private bool canMove;
 		public bool CanMove{

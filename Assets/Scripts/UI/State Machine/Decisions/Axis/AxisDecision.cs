@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace FinalInferno.UI.FSM
 {
@@ -14,6 +15,7 @@ namespace FinalInferno.UI.FSM
         /// Eixo a ser ativado.
         /// </summary>
         [SerializeField] private string activatorAxis;
+        [SerializeField] private InputActionReference buttonAction;
         public string ActivatorAxis => activatorAxis;
 
         /// <summary>
@@ -22,7 +24,8 @@ namespace FinalInferno.UI.FSM
         /// <param name="controller"> O controlador da máquina de estados. </param>
         public override bool Decide(StateController controller)
         {
-            return Input.GetButtonDown(activatorAxis);
+            // return UnityEngine.Input.GetButtonDown(activatorAxis);
+            return buttonAction.action.triggered;
         }
 
     }

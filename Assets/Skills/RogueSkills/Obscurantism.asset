@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d0807b991c330dd791300793dc06252, type: 3}
+  m_Name: Obscurantism
+  m_EditorClassIdentifier: 
+  name: Obscurantism
+  level: 0
+  cost: 0
+  active: 0
+  shortDescription: Stops encounters from occuring while active.
+  target: 1
+  attribute: 5
+  type: 0
+  callbackDelay: 0
+  effects:
+  - effect: {fileID: 11400000, guid: 76b72105cca44c7a09c04d36cce6f6da, type: 2}
+    value1: 0
+    value2: 10
+  visualEffect: {fileID: 0}
+  xp: 0
+  xpNext: 0
+  description: Herman withholds the party's information from enemies by spreading
+    fake leads and misguiding data. This allows them to travel safely for some time.
+  skillsToUpdate: []
+  prerequisiteSkills: []
+  prerequisiteSkillsLevel: 
+  prerequisiteHeroLevel: 4
+  skillTable: {fileID: 4900000, guid: 31d6d818f55ba3fa88c67fcdcf3134db, type: 3}
+  table:
+    colTypes:
+    - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    colNames:
+    - Level
+    - SkillEffect0Value0
+    - SkillEffect0Value1
+    rows:
+    - elements:
+      - 1
+      - 0
+      - 10
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+  expTable: {fileID: 4900000, guid: a85cd63d67d2b7a53a5dfdc2ae94c9b0, type: 3}
+  xpTable:
+    colTypes:
+    - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    colNames:
+    - Level
+    - XPNextLevel
+    - XPAccumulated
+    rows:
+    - elements:
+      - 1
+      - 0
+      - 0
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+  skillImage: {fileID: 21300000, guid: 7079cf8e46a64dd4782962927d3a0e04, type: 3}
