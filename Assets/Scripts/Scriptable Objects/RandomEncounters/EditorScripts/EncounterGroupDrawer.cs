@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
@@ -19,18 +20,6 @@ namespace FinalInferno{
             return (10f + EditorGUIUtility.singleLineHeight * (isNull? 1f : 3f) + (isNull? 0f : PORTRAIT_SIZE+5f));
         }
 
-        private Texture2D GetCroppedTexture(Sprite sprite){
-            Texture2D croppedTexture = new Texture2D((int)sprite.rect.width, (int)sprite.rect.height);
-            Color[] pixels = sprite.texture.GetPixels((int)sprite.textureRect.x,
-                                                      (int)sprite.textureRect.y,
-                                                      (int)sprite.textureRect.width,
-                                                      (int)sprite.textureRect.height);
-            croppedTexture.SetPixels(pixels);
-            croppedTexture.Apply();
-
-            return croppedTexture;
-        }
-
         public override void OnGUI(Rect propertyRect, SerializedProperty property, GUIContent label){
             EditorGUI.BeginProperty(propertyRect, label, property);
             EditorGUI.PrefixLabel(propertyRect, GUIUtility.GetControlID(FocusType.Passive), label);
@@ -46,6 +35,7 @@ namespace FinalInferno{
                 enemies[2] = obj.FindProperty("enemyC");
                 enemies[3] = obj.FindProperty("enemyD");
                 difficultyRating = obj.FindProperty("difficultyRating");
+                ReadOnlyCollection<bool> canEncounter = (obj.targetObject as EncounterGroup).CanEncounter;
 
                 Vector2 portraitSize = new Vector2(PORTRAIT_SIZE, PORTRAIT_SIZE);
                 for(int i = 0; i < 4; i++){
@@ -54,10 +44,16 @@ namespace FinalInferno{
 
                     Vector2 portraitPosition = new Vector2(displayRect.position.x + i * (portraitSize.x + 25f), displayRect.y);
                     Rect portraitRect = new Rect(portraitPosition, portraitSize);
-                    Sprite enemySprite = enemy.GetSubUnitSprite(i);
+                    Sprite enemySprite = enemy.GetSubUnitPortrait(i);
 
-                    EditorGUI.DrawTextureTransparent(portraitRect, GetCroppedTexture(enemySprite), ScaleMode.ScaleToFit);
+                    EditorGUI.DrawTextureTransparent(portraitRect, EditorUtils.GetCroppedTexture(enemySprite), ScaleMode.ScaleToFit);
                 }
+
+                Rect detailsRect = new Rect(new Vector2(displayRect.position.x, displayRect.position.y + PORTRAIT_SIZE + 2.5f), new Vector2(displayRect.size.x, 2 * EditorGUIUtility.singleLineHeight));
+                Rect difficultyRect = new Rect(detailsRect.position.x, detailsRect.position.y, detailsRect.width/2f, detailsRect.height);
+                Rect levelInfoRect = new Rect(detailsRect.position.x + detailsRect.width/2f, detailsRect.position.y, detailsRect.width/2f, detailsRect.height);
+                EditorGUI.LabelField(difficultyRect, $"Dificulty rating: {(difficultyRating.floatValue):0.##}");
+                EditorGUI.LabelField(levelInfoRect, $"Levels: 0{(canEncounter[0]?'☑':'☐')} 1{(canEncounter[1]?'☑':'☐')} 2{(canEncounter[2]?'☑':'☐')} 3{(canEncounter[3]?'☑':'☐')} 4{(canEncounter[4]?'☑':'☐')}");
             }
 
             EditorGUI.EndProperty();

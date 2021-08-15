@@ -68,7 +68,7 @@ namespace FinalInferno{
         protected Sprite queueSprite;
         public virtual Sprite QueueSprite { get => queueSprite; }
         #if UNITY_EDITOR
-        public virtual Sprite GetSubUnitSprite(int index){ return queueSprite; }
+        public virtual Sprite GetSubUnitPortrait(int index){ return portrait; }
         #endif
     }
 

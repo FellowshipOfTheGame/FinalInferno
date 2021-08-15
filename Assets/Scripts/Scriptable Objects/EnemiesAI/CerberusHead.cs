@@ -177,7 +177,7 @@ namespace FinalInferno{
         }
 
         #if UNITY_EDITOR
-        public override Sprite GetSubUnitSprite(int index){
+        public override Sprite GetSubUnitPortrait(int index){
             switch(index){
                 case 0:
                     return queueSprite;
