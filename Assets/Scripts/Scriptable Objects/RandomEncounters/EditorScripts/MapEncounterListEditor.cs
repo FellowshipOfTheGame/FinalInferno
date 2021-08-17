@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
@@ -10,16 +11,19 @@ namespace FinalInferno{
     [CustomEditor(typeof(MapEncounterList))]
 	public class MapEncounterListEditor : Editor{
 		private SerializedProperty encounterGroups;
+		// private SerializedProperty difficultyFactor;
 		private int selectedLevel = 0;
-		float accumulatedDifficulty = 0;
-		List<EncounterGroup> validEncounterGroups;
+		// private float selectedDifficultyFactor = 0f;
+		private List<EncounterGroup> validEncounterGroups;
+        private ReadOnlyDictionary<EncounterGroup, float> chancesDict;
 		private const float PORTRAIT_SIZE = 48f;
 
 		public void OnEnable(){
 			encounterGroups = serializedObject.FindProperty("encounterGroups");
+			// difficultyFactor = serializedObject.FindProperty("difficultyFactor");
 			selectedLevel = -1;
 			validEncounterGroups = new List<EncounterGroup>();
-			accumulatedDifficulty = 0;
+			chancesDict = new ReadOnlyDictionary<EncounterGroup, float>(new Dictionary<EncounterGroup, float>());
 		}
 
 		public override void OnInspectorGUI() {
@@ -35,30 +39,39 @@ namespace FinalInferno{
 		}
 
 		private void ShowPreviews(){
-			EditorGUILayout.BeginHorizontal(EditorStyles.boldLabel);
-			// Level selection
+			// Seleção de level da party
 			int previousLevel = selectedLevel;
+			// float previousDifficultyFactor = difficultyFactor.floatValue;
+			EditorGUILayout.BeginHorizontal(EditorStyles.boldLabel);
 			for(int i = 0; i < 5; i++){
 				if(GUILayout.Button($"level{i}")){
 					selectedLevel = i;
 				}
 			}
-			selectedLevel = Mathf.Clamp(selectedLevel, 0, 4);
-			bool selectedLevelChanged = selectedLevel != previousLevel;
 			EditorGUILayout.EndHorizontal();
 
-			// Dsiplay selected level
+			// Mostra o level selecionado
 			EditorGUILayout.LabelField($"Selected level: {selectedLevel}", EditorStyles.boldLabel);
 			EditorGUILayout.Space();
 
+			// EditorGUILayout.PropertyField(difficultyFactor);
+			// EditorGUILayout.Space();
+
+			selectedLevel = Mathf.Clamp(selectedLevel, 0, 4);
+			bool parametersChanged = selectedLevel != previousLevel;
+			// parametersChanged |= (Mathf.Abs(previousDifficultyFactor - difficultyFactor.floatValue) > Mathf.Epsilon);
+			// previousDifficultyFactor = difficultyFactor.floatValue;
+
 			EditorGUILayout.BeginVertical(EditorStyles.helpBox);
 			EditorGUILayout.Space();
-			// Calculate values if needed
-			accumulatedDifficulty = selectedLevelChanged? 0 : accumulatedDifficulty;
-			if(selectedLevelChanged) validEncounterGroups.Clear();
+			// Calcula os valores apenas caso precise
+			if(parametersChanged){
+				validEncounterGroups.Clear();
+				chancesDict = (target as MapEncounterList).GetChancesForLevel(selectedLevel);
+			}
 
-			// Repopulate encounter list if needed
-			for(int i = 0; selectedLevelChanged && i < encounterGroups.arraySize; i++){
+			// Repopula a lista de encontros validos caso precise
+			for(int i = 0; parametersChanged && i < encounterGroups.arraySize; i++){
 				SerializedProperty groupProp = encounterGroups.GetArrayElementAtIndex(i);
 				if(groupProp == null || groupProp.objectReferenceValue == null) continue;
 
@@ -66,24 +79,29 @@ namespace FinalInferno{
 				if(!obj.FindProperty("canEncounter").GetArrayElementAtIndex(selectedLevel).boolValue) continue;
 
 				EncounterGroup encounterGroup = obj.targetObject as EncounterGroup;
-				accumulatedDifficulty += encounterGroup.DifficultyRating;
 				validEncounterGroups.Add(encounterGroup);
 			}
-			// Calculate chances as needed
-			if(selectedLevelChanged){
+			// Calcula as chances caso precise
+			if(parametersChanged){
 				validEncounterGroups.Sort((first, second) => first.DifficultyRating.CompareTo(second.DifficultyRating));
-				accumulatedDifficulty = accumulatedDifficulty == 0? 1f : accumulatedDifficulty;
 			}
 
-			// Display info on all encounter groups as calculated
+			// Mostra a informação calculada de todos os encontros para o level selecionado
+			DisplayEncounterInfo();
+
+			EditorGUILayout.Space();
+			EditorGUILayout.EndVertical();
+		}
+
+		private void DisplayEncounterInfo(){
 			bool isFirst = true;
 			foreach(EncounterGroup encounterGroup in validEncounterGroups){
 				if(!isFirst) EditorUtils.DrawSeparator(EditorGUILayout.GetControlRect());
 				isFirst = false;
 
 				EditorGUILayout.BeginHorizontal();
-				EditorGUILayout.LabelField($"Chance = {((encounterGroup.DifficultyRating/accumulatedDifficulty)*100):##0.##}%", GUILayout.MinHeight(PORTRAIT_SIZE), GUILayout.MaxWidth(100f));
-				// Show encounter info
+				EditorGUILayout.LabelField($"Chance = {((chancesDict[encounterGroup])):##0.##}%", GUILayout.MinHeight(PORTRAIT_SIZE), GUILayout.MaxWidth(100f));
+				// Mostra informação do encontro
 				Rect currentRect = EditorGUILayout.GetControlRect();
 				for(int i = 0; i < 4; i++){
 					if(encounterGroup[i] == null) continue;
@@ -95,9 +113,6 @@ namespace FinalInferno{
 				EditorGUILayout.EndHorizontal();
 				EditorGUILayout.LabelField($"\"{encounterGroup.name}\"", EditorStyles.boldLabel);
 			}
-
-			EditorGUILayout.Space();
-			EditorGUILayout.EndVertical();
 		}
 	}
 #endif
