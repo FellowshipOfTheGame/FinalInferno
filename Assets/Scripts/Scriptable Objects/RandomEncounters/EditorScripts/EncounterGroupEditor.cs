@@ -32,14 +32,19 @@ namespace FinalInferno{
 
             EditorGUILayout.BeginHorizontal();
             // Name
-            EditorGUILayout.LabelField($"{enemy.DialogueName}", GUILayout.MinHeight(PORTRAIT_SIZE));
+            EditorGUILayout.LabelField($"{enemy.DialogueName}", GUILayout.MinHeight(PORTRAIT_SIZE), GUILayout.MaxWidth(EditorGUIUtility.labelWidth));
             // Portrait
             Rect currentRect = EditorGUILayout.GetControlRect();
             currentRect.size = new Vector2(PORTRAIT_SIZE, PORTRAIT_SIZE);
             Sprite enemySprite = enemy.GetSubUnitPortrait(index);
             EditorGUI.DrawTextureTransparent(currentRect, EditorUtils.GetCroppedTexture(enemySprite), ScaleMode.ScaleToFit);
             // Element
+            currentRect.size = new Vector2(EditorGUIUtility.currentViewWidth - PORTRAIT_SIZE - EditorGUIUtility.labelWidth - 5f, PORTRAIT_SIZE / 2f);
+            currentRect.position += new Vector2(PORTRAIT_SIZE + 5f, 0);
+            EditorGUI.LabelField(currentRect, $"Element : {enemy.Element.ToString()}");
             // DamageType
+            currentRect.position += new Vector2(0, PORTRAIT_SIZE / 2f);
+            EditorGUI.LabelField(currentRect, $"Dmg Type: {enemy.DamageFocus.ToString()}");
             EditorGUILayout.EndHorizontal();
         }
 
@@ -50,16 +55,19 @@ namespace FinalInferno{
             EditorGUILayout.PropertyField(enemyA);
             enemy = enemyA.objectReferenceValue as Enemy;
             ShowEnemyInfo(enemy, 0);
+            EditorUtils.DrawSeparator(EditorGUILayout.GetControlRect());
             EditorGUILayout.PropertyField(enemyB);
             enemy = enemyB.objectReferenceValue as Enemy;
             ShowEnemyInfo(enemy, 1);
+            EditorUtils.DrawSeparator(EditorGUILayout.GetControlRect());
             EditorGUILayout.PropertyField(enemyC);
             enemy = enemyC.objectReferenceValue as Enemy;
             ShowEnemyInfo(enemy, 2);
+            EditorUtils.DrawSeparator(EditorGUILayout.GetControlRect());
             EditorGUILayout.PropertyField(enemyD);
             enemy = enemyD.objectReferenceValue as Enemy;
             ShowEnemyInfo(enemy, 3);
-            EditorGUILayout.Space();
+            EditorUtils.DrawSeparator(EditorGUILayout.GetControlRect());
 
             EditorGUILayout.PropertyField(difficultyRating);
             EditorGUILayout.Space();
