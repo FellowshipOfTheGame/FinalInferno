@@ -44,14 +44,14 @@ namespace FinalInferno{
 			// float previousDifficultyFactor = difficultyFactor.floatValue;
 			EditorGUILayout.BeginHorizontal(EditorStyles.boldLabel);
 			for(int i = 0; i < 5; i++){
-				if(GUILayout.Button($"level{i}")){
+				if(GUILayout.Button($"level {i+1}")){
 					selectedLevel = i;
 				}
 			}
 			EditorGUILayout.EndHorizontal();
 
 			// Mostra o level selecionado
-			EditorGUILayout.LabelField($"Selected level: {selectedLevel}", EditorStyles.boldLabel);
+			EditorGUILayout.LabelField($"Selected level: {selectedLevel+1}", EditorStyles.boldLabel);
 			EditorGUILayout.Space();
 
 			// EditorGUILayout.PropertyField(difficultyFactor);

@@ -76,7 +76,7 @@ namespace FinalInferno{
             EditorGUILayout.BeginHorizontal();
             for(int i = 0; i < 5; i++){
                 EditorGUILayout.BeginVertical();
-                    EditorGUILayout.LabelField($"Level {i}", GUILayout.ExpandWidth(true), GUILayout.MaxWidth(windowWidth/5f - 10f));
+                    EditorGUILayout.LabelField($"Level {i+1}", GUILayout.ExpandWidth(true), GUILayout.MaxWidth(windowWidth/5f - 10f));
 
                     EditorGUILayout.BeginHorizontal();
                         EditorGUILayout.Space(15f, false);

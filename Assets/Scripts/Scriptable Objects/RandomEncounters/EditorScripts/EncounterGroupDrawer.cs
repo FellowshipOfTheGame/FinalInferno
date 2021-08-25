@@ -53,7 +53,7 @@ namespace FinalInferno{
                 Rect difficultyRect = new Rect(detailsRect.position.x, detailsRect.position.y, detailsRect.width/2f, detailsRect.height);
                 Rect levelInfoRect = new Rect(detailsRect.position.x + detailsRect.width/2f, detailsRect.position.y, detailsRect.width/2f, detailsRect.height);
                 EditorGUI.LabelField(difficultyRect, $"Dificulty rating: {(difficultyRating.floatValue):0.##}");
-                EditorGUI.LabelField(levelInfoRect, $"Levels: 0{(canEncounter[0]?'☑':'☐')} 1{(canEncounter[1]?'☑':'☐')} 2{(canEncounter[2]?'☑':'☐')} 3{(canEncounter[3]?'☑':'☐')} 4{(canEncounter[4]?'☑':'☐')}");
+                EditorGUI.LabelField(levelInfoRect, $"Levels: 1{(canEncounter[0]?'☑':'☐')} 2{(canEncounter[1]?'☑':'☐')} 3{(canEncounter[2]?'☑':'☐')} 4{(canEncounter[3]?'☑':'☐')} 5{(canEncounter[4]?'☑':'☐')}");
             }
 
             EditorGUI.EndProperty();
