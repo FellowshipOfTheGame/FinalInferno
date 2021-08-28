@@ -7,6 +7,14 @@ namespace FinalInferno{
     [CreateAssetMenu(fileName = "MapEncounterList", menuName = "ScriptableObject/Map Encounter List")]
     public class MapEncounterList : ScriptableObject, ISerializationCallbackReceiver{
         [SerializeField] private List<EncounterGroup> encounterGroups;
+        public bool HasEncounterGroup {
+            get {
+                foreach (EncounterGroup group in encounterGroups) {
+                    if(group != null) return true;
+                }
+                return false;
+            }
+        }
         // O editor tava com uns comportamentos estranhos com isso aqui
         // [SerializeField, Range(0.1f, 0.9f)] private float difficultyFactor = 0.8f;
         private const float difficultyFactor = 0.8f;

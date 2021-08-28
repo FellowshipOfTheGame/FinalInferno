@@ -6,6 +6,7 @@ using UnityEngine;
 namespace FinalInferno{
     [CreateAssetMenu(fileName = "EncounterGroup", menuName = "ScriptableObject/Encounter Group")]
     public class EncounterGroup : ScriptableObject {
+        private const int ENCOUNTER_MAX_SIZE = 4;
         [SerializeField] private Enemy enemyA;
         public Enemy EnemyA => enemyA;
         [SerializeField] private Enemy enemyB;
@@ -22,6 +23,17 @@ namespace FinalInferno{
                 3 => enemyD,
                 _ => null
             };
+        }
+        public Enemy[] GetEnemies(){
+            List<Enemy> list = new List<Enemy>();
+
+            for(int i = 0; i < ENCOUNTER_MAX_SIZE; i++){
+                if(this[i] != null){
+                    list.Add(this[i]);
+                }
+            }
+
+            return list.ToArray();
         }
         [SerializeField, Range(0,1f)] private float difficultyRating = 0;
         public float DifficultyRating => difficultyRating;
