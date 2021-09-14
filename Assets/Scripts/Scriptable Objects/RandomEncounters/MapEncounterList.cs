@@ -48,7 +48,7 @@ namespace FinalInferno{
 
         private void RemoveListDuplicates(){
             List<EncounterGroup> counter = new List<EncounterGroup>();
-            for(int i = 0; i < encounterGroups.Count; i++){
+            for(int i = 0; encounterGroups != null && i < encounterGroups.Count; i++){
                 if(encounterGroups[i] == null) continue;
                 if(counter.Contains(encounterGroups[i])){
                     encounterGroups[i] = null;
