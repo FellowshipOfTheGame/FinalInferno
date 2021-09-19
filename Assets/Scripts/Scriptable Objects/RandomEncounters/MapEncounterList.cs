@@ -6,27 +6,28 @@ using UnityEngine;
 namespace FinalInferno{
     [CreateAssetMenu(fileName = "MapEncounterList", menuName = "ScriptableObject/Map Encounter List")]
     public class MapEncounterList : ScriptableObject, ISerializationCallbackReceiver{
-        [SerializeField] private List<EncounterGroup> encounterGroups;
+        [SerializeField] private List<EncounterGroup> encounterGroups = null;
+        [SerializeField] private List<EncounterGroupItem> encounterGroupItems = new List<EncounterGroupItem>();
         public bool HasEncounterGroup {
             get {
-                foreach (EncounterGroup group in encounterGroups) {
-                    if(group != null) return true;
+                foreach (EncounterGroupItem item in encounterGroupItems) {
+                    if(item?.group != null) return true;
                 }
                 return false;
             }
         }
-        // O editor tava com uns comportamentos estranhos com isso aqui
-        // [SerializeField, Range(0.1f, 0.9f)] private float difficultyFactor = 0.8f;
-        private const float difficultyFactor = 0.8f;
+        [SerializeField] private float difficultyFactor = 0.8f;
         public ReadOnlyDictionary<EncounterGroup, float> GetChancesForLevel(int level){
             Dictionary<EncounterGroup, float> dict = new Dictionary<EncounterGroup, float>();
             level = Mathf.Clamp(level, 0, 4);
 
             float accumulatedWeights = 0f;
-            foreach(EncounterGroup encounterGroup in encounterGroups){
+            foreach(EncounterGroupItem encounterGroupItem in encounterGroupItems){
+                EncounterGroup encounterGroup = encounterGroupItem?.group;
                 if(encounterGroup == null || !encounterGroup.CanEncounter[level]) continue;
 
                 float encounterWeight = 1f - (difficultyFactor * encounterGroup.DifficultyRating); 
+                encounterWeight *= encounterGroupItem.chanceMultiplier;
                 accumulatedWeights += encounterWeight;
                 dict.Add(encounterGroup, encounterWeight);
             }
@@ -39,6 +40,13 @@ namespace FinalInferno{
         }
 
 		public void OnAfterDeserialize() {
+            if(encounterGroups != null && encounterGroups.Count > 0){
+                encounterGroupItems.Clear();
+                foreach(EncounterGroup group in encounterGroups){
+                    encounterGroupItems.Add(new EncounterGroupItem(group));
+                }
+                encounterGroups = null;
+            }
             RemoveListDuplicates();
 		}
 
@@ -47,14 +55,16 @@ namespace FinalInferno{
 		}
 
         private void RemoveListDuplicates(){
-            List<EncounterGroup> counter = new List<EncounterGroup>();
-            for(int i = 0; encounterGroups != null && i < encounterGroups.Count; i++){
-                if(encounterGroups[i] == null) continue;
-                if(counter.Contains(encounterGroups[i])){
-                    encounterGroups[i] = null;
+            HashSet<EncounterGroup> counter = new HashSet<EncounterGroup>();
+            for(int i = 0; encounterGroupItems != null && i < encounterGroupItems.Count; i++){
+                if(encounterGroupItems[i]?.group == null) continue;
+
+                if(counter.Contains(encounterGroupItems[i].group)){
+                    encounterGroupItems[i].group = null;
+                    encounterGroupItems[i].chanceMultiplier = 1.0f;
                     Debug.LogWarning("Removing duplicate encounter group");
                 }else{
-                    counter.Add(encounterGroups[i]);
+                    counter.Add(encounterGroupItems[i].group);
                 }
             }
         }
