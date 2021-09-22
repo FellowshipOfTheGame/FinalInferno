@@ -124,7 +124,7 @@ namespace FinalInferno{
 			EditorGUILayout.BeginHorizontal();
 			EditorGUILayout.LabelField("Difficulty Factor", EditorStyles.boldLabel);
 			if(GUILayout.Button("-", GUILayout.MaxWidth(SMALL_LABEL_WIDTH))){
-				selectedDifficultyFactor = Mathf.Max(0.1f, difficultyFactor.floatValue - 0.1f);
+				selectedDifficultyFactor = Mathf.Max(0.0f, difficultyFactor.floatValue - 0.1f);
 			}
 			EditorGUILayout.LabelField($"{(selectedDifficultyFactor):0.0}", GUILayout.MaxWidth(SMALL_LABEL_WIDTH));
 			if(GUILayout.Button("+", GUILayout.MaxWidth(SMALL_LABEL_WIDTH))){

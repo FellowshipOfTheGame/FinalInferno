@@ -28,6 +28,7 @@ namespace FinalInferno{
 
                 float encounterWeight = 1f - (difficultyFactor * encounterGroup.DifficultyRating); 
                 encounterWeight *= encounterGroupItem.chanceMultiplier;
+                encounterWeight = Mathf.Max(encounterWeight, Mathf.Epsilon);
                 accumulatedWeights += encounterWeight;
                 dict.Add(encounterGroup, encounterWeight);
             }
