@@ -105,7 +105,7 @@ namespace FinalInferno{
 			}
 			// Calcula as chances caso precise
 			if(parametersChanged){
-				validEncounterGroups.Sort((first, second) => first.DifficultyRating.CompareTo(second.DifficultyRating));
+				validEncounterGroups.Sort((first, second) => chancesDict[first].CompareTo(chancesDict[second]));
 			}
 
 			// Mostra a informação calculada de todos os encontros para o level selecionado
