@@ -10,12 +10,7 @@ namespace FinalInferno{
         public static bool encountersEnabled = true;
         [SerializeField] private Transform playerObj = null;
         // Tabela de encontros aleatorios pra este mapa
-        [SerializeField] private TextAsset encounterTable = null;
         [SerializeField] private MapEncounterList mapEncounterList = null;
-        [Range(0, 4)]
-        [SerializeField] private int minNumberEnemies = 0;
-        [Range(0, 4)]
-        [SerializeField] private int maxNumberEnemies = 0;
         [SerializeField] private EncounterRate encounterRate = null;
         [Space]
         [SerializeField] private OverworldSkill encounterIncreaseSkill = null;
@@ -84,8 +79,7 @@ namespace FinalInferno{
             // ou quando a tabela não existir
             // ou quando o numero de inimigos por encontro for 0
             if((curEncounterRate < float.Epsilon && rateIncreaseValue < float.Epsilon)
-                || mapEncounterList == null
-                || (minNumberEnemies == 0 && maxNumberEnemies == 0)){
+                || mapEncounterList == null){
                 curEncounterRate = 0;
                 rateIncreaseValue = 0;
                 isSafeArea = true;
