@@ -176,6 +176,21 @@ namespace FinalInferno{
             }
         }
 
+        #if UNITY_EDITOR
+        public override Sprite GetSubUnitPortrait(int index){
+            switch(index){
+                case 0:
+                    return queueSprite;
+                case 1:
+                    return queueSpriteMiddleHead;
+                case 2:
+                    return queueSpriteFrontHead;
+                default:
+                    return null;
+            }
+        }
+        #endif
+
         public override void ResetParameters(){
             hellFireCD = 0;
             summonedGhosts = false;
