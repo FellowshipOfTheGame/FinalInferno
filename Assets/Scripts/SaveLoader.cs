@@ -26,8 +26,8 @@ namespace FinalInferno{
                 // Verifica se o numero de personagens no overwold é igual à capacidade da party
                 // Consequentemente só vai permitir salvar o jogo no overworld
                 int charCount = 0;
-                for(int i = 0; i < CharacterOW.CharacterList.Count; i++){
-                    if(CharacterOW.CharacterList[i] != null)
+                for(int i = 0; i < Party.Capacity; i++){
+                    if(Party.Instance.characters[i].OverworldInstance != null)
                         charCount++;
                 }
                 return (charCount == Party.Capacity);

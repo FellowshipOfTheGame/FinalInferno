@@ -67,6 +67,9 @@ namespace FinalInferno{
         [SerializeField]
         protected Sprite queueSprite;
         public virtual Sprite QueueSprite { get => queueSprite; }
+        #if UNITY_EDITOR
+        public virtual Sprite GetSubUnitPortrait(int index){ return portrait; }
+        #endif
     }
 
     #if UNITY_EDITOR

@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace FinalInferno{
     public class GiveExp : MonoBehaviour
@@ -9,25 +8,25 @@ namespace FinalInferno{
 
         #if UNITY_EDITOR
         void Update(){
-            if(Input.GetKeyDown(KeyCode.X)){
+            if(Keyboard.current[Key.X].wasPressedThisFrame){
                 Party.Instance.GiveExp(5000);
             }
 
-            if(Input.GetKeyDown(KeyCode.C)){
+            if(Keyboard.current[Key.C].wasPressedThisFrame){
                 Party.Instance.GiveExp(500);
             }
 
-            if(Input.GetKeyDown(KeyCode.E)){
+            if(Keyboard.current[Key.E].wasPressedThisFrame){
                 if(skill != null)
                 skill.GiveExp(500);
             }
 
-            if(Input.GetKeyDown(KeyCode.R)){
+            if(Keyboard.current[Key.R].wasPressedThisFrame){
                 if(skill != null)
                 skill.GiveExp(50);
             }
 
-            if(Input.GetKeyDown(KeyCode.T)){
+            if(Keyboard.current[Key.T].wasPressedThisFrame){
                 foreach(Character character in Party.Instance.characters){
                     foreach(PlayerSkill skill in character.archetype.skills.ToArray()){
                         if(skill.active){
@@ -37,7 +36,7 @@ namespace FinalInferno{
                 }
             }
 
-            if(Input.GetKeyDown(KeyCode.Y)){
+            if(Keyboard.current[Key.Y].wasPressedThisFrame){
                 foreach(Character character in Party.Instance.characters){
                     foreach(PlayerSkill skill in character.archetype.skills.ToArray()){
                         if(skill.active){
@@ -47,15 +46,15 @@ namespace FinalInferno{
                 }
             }
 
-            if(Input.GetKeyDown(KeyCode.N)){
+            if(Keyboard.current[Key.N].wasPressedThisFrame){
                 SaveLoader.NewGame();
             }
 
-            if(Input.GetKeyDown(KeyCode.S)){
+            if(Keyboard.current[Key.S].wasPressedThisFrame){
                 SaveLoader.SaveGame();
             }
 
-            if(Input.GetKeyDown(KeyCode.L)){
+            if(Keyboard.current[Key.L].wasPressedThisFrame){
                 SaveLoader.LoadGame();
             }
         }

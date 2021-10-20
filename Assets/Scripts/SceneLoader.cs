@@ -33,10 +33,7 @@ namespace FinalInferno{
             RECalculator.encountersEnabled = false;
             Party.Instance.currentMap = SceneManager.GetActiveScene().name;
             // Armazena a posicao dos personagens no overworld dentro do SO correspondente
-            for(int i = 0; i < Party.Instance.characters.Count; i++){
-                if(CharacterOW.CharacterList[i] != null)
-                    Party.Instance.characters[i].position = CharacterOW.CharacterList[i].transform.position;
-            }
+            Party.Instance.SaveOverworldPositions();
             // Adicionar o setup da batalha no SceneManager.sceneLoaded
             enemies = new List<Enemy>(enemiesSelected);
             // Salva a BGM de batalha
@@ -121,9 +118,7 @@ namespace FinalInferno{
 
             // Salva o jogo se o autosave esta ativado
             if(SaveLoader.AutoSave && SaveLoader.CanSaveGame){
-                for(int i = 0; i < Party.Capacity; i++){
-                    Party.Instance.characters[i].position = new Vector2(CharacterOW.CharacterList[i].transform.position.x, CharacterOW.CharacterList[i].transform.position.y);
-                }
+                Party.Instance.SaveOverworldPositions();
                 SaveLoader.SaveGame();
             }
                 
@@ -172,10 +167,7 @@ namespace FinalInferno{
                 RECalculator.encountersEnabled = false;
                 // Pegar a informação da posição dos personagens pelo SO da party
                 // Reposicionar os game objects dos players na tela
-                for(int i = 0; i < Party.Instance.characters.Count; i++){
-                    if(CharacterOW.CharacterList[i] != null)
-                        CharacterOW.CharacterList[i].transform.position = Party.Instance.characters[i].position;
-                }
+                Party.Instance.LoadOverworldPositions();
             }
             RECalculator.encountersEnabled = true;
             Party.Instance.currentMap = SceneManager.GetActiveScene().name;

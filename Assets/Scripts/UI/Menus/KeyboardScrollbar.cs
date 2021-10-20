@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Scrollbar)), RequireComponent(typeof(RectTransform))]
 public class KeyboardScrollbar : MonoBehaviour
@@ -22,6 +23,7 @@ public class KeyboardScrollbar : MonoBehaviour
         }
     }
     [SerializeField] private float speed = 0.1f;
+    [SerializeField] private InputActionReference movementAction;
 
     void Reset(){
         scrollbar = GetComponent<Scrollbar>();
@@ -45,7 +47,8 @@ public class KeyboardScrollbar : MonoBehaviour
     void Update()
     {
         if(active){
-            float axis = Input.GetAxisRaw("Vertical");
+            // float axis = Input.GetAxisRaw("Vertical");
+            float axis = movementAction.action.ReadValue<Vector2>().y;
             scrollbar.value = Mathf.Clamp(scrollbar.value + speed * axis * scrollbar.size * Time.deltaTime, 0f, 1f);
         }
     }
