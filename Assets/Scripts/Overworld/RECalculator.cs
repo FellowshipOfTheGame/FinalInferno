@@ -12,14 +12,6 @@ namespace FinalInferno{
         // Tabela de encontros aleatorios pra este mapa
         [SerializeField] private TextAsset encounterTable = null;
         [SerializeField] private MapEncounterList mapEncounterList = null;
-        [SerializeField] private DynamicTable table;
-        private DynamicTable Table {
-            get {
-                if(table == null)
-                    table = DynamicTable.Create(encounterTable);
-                return table;
-            }
-        }
         [Range(0, 4)]
         [SerializeField] private int minNumberEnemies = 0;
         [Range(0, 4)]
@@ -61,10 +53,6 @@ namespace FinalInferno{
         // Start is called before the first frame update
         void Start()
         {
-            #if UNITY_EDITOR
-            table = DynamicTable.Create(encounterTable);
-            #endif
-
             playerObj = CharacterOW.MainOWCharacter?.transform;
             if(playerObj)
                 lastCheckPosition = new Vector2(playerObj.position.x, playerObj.position.y);
@@ -102,10 +90,6 @@ namespace FinalInferno{
                 rateIncreaseValue = 0;
                 isSafeArea = true;
             }
-        }
-
-        public void ReloadTable(){
-            table = DynamicTable.Create(encounterTable);
         }
 
         // A checagem precisa acontecer no LateUpdate para evitar conflito com o update que o sistema de dialogo usa
