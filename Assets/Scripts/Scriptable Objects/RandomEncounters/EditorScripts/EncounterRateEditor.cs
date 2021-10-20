@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
@@ -6,20 +6,6 @@ using UnityEditor;
 #endif
 
 namespace FinalInferno{
-    [CreateAssetMenu(fileName = "EncounterRate", menuName = "ScriptableObject/Encounter Rate")]
-    public class EncounterRate : ScriptableObject {
-        [Range(0, 100), SerializeField] private float baseEncounterRate = 5.0f;
-        public float BaseEncounterRate { get => baseEncounterRate; }
-
-        [Range(0, 100), SerializeField] private float rateIncreaseValue = 1f;
-        public float RateIncreaseValue{ get => rateIncreaseValue; }
-
-        [Range(1, 20), SerializeField] private int freeWalkDistance = 3;
-        public float FreeWalkDistance { get => freeWalkDistance; }
-        // Esse valor deve ser o valor mínimo do atributo Range acima
-        public int MinFreeWalkDistance { get => 1; }
-    }
-
 #if UNITY_EDITOR
     [CustomEditor(typeof(EncounterRate))]
     public class EncounterRateEditor : Editor{
@@ -106,10 +92,12 @@ namespace FinalInferno{
             EditorGUILayout.LabelField($"Distance walked  5% of the time:{((baseRate > float.Epsilon)? Mathf.Min(distanceWalked,999) : 999)}{((baseRate > float.Epsilon && distanceWalked <= 999)? "" : "+")}", GUILayout.ExpandWidth(true));
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Accumulated encounter chance per steps taken:");
-            GUIStyle style = new GUIStyle();
+            GUIStyle style = new GUIStyle(EditorStyles.label);
             style.alignment = TextAnchor.UpperRight;
             EditorGUILayout.LabelField("", $"{((distanceWalked <= 999)? 95 : (100f-(successChance*100f))):##.##}%", style);
-            EditorGUILayout.CurveField(curve, GUILayout.ExpandHeight(true));
+			GUI.enabled = false;
+            EditorGUILayout.CurveField(curve, GUILayout.MinHeight(200f));
+			GUI.enabled = true;
             EditorGUILayout.LabelField("0", ((baseRate > float.Epsilon && distanceWalked <= 999)? $"{distanceWalked}" : "999+"), style);
         }
     }

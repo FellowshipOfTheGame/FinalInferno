@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 #if UNITY_EDITOR
-public class CreateAssetDatabase : IPreprocessBuildWithReport, IProcessSceneWithReport
+public class CreateAssetDatabase : IPreprocessBuildWithReport
 {
     public int callbackOrder{ get => 0; }
 
@@ -32,15 +32,6 @@ public class CreateAssetDatabase : IPreprocessBuildWithReport, IProcessSceneWith
         }
         if(i == 0){
             Debug.LogWarning("No database found to update");
-        }
-    }
-
-    public void OnProcessScene(Scene scene, BuildReport report){
-        FinalInferno.RECalculator[] calcs = GameObject.FindObjectsOfType<FinalInferno.RECalculator>();
-
-        foreach(FinalInferno.RECalculator calculator in calcs){
-            Debug.Log($"Reloading Random Encounter table for object {calculator.gameObject.name} in scene {scene.name}");
-            calculator.ReloadTable();
         }
     }
 }
