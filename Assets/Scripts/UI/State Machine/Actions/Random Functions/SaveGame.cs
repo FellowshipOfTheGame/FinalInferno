@@ -19,8 +19,8 @@ namespace FinalInferno.UI.FSM
         {
             // Armazena a posicao dos personagens no overworld dentro do SO correspondente
             for(int i = 0; i < Party.Instance.characters.Count; i++){
-                if(CharacterOW.CharacterList[i] != null)
-                    Party.Instance.characters[i].position = CharacterOW.CharacterList[i].transform.position;
+                if(Party.Instance.characters[i].OverworldInstance != null)
+                    Party.Instance.characters[i].position = Party.Instance.characters[i].OverworldInstance.transform.position;
             }
             SaveLoader.SaveGame();
         }
