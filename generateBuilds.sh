@@ -3,21 +3,24 @@
 PROJECT_NAME=""
 VERSION=""
 UNITY_EXECUTABLE=""
-if [ "$#" -ne 1 ]; then
-	echo "Usage: $0 PATH_TO_UNITY_EXECUTABLE" >&2
-	exit 1
-else
-	UNITY_EXECUTABLE="$1"
-	echo "Using unity executable: $1"
-fi
 
-if [ -e ProjectSettings/ProjectSettings.asset ]; then
-	PROJECT_NAME=$(grep productName ProjectSettings/ProjectSettings.asset | sed 's/.*productName: //' | sed 's/ //g')
-	VERSION=$(grep bundleVersion ProjectSettings/ProjectSettings.asset | sed 's/.*bundleVersion: //')
-else
+if [ "$#" -ne 1 ] && [ "$#" -ne 2 ]; then
+	echo "Usage: $0 PATH_TO_UNITY_EXECUTABLE VERSION_OVERRIDE(optional)" >&2
+	exit 1
+elif [ ! -e ProjectSettings/ProjectSettings.asset ]; then
 	echo "Current folder is not a Unity Project!"
 	exit 2
 fi
+
+UNITY_EXECUTABLE="$1"
+echo "Using unity executable: $1"
+if [ "$#" -ne 2 ]; then
+	VERSION=$(grep bundleVersion ProjectSettings/ProjectSettings.asset | sed 's/.*bundleVersion: //')
+else
+	VERSION="$2"
+fi
+
+PROJECT_NAME=$(grep productName ProjectSettings/ProjectSettings.asset | sed 's/.*productName: //' | sed 's/ //g')
 
 echo "Building project $PROJECT_NAME for version $VERSION"
 
