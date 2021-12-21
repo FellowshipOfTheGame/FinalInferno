@@ -32,8 +32,10 @@ jobs:
           path: Library
           key: Library-2020.3.11
 
-      - name: Generate Builds
+      - name: Install zip
         uses: montudor/action-zip@v1
+
+      - name: Generate Builds
         run: |
           chmod +x generateBuilds.sh
           ./generateBuilds.sh unity-editor
