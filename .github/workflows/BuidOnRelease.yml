@@ -37,11 +37,11 @@ jobs:
           chmod +x generateBuilds.sh
           ./generateBuilds.sh unity-editor
           export LINUX_BUILD_NAME=ls Build/*Linux.zip | sed -e 's/Build\///'
-          echo "::set-env name=LINUX_BUILD_NAME::$LINUX_BUILD_NAME"
+          echo "LINUX_BUILD_NAME=$LINUX_BUILD_NAME" >> $GITHUB_ENV
           export WINDOWS_BUILD_NAME=ls Build/*Windows.zip | sed -e 's/Build\///'
-          echo "::set-env name=WINDOWS_BUILD_NAME::$WINDOWS_BUILD_NAME"
+          echo "WINDOWS_BUILD_NAME=$WINDOWS_BUILD_NAME" >> $GITHUB_ENV
           export WEB_BUILD_NAME=ls Build/*Web.zip | sed -e 's/Build\///'
-          echo "::set-env name=WEB_BUILD_NAME::$WEB_BUILD_NAME"
+          echo "WEB_BUILD_NAME=$WEB_BUILD_NAME" >> $GITHUB_ENV
 
       - name: Upload Linux Release Assets
         uses: actions/upload-release-asset@v1
@@ -49,8 +49,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./Build/$LINUX_BUILD_NAME
-          asset_name: $LINUX_BUILD_NAME
+          asset_path: ./Build/${{ env.LINUX_BUILD_NAME }}
+          asset_name: ${{ env.LINUX_BUILD_NAME }}
           asset_content_type: application/zip
 
       - name: Upload Windows Release Assets
@@ -59,8 +59,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./Build/$WINDOWS_BUILD_NAME
-          asset_name: $WINDOWS_BUILD_NAME
+          asset_path: ./Build/${{ env.WINDOWS_BUILD_NAME }}
+          asset_name: ${{ env.WINDOWS_BUILD_NAME }}
           asset_content_type: application/zip
 
       - name: Upload Web Release Assets
@@ -69,6 +69,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./Build/$WEB_BUILD_NAME
-          asset_name: $WEB_BUILD_NAME
+          asset_path: ./Build/${{ env.WEB_BUILD_NAME }}
+          asset_name: ${{ env.WEB_BUILD_NAME }}
           asset_content_type: application/zip
