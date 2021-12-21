@@ -33,14 +33,15 @@ jobs:
           key: Library-2020.3.11
 
       - name: Generate Builds
+        uses: montudor/action-zip@v1
         run: |
           chmod +x generateBuilds.sh
           ./generateBuilds.sh unity-editor
-          export LINUX_BUILD_NAME=ls Build/*Linux.zip | sed -e 's/Build\///'
+          export LINUX_BUILD_NAME=$(ls Build/*Linux.zip | sed -e 's/Build\///')
           echo "LINUX_BUILD_NAME=$LINUX_BUILD_NAME" >> $GITHUB_ENV
-          export WINDOWS_BUILD_NAME=ls Build/*Windows.zip | sed -e 's/Build\///'
+          export WINDOWS_BUILD_NAME=$(ls Build/*Windows.zip | sed -e 's/Build\///')
           echo "WINDOWS_BUILD_NAME=$WINDOWS_BUILD_NAME" >> $GITHUB_ENV
-          export WEB_BUILD_NAME=ls Build/*Web.zip | sed -e 's/Build\///'
+          export WEB_BUILD_NAME=$(ls Build/*Web.zip | sed -e 's/Build\///')
           echo "WEB_BUILD_NAME=$WEB_BUILD_NAME" >> $GITHUB_ENV
 
       - name: Upload Linux Release Assets
