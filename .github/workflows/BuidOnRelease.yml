@@ -21,11 +21,7 @@ jobs:
         uses: kuler90/setup-unity@v1
         with:
           unity-version: 2020.3.11f1
-          unity-modules: [
-            windows-mono,
-            linux-mono,
-            webgl
-          ]
+          unity-modules: "[windows-mono, linux-mono, webgl]"
 
       - name: Activate unity
         # exit code is 1 for manual activation
