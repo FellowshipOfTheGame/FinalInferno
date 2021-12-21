@@ -51,3 +51,5 @@ zip -r ../${PROJECT_NAME}${VERSION}_Windows.zip ./
 cd ../Web
 rm ../${PROJECT_NAME}${VERSION}_Web.zip
 zip -r ../${PROJECT_NAME}${VERSION}_Web.zip ./
+
+cd ../..

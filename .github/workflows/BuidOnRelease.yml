@@ -1,0 +1,74 @@
+name: Build On Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-and-upload:
+    name: Generate And Upload Build Files
+    runs-on: ubuntu-latest
+    container: unityci/editor:ubuntu-2020.3.11f1-base-0.13.0
+    env:
+      DOTNET_ROOT: '/opt/unity/Editor/Data/NetCore/Sdk-2.2.107'
+
+    steps:
+      - name: Activate unity
+        # exit code is 1 for manual activation
+        continue-on-error: true
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        run: |          
+          echo "$UNITY_LICENSE" | tr -d '\r' > UnityLicenseFile.ulf
+          unity-editor -nographics -logFile /dev/stdout -manualLicenseFile UnityLicenseFile.ulf -quit | echo "Activation finished"
+
+      - name: Checkout repository
+        uses: actions/checkout@v1
+
+      - name: Cache Library
+        id: cache-library
+        uses: actions/cache@v2
+        with:
+          path: Library
+          key: Library-2020.3.11
+
+      - name: Generate Builds
+        run: |
+          chmod +x generateBuilds.sh
+          ./generateBuilds.sh unity-editor
+          export LINUX_BUILD_NAME=ls Build/*Linux.zip | sed -e 's/Build\///'
+          echo "::set-env name=LINUX_BUILD_NAME::$LINUX_BUILD_NAME"
+          export WINDOWS_BUILD_NAME=ls Build/*Windows.zip | sed -e 's/Build\///'
+          echo "::set-env name=WINDOWS_BUILD_NAME::$WINDOWS_BUILD_NAME"
+          export WEB_BUILD_NAME=ls Build/*Web.zip | sed -e 's/Build\///'
+          echo "::set-env name=WEB_BUILD_NAME::$WEB_BUILD_NAME"
+
+      - name: Upload Linux Release Assets
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./Build/$LINUX_BUILD_NAME
+          asset_name: $LINUX_BUILD_NAME
+          asset_content_type: application/zip
+
+      - name: Upload Windows Release Assets
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./Build/$WINDOWS_BUILD_NAME
+          asset_name: $WINDOWS_BUILD_NAME
+          asset_content_type: application/zip
+
+      - name: Upload Web Release Assets
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./Build/$WEB_BUILD_NAME
+          asset_name: $WEB_BUILD_NAME
+          asset_content_type: application/zip
