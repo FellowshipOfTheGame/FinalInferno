@@ -33,7 +33,9 @@ jobs:
           key: Library-2020.3.11
 
       - name: Install zip
-        run: sudo apt-get install -y zip unzip
+        run: |
+          apt update && apt install sudo
+          sudo apt-get install -y zip
 
       - name: Generate Builds
         run: |
