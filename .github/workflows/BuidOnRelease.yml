@@ -8,11 +8,20 @@ jobs:
   build-and-upload:
     name: Generate And Upload Build Files
     runs-on: ubuntu-latest
-    container: unityci/editor:ubuntu-2020.3.11f1-base-0.13.0
     env:
       DOTNET_ROOT: '/opt/unity/Editor/Data/NetCore/Sdk-2.2.107'
 
     steps:
+      - name: Install zip
+        run: |
+          apt update && apt install sudo
+          sudo apt-get install -y zip
+
+      - name: Setup Unity
+        uses: kuler90/setup-unity@v1
+        with:
+          unity-modules: [windows-mono, linux-il2cpp, webgl]
+
       - name: Activate unity
         # exit code is 1 for manual activation
         continue-on-error: true
@@ -31,11 +40,6 @@ jobs:
         with:
           path: Library
           key: Library-2020.3.11
-
-      - name: Install zip
-        run: |
-          apt update && apt install sudo
-          sudo apt-get install -y zip
 
       - name: Generate Builds
         run: |
