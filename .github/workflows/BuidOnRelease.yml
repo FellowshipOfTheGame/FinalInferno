@@ -5,9 +5,10 @@ on:
     types: [published]
 
 jobs:
-  build-and-upload:
-    name: Generate And Upload Build Files
+  build-and-upload-linux:
+    name: Generate And Upload Linux Build Files
     runs-on: ubuntu-latest
+    container: unityci/editor:ubuntu-2020.3.11f1-base-0.15.0
     env:
       DOTNET_ROOT: '/opt/unity/Editor/Data/NetCore/Sdk-2.2.107'
 
@@ -16,16 +17,6 @@ jobs:
         run: |
           apt update && apt install sudo
           sudo apt-get install -y zip
-
-      - name: Setup Unity
-        uses: kuler90/setup-unity@v1
-        with:
-          unity-version: 2020.3.11f1
-          unity-modules: "
-            windows-mono
-            linux-mono
-            webgl
-          "
 
       - name: Activate unity
         # exit code is 1 for manual activation
@@ -44,18 +35,13 @@ jobs:
         uses: actions/cache@v2
         with:
           path: Library
-          key: Library-2020.3.11
+          key: Library-2020.3.11-linux
 
-      - name: Generate Builds
+      - name: Generate Build
         run: |
-          chmod +x generateBuilds.sh
-          ./generateBuilds.sh unity-editor
+          make linux UNITY_EXECUTABLE=unity-editor
           export LINUX_BUILD_NAME=$(ls Build/*Linux.zip | sed -e 's/Build\///')
           echo "LINUX_BUILD_NAME=$LINUX_BUILD_NAME" >> $GITHUB_ENV
-          export WINDOWS_BUILD_NAME=$(ls Build/*Windows.zip | sed -e 's/Build\///')
-          echo "WINDOWS_BUILD_NAME=$WINDOWS_BUILD_NAME" >> $GITHUB_ENV
-          export WEB_BUILD_NAME=$(ls Build/*Web.zip | sed -e 's/Build\///')
-          echo "WEB_BUILD_NAME=$WEB_BUILD_NAME" >> $GITHUB_ENV
 
       - name: Upload Linux Release Assets
         uses: actions/upload-release-asset@v1
@@ -67,6 +53,44 @@ jobs:
           asset_name: ${{ env.LINUX_BUILD_NAME }}
           asset_content_type: application/zip
 
+  build-and-upload-windows:
+    name: Generate And Upload Windows Build Files
+    runs-on: ubuntu-latest
+    container: unityci/editor:ubuntu-2020.3.11f1-windows-mono-0.15.0
+    env:
+      DOTNET_ROOT: '/opt/unity/Editor/Data/NetCore/Sdk-2.2.107'
+
+    steps:
+      - name: Install zip
+        run: |
+          apt update && apt install sudo
+          sudo apt-get install -y zip
+
+      - name: Activate unity
+        # exit code is 1 for manual activation
+        continue-on-error: true
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        run: |          
+          echo "$UNITY_LICENSE" | tr -d '\r' > UnityLicenseFile.ulf
+          unity-editor -nographics -logFile /dev/stdout -manualLicenseFile UnityLicenseFile.ulf -quit | echo "Activation finished"
+
+      - name: Checkout repository
+        uses: actions/checkout@v1
+
+      - name: Cache Library
+        id: cache-library
+        uses: actions/cache@v2
+        with:
+          path: Library
+          key: Library-2020.3.11-windows
+
+      - name: Generate Build
+        run: |
+          make windows UNITY_EXECUTABLE=unity-editor
+          export WINDOWS_BUILD_NAME=$(ls Build/*Windows.zip | sed -e 's/Build\///')
+          echo "WINDOWS_BUILD_NAME=$WINDOWS_BUILD_NAME" >> $GITHUB_ENV
+
       - name: Upload Windows Release Assets
         uses: actions/upload-release-asset@v1
         env:
@@ -76,6 +100,44 @@ jobs:
           asset_path: ./Build/${{ env.WINDOWS_BUILD_NAME }}
           asset_name: ${{ env.WINDOWS_BUILD_NAME }}
           asset_content_type: application/zip
+
+  build-and-upload-webgl:
+    name: Generate And Upload WebGL Build Files
+    runs-on: ubuntu-latest
+    container: unityci/editor:ubuntu-2020.3.11f1-webgl-0.15.0
+    env:
+      DOTNET_ROOT: '/opt/unity/Editor/Data/NetCore/Sdk-2.2.107'
+
+    steps:
+      - name: Install zip
+        run: |
+          apt update && apt install sudo
+          sudo apt-get install -y zip
+
+      - name: Activate unity
+        # exit code is 1 for manual activation
+        continue-on-error: true
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        run: |          
+          echo "$UNITY_LICENSE" | tr -d '\r' > UnityLicenseFile.ulf
+          unity-editor -nographics -logFile /dev/stdout -manualLicenseFile UnityLicenseFile.ulf -quit | echo "Activation finished"
+
+      - name: Checkout repository
+        uses: actions/checkout@v1
+
+      - name: Cache Library
+        id: cache-library
+        uses: actions/cache@v2
+        with:
+          path: Library
+          key: Library-2020.3.11-webgl
+
+      - name: Generate Build
+        run: |
+          make webgl UNITY_EXECUTABLE=unity-editor
+          export WEB_BUILD_NAME=$(ls Build/*Web.zip | sed -e 's/Build\///')
+          echo "WEB_BUILD_NAME=$WEB_BUILD_NAME" >> $GITHUB_ENV
 
       - name: Upload Web Release Assets
         uses: actions/upload-release-asset@v1
