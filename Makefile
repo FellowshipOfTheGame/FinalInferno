@@ -1,7 +1,7 @@
 PROJECT_SETTINGS = $(CURDIR)/ProjectSettings/ProjectSettings.asset
 override IS_UNITY_PROJECT = $(shell if [ ! -e $(PROJECT_SETTINGS) ]; then echo 0; else echo 1; fi)
 ifeq ($(IS_UNITY_PROJECT),0)
-$(error Current folder does not contain an Unity project!)
+$(error Current folder does not contain a Unity project!)
 endif
 PROJECT_NAME = $(shell grep productName ProjectSettings/ProjectSettings.asset | sed 's/.*productName: //' | sed 's/ //g')
 VERSION = $(shell grep bundleVersion ProjectSettings/ProjectSettings.asset | sed 's/.*bundleVersion: //')

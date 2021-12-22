@@ -29,7 +29,7 @@ jobs:
           unity-editor -nographics -logFile /dev/stdout -manualLicenseFile UnityLicenseFile.ulf -quit | echo "Activation finished"
 
       - name: Checkout repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Cache Library
         id: cache-library
@@ -45,14 +45,12 @@ jobs:
           echo "LINUX_BUILD_NAME=$LINUX_BUILD_NAME" >> $GITHUB_ENV
 
       - name: Upload Linux Release Assets
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: svenstaro/upload-release-action@v2
         with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./Build/${{ env.LINUX_BUILD_NAME }}
+          repo_token:  ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref }}
+          file: ./Build/${{ env.LINUX_BUILD_NAME }}
           asset_name: ${{ env.LINUX_BUILD_NAME }}
-          asset_content_type: application/zip
 
   build-and-upload-windows:
     name: Generate And Upload Windows Build Files
@@ -78,7 +76,7 @@ jobs:
           unity-editor -nographics -logFile /dev/stdout -manualLicenseFile UnityLicenseFile.ulf -quit | echo "Activation finished"
 
       - name: Checkout repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Cache Library
         id: cache-library
@@ -94,14 +92,12 @@ jobs:
           echo "WINDOWS_BUILD_NAME=$WINDOWS_BUILD_NAME" >> $GITHUB_ENV
 
       - name: Upload Windows Release Assets
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: svenstaro/upload-release-action@v2
         with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./Build/${{ env.WINDOWS_BUILD_NAME }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref }}
+          file: ./Build/${{ env.WINDOWS_BUILD_NAME }}
           asset_name: ${{ env.WINDOWS_BUILD_NAME }}
-          asset_content_type: application/zip
 
   build-and-upload-webgl:
     name: Generate And Upload WebGL Build Files
@@ -127,7 +123,7 @@ jobs:
           unity-editor -nographics -logFile /dev/stdout -manualLicenseFile UnityLicenseFile.ulf -quit | echo "Activation finished"
 
       - name: Checkout repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Cache Library
         id: cache-library
@@ -143,11 +139,9 @@ jobs:
           echo "WEB_BUILD_NAME=$WEB_BUILD_NAME" >> $GITHUB_ENV
 
       - name: Upload Web Release Assets
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: svenstaro/upload-release-action@v2
         with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./Build/${{ env.WEB_BUILD_NAME }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref }}
+          file: ./Build/${{ env.WEB_BUILD_NAME }}
           asset_name: ${{ env.WEB_BUILD_NAME }}
-          asset_content_type: application/zip
