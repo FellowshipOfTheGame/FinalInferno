@@ -3,8 +3,8 @@ override IS_UNITY_PROJECT = $(shell if [ ! -e $(PROJECT_SETTINGS) ]; then echo 0
 ifeq ($(IS_UNITY_PROJECT),0)
 $(error Current folder does not contain a Unity project!)
 endif
-PROJECT_NAME = $(shell grep productName ProjectSettings/ProjectSettings.asset | sed 's/.*productName: //' | sed 's/ //g')
-VERSION = $(shell grep bundleVersion ProjectSettings/ProjectSettings.asset | sed 's/.*bundleVersion: //')
+PROJECT_NAME = $(shell grep productName $(PROJECT_SETTINGS) | sed 's/.*productName: //' | sed 's/ //g')
+VERSION = $(shell grep bundleVersion $(PROJECT_SETTINGS) | sed 's/.*bundleVersion: //')
 UNITY_EXECUTABLE =
 BUILD_DIR = $(CURDIR)/Build
 LINUX_BUILD_DIR = $(BUILD_DIR)/Linux
