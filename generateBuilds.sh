@@ -46,10 +46,10 @@ cd Build/Linux
 rm -f ../${PROJECT_NAME}${VERSION}_Linux.zip
 zip -r ../${PROJECT_NAME}${VERSION}_Linux.zip ./
 cd ../Windows
-rm ../${PROJECT_NAME}${VERSION}_Windows.zip
+rm -f ../${PROJECT_NAME}${VERSION}_Windows.zip
 zip -r ../${PROJECT_NAME}${VERSION}_Windows.zip ./
 cd ../Web
-rm ../${PROJECT_NAME}${VERSION}_Web.zip
+rm -f ../${PROJECT_NAME}${VERSION}_Web.zip
 zip -r ../${PROJECT_NAME}${VERSION}_Web.zip ./
 
 cd ../..
