@@ -22,6 +22,7 @@ namespace FinalInferno{
         public BattleUnit currentUnit {get; private set;}
         public int MaxBaseSpeed {get; private set; } = Unit.maxStatValue;
         public int MinBaseSpeed {get; private set; } = 0;
+        public int CameraPPU {get; private set;} = 64;
 
         public BattleUnitsUI unitsUI;
 
@@ -67,7 +68,7 @@ namespace FinalInferno{
         }
 
         public void PrepareBattle(){
-            int ppu = Camera.main.gameObject.GetComponent<UnityEngine.U2D.PixelPerfectCamera>().assetsPPU;
+            CameraPPU = Camera.main.gameObject.GetComponent<UnityEngine.U2D.PixelPerfectCamera>().assetsPPU;
             MaxBaseSpeed = 0;
             MinBaseSpeed = Unit.maxStatValue;
             foreach(Unit unit in units){
@@ -79,7 +80,7 @@ namespace FinalInferno{
                     BattleProgress.addHeroSkills((Hero)unit);
                 }
 
-                BattleUnit newUnit = BattleUnitsUI.instance.LoadUnit(unit, ppu);
+                BattleUnit newUnit = BattleUnitsUI.Instance.LoadUnit(unit, CameraPPU);
                 battleUnits.Add(newUnit);
                 float initiative = newUnit.curSpeed;
                 // Debug.Log("Carregou " + unit.name);

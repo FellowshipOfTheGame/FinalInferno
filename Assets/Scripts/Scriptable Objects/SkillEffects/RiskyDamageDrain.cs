@@ -7,7 +7,7 @@ namespace FinalInferno{
     public class RiskyDamageDrain : SkillEffect {
         // value1 = dmgDrain multiplier
         // value2 = debuff duration
-        public override string Description { get { return "Drain " + value1*100 + "% damage for " + value2 + " turns"; } }
+        public override string Description { get { return "Drain " + value1*100 + "% damage for " + value2 + " turns, but gets drained instead if target is alive at the end"; } }
         
         public override void Apply(BattleUnit source, BattleUnit target) {
             bool isDraining = false;
@@ -20,7 +20,6 @@ namespace FinalInferno{
             if(!isDraining){
                 source.AddEffect(new DrainingDamage(source, target, value1, (int)value2, false, true, true));
                 target.AddEffect(new DamageDrained(source, target, value1, (int)value2));
-            }else{
             }
         }
     }

@@ -44,6 +44,7 @@ namespace FinalInferno{
 
         // Callbacks da unidade
         public ReadOnlyCollection<Skill> ActiveSkills { get => activeSkills.AsReadOnly(); }
+
         public SkillDelegate OnEndBattle = null;
         public SkillDelegate OnStartBattle = null;
         //public SkillDelegate OnGiveBuff = null;
@@ -98,8 +99,8 @@ namespace FinalInferno{
             canvasTransform = FindObjectOfType<Canvas>().transform;
         }
 
-        public void Configure(Unit unit){
-            if(Unit != null){
+        public void Configure(Unit unit, bool isMorph = false, float curHPMultiplier = 1.0f){
+            if(Unit != null && !isMorph){
                 Debug.LogError("Tentou configurar uma unidade já configurada");
                 return;
             }
@@ -144,7 +145,7 @@ namespace FinalInferno{
 
             // Aplica os status base da unidade
             MaxHP = unit.hpMax;
-            if(unit.IsHero){
+            if(unit.IsHero && !isMorph){
                 foreach(Character character in Party.Instance.characters){
                     if(character.archetype == unit){
                         CurHP = character.hpCur;
@@ -152,13 +153,15 @@ namespace FinalInferno{
                     }
                 }
             }else{
-                CurHP = unit.hpMax;
+                curHPMultiplier = Mathf.Clamp(curHPMultiplier, 0, 1f);
+                CurHP = Mathf.Max(1, Mathf.FloorToInt(unit.hpMax * curHPMultiplier));
             }
             curDmg = unit.baseDmg;
             curDef = unit.baseDef;
             curMagicDef = unit.baseMagicDef;
             curSpeed = unit.baseSpeed;
 
+            elementalResistances.Clear();
             ReadOnlyDictionary<Element, float> baseResistances = unit.ElementalResistances;
             foreach(Element element in System.Enum.GetValues(typeof(Element))){
                 if(baseResistances.ContainsKey(element)){
@@ -167,10 +170,15 @@ namespace FinalInferno{
                     elementalResistances.Add(element, 1.0f);
                 }
             }
-            actionPoints = 0;
-            hpOnHold = 0; 
 
-            effects = new List<StatusEffect>();
+            if(!isMorph){
+                actionPoints = 0;
+                hpOnHold = 0; 
+
+                effects = new List<StatusEffect>();
+            }else{
+                activeSkills.Clear();
+            }
 
             // Manda as configurações base para o handler de status effects
             statusEffectHandler.Setup(this, sr.sortingOrder+1);
@@ -190,7 +198,7 @@ namespace FinalInferno{
                         // Aplica o efeito das skills relevantes na unidade
                         skill.Use(this, this);
                         // Da exp para a skill
-                        if(unit.IsHero){
+                        if(unit.IsHero && !isMorph){
                             List<Unit> enemies = new List<Unit>();
                             foreach(Unit u in BattleManager.instance.units){
                                 if(!u.IsHero)
@@ -251,6 +259,11 @@ namespace FinalInferno{
             if(deadUnit && CurHP <= 0 && effects.Count <= 0){
                 BattleManager.instance.Kill(this);
             }
+        }
+
+        public void ShowDamage(int value, bool isHeal, float multiplier){
+            // Show damage ignoring value changes and animations
+            damageIndicator?.ShowDamage(value, isHeal, multiplier);
         }
 
         public StatusEffect AddEffect(StatusEffect statusEffect, bool ignoreCallback = false){

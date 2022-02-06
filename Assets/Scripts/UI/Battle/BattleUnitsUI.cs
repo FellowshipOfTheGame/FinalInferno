@@ -11,7 +11,7 @@ namespace FinalInferno.UI.Battle
     /// </summary>
     public class BattleUnitsUI : MonoBehaviour
     {
-        public static BattleUnitsUI instance;
+        public static BattleUnitsUI Instance { get; private set; }
 
         [Header("Contents")]
         [SerializeField] private Transform heroesContent;
@@ -32,16 +32,16 @@ namespace FinalInferno.UI.Battle
 
         void Awake(){
             // Singleton
-            if (instance == null)
-                instance = this;
-            else if (instance != this)
+            if (Instance == null)
+                Instance = this;
+            else if (Instance != this)
                 Destroy(this);
         }
 
-        void Start()
-        {
-            //LoadTeam(UnitType.Hero, heroesContent, heroesManager);
-            //LoadTeam(UnitType.Enemy, enemiesContent, enemiesManager);
+        void OnDestroy(){
+            if(Instance == this){
+                Instance = null;
+            }
         }
 
         void Update(){
@@ -52,6 +52,14 @@ namespace FinalInferno.UI.Battle
             foreach(Transform child in enemiesManager.transform){
                 child.transform.localEulerAngles = new Vector3(child.transform.localEulerAngles.x, child.transform.localEulerAngles.y, enemiesManager.transform.localEulerAngles.z * -1f);
             }
+        }
+
+        public void UpdateBattleUnitSize(BattleUnit battleUnit, int ppu = 64){
+            RectTransform referenceTransform = battleUnit.battleItem.transform.parent.Find("Active Reference").GetComponent<RectTransform>();
+            referenceTransform.anchoredPosition += new Vector2(0f, battleUnit.GetComponent<SpriteRenderer>().sprite.bounds.size.y * ppu);
+            // Debug.Log("height detected for " + unit.name + " = " + unit.BattleSprite.bounds.size.y);
+            battleUnit.battleItem.layout.preferredWidth = battleUnit.Unit.BoundsSizeX * ppu;
+            battleUnit.battleItem.layout.preferredHeight = battleUnit.Unit.BoundsSizeY * ppu;
         }
 
         public BattleUnit LoadUnit(Unit unit, int ppu = 64){
@@ -65,19 +73,16 @@ namespace FinalInferno.UI.Battle
 
             // Define as configurações de renderização
             int sortingLayer = 0;
-            SpriteRenderer sr = battleUnit.GetComponent<SpriteRenderer>();
             foreach(Transform child in ((unit.IsHero)? heroesContent : enemiesContent)){
                 // 1 layer pra unidade, 1 pros status effects e 1 pra skill sendo usada na unidade
                 sortingLayer += 3;
             }
-            sr.sortingOrder = sortingLayer;
+            battleUnit.GetComponent<SpriteRenderer>().sortingOrder = sortingLayer;
             battleUnit.Configure(unit);
-            // Nesse ponto aqui sr.sprite corresponde a um sprite de batalha da unidade
-            // Reposiciona o indicador da unidade de acordo com o tamanho do sprite de batalha
-            AxisInteractableItem newItem = battleUnit.battleItem.GetComponent<AxisInteractableItem>();
-            battleUnit.battleItem.layout.preferredWidth = unit.BoundsSizeX * ppu;
-            battleUnit.battleItem.layout.preferredHeight = unit.BoundsSizeY * ppu;
+            battleItem.Setup();
+            UpdateBattleUnitSize(battleUnit, ppu);
 
+            AxisInteractableItem newItem = battleUnit.battleItem.GetComponent<AxisInteractableItem>();
             AIIManager manager = (unit.IsHero)? heroesManager : enemiesManager;
             
             // Ordena o item na lista
@@ -130,45 +135,6 @@ namespace FinalInferno.UI.Battle
                     manager.firstItem = newItem;
                 }
                 manager.lastItem = newItem;
-            }
-        }
-
-        // Função obsoleta, preciso deletar soon tm
-        private void LoadTeam(UnitType team, Transform content, AIIManager manager)
-        {
-            List<BattleUnit> units = BattleManager.instance.GetTeam(team);
-
-            foreach (AxisInteractableItem item in content.GetComponentsInChildren<AxisInteractableItem>())
-            {
-                Destroy(item.gameObject);
-            }
-
-            // Variável auxiliar para a ordenação dos itens
-            AxisInteractableItem lastItem = null;
-
-            // Passa por todas as unidades da lista, adicionando-as no menu e as ordenando
-            foreach (BattleUnit unit in units)
-            {
-                // Instancia um novo item e o coloca no content
-                GameObject newUnit = Instantiate(unitPrefab, content);
-                newUnit.transform.rotation = Quaternion.identity;
-
-                newUnit.GetComponent<Image>().color = unit.Unit.color;
-
-                unit.Configure(unit.Unit);
-
-                // Ordena o item na lista
-                AxisInteractableItem newItem = newUnit.GetComponent<AxisInteractableItem>();
-                if (lastItem != null)
-                {
-                    newItem.upItem = lastItem;
-                    lastItem.downItem = newItem;
-                }
-                else
-                {
-                    manager.firstItem = newItem;
-                }
-                lastItem = newItem;
             }
         }
 
