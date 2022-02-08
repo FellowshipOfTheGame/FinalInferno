@@ -1,16 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using FinalInferno.UI.Battle;
+using UnityEngine;
 
-namespace FinalInferno.UI.FSM
-{
+namespace FinalInferno.UI.FSM {
     /// <summary>
     /// Decisão baseada no tipo de unidade que está no turno.
     /// </summary>
     [CreateAssetMenu(menuName = "BattleUI SM/Decisions/Has Valid Targets")]
-    public class HasValidTargetsDecision : Decision
-    {
+    public class HasValidTargetsDecision : Decision {
         /// <summary>
         /// Valor desejado para a decisão.
         /// </summary>
@@ -20,12 +17,11 @@ namespace FinalInferno.UI.FSM
         /// Verifica se a decisão ativou.
         /// </summary>
         /// <param name="controller"> O controlador da máquina de estados. </param>
-        public override bool Decide(StateController controller)
-        {
+        public override bool Decide(StateController controller) {
             bool hasValidTargets = false;
             TargetType currentSkillType = BattleSkillManager.GetSkillType();
 
-            switch(currentSkillType){
+            switch (currentSkillType) {
                 case TargetType.AllAllies:
                 case TargetType.AllEnemies:
                 case TargetType.MultiAlly:

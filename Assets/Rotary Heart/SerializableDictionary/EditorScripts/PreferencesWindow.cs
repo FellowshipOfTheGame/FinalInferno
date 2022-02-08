@@ -1,16 +1,14 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace RotaryHeart.Lib.SerializableDictionary
-{
+namespace RotaryHeart.Lib.SerializableDictionary {
 #if UNITY_EDITOR
-    public class PreferencesWindow
-    {
+    public class PreferencesWindow {
         #region GUIContent
-        static readonly GUIContent gui_pagesTitle = new GUIContent("Pages", "Section that has all the pages settings for the drawer");
-        static readonly GUIContent gui_showPages = new GUIContent("Show Pages", "Should the drawer be divided in pages?");
-        static readonly GUIContent gui_showSizes = new GUIContent("Show Sizes", "Should the dictionary show the size on the title bar?");
-        static readonly GUIContent gui_pageCount = new GUIContent("Page Count", "How many elements per page are going to be drawn");
+        private static readonly GUIContent gui_pagesTitle = new GUIContent("Pages", "Section that has all the pages settings for the drawer");
+        private static readonly GUIContent gui_showPages = new GUIContent("Show Pages", "Should the drawer be divided in pages?");
+        private static readonly GUIContent gui_showSizes = new GUIContent("Show Sizes", "Should the dictionary show the size on the title bar?");
+        private static readonly GUIContent gui_pageCount = new GUIContent("Page Count", "How many elements per page are going to be drawn");
         #endregion
 
         // Have we loaded the prefs yet
@@ -23,10 +21,8 @@ namespace RotaryHeart.Lib.SerializableDictionary
 
         // Add preferences section named "My Preferences" to the Preferences Window
         [PreferenceItem("RHSD")]
-        public static void PreferencesGUI()
-        {
-            if (!prefsLoaded)
-            {
+        public static void PreferencesGUI() {
+            if (!prefsLoaded) {
                 showPages = Constants.ShowPages;
                 showSize = Constants.ShowSize;
                 pageCount = Constants.PageCount;
@@ -46,8 +42,7 @@ namespace RotaryHeart.Lib.SerializableDictionary
 
             GUI.enabled = true;
 
-            if (GUI.changed)
-            {
+            if (GUI.changed) {
                 Constants.ShowPages = showPages;
                 Constants.ShowSize = showSize;
                 Constants.PageCount = pageCount;
@@ -55,8 +50,7 @@ namespace RotaryHeart.Lib.SerializableDictionary
 
             GUILayout.FlexibleSpace();
 
-            if (GUILayout.Button("Restore Default"))
-            {
+            if (GUILayout.Button("Restore Default")) {
                 Constants.RestoreDefaults();
 
                 prefsLoaded = false;

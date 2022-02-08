@@ -1,5 +1,4 @@
-﻿namespace RotaryHeart.Lib.SerializableDictionary
-{
+﻿namespace RotaryHeart.Lib.SerializableDictionary {
     /// <summary>
     /// Attribute used to force drawing a key as a property
     /// </summary>

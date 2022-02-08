@@ -1,23 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace FinalInferno.UI.AII{
+namespace FinalInferno.UI.AII {
     [RequireComponent(typeof(RectTransform))]
-    public class CompensateParentOffset : MonoBehaviour
-    {
+    public class CompensateParentOffset : MonoBehaviour {
         public RectTransform followTarget = null;
         private RectTransform rectTransform;
         private Vector2 currentOffset = Vector2.zero;
 
-        void Awake(){
+        private void Awake() {
             rectTransform = GetComponent<RectTransform>();
         }
 
         // Update is called once per frame
-        void LateUpdate()
-        {
-            if(followTarget){
+        private void LateUpdate() {
+            if (followTarget) {
                 RectTransform followParent = followTarget.parent as RectTransform;
                 RectTransform myParent = transform.parent as RectTransform;
 

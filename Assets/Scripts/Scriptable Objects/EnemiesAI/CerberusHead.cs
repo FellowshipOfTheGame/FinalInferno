@@ -1,15 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using FinalInferno;
-using FinalInferno.UI.Battle;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace FinalInferno{
+namespace FinalInferno {
     [CreateAssetMenu(fileName = "CerberusHead", menuName = "ScriptableObject/Enemy/CerberusHead")]
-    public class CerberusHead : Enemy{
+    public class CerberusHead : Enemy {
         // OBS.: A IA parte do pressuposto que as 3 cabeças do cérbero são as unicas unidades no time inimigo
         // O posicionamento de unidades também será feito levando isso em conta
         // O nível do cérbero deve ser incrementado de 1 em 1 para versões mais fortes
@@ -22,7 +19,7 @@ namespace FinalInferno{
         private static BattleUnit backHead = null;
         private static BattleUnit middleHead = null;
         private static BattleUnit frontHead = null;
-        public override string DialogueName { get { return "Cerberus"; } }
+        public override string DialogueName => "Cerberus";
 
         [Space(10)]
         [Header("It has 3 heads")]
@@ -31,8 +28,8 @@ namespace FinalInferno{
         [SerializeField] private RuntimeAnimatorController animatorMiddleHead;
         [SerializeField] private RuntimeAnimatorController animatorFrontHead;
         public override RuntimeAnimatorController Animator {
-            get{
-                switch(heads){
+            get {
+                switch (heads) {
                     case 1:
                         return animator;
                     case 2:
@@ -47,8 +44,8 @@ namespace FinalInferno{
         [SerializeField] private Sprite portraitMiddleHead; //
         [SerializeField] private Sprite portraitFrontHead; //
         public override Sprite Portrait {
-            get{
-                switch(heads){
+            get {
+                switch (heads) {
                     case 1:
                         return portrait;
                     case 2:
@@ -77,8 +74,8 @@ namespace FinalInferno{
         [SerializeField, Range(0, 1f)]
         private float yOffsetFront = 0;
         public override Vector2 EffectsRelativePosition {
-            get{
-                switch(heads){
+            get {
+                switch (heads) {
                     case 1:
                         return new Vector2(xOffset, yOffset);
                     case 2:
@@ -91,19 +88,19 @@ namespace FinalInferno{
             }
         }
         public override Sprite BattleSprite {
-            get{
-                if(BattleManager.instance == null){
+            get {
+                if (BattleManager.instance == null) {
                     return battleSprite;
                 }
 
                 //Debug.Log("Usou o getter certo");
-                switch(heads){
+                switch (heads) {
                     default:
                     case 0:
                         heads = 1;
                         battleUnits.Clear();
-                        foreach(BattleUnit bUnit in FindObjectsOfType<BattleUnit>()){
-                            if(bUnit.Unit == this && bUnit.name == this.name){
+                        foreach (BattleUnit bUnit in FindObjectsOfType<BattleUnit>()) {
+                            if (bUnit.Unit == this && bUnit.name == name) {
                                 bUnit.name += (" " + heads);
                                 battleUnits.Add(bUnit.gameObject);
                                 backHead = bUnit;
@@ -113,8 +110,8 @@ namespace FinalInferno{
                         return battleSpriteBackHead;
                     case 1:
                         heads++;
-                        foreach(BattleUnit bUnit in FindObjectsOfType<BattleUnit>()){
-                            if(bUnit.Unit == this && bUnit.name == this.name){
+                        foreach (BattleUnit bUnit in FindObjectsOfType<BattleUnit>()) {
+                            if (bUnit.Unit == this && bUnit.name == name) {
                                 bUnit.name += (" " + heads);
                                 battleUnits.Add(bUnit.gameObject);
                                 middleHead = bUnit;
@@ -124,8 +121,8 @@ namespace FinalInferno{
                         return battleSpriteMiddleHead;
                     case 2:
                         heads++;
-                        foreach(BattleUnit bUnit in FindObjectsOfType<BattleUnit>()){
-                            if(bUnit.Unit == this && bUnit.name == this.name){
+                        foreach (BattleUnit bUnit in FindObjectsOfType<BattleUnit>()) {
+                            if (bUnit.Unit == this && bUnit.name == name) {
                                 bUnit.name += (" " + heads);
                                 battleUnits.Add(bUnit.gameObject);
                                 frontHead = bUnit;
@@ -135,7 +132,7 @@ namespace FinalInferno{
 
                         //Faz os sprites ficarem na mesma posição
                         CompositeBattleUnit composite = middleHead.gameObject.AddComponent<CompositeBattleUnit>();
-                        if(composite){
+                        if (composite) {
                             composite.AddApendage(backHead);
                             composite.AddApendage(frontHead);
                         }
@@ -146,7 +143,7 @@ namespace FinalInferno{
                         bodyObj.transform.position = Vector3.zero;
                         bodyObj.transform.rotation = Quaternion.identity;
                         SpriteRenderer sr = bodyObj.gameObject.AddComponent<SpriteRenderer>();
-                        if(sr){
+                        if (sr) {
                             sr.sprite = bodySprite;
                             sr.sortingOrder = 0;
                             sr.flipX = true;
@@ -156,14 +153,14 @@ namespace FinalInferno{
                 }
             }
         }
-        public override float BoundsSizeX { get => (battleSprite.bounds.size.x); }
-        public override float BoundsSizeY { get => (battleSprite.bounds.size.y/8f); }
+        public override float BoundsSizeX => (battleSprite.bounds.size.x);
+        public override float BoundsSizeY => (battleSprite.bounds.size.y / 8f);
         [Space(10)]
         [SerializeField] private Sprite queueSpriteMiddleHead;
         [SerializeField] private Sprite queueSpriteFrontHead;
         public override Sprite QueueSprite {
-            get{
-                switch(heads){
+            get {
+                switch (heads) {
                     case 1:
                         return queueSprite;
                     case 2:
@@ -176,9 +173,9 @@ namespace FinalInferno{
             }
         }
 
-        #if UNITY_EDITOR
-        public override Sprite GetSubUnitPortrait(int index){
-            switch(index){
+#if UNITY_EDITOR
+        public override Sprite GetSubUnitPortrait(int index) {
+            switch (index) {
                 case 0:
                     return queueSprite;
                 case 1:
@@ -189,33 +186,34 @@ namespace FinalInferno{
                     return null;
             }
         }
-        #endif
+#endif
 
-        public override void ResetParameters(){
+        public override void ResetParameters() {
             hellFireCD = 0;
             summonedGhosts = false;
         }
 
         //funcao que escolhe o ataque a ser utilizado
-        public override Skill AttackDecision(){
-            if(hellFireCD < 1){
+        public override Skill AttackDecision() {
+            if (hellFireCD < 1) {
                 float rand = Random.Range(0.0f, 1.0f); //gera um numero aleatorio entre 0 e 1
 
-                if(rand < 0.9f/heads){
-                    hellFireCD = (heads-1); 
-                    skills[0].Level = ((level-1) * 3) + 4 - heads;
+                if (rand < 0.9f / heads) {
+                    hellFireCD = (heads - 1);
+                    skills[0].Level = ((level - 1) * 3) + 4 - heads;
                     return skills[0]; //decide usar primeira habilidade
                 }
-            } else
+            } else {
                 hellFireCD--;
+            }
 
             return attackSkill; //decide usar ataque basico
         }
 
         //funcao que escolhe qual acao sera feita no proprio turno
-        public override Skill SkillDecision(float percentageNotDefense){
+        public override Skill SkillDecision(float percentageNotDefense) {
             float rand = Random.Range(0.0f, 1.0f); //gera um numero aleatorio entre 0 e 1
-            float percentageDebuff = Mathf.Min((1f/3f), percentageNotDefense/3f); //porcentagem para o inimigo usar a habilidade de buff
+            float percentageDebuff = Mathf.Min((1f / 3f), percentageNotDefense / 3f); //porcentagem para o inimigo usar a habilidade de buff
             List<BattleUnit> team;
             bool fearCD = false;
 
@@ -223,33 +221,35 @@ namespace FinalInferno{
             heads = team.Count;
 
             // Invoca as cabeças fantasma
-            if(heads <= 1 && !summonedGhosts){
+            if (heads <= 1 && !summonedGhosts) {
                 summonedGhosts = true;
                 return skills[2];
             }
 
             team = BattleManager.instance.GetTeam(UnitType.Hero);
-            foreach (BattleUnit hero in team){
-                if(!hero.CanAct) fearCD = true;
+            foreach (BattleUnit hero in team) {
+                if (!hero.CanAct) {
+                    fearCD = true;
+                }
             }
 
-            if(!fearCD && rand < percentageDebuff){
+            if (!fearCD && rand < percentageDebuff) {
                 skills[1].Level = ((level - 1) * 3) + 4 - heads;
                 return skills[1]; //decide usar a segunda habilidade(debuff)
             }
 
-            if(rand < percentageNotDefense)
+            if (rand < percentageNotDefense) {
                 return AttackDecision(); //decide atacar
+            }
 
             return defenseSkill; //decide defender
         }
 
-        protected override List<BattleUnit> GetTargets(TargetType type){
+        protected override List<BattleUnit> GetTargets(TargetType type) {
             List<BattleUnit> targets = new List<BattleUnit>();
             List<BattleUnit> team = new List<BattleUnit>();
 
-            switch (type)
-            {
+            switch (type) {
                 case TargetType.Self:
                     targets.Add(BattleManager.instance.currentUnit);
                     break;
@@ -258,7 +258,7 @@ namespace FinalInferno{
                     break;
                 case TargetType.MultiEnemy:
                     team = BattleManager.instance.GetTeam(UnitType.Hero);
-                    for(int i = 0; i < heads && team.Count > 0; i++){
+                    for (int i = 0; i < heads && team.Count > 0; i++) {
                         int targetIdx = TargetDecision(team);
                         targets.Add(team[targetIdx]);
                         team.RemoveAt(targetIdx);
@@ -266,7 +266,7 @@ namespace FinalInferno{
                     break;
                 case TargetType.SingleAlly:
                     team = BattleManager.instance.GetTeam(UnitType.Enemy);
-                    targets.Add(team[Random.Range(0, team.Count-1)]);
+                    targets.Add(team[Random.Range(0, team.Count - 1)]);
                     break;
                 case TargetType.SingleEnemy:
                     team = BattleManager.instance.GetTeam(UnitType.Hero);
@@ -282,20 +282,20 @@ namespace FinalInferno{
         }
     }
 
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
     [CustomPreview(typeof(CerberusHead))]
-    public class CerberusHeadPreview : UnitPreview{
-        public override void OnPreviewGUI(Rect r, GUIStyle background){
+    public class CerberusHeadPreview : UnitPreview {
+        public override void OnPreviewGUI(Rect r, GUIStyle background) {
             CerberusHead unit = target as CerberusHead;
-            if(unit != null){
-                if(tex == null){
+            if (unit != null) {
+                if (tex == null) {
                     tex = new Texture2D(Mathf.FloorToInt(unit.BattleSprite.textureRect.width), Mathf.FloorToInt(unit.BattleSprite.textureRect.height), unit.BattleSprite.texture.format, false);
                     Color[] colors = unit.BattleSprite.texture.GetPixels(Mathf.FloorToInt(unit.BattleSprite.textureRectOffset.x), Mathf.FloorToInt(unit.BattleSprite.textureRectOffset.y), tex.width, tex.height);
                     tex.SetPixels(colors);
                     tex.Apply();
 
                     Color[] transparency = new Color[tex.width * tex.height];
-                    for(int i = 0; i < transparency.Length; i++){
+                    for (int i = 0; i < transparency.Length; i++) {
                         transparency[i] = Color.clear;
                     }
                     bg = new Texture2D(tex.width, tex.height, tex.format, false, false);
@@ -307,9 +307,9 @@ namespace FinalInferno{
                 float aspectRatio = tex.height / (float)tex.width;
                 float scaledHeight = aspectRatio * 0.8f * r.width;
 
-                if(tex.width > tex.height && (r.height * 0.8f) > scaledHeight){
+                if (tex.width > tex.height && (r.height * 0.8f) > scaledHeight) {
                     texRect = new Rect(r.center.x - 0.4f * r.width, r.center.y - aspectRatio * 0.4f * r.width, 0.8f * r.width, aspectRatio * 0.8f * r.width);
-                }else{
+                } else {
                     texRect = new Rect(r.center.x - 0.4f * r.height / aspectRatio, r.center.y - 0.4f * r.height, 0.8f * r.height / aspectRatio, 0.8f * r.height);
                 }
 
@@ -319,14 +319,14 @@ namespace FinalInferno{
                 GUI.DrawTexture(texRect, tex, ScaleMode.ScaleToFit);
 
                 int previousValue = CerberusHead.heads;
-                for(int i = 1; i <= 3; i++){
+                for (int i = 1; i <= 3; i++) {
                     CerberusHead.heads = i;
-                    Rect headRect = new Rect(texRect.x + (unit.EffectsRelativePosition.x * texRect.width) - rectSize/2, texRect.yMax - (unit.EffectsRelativePosition.y * texRect.height) - rectSize/2, rectSize, rectSize);
+                    Rect headRect = new Rect(texRect.x + (unit.EffectsRelativePosition.x * texRect.width) - rectSize / 2, texRect.yMax - (unit.EffectsRelativePosition.y * texRect.height) - rectSize / 2, rectSize, rectSize);
                     EditorGUI.DrawRect(headRect, new Color(0f, 1f, 0f, .7f));
                 }
                 CerberusHead.heads = previousValue;
             }
         }
     }
-    #endif
+#endif
 }

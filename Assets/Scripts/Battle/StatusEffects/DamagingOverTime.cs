@@ -1,17 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace FinalInferno{
+namespace FinalInferno {
     public class DamagingOverTime : StatusEffect {
-        public override StatusType Type { get{ return StatusType.Undesirable; } }
-        public override float Value { get{ return dmgPerTurn; } }
+        public override StatusType Type => StatusType.Undesirable;
+        public override float Value => dmgPerTurn;
         private int dmgPerTurn;
         private float valueReceived;
         private Element element;
         public override StatusEffectVisuals VFXID {
-            get{
-                switch(element){
+            get {
+                switch (element) {
                     case Element.Earth:
                         return StatusEffectVisuals.Quicksand;
                     case Element.Fire:
@@ -29,8 +27,10 @@ namespace FinalInferno{
         }
 
         public DamagingOverTime(BattleUnit src, BattleUnit trgt, float value, Element elemnt, int dur = 1, bool force = false) {
-            if(dur < 0)
+            if (dur < 0) {
                 dur = int.MinValue;
+            }
+
             Duration = dur;
             TurnsLeft = Duration;
             Target = trgt;
@@ -41,18 +41,18 @@ namespace FinalInferno{
             Failed = !Apply(force);
         }
 
-        public override void CopyTo(BattleUnit target, float modifier = 1.0f){
+        public override void CopyTo(BattleUnit target, float modifier = 1.0f) {
             target.AddEffect(new DamagingOverTime(Source, target, valueReceived * modifier, element, Duration), true);
         }
 
-        public override void Amplify(float modifier){
+        public override void Amplify(float modifier) {
             dmgPerTurn = Mathf.Max(Mathf.FloorToInt(modifier * dmgPerTurn), 1);
         }
 
-        public override bool Update(){
-            if(base.Update()){
+        public override bool Update() {
+            if (base.Update()) {
                 return true;
-            }else{
+            } else {
                 Target.TakeDamage(dmgPerTurn, 1.0f, DamageType.None, element, Source);
                 return false;
             }

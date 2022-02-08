@@ -1,27 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace FinalInferno.UI.AII
-{
-    public class VictoryHeroSkillListItem : MonoBehaviour
-    {
+namespace FinalInferno.UI.AII {
+    public class VictoryHeroSkillListItem : MonoBehaviour {
         [SerializeField] private AxisInteractableItem item;
         [SerializeField] private AIIManager skillsManager;
 
-        private void Awake()
-        {
+        private void Awake() {
             item.OnEnter += EnableFirstSkillDescription;
             item.OnExit += DisableSkills;
         }
 
-        private void EnableFirstSkillDescription()
-        {
+        private void EnableFirstSkillDescription() {
             skillsManager.Active();
         }
 
-        private void DisableSkills()
-        {
+        private void DisableSkills() {
             skillsManager.Deactive();
         }
     }

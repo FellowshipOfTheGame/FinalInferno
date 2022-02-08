@@ -1,67 +1,70 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using FinalInferno.UI.Battle;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace FinalInferno{
+namespace FinalInferno {
     //engloba os inimigos do jogador
     [CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObject/Enemy/Basic")]
-    public class Enemy : Unit, IDatabaseItem{
+    public class Enemy : Unit, IDatabaseItem {
         public Color dialogueColor;
         [Space(10)]
         [Header("Enemy Info")]
         [SerializeField] protected Element element = Element.Neutral;
-        public Element Element { get{ return element; } }
+        public Element Element => element;
         [SerializeField] protected DamageType damageFocus = DamageType.None;
-        public DamageType DamageFocus { get{ return damageFocus; } }
-        public override Color DialogueColor { get { return dialogueColor; } }
-        public override string DialogueName { get { return (AssetName == null)? "" : AssetName; } }
+        public DamageType DamageFocus => damageFocus;
+        public override Color DialogueColor => dialogueColor;
+        public override string DialogueName => (AssetName == null) ? "" : AssetName;
         [SerializeField] private Sprite bestiaryPortrait;
-        public Sprite BestiaryPortrait { get => bestiaryPortrait; }
+        public Sprite BestiaryPortrait => bestiaryPortrait;
         [SerializeField] private AudioClip enemyCry;
-        public AudioClip EnemyCry { get => enemyCry; }
+        public AudioClip EnemyCry => enemyCry;
         [TextArea]
         [SerializeField] private string bio = "Bio";
-        public string Bio { get => bio; }
+        public string Bio => bio;
         [Space(10)]
         [Header("Table")]
         [SerializeField] protected TextAsset enemyTable;
         [SerializeField] protected DynamicTable table;
         protected DynamicTable Table {
             get {
-                if(table == null && enemyTable != null)
+                if (table == null && enemyTable != null) {
                     table = DynamicTable.Create(enemyTable);
-                else if (enemyTable == null)
+                } else if (enemyTable == null) {
                     table = null;
+                }
+
                 return table;
             }
         }
         [SerializeField, HideInInspector] protected int curTableRow = 0;
-        public override long SkillExp { get { return BaseExp; } } // Quanta exp o inimigo dá pra skill quando ela é usada nele
+        public override long SkillExp => BaseExp;  // Quanta exp o inimigo dá pra skill quando ela é usada nele
         public long BaseExp { get; protected set; } // Quanta exp o inimigo dá pra party ao final da batalha
 
-        public void LoadTables(){
+        public void LoadTables() {
             table = DynamicTable.Create(enemyTable);
         }
 
-        public void Preload(){
+        public void Preload() {
             curTableRow = -1;
             LevelEnemy(-1);
         }
 
         // Funcao atualmente desnecessaria
-        public int GetSkillLevel(EnemySkill skill){
+        public int GetSkillLevel(EnemySkill skill) {
             int skillIndex = skills.IndexOf(skill);
-            if(skillIndex >= 0)
+            if (skillIndex >= 0) {
                 return Table.Rows[curTableRow].Field<int>("LevelSkill" + skillIndex);
+            }
+
             return 0;
         }
 
         // Função que identifica o nível do inimigo de acordo com o progresso e ajusta como for necessário
-        public int LevelEnemy(){
+        public int LevelEnemy() {
             // Calcula o level dos inimigos
 
             int scaledLevel = Party.Instance.ScaledLevel;
@@ -70,17 +73,18 @@ namespace FinalInferno{
             int enemyLevel = 10 * (scaledLevel / 10);
             // O tier só deve incrementar depois que o jogador ganhar mais um nível
             // Debug.Log($"Calculated enemy level = {enemyLevel}");
-            if(scaledLevel == enemyLevel && enemyLevel >= 10){
+            if (scaledLevel == enemyLevel && enemyLevel >= 10) {
                 enemyLevel -= 10;
             }
             // Debug.Log($"Calculated enemy level = {enemyLevel}");
 
-            while(scaledLevel > 10){
+            while (scaledLevel > 10) {
                 scaledLevel -= 10;
             }
             // Ajusta o nível dos monstros dentro do tier de historia
-            if(scaledLevel > 5)
+            if (scaledLevel > 5) {
                 enemyLevel += 5;
+            }
             // Debug.Log($"Calculated enemy level = {enemyLevel}");
 
             LevelEnemy(enemyLevel);
@@ -90,20 +94,20 @@ namespace FinalInferno{
         }
 
         // Função que atualiza os status do inimigo para um novo level e seta o nível das skills
-        public void LevelEnemy(int newLevel){
-            if(Table == null || Table.Rows.Count < 1){
+        public void LevelEnemy(int newLevel) {
+            if (Table == null || Table.Rows.Count < 1) {
                 Debug.Log($"This enemy({AssetName}) has no table to load");
                 return;
             }
 
-            level = Mathf.Clamp(newLevel, Table.Rows[0].Field<int>("Level"), Table.Rows[Table.Rows.Count-1].Field<int>("Level"));
+            level = Mathf.Clamp(newLevel, Table.Rows[0].Field<int>("Level"), Table.Rows[Table.Rows.Count - 1].Field<int>("Level"));
 
             int row = -1;
-            do{
+            do {
                 row++;
-            }while(row < Table.Rows.Count-1 && Table.Rows[row+1].Field<int>("Level") <= newLevel);
+            } while (row < Table.Rows.Count - 1 && Table.Rows[row + 1].Field<int>("Level") <= newLevel);
 
-            if(row != curTableRow){
+            if (row != curTableRow) {
                 curTableRow = row;
                 name = Table.Rows[row].Field<string>("Rank");
                 level = Table.Rows[row].Field<int>("Level");
@@ -115,11 +119,11 @@ namespace FinalInferno{
                 BaseExp = Table.Rows[row].Field<int>("XP");
 
                 elementalResistances.Clear();
-                foreach(Element element in System.Enum.GetValues(typeof(Element))){
+                foreach (Element element in System.Enum.GetValues(typeof(Element))) {
                     string colName = System.Enum.GetName(typeof(Element), element) + "Resistance";
-                    if(Table.Rows[row].HasField<float>(colName)){
+                    if (Table.Rows[row].HasField<float>(colName)) {
                         float value = Table.Rows[row].Field<float>(colName);
-                        if(value != 1.0f){
+                        if (value != 1.0f) {
                             elementalResistances.Add(element, value);
                         }
                     }
@@ -128,85 +132,86 @@ namespace FinalInferno{
                 color = Table.Rows[row].Field<Color>("Color");
             }
 
-            for(int i = 0; i < skills.Count; i++){
+            for (int i = 0; i < skills.Count; i++) {
                 skills[i].Level = Table.Rows[curTableRow].Field<int>("LevelSkill" + i);
             }
         }
 
         //funcao que escolhe o alvo de um ataque baseado na ameaca que herois representam
-        public virtual int TargetDecision(List<BattleUnit> team){
+        public virtual int TargetDecision(List<BattleUnit> team) {
             float sumTotal = 0.0f;
             List<float> percentual = new List<float>();
 
             //soma a ameaca de todos os herois
-            foreach (BattleUnit unit in team){
+            foreach (BattleUnit unit in team) {
                 sumTotal += Mathf.Clamp(unit.aggro, Mathf.Epsilon, float.MaxValue);
             }
-        
+
             //calcula a porcentagem que cada heroi representa da soma total das ameacas
-            foreach (BattleUnit unit in team){
-                percentual.Add(Mathf.Clamp(unit.aggro, Mathf.Epsilon, float.MaxValue)/sumTotal);
+            foreach (BattleUnit unit in team) {
+                percentual.Add(Mathf.Clamp(unit.aggro, Mathf.Epsilon, float.MaxValue) / sumTotal);
             }
 
             //gera um numero aleatorio entre 0 e 1
             float rand = Random.Range(0.0f, 1.0f);
 
             //escolhe o alvo com probabilidades baseadas na porcentagem que cada heroi representa da soma total das ameacas
-            for(int i = 0; i < team.Count; i++){
-                if(rand <= percentual[i])
+            for (int i = 0; i < team.Count; i++) {
+                if (rand <= percentual[i]) {
                     return i; //decide atacar o heroi i
-                
+                }
+
                 rand -= percentual[i];
             }
-            
+
             return 0;
         }
 
         //funcao que escolhe o ataque a ser utilizado
-        public virtual Skill AttackDecision(){
+        public virtual Skill AttackDecision() {
             return attackSkill; //decide usar ataque basico
         }
 
         //funcao que escolhe qual acao sera feita no proprio turno
-        public virtual Skill SkillDecision(float percentageNotDefense){
+        public virtual Skill SkillDecision(float percentageNotDefense) {
             float rand = Random.Range(0.0f, 1.0f); //gera um numero aleatorio entre 0 e 1
 
-            if(rand < percentageNotDefense)
+            if (rand < percentageNotDefense) {
                 return AttackDecision(); //decide atacar
-            
+            }
+
             return defenseSkill; //decide defender
         }
 
         //inteligencia artificial do inimigo na batalha
-        public virtual void AIEnemy(){
+        public virtual void AIEnemy() {
             Skill skill;
             List<BattleUnit> team = BattleManager.instance.GetTeam(UnitType.Enemy);
             float average = 0.0f;
             float percentualHP;
 
             //calcula a media de vida do grupo dos inimigos
-            foreach (BattleUnit unit in team){
+            foreach (BattleUnit unit in team) {
                 average += unit.CurHP;
             }
             average /= team.Count;
 
             //calcula quanto porecento de vida o inimigo atual tem em relacao a media de vida do grupo de inimigos
-            percentualHP = BattleManager.instance.currentUnit.CurHP/average;
-            
-            skill = SkillDecision(Mathf.Sqrt(percentualHP)+0.05f*percentualHP); //parametro passado calcula o complementar da porcentagem do inimigo defender, baseado no percentual de vida
-            
+            percentualHP = BattleManager.instance.currentUnit.CurHP / average;
+
+            skill = SkillDecision(Mathf.Sqrt(percentualHP) + 0.05f * percentualHP); //parametro passado calcula o complementar da porcentagem do inimigo defender, baseado no percentual de vida
+
             BattleSkillManager.currentSkill = skill;
             BattleSkillManager.currentTargets = GetTargets(skill.target);
         }
 
-        public virtual void ResetParameters(){ /* Função para resetar parametros de boss por exemplo */ }
+        public virtual void ResetParameters() { /* Função para resetar parametros de boss por exemplo */ }
 
-        protected virtual List<BattleUnit> GetTargets(TargetType type){
+        protected virtual List<BattleUnit> GetTargets(TargetType type) {
             List<BattleUnit> targets = new List<BattleUnit>();
             List<BattleUnit> team = new List<BattleUnit>();
 
-            switch (type)
-            {
+            switch (type) {
                 case TargetType.Self:
                     targets.Add(BattleManager.instance.currentUnit);
                     break;
@@ -218,7 +223,7 @@ namespace FinalInferno{
                     break;
                 case TargetType.SingleAlly:
                     team = BattleManager.instance.GetTeam(UnitType.Enemy);
-                    targets.Add(team[Random.Range(0, team.Count-1)]);
+                    targets.Add(team[Random.Range(0, team.Count - 1)]);
                     break;
                 case TargetType.SingleEnemy:
                     team = BattleManager.instance.GetTeam(UnitType.Hero);
@@ -233,15 +238,15 @@ namespace FinalInferno{
         }
     }
 
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
     [CustomPreview(typeof(Enemy))]
-    public class EnemyPreview : UnitPreview{
-        public override bool HasPreviewGUI(){
+    public class EnemyPreview : UnitPreview {
+        public override bool HasPreviewGUI() {
             return base.HasPreviewGUI();
         }
-        public override void OnInteractivePreviewGUI(Rect r, GUIStyle background){
+        public override void OnInteractivePreviewGUI(Rect r, GUIStyle background) {
             base.OnInteractivePreviewGUI(r, background);
         }
     }
-    #endif
+#endif
 }

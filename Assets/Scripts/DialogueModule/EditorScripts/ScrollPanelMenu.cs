@@ -1,23 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor;
 
-namespace Fog.Dialogue{
+namespace Fog.Dialogue {
 
 #if UNITY_EDITOR
     // This shouldn't be here, it wasn't working in the DialogueScrollPanel.cs file so it's here for reasons unknown
     [CustomEditor(typeof(DialogueScrollPanel))]
-    public class DialogueScrollPanelEditor : UnityEditor.UI.ScrollRectEditor{
+    public class DialogueScrollPanelEditor : UnityEditor.UI.ScrollRectEditor {
         [SerializeField] private bool wasVerticalLast = true;
 
-        public override void OnInspectorGUI(){
+        public override void OnInspectorGUI() {
             EditorGUILayout.LabelField("Custom Scroll Rect Fields", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(serializedObject.FindProperty("smoothScrolling"), new GUIContent("Smooth Scrolling"));
             SerializedProperty prop = serializedObject.FindProperty("smoothScrolling");
-            if(prop != null && prop.propertyType == SerializedPropertyType.Boolean){
-                if(prop.boolValue){
+            if (prop != null && prop.propertyType == SerializedPropertyType.Boolean) {
+                if (prop.boolValue) {
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("scrollSpeed"), new GUIContent("Scroll Speed"));
                 }
             }
@@ -46,17 +44,16 @@ namespace Fog.Dialogue{
         }
     }
 
-    public class ScrollPanelMenu : MonoBehaviour
-    {
+    public class ScrollPanelMenu : MonoBehaviour {
         [MenuItem("GameObject/UI/FOG.Dialogue - ScrollPanel", false, 49)]
-        static void CreateScrollPanel(MenuCommand menuCommand){
+        private static void CreateScrollPanel(MenuCommand menuCommand) {
             // Create a custom game object
             GameObject panelObj = new GameObject("Dialogue Scroll Panel");
             // Register the creation in the undo system
             Undo.RegisterCreatedObjectUndo(panelObj, "Create " + panelObj.name);
             // Cria um Canvas se ele nao existir
             Canvas canvas = FindObjectOfType<Canvas>();
-            if(!canvas){
+            if (!canvas) {
                 GameObject canvasObj = new GameObject("Canvas", typeof(CanvasScaler));
                 Undo.RegisterCreatedObjectUndo(canvasObj, "Create " + canvasObj.name);
                 canvas = canvasObj.GetComponent<Canvas>();
@@ -157,7 +154,7 @@ namespace Fog.Dialogue{
             textMesh.rectTransform.localScale = new Vector3(1f, 1f, 1f);
             // Configura o DialogueHandler da cena (cria se necessario)
             DialogueHandler handler = FindObjectOfType<DialogueHandler>();
-            if(!handler){
+            if (!handler) {
                 GameObject go = new GameObject("Dialogue Handler", typeof(DialogueHandler));
                 Undo.RegisterCreatedObjectUndo(go, "Create " + go.name);
                 handler = go.GetComponent<DialogueHandler>();

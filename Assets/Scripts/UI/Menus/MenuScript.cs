@@ -1,42 +1,35 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using TMPro;
 using UnityEngine;
-using TMPro;
 
-namespace FinalInferno.UI
-{
-    public class MenuScript : MonoBehaviour
-    {
+namespace FinalInferno.UI {
+    public class MenuScript : MonoBehaviour {
         [SerializeField] private TextMeshProUGUI versionText;
 
-        void Awake(){
-            if(versionText){
+        private void Awake() {
+            if (versionText) {
                 versionText.text = "Version " + Application.version;
             }
         }
 
-        public void QuitGame()
-        {
-        #if UNITY_EDITOR
+        public void QuitGame() {
+#if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
-        #elif UNITY_WEBGL
+#elif UNITY_WEBGL
             SceneLoader.LoadMainMenu();
-        #else
+#else
             Application.Quit();
-        #endif
+#endif
         }
 
-        public void SceneLoadCallback(){
+        public void SceneLoadCallback() {
             SceneLoader.onSceneLoad?.Invoke();
         }
 
-        public void NewGame()
-        {
+        public void NewGame() {
             SaveLoader.NewGame();
         }
 
-        public void LoadGame()
-        {
+        public void LoadGame() {
             SaveLoader.LoadGame();
         }
     }

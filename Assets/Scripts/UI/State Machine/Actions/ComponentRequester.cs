@@ -1,14 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace FinalInferno.UI.FSM
-{
+namespace FinalInferno.UI.FSM {
     /// <summary>
     /// Tipo de ação que requer algum componente.
     /// </summary>
-    public abstract class ComponentRequester : Action
-    {
+    public abstract class ComponentRequester : Action {
         /// <summary>
         /// Função chamada para pedir um componente ao provedor.
         /// </summary>

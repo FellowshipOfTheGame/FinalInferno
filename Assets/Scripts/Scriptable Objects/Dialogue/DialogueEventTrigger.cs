@@ -1,18 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace FinalInferno{
+namespace FinalInferno {
     [CreateAssetMenu(fileName = "NewEventDialogue", menuName = "ScriptableObject/DialogueSystem/FinalInferno/EventDialogue")]
-    public class DialogueEventTrigger : DialogueFI
-    {
+    public class DialogueEventTrigger : DialogueFI {
         public QuestEvent[] eventsTriggered;
 
-        public override void AfterDialogue(){
-            foreach(QuestEvent _event in eventsTriggered){
+        public override void AfterDialogue() {
+            foreach (QuestEvent _event in eventsTriggered) {
                 Quest quest = _event.quest;
 
-                if(quest != null){
+                if (quest != null) {
                     quest.SetFlag(_event.eventFlag, true);
                     Debug.Log("Dialogo triggerou evento " + _event.eventFlag + " da quest " + quest);
                 }

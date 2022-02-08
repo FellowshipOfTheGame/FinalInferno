@@ -1,16 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using FinalInferno.UI;
+﻿using UnityEngine;
 
-namespace FinalInferno.UI.FSM
-{
+namespace FinalInferno.UI.FSM {
     /// <summary>
     /// Ação que fecha ou abre o bestiário.
     /// </summary>
     [CreateAssetMenu(menuName = "BattleUI SM/Actions/Bestiary State")]
-    public class ChangeBestiaryState : ComponentRequester
-    {
+    public class ChangeBestiaryState : ComponentRequester {
         /// <summary>
         /// Referência ao bestiário.
         /// </summary>
@@ -26,11 +21,10 @@ namespace FinalInferno.UI.FSM
         /// Abre ou fecha o bestiário.
         /// </summary>
         /// <param name="controller"> O controlador da máquina de estados. </param>
-        public override void Act(StateController controller)
-        {
-            if(shouldOpen){
+        public override void Act(StateController controller) {
+            if (shouldOpen) {
                 bestiary.OpenBestiary();
-            }else{
+            } else {
                 bestiary.CloseBestiary();
             }
         }
@@ -40,8 +34,7 @@ namespace FinalInferno.UI.FSM
         /// Requisita um animator.
         /// </summary>
         /// <param name="provider"> Game object que provê o componente desejado. </param>
-        public override void RequestComponent(GameObject provider)
-        {
+        public override void RequestComponent(GameObject provider) {
             bestiary = provider.GetComponent<BestiaryMenu>();
         }
 

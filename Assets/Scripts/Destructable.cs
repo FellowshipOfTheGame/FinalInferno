@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Destructable : MonoBehaviour
-{
-    public void DestroyObject(){
+public class Destructable : MonoBehaviour {
+    public void DestroyObject() {
         Destroy(gameObject);
     }
 }

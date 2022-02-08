@@ -1,23 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
-namespace FinalInferno{
-    public class FloatVariableObserver : MonoBehaviour, IVariableObserver<float>{
-        [SerializeField] FloatVariable variable;
+namespace FinalInferno {
+    public class FloatVariableObserver : MonoBehaviour, IVariableObserver<float> {
+        [SerializeField] private FloatVariable variable;
         [SerializeField] private UnityEvent<float> OnValueChanged;
 
-        void OnEnable(){
+        private void OnEnable() {
             variable.AddObserver(this);
         }
 
-        void OnDisable(){
+        private void OnDisable() {
             variable.RemoveObserver(this);
         }
 
-		public void ValueChanged(float value){
+        public void ValueChanged(float value) {
             OnValueChanged?.Invoke(value);
-		}
-	}
+        }
+    }
 }

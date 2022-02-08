@@ -1,14 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace FinalInferno{
+namespace FinalInferno {
     [CreateAssetMenu(fileName = "NewStartQuestDialogue", menuName = "ScriptableObject/DialogueSystem/FinalInferno/NewQuestDialogue")]
-    public class DialogueNewQuest : DialogueEventTrigger
-    {
+    public class DialogueNewQuest : DialogueEventTrigger {
         [SerializeField] private Quest questToStart;
 
-        public override void AfterDialogue(){
+        public override void AfterDialogue() {
             base.AfterDialogue();
             questToStart.StartQuest();
         }

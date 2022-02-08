@@ -1,14 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
-namespace FinalInferno{
-    public class EncounterSkillButton : MonoBehaviour, IVariableObserver<float>
-    {
-        [SerializeField] OverworldSkill encounterSkill = null;
-        [SerializeField] FloatVariable distanceWalkedRef;
+namespace FinalInferno {
+    public class EncounterSkillButton : MonoBehaviour, IVariableObserver<float> {
+        [SerializeField] private OverworldSkill encounterSkill = null;
+        [SerializeField] private FloatVariable distanceWalkedRef;
         private float DistanceWalked => distanceWalkedRef?.Value ?? 0;
         [SerializeField] private float skillCooldownDistance = 5f;
         [SerializeField] private InputActionReference buttonAction;
@@ -18,64 +15,64 @@ namespace FinalInferno{
         private float skillDistance = 0;
         private bool onCooldown = false;
 
-        void Start(){
-            if(encounterSkill == null || encounterSkill.Level < 1){
+        private void Start() {
+            if (encounterSkill == null || encounterSkill.Level < 1) {
                 gameObject.SetActive(false);
-            }else{
+            } else {
                 skillDistance = encounterSkill?.effects[0].value2 ?? 0;
                 onCooldown = false;
                 skillCooldownDistance = Mathf.Max(skillCooldownDistance, float.Epsilon);
             }
         }
 
-        void Update(){
-            if(!encounterSkill.active){
-                if(CharacterOW.PartyCanMove && !onCooldown && isButtonDown){
+        private void Update() {
+            if (!encounterSkill.active) {
+                if (CharacterOW.PartyCanMove && !onCooldown && isButtonDown) {
                     encounterSkill.Activate();
                     onCooldown = true;
                 }
             }
         }
 
-        void OnEnable(){
+        private void OnEnable() {
             distanceWalkedRef.AddObserver(this);
             isButtonDown = false;
             buttonAction.action.performed += SetButtonDown;
             buttonAction.action.canceled += SetButtonUp;
         }
 
-        void OnDisable(){
+        private void OnDisable() {
             distanceWalkedRef.RemoveObserver(this);
             buttonAction.action.performed -= SetButtonDown;
             buttonAction.action.canceled -= SetButtonUp;
             isButtonDown = false;
         }
 
-        private void SetButtonDown(InputAction.CallbackContext context){
+        private void SetButtonDown(InputAction.CallbackContext context) {
             isButtonDown = true;
         }
-        private void SetButtonUp(InputAction.CallbackContext context){
+        private void SetButtonUp(InputAction.CallbackContext context) {
             isButtonDown = false;
         }
 
-		public void ValueChanged(float value){
-            if(!encounterSkill.active){
-                if(onCooldown){
+        public void ValueChanged(float value) {
+            if (!encounterSkill.active) {
+                if (onCooldown) {
                     float cooldown = Mathf.Max((DistanceWalked - skillDistance), 0) / skillCooldownDistance;
-                    if(cooldown >= 1.0f){
+                    if (cooldown >= 1.0f) {
                         onCooldown = false;
                     }
                     cooldown = Mathf.Clamp(cooldown, 0, 1.0f);
                     fillImage.fillAmount = cooldown;
-                }else{
+                } else {
                     fillImage.fillAmount = 1.0f;
                 }
-            }else{
+            } else {
                 fillImage.fillAmount = 1.0f;
-                if(DistanceWalked > skillDistance){
+                if (DistanceWalked > skillDistance) {
                     encounterSkill.Deactivate();
                 }
             }
-		}
-	}
+        }
+    }
 }

@@ -1,12 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace FinalInferno.UI
-{
+namespace FinalInferno.UI {
 
-    public class ChangeSceneUI : MonoBehaviour
-    {
+    public class ChangeSceneUI : MonoBehaviour {
         private Animator Anim;
 
         [SerializeField] private LoadEnemiesPreview loadEnemiesPreview;
@@ -24,55 +20,47 @@ namespace FinalInferno.UI
         public static bool isCutscene;
         public static Fog.Dialogue.Dialogue selectedDialogue;
 
-        private void Awake()
-        {
+        private void Awake() {
             Anim = GetComponent<Animator>();
         }
 
-        private void Update()
-        {
+        private void Update() {
             Anim.SetBool("IsBattle", isBattle);
         }
 
-        private void ChangeMap()
-        {
-            if (!isCutscene){
+        private void ChangeMap() {
+            if (!isCutscene) {
                 SceneLoader.LoadOWScene(sceneName, true, positionOnLoad);
-            }else{
+            } else {
                 SceneLoader.LoadCustscene(sceneName, selectedDialogue, false, positionOnLoad, savePosition);
             }
         }
 
-        public void SceneLoadCallback(){
+        public void SceneLoadCallback() {
             SceneLoader.onSceneLoad?.Invoke();
         }
 
-        private void LoadPreview()
-        {
+        private void LoadPreview() {
             loadEnemiesPreview.LoadPreview();
         }
 
-        private void StartBattle()
-        {
+        private void StartBattle() {
             isBattle = false;
             SceneLoader.LoadBattleScene(battleEnemies, battleBG, battleBGM);
         }
 
-        private void MainMenu()
-        {
+        private void MainMenu() {
             SceneLoader.LoadMainMenu();
         }
 
-        private void ReturnCheckpoint()
-        {
+        private void ReturnCheckpoint() {
             SaveLoader.LoadGame();
         }
 
-        private void Continue()
-        {
-            if(isCutscene){
+        private void Continue() {
+            if (isCutscene) {
                 SceneLoader.LoadCustscene(Party.Instance.currentMap, selectedDialogue, true, null, null, true);
-            }else{
+            } else {
                 SceneLoader.LoadOWScene(Party.Instance.currentMap, true, null);
             }
         }

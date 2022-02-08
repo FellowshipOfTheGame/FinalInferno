@@ -1,13 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using FinalInferno.UI.FSM;
+﻿using FinalInferno.UI.FSM;
 using FinalInferno.UI.SkillsMenu;
+using UnityEngine;
 
-namespace FinalInferno.UI.AII
-{
-    public class HeroSkillsItem : MonoBehaviour
-    {
+namespace FinalInferno.UI.AII {
+    public class HeroSkillsItem : MonoBehaviour {
         [SerializeField] private AxisInteractableItem item;
         [SerializeField] private AIIManager skillsManager;
         [SerializeField] private ButtonClickDecision cancelDecision;
@@ -17,8 +13,7 @@ namespace FinalInferno.UI.AII
 
         private bool isCurrent = false;
 
-        private void Awake()
-        {
+        private void Awake() {
             item.OnEnter += EnableFirstSkillDescription;
             item.OnEnter += UpdateSkillsContentPosition;
             item.OnEnter += () => RegisterAsCurrent(true);
@@ -27,40 +22,37 @@ namespace FinalInferno.UI.AII
             item.OnAct += OnCancel;
         }
 
-        public void OnCancel(){
-            if(cancelDecision != null){
+        public void OnCancel() {
+            if (cancelDecision != null) {
                 cancelDecision.Click();
             }
         }
 
-        public void LoseFocus(){
-            if(isCurrent){
+        public void LoseFocus() {
+            if (isCurrent) {
                 skillsManager.SetFocus(false);
             }
         }
 
-        public void RegainFocus(){
-            if(isCurrent){
+        public void RegainFocus() {
+            if (isCurrent) {
                 skillsManager.SetFocus(true);
             }
         }
 
-        private void RegisterAsCurrent(bool value){
+        private void RegisterAsCurrent(bool value) {
             isCurrent = value;
         }
 
-        private void EnableFirstSkillDescription()
-        {
+        private void EnableFirstSkillDescription() {
             skillsManager.Active();
         }
 
-        private void DisableSkills()
-        {
+        private void DisableSkills() {
             skillsManager.Deactive();
         }
 
-        private void UpdateSkillsContentPosition()
-        {
+        private void UpdateSkillsContentPosition() {
             content.SetContentToPosition(index);
         }
     }

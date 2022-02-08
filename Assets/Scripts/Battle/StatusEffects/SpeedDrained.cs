@@ -1,17 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace FinalInferno{
+namespace FinalInferno {
     public class SpeedDrained : StatusEffect {
-        public override StatusType Type { get{ return StatusType.Debuff; } }
-        public override float Value { get{ return spdValue; } }
+        public override StatusType Type => StatusType.Debuff;
+        public override float Value => spdValue;
         private int spdValue;
         private float valueReceived;
 
         public SpeedDrained(BattleUnit src, BattleUnit trgt, float value, int dur = 1, bool force = false) {
-            if(dur < 0)
+            if (dur < 0) {
                 dur = int.MinValue;
+            }
+
             Duration = dur;
             TurnsLeft = Duration;
             Target = trgt;
@@ -21,19 +21,21 @@ namespace FinalInferno{
             Failed = !Apply(force);
         }
 
-        public override void CopyTo(BattleUnit target, float modifier = 1.0f){
+        public override void CopyTo(BattleUnit target, float modifier = 1.0f) {
             target.AddEffect(new SpeedDrained(Source, target, valueReceived * modifier, Duration), true);
         }
 
-        public override void Amplify(float modifier){
+        public override void Amplify(float modifier) {
             Target.curSpeed += spdValue;
             spdValue = Mathf.Max(Mathf.FloorToInt(modifier * spdValue), 1);
             Apply(true);
         }
 
         public override bool Apply(bool force = false) {
-            if(!base.Apply(force))
+            if (!base.Apply(force)) {
                 return false;
+            }
+
             Target.curSpeed -= spdValue;
             return true;
         }

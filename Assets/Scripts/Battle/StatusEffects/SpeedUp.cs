@@ -1,18 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace FinalInferno{
+namespace FinalInferno {
     public class SpeedUp : StatusEffect {
-        public override StatusEffectVisuals VFXID { get => StatusEffectVisuals.SpeedUp; }
-        public override StatusType Type { get{ return StatusType.Buff; } }
-        public override float Value { get{ return speedValue; } }
+        public override StatusEffectVisuals VFXID => StatusEffectVisuals.SpeedUp;
+        public override StatusType Type => StatusType.Buff;
+        public override float Value => speedValue;
         private int speedValue;
         private float valueReceived;
 
         public SpeedUp(BattleUnit src, BattleUnit trgt, float value, int dur = 1, bool force = false) {
-            if(dur < 0)
+            if (dur < 0) {
                 dur = int.MinValue;
+            }
+
             Duration = dur;
             TurnsLeft = Duration;
             Target = trgt;
@@ -22,19 +22,21 @@ namespace FinalInferno{
             Failed = !Apply(force);
         }
 
-        public override void CopyTo(BattleUnit target, float modifier = 1.0f){
+        public override void CopyTo(BattleUnit target, float modifier = 1.0f) {
             target.AddEffect(new SpeedUp(Source, target, valueReceived * modifier, Duration), true);
         }
 
-        public override void Amplify(float modifier){
+        public override void Amplify(float modifier) {
             Target.curSpeed -= speedValue;
             speedValue = Mathf.Max(Mathf.FloorToInt(modifier * speedValue), 1);
             Apply(true);
         }
 
         public override bool Apply(bool force = false) {
-            if(!base.Apply(force))
+            if (!base.Apply(force)) {
                 return false;
+            }
+
             Target.curSpeed += speedValue;
             return true;
         }

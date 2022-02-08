@@ -1,12 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
-namespace FinalInferno{
+namespace FinalInferno {
     [CreateAssetMenu(fileName = "NewBattleDialogue", menuName = "ScriptableObject/DialogueSystem/FinalInferno/DialogueBeforeBattle")]
-    public class DialogueBeforeBattle : DialogueEventTrigger
-    {
+    public class DialogueBeforeBattle : DialogueEventTrigger {
         [SerializeField] private Sprite battleBG;
         [SerializeField] private AudioClip battleBGM;
         [SerializeField] private Enemy[] battleEnemies;
@@ -14,8 +10,8 @@ namespace FinalInferno{
         [SerializeField] private FinalInferno.UI.FSM.ButtonClickDecision decision;
         [Header("Optional")]
         [SerializeField] private DialogueFI dialogueAfterBattle;
-        
-        public override void AfterDialogue(){
+
+        public override void AfterDialogue() {
             shouldUnlockMovement = false;
 
             SceneLoader.beforeSceneChange += SetFlags;
@@ -33,7 +29,7 @@ namespace FinalInferno{
             Fog.Dialogue.DialogueHandler.instance.OnDialogueStart -= AfterDialogue;
         }
 
-        public void SetFlags(){
+        public void SetFlags() {
             base.AfterDialogue();
             SceneLoader.beforeSceneChange -= SetFlags;
         }

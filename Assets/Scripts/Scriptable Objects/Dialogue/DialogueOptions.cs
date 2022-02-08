@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace FinalInferno{
+namespace FinalInferno {
     [CreateAssetMenu(fileName = "NewOptionsDialogue", menuName = "ScriptableObject/DialogueSystem/FinalInferno/DialogueOptions")]
-    public class DialogueOptions : Fog.Dialogue.OptionsDialogue{
-        public override void BeforeDialogue(){
+    public class DialogueOptions : Fog.Dialogue.OptionsDialogue {
+        public override void BeforeDialogue() {
             CharacterOW.PartyCanMove = false;
 
             base.BeforeDialogue();

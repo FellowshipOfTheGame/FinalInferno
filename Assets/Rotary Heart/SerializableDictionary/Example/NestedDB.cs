@@ -1,27 +1,22 @@
 ﻿using RotaryHeart.Lib.SerializableDictionary;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace RotaryHeart.Lib
-{
+namespace RotaryHeart.Lib {
     [CreateAssetMenu(fileName = "NestedDB.asset", menuName = "Nested DB")]
-    public class NestedDB : ScriptableObject
-    {
+    public class NestedDB : ScriptableObject {
         [SerializeField, ID("id")]
         public MainDict nested;
     }
 
     [System.Serializable]
-    public class Example
-    {
+    public class Example {
         public string id;
         public QueryTriggerInteraction enumVal;
         public NestedDict nestedData;
     }
 
     [System.Serializable]
-    public class NestedExample
-    {
+    public class NestedExample {
         public GameObject prefab;
         public float speed;
         public Color color;

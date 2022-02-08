@@ -1,15 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace FinalInferno.UI.Battle.LifeMenu
-{
+namespace FinalInferno.UI.Battle.LifeMenu {
     /// <summary>
     /// Classe responsável por gerenciar as informações do personagem no menu de inimigo.
     /// </summary>
-    public class EnemyInfo : UnitLife
-    {
+    public class EnemyInfo : UnitLife {
         /// <summary>
         /// Referência para o inimigo que está sendo mostrado.
         /// </summary>
@@ -39,9 +35,8 @@ namespace FinalInferno.UI.Battle.LifeMenu
         /// <summary>
         /// Carrega as informações do personagem no menu.
         /// </summary>
-        public override void UpdateUnitLife()
-        {
-            thisEnemy = (Enemy) thisUnit.Unit;
+        public override void UpdateUnitLife() {
+            thisEnemy = (Enemy)thisUnit.Unit;
 
             nameText.text = thisEnemy.name.ToUpper();
             nameText.color = thisEnemy.color;

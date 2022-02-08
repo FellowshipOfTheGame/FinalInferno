@@ -1,16 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using FinalInferno.UI.Battle.SkillMenu;
 using UnityEngine;
-using FinalInferno.UI.FSM;
-using FinalInferno.UI.Battle.SkillMenu;
 
-namespace FinalInferno.UI.AII
-{
+namespace FinalInferno.UI.AII {
     /// <summary>
 	/// Item da lista de efeitos.
 	/// </summary>
-    public class EffectListItem : MonoBehaviour
-    {
+    public class EffectListItem : MonoBehaviour {
         /// <summary>
         /// Referência à lista de skills.
         /// </summary>
@@ -26,8 +21,7 @@ namespace FinalInferno.UI.AII
         /// </summary>
         [SerializeField] private AxisInteractableItem item;
 
-        void Awake()
-        {
+        private void Awake() {
             item.OnEnter += UpdateEffectDescription;
             effectElement = GetComponent<EffectElement>();
         }
@@ -35,8 +29,7 @@ namespace FinalInferno.UI.AII
         /// <summary>
         /// Atualiza a descrição do efeito no menu.
         /// </summary>
-        private void UpdateEffectDescription()
-        {
+        private void UpdateEffectDescription() {
             effectElement.effect.UpdateValues();
             skillList.UpdateEffectDescription(effectElement.effect.effect);
         }

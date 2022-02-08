@@ -1,14 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using static FinalInferno.BattleProgress;
-using UnityEngine.UI;
 using FinalInferno.UI.AII;
+using UnityEngine;
+using UnityEngine.UI;
+using static FinalInferno.BattleProgress;
 
-namespace FinalInferno.UI.Victory
-{
-    public class VictoryScreenAnimation : MonoBehaviour
-    {
+namespace FinalInferno.UI.Victory {
+    public class VictoryScreenAnimation : MonoBehaviour {
         private BattleChanges changes;
 
         [Header("Animation")]
@@ -32,15 +30,13 @@ namespace FinalInferno.UI.Victory
         [SerializeField] private GameObject UpdatedSkill;
         [SerializeField] private SkillInfoLoader Loader;
 
-
-        void Awake(){
-            foreach(Image img in heroesImages){
+        private void Awake() {
+            foreach (Image img in heroesImages) {
                 img.color = Color.clear;
             }
         }
 
-        public void SetPartyStatus()
-        {
+        public void SetPartyStatus() {
             partyLevelSlider.maxValue = /*BattleProgress.startingExp +*/ BattleProgress.xpToNextLevel;
             partyLevelSlider.value = BattleProgress.startingExp;
             previousXPAmountImage.fillAmount = BattleProgress.startingExp / (float)(/*BattleProgress.startingExp +*/ BattleProgress.xpToNextLevel);
@@ -49,8 +45,7 @@ namespace FinalInferno.UI.Victory
 
         }
 
-        public void StartAnimation() 
-        {
+        public void StartAnimation() {
             changes = new BattleChanges(Party.Instance);
             float idealDuration = changes.xpGained / xpPerSecond;
             _duration = Mathf.Clamp(idealDuration, minDuration, maxDuration);
@@ -59,43 +54,36 @@ namespace FinalInferno.UI.Victory
             StartCoroutine(HeroesSkills());
         }
 
-        private IEnumerator PartyLevel()
-        {
-            while (_time <= _duration)
-            {
+        private IEnumerator PartyLevel() {
+            while (_time <= _duration) {
                 partyLevelSlider.value += Time.fixedDeltaTime * changes.xpGained / _duration;
-                if (partyLevelSlider.value >= partyLevelSlider.maxValue)
-                {
+                if (partyLevelSlider.value >= partyLevelSlider.maxValue) {
                     LevelUp();
                     //yield return new WaitForSeconds(levelUpTime);
                 }
                 _time += Time.fixedDeltaTime;
-                yield return new WaitForFixedUpdate();   
+                yield return new WaitForFixedUpdate();
             }
-            partyLevelSlider.value = (BattleProgress.startingExp + changes.xpGained) % (/*BattleProgress.startingExp*/ + BattleProgress.xpToNextLevel);
+            partyLevelSlider.value = (BattleProgress.startingExp + changes.xpGained) % (/*BattleProgress.startingExp*/ +BattleProgress.xpToNextLevel);
         }
 
-        private void LevelUp()
-        {
+        private void LevelUp() {
             // TO DO: Fazer um efeito mais chamativo para indicar que o nível subiu, assim como tem pras skills
             startingLevelText.text = nextLevelText.text;
-            nextLevelText.text = (int.Parse(nextLevelText.text)+1).ToString();
+            nextLevelText.text = (int.Parse(nextLevelText.text) + 1).ToString();
             previousXPAmountImage.fillAmount = 0f;
             partyLevelSlider.value -= partyLevelSlider.maxValue;
             partyLevelSlider.maxValue = Party.Instance.xpNext/* - partyLevelSlider.maxValue*/;
         }
 
-        private IEnumerator HeroesSkills()
-        {
-            for (int i = 0; i < Party.Capacity; i++)
-            {
+        private IEnumerator HeroesSkills() {
+            for (int i = 0; i < Party.Capacity; i++) {
                 StartCoroutine(HeroSkill(i));
                 yield return new WaitForSeconds(timeBetweenHeroesShown);
             }
         }
 
-        private IEnumerator HeroSkill(int heroIndex)
-        {
+        private IEnumerator HeroSkill(int heroIndex) {
             heroesImages[heroIndex].sprite = changes.heroes[heroIndex].Portrait;
             heroesImages[heroIndex].color = Color.white;
             heroesImages[heroIndex].GetComponent<Animator>().runtimeAnimatorController = HeroImageAnimator;
@@ -103,22 +91,18 @@ namespace FinalInferno.UI.Victory
             AIIManager manager = skillsContents[heroIndex].GetComponent<AIIManager>();
             AxisInteractableItem lastItem = null;
 
-            for (int i = 0; i < changes.skillReferences[heroIndex].Count; i++)
-            {
-                if(changes.heroSkills[heroIndex][i].level < changes.skillReferences[heroIndex][i].MaxLevel){
+            for (int i = 0; i < changes.skillReferences[heroIndex].Count; i++) {
+                if (changes.heroSkills[heroIndex][i].level < changes.skillReferences[heroIndex][i].MaxLevel) {
                     UpdatedSkill newSkill = Instantiate(UpdatedSkill, skillsContents[heroIndex]).GetComponent<UpdatedSkill>();
                     newSkill.LoadUpdatedSkill(changes.heroSkills[heroIndex][i], changes.skillReferences[heroIndex][i]);
 
                     newSkill.GetComponent<VictorySkillListItem>().loader = Loader;
 
                     AxisInteractableItem newItem = newSkill.GetComponent<AxisInteractableItem>();
-                    if (lastItem != null)
-                    {
+                    if (lastItem != null) {
                         newItem.upItem = lastItem;
                         lastItem.downItem = newItem;
-                    }
-                    else
-                    {
+                    } else {
                         manager.firstItem = newItem;
                     }
                     lastItem = newItem;
@@ -128,19 +112,15 @@ namespace FinalInferno.UI.Victory
                 }
             }
 
-            for (int i = 0; i < changes.newSkills[heroIndex].Count; i++)
-            {
+            for (int i = 0; i < changes.newSkills[heroIndex].Count; i++) {
                 UpdatedSkill newSkill = Instantiate(UpdatedSkill, skillsContents[heroIndex]).GetComponent<UpdatedSkill>();
                 newSkill.LoadNewSkill(changes.newSkills[heroIndex][i]);
 
                 AxisInteractableItem newItem = newSkill.GetComponent<AxisInteractableItem>();
-                if (lastItem != null)
-                {
+                if (lastItem != null) {
                     newItem.upItem = lastItem;
                     lastItem.downItem = newItem;
-                }
-                else
-                {
+                } else {
                     manager.firstItem = newItem;
                 }
                 lastItem = newItem;

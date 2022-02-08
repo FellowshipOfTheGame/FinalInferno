@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace FinalInferno{
-    #if UNITY_EDITOR
+namespace FinalInferno {
+#if UNITY_EDITOR
     [CustomEditor(typeof(EncounterGroup))]
     public class EncounterGroupEditor : Editor {
         private SerializedProperty enemyA;
@@ -18,7 +16,7 @@ namespace FinalInferno{
 
         private const float PORTRAIT_SIZE = 48f;
 
-        public void OnEnable(){
+        public void OnEnable() {
             enemyA = serializedObject.FindProperty("enemyA");
             enemyB = serializedObject.FindProperty("enemyB");
             enemyC = serializedObject.FindProperty("enemyC");
@@ -27,8 +25,10 @@ namespace FinalInferno{
             canEncounter = serializedObject.FindProperty("canEncounter");
         }
 
-        private void ShowEnemyInfo(Enemy enemy, int index){
-            if(enemy == null) return;
+        private void ShowEnemyInfo(Enemy enemy, int index) {
+            if (enemy == null) {
+                return;
+            }
 
             EditorGUILayout.BeginHorizontal();
             // Name
@@ -48,7 +48,7 @@ namespace FinalInferno{
             EditorGUILayout.EndHorizontal();
         }
 
-        public override void OnInspectorGUI(){
+        public override void OnInspectorGUI() {
             serializedObject.Update();
 
             Enemy enemy;
@@ -74,15 +74,15 @@ namespace FinalInferno{
 
             float windowWidth = EditorGUIUtility.currentViewWidth;
             EditorGUILayout.BeginHorizontal();
-            for(int i = 0; i < 5; i++){
+            for (int i = 0; i < 5; i++) {
                 EditorGUILayout.BeginVertical();
-                    EditorGUILayout.LabelField($"Level {i+1}", GUILayout.ExpandWidth(true), GUILayout.MaxWidth(windowWidth/5f - 10f));
+                EditorGUILayout.LabelField($"Level {i + 1}", GUILayout.ExpandWidth(true), GUILayout.MaxWidth(windowWidth / 5f - 10f));
 
-                    EditorGUILayout.BeginHorizontal();
-                        EditorGUILayout.Space(15f, false);
-                        SerializedProperty indexElement = canEncounter.GetArrayElementAtIndex(i);
-                        indexElement.boolValue = EditorGUILayout.Toggle(indexElement.boolValue, GUILayout.ExpandWidth(true));
-                    EditorGUILayout.EndHorizontal();
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.Space(15f, false);
+                SerializedProperty indexElement = canEncounter.GetArrayElementAtIndex(i);
+                indexElement.boolValue = EditorGUILayout.Toggle(indexElement.boolValue, GUILayout.ExpandWidth(true));
+                EditorGUILayout.EndHorizontal();
                 EditorGUILayout.EndVertical();
             }
             EditorGUILayout.EndHorizontal();
@@ -90,5 +90,5 @@ namespace FinalInferno{
             serializedObject.ApplyModifiedProperties();
         }
     }
-    #endif
+#endif
 }

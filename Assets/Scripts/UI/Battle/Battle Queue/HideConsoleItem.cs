@@ -1,29 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace FinalInferno.UI.Battle.QueueMenu
-{
+namespace FinalInferno.UI.Battle.QueueMenu {
     /// <summary>
 	/// Item que esconde o console quando é selecionado.
 	/// </summary>
-    public class HideConsoleItem : MonoBehaviour
-    {
+    public class HideConsoleItem : MonoBehaviour {
         [SerializeField] private AII.AxisInteractableItem item;
         [SerializeField] private Animator consoleAnim;
-        void Awake(){
-            if(item == null){
+
+        private void Awake() {
+            if (item == null) {
                 item = GetComponent<AII.AxisInteractableItem>();
             }
 
-            if(item != null){
+            if (item != null) {
                 item.OnEnter += HideConsole;
             }
         }
-        void HideConsole()
-        {
+
+        private void HideConsole() {
             // Esconde o console
-            if(consoleAnim){
+            if (consoleAnim) {
                 consoleAnim.SetTrigger("HideSkillDetails");
                 consoleAnim.SetTrigger("HideConsole");
             }

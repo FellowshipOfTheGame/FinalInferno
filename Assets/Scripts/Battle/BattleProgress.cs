@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
-namespace FinalInferno{
+namespace FinalInferno {
     public static class BattleProgress {
         public static int startingLevel; // Nivel da party do inicio da batalha
         public static long startingExp; // Exp nao cumulativa da party no inicio da batalha
@@ -12,7 +10,7 @@ namespace FinalInferno{
         public static List<SkillInfo>[] heroSkills = new List<SkillInfo>[Party.Capacity]; // Info das skills de cada hero no inicio da batalha
         private static List<PlayerSkill>[] skillReferences = new List<PlayerSkill>[Party.Capacity]; // Referencia para cada skill do hero (contem info atualizada)
 
-        public struct BattleChanges{
+        public struct BattleChanges {
             public int levelChanges; // Quantos levels a party ganhou
             public long xpGained; // Total de exp que a party ganhou
             public Hero[] heroes; // Referencias pros heroes
@@ -21,29 +19,29 @@ namespace FinalInferno{
             public List<PlayerSkill>[] skillReferences; // Referencia para cada skill do hero (contem info atualizada)
             public List<PlayerSkill>[] newSkills; // Skills que cada hero desbloqueou durante a batalha
 
-            public BattleChanges(Party party){ // Ex de uso no final da batalha: BattleChanges changes = new BattleChanges(Party.Instance)
+            public BattleChanges(Party party) { // Ex de uso no final da batalha: BattleChanges changes = new BattleChanges(Party.Instance)
                 levelChanges = party.Level - BattleProgress.startingLevel;
                 xpGained = party.XpCumulative - BattleProgress.xpCumulative;
                 heroes = new Hero[Party.Capacity];
                 heroSkills = new List<SkillInfo>[Party.Capacity];
                 skillReferences = new List<PlayerSkill>[Party.Capacity];
                 newSkills = new List<PlayerSkill>[Party.Capacity];
-                for(int i = 0; i < Party.Capacity; i++){
+                for (int i = 0; i < Party.Capacity; i++) {
                     heroes[i] = BattleProgress.heroes[i];
                     heroSkills[i] = new List<SkillInfo>();
                     skillReferences[i] = new List<PlayerSkill>();
                     newSkills[i] = new List<PlayerSkill>();
 
-                    for(int j = 0; j < BattleProgress.skillReferences[i].Count; j++){
-                        if(BattleProgress.skillReferences[i][j].XpCumulative != BattleProgress.heroSkills[i][j].xpCumulative){
+                    for (int j = 0; j < BattleProgress.skillReferences[i].Count; j++) {
+                        if (BattleProgress.skillReferences[i][j].XpCumulative != BattleProgress.heroSkills[i][j].xpCumulative) {
                             heroSkills[i].Add(BattleProgress.heroSkills[i][j]);
                             skillReferences[i].Add(BattleProgress.skillReferences[i][j]);
                             // Debug.Log("Skill atualizada: " + BattleProgress.skillReferences[i][j].name);
                         }
                     }
 
-                    for(int j = 0; j < BattleProgress.heroSkills[i].Count; j++){
-                        if(BattleProgress.skillReferences[i][j].active && !(BattleProgress.heroSkills[i][j].active)){
+                    for (int j = 0; j < BattleProgress.heroSkills[i].Count; j++) {
+                        if (BattleProgress.skillReferences[i][j].active && !(BattleProgress.heroSkills[i][j].active)) {
                             newSkills[i].Add(BattleProgress.skillReferences[i][j]);
                         }
                     }
@@ -53,29 +51,29 @@ namespace FinalInferno{
 
         private static int currentIndex = 0;
 
-        public static void ResetInfo(Party party){
+        public static void ResetInfo(Party party) {
             currentIndex = 0;
             startingLevel = party.Level;
             startingExp = party.xp;
             xpToNextLevel = party.xpNext;
             xpCumulative = party.XpCumulative;
-            for(int i = 0; i < Party.Capacity; i++){
+            for (int i = 0; i < Party.Capacity; i++) {
                 heroes[i] = null;
                 heroSkills[i] = new List<SkillInfo>();
                 skillReferences[i] = new List<PlayerSkill>();
             }
         }
 
-        public static void addHeroSkills(Hero hero){
+        public static void addHeroSkills(Hero hero) {
             heroes[currentIndex] = hero;
-            foreach(PlayerSkill skill in hero.skills){
+            foreach (PlayerSkill skill in hero.skills) {
                 addSkill(skill);
             }
             currentIndex++;
         }
 
-        private static void addSkill(PlayerSkill skill){
-            if(skill.active || skill.Type == SkillType.Active){
+        private static void addSkill(PlayerSkill skill) {
+            if (skill.active || skill.Type == SkillType.Active) {
                 heroSkills[currentIndex].Add(new SkillInfo(skill));
                 skillReferences[currentIndex].Add(skill);
             }

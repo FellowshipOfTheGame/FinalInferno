@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace FinalInferno{
+namespace FinalInferno {
     //engloba os personagens do jogador
     [CreateAssetMenu(fileName = "Character", menuName = "ScriptableObject/Character")]
     public class Character : ScriptableObject/*, IDatabaseItem*/{
@@ -13,18 +11,18 @@ namespace FinalInferno{
         public Vector2 direction; // direção do personagem no Overworld
         //public bool isPresent;
         private CharacterOW overworldInstance;
-        public CharacterOW OverworldInstance{
+        public CharacterOW OverworldInstance {
             get => overworldInstance;
-            set => overworldInstance = (overworldInstance == null? value : (value == null? null : overworldInstance));
+            set => overworldInstance = (overworldInstance == null ? value : (value == null ? null : overworldInstance));
         }
 
         //funcao que ajusta a vida atual do personagem quando sobe de nivel
-        public void LevelUp(int level){
+        public void LevelUp(int level) {
             //Debug.Log(archetype.name + " passou pro level: " + level);
             hpCur = archetype.LevelUp(level);
         }
-        
-        public void ResetCharacter(){
+
+        public void ResetCharacter() {
             position = Vector2.zero;
             archetype.ResetHero();
             hpCur = archetype.hpMax;

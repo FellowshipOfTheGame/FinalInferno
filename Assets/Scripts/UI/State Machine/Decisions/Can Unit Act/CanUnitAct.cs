@@ -1,15 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace FinalInferno.UI.FSM
-{
+namespace FinalInferno.UI.FSM {
     /// <summary>
     /// Decisão baseada na capacidade na unidade atual de agir.
     /// </summary>
     [CreateAssetMenu(menuName = "BattleUI SM/Decisions/Can Unit Act")]
-    public class CanUnitAct : Decision
-    {
+    public class CanUnitAct : Decision {
         /// <summary>
         /// A situação desejada para a unidade.
         /// </summary>
@@ -19,8 +15,7 @@ namespace FinalInferno.UI.FSM
         /// Verifica se a unidade está na situação desejada.
         /// </summary>
         /// <param name="controller"> O controlador da máquina de estados. </param>
-        public override bool Decide(StateController controller)
-        {
+        public override bool Decide(StateController controller) {
             return (canAct == BattleManager.instance.currentUnit.CanAct);
         }
 

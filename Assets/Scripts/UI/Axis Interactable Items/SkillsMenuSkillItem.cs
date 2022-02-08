@@ -1,13 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using FinalInferno.UI.SkillsMenu;
 using UnityEngine;
-using FinalInferno.UI.SkillsMenu;
 using UnityEngine.UI;
 
-namespace FinalInferno.UI.AII
-{
-    public class SkillsMenuSkillItem : MonoBehaviour
-    {
+namespace FinalInferno.UI.AII {
+    public class SkillsMenuSkillItem : MonoBehaviour {
         [SerializeField] private AxisInteractableItem item;
         private PlayerSkill skill;
         private LoadSkillDescription loader;
@@ -19,14 +15,12 @@ namespace FinalInferno.UI.AII
         [SerializeField] private Text SkillNameText;
         [SerializeField] private Image SkillImage;
 
-        void Awake()
-        {
+        private void Awake() {
             item.OnEnter += UpdateSkillDescription;
             item.OnEnter += ClampSkillContent;
         }
 
-        public void LoadSkill(PlayerSkill mySkill, LoadSkillDescription _loader, HeroSkillsContent _content, int heroIdx)
-        {
+        public void LoadSkill(PlayerSkill mySkill, LoadSkillDescription _loader, HeroSkillsContent _content, int heroIdx) {
             skill = mySkill;
             loader = _loader;
             content = _content;
@@ -36,13 +30,11 @@ namespace FinalInferno.UI.AII
             SkillImage.sprite = skill.skillImage;
         }
 
-        private void UpdateSkillDescription()
-        {
+        private void UpdateSkillDescription() {
             loader.LoadSkillInfo(skill, heroIndex);
         }
 
-        private void ClampSkillContent()
-        {
+        private void ClampSkillContent() {
             content.ClampContent(rect);
         }
     }

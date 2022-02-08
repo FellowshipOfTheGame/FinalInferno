@@ -1,31 +1,25 @@
-using UnityEngine;
-using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using UnityEditor;
+using UnityEngine;
 
-namespace RotaryHeart.Lib.SerializableDictionary
-{
+namespace RotaryHeart.Lib.SerializableDictionary {
 #if UNITY_EDITOR
     [CustomPropertyDrawer(typeof(DrawableDictionary), true)]
-    public class DictionaryPropertyDrawer : PropertyDrawer
-    {
+    public class DictionaryPropertyDrawer : PropertyDrawer {
         #region Fields
-        SerializedProperty reqReferences;
-        SerializedProperty isExpanded;
-        SerializedProperty KeysValues;
-        SerializedProperty KeysProp;
-        SerializedProperty ValuesProp;
-
-        readonly GUIContent idContent = new GUIContent("Id");
-        readonly GUIContent valueContent = new GUIContent("Value");
-        readonly GUIStyle tooTipStyle = new GUIStyle("Tooltip");
-
-        ReorderableList list;
-
-        string title;
-
-        System.Type[] typesNative =
+        private SerializedProperty reqReferences;
+        private SerializedProperty isExpanded;
+        private SerializedProperty KeysValues;
+        private SerializedProperty KeysProp;
+        private SerializedProperty ValuesProp;
+        private readonly GUIContent idContent = new GUIContent("Id");
+        private readonly GUIContent valueContent = new GUIContent("Value");
+        private readonly GUIStyle tooTipStyle = new GUIStyle("Tooltip");
+        private ReorderableList list;
+        private string title;
+        private System.Type[] typesNative =
         {
                 typeof(bool),
                 typeof(byte),
@@ -47,8 +41,7 @@ namespace RotaryHeart.Lib.SerializableDictionary
         /// Used to get the required references, returns the reference to the ReorderableList
         /// </summary>
         /// <param name="property">This property</param>
-        private SerializedProperty GetReferences(SerializedProperty property)
-        {
+        private SerializedProperty GetReferences(SerializedProperty property) {
             SerializedProperty listProp = property.FindPropertyRelative("reorderableList");
             reqReferences = property.FindPropertyRelative("reqReferences");
             isExpanded = property.FindPropertyRelative("isExpanded");
@@ -62,8 +55,7 @@ namespace RotaryHeart.Lib.SerializableDictionary
             return listProp;
         }
 
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-        {
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
             GetReferences(property);
 
             //Default header height
@@ -72,41 +64,39 @@ namespace RotaryHeart.Lib.SerializableDictionary
             float verticalSpace = list.verticalSpacing * 2;
 
             //Add another line if it has the req reference drawn
-            if (KeysProp.arrayElementType.Contains("$"))
+            if (KeysProp.arrayElementType.Contains("$")) {
                 height += EditorGUIUtility.singleLineHeight;
+            }
 
-            if (isExpanded.boolValue)
-            {
+            if (isExpanded.boolValue) {
                 //Default height for the bottom section
                 height += EditorGUIUtility.singleLineHeight;
 
                 int keysSize = KeysProp.arraySize;
 
-                if (Constants.ShowPages)
-                {
+                if (Constants.ShowPages) {
                     //Extra space for top section pages
                     height += EditorGUIUtility.singleLineHeight;
                     keysSize = Mathf.Min(keysSize, Constants.PageCount);
                 }
 
-                if (keysSize > 0)
-                {
+                if (keysSize > 0) {
                     //Iterate through all the keys
-                    for (int keyIndex = 0; keyIndex < keysSize; keyIndex++)
-                    {
+                    for (int keyIndex = 0; keyIndex < keysSize; keyIndex++) {
                         //Should only happen with pages
-                        if (keyIndex >= KeysProp.arraySize)
+                        if (keyIndex >= KeysProp.arraySize) {
                             break;
+                        }
 
-                        var keyProp = KeysProp.GetArrayElementAtIndex(keyIndex);
+                        SerializedProperty keyProp = KeysProp.GetArrayElementAtIndex(keyIndex);
 
                         //Use the same element height calculations, adding 4 because of the 
                         height += List_getElementHeightCallback(keyProp, keyIndex) + verticalSpace;
                     }
-                }
-                else
+                } else {
                     //Default height for empty list
                     height += EditorGUIUtility.singleLineHeight + verticalSpace * 3;
+                }
             }
 
             return height + verticalSpace;
@@ -114,155 +104,136 @@ namespace RotaryHeart.Lib.SerializableDictionary
 
         #region Helpers
 
-        private object GetTargetObjectOfProperty(SerializedProperty prop)
-        {
-            var path = prop.propertyPath.Replace(".Array.data[", "[");
+        private object GetTargetObjectOfProperty(SerializedProperty prop) {
+            string path = prop.propertyPath.Replace(".Array.data[", "[");
             object obj = prop.serializedObject.targetObject;
-            var elements = path.Split('.');
-            foreach (var element in elements)
-            {
-                if (element.Contains("["))
-                {
-                    var elementName = element.Substring(0, element.IndexOf("["));
-                    var index = System.Convert.ToInt32(element.Substring(element.IndexOf("[")).Replace("[", "").Replace("]", ""));
+            string[] elements = path.Split('.');
+            foreach (string element in elements) {
+                if (element.Contains("[")) {
+                    string elementName = element.Substring(0, element.IndexOf("["));
+                    int index = System.Convert.ToInt32(element.Substring(element.IndexOf("[")).Replace("[", "").Replace("]", ""));
                     obj = GetValue_Imp(obj, elementName, index);
-                }
-                else
-                {
+                } else {
                     obj = GetValue_Imp(obj, element);
                 }
             }
             return obj;
         }
 
-        private void SetTargetObjectOfProperty(SerializedProperty prop, object value, bool custom = false)
-        {
-            var path = prop.propertyPath.Replace(".Array.data[", "[");
+        private void SetTargetObjectOfProperty(SerializedProperty prop, object value, bool custom = false) {
+            string path = prop.propertyPath.Replace(".Array.data[", "[");
             object obj = prop.serializedObject.targetObject;
-            var elements = path.Split('.');
-            foreach (var element in elements.Take(elements.Length - 1))
-            {
-                if (element.Contains("["))
-                {
-                    var elementName = element.Substring(0, element.IndexOf("["));
-                    var index = System.Convert.ToInt32(element.Substring(element.IndexOf("[")).Replace("[", "").Replace("]", ""));
+            string[] elements = path.Split('.');
+            foreach (string element in elements.Take(elements.Length - 1)) {
+                if (element.Contains("[")) {
+                    string elementName = element.Substring(0, element.IndexOf("["));
+                    int index = System.Convert.ToInt32(element.Substring(element.IndexOf("[")).Replace("[", "").Replace("]", ""));
                     obj = GetValue_Imp(obj, elementName, index);
-                }
-                else
-                {
+                } else {
                     obj = GetValue_Imp(obj, element);
                 }
             }
 
-            if (Object.ReferenceEquals(obj, null)) return;
+            if (Object.ReferenceEquals(obj, null)) {
+                return;
+            }
 
-            try
-            {
-                var element = elements.Last();
-                var tp = obj.GetType();
+            try {
+                string element = elements.Last();
+                System.Type tp = obj.GetType();
 
-                if (custom)
+                if (custom) {
                     tp = tp.BaseType;
-
-                if (element.Contains("["))
-                {
-                    var elementName = element.Substring(0, element.IndexOf("["));
-                    var index = System.Convert.ToInt32(element.Substring(element.IndexOf("[")).Replace("[", "").Replace("]", ""));
-                    var field = tp.GetField(elementName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                    var arr = field.GetValue(obj) as System.Collections.IList;
-                    arr[index] = value;
                 }
-                else
-                {
-                    var field = tp.GetField(element, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                    if (field != null)
-                    {
+
+                if (element.Contains("[")) {
+                    string elementName = element.Substring(0, element.IndexOf("["));
+                    int index = System.Convert.ToInt32(element.Substring(element.IndexOf("[")).Replace("[", "").Replace("]", ""));
+                    FieldInfo field = tp.GetField(elementName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                    System.Collections.IList arr = field.GetValue(obj) as System.Collections.IList;
+                    arr[index] = value;
+                } else {
+                    FieldInfo field = tp.GetField(element, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                    if (field != null) {
                         field.SetValue(obj, value);
                     }
                 }
 
-            }
-            catch
-            {
+            } catch {
                 return;
             }
         }
 
-        private object GetValue_Imp(object source, string name)
-        {
-            if (source == null)
+        private object GetValue_Imp(object source, string name) {
+            if (source == null) {
                 return null;
-            var type = source.GetType();
+            }
 
-            while (type != null)
-            {
-                var f = type.GetField(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
-                if (f != null)
+            System.Type type = source.GetType();
+
+            while (type != null) {
+                FieldInfo f = type.GetField(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+                if (f != null) {
                     return f.GetValue(source);
+                }
 
-                var p = type.GetProperty(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
-                if (p != null)
+                PropertyInfo p = type.GetProperty(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+                if (p != null) {
                     return p.GetValue(source, null);
+                }
 
                 type = type.BaseType;
             }
             return null;
         }
 
-        private object GetValue_Imp(object source, string name, int index)
-        {
-            var enumerable = GetValue_Imp(source, name) as System.Collections.IEnumerable;
-            if (enumerable == null) return null;
-            var enm = enumerable.GetEnumerator();
+        private object GetValue_Imp(object source, string name, int index) {
+            System.Collections.IEnumerable enumerable = GetValue_Imp(source, name) as System.Collections.IEnumerable;
+            if (enumerable == null) {
+                return null;
+            }
+
+            System.Collections.IEnumerator enm = enumerable.GetEnumerator();
             //while (index-- >= 0)
             //    enm.MoveNext();
             //return enm.Current;
 
-            for (int i = 0; i <= index; i++)
-            {
-                if (!enm.MoveNext()) return null;
+            for (int i = 0; i <= index; i++) {
+                if (!enm.MoveNext()) {
+                    return null;
+                }
             }
             return enm.Current;
         }
 
-        private bool IsUnitySerialized(FieldInfo fieldInfo)
-        {
+        private bool IsUnitySerialized(FieldInfo fieldInfo) {
             object[] customAttributes = fieldInfo.GetCustomAttributes(true);
-            if (customAttributes.Any(x => x is System.NonSerializedAttribute))
-            {
+            if (customAttributes.Any(x => x is System.NonSerializedAttribute)) {
                 return false;
             }
-            if (fieldInfo.IsPrivate && !customAttributes.Any(x => x is SerializeField))
-            {
+            if (fieldInfo.IsPrivate && !customAttributes.Any(x => x is SerializeField)) {
                 return false;
             }
             return IsUnitySerialized(fieldInfo.FieldType);
         }
 
-        private bool IsUnitySerialized(System.Type type)
-        {
-            if (type.IsGenericType)
-            {
-                if (type.GetGenericTypeDefinition() == typeof(List<>))
-                {
+        private bool IsUnitySerialized(System.Type type) {
+            if (type.IsGenericType) {
+                if (type.GetGenericTypeDefinition() == typeof(List<>)) {
                     return IsUnitySerialized(type.GetGenericArguments()[0]);
                 }
                 return false;
             }
-            if (type.IsEnum)
-            {
+            if (type.IsEnum) {
                 return true;
             }
-            if (type.IsValueType)
-            {
+            if (type.IsValueType) {
                 return true;
             }
-            if (type.IsAssignableFrom(typeof(Object)))
-            {
+            if (type.IsAssignableFrom(typeof(Object))) {
                 return true;
             }
-            if (typesNative.Contains(type) || (type.IsArray && typesNative.Contains(type.GetElementType())))
-            {
+            if (typesNative.Contains(type) || (type.IsArray && typesNative.Contains(type.GetElementType()))) {
                 return true;
             }
             return false;
@@ -272,8 +243,7 @@ namespace RotaryHeart.Lib.SerializableDictionary
         /// Converts a Vector4 to Quaternion
         /// </summary>
         /// <param name="v4">Vector to convert</param>
-        private Quaternion ConvertToQuaternion(Vector4 v4)
-        {
+        private Quaternion ConvertToQuaternion(Vector4 v4) {
             return new Quaternion(v4.x, v4.y, v4.z, v4.w);
         }
 
@@ -281,15 +251,13 @@ namespace RotaryHeart.Lib.SerializableDictionary
         /// Converts a Quaternion to Vector4
         /// </summary>
         /// <param name="q">Quaternion to convert</param>
-        private Vector4 QuaternionToVector4(Quaternion q)
-        {
+        private Vector4 QuaternionToVector4(Quaternion q) {
             return new Vector4(q.x, q.y, q.z, q.w);
         }
 
         #endregion
 
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-        {
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
             SerializedProperty listProp = GetReferences(property);
 
             reqReferences.isExpanded = false;
@@ -303,8 +271,7 @@ namespace RotaryHeart.Lib.SerializableDictionary
             int offset = 0;
 
             //Only draw the required references field for keys that requires a default value
-            if (keyType.Contains("$"))
-            {
+            if (keyType.Contains("$")) {
                 nextRect = GetNextRect(ref position);
                 EditorGUI.PropertyField(nextRect, reqReferences);
                 offset = 20;
@@ -313,15 +280,16 @@ namespace RotaryHeart.Lib.SerializableDictionary
             nextRect = GetNextRect(ref position);
 
             //Fix values size based on the keys size
-            if (ValuesProp.arraySize != KeysProp.arraySize)
+            if (ValuesProp.arraySize != KeysProp.arraySize) {
                 ValuesProp.arraySize = KeysProp.arraySize;
-            if (KeysValues.arraySize != KeysProp.arraySize)
-                KeysValues.arraySize = KeysProp.arraySize;
+            }
 
-            if (list != null)
-            {
-                if (!list.HasList)
-                {
+            if (KeysValues.arraySize != KeysProp.arraySize) {
+                KeysValues.arraySize = KeysProp.arraySize;
+            }
+
+            if (list != null) {
+                if (!list.HasList) {
                     list = new ReorderableList(KeysProp, true, true, true);
 
                     //Required callbacks
@@ -342,34 +310,29 @@ namespace RotaryHeart.Lib.SerializableDictionary
             }
         }
 
-        private void List_headerExpand(bool expand)
-        {
+        private void List_headerExpand(bool expand) {
             isExpanded.boolValue = expand;
 
-            for (int i = 0; i < KeysValues.arraySize; i++)
-            {
+            for (int i = 0; i < KeysValues.arraySize; i++) {
                 KeysProp.GetArrayElementAtIndex(i).isExpanded = expand;
                 ValuesProp.GetArrayElementAtIndex(i).isExpanded = expand;
             }
         }
 
-        private void List_onElementsReorder(int startIndex, int newIndex)
-        {
+        private void List_onElementsReorder(int startIndex, int newIndex) {
             KeysValues.MoveArrayElement(startIndex, newIndex);
             //KeysProp.MoveArrayElement(startIndex, newIndex);
             ValuesProp.MoveArrayElement(startIndex, newIndex);
         }
 
-        private void List_drawHeaderCallback(Rect rect, GUIContent label)
-        {
+        private void List_drawHeaderCallback(Rect rect, GUIContent label) {
             rect.x += 6;
 
             isExpanded.boolValue = EditorGUI.Foldout(rect, isExpanded.boolValue, "", true);
             EditorGUI.LabelField(rect, title + (Constants.ShowSize ? " [" + KeysValues.arraySize + "]" : ""));
         }
 
-        private float List_getElementHeightCallback(SerializedProperty element, int index)
-        {
+        private float List_getElementHeightCallback(SerializedProperty element, int index) {
             float height;
 
             bool containsAttribute = fieldInfo.GetCustomAttributes(typeof(DrawKeyAsPropertyAttribute), true).Any();
@@ -377,9 +340,8 @@ namespace RotaryHeart.Lib.SerializableDictionary
             height = EditorGUI.GetPropertyHeight(element, GUIContent.none, true) + list.verticalSpacing * 4;
 
             //Value height
-            if (element.isExpanded)
-            {
-                var valueProp = ValuesProp.GetArrayElementAtIndex(index);
+            if (element.isExpanded) {
+                SerializedProperty valueProp = ValuesProp.GetArrayElementAtIndex(index);
 
                 height += EditorGUI.GetPropertyHeight(valueProp, GUIContent.none, true) + list.verticalSpacing - (containsAttribute ? EditorGUIUtility.singleLineHeight : 0);
             }
@@ -387,25 +349,23 @@ namespace RotaryHeart.Lib.SerializableDictionary
             return height;
         }
 
-        private void List_drawElementCallback(Rect rect, SerializedProperty element, GUIContent label, int index, bool selected, bool focused)
-        {
-            var keyValueProp = KeysValues.GetArrayElementAtIndex(index);
-            var keyProp = KeysProp.GetArrayElementAtIndex(index);
-            var valueProp = ValuesProp.GetArrayElementAtIndex(index);
+        private void List_drawElementCallback(Rect rect, SerializedProperty element, GUIContent label, int index, bool selected, bool focused) {
+            SerializedProperty keyValueProp = KeysValues.GetArrayElementAtIndex(index);
+            SerializedProperty keyProp = KeysProp.GetArrayElementAtIndex(index);
+            SerializedProperty valueProp = ValuesProp.GetArrayElementAtIndex(index);
 
             SerializedProperty keyToUse = keyProp.propertyType == SerializedPropertyType.Generic ? keyProp : keyValueProp;
 
-            if (keyToUse.propertyType == SerializedPropertyType.Generic)
-            {
+            if (keyToUse.propertyType == SerializedPropertyType.Generic) {
                 rect.x -= 10;
                 rect.width += 10;
             }
 
             //Only draw the color if this entry is not selected
-            if (!selected)
-            {
-                if (Event.current.type == EventType.Repaint)
+            if (!selected) {
+                if (Event.current.type == EventType.Repaint) {
                     tooTipStyle.Draw(rect, false, false, false, false);
+                }
             }
 
             rect.height = EditorGUIUtility.singleLineHeight;
@@ -419,15 +379,12 @@ namespace RotaryHeart.Lib.SerializableDictionary
             #region Key Field
 
             string propName = "";
-            if (containsAttribute)
-            {
+            if (containsAttribute) {
                 FieldInfo keysField = fieldInfo.FieldType.BaseType.GetField("_keys", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
                 System.Type elementType = keysField.FieldType.GetGenericArguments()[0];
 
-                foreach (var fi in elementType.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance))
-                {
-                    if (IsUnitySerialized(fi))
-                    {
+                foreach (FieldInfo fi in elementType.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)) {
+                    if (IsUnitySerialized(fi)) {
                         propName = fi.Name;
                         break;
                     }
@@ -435,58 +392,49 @@ namespace RotaryHeart.Lib.SerializableDictionary
             }
 
             //Draw only if its not a generic type or can be draw as property
-            if ((containsAttribute && !string.IsNullOrEmpty(propName)) || keyToUse.propertyType != SerializedPropertyType.Generic)
-            {
-                if (containsAttribute)
+            if ((containsAttribute && !string.IsNullOrEmpty(propName)) || keyToUse.propertyType != SerializedPropertyType.Generic) {
+                if (containsAttribute) {
                     keyRect.height = EditorGUI.GetPropertyHeight(keyProp, GUIContent.none, true) - (keyProp.isExpanded ? EditorGUIUtility.singleLineHeight : 0);
+                }
 
                 keyProp.isExpanded = EditorGUI.Foldout(new Rect(rect.x + 15, keyRect.y, 20, rect.height), keyProp.isExpanded, idContent, true);
             }
 
             GUI.SetNextControlName("CheckGenericFocus" + index);
 
-            switch (keyToUse.propertyType)
-            {
+            switch (keyToUse.propertyType) {
                 case SerializedPropertyType.Quaternion:
                     EditorGUI.BeginChangeCheck();
-                    var newV4 = EditorGUI.Vector4Field(keyRect, GUIContent.none, QuaternionToVector4(keyToUse.quaternionValue));
+                    Vector4 newV4 = EditorGUI.Vector4Field(keyRect, GUIContent.none, QuaternionToVector4(keyToUse.quaternionValue));
 
-                    if (EditorGUI.EndChangeCheck())
-                    {
+                    if (EditorGUI.EndChangeCheck()) {
                         keyToUse.quaternionValue = ConvertToQuaternion(newV4);
                     }
                     break;
 
                 case SerializedPropertyType.Enum:
                     string[] names = keyToUse.enumDisplayNames;
-                    var selectedVal = names[keyToUse.enumValueIndex];
+                    string selectedVal = names[keyToUse.enumValueIndex];
 
                     //Draw button with dropdown style
-                    if (GUI.Button(keyRect, selectedVal, EditorStyles.layerMaskField))
-                    {
+                    if (GUI.Button(keyRect, selectedVal, EditorStyles.layerMaskField)) {
                         List<string> usedNames = new List<string>();
                         GenericMenu menu = new GenericMenu();
 
                         //Add all the used values
-                        for (int i = 0; i < KeysValues.arraySize; i++)
-                        {
+                        for (int i = 0; i < KeysValues.arraySize; i++) {
                             usedNames.Add(names[KeysValues.GetArrayElementAtIndex(i).enumValueIndex]);
                         }
 
                         //Add all the menu items
-                        for (int i = 0; i < names.Length; i++)
-                        {
+                        for (int i = 0; i < names.Length; i++) {
                             int nameIndex = i;
 
                             //If the value is being used, show it disabled
-                            if (usedNames.Contains(names[nameIndex]) && !names[nameIndex].Equals(selectedVal))
-                            {
+                            if (usedNames.Contains(names[nameIndex]) && !names[nameIndex].Equals(selectedVal)) {
                                 menu.AddDisabledItem(new GUIContent(names[nameIndex]));
-                            }
-                            else
-                            {
-                                menu.AddItem(new GUIContent(names[nameIndex]), selectedVal == names[nameIndex], () =>
-                                {
+                            } else {
+                                menu.AddItem(new GUIContent(names[nameIndex]), selectedVal == names[nameIndex], () => {
                                     keyToUse.enumValueIndex = nameIndex;
                                     keyToUse.serializedObject.ApplyModifiedProperties();
                                 });
@@ -502,12 +450,9 @@ namespace RotaryHeart.Lib.SerializableDictionary
 
                 case SerializedPropertyType.Generic:
                     //Only draw as property if values are correct
-                    if (containsAttribute && !string.IsNullOrEmpty(propName))
-                    {
+                    if (containsAttribute && !string.IsNullOrEmpty(propName)) {
                         EditorGUI.PropertyField(keyRect, keyToUse.FindPropertyRelative(propName), GUIContent.none, false);
-                    }
-                    else
-                    {
+                    } else {
                         keyRect.height = EditorGUI.GetPropertyHeight(keyToUse, idContent);
                         EditorGUI.PropertyField(new Rect(rect.x + 15, keyRect.y, keyRect.width + 35, keyRect.height), keyToUse, idContent, true);
                     }
@@ -519,44 +464,35 @@ namespace RotaryHeart.Lib.SerializableDictionary
             }
 
             //Not used for generic type
-            if (keyToUse.propertyType != SerializedPropertyType.Generic)
-            {
+            if (keyToUse.propertyType != SerializedPropertyType.Generic) {
                 //Old key value
-                var oldId = GetKeyValue(keyProp);
+                object oldId = GetKeyValue(keyProp);
                 //New key value
-                var newId = GetKeyValue(keyValueProp);
+                object newId = GetKeyValue(keyValueProp);
 
                 //Notify if the key is empty or null
-                if ((keyToUse.propertyType == SerializedPropertyType.String && string.IsNullOrEmpty(newId.ToString())) || newId == null)
-                {
+                if ((keyToUse.propertyType == SerializedPropertyType.String && string.IsNullOrEmpty(newId.ToString())) || newId == null) {
                     GUIContent content = EditorGUIUtility.IconContent("console.warnicon.sml");
                     content.tooltip = "ID cannot be left empty";
 
                     GUI.Button(new Rect(keyRect.x - 15, keyRect.y, 30, 30), content, GUIStyle.none);
                 }
                 //Check if the key value has been changed
-                else if ((oldId == null && newId != null) || !oldId.Equals(newId))
-                {
+                else if ((oldId == null && newId != null) || !oldId.Equals(newId)) {
                     //Be sure that the dictionary doesn't contain an element with this key
-                    if (ContainsId(newId, index))
-                    {
+                    if (ContainsId(newId, index)) {
                         //Check if this key is still focused
-                        if (GUI.GetNameOfFocusedControl().Equals("CheckGenericFocus" + index))
-                        {
+                        if (GUI.GetNameOfFocusedControl().Equals("CheckGenericFocus" + index)) {
                             //Notify the user that this key already exists
                             GUIContent content = EditorGUIUtility.IconContent("console.erroricon.sml");
                             content.tooltip = "Dictionary already has this id, this id cannot be used";
 
                             GUI.Button(new Rect(keyRect.x - 15, keyRect.y, 30, 30), content, GUIStyle.none);
-                        }
-                        else
-                        {
+                        } else {
                             //If it's not, set the correct key back. This is to avoid having multiple errors with ids
                             SetValue(keyValueProp, oldId);
                         }
-                    }
-                    else
-                    {
+                    } else {
                         //Set the value
                         SetGenericValue(keyProp, valueProp, newId);
                     }
@@ -571,64 +507,51 @@ namespace RotaryHeart.Lib.SerializableDictionary
             #region Value Field
 
             //Special case for generic types
-            if (valueProp.propertyType == SerializedPropertyType.Generic)
-            {
-                if (keyToUse.propertyType != SerializedPropertyType.Generic)
+            if (valueProp.propertyType == SerializedPropertyType.Generic) {
+                if (keyToUse.propertyType != SerializedPropertyType.Generic) {
                     valueRect.y -= 3;
+                }
 
                 EditorGUI.BeginChangeCheck();
 
                 //Value field
-                if (keyProp.isExpanded)
-                {
+                if (keyProp.isExpanded) {
                     EditorGUI.BeginProperty(valueRect, GUIContent.none, valueProp);
 
-                    if (valueProp.propertyType == SerializedPropertyType.Quaternion)
-                    {
+                    if (valueProp.propertyType == SerializedPropertyType.Quaternion) {
                         EditorGUI.BeginChangeCheck();
-                        var newV4 = EditorGUI.Vector4Field(valueRect, GUIContent.none, QuaternionToVector4(valueProp.quaternionValue));
+                        Vector4 newV4 = EditorGUI.Vector4Field(valueRect, GUIContent.none, QuaternionToVector4(valueProp.quaternionValue));
 
-                        if (EditorGUI.EndChangeCheck())
-                        {
+                        if (EditorGUI.EndChangeCheck()) {
                             valueProp.quaternionValue = ConvertToQuaternion(newV4);
                         }
-                    }
-                    else
-                    {
+                    } else {
                         EditorGUI.PropertyField(valueRect, valueProp, valueContent, true);
                     }
                     EditorGUI.EndProperty();
                 }
 
-                if (EditorGUI.EndChangeCheck())
-                {
+                if (EditorGUI.EndChangeCheck()) {
                     //This is used to apply the modified changes
                     ValuesProp.serializedObject.ApplyModifiedProperties();
                 }
-            }
-            else
-            {
+            } else {
                 //Value field
-                if (keyProp.isExpanded)
-                {
+                if (keyProp.isExpanded) {
                     valueRect.x -= 10;
                     valueRect.width += 10;
 
                     EditorGUI.BeginProperty(valueRect, GUIContent.none, valueProp);
 
                     EditorGUI.PrefixLabel(valueRect, valueContent);
-                    if (valueProp.propertyType == SerializedPropertyType.Quaternion)
-                    {
+                    if (valueProp.propertyType == SerializedPropertyType.Quaternion) {
                         EditorGUI.BeginChangeCheck();
-                        var newV4 = EditorGUI.Vector4Field(new Rect(valueRect.x + 45, valueRect.y, valueRect.width - 45, valueRect.height), GUIContent.none, QuaternionToVector4(valueProp.quaternionValue));
+                        Vector4 newV4 = EditorGUI.Vector4Field(new Rect(valueRect.x + 45, valueRect.y, valueRect.width - 45, valueRect.height), GUIContent.none, QuaternionToVector4(valueProp.quaternionValue));
 
-                        if (EditorGUI.EndChangeCheck())
-                        {
+                        if (EditorGUI.EndChangeCheck()) {
                             valueProp.quaternionValue = ConvertToQuaternion(newV4);
                         }
-                    }
-                    else
-                    {
+                    } else {
                         EditorGUI.PropertyField(new Rect(valueRect.x + 45, valueRect.y, valueRect.width - 45, valueRect.height), valueProp, GUIContent.none, true);
                     }
                     EditorGUI.EndProperty();
@@ -638,8 +561,7 @@ namespace RotaryHeart.Lib.SerializableDictionary
             #endregion Value Field
         }
 
-        private void List_onAddCallback(ReorderableList list)
-        {
+        private void List_onAddCallback(ReorderableList list) {
             KeysValues.arraySize = ValuesProp.arraySize = ++KeysProp.arraySize;
 
             KeysValues.serializedObject.ApplyModifiedProperties();
@@ -651,10 +573,8 @@ namespace RotaryHeart.Lib.SerializableDictionary
             //SetPropertyDefault(ValuesProp.GetArrayElementAtIndex(ValuesProp.arraySize - 1), null);
         }
 
-        private void List_onRemoveCallback(ReorderableList list)
-        {
-            for (int i = list.Selected.Length - 1; i >= 0; i--)
-            {
+        private void List_onRemoveCallback(ReorderableList list) {
+            for (int i = list.Selected.Length - 1; i >= 0; i--) {
                 int index = list.Selected[i];
 
                 int last = KeysProp.arraySize - 1;
@@ -678,19 +598,17 @@ namespace RotaryHeart.Lib.SerializableDictionary
         /// <param name="obj">Id to check</param>
         /// <param name="index">Property index on the array</param>
         /// <returns>True if an element is already using the id; otherwise, false</returns>
-        private bool ContainsId(object obj, int index)
-        {
-            for (int i = 0; i < KeysProp.arraySize; i++)
-            {
-                if (index == i)
-                {
+        private bool ContainsId(object obj, int index) {
+            for (int i = 0; i < KeysProp.arraySize; i++) {
+                if (index == i) {
                     continue;
                 }
 
                 object val = GetKeyValue(KeysProp.GetArrayElementAtIndex(i));
 
-                if (val.Equals(obj))
+                if (val.Equals(obj)) {
                     return true;
+                }
             }
             return false;
         }
@@ -700,11 +618,9 @@ namespace RotaryHeart.Lib.SerializableDictionary
         /// </summary>
         /// <param name="prop">Property to check</param>
         /// <returns>object representation of the property value</returns>
-        private object GetKeyValue(SerializedProperty prop)
-        {
+        private object GetKeyValue(SerializedProperty prop) {
             object obj = null;
-            switch (prop.propertyType)
-            {
+            switch (prop.propertyType) {
                 case SerializedPropertyType.Integer:
                 case SerializedPropertyType.LayerMask:
                     obj = prop.intValue;
@@ -773,10 +689,8 @@ namespace RotaryHeart.Lib.SerializableDictionary
         /// </summary>
         /// <param name="prop">Property to modify</param>
         /// <param name="obj">Value</param>
-        private void SetValue(SerializedProperty prop, object obj)
-        {
-            switch (prop.propertyType)
-            {
+        private void SetValue(SerializedProperty prop, object obj) {
+            switch (prop.propertyType) {
                 case SerializedPropertyType.Integer:
                 case SerializedPropertyType.LayerMask:
                     prop.intValue = (int)obj;
@@ -843,12 +757,12 @@ namespace RotaryHeart.Lib.SerializableDictionary
         /// </summary>
         /// <param name="prop">SerializedProperty to get the value from</param>
         /// <returns>Gradient value, or null if it fails</returns>
-        private Gradient GetGradientValue(SerializedProperty prop)
-        {
+        private Gradient GetGradientValue(SerializedProperty prop) {
             PropertyInfo propertyInfo = typeof(SerializedProperty).GetProperty("gradientValue", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
-            if (propertyInfo == null)
+            if (propertyInfo == null) {
                 return null;
+            }
 
             return propertyInfo.GetValue(prop, null) as Gradient;
         }
@@ -858,12 +772,12 @@ namespace RotaryHeart.Lib.SerializableDictionary
         /// </summary>
         /// <param name="prop">SerializedProperty to get the value from</param>
         /// <param name="gradient">Gradient value to save</param>
-        private void SetGradientValue(SerializedProperty prop, Gradient gradient)
-        {
+        private void SetGradientValue(SerializedProperty prop, Gradient gradient) {
             PropertyInfo propertyInfo = typeof(SerializedProperty).GetProperty("gradientValue", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
-            if (propertyInfo == null)
+            if (propertyInfo == null) {
                 return;
+            }
 
             propertyInfo.SetValue(prop, gradient, null);
         }
@@ -874,22 +788,19 @@ namespace RotaryHeart.Lib.SerializableDictionary
         /// <param name="keyProp">Key proeprty</param>
         /// <param name="valueProp">Value property</param>
         /// <param name="obj">Key value to set</param>
-        private void SetGenericValue(SerializedProperty keyProp, SerializedProperty valueProp, object obj)
-        {
+        private void SetGenericValue(SerializedProperty keyProp, SerializedProperty valueProp, object obj) {
             SetValue(keyProp, obj);
 
             IDAttribute attribute = System.Attribute.GetCustomAttribute(fieldInfo, typeof(IDAttribute)) as IDAttribute;
 
-            if (attribute == null)
-            {
+            if (attribute == null) {
                 //This generic dictionary doesn't contain an id attribute
                 return;
             }
 
             SerializedProperty id = valueProp.FindPropertyRelative(attribute.Id);
 
-            if (id == null)
-            {
+            if (id == null) {
                 Debug.LogError("Couldn't find any id field with name '" + attribute.Id + "' on field: " + fieldInfo.Name);
                 return;
             }
@@ -902,10 +813,9 @@ namespace RotaryHeart.Lib.SerializableDictionary
         /// </summary>
         /// <param name="position">Position reference</param>
         /// <returns>Next rect</returns>
-        private Rect GetNextRect(ref Rect position)
-        {
-            var h = EditorGUIUtility.singleLineHeight;
-            var r = new Rect(position.x, position.y, position.width, h);
+        private Rect GetNextRect(ref Rect position) {
+            float h = EditorGUIUtility.singleLineHeight;
+            Rect r = new Rect(position.x, position.y, position.width, h);
             position = new Rect(position.x, position.y + h, position.width, h);
             return r;
         }
@@ -914,13 +824,12 @@ namespace RotaryHeart.Lib.SerializableDictionary
         /// Sets the default value based on the property
         /// </summary>
         /// <param name="prop">Property</param>
-        private void SetPropertyDefault(SerializedProperty prop, SerializedProperty parentProperty)
-        {
-            if (prop == null)
+        private void SetPropertyDefault(SerializedProperty prop, SerializedProperty parentProperty) {
+            if (prop == null) {
                 throw new System.ArgumentNullException("prop");
+            }
 
-            switch (prop.propertyType)
-            {
+            switch (prop.propertyType) {
                 case SerializedPropertyType.Integer:
                     prop.intValue = int.MaxValue;
                     break;
@@ -945,24 +854,23 @@ namespace RotaryHeart.Lib.SerializableDictionary
                 case SerializedPropertyType.Enum:
                     int index = 0;
 
-                    if (parentProperty != null)
-                    {
+                    if (parentProperty != null) {
                         List<int> numbersUsed = new List<int>();
 
-                        for (int i = 0; i < parentProperty.arraySize; i++)
+                        for (int i = 0; i < parentProperty.arraySize; i++) {
                             numbersUsed.Add(parentProperty.GetArrayElementAtIndex(i).enumValueIndex);
+                        }
 
-                        while (true)
-                        {
-                            if (!numbersUsed.Contains(index))
-                            {
+                        while (true) {
+                            if (!numbersUsed.Contains(index)) {
                                 break;
                             }
                             index++;
                         }
 
-                        if (index >= prop.enumNames.Length)
+                        if (index >= prop.enumNames.Length) {
                             index = 0;
+                        }
                     }
 
                     prop.enumValueIndex = index;
@@ -996,10 +904,9 @@ namespace RotaryHeart.Lib.SerializableDictionary
                     break;
                 case SerializedPropertyType.Generic:
                     //Used to initialized all the values on the generic type
-                    var t = prop.GetEnumerator();
-                    while (t.MoveNext())
-                    {
-                        var val = t.Current;
+                    System.Collections.IEnumerator t = prop.GetEnumerator();
+                    while (t.MoveNext()) {
+                        object val = t.Current;
                         SetPropertyDefault((val as SerializedProperty), null);
                     }
                     break;

@@ -1,13 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using TMPro;
 
-namespace FinalInferno.UI.AII{
-    public class ToggleItem : AxisInteractableItem
-    {
+namespace FinalInferno.UI.AII {
+    public class ToggleItem : AxisInteractableItem {
         [Header("Toggle")]
         [SerializeField] private GameObject hideObject;
         [SerializeField] private TextMeshProUGUI textIndicator;
@@ -18,7 +15,7 @@ namespace FinalInferno.UI.AII{
         private bool active;
         private bool isOn = false;
 
-        public override void Awake(){
+        public override void Awake() {
             base.Awake();
             OnEnter += Activate;
             OnExit += Deactivate;
@@ -27,50 +24,52 @@ namespace FinalInferno.UI.AII{
             active = false;
         }
 
-        void Activate(){
-           active = true;
-           timer = -inputCooldown;
+        private void Activate() {
+            active = true;
+            timer = -inputCooldown;
         }
 
-        void Deactivate(){
+        private void Deactivate() {
             active = false;
         }
 
-        void Update(){
-            if(active){
-                if(timer < inputCooldown){
+        private void Update() {
+            if (active) {
+                if (timer < inputCooldown) {
                     timer += Time.deltaTime;
                 }
             }
         }
 
-        public void Show(){
-            if(hideObject){
+        public void Show() {
+            if (hideObject) {
                 hideObject.SetActive(true);
             }
         }
 
-        public void Hide(){
-            if(hideObject){
+        public void Hide() {
+            if (hideObject) {
                 hideObject.SetActive(false);
             }
         }
 
-        private void Toggle(){
-            if(timer < inputCooldown)
+        private void Toggle() {
+            if (timer < inputCooldown) {
                 return;
+            }
+
             timer = 0f;
             Toggle(null);
             OnToggle?.Invoke();
         }
 
-        public void Toggle(bool? value = null){
+        public void Toggle(bool? value = null) {
 
             isOn = value ?? !isOn;
-            if(textIndicator){
-                textIndicator.text = (isOn)? "<color=#006400>On</color>" : "<color=#840000>Off</color>";
+            if (textIndicator) {
+                textIndicator.text = (isOn) ? "<color=#006400>On</color>" : "<color=#840000>Off</color>";
             }
-            if(imageIndicator){
+            if (imageIndicator) {
                 imageIndicator.enabled = isOn;
             }
         }

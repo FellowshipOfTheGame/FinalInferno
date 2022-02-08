@@ -1,18 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace FinalInferno{
+namespace FinalInferno {
     public class Regenerating : StatusEffect {
-        public override StatusEffectVisuals VFXID { get => StatusEffectVisuals.Regenerating; }
-        public override StatusType Type { get{ return StatusType.None; } }
-        public override float Value { get{ return Target.MaxHP * percentageGain; } }
+        public override StatusEffectVisuals VFXID => StatusEffectVisuals.Regenerating;
+        public override StatusType Type => StatusType.None;
+        public override float Value => Target.MaxHP * percentageGain;
         private float percentageGain;
         private Element element;
 
         public Regenerating(BattleUnit src, BattleUnit trgt, float value, int dur = 1, bool force = false) {
-            if(dur < 0)
+            if (dur < 0) {
                 dur = int.MinValue;
+            }
+
             Duration = dur;
             TurnsLeft = Duration;
             Target = trgt;
@@ -21,18 +21,18 @@ namespace FinalInferno{
             Failed = !Apply(force);
         }
 
-        public override void CopyTo(BattleUnit target, float modifier = 1.0f){
+        public override void CopyTo(BattleUnit target, float modifier = 1.0f) {
             target.AddEffect(new Regenerating(Source, target, percentageGain * modifier, Duration), true);
         }
 
-        public override void Amplify(float modifier){
+        public override void Amplify(float modifier) {
             percentageGain *= modifier;
         }
 
-        public override bool Update(){
-            if(base.Update()){
+        public override bool Update() {
+            if (base.Update()) {
                 return true;
-            }else{
+            } else {
                 Target.Heal(Mathf.Max(Mathf.FloorToInt(Target.MaxHP * percentageGain), 1), 1.0f, Source);
                 return false;
             }

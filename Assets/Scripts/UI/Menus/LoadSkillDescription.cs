@@ -1,12 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace FinalInferno.UI.SkillsMenu
-{
-    public class LoadSkillDescription : MonoBehaviour
-    {
+namespace FinalInferno.UI.SkillsMenu {
+    public class LoadSkillDescription : MonoBehaviour {
         private Hero currentHero;
         [SerializeField] private Text skillNameText;
         [SerializeField] private Image skillImage;
@@ -32,12 +28,11 @@ namespace FinalInferno.UI.SkillsMenu
         [SerializeField] private SkillEffectItem effectPrefab;
         [SerializeField] private SkillRequirementItem requirementPrefab;
 
-        void Awake(){
+        private void Awake() {
             currentHero = Party.Instance.characters[0].archetype;
         }
 
-        public void LoadSkillInfo(PlayerSkill skill, int heroIndex)
-        {
+        public void LoadSkillInfo(PlayerSkill skill, int heroIndex) {
             skillNameText.text = skill.name;
             skillImage.sprite = skill.skillImage;
 
@@ -47,20 +42,20 @@ namespace FinalInferno.UI.SkillsMenu
             skillTargetTypeImage.sprite = Icons.instance.targetTypeSprites[(int)skill.target];
             skillTargetTypeText.text = skill.target.ToString();
 
-            heroIndex = Mathf.Clamp(heroIndex, 0, Party.Instance.characters.Count-1);
+            heroIndex = Mathf.Clamp(heroIndex, 0, Party.Instance.characters.Count - 1);
             currentHero = Party.Instance.characters[heroIndex].archetype;
-            float attackCost = currentHero? currentHero.attackSkill.cost : 10f;
+            float attackCost = currentHero ? currentHero.attackSkill.cost : 10f;
             skillSpeedText.text = (skill.cost / attackCost).ToString();
-            float timeKey = ((Mathf.Clamp((skill.cost/attackCost), 0.8f, 2f)) - 0.8f) / 1.2f;
+            float timeKey = ((Mathf.Clamp((skill.cost / attackCost), 0.8f, 2f)) - 0.8f) / 1.2f;
             skillSpeedText.color = gradient.Evaluate(timeKey);
 
             skillTypeText.text = skill.TypeString;
             skillDescriptionText.text = skill.description;
-            if(skill.Level > 0){
+            if (skill.Level > 0) {
                 string levelInfo = "Current Level: " + skill.Level + "\n";
-                if(skill.Level < skill.MaxLevel){
+                if (skill.Level < skill.MaxLevel) {
                     levelInfo += "Exp to next level: " + (skill.xpNext - skill.xp);
-                }else{
+                } else {
                     levelInfo += "Max level reached!";
                 }
                 skillLevelInfoText.text = levelInfo;
@@ -69,14 +64,14 @@ namespace FinalInferno.UI.SkillsMenu
                 requirementList.gameObject.SetActive(false);
 
                 SkillEffectItem[] children = effectList.GetComponentsInChildren<SkillEffectItem>();
-                for(int i = 0; i < skill.effects.Count || i < children.Length; i++){
-                    if(i >= skill.effects.Count){
+                for (int i = 0; i < skill.effects.Count || i < children.Length; i++) {
+                    if (i >= skill.effects.Count) {
                         Destroy(children[i].gameObject);
-                    }else{
+                    } else {
                         SkillEffectItem child = null;
-                        if(i >= children.Length){
+                        if (i >= children.Length) {
                             child = Instantiate(effectPrefab, effectList.GetComponent<RectTransform>());
-                        }else{
+                        } else {
                             child = children[i];
                         }
                         skill.effects[i].effect.value1 = skill.effects[i].value1;
@@ -84,24 +79,24 @@ namespace FinalInferno.UI.SkillsMenu
                         child.ShowEffect(skill.effects[i].effect);
                     }
                 }
-            }else{
+            } else {
                 string unlockInfo = "Skill unlocks at party level ";
-                unlockInfo += (Party.Instance.Level >= skill.prerequisiteHeroLevel)? "<color=#006400>" : "<color=#840000>";
+                unlockInfo += (Party.Instance.Level >= skill.prerequisiteHeroLevel) ? "<color=#006400>" : "<color=#840000>";
                 unlockInfo += skill.prerequisiteHeroLevel + "</color>";
                 skillLevelInfoText.text = unlockInfo;
-                listDescriptionText.text = "\nSkill Requirements:" + ((skill.prerequisiteSkills.Count > 0)? "" : " None");
+                listDescriptionText.text = "\nSkill Requirements:" + ((skill.prerequisiteSkills.Count > 0) ? "" : " None");
                 effectList.gameObject.SetActive(false);
                 requirementList.gameObject.SetActive(true);
 
                 SkillRequirementItem[] children = requirementList.GetComponentsInChildren<SkillRequirementItem>();
-                for(int i = 0; i < skill.prerequisiteSkills.Count || i < children.Length; i++){
-                    if(i >= skill.prerequisiteSkills.Count){
+                for (int i = 0; i < skill.prerequisiteSkills.Count || i < children.Length; i++) {
+                    if (i >= skill.prerequisiteSkills.Count) {
                         Destroy(children[i].gameObject);
-                    }else{
+                    } else {
                         SkillRequirementItem child = null;
-                        if(i >= children.Length){
+                        if (i >= children.Length) {
                             child = Instantiate(requirementPrefab, requirementList.GetComponent<RectTransform>());
-                        }else{
+                        } else {
                             child = children[i];
                         }
                         child.ShowRequirement(skill.prerequisiteSkills[i], skill.prerequisiteSkillsLevel[i]);
@@ -110,9 +105,9 @@ namespace FinalInferno.UI.SkillsMenu
             }
 
             detailManager.SetInteractable(skill.Level > 0 && skill.Type != SkillType.Active);
-            if(detailManager.Interactable){
+            if (detailManager.Interactable) {
                 detailManager.ShowToggle();
-            }else{
+            } else {
                 detailManager.HideToggle();
             }
             detailManager.CurrentSkill = skill;

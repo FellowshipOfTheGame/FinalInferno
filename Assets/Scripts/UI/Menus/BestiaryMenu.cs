@@ -1,14 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
-namespace FinalInferno.UI{
-    public class BestiaryMenu : MonoBehaviour
-    {
+namespace FinalInferno.UI {
+    public class BestiaryMenu : MonoBehaviour {
         [SerializeField, Range(0f, 2f)] private float inputCooldown = 0.25f;
         [Header("Active References")]
         [SerializeField] private TextMeshProUGUI monsterName;
@@ -40,33 +38,32 @@ namespace FinalInferno.UI{
         private bool activatedInput = false;
         private float cooldown = 0;
 
-        public void ToggleBestiary(){
-            if(isOpen){
+        public void ToggleBestiary() {
+            if (isOpen) {
                 CloseBestiary();
-            }else{
+            } else {
                 OpenBestiary();
             }
         }
 
-        public void OpenBestiary()
-        {
+        public void OpenBestiary() {
             bestiary = Party.Instance.Bestiary;
             enemies.Clear();
-            foreach(Enemy enemy in bestiary.Keys){
+            foreach (Enemy enemy in bestiary.Keys) {
                 // Inimigos que não aparecem no bestiario, como o Dummy, tem essa propriedade nula
-                if(enemy.BestiaryPortrait != null){
+                if (enemy.BestiaryPortrait != null) {
                     enemies.Add(enemy);
                     enemy.LevelEnemy();
                 }
             }
-            Enemy firstEntry = (enemies.Count > 0)? enemies[0] : null;
+            Enemy firstEntry = (enemies.Count > 0) ? enemies[0] : null;
             currentIndex = 0;
             isOpen = true;
             ShowEnemy(firstEntry);
             cooldown = 0f;
         }
 
-        public void CloseBestiary(){
+        public void CloseBestiary() {
             detailsObject.SetActive(false);
             monsterName.text = "";
             bestiary = null;
@@ -76,19 +73,21 @@ namespace FinalInferno.UI{
             activatedInput = false;
         }
 
-        private string GetResistanceString(Enemy enemy){
+        private string GetResistanceString(Enemy enemy) {
             string str = "";
             string[] elementNames = System.Enum.GetNames(typeof(Element));
             int maxLength = int.MinValue;
-            foreach(string name in elementNames){
-                if(name.Length > maxLength) maxLength = name.Length;
+            foreach (string name in elementNames) {
+                if (name.Length > maxLength) {
+                    maxLength = name.Length;
+                }
             }
             bool hasResistance = false;
 
-            foreach(Element element in enemy.ElementalResistances.Keys){
-                if(hasResistance){
+            foreach (Element element in enemy.ElementalResistances.Keys) {
+                if (hasResistance) {
                     str += "\n";
-                }else{
+                } else {
                     hasResistance = true;
                 }
 
@@ -97,30 +96,31 @@ namespace FinalInferno.UI{
 
                 // Escreve a resistencia do monstro a esse elemento, usando porcentagem e colorindo para indicar resistencia ou fraqueza
                 float value = (1.0f - enemy.ElementalResistances[element]) * 100f;
-                if(value < 0){
+                if (value < 0) {
                     str += "<color=#840000>";
-                }else{
+                } else {
                     // valores iguais a zero não devem aparecer aqui, apenas negativos
                     str += "<color=#006400>";
                 }
                 str += value.ToString("0.###").PadLeft(6) + "%</color>";
             }
 
-            if(hasResistance){
+            if (hasResistance) {
                 return str;
-            }else{
+            } else {
                 return "None";
             }
         }
 
-        private void ShowEnemy(Enemy enemy){
+        private void ShowEnemy(Enemy enemy) {
             // Se o bestiario não estiver aberto, não faz nada
-            if(!isOpen)
+            if (!isOpen) {
                 return;
+            }
 
-            if(enemy != null){
+            if (enemy != null) {
                 detailsObject.SetActive(true);
-                monsterName.text = (enemy is CerberusHead)? "Cerberus" : enemy.AssetName;
+                monsterName.text = (enemy is CerberusHead) ? "Cerberus" : enemy.AssetName;
                 portrait.sprite = enemy.BestiaryPortrait;
                 bio.text = enemy.Bio;
                 rank.text = "Rank: <color=#" + ColorUtility.ToHtmlStringRGB(enemy.color) + ">" + enemy.name + "</color>";
@@ -134,9 +134,10 @@ namespace FinalInferno.UI{
                 exp.text = "Exp: " + enemy.BaseExp;
                 killCount.text = "Kills: " + bestiary[enemy];
                 elementalResistances.text = GetResistanceString(enemy);
-                if(source != null)
+                if (source != null) {
                     source.PlayOneShot(enemy.EnemyCry);
-            }else{
+                }
+            } else {
                 // Essa função só é chamada com null caso o bestiario esteja vazio
                 detailsObject.SetActive(false);
                 monsterName.text = "Empty";
@@ -147,41 +148,40 @@ namespace FinalInferno.UI{
             leftArrow.SetActive(false);
         }
 
-        void Awake(){
+        private void Awake() {
             CloseBestiary();
             source = GetComponent<AudioSource>();
         }
 
-        void Update()
-        {
-            if(isOpen){
-                if(cooldown > inputCooldown){
-                    if(!activatedInput){
+        private void Update() {
+            if (isOpen) {
+                if (cooldown > inputCooldown) {
+                    if (!activatedInput) {
                         activatedInput = true;
-                        if(currentIndex < enemies.Count-1){
+                        if (currentIndex < enemies.Count - 1) {
                             rightArrow.SetActive(true);
-                        }else{
+                        } else {
                             rightArrow.SetActive(false);
                         }
-                        if(currentIndex > 0){
+                        if (currentIndex > 0) {
                             leftArrow.SetActive(true);
-                        }else{
+                        } else {
                             leftArrow.SetActive(false);
                         }
                     }
 
                     // float input = UnityEngine.Input.GetAxis("Horizontal");
                     float input = movementAction.action.ReadValue<Vector2>().x;
-                    if(input > 0 && currentIndex < enemies.Count-1){
+                    if (input > 0 && currentIndex < enemies.Count - 1) {
                         currentIndex++;
                         ShowEnemy(enemies[currentIndex]);
                         cooldown = 0f;
-                    }else if(input < 0 && currentIndex > 0){
+                    } else if (input < 0 && currentIndex > 0) {
                         currentIndex--;
                         ShowEnemy(enemies[currentIndex]);
                         cooldown = 0f;
                     }
-                }else{
+                } else {
                     cooldown += Time.deltaTime;
                 }
             }

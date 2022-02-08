@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
-using System.Data;
 
-namespace FinalInferno{
-    public class RECalculator : MonoBehaviour, IOverworldSkillListener
-    {
+namespace FinalInferno {
+    public class RECalculator : MonoBehaviour, IOverworldSkillListener {
         public static bool encountersEnabled = true;
         [SerializeField] private Transform playerObj = null;
         // Tabela de encontros aleatorios pra este mapa
@@ -15,14 +12,14 @@ namespace FinalInferno{
         [Space]
         [SerializeField] private OverworldSkill encounterIncreaseSkill = null;
         [SerializeField] private FloatVariable encounterIncDistWalked = null;
-        private float EncounterIncDistWalked{
+        private float EncounterIncDistWalked {
             get => encounterIncDistWalked?.Value ?? 0;
             set => encounterIncDistWalked?.UpdateValue(value);
         }
         private float encounterIncDist = 0;
         [SerializeField] private OverworldSkill encounterDecreaseSkill = null;
         [SerializeField] private FloatVariable encounterDecDistWalked = null;
-        private float EncounterDecDistWalked{
+        private float EncounterDecDistWalked {
             get => encounterDecDistWalked?.Value ?? 0;
             set => encounterDecDistWalked?.UpdateValue(value);
         }
@@ -46,21 +43,22 @@ namespace FinalInferno{
         [SerializeField] private FinalInferno.UI.FSM.ButtonClickDecision decision;
 
         // Start is called before the first frame update
-        void Start()
-        {
+        private void Start() {
             playerObj = CharacterOW.MainOWCharacter?.transform;
-            if(playerObj)
+            if (playerObj) {
                 lastCheckPosition = new Vector2(playerObj.position.x, playerObj.position.y);
-            else
+            } else {
                 lastCheckPosition = Vector2.zero;
+            }
+
             lastPosition = lastCheckPosition;
 
-            if(agent == null && CharacterOW.MainOWCharacter != null){
+            if (agent == null && CharacterOW.MainOWCharacter != null) {
                 agent = CharacterOW.MainOWCharacter.GetComponent<Fog.Dialogue.Agent>();
             }
 
             distanceWalked = 0f;
-            if(encounterRate != null){
+            if (encounterRate != null) {
                 baseEncounterRate = encounterRate.BaseEncounterRate;
                 rateIncreaseValue = encounterRate.RateIncreaseValue;
                 distanceWalked = encounterRate.MinFreeWalkDistance - encounterRate.FreeWalkDistance;
@@ -78,8 +76,8 @@ namespace FinalInferno{
             // Se certifica que não vai fazer nada no update quando a taxa de encontro é 0
             // ou quando a tabela não existir
             // ou quando o numero de inimigos por encontro for 0
-            if((curEncounterRate < float.Epsilon && rateIncreaseValue < float.Epsilon)
-                || mapEncounterList == null){
+            if ((curEncounterRate < float.Epsilon && rateIncreaseValue < float.Epsilon)
+                || mapEncounterList == null) {
                 curEncounterRate = 0;
                 rateIncreaseValue = 0;
                 isSafeArea = true;
@@ -87,7 +85,7 @@ namespace FinalInferno{
         }
 
         // A checagem precisa acontecer no LateUpdate para evitar conflito com o update que o sistema de dialogo usa
-        void LateUpdate(){
+        private void LateUpdate() {
             if (encountersEnabled && CharacterOW.PartyCanMove && (agent == null || agent.canInteract)) {
                 // Calcula a distancia entre a posicao atual e a distancia no ultimo LateUpdate
                 float distance = CalculateDistanceWalked();
@@ -95,10 +93,12 @@ namespace FinalInferno{
                 distanceWalked += distance;
                 if (distanceWalked >= 1.0f) {
                     // Caso o player tenha se movido ao menos uma unidade, verifica se encontrou batalha
-                    if (CheckEncounter(distanceWalked)) return;
+                    if (CheckEncounter(distanceWalked)) {
+                        return;
+                    }
                     // Atualiza distancia das skills
-                    EncounterIncDistWalked += ( (EncounterIncDistWalked < (float.MaxValue - distanceWalked))?  distanceWalked : 0);
-                    EncounterDecDistWalked += ( (EncounterDecDistWalked < (float.MaxValue - distanceWalked))?  distanceWalked : 0);
+                    EncounterIncDistWalked += ((EncounterIncDistWalked < (float.MaxValue - distanceWalked)) ? distanceWalked : 0);
+                    EncounterDecDistWalked += ((EncounterDecDistWalked < (float.MaxValue - distanceWalked)) ? distanceWalked : 0);
                     // Atualiza lastCheckPosition
                     lastCheckPosition = new Vector2(playerObj.position.x, playerObj.position.y);
                     distanceWalked = 0f;
@@ -108,8 +108,11 @@ namespace FinalInferno{
             }
         }
 
-        private float CalculateDistanceWalked(){
-            if(playerObj == null) return 0f;
+        private float CalculateDistanceWalked() {
+            if (playerObj == null) {
+                return 0f;
+            }
+
             return Vector2.Distance(lastPosition, new Vector2(playerObj.position.x, playerObj.position.y));
         }
 
@@ -117,7 +120,9 @@ namespace FinalInferno{
         // Se houver frame drop e o jogador andar distancias maiores do que deveria sem checar,
         // A proxima checagem de batalha terá uma chance maior pois o incremento é linear
         private bool CheckEncounter(float distance) {
-            if (isSafeArea || !mapEncounterList.HasEncounterGroup) return false;
+            if (isSafeArea || !mapEncounterList.HasEncounterGroup) {
+                return false;
+            }
 
             if (Random.Range(0.0f, 100.0f) <= (curEncounterRate * skillModifier)) {
                 // Caso nao encontre uma batalha
@@ -129,7 +134,7 @@ namespace FinalInferno{
             // Quando encontrar uma batalha
             // Impede que o player se movimente e interaja
             CharacterOW.PartyCanMove = false;
-            if(agent != null){
+            if (agent != null) {
                 agent.canInteract = false;
             }
 
@@ -161,48 +166,51 @@ namespace FinalInferno{
             return true;
         }
 
-        private EncounterGroup CalculateRoll(float roll, List<EncounterGroup> list, ReadOnlyDictionary<EncounterGroup, float> chanceDict){
+        private EncounterGroup CalculateRoll(float roll, List<EncounterGroup> list, ReadOnlyDictionary<EncounterGroup, float> chanceDict) {
             EncounterGroup result = list[0];
             float cummulativeChance = 0;
-            for(int i = 0; i < list.Count && roll > cummulativeChance; i++){
+            for (int i = 0; i < list.Count && roll > cummulativeChance; i++) {
                 result = list[i];
                 cummulativeChance += chanceDict[result];
             }
             return result;
         }
 
-        public void OnEnable(){
+        public void OnEnable() {
             encounterIncreaseSkill?.AddActivationListener(this);
             encounterDecreaseSkill?.AddActivationListener(this);
         }
 
-        public void OnDisable(){
+        public void OnDisable() {
             encounterIncreaseSkill?.RemoveActivationListener(this);
             encounterDecreaseSkill?.RemoveActivationListener(this);
         }
 
-		public void ActivatedSkill(OverworldSkill skill){
-            if(skill == null) return;
-            if(skill == encounterIncreaseSkill){
+        public void ActivatedSkill(OverworldSkill skill) {
+            if (skill == null) {
+                return;
+            }
+
+            if (skill == encounterIncreaseSkill) {
                 encounterDecreaseSkill?.Deactivate();
                 EncounterIncDistWalked = 0;
                 skillModifier = skill.effects[0].value1;
-            }else if(skill == encounterDecreaseSkill){
+            } else if (skill == encounterDecreaseSkill) {
                 encounterIncreaseSkill?.Deactivate();
                 EncounterDecDistWalked = 0;
                 skillModifier = skill.effects[0].value1;
             }
-		}
+        }
 
-		public void DeactivatedSkill(OverworldSkill skill){
-            if(skill == encounterDecreaseSkill || skill == encounterIncreaseSkill){
+        public void DeactivatedSkill(OverworldSkill skill) {
+            if (skill == encounterDecreaseSkill || skill == encounterIncreaseSkill) {
                 skillModifier = 1.0f;
-                if(skill == encounterDecreaseSkill){
+                if (skill == encounterDecreaseSkill) {
                     EncounterDecDistWalked = encounterDecDist;
-                }else{
+                } else {
                     EncounterIncDistWalked = encounterIncDist;
                 }
             }
-		}
-	}
+        }
+    }
 }

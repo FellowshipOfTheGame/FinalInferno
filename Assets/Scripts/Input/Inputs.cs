@@ -6,13 +6,10 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-namespace FinalInferno.Input
-{
-    public class @Inputs : IInputActionCollection, IDisposable
-    {
+namespace FinalInferno.Input {
+    public class @Inputs : IInputActionCollection, IDisposable {
         public InputActionAsset asset { get; }
-        public @Inputs()
-        {
+        public @Inputs() {
             asset = InputActionAsset.FromJson(@"{
     ""name"": ""Inputs"",
     ""maps"": [
@@ -838,47 +835,39 @@ namespace FinalInferno.Input
             m_Battle_DebugTrigger = m_Battle.FindAction("DebugTrigger", throwIfNotFound: true);
         }
 
-        public void Dispose()
-        {
+        public void Dispose() {
             UnityEngine.Object.Destroy(asset);
         }
 
-        public InputBinding? bindingMask
-        {
+        public InputBinding? bindingMask {
             get => asset.bindingMask;
             set => asset.bindingMask = value;
         }
 
-        public ReadOnlyArray<InputDevice>? devices
-        {
+        public ReadOnlyArray<InputDevice>? devices {
             get => asset.devices;
             set => asset.devices = value;
         }
 
         public ReadOnlyArray<InputControlScheme> controlSchemes => asset.controlSchemes;
 
-        public bool Contains(InputAction action)
-        {
+        public bool Contains(InputAction action) {
             return asset.Contains(action);
         }
 
-        public IEnumerator<InputAction> GetEnumerator()
-        {
+        public IEnumerator<InputAction> GetEnumerator() {
             return asset.GetEnumerator();
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
+        IEnumerator IEnumerable.GetEnumerator() {
             return GetEnumerator();
         }
 
-        public void Enable()
-        {
+        public void Enable() {
             asset.Enable();
         }
 
-        public void Disable()
-        {
+        public void Disable() {
             asset.Disable();
         }
 
@@ -891,8 +880,7 @@ namespace FinalInferno.Input
         private readonly InputAction m_Overworld_OpenMenu;
         private readonly InputAction m_Overworld_RepelSkill;
         private readonly InputAction m_Overworld_TauntSkill;
-        public struct OverworldActions
-        {
+        public struct OverworldActions {
             private @Inputs m_Wrapper;
             public OverworldActions(@Inputs wrapper) { m_Wrapper = wrapper; }
             public InputAction @Movement => m_Wrapper.m_Overworld_Movement;
@@ -906,10 +894,8 @@ namespace FinalInferno.Input
             public void Disable() { Get().Disable(); }
             public bool enabled => Get().enabled;
             public static implicit operator InputActionMap(OverworldActions set) { return set.Get(); }
-            public void SetCallbacks(IOverworldActions instance)
-            {
-                if (m_Wrapper.m_OverworldActionsCallbackInterface != null)
-                {
+            public void SetCallbacks(IOverworldActions instance) {
+                if (m_Wrapper.m_OverworldActionsCallbackInterface != null) {
                     @Movement.started -= m_Wrapper.m_OverworldActionsCallbackInterface.OnMovement;
                     @Movement.performed -= m_Wrapper.m_OverworldActionsCallbackInterface.OnMovement;
                     @Movement.canceled -= m_Wrapper.m_OverworldActionsCallbackInterface.OnMovement;
@@ -930,8 +916,7 @@ namespace FinalInferno.Input
                     @TauntSkill.canceled -= m_Wrapper.m_OverworldActionsCallbackInterface.OnTauntSkill;
                 }
                 m_Wrapper.m_OverworldActionsCallbackInterface = instance;
-                if (instance != null)
-                {
+                if (instance != null) {
                     @Movement.started += instance.OnMovement;
                     @Movement.performed += instance.OnMovement;
                     @Movement.canceled += instance.OnMovement;
@@ -962,8 +947,7 @@ namespace FinalInferno.Input
         private readonly InputAction m_MenuNavigation_Confirm;
         private readonly InputAction m_MenuNavigation_Cancel;
         private readonly InputAction m_MenuNavigation_CloseMenu;
-        public struct MenuNavigationActions
-        {
+        public struct MenuNavigationActions {
             private @Inputs m_Wrapper;
             public MenuNavigationActions(@Inputs wrapper) { m_Wrapper = wrapper; }
             public InputAction @Movement => m_Wrapper.m_MenuNavigation_Movement;
@@ -975,10 +959,8 @@ namespace FinalInferno.Input
             public void Disable() { Get().Disable(); }
             public bool enabled => Get().enabled;
             public static implicit operator InputActionMap(MenuNavigationActions set) { return set.Get(); }
-            public void SetCallbacks(IMenuNavigationActions instance)
-            {
-                if (m_Wrapper.m_MenuNavigationActionsCallbackInterface != null)
-                {
+            public void SetCallbacks(IMenuNavigationActions instance) {
+                if (m_Wrapper.m_MenuNavigationActionsCallbackInterface != null) {
                     @Movement.started -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnMovement;
                     @Movement.performed -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnMovement;
                     @Movement.canceled -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnMovement;
@@ -993,8 +975,7 @@ namespace FinalInferno.Input
                     @CloseMenu.canceled -= m_Wrapper.m_MenuNavigationActionsCallbackInterface.OnCloseMenu;
                 }
                 m_Wrapper.m_MenuNavigationActionsCallbackInterface = instance;
-                if (instance != null)
-                {
+                if (instance != null) {
                     @Movement.started += instance.OnMovement;
                     @Movement.performed += instance.OnMovement;
                     @Movement.canceled += instance.OnMovement;
@@ -1019,8 +1000,7 @@ namespace FinalInferno.Input
         private readonly InputAction m_Battle_Confirm;
         private readonly InputAction m_Battle_Cancel;
         private readonly InputAction m_Battle_DebugTrigger;
-        public struct BattleActions
-        {
+        public struct BattleActions {
             private @Inputs m_Wrapper;
             public BattleActions(@Inputs wrapper) { m_Wrapper = wrapper; }
             public InputAction @Movement => m_Wrapper.m_Battle_Movement;
@@ -1032,10 +1012,8 @@ namespace FinalInferno.Input
             public void Disable() { Get().Disable(); }
             public bool enabled => Get().enabled;
             public static implicit operator InputActionMap(BattleActions set) { return set.Get(); }
-            public void SetCallbacks(IBattleActions instance)
-            {
-                if (m_Wrapper.m_BattleActionsCallbackInterface != null)
-                {
+            public void SetCallbacks(IBattleActions instance) {
+                if (m_Wrapper.m_BattleActionsCallbackInterface != null) {
                     @Movement.started -= m_Wrapper.m_BattleActionsCallbackInterface.OnMovement;
                     @Movement.performed -= m_Wrapper.m_BattleActionsCallbackInterface.OnMovement;
                     @Movement.canceled -= m_Wrapper.m_BattleActionsCallbackInterface.OnMovement;
@@ -1050,8 +1028,7 @@ namespace FinalInferno.Input
                     @DebugTrigger.canceled -= m_Wrapper.m_BattleActionsCallbackInterface.OnDebugTrigger;
                 }
                 m_Wrapper.m_BattleActionsCallbackInterface = instance;
-                if (instance != null)
-                {
+                if (instance != null) {
                     @Movement.started += instance.OnMovement;
                     @Movement.performed += instance.OnMovement;
                     @Movement.canceled += instance.OnMovement;
@@ -1069,25 +1046,26 @@ namespace FinalInferno.Input
         }
         public BattleActions @Battle => new BattleActions(this);
         private int m_ControllerSchemeIndex = -1;
-        public InputControlScheme ControllerScheme
-        {
-            get
-            {
-                if (m_ControllerSchemeIndex == -1) m_ControllerSchemeIndex = asset.FindControlSchemeIndex("Controller");
+        public InputControlScheme ControllerScheme {
+            get {
+                if (m_ControllerSchemeIndex == -1) {
+                    m_ControllerSchemeIndex = asset.FindControlSchemeIndex("Controller");
+                }
+
                 return asset.controlSchemes[m_ControllerSchemeIndex];
             }
         }
         private int m_KeyboardSchemeIndex = -1;
-        public InputControlScheme KeyboardScheme
-        {
-            get
-            {
-                if (m_KeyboardSchemeIndex == -1) m_KeyboardSchemeIndex = asset.FindControlSchemeIndex("Keyboard");
+        public InputControlScheme KeyboardScheme {
+            get {
+                if (m_KeyboardSchemeIndex == -1) {
+                    m_KeyboardSchemeIndex = asset.FindControlSchemeIndex("Keyboard");
+                }
+
                 return asset.controlSchemes[m_KeyboardSchemeIndex];
             }
         }
-        public interface IOverworldActions
-        {
+        public interface IOverworldActions {
             void OnMovement(InputAction.CallbackContext context);
             void OnInteract(InputAction.CallbackContext context);
             void OnSprintSkipDialogue(InputAction.CallbackContext context);
@@ -1095,15 +1073,13 @@ namespace FinalInferno.Input
             void OnRepelSkill(InputAction.CallbackContext context);
             void OnTauntSkill(InputAction.CallbackContext context);
         }
-        public interface IMenuNavigationActions
-        {
+        public interface IMenuNavigationActions {
             void OnMovement(InputAction.CallbackContext context);
             void OnConfirm(InputAction.CallbackContext context);
             void OnCancel(InputAction.CallbackContext context);
             void OnCloseMenu(InputAction.CallbackContext context);
         }
-        public interface IBattleActions
-        {
+        public interface IBattleActions {
             void OnMovement(InputAction.CallbackContext context);
             void OnConfirm(InputAction.CallbackContext context);
             void OnCancel(InputAction.CallbackContext context);

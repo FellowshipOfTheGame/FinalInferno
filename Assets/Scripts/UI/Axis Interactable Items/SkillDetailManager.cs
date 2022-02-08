@@ -1,18 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FinalInferno.UI.AII{
+namespace FinalInferno.UI.AII {
     [RequireComponent(typeof(ScrollRect))]
-    public class SkillDetailManager  : AIIManager
-    {
+    public class SkillDetailManager : AIIManager {
         [SerializeField] private List<SkillsMenu.SkillDetailPage> detailPages = new List<SkillsMenu.SkillDetailPage>();
         [SerializeField] private ToggleItem toggle = null;
         private List<float> currentValues = null;
         private PlayerSkill currentSkill = null;
-        public PlayerSkill CurrentSkill{
-            set{
+        public PlayerSkill CurrentSkill {
+            set {
                 currentSkill = value;
                 toggle.Toggle(currentSkill.active);
             }
@@ -25,24 +23,25 @@ namespace FinalInferno.UI.AII{
         [SerializeField] private GameObject leftArrow;
         [SerializeField] private GameObject xIndicator;
 
-        void Reset(){
+        private void Reset() {
             scrollRect = GetComponent<ScrollRect>();
         }
 
-        public new void Awake(){
+        public new void Awake() {
             currentItem = null;
             rightArrow.SetActive(false);
             leftArrow.SetActive(false);
 
-            if(!scrollRect)
+            if (!scrollRect) {
                 scrollRect = GetComponent<ScrollRect>();
+            }
 
             currentValues = new List<float>();
-            for(int i = 0; i < detailPages.Count; i++){
+            for (int i = 0; i < detailPages.Count; i++) {
                 detailPages[i].Index = i;
                 detailPages[i].FocusPage = FocusOn;
 
-                if(!toggle && detailPages[i].GetType() == typeof(ToggleItem)){
+                if (!toggle && detailPages[i].GetType() == typeof(ToggleItem)) {
                     toggle = detailPages[i].AII as ToggleItem;
                 }
                 currentValues.Add(1f);
@@ -50,33 +49,35 @@ namespace FinalInferno.UI.AII{
             toggle.OnToggle += ToggleSkillActive;
         }
 
-        private void ToggleSkillActive(){
+        private void ToggleSkillActive() {
             currentSkill.active = !currentSkill.active;
-            if(AS) AS.Play();
+            if (AS) {
+                AS.Play();
+            }
         }
 
-        public void FocusOn(int index){
+        public void FocusOn(int index) {
             Debug.Log($"Chamou focus on {index}");
-            index = Mathf.Clamp(index, 0, detailPages.Count-1);
+            index = Mathf.Clamp(index, 0, detailPages.Count - 1);
 
-            if(index < detailPages.Count-1){
+            if (index < detailPages.Count - 1) {
                 rightArrow.SetActive(true);
-            }else{
+            } else {
                 rightArrow.SetActive(false);
             }
 
-            if(index > 0){
+            if (index > 0) {
                 leftArrow.SetActive(true);
-            }else{
+            } else {
                 leftArrow.SetActive(false);
             }
 
-            if(index != currentIndex){
+            if (index != currentIndex) {
 
                 scrollRect.content = detailPages[index].GetComponent<RectTransform>();
-                foreach(SkillsMenu.SkillDetailPage page in detailPages){
+                foreach (SkillsMenu.SkillDetailPage page in detailPages) {
                     RectTransform rect = page.GetComponent<RectTransform>();
-                    if(rect){
+                    if (rect) {
                         rect.pivot += new Vector2(currentIndex - index, 0);
                         rect.anchorMin += new Vector2(currentIndex - index, 0);
                         rect.anchorMax += new Vector2(currentIndex - index, 0);
@@ -89,31 +90,31 @@ namespace FinalInferno.UI.AII{
             }
         }
 
-        public void HideToggle(){
+        public void HideToggle() {
             toggle.Hide();
         }
 
-        public void ShowToggle(){
+        public void ShowToggle() {
             toggle.Show();
         }
 
-        public override void Active(){
+        public override void Active() {
             xIndicator.SetActive(false);
             currentIndex = 0;
-            for(int i = 0; i < currentValues.Count; i++){
+            for (int i = 0; i < currentValues.Count; i++) {
                 currentValues[i] = 1f;
             }
 
             base.Active();
         }
 
-        public override void Deactive(){
+        public override void Deactive() {
             FocusOn(0);
             rightArrow.SetActive(false);
             leftArrow.SetActive(false);
             xIndicator.SetActive(true);
             currentIndex = 0;
-            for(int i = 0; i < currentValues.Count; i++){
+            for (int i = 0; i < currentValues.Count; i++) {
                 currentValues[i] = 1f;
             }
             scrollbar.SetValue(1f);

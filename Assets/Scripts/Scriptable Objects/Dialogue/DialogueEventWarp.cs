@@ -1,24 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
-namespace FinalInferno{
+namespace FinalInferno {
     [CreateAssetMenu(fileName = "NewEventWarpDialogue", menuName = "ScriptableObject/DialogueSystem/FinalInferno/DialogueEventWarp")]
-    public class DialogueEventWarp : DialogueEventTrigger
-    {
+    public class DialogueEventWarp : DialogueEventTrigger {
         // TO DO: adicionar suporte de cutscene aqui
         [Header("Scene")]
         [SerializeField] private SceneWarp scene;
         [Header("Expected value = TriggerChangeScene")]
         [SerializeField] private FinalInferno.UI.FSM.ButtonClickDecision decision;
-        
-        public override void AfterDialogue(){
+
+        public override void AfterDialogue() {
             Debug.Log("teste");
-            if(scene.scene == null || scene.scene == "" || decision == null){
+            if (scene.scene == null || scene.scene == "" || decision == null) {
                 shouldUnlockMovement = true;
                 base.AfterDialogue();
-            }else{
+            } else {
                 SceneLoader.beforeSceneChange += SetFlags;
                 shouldUnlockMovement = false;
 
@@ -32,7 +28,7 @@ namespace FinalInferno{
             Fog.Dialogue.DialogueHandler.instance.OnDialogueStart -= AfterDialogue;
         }
 
-        public void SetFlags(){
+        public void SetFlags() {
             base.AfterDialogue();
             SceneLoader.beforeSceneChange -= SetFlags;
         }

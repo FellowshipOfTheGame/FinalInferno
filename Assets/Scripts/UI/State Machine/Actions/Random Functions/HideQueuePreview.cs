@@ -1,21 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using FinalInferno.UI.Battle.QueueMenu;
 using UnityEngine;
-using FinalInferno.UI.Battle.QueueMenu;
 
-namespace FinalInferno.UI.FSM
-{
+namespace FinalInferno.UI.FSM {
     [CreateAssetMenu(menuName = "BattleUI SM/Actions/Stop Queue Preview")]
-    public class HideQueuePreview : ComponentRequester
-    {
+    public class HideQueuePreview : ComponentRequester {
         [SerializeField] private BattleQueueUI queue;
 
-        public override void Act(StateController controller){
-            if(queue != null)
+        public override void Act(StateController controller) {
+            if (queue != null) {
                 queue.StopPreview();
+            }
         }
 
-        public override void RequestComponent(GameObject provider){
+        public override void RequestComponent(GameObject provider) {
             queue = provider.GetComponent<BattleQueueUI>();
         }
     }

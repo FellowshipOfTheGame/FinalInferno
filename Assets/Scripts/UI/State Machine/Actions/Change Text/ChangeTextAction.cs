@@ -1,16 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace FinalInferno.UI.FSM
-{
+namespace FinalInferno.UI.FSM {
     /// <summary>
     /// Ação que altera o texto de um Text.
     /// </summary>
     [CreateAssetMenu(menuName = "BattleUI SM/Actions/Change Text")]
-    public class ChangeTextAction : ComponentRequester
-    {
+    public class ChangeTextAction : ComponentRequester {
         /// <summary>
         /// Referência ao Text.
         /// </summary>
@@ -26,8 +22,7 @@ namespace FinalInferno.UI.FSM
         /// Chama o trigger.
         /// </summary>
         /// <param name="controller"> O controlador da máquina de estados. </param>
-        public override void Act(StateController controller)
-        {
+        public override void Act(StateController controller) {
             text.text = newText;
         }
 
@@ -36,8 +31,7 @@ namespace FinalInferno.UI.FSM
         /// Requisita um Text.
         /// </summary>
         /// <param name="provider"> Game object que provê o componente desejado. </param>
-        public override void RequestComponent(GameObject provider)
-        {
+        public override void RequestComponent(GameObject provider) {
             text = provider.GetComponent<Text>();
         }
 

@@ -1,44 +1,44 @@
 using System;
-using UnityEngine;
-using UnityEngine.UI;
 using UnityEditor;
+using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
-namespace FinalInferno.Input{
+namespace FinalInferno.Input {
 #if UNITY_EDITOR
     [CustomEditor(typeof(InputDependentImage))]
     [CanEditMultipleObjects]
     public class InputDependentImageEditor : UnityEditor.UI.ImageEditor {
-        SerializedProperty inputActions;
-        SerializedProperty controlSchemesNames;
-        SerializedProperty controlSchemesImages;
+        private SerializedProperty inputActions;
+        private SerializedProperty controlSchemesNames;
+        private SerializedProperty controlSchemesImages;
 
-        protected override void OnEnable(){
+        protected override void OnEnable() {
             base.OnEnable();
             inputActions = serializedObject.FindProperty("inputActions");
             controlSchemesNames = serializedObject.FindProperty("controlSchemesNames");
             controlSchemesImages = serializedObject.FindProperty("controlSchemesImages");
         }
 
-        public override void OnInspectorGUI(){
+        public override void OnInspectorGUI() {
             serializedObject.Update();
 
             EditorGUILayout.LabelField("Input Info:", EditorStyles.boldLabel);
             EditorGUILayout.Space();
             EditorGUILayout.PropertyField(inputActions);
-            if(inputActions.objectReferenceValue != null){
+            if (inputActions.objectReferenceValue != null) {
                 EditorGUI.indentLevel++;
                 InputActionAsset inputActionAsset = inputActions.objectReferenceValue as InputActionAsset;
                 string[] schemeNames = Array.ConvertAll<InputControlScheme, string>(inputActionAsset.controlSchemes.ToArray(), map => map.name);
                 controlSchemesNames.ClearArray();
-                for(int i = 0; i < schemeNames.Length; i++){
+                for (int i = 0; i < schemeNames.Length; i++) {
                     EditorGUILayout.BeginHorizontal();
 
                     controlSchemesNames.InsertArrayElementAtIndex(i);
                     controlSchemesNames.GetArrayElementAtIndex(i).stringValue = schemeNames[i];
                     EditorGUILayout.PrefixLabel(schemeNames[i]);
 
-                    if(i >= controlSchemesImages.arraySize){
+                    if (i >= controlSchemesImages.arraySize) {
                         controlSchemesImages.InsertArrayElementAtIndex(i);
                     }
                     SerializedProperty imageProperty = controlSchemesImages.GetArrayElementAtIndex(i);
@@ -59,43 +59,39 @@ namespace FinalInferno.Input{
         // Conversion
         // Baseado no código do pacote SoftMaskForUGUI by mob-sakai
         [MenuItem("CONTEXT/Image/Convert to Input Dependent Image", true)]
-        private static bool _ConvertToInputDependentImage(MenuCommand command)
-        {
+        private static bool _ConvertToInputDependentImage(MenuCommand command) {
             return command.context && command.context.GetType() != typeof(InputDependentImage);
         }
 
         [MenuItem("CONTEXT/Image/Convert to Input Dependent Image", false)]
-        private static void ConvertToInputDependentImage(MenuCommand command)
-        {
+        private static void ConvertToInputDependentImage(MenuCommand command) {
             ConvertTo<InputDependentImage>(command.context);
         }
 
         [MenuItem("CONTEXT/Image/Convert to Image", true)]
-        private static bool _ConvertToImage(MenuCommand command)
-        {
+        private static bool _ConvertToImage(MenuCommand command) {
             return command.context && command.context.GetType() != typeof(Image);
         }
 
         [MenuItem("CONTEXT/Image/Convert to Image", false)]
-        private static void ConvertToImage(MenuCommand command)
-        {
+        private static void ConvertToImage(MenuCommand command) {
             ConvertTo<Image>(command.context);
         }
 
-        private static void ConvertTo<T>(UnityEngine.Object context) where T : MonoBehaviour
-        {
-            var target = context as MonoBehaviour;
-            var serializedObject = new SerializedObject(target);
+        private static void ConvertTo<T>(UnityEngine.Object context) where T : MonoBehaviour {
+            MonoBehaviour target = context as MonoBehaviour;
+            SerializedObject serializedObject = new SerializedObject(target);
             serializedObject.Update();
 
-            var oldEnable = target.enabled;
+            bool oldEnable = target.enabled;
             target.enabled = false;
 
             // Find MonoScript of the specified component.
-            foreach(string scriptGUID in AssetDatabase.FindAssets("t:MonoScript")){
+            foreach (string scriptGUID in AssetDatabase.FindAssets("t:MonoScript")) {
                 MonoScript script = AssetDatabase.LoadAssetAtPath<MonoScript>(AssetDatabase.GUIDToAssetPath(scriptGUID));
-                if (script.GetClass() != typeof(T))
+                if (script.GetClass() != typeof(T)) {
                     continue;
+                }
 
                 // Set 'm_Script' to convert.
                 serializedObject.FindProperty("m_Script").objectReferenceValue = script;

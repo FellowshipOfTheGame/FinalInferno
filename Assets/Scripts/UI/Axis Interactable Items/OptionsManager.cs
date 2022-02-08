@@ -1,11 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Audio;
+﻿using UnityEngine;
 
-namespace FinalInferno.UI.AII{
-    public class OptionsManager : AIIManager
-    {
+namespace FinalInferno.UI.AII {
+    public class OptionsManager : AIIManager {
         [Header("OptionItems")]
         [SerializeField] private ToggleItem autoSave;
         [SerializeField] private VolumeController volumeController;
@@ -14,7 +10,7 @@ namespace FinalInferno.UI.AII{
         [SerializeField] private HorizontalSliderItem sfxVolume;
         [SerializeField] private HorizontalSliderItem sfxVolumeUI;
 
-        public new void Awake(){
+        public new void Awake() {
             currentItem = null;
 
             autoSave.Toggle(SaveLoader.AutoSave);
@@ -33,32 +29,35 @@ namespace FinalInferno.UI.AII{
             sfxVolumeUI.slider.onValueChanged.AddListener(UpdateVFXUI);
         }
 
-        void UpdateMaster(float value){
+        private void UpdateMaster(float value) {
             volumeController.SetMasterVolume(value);
         }
 
-        void UpdateBGM(float value){
+        private void UpdateBGM(float value) {
             volumeController.SetBGMVolume(value);
         }
 
-        void UpdateVFX(float value){
+        private void UpdateVFX(float value) {
             volumeController.SetSFXVolume(value);
         }
 
-        void UpdateVFXUI(float value){
+        private void UpdateVFXUI(float value) {
             volumeController.SetSFXUIVolume(value);
         }
 
-        public new void Start(){
+        public new void Start() {
             active = false;
         }
 
-        void ToggleAutoSave(){
-            if (AS) AS.Play();
+        private void ToggleAutoSave() {
+            if (AS) {
+                AS.Play();
+            }
+
             SaveLoader.AutoSave = !SaveLoader.AutoSave;
         }
 
-        void OnDisable(){
+        private void OnDisable() {
             PlayerPrefs.Save();
         }
     }

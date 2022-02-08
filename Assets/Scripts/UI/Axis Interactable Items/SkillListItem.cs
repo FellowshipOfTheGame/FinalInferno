@@ -1,16 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using FinalInferno.UI.Battle.SkillMenu;
 using UnityEngine;
-using FinalInferno.UI.FSM;
-using FinalInferno.UI.Battle.SkillMenu;
 
-namespace FinalInferno.UI.AII
-{
+namespace FinalInferno.UI.AII {
     /// <summary>
 	/// Item da lista de skills.
 	/// </summary>
-    public class SkillListItem : MonoBehaviour
-    {
+    public class SkillListItem : MonoBehaviour {
         /// <summary>
         /// Referência à lista de skills.
         /// </summary>
@@ -31,10 +26,9 @@ namespace FinalInferno.UI.AII
         /// </summary>
         [SerializeField] private AxisInteractableItem item;
 
-        void Awake()
-        {
+        private void Awake() {
             rect = GetComponent<RectTransform>();
-            
+
             item.OnEnter += UpdateSkillDescription;
             item.OnEnter += ClampSkillContent;
         }
@@ -42,10 +36,10 @@ namespace FinalInferno.UI.AII
         /// <summary>
         /// Atualiza a descrição da skill no menu.
         /// </summary>
-        private void UpdateSkillDescription()
-        {
-            if (skill == null)
+        private void UpdateSkillDescription() {
+            if (skill == null) {
                 skill = GetComponent<SkillElement>().skill;
+            }
 
             skillList.UpdateSkillDescription(skill);
         }
@@ -53,8 +47,7 @@ namespace FinalInferno.UI.AII
         /// <summary>
         /// Atualiza a posição do content das skills.
         /// </summary>
-        private void ClampSkillContent()
-        {
+        private void ClampSkillContent() {
             skillList.ClampSkillContent(rect);
         }
     }

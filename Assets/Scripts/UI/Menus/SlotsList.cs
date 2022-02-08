@@ -1,15 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
-using FinalInferno.UI.AII;
+﻿using FinalInferno.UI.AII;
 using FinalInferno.UI.FSM;
+using TMPro;
+using UnityEngine;
 
-namespace FinalInferno.UI.Saves
-{
-    public class SlotsList : MonoBehaviour
-    {
+namespace FinalInferno.UI.Saves {
+    public class SlotsList : MonoBehaviour {
         [Header("Prefab")]
         /// <summary>
         /// Objeto template para um item de slot que será mostrado no menu.
@@ -39,27 +34,24 @@ namespace FinalInferno.UI.Saves
         [Header("Autosave info")]
         [SerializeField] private TextMeshProUGUI textMesh;
 
-        void Update(){
-            if(textMesh != null){
-                string autoSaveStatus = (SaveLoader.AutoSave)? "<color=#006400>on</color>" : "<color=#840000>off</color>";
+        private void Update() {
+            if (textMesh != null) {
+                string autoSaveStatus = (SaveLoader.AutoSave) ? "<color=#006400>on</color>" : "<color=#840000>off</color>";
                 string currentSlot = "" + (SaveLoader.SaveSlot + 1);
                 textMesh.text = "<color=#840000>Autosave is </color>" + autoSaveStatus;
-                if(SaveLoader.AutoSave){
+                if (SaveLoader.AutoSave) {
                     textMesh.text += "<color=#840000>, curent slot is " + currentSlot + "</color>";
                 }
             }
         }
 
-        void Awake()
-        {
+        private void Awake() {
             loadPreviewsActions.list = this;
         }
 
-        public void UpdateSlotsContent(SavePreviewInfo[] slots)
-        {
+        public void UpdateSlotsContent(SavePreviewInfo[] slots) {
             // Passa por todas as skills da lista, adicionando as ativas no menu e as ordenando
-            for (int i = 0; i < SaveFile.NSaveSlots && i < slotObjects.Length && i < slots.Length; i++)
-            {
+            for (int i = 0; i < SaveFile.NSaveSlots && i < slotObjects.Length && i < slots.Length; i++) {
                 SavePreviewInfo slot = slots[i];
                 GameObject slotGO = slotObjects[i];
                 // Instancia um novo item e o coloca no content

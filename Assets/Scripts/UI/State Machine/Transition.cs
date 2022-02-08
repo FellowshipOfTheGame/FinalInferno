@@ -1,15 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace FinalInferno.UI.FSM
-{
+﻿namespace FinalInferno.UI.FSM {
     /// <summary>
     /// Componente que guarda especificações da transição.
     /// </summary>
     [System.Serializable]
-    public class Transition
-    {
+    public class Transition {
         /// <summary>
         /// Decisões para ativar a transição.
         /// Todas as decisões devem estar ativas para ativar a transição.

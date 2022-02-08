@@ -1,39 +1,36 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Audio;
 
 [CreateAssetMenu(fileName = "VolumeController", menuName = "ScriptableObject/VolumeController")]
-public class VolumeController : ScriptableObject
-{
+public class VolumeController : ScriptableObject {
     #region subclasses
     [System.Serializable]
-    private class AudioChannel{
+    private class AudioChannel {
         // All Volume strings must be "Volume" + channelName
         [SerializeField] private string volumeString;
         public string VolumeString => volumeString;
         // [SerializeField,HideInInspector] private float minVolume = 0.0001f;
         private const float minVolume = 0.0001f;
         public float MinVolume => minVolume;
-        [SerializeField,Range(0.1f,1)] private float maxVolume = 1;
+        [SerializeField, Range(0.1f, 1)] private float maxVolume = 1;
         public float MaxVolume => maxVolume;
 
-        public void SetValue(AudioMixer mixer, float value){
+        public void SetValue(AudioMixer mixer, float value) {
             value = Mathf.Clamp(value, 0, 1f);
             PlayerPrefs.SetFloat(VolumeString, value);
             value = MinVolume + value * (MaxVolume - MinVolume);
-            if(!mixer.SetFloat(VolumeString, Mathf.Log10(value) * 20f)){
+            if (!mixer.SetFloat(VolumeString, Mathf.Log10(value) * 20f)) {
                 Debug.LogError($"Variable {VolumeString} not set in audio mixer");
             }
         }
 
-        public float CurrentValue(AudioMixer mixer){
+        public float CurrentValue(AudioMixer mixer) {
             float value = 1f;
-            if(mixer.GetFloat(VolumeString, out value)){
-                value = Mathf.Pow(10, value/20f);
+            if (mixer.GetFloat(VolumeString, out value)) {
+                value = Mathf.Pow(10, value / 20f);
                 value = Mathf.Clamp(value, minVolume, maxVolume);
                 return (value - minVolume) / (maxVolume - minVolume);
-            }else{
+            } else {
                 Debug.LogError($"Variable {VolumeString} not set in audio mixer");
                 return 1f;
             }
@@ -41,7 +38,7 @@ public class VolumeController : ScriptableObject
     }
 
     [System.Serializable]
-    public class VolumeInfo{
+    public class VolumeInfo {
         [SerializeField] private float volumeMaster = 1f;
         public float VolumeMaster => volumeMaster;
         [SerializeField] private float volumeBGM = 1f;
@@ -51,8 +48,8 @@ public class VolumeController : ScriptableObject
         [SerializeField] private float volumeSFXUI = 1f;
         public float VolumeSFXUI => volumeSFXUI;
 
-        public VolumeInfo() : this(1f,1f,1f,1f) { }
-        public VolumeInfo(float master, float bgm, float sfx, float sfxui){
+        public VolumeInfo() : this(1f, 1f, 1f, 1f) { }
+        public VolumeInfo(float master, float bgm, float sfx, float sfxui) {
             volumeMaster = master;
             volumeBGM = bgm;
             volumeSFX = sfx;
@@ -67,7 +64,7 @@ public class VolumeController : ScriptableObject
     [SerializeField] private AudioChannel SFXChannel;
     [SerializeField] private AudioChannel SFXUIChannel;
 
-    public VolumeInfo GetInfo(){
+    public VolumeInfo GetInfo() {
         float master = masterChannel.CurrentValue(audioMixer);
         float bgm = BGMChannel.CurrentValue(audioMixer);
         float sfx = SFXChannel.CurrentValue(audioMixer);
@@ -76,8 +73,8 @@ public class VolumeController : ScriptableObject
         return new VolumeInfo(master, bgm, sfx, sfxui);
     }
 
-    public void ResetValues(VolumeInfo info = null){
-        if(info == null){
+    public void ResetValues(VolumeInfo info = null) {
+        if (info == null) {
             info = new VolumeInfo();
         }
         masterChannel.SetValue(audioMixer, info.VolumeMaster);
@@ -86,19 +83,19 @@ public class VolumeController : ScriptableObject
         SFXUIChannel.SetValue(audioMixer, info.VolumeSFXUI);
     }
 
-    private void SetVolume(AudioChannel channel, float value){
+    private void SetVolume(AudioChannel channel, float value) {
         channel.SetValue(audioMixer, value);
     }
-    public void SetMasterVolume(float value){
+    public void SetMasterVolume(float value) {
         SetVolume(masterChannel, value);
     }
-    public void SetBGMVolume(float value){
+    public void SetBGMVolume(float value) {
         SetVolume(BGMChannel, value);
     }
-    public void SetSFXVolume(float value){
+    public void SetSFXVolume(float value) {
         SetVolume(SFXChannel, value);
     }
-    public void SetSFXUIVolume(float value){
+    public void SetSFXUIVolume(float value) {
         SetVolume(SFXUIChannel, value);
     }
 }

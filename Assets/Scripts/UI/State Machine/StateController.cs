@@ -1,14 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace FinalInferno.UI.FSM
-{
+namespace FinalInferno.UI.FSM {
     /// <summary>
 	/// Componente que controla a máquina de estados.
 	/// </summary>
-    public class StateController : MonoBehaviour
-    {
+    public class StateController : MonoBehaviour {
         /// <summary>
         /// Estado atual da máquina.
         /// </summary>
@@ -26,28 +22,25 @@ namespace FinalInferno.UI.FSM
         /// </summary>
         [SerializeField] private Action[] startActions;
 
-        void Start()
-        {
+        private void Start() {
             // Executa as ações iniciais.
-            foreach (Action A in startActions)
-            {
+            foreach (Action A in startActions) {
                 A.Act(this);
             }
             nextState = null;
         }
 
-        void Update()
-        {
-            if(nextState != null){
+        private void Update() {
+            if (nextState != null) {
                 TransitionToState();
-            }else{
+            } else {
                 // Atualiza o tempo passado e verifica por transições
                 stateTimeElapsed += Time.deltaTime;
                 currentState.UpdateState(this);
             }
         }
 
-        public void SetNextState(State state, Action[] actions){
+        public void SetNextState(State state, Action[] actions) {
             nextState = state;
             changeActions = actions;
         }
@@ -57,8 +50,7 @@ namespace FinalInferno.UI.FSM
         /// </summary>
         /// <param name="nextState"> O próximo estado da máquina. </param>
         /// <param name="transitionActions"> Ações que serão executadas na transição. </param>
-        private void TransitionToState()
-        {
+        private void TransitionToState() {
             OnExitState(changeActions);
             currentState = nextState;
             Debug.Log("New State: " + nextState.name);
@@ -69,8 +61,7 @@ namespace FinalInferno.UI.FSM
         /// Verifica se o estado já durou mais que o valor dado.
         /// </summary>
         /// <param name="duration"> A duração a ser verificada. </param>
-        public bool CheckIfCountDownElapsed(float duration)
-        {
+        public bool CheckIfCountDownElapsed(float duration) {
             return (stateTimeElapsed >= duration);
         }
 
@@ -78,11 +69,9 @@ namespace FinalInferno.UI.FSM
         /// Executa as ações de transição.
         /// </summary>
         /// <param name="transitionActions"> Ações executadas na transição. </param>
-        private void OnExitState(Action[] transitionActions)
-        {
+        private void OnExitState(Action[] transitionActions) {
             stateTimeElapsed = 0;
-            foreach (Action A in transitionActions)
-            {
+            foreach (Action A in transitionActions) {
                 A.Act(this);
             }
         }

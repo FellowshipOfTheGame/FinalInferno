@@ -1,18 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace FinalInferno{
+namespace FinalInferno {
     [CreateAssetMenu(fileName = "MagicalDamage", menuName = "ScriptableObject/SkillEffect/MagicalDamage")]
     public class MagicalDamage : SkillEffect {
         // value1 = dmg multiplier
         // value2 = element of the damage
-        public override string Description { get { return "Deals " + value1 + "x " + DmgType + " magical damage"; } }
-        private string DmgType{
-            get{
+        public override string Description => "Deals " + value1 + "x " + DmgType + " magical damage";
+        private string DmgType {
+            get {
                 string value = "\b";
                 Element element = (Element)(Mathf.Clamp((int)value2, 1, (int)Element.Neutral));
-                switch(element){
+                switch (element) {
                     case Element.Fire:
                         value = "Fire";
                         break;

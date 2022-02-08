@@ -1,15 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace FinalInferno.UI.FSM
-{
+namespace FinalInferno.UI.FSM {
     /// <summary>
     /// Ação que invoca um trigger de um animator.
     /// </summary>
     [CreateAssetMenu(menuName = "BattleUI SM/Actions/Trigger")]
-    public class TriggerAction : ComponentRequester
-    {
+    public class TriggerAction : ComponentRequester {
         /// <summary>
         /// Referência ao animator.
         /// </summary>
@@ -25,8 +21,7 @@ namespace FinalInferno.UI.FSM
         /// Chama o trigger.
         /// </summary>
         /// <param name="controller"> O controlador da máquina de estados. </param>
-        public override void Act(StateController controller)
-        {
+        public override void Act(StateController controller) {
             animator.SetTrigger(trigger);
         }
 
@@ -35,8 +30,7 @@ namespace FinalInferno.UI.FSM
         /// Requisita um animator.
         /// </summary>
         /// <param name="provider"> Game object que provê o componente desejado. </param>
-        public override void RequestComponent(GameObject provider)
-        {
+        public override void RequestComponent(GameObject provider) {
             animator = provider.GetComponent<Animator>();
         }
 

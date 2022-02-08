@@ -1,24 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
-namespace FinalInferno{
+namespace FinalInferno {
     public static class SceneLoader {
         private static List<Enemy> enemies = new List<Enemy>();
         private static bool updatePositions = false;
         private static Fog.Dialogue.Dialogue cutsceneDialogue = null;
-        public static Fog.Dialogue.Dialogue CutsceneDialogue{
+        public static Fog.Dialogue.Dialogue CutsceneDialogue {
             get => cutsceneDialogue;
-            set{
-                if(cutsceneDialogue == null){
+            set {
+                if (cutsceneDialogue == null) {
                     cutsceneDialogue = value;
-                }else{
-                    if(value == null){
+                } else {
+                    if (value == null) {
                         cutsceneDialogue = value;
                         Debug.LogWarning("Saved cutscene has been removed");
-                    }else{
+                    } else {
                         Debug.LogError("A cutscene has already been set");
                     }
                 }
@@ -58,16 +57,17 @@ namespace FinalInferno{
         }
         public static void LoadOWScene(string map, bool shouldUpdate = false, Vector2? newPosition = null, bool dontSave = false) {
             updatePositions = shouldUpdate;
-            if(newPosition != null){
-                foreach(Character character in Party.Instance.characters){
+            if (newPosition != null) {
+                foreach (Character character in Party.Instance.characters) {
                     character.position = newPosition.Value;
                 }
             }
             Party.Instance.currentMap = map;
 
             // Salva o jogo se o autosave esta ativado
-            if(SaveLoader.AutoSave && !dontSave)
+            if (SaveLoader.AutoSave && !dontSave) {
                 SaveLoader.SaveGame();
+            }
 
             SceneManager.sceneLoaded += OnMapLoad;
             onSceneLoad += UnlockMovement;
@@ -82,29 +82,30 @@ namespace FinalInferno{
         public static void LoadCustscene(string map, Fog.Dialogue.Dialogue dialogue, bool shouldUpdate = false, Vector2? newPosition = null, Vector2? savePosition = null, bool dontSave = false) {
             updatePositions = shouldUpdate;
             cutsceneDialogue = dialogue;
-            if(savePosition != null){
-                foreach(Character character in Party.Instance.characters){
+            if (savePosition != null) {
+                foreach (Character character in Party.Instance.characters) {
                     character.position = savePosition.Value;
                 }
             }
             Party.Instance.currentMap = SceneManager.GetActiveScene().name;
 
             // Salva o jogo se o autosave esta ativado
-            if(SaveLoader.AutoSave && !dontSave)
+            if (SaveLoader.AutoSave && !dontSave) {
                 SaveLoader.SaveGame();
+            }
 
-            if(newPosition != null){
-                foreach(Character character in Party.Instance.characters){
+            if (newPosition != null) {
+                foreach (Character character in Party.Instance.characters) {
                     character.position = newPosition.Value;
                 }
             }
 
-            if(dialogue != null){
+            if (dialogue != null) {
                 SceneManager.sceneLoaded += OnMapLoad;
                 onSceneLoad += StartDialogue;
                 beforeSceneChange?.Invoke();
                 SceneManager.LoadScene(map);
-            }else{
+            } else {
                 SceneManager.sceneLoaded += OnMapLoad;
                 onSceneLoad += UnlockMovement;
                 beforeSceneChange?.Invoke();
@@ -112,24 +113,24 @@ namespace FinalInferno{
             }
         }
 
-        public static void LoadMainMenu(){
+        public static void LoadMainMenu() {
             SceneManager.sceneLoaded += OnMainMenuLoad;
             beforeSceneChange?.Invoke();
 
             // Salva o jogo se o autosave esta ativado
-            if(SaveLoader.AutoSave && SaveLoader.CanSaveGame){
+            if (SaveLoader.AutoSave && SaveLoader.CanSaveGame) {
                 Party.Instance.SaveOverworldPositions();
                 SaveLoader.SaveGame();
             }
-                
+
             SceneManager.LoadScene("MainMenu");
         }
 
         // Metodos que podem ser chamados ao carregar uma nova cena
-        public static void OnBattleLoad(Scene map, LoadSceneMode mode){
+        public static void OnBattleLoad(Scene map, LoadSceneMode mode) {
             BattleManager.instance.units.Clear();
             // Adiciona os herois da party na lista de unidade da batalha
-            foreach(Character character in Party.Instance.characters){
+            foreach (Character character in Party.Instance.characters) {
                 BattleManager.instance.units.Add(character.archetype);
             }
             // Adiciona os inimigos desejados para a lista de unidades da batalha
@@ -139,9 +140,9 @@ namespace FinalInferno{
 
             // Coloca a imagem de fundo da batalha
             GameObject go = GameObject.Find("BackgroundImage");
-            if(go && BGImage){
+            if (go && BGImage) {
                 UnityEngine.UI.Image img = go.GetComponent<UnityEngine.UI.Image>();
-                if(img){
+                if (img) {
                     img.sprite = BGImage;
                 }
             }
@@ -149,20 +150,21 @@ namespace FinalInferno{
 
             // Se não houver música, deixa a música padrão que está configurada
             StaticReferences.BGM.Stop();
-            if(battleBGM != null)
+            if (battleBGM != null) {
                 StaticReferences.BGM.PlaySong(battleBGM);
-            else
+            } else {
                 StaticReferences.BGM.Resume();
+            }
 
             battleBGM = null;
             SceneManager.sceneLoaded -= OnBattleLoad;
         }
-        public static void OnMainMenuLoad(Scene map, LoadSceneMode mode){
+        public static void OnMainMenuLoad(Scene map, LoadSceneMode mode) {
             StaticReferences.BGM.PlaySong(StaticReferences.MainMenuBGM);
             SceneManager.sceneLoaded -= OnMainMenuLoad;
         }
         public static void OnMapLoad(Scene map, LoadSceneMode mode) {
-            if(updatePositions){
+            if (updatePositions) {
                 // Desativa o calculo de encontrar batalhas para "teleportar" os personagens
                 RECalculator.encountersEnabled = false;
                 // Pegar a informação da posição dos personagens pelo SO da party
@@ -173,11 +175,11 @@ namespace FinalInferno{
             Party.Instance.currentMap = SceneManager.GetActiveScene().name;
             SceneManager.sceneLoaded -= OnMapLoad;
         }
-        public static void UnlockMovement(){
+        public static void UnlockMovement() {
             CharacterOW.PartyCanMove = true;
             onSceneLoad -= UnlockMovement;
         }
-        public static void StartDialogue(){
+        public static void StartDialogue() {
             Fog.Dialogue.Agent agent = CharacterOW.MainOWCharacter?.GetComponent<Fog.Dialogue.Agent>();
             Fog.Dialogue.DialogueHandler.instance.StartDialogue(cutsceneDialogue);
             cutsceneDialogue = null;

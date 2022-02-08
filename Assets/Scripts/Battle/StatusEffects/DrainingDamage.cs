@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace FinalInferno{
+namespace FinalInferno {
     public class DrainingDamage : StatusEffect {
-        public override StatusEffectVisuals VFXID { get => StatusEffectVisuals.DrainingDamage; }
-        public override StatusType Type { get{ return StatusType.Buff; } }
-        public override float Value { get{ return dmgValue; } }
+        public override StatusEffectVisuals VFXID => StatusEffectVisuals.DrainingDamage;
+        public override StatusType Type => StatusType.Buff;
+        public override float Value => dmgValue;
         private int dmgValue;
         private float multiplier;
         private bool doubleEdged;
@@ -16,8 +14,10 @@ namespace FinalInferno{
             // src é quem drena, trgt é quem é drenado
             // Isso conta como um buff que trgt aplica em src mesmo que src cause a aplicação do buff
             // Target então dever ser src e Source deve ser trgt
-            if(dur < 0)
+            if (dur < 0) {
                 dur = int.MinValue;
+            }
+
             Duration = dur;
             TurnsLeft = Duration;
             Target = src;
@@ -29,30 +29,34 @@ namespace FinalInferno{
             Failed = !Apply(force);
         }
 
-        public override void CopyTo(BattleUnit target, float modifier = 1.0f){
+        public override void CopyTo(BattleUnit target, float modifier = 1.0f) {
             target.AddEffect(new DrainingDamage(target, Source, multiplier * modifier, Duration), true);
         }
 
-        public override void Amplify(float modifier){
+        public override void Amplify(float modifier) {
             Target.curDmg -= dmgValue;
             dmgValue = Mathf.Max(Mathf.FloorToInt(modifier * dmgValue), 1);
             Apply(true);
         }
 
         public override bool Apply(bool force = false) {
-            if(!base.Apply(force))
+            if (!base.Apply(force)) {
                 return false;
+            }
+
             Target.curDmg += dmgValue;
             return true;
         }
 
         public override void Remove() {
-            if(Source.CurHP > 0 || !isPermanent){
+            if (Source.CurHP > 0 || !isPermanent) {
                 Target.curDmg -= dmgValue;
-                if(doubleEdged && Source.CurHP > 0){
+                if (doubleEdged && Source.CurHP > 0) {
                     // Remove o debuff que foi aplicado quando começou a drenar o dano, caso ainda exista
                     DamageDrained myDebuff = (DamageDrained)Source.effects.Find(debuff => (debuff.GetType() == typeof(DamageDrained) && debuff.Source == Target && debuff.Target == Source));
-                    if(myDebuff != null) myDebuff.Remove();
+                    if (myDebuff != null) {
+                        myDebuff.Remove();
+                    }
 
                     // Aplica o dreno de dano ao contrario
                     Source.AddEffect(new DrainingDamage(Source, Target, multiplier, Duration));
@@ -62,7 +66,7 @@ namespace FinalInferno{
             base.Remove();
         }
 
-        public override void ForceRemove(){
+        public override void ForceRemove() {
             Target.curDmg -= dmgValue;
             base.Remove();
         }

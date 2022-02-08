@@ -1,12 +1,10 @@
-﻿using UnityEngine;
-using UnityEditor;
+﻿using UnityEditor;
+using UnityEngine;
 
-namespace RotaryHeart.Lib.SerializableDictionary
-{
+namespace RotaryHeart.Lib.SerializableDictionary {
 #if UNITY_EDITOR
-    public class SupportWindow : EditorWindow
-    {
-        int ToolBarIndex;
+    public class SupportWindow : EditorWindow {
+        private int ToolBarIndex;
 
         private GUIContent assetName;
         private GUIContent support;
@@ -20,8 +18,7 @@ namespace RotaryHeart.Lib.SerializableDictionary
         private GUIStyle ReviewBanner;
 
         [MenuItem("Tools/Rotary Heart/Serializable Dictionary/About")]
-        public static void ShowWindow()
-        {
+        public static void ShowWindow() {
             SupportWindow myWindow = ScriptableObject.CreateInstance<SupportWindow>();
             myWindow.ShowUtility();
             myWindow.titleContent = new GUIContent("About");
@@ -34,29 +31,24 @@ namespace RotaryHeart.Lib.SerializableDictionary
             myWindow.labelStyle = new GUIStyle(EditorStyles.label);
             myWindow.labelStyle.richText = true;
 
-            myWindow.PublisherNameStyle = new GUIStyle()
-            {
+            myWindow.PublisherNameStyle = new GUIStyle() {
                 alignment = TextAnchor.MiddleLeft,
                 richText = true
             };
-            myWindow.ToolBarStyle = new GUIStyle("LargeButtonMid")
-            {
+            myWindow.ToolBarStyle = new GUIStyle("LargeButtonMid") {
                 alignment = TextAnchor.MiddleLeft,
                 richText = true
             };
-            myWindow.GreyText = new GUIStyle(EditorStyles.centeredGreyMiniLabel)
-            {
+            myWindow.GreyText = new GUIStyle(EditorStyles.centeredGreyMiniLabel) {
                 alignment = TextAnchor.MiddleLeft
             };
-            myWindow.ReviewBanner = new GUIStyle("TL SelectionButton")
-            {
+            myWindow.ReviewBanner = new GUIStyle("TL SelectionButton") {
                 alignment = TextAnchor.MiddleCenter,
                 richText = true
             };
         }
 
-        void OnGUI()
-        {
+        private void OnGUI() {
             maxSize = minSize = new Vector2(300, 400);
 
             EditorGUILayout.Space();
@@ -69,20 +61,21 @@ namespace RotaryHeart.Lib.SerializableDictionary
 
             ToolBarIndex = GUILayout.Toolbar(ToolBarIndex, toolbarOptions, ToolBarStyle, GUILayout.Height(50));
 
-            switch (ToolBarIndex)
-            {
+            switch (ToolBarIndex) {
                 case 0:
                     EditorGUILayout.Space();
 
-                    if (GUILayout.Button("Support Forum"))
+                    if (GUILayout.Button("Support Forum")) {
                         Application.OpenURL("https://forum.unity.com/threads/released-serializable-dictionary.518178/");
+                    }
 
                     EditorGUILayout.LabelField("Talk with others.", GreyText);
 
                     EditorGUILayout.Space();
 
-                    if (GUILayout.Button("Wiki"))
+                    if (GUILayout.Button("Wiki")) {
                         Application.OpenURL("https://www.rotaryheart.com/Wiki.html");
+                    }
 
                     EditorGUILayout.LabelField("Detailed code documentation.", GreyText);
                     break;
@@ -90,29 +83,28 @@ namespace RotaryHeart.Lib.SerializableDictionary
                 case 1:
                     EditorGUILayout.Space();
 
-                    if (GUILayout.Button("Email"))
+                    if (GUILayout.Button("Email")) {
                         Application.OpenURL("mailto:ma.rotaryheart@gmail.com?");
+                    }
 
                     EditorGUILayout.LabelField("Get in touch.", GreyText);
                     break;
-                default: break;
+                default:
+                    break;
             }
 
             GUILayout.FlexibleSpace();
-            if (GUILayout.Button(review, ReviewBanner, GUILayout.Height(30)))
+            if (GUILayout.Button(review, ReviewBanner, GUILayout.Height(30))) {
                 Application.OpenURL("https://www.assetstore.unity3d.com/en/#!/account/downloads/search=Serialized%20Dictionary");
+            }
         }
 
-        GUIContent IconContent(string text, string icon, string tooltip)
-        {
+        private GUIContent IconContent(string text, string icon, string tooltip) {
             GUIContent content;
 
-            if (string.IsNullOrEmpty(icon))
-            {
+            if (string.IsNullOrEmpty(icon)) {
                 content = new GUIContent();
-            }
-            else
-            {
+            } else {
                 content = EditorGUIUtility.IconContent(icon);
             }
 

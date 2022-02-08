@@ -1,24 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace FinalInferno.UI.AII
-{
+namespace FinalInferno.UI.AII {
     /// <summary>
 	/// Componente que implementa um sistema de itens que podem ser selecionados por atalhos do teclado, 
     /// como se fosse um eixo.
 	/// </summary>
-    public class AxisInteractableItem : MonoBehaviour
-    {
+    public class AxisInteractableItem : MonoBehaviour {
         /// <summary>
         /// Referência que se mostra visível quando o item está ativo.
         /// </summary>
         [SerializeField] private UIBehaviour activeReference = null;
         public UIBehaviour ActiveReference {
             get => activeReference;
-            set{
-                if(activeReference == null){
+            set {
+                if (activeReference == null) {
                     activeReference = value;
                 }
             }
@@ -64,8 +60,7 @@ namespace FinalInferno.UI.AII
         /// </summary>
         public AxisInteractableItem upItem;
 
-        public virtual void Awake()
-        {
+        public virtual void Awake() {
             OnEnter += EnableReference;
             OnExit += DisableReference;
         }
@@ -73,33 +68,35 @@ namespace FinalInferno.UI.AII
         /// <summary>
         /// Ativa o item.
         /// </summary>
-        public void Enter()
-        {
-            if (OnEnter != null) OnEnter();
+        public void Enter() {
+            if (OnEnter != null) {
+                OnEnter();
+            }
         }
 
         /// <summary>
         /// Desativa o item.
         /// </summary>
-        public void Exit()
-        {
-            if (OnExit != null) OnExit();
+        public void Exit() {
+            if (OnExit != null) {
+                OnExit();
+            }
         }
 
         /// <summary>
         /// Executa a ação do item.
         /// </summary>
-        public void Act()
-        {
-            if (OnAct != null) OnAct();
+        public void Act() {
+            if (OnAct != null) {
+                OnAct();
+            }
         }
 
         /// <summary>
         /// Ativa a referência do item.
         /// </summary>
-        public void EnableReference()
-        {
-            if(activeReference){
+        public void EnableReference() {
+            if (activeReference) {
                 activeReference.enabled = true;
             }
         }
@@ -107,9 +104,8 @@ namespace FinalInferno.UI.AII
         /// <summary>
         /// Desativa a referência do item.
         /// </summary>
-        public void DisableReference()
-        {
-            if(activeReference){
+        public void DisableReference() {
+            if (activeReference) {
                 activeReference.enabled = false;
             }
         }

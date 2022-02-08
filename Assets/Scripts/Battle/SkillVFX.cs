@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using FinalInferno.UI.Battle;
+using UnityEngine;
 
-namespace FinalInferno{
+namespace FinalInferno {
     [RequireComponent(typeof(Animator)), RequireComponent(typeof(SpriteRenderer))]
-    public class SkillVFX : MonoBehaviour
-    {
-        public enum TargetPosition{
+    public class SkillVFX : MonoBehaviour {
+        public enum TargetPosition {
             Default = 0,
             Feet,
             Torso,
@@ -23,22 +21,22 @@ namespace FinalInferno{
         private AudioSource src = null;
         [HideInInspector] public bool forceCallback = false;
 
-        void Awake(){
+        private void Awake() {
             // Toca um efeito sonoro por skill
             src = GetComponent<AudioSource>();
-            if(src != null && !effectsPlaying.Contains(src.clip)){
+            if (src != null && !effectsPlaying.Contains(src.clip)) {
                 effectsPlaying.Add(src.clip);
                 src.Play();
-            }else if(src != null){
+            } else if (src != null) {
                 Destroy(src);
                 src = null;
             }
         }
 
-        public void SetTarget(BattleUnit unit, bool isCallback = false){
+        public void SetTarget(BattleUnit unit, bool isCallback = false) {
             forceCallback = isCallback;
             GetComponent<SpriteRenderer>().sortingOrder = unit.GetComponent<SpriteRenderer>().sortingOrder + 2;
-            switch(spawnPosition){
+            switch (spawnPosition) {
                 case TargetPosition.Default:
                     transform.localPosition = unit.DefaultSkillPosition;
                     break;
@@ -57,38 +55,37 @@ namespace FinalInferno{
             }
         }
 
-        void UseSkill(){
-            if(!forceCallback){
+        private void UseSkill() {
+            if (!forceCallback) {
                 // Debug.Log("Chamou o use skill pela animação; " + "Object: " + gameObject.name);
                 BattleSkillManager.currentSkill.Use(BattleSkillManager.currentUser, transform.parent.GetComponent<BattleUnit>());
             }
         }
 
-        private void EndAnimation(){
-            foreach(GameObject particle in particleList){
-                if(particle != null){
+        private void EndAnimation() {
+            foreach (GameObject particle in particleList) {
+                if (particle != null) {
                     Destroy(particle);
                 }
             }
 
-            if(src != null){
+            if (src != null) {
                 effectsPlaying.Remove(src.clip);
             }
 
             Destroy(gameObject);
         }
 
-        void DestroySkillObject()
-        {
-            if(!forceCallback){
+        private void DestroySkillObject() {
+            if (!forceCallback) {
                 counter++;
-                if(counter >= nTargets){
+                if (counter >= nTargets) {
                     counter = 0;
                     nTargets = -1;
 
                     // Chama o callback de quando se usa a skill
                     // O usuario atual esta salvo como current user e os alvos da ultima skill estao em currenttargets
-                    if(BattleSkillManager.currentUser.OnSkillUsed != null){
+                    if (BattleSkillManager.currentUser.OnSkillUsed != null) {
                         BattleSkillManager.currentUser.OnSkillUsed(BattleSkillManager.currentUser, BattleManager.instance.battleUnits);
                     }
 
@@ -99,12 +96,11 @@ namespace FinalInferno{
             EndAnimation();
         }
 
-        void CreateParticles(GameObject particles)
-        {
-            GameObject particle = Instantiate(particles, this.transform.position, this.transform.rotation, this.transform);
+        private void CreateParticles(GameObject particles) {
+            GameObject particle = Instantiate(particles, transform.position, transform.rotation, transform);
             particleList.Add(particle);
             ParticleSystemRenderer renderer = particle?.GetComponent<ParticleSystemRenderer>();
-            if(renderer){
+            if (renderer) {
                 renderer.sortingLayerID = GetComponent<SpriteRenderer>().sortingLayerID;
                 renderer.sortingLayerName = GetComponent<SpriteRenderer>().sortingLayerName;
                 renderer.sortingOrder = GetComponent<SpriteRenderer>().sortingOrder;

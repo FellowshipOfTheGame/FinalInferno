@@ -1,16 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using FinalInferno.UI.Battle.SkillMenu;
 using UnityEngine;
-using FinalInferno.UI.Battle.SkillMenu;
 
-namespace FinalInferno.UI.FSM
-{
+namespace FinalInferno.UI.FSM {
     /// <summary>
     /// Ação que carrega a lista de skills.
     /// </summary>
     [CreateAssetMenu(menuName = "BattleUI SM/Actions/Load Skill List")]
-    public class LoadSkillListAction : ComponentRequester
-    {
+    public class LoadSkillListAction : ComponentRequester {
         /// <summary>
         /// Gerenciador das informações do personagem.
         /// </summary>
@@ -26,8 +22,7 @@ namespace FinalInferno.UI.FSM
         /// Atualiza a lista de skills.
         /// </summary>
         /// <param name="controller"> O controlador da máquina de estados. </param>
-        public override void Act(StateController controller)
-        {
+        public override void Act(StateController controller) {
             skillList.UpdateSkillsContent(info.GetCurrentHeroSkills());
         }
 
@@ -36,14 +31,16 @@ namespace FinalInferno.UI.FSM
         /// Pede os componentes HeroInfo e SkillList aos respectivos responsáveis.
         /// </summary>
         /// <param name="provider"> Game object que provê o componente desejado. </param>
-        public override void RequestComponent(GameObject provider)
-        {
+        public override void RequestComponent(GameObject provider) {
             HeroInfo newInfo = provider.GetComponent<HeroInfo>();
             SkillList newSkillList = provider.GetComponent<SkillList>();
-            if (newInfo != null)
+            if (newInfo != null) {
                 info = newInfo;
-            if (newSkillList != null)
+            }
+
+            if (newSkillList != null) {
                 skillList = newSkillList;
+            }
         }
     }
 

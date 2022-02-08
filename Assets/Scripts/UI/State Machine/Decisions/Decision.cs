@@ -1,14 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace FinalInferno.UI.FSM
-{
+namespace FinalInferno.UI.FSM {
     /// <summary>
     /// Componente base para as decisões.
     /// </summary>
-    public abstract class Decision : ScriptableObject
-    {
+    public abstract class Decision : ScriptableObject {
         /// <summary>
         /// Verifica se a decisão ativou.
         /// </summary>

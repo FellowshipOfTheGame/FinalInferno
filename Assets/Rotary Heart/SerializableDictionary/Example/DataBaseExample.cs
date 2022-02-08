@@ -1,13 +1,10 @@
 using RotaryHeart.Lib.SerializableDictionary;
 using UnityEngine;
 
-namespace RotaryHeart.Lib
-{
+namespace RotaryHeart.Lib {
     [CreateAssetMenu(fileName = "DataBase.asset", menuName = "Data Base")]
-    public class DataBaseExample : ScriptableObject
-    {
-        public enum EnumExample
-        {
+    public class DataBaseExample : ScriptableObject {
+        public enum EnumExample {
             None,
             Value1,
             Value2,
@@ -18,16 +15,14 @@ namespace RotaryHeart.Lib
         }
 
         [System.Serializable]
-        public class ChildTest
-        {
+        public class ChildTest {
             public Color myChildColor;
             public bool myChildBool;
             public Gradient test;
         }
 
         [System.Serializable]
-        public class ClassTest
-        {
+        public class ClassTest {
             public string id;
             public float test;
             public string test2;
@@ -36,36 +31,45 @@ namespace RotaryHeart.Lib
         }
 
         [System.Serializable]
-        public class ArrayTest
-        {
+        public class ArrayTest {
             public int[] myArray;
         }
 
         [System.Serializable]
-        public class AdvancedGenericClass
-        {
+        public class AdvancedGenericClass {
             [Range(0, 100)]
             public float value;
 
-            public bool Equals(AdvancedGenericClass other)
-            {
-                if (ReferenceEquals(null, other)) return false;
-                if (ReferenceEquals(this, other)) return true;
+            public bool Equals(AdvancedGenericClass other) {
+                if (ReferenceEquals(null, other)) {
+                    return false;
+                }
+
+                if (ReferenceEquals(this, other)) {
+                    return true;
+                }
+
                 return other.value == value;
             }
 
-            public override bool Equals(object obj)
-            {
-                if (ReferenceEquals(null, obj)) return false;
-                if (ReferenceEquals(this, obj)) return true;
-                if (obj.GetType() != typeof(AdvancedGenericClass)) return false;
+            public override bool Equals(object obj) {
+                if (ReferenceEquals(null, obj)) {
+                    return false;
+                }
+
+                if (ReferenceEquals(this, obj)) {
+                    return true;
+                }
+
+                if (obj.GetType() != typeof(AdvancedGenericClass)) {
+                    return false;
+                }
+
                 return Equals((AdvancedGenericClass)obj);
             }
 
-            public override int GetHashCode()
-            {
-                unchecked
-                {
+            public override int GetHashCode() {
+                unchecked {
                     return value.GetHashCode();
                 }
             }

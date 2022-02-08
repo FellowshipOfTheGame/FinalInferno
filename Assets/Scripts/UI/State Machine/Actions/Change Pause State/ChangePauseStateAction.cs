@@ -1,15 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
+﻿using UnityEngine;
 
-namespace FinalInferno.UI.FSM
-{
+namespace FinalInferno.UI.FSM {
     [CreateAssetMenu(menuName = "BattleUI SM/Actions/Change Pause State")]
-    public class ChangePauseStateAction : Action
-    {
-        public override void Act(StateController controller)
-        {
+    public class ChangePauseStateAction : Action {
+        public override void Act(StateController controller) {
             PauseMenu.Instance.ChangePauseState();
         }
 

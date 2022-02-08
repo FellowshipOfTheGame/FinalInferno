@@ -1,16 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
-namespace FinalInferno{
+namespace FinalInferno {
     //engloba cada efeitos que uma "skill" pode causar]
-    public abstract class SkillEffect : ScriptableObject{
+    public abstract class SkillEffect : ScriptableObject {
 
         [SerializeField] private string displayName;
-        public string DisplayName { get => displayName; }
+        public string DisplayName => displayName;
         [SerializeField] private Sprite icon;
-        public Sprite Icon { get{ return icon; } }
+        public Sprite Icon => icon;
         public abstract string Description { get; }
         public float value1, value2;
 

@@ -1,14 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace FinalInferno{
+namespace FinalInferno {
     [CreateAssetMenu(fileName = "NewEndQuestDialogue", menuName = "ScriptableObject/DialogueSystem/FinalInferno/EndQuestDialogue")]
-    public class DialogueEndQuest : DialogueEventTrigger
-    {
+    public class DialogueEndQuest : DialogueEventTrigger {
         [SerializeField] private Quest questToEnd;
 
-        public override void AfterDialogue(){
+        public override void AfterDialogue() {
             base.AfterDialogue();
             questToEnd.CompleteQuest();
         }

@@ -1,13 +1,11 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Fog.Dialogue{
+namespace Fog.Dialogue {
     // Editor class is in ScrollPanel.cs file, tried to put it here, didn't work
     [RequireComponent(typeof(Mask)), RequireComponent(typeof(Image)), RequireComponent(typeof(RectTransform))]
-    public class DialogueScrollPanel : ScrollRect
-    {
+    public class DialogueScrollPanel : ScrollRect {
         public bool smoothScrolling;
         public float scrollSpeed;
         [SerializeField] private GameObject scrollUpIndicator = null;
@@ -16,7 +14,7 @@ namespace Fog.Dialogue{
 
         // To do: Change this so it also works with horizontal scrolling
 
-        protected new void Reset(){
+        protected new void Reset() {
             smoothScrolling = false;
             scrollSpeed = 10f;
             content = null;
@@ -35,11 +33,11 @@ namespace Fog.Dialogue{
             onValueChanged = null;
         }
 
-        protected new void Start(){
+        protected new void Start() {
             base.Start();
         }
 
-        public float NormalizedTopPosition(RectTransform rect){
+        public float NormalizedTopPosition(RectTransform rect) {
             float contentHeight = content.rect.height;
             float viewportHeight = viewport.rect.height;
 
@@ -54,10 +52,10 @@ namespace Fog.Dialogue{
             return Mathf.Clamp((distance - viewportHeight) / (contentHeight - viewportHeight), 0f, 1f);
         }
 
-        public float NormalizedBottomPosition(RectTransform rect){
+        public float NormalizedBottomPosition(RectTransform rect) {
             float contentHeight = content.rect.height;
             float viewportHeight = viewport.rect.height;
-            
+
             Vector3[] corners = new Vector3[4];
             content.GetWorldCorners(corners);
             float contentBottom = corners[0].y;
@@ -69,120 +67,122 @@ namespace Fog.Dialogue{
             return Mathf.Clamp((distance) / (contentHeight - viewportHeight), 0f, 1f);
         }
 
-        public void Scroll(float axis){
+        public void Scroll(float axis) {
             RectTransform rectTransform = transform as RectTransform;
             verticalNormalizedPosition = Mathf.Clamp(verticalNormalizedPosition + axis * scrollSpeed * (rectTransform.rect.height / content.rect.height), 0f, 1f);
         }
 
-        public void JumpToEnd(){
-            if(smoothScrolling){
+        public void JumpToEnd() {
+            if (smoothScrolling) {
                 StopAllCoroutines();
             }
             Canvas.ForceUpdateCanvases();
             verticalNormalizedPosition = 0f;
         }
 
-        public void JumpToStart(){
-            if(smoothScrolling){
+        public void JumpToStart() {
+            if (smoothScrolling) {
                 StopAllCoroutines();
             }
             Canvas.ForceUpdateCanvases();
             verticalNormalizedPosition = 1f;
         }
 
-        public void JumpToPosition(float targetNormalPosition){
-            if(smoothScrolling){
+        public void JumpToPosition(float targetNormalPosition) {
+            if (smoothScrolling) {
                 StopAllCoroutines();
             }
             Canvas.ForceUpdateCanvases();
             verticalNormalizedPosition = Mathf.Clamp(targetNormalPosition, 0f, 1f);
         }
 
-        public void ScrollToEnd(){
-            if(smoothScrolling){
+        public void ScrollToEnd() {
+            if (smoothScrolling) {
                 StopAllCoroutines();
                 StartCoroutine(ScrollingDown());
-            }else
+            } else {
                 JumpToEnd();
+            }
         }
 
-        public void ScrollToStart(){
-            if(smoothScrolling){
+        public void ScrollToStart() {
+            if (smoothScrolling) {
                 StopAllCoroutines();
                 StartCoroutine(ScrollingUp());
-            }else
+            } else {
                 JumpToStart();
+            }
         }
 
-        public void ScrollToPosition(float targetNormalPosition){
+        public void ScrollToPosition(float targetNormalPosition) {
             targetNormalPosition = Mathf.Clamp(targetNormalPosition, 0f, 1f);
-            if(smoothScrolling){
-                if(targetNormalPosition < verticalNormalizedPosition - Mathf.Epsilon){
+            if (smoothScrolling) {
+                if (targetNormalPosition < verticalNormalizedPosition - Mathf.Epsilon) {
                     StopAllCoroutines();
                     StartCoroutine(ScrollingDown(targetNormalPosition));
-                }else if(targetNormalPosition > verticalNormalizedPosition + Mathf.Epsilon){
+                } else if (targetNormalPosition > verticalNormalizedPosition + Mathf.Epsilon) {
                     StopAllCoroutines();
                     StartCoroutine(ScrollingUp(targetNormalPosition));
                 }
-            }else{
+            } else {
                 JumpToPosition(targetNormalPosition);
             }
         }
 
-        private IEnumerator ScrollingUp(float targetPosition = 1f){
+        private IEnumerator ScrollingUp(float targetPosition = 1f) {
             yield return new WaitForEndOfFrame();
-            while(verticalNormalizedPosition < (targetPosition - Mathf.Epsilon)){
+            while (verticalNormalizedPosition < (targetPosition - Mathf.Epsilon)) {
                 // Canvas.ForceUpdateCanvases();
-                verticalNormalizedPosition += (Time.deltaTime * scrollSpeed * 10)/(content.rect.height);
+                verticalNormalizedPosition += (Time.deltaTime * scrollSpeed * 10) / (content.rect.height);
                 yield return new WaitForEndOfFrame();
             }
             verticalNormalizedPosition = 1f;
             velocity = Vector2.zero;
         }
 
-        private IEnumerator ScrollingDown(float targetPosition = 0f){
+        private IEnumerator ScrollingDown(float targetPosition = 0f) {
             yield return new WaitForEndOfFrame();
-            while(verticalNormalizedPosition > (targetPosition + Mathf.Epsilon)){
+            while (verticalNormalizedPosition > (targetPosition + Mathf.Epsilon)) {
                 // Canvas.ForceUpdateCanvases();
-                verticalNormalizedPosition -= (Time.deltaTime * scrollSpeed * 10)/(content.rect.height);
+                verticalNormalizedPosition -= (Time.deltaTime * scrollSpeed * 10) / (content.rect.height);
                 yield return new WaitForEndOfFrame();
             }
             verticalNormalizedPosition = 0f;
             velocity = Vector2.zero;
         }
 
-        protected override void OnEnable(){
+        protected override void OnEnable() {
             base.OnEnable();
-            if(skipIndicator != null){
+            if (skipIndicator != null) {
                 skipIndicator.SetActive(true);
             }
-            if(scrollUpIndicator != null){
+            if (scrollUpIndicator != null) {
                 scrollUpIndicator.SetActive(false);
             }
-            if(scrollDownIndicator != null){
+            if (scrollDownIndicator != null) {
                 scrollDownIndicator.SetActive(false);
             }
         }
 
-        protected override void OnDisable(){
-            if(skipIndicator != null){
+        protected override void OnDisable() {
+            if (skipIndicator != null) {
                 skipIndicator.SetActive(false);
             }
-            if(scrollUpIndicator != null){
+            if (scrollUpIndicator != null) {
                 scrollUpIndicator.SetActive(false);
             }
-            if(scrollDownIndicator != null){
+            if (scrollDownIndicator != null) {
                 scrollDownIndicator.SetActive(false);
             }
             base.OnDisable();
         }
 
-        protected override void LateUpdate(){
+        protected override void LateUpdate() {
             base.LateUpdate();
-            if(scrollUpIndicator != null){
+            if (scrollUpIndicator != null) {
                 scrollUpIndicator.SetActive((verticalNormalizedPosition < (1f - float.Epsilon)) && (content.rect.height - viewport.rect.height > float.Epsilon));
             }
-            if(scrollDownIndicator != null){
+            if (scrollDownIndicator != null) {
                 scrollDownIndicator.SetActive((verticalNormalizedPosition > float.Epsilon) && (content.rect.height - viewport.rect.height > float.Epsilon));
             }
         }

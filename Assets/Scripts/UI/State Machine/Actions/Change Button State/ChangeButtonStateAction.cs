@@ -1,16 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace FinalInferno.UI.FSM
-{
+namespace FinalInferno.UI.FSM {
     /// <summary>
     /// Ação que muda o estado de um botão.
     /// </summary>
     [CreateAssetMenu(menuName = "BattleUI SM/Actions/Change Button State")]
-    public class ChangeButtonStateAction : ComponentRequester
-    {
+    public class ChangeButtonStateAction : ComponentRequester {
         /// <summary>
         /// Referencia ao botão.
         /// </summary>
@@ -21,8 +17,7 @@ namespace FinalInferno.UI.FSM
         /// Muda o estado do botão.
         /// </summary>
         /// <param name="controller"> O controlador da máquina de estados. </param>
-        public override void Act(StateController controller)
-        {
+        public override void Act(StateController controller) {
             button.interactable = !button.interactable;
         }
 
@@ -32,8 +27,7 @@ namespace FinalInferno.UI.FSM
         /// Requisita um botão.
         /// </summary>
         /// <param name="provider"> Game object que provê o componente desejado. </param>
-        public override void RequestComponent(GameObject provider)
-        {
+        public override void RequestComponent(GameObject provider) {
             button = provider.GetComponent<Button>();
         }
 

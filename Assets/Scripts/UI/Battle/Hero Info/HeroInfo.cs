@@ -1,15 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FinalInferno.UI.Battle.SkillMenu
-{
+namespace FinalInferno.UI.Battle.SkillMenu {
     /// <summary>
     /// Classe responsável por gerenciar as informações do personagem no menu de skills.
     /// </summary>
-    public class HeroInfo : MonoBehaviour
-    {
+    public class HeroInfo : MonoBehaviour {
         /// <summary>
         /// Referência para o heroi que está em seu turno.
         /// </summary>
@@ -89,9 +86,8 @@ namespace FinalInferno.UI.Battle.SkillMenu
         /// Carrega as informações do personagem no menu.
         /// </summary>
         /// <param name="currentUnit"> Referência ao heroi que está em seu turno. </param>
-        public void LoadInfo(BattleUnit currentUnit)
-        {
-            currentHero = (Hero) currentUnit.Unit;
+        public void LoadInfo(BattleUnit currentUnit) {
+            currentHero = (Hero)currentUnit.Unit;
             activeSkills = new List<Skill>(currentUnit.ActiveSkills);
 
             nameText.text = currentHero.name.ToUpper();
@@ -104,77 +100,62 @@ namespace FinalInferno.UI.Battle.SkillMenu
             hpText.text = currentUnit.CurHP + "/" + currentUnit.MaxHP;
 
             damageText.text = currentUnit.Unit.baseDmg.ToString();
-            if (currentUnit.curDmg > currentUnit.Unit.baseDmg)
-            {
+            if (currentUnit.curDmg > currentUnit.Unit.baseDmg) {
                 alteredDamageText.text = "+" + (currentUnit.curDmg - currentUnit.Unit.baseDmg).ToString();
                 alteredDamageText.color = positiveColor;
-            }
-            else if (currentUnit.curDmg < currentUnit.Unit.baseDmg)
-            {
+            } else if (currentUnit.curDmg < currentUnit.Unit.baseDmg) {
                 alteredDamageText.text = "" + (currentUnit.curDmg - currentUnit.Unit.baseDmg).ToString();
                 alteredDamageText.color = negativeColor;
-            }
-            else
+            } else {
                 alteredDamageText.text = "";
-                
-            resistanceText.text = currentUnit.Unit.baseDef.ToString();
-            if (currentUnit.curDef > currentUnit.Unit.baseDef)
-            {
-                alteredResistanceText.text = "+" +(currentUnit.curDef - currentUnit.Unit.baseDef).ToString();
-                alteredResistanceText.color = positiveColor;
             }
-            else if (currentUnit.curDef < currentUnit.Unit.baseDef)
-            {
+
+            resistanceText.text = currentUnit.Unit.baseDef.ToString();
+            if (currentUnit.curDef > currentUnit.Unit.baseDef) {
+                alteredResistanceText.text = "+" + (currentUnit.curDef - currentUnit.Unit.baseDef).ToString();
+                alteredResistanceText.color = positiveColor;
+            } else if (currentUnit.curDef < currentUnit.Unit.baseDef) {
                 alteredResistanceText.text = "" + (currentUnit.curDef - currentUnit.Unit.baseDef).ToString();
                 alteredResistanceText.color = negativeColor;
-            }
-            else
+            } else {
                 alteredResistanceText.text = "";
+            }
 
             magicResistanceText.text = currentUnit.Unit.baseMagicDef.ToString();
-            if (currentUnit.curMagicDef > currentUnit.Unit.baseMagicDef)
-            {
+            if (currentUnit.curMagicDef > currentUnit.Unit.baseMagicDef) {
                 alteredMagicResistanceText.text = "+" + (currentUnit.curMagicDef - currentUnit.Unit.baseMagicDef).ToString();
                 alteredMagicResistanceText.color = positiveColor;
-            }
-            else if (currentUnit.curMagicDef < currentUnit.Unit.baseMagicDef)
-            {
+            } else if (currentUnit.curMagicDef < currentUnit.Unit.baseMagicDef) {
                 alteredMagicResistanceText.text = "" + (currentUnit.curMagicDef - currentUnit.Unit.baseMagicDef).ToString();
                 alteredMagicResistanceText.color = negativeColor;
-            }
-            else
+            } else {
                 alteredMagicResistanceText.text = "";
+            }
 
             speedText.text = currentUnit.Unit.baseSpeed.ToString();
-            if (currentUnit.curSpeed > currentUnit.Unit.baseSpeed)
-            {
-                alteredSpeedText.text = "+" +(currentUnit.curSpeed - currentUnit.Unit.baseSpeed).ToString();
+            if (currentUnit.curSpeed > currentUnit.Unit.baseSpeed) {
+                alteredSpeedText.text = "+" + (currentUnit.curSpeed - currentUnit.Unit.baseSpeed).ToString();
                 alteredSpeedText.color = positiveColor;
-            }
-            else if (currentUnit.curSpeed < currentUnit.Unit.baseSpeed)
-            {
+            } else if (currentUnit.curSpeed < currentUnit.Unit.baseSpeed) {
                 alteredSpeedText.text = "" + (currentUnit.curSpeed - currentUnit.Unit.baseSpeed).ToString();
                 alteredSpeedText.color = negativeColor;
-            }
-            else
+            } else {
                 alteredSpeedText.text = "";
-
+            }
         }
 
         /// <summary>
         /// Retorna a lista de skills do heroi que está em seu turno.
         /// </summary>
-        public List<Skill> GetCurrentHeroSkills()
-        {
+        public List<Skill> GetCurrentHeroSkills() {
             return activeSkills;
         }
 
-        public void ChangeAIISkillsList()
-        {
+        public void ChangeAIISkillsList() {
             skillList.ActivateManager();
         }
 
-        public void ChangeAIIButtons(){
+        public void ChangeAIIButtons() {
             buttonAIIManager.Active();
         }
     }

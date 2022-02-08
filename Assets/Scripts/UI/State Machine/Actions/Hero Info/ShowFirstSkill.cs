@@ -1,30 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using FinalInferno.UI.Battle.SkillMenu;
 using UnityEngine;
-using FinalInferno.UI.Battle.SkillMenu;
 
-namespace FinalInferno.UI.FSM
-{
+namespace FinalInferno.UI.FSM {
     [CreateAssetMenu(menuName = "BattleUI SM/Actions/Show First Skill")]
-    public class ShowFirstSkill : ComponentRequester
-    {
+    public class ShowFirstSkill : ComponentRequester {
         private SkillList skillListManager;
 
-        public override void Act(StateController controller){
-            if(skillListManager != null){
+        public override void Act(StateController controller) {
+            if (skillListManager != null) {
                 Skill firstSkill = skillListManager.GetFirstSkill();
-                if(firstSkill != null){
+                if (firstSkill != null) {
                     skillListManager.UpdateSkillDescription(firstSkill);
                     FinalInferno.UI.Battle.BattleSkillManager.currentSkill = firstSkill;
-                }else{
+                } else {
                     Debug.LogError($"firstSkill null in object {name} of type ShowFirstSkill");
                 }
-            }else{
+            } else {
                 Debug.LogError($"skillListManager null in object {name} of type ShowFirstSkill");
             }
         }
 
-        public override void RequestComponent(GameObject provider){
+        public override void RequestComponent(GameObject provider) {
             skillListManager = provider.GetComponent<SkillList>();
         }
     }

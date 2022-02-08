@@ -1,15 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace FinalInferno.UI.FSM
-{
+namespace FinalInferno.UI.FSM {
     /// <summary>
     /// Decisão baseada se a batalha acabou com vitoria, derrota ou não acabou.
     /// </summary>
     [CreateAssetMenu(menuName = "BattleUI SM/Decisions/End Battle")]
-    public class EndBattleDecision : Decision
-    {
+    public class EndBattleDecision : Decision {
         /// <summary>
         /// Tipo desejado.
         /// </summary>
@@ -19,8 +15,7 @@ namespace FinalInferno.UI.FSM
         /// Verifica se a decisão ativou.
         /// </summary>
         /// <param name="controller"> O controlador da máquina de estados. </param>
-        public override bool Decide(StateController controller)
-        {
+        public override bool Decide(StateController controller) {
             return (BattleManager.instance.CheckEnd() == desiredType);
         }
 
