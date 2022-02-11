@@ -47,6 +47,14 @@ namespace FinalInferno {
         public override int GetHashCode() {
             return (3 * name.GetHashCode() + 5 * flagsNames.GetHashCode() + 7 * flagsTrue.GetHashCode());
         }
+        public void SetQuestFlags(Quest quest) {
+            flagsTrue = 0;
+            ulong bitValue = 1;
+            for (int j = 0; j < quest.EventCount; j++) {
+                flagsTrue |= bitValue * (quest.GetFlag(flagsNames[j]) ? 1 : (ulong)0);
+                bitValue <<= 1;
+            }
+        }
     }
 
 }

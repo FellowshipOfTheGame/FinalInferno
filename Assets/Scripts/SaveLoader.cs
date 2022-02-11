@@ -7,12 +7,7 @@ namespace FinalInferno {
         private static SaveFile saveFile = dataSaver.LoadData();
         public static int SaveSlot { get => saveFile.Slot; set => saveFile.Slot = value; }
         public static bool AutoSave {
-            get {
-                if (saveFile != null) {
-                    return PlayerPrefs.GetString("autosave", "true") == "true";
-                }
-                return false;
-            }
+            get => saveFile != null && PlayerPrefs.GetString("autosave", "true") == "true";
             set {
                 if (saveFile != null) {
                     PlayerPrefs.SetString("autosave", (value ? "true" : "false"));
@@ -21,11 +16,9 @@ namespace FinalInferno {
         }
         public static bool CanSaveGame {
             get {
-                // Verifica se o numero de personagens no overwold é igual à capacidade da party
-                // Consequentemente só vai permitir salvar o jogo no overworld
                 int charCount = 0;
-                for (int i = 0; i < Party.Capacity; i++) {
-                    if (Party.Instance.characters[i].OverworldInstance != null) {
+                foreach (Character character in Party.Instance.characters) {
+                    if (character.OverworldInstance != null) {
                         charCount++;
                     }
                 }
@@ -34,99 +27,58 @@ namespace FinalInferno {
         }
 
         public static SavePreviewInfo[] PreviewAllSlots() {
-            return saveFile.Preview();
+            return saveFile.PreviewAllSlots();
         }
 
-        public static SavePreviewInfo PreviewSlot(int slotNumber) {
-            return saveFile.Preview(slotNumber);
+        public static SavePreviewInfo PreviewSingleSlot(int slotNumber) {
+            return saveFile.PreviewSingleSlot(slotNumber);
         }
 
         public static void SaveGame() {
-            // // Failsafe para garantir que saveFile não seja null
-            // if(saveFile == null)
-            //     saveFile = new SaveFile();
-            // Falha em salvar o jogo caso não esteja numa situação na qual isso é permitido
             if (!CanSaveGame) {
                 Debug.Log("Attempted to save the game when it shouldn't be possible");
                 return;
             }
-            // // Teoricamente não é necessario reler o arquivo, mas faremos isso como medida de segurança,
-            // // assim evitamos que a variavel saveFile tenha sido alterada de alguma maneira em runtime
-            // if(!CheckIntegrity()){
-            //     // BUG: Crashando o jogo no primeiro save, quando o arquivo não existe
-            //     Debug.LogError("Save File has been altered during gameplay");
-            //     Application.Quit();
-            //     return;
-            // }
-            // Avalia a situação atual do jogo e salva todas as informações necessarias
             Debug.Log("Saving game...");
             saveFile.Save();
-            // Escreve as informações no arquivo de save
             dataSaver.SaveData(saveFile);
             Debug.Log("Game saved (...probably)");
         }
 
         public static void LoadGame() {
             if (!saveFile.HasCheckPoint) {
+                Debug.Log("Tried to load empty save file, starting new game instead...");
                 NewGame();
-            } else {
-                ResetGame();
-                // // Teoricamente não é necessario reler o arquivo, mas faremos isso como medida de segurança,
-                // // assim evitamos que a variavel saveFile tenha sido alterada de alguma maneira em runtime
-                // if(!CheckIntegrity()){
-                //     Debug.LogError("Save File has been altered during gameplay");
-                //     Application.Quit();
-                //     return;
-                // }
-                // Aplica a situação do save slot atual nos arquivos do jogo
-                saveFile.Load();
-                // Carrega a nova cena
-                SceneLoader.LoadOWScene(Party.Instance.currentMap, true);
+                return;
             }
+            ResetGame();
+            saveFile.Load();
+            SceneLoader.LoadOWSceneAndPositions(Party.Instance.currentMap);
         }
 
         public static void NewGame() {
-            // // Failsafe para garantir que saveFile não seja null
-            // if(saveFile == null)
-            //     saveFile = new SaveFile();
-            // Reseta todas as informações do jogo para um estado inicial
             ResetGame();
-
             Quest mainQuest = AssetManager.LoadAsset<Quest>("MainQuest");
             mainQuest.StartQuest(true);
-
-            //Debug.Log("Default flag = " + mainQuest.events["Default"]);
-            // Carrega a cena inicial como cutscene
-            SceneLoader.LoadCustscene(StaticReferences.FirstScene, StaticReferences.FirstDialogue);
+            SceneLoader.LoadCustsceneFromMenu(StaticReferences.FirstScene, StaticReferences.FirstDialogue);
         }
 
         public static void StartDemo() {
-            // // Failsafe para garantir que saveFile não seja null
-            // if(saveFile == null)
-            //     saveFile = new SaveFile();
-            // Reseta todas as informações do jogo para um estado inicial
             ResetGame();
-
             Quest mainQuest = AssetManager.LoadAsset<Quest>("AdventurerQuest");
             mainQuest.StartQuest(true);
             mainQuest = AssetManager.LoadAsset<Quest>("MainQuest");
             mainQuest.StartQuest(true);
-
-            //Debug.Log("Default flag = " + mainQuest.events["Default"]);
-            // Carrega a cena inicial como cutscene
-            SceneLoader.LoadOWScene("Demo");
-        }
-
-        private static bool CheckIntegrity() {
-            SaveFile currentSaved = dataSaver.LoadData();
-            return saveFile.Equals(currentSaved);
+            SceneLoader.LoadOWSceneWithDefaultPositions("Demo");
         }
 
         public static void ResetGame() {
             Party.Instance.ResetParty();
+            ResetSettings();
+        }
 
-            // Pega as configurações padrão
-            SaveLoader.AutoSave = true;
+        private static void ResetSettings() {
+            AutoSave = true;
             StaticReferences.VolumeController.ResetValues();
         }
     }

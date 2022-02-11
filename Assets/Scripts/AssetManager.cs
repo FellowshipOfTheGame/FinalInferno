@@ -58,24 +58,19 @@ namespace FinalInferno {
                     string key = (asset is Enemy) ? (asset as Enemy).AssetName : asset.name;
                     try {
                         dict.Add(key, asset);
-                        // Codigo aqui embaixo só executa se não cair no catch
                         asset.Preload();
                     } catch (System.ArgumentException) {
-                        Debug.LogWarning("Asset " + key + " is being added more than once");
+                        Debug.LogWarning($"Asset {key} is being added more than once");
                     }
                 }
             }
 
             public T LoadAsset(string name) {
-                T value = default(T);
                 try {
-                    value = dict[name];
+                    return dict[name];
                 } catch (KeyNotFoundException) {
-                    value = default(T);
+                    return default;
                 }
-                // O uso do dicionario é mais eficiente (~= O(1)) do que um find na lista (O(n))
-                // value = assets.Find(asset => (asset is Enemy)? ((asset as Enemy).AssetName == name) : (asset.name == name));
-                return value;
             }
         }
         // Fim da subclasse =====================================================================
@@ -89,29 +84,21 @@ namespace FinalInferno {
         [SerializeField] private Bundle<Quest> quests = new Bundle<Quest>();
 
         private Bundle<T> GetBundle<T>(string typeName) where T : ScriptableObject, IDatabaseItem {
-            Bundle<T> bundle = null;
             switch (typeName) {
                 case "party":
-                    bundle = party as Bundle<T>;
-                    break;
+                    return party as Bundle<T>;
                 case "hero":
-                    bundle = heroes as Bundle<T>;
-                    break;
+                    return heroes as Bundle<T>;
                 case "enemy":
-                    bundle = enemies as Bundle<T>;
-                    break;
+                    return enemies as Bundle<T>;
                 case "skill":
-                    bundle = skills as Bundle<T>;
-                    break;
+                    return skills as Bundle<T>;
                 case "quest":
-                    bundle = quests as Bundle<T>;
-                    break;
+                    return quests as Bundle<T>;
                 default:
                     Debug.Log("Access to bundle " + typeName + " is not implemented");
-                    break;
+                    return null;
             }
-
-            return bundle;
         }
 
 #if UNITY_EDITOR
@@ -135,48 +122,55 @@ namespace FinalInferno {
 #endif
 
         public static void Preload() {
-            if (Instance != null) {
-                Instance.party.Preload();
-                Instance.heroes.Preload();
-                Instance.enemies.Preload();
-                Instance.skills.Preload();
-                Instance.quests.Preload();
-            } else {
+            if (Instance == null) {
                 Debug.LogError("No database to preload");
+                return;
             }
+            Instance.party.Preload();
+            Instance.heroes.Preload();
+            Instance.enemies.Preload();
+            Instance.skills.Preload();
+            Instance.quests.Preload();
+        }
+
+        public static bool IsTypeSupported(System.Type type) {
+            string typeName = type.Name.ToLower();
+            return typeName switch {
+                "party" => true,
+                "hero" => true,
+                "enemy" => true,
+                "skill" => true,
+                "quest" => true,
+                _ => false,
+            };
         }
 
         public static ScriptableObject LoadAsset(string name, System.Type type) {
             string typeName = type.Name.ToLower();
-            switch (typeName) {
-                case "party":
-                    return LoadAsset<Party>(name);
-                case "hero":
-                    return LoadAsset<Hero>(name);
-                case "enemy":
-                    return LoadAsset<Enemy>(name);
-                case "skill":
-                    return LoadAsset<Skill>(name);
-                case "quest":
-                    return LoadAsset<Quest>(name);
-                default:
-                    Debug.Log("Access to bundle " + typeName + " is not implemented");
-                    return null;
+            if (!IsTypeSupported(type)) {
+                Debug.Log($"Access to bundle {typeName} is not implemented");
+                return null;
             }
+
+            return typeName switch {
+                "party" => LoadAsset<Party>(name),
+                "hero" => LoadAsset<Hero>(name),
+                "enemy" => LoadAsset<Enemy>(name),
+                "skill" => LoadAsset<Skill>(name),
+                "quest" => LoadAsset<Quest>(name),
+                _ => throw new System.NotImplementedException(),
+            };
         }
 
         public static T LoadAsset<T>(string name, string typeName = null) where T : ScriptableObject, IDatabaseItem {
-            if (Instance != null) {
-                if (typeName == null) {
-                    typeName = typeof(T).Name.ToLower();
-                }
-                Debug.Log("looking for object " + name + " of type " + typeName + " as " + typeof(T).Name);
-                Bundle<T> bundle = Instance.GetBundle<T>(typeName);
-                return (bundle == null) ? null : bundle.LoadAsset(name);
-            } else {
+            if (Instance == null) {
                 Debug.LogError("Database has not been loaded");
-                return default(T);
+                return default;
             }
+            typeName ??= typeof(T).Name.ToLower();
+            Debug.Log($"looking for object {name} of type {typeName} as {typeof(T).Name}");
+            Bundle<T> bundle = Instance.GetBundle<T>(typeName);
+            return bundle?.LoadAsset(name);
         }
     }
 }

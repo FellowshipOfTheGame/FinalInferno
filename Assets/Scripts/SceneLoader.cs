@@ -5,8 +5,7 @@ using UnityEngine.SceneManagement;
 
 namespace FinalInferno {
     public static class SceneLoader {
-        private static List<Enemy> enemies = new List<Enemy>();
-        private static bool updatePositions = false;
+        private static BattleInfo battleInfo;
         private static Fog.Dialogue.Dialogue cutsceneDialogue = null;
         public static Fog.Dialogue.Dialogue CutsceneDialogue {
             get => cutsceneDialogue;
@@ -23,101 +22,127 @@ namespace FinalInferno {
                 }
             }
         }
-        private static AudioClip battleBGM;
-        private static Sprite BGImage;
         public static UnityAction beforeSceneChange = null;
         public static UnityAction onSceneLoad = null;
 
-        public static void LoadBattleScene(Enemy[] enemiesSelected, Sprite BG, AudioClip BGM) {
+        public static void LoadBattleScene(BattleInfo newBattleInfo) {
             RECalculator.encountersEnabled = false;
             Party.Instance.currentMap = SceneManager.GetActiveScene().name;
-            // Armazena a posicao dos personagens no overworld dentro do SO correspondente
             Party.Instance.SaveOverworldPositions();
-            // Adicionar o setup da batalha no SceneManager.sceneLoaded
-            enemies = new List<Enemy>(enemiesSelected);
-            // Salva a BGM de batalha
-            battleBGM = BGM;
-            // Salva a imagem de background
-            BGImage = BG;
-            // O callback de batalha deve usar o callback do scene manager padrão,
-            // porque a primeira transição da maquina de estado espera que isso seja chamado
+            battleInfo.CopyValues(newBattleInfo);
             SceneManager.sceneLoaded += OnBattleLoad;
-
             beforeSceneChange?.Invoke();
             SceneManager.LoadScene("Battle");
         }
 
-
-        // Métodos que carregam a cena desejada
-        public static void LoadOWScene(Scene map, bool shouldUpdate = false, Vector2? newPosition = null, bool dontSave = false) {
-            LoadOWScene(map.name, shouldUpdate, newPosition, dontSave);
-        }
-        public static void LoadOWScene(int mapID, bool shouldUpdate = false, Vector2? newPosition = null, bool dontSave = false) {
-            LoadOWScene(SceneManager.GetSceneByBuildIndex(mapID).name);
-        }
-        public static void LoadOWScene(string map, bool shouldUpdate = false, Vector2? newPosition = null, bool dontSave = false) {
-            updatePositions = shouldUpdate;
-            if (newPosition != null) {
-                foreach (Character character in Party.Instance.characters) {
-                    character.position = newPosition.Value;
-                }
+        private static void OverrideCharacterPositions(Vector2 newPosition) {
+            foreach (Character character in Party.Instance.characters) {
+                character.position = newPosition;
             }
-            Party.Instance.currentMap = map;
+        }
 
-            // Salva o jogo se o autosave esta ativado
-            if (SaveLoader.AutoSave && !dontSave) {
+        #region LoadOWScene
+        public static void LoadOWSceneAndPositions(string map) {
+            Party.Instance.currentMap = map;
+            if (SaveLoader.AutoSave) {
                 SaveLoader.SaveGame();
             }
 
-            SceneManager.sceneLoaded += OnMapLoad;
+            SceneManager.sceneLoaded += MapAndPositionsLoaded;
             onSceneLoad += UnlockMovement;
             beforeSceneChange?.Invoke();
             SceneManager.LoadScene(map);
         }
 
-        // Métodos que carregam a cena e iniciam um diálogo
-        public static void LoadCustscene(Scene map, Fog.Dialogue.Dialogue dialogue, bool shouldUpdate = false, Vector2? newPosition = null, Vector2? savePosition = null, bool dontSave = false) {
-            LoadCustscene(map.name, dialogue, shouldUpdate, newPosition, savePosition, dontSave);
-        }
-        public static void LoadCustscene(string map, Fog.Dialogue.Dialogue dialogue, bool shouldUpdate = false, Vector2? newPosition = null, Vector2? savePosition = null, bool dontSave = false) {
-            updatePositions = shouldUpdate;
-            cutsceneDialogue = dialogue;
-            if (savePosition != null) {
-                foreach (Character character in Party.Instance.characters) {
-                    character.position = savePosition.Value;
-                }
-            }
-            Party.Instance.currentMap = SceneManager.GetActiveScene().name;
-
-            // Salva o jogo se o autosave esta ativado
-            if (SaveLoader.AutoSave && !dontSave) {
+        public static void LoadOWSceneWithSetPosition(string map, Vector2 newPosition) {
+            OverrideCharacterPositions(newPosition);
+            Party.Instance.currentMap = map;
+            if (SaveLoader.AutoSave) {
                 SaveLoader.SaveGame();
             }
 
-            if (newPosition != null) {
-                foreach (Character character in Party.Instance.characters) {
-                    character.position = newPosition.Value;
-                }
+            SceneManager.sceneLoaded += MapAndPositionsLoaded;
+            onSceneLoad += UnlockMovement;
+            beforeSceneChange?.Invoke();
+            SceneManager.LoadScene(map);
+        }
+
+        public static void LoadOWSceneWithDefaultPositions(string map) {
+            Party.Instance.currentMap = map;
+            if (SaveLoader.AutoSave) {
+                SaveLoader.SaveGame();
             }
 
-            if (dialogue != null) {
-                SceneManager.sceneLoaded += OnMapLoad;
-                onSceneLoad += StartDialogue;
-                beforeSceneChange?.Invoke();
-                SceneManager.LoadScene(map);
-            } else {
-                SceneManager.sceneLoaded += OnMapLoad;
-                onSceneLoad += UnlockMovement;
-                beforeSceneChange?.Invoke();
-                SceneManager.LoadScene(map);
-            }
+            SceneManager.sceneLoaded += MapLoaded;
+            onSceneLoad += UnlockMovement;
+            beforeSceneChange?.Invoke();
+            SceneManager.LoadScene(map);
         }
+
+        public static void LoadOWSceneFromBattle(string map) {
+            Party.Instance.currentMap = map;
+
+            SceneManager.sceneLoaded += MapAndPositionsLoaded;
+            onSceneLoad += UnlockMovement;
+            beforeSceneChange?.Invoke();
+            SceneManager.LoadScene(map);
+        }
+        #endregion
+
+        #region LoadCutscene
+        public static void LoadCustsceneFromMenu(string map, Fog.Dialogue.Dialogue dialogue) {
+            cutsceneDialogue = dialogue;
+            Party.Instance.currentMap = SceneManager.GetActiveScene().name;
+
+            SceneManager.sceneLoaded += MapLoaded;
+            if (dialogue != null) {
+                onSceneLoad += StartDialogue;
+            } else {
+                onSceneLoad += UnlockMovement;
+            }
+            beforeSceneChange?.Invoke();
+            SceneManager.LoadScene(map);
+        }
+
+        public static void LoadCustsceneWithSetPosition(string map, Fog.Dialogue.Dialogue dialogue, Vector2 newPosition, Vector2 savePosition) {
+            cutsceneDialogue = dialogue;
+            Party.Instance.currentMap = SceneManager.GetActiveScene().name;
+
+            OverrideCharacterPositions(savePosition);
+            if (SaveLoader.AutoSave) {
+                SaveLoader.SaveGame();
+            }
+            OverrideCharacterPositions(newPosition);
+
+            SceneManager.sceneLoaded += MapLoaded;
+            if (dialogue != null) {
+                onSceneLoad += StartDialogue;
+            } else {
+                onSceneLoad += UnlockMovement;
+            }
+            beforeSceneChange?.Invoke();
+            SceneManager.LoadScene(map);
+        }
+
+        public static void LoadCustsceneFromBattle(string map, Fog.Dialogue.Dialogue dialogue) {
+            cutsceneDialogue = dialogue;
+            Party.Instance.currentMap = SceneManager.GetActiveScene().name;
+
+            SceneManager.sceneLoaded += MapAndPositionsLoaded;
+            if (dialogue != null) {
+                onSceneLoad += StartDialogue;
+            } else {
+                onSceneLoad += UnlockMovement;
+            }
+            beforeSceneChange?.Invoke();
+            SceneManager.LoadScene(map);
+        }
+        #endregion
 
         public static void LoadMainMenu() {
             SceneManager.sceneLoaded += OnMainMenuLoad;
             beforeSceneChange?.Invoke();
 
-            // Salva o jogo se o autosave esta ativado
             if (SaveLoader.AutoSave && SaveLoader.CanSaveGame) {
                 Party.Instance.SaveOverworldPositions();
                 SaveLoader.SaveGame();
@@ -129,58 +154,59 @@ namespace FinalInferno {
         // Metodos que podem ser chamados ao carregar uma nova cena
         public static void OnBattleLoad(Scene map, LoadSceneMode mode) {
             BattleManager.instance.units.Clear();
-            // Adiciona os herois da party na lista de unidade da batalha
             foreach (Character character in Party.Instance.characters) {
                 BattleManager.instance.units.Add(character.archetype);
             }
-            // Adiciona os inimigos desejados para a lista de unidades da batalha
-            BattleManager.instance.units.AddRange(enemies);
-            // Avisa que a batalha pode começar
-            BattleManager.instance.PrepareBattle();
+            BattleManager.instance.units.AddRange(battleInfo.enemies);
 
-            // Coloca a imagem de fundo da batalha
+            UpdateBackgroundImage();
+            BattleManager.instance.PrepareBattle();
+            PlayBattleBGM();
+
+            battleInfo.Clear();
+            SceneManager.sceneLoaded -= OnBattleLoad;
+        }
+
+        private static void UpdateBackgroundImage() {
             GameObject go = GameObject.Find("BackgroundImage");
-            if (go && BGImage) {
+            if (go && battleInfo.BGImage) {
                 UnityEngine.UI.Image img = go.GetComponent<UnityEngine.UI.Image>();
                 if (img) {
-                    img.sprite = BGImage;
+                    img.sprite = battleInfo.BGImage;
                 }
             }
-            BGImage = null;
+        }
 
-            // Se não houver música, deixa a música padrão que está configurada
+        private static void PlayBattleBGM() {
             StaticReferences.BGM.Stop();
-            if (battleBGM != null) {
-                StaticReferences.BGM.PlaySong(battleBGM);
+            if (battleInfo.BGM != null) {
+                StaticReferences.BGM.PlaySong(battleInfo.BGM);
             } else {
                 StaticReferences.BGM.Resume();
             }
-
-            battleBGM = null;
-            SceneManager.sceneLoaded -= OnBattleLoad;
         }
+
         public static void OnMainMenuLoad(Scene map, LoadSceneMode mode) {
             StaticReferences.BGM.PlaySong(StaticReferences.MainMenuBGM);
             SceneManager.sceneLoaded -= OnMainMenuLoad;
         }
-        public static void OnMapLoad(Scene map, LoadSceneMode mode) {
-            if (updatePositions) {
-                // Desativa o calculo de encontrar batalhas para "teleportar" os personagens
-                RECalculator.encountersEnabled = false;
-                // Pegar a informação da posição dos personagens pelo SO da party
-                // Reposicionar os game objects dos players na tela
-                Party.Instance.LoadOverworldPositions();
-            }
+        public static void MapAndPositionsLoaded(Scene map, LoadSceneMode mode) {
+            RECalculator.encountersEnabled = false;
+            Party.Instance.LoadOverworldPositions();
+            RECalculator.encountersEnabled = true;
+            SceneManager.sceneLoaded -= MapAndPositionsLoaded;
+        }
+        public static void MapLoaded(Scene map, LoadSceneMode mode) {
             RECalculator.encountersEnabled = true;
             Party.Instance.currentMap = SceneManager.GetActiveScene().name;
-            SceneManager.sceneLoaded -= OnMapLoad;
+            SceneManager.sceneLoaded -= MapLoaded;
         }
         public static void UnlockMovement() {
             CharacterOW.PartyCanMove = true;
             onSceneLoad -= UnlockMovement;
         }
         public static void StartDialogue() {
-            Fog.Dialogue.Agent agent = CharacterOW.MainOWCharacter?.GetComponent<Fog.Dialogue.Agent>();
+            Fog.Dialogue.Agent agent = CharacterOW.MainOWCharacter != null? CharacterOW.MainOWCharacter.GetComponent<Fog.Dialogue.Agent>() : null;
             Fog.Dialogue.DialogueHandler.instance.StartDialogue(cutsceneDialogue);
             cutsceneDialogue = null;
             onSceneLoad -= StartDialogue;

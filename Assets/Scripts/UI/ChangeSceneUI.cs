@@ -28,11 +28,16 @@ namespace FinalInferno.UI {
             Anim.SetBool("IsBattle", isBattle);
         }
 
+        private void MainMenu() {
+            SceneLoader.LoadMainMenu();
+        }
+
+        // Overworld callbacks
         private void ChangeMap() {
             if (!isCutscene) {
-                SceneLoader.LoadOWScene(sceneName, true, positionOnLoad);
+                SceneLoader.LoadOWSceneWithSetPosition(sceneName, positionOnLoad);
             } else {
-                SceneLoader.LoadCustscene(sceneName, selectedDialogue, false, positionOnLoad, savePosition);
+                SceneLoader.LoadCustsceneWithSetPosition(sceneName, selectedDialogue, positionOnLoad, savePosition);
             }
         }
 
@@ -46,22 +51,19 @@ namespace FinalInferno.UI {
 
         private void StartBattle() {
             isBattle = false;
-            SceneLoader.LoadBattleScene(battleEnemies, battleBG, battleBGM);
+            SceneLoader.LoadBattleScene(new BattleInfo(battleEnemies, battleBG, battleBGM));
         }
 
-        private void MainMenu() {
-            SceneLoader.LoadMainMenu();
-        }
-
+        // Battle callbacks
         private void ReturnCheckpoint() {
             SaveLoader.LoadGame();
         }
 
         private void Continue() {
             if (isCutscene) {
-                SceneLoader.LoadCustscene(Party.Instance.currentMap, selectedDialogue, true, null, null, true);
+                SceneLoader.LoadCustsceneFromBattle(Party.Instance.currentMap, selectedDialogue);
             } else {
-                SceneLoader.LoadOWScene(Party.Instance.currentMap, true, null);
+                SceneLoader.LoadOWSceneFromBattle(Party.Instance.currentMap);
             }
         }
     }

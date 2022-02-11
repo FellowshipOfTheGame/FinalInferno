@@ -7,6 +7,7 @@ namespace FinalInferno {
     [System.Serializable]
     public class DynamicTable : ISerializationCallbackReceiver {
         // Declaração de subclasses e delegates ------------------
+        #region subclass
         [System.Serializable]
         public class TableRow {
             public int Count => (elements != null) ? elements.Length : 0;
@@ -26,11 +27,7 @@ namespace FinalInferno {
                 }
 
                 try {
-                    if (colTypes[accessDict[colName]] == assembQualName) {
-                        return accessDict[colName];
-                    } else {
-                        return -1;
-                    }
+                    return colTypes[accessDict[colName]] == assembQualName ? accessDict[colName] : -1;
                 } catch (KeyNotFoundException e) {
                     Debug.LogError(e.Message);
                     return -1;
@@ -41,79 +38,105 @@ namespace FinalInferno {
                 return (GetColNumber(colName, typeof(T).AssemblyQualifiedName) != -1);
             }
 
+            private T TryParseInt<T>(string fieldContent) {
+                try {
+                    return (T)(object)int.Parse(fieldContent, CultureInfo.InvariantCulture.NumberFormat);
+                } catch {
+                    Debug.LogError($"Error trying to parse object of type {typeof(T).AssemblyQualifiedName} from DynamicTable");
+                    return default;
+                }
+            }
+
+            private T TryParseLong<T>(string fieldContent) {
+                try {
+                    return (T)(object)long.Parse(fieldContent, CultureInfo.InvariantCulture.NumberFormat);
+                } catch {
+                    Debug.LogError($"Error trying to parse object of type {typeof(T).AssemblyQualifiedName} from DynamicTable");
+                    return default;
+                }
+            }
+
+            private T TryParseFloat<T>(string fieldContent) {
+                try {
+                    return (T)(object)float.Parse(fieldContent, CultureInfo.InvariantCulture.NumberFormat);
+                } catch {
+                    Debug.LogError($"Error trying to parse object of type {typeof(T).AssemblyQualifiedName} from DynamicTable");
+                    return default;
+                }
+            }
+
+            private T TryParseBool<T>(string fieldContent) {
+                try {
+                    return (T)(object)bool.Parse(fieldContent);
+                } catch {
+                    Debug.LogError($"Error trying to parse object of type {typeof(T).AssemblyQualifiedName} from DynamicTable");
+                    return default;
+                }
+            }
+
+            private T TryParseColor<T>(string fieldContent) {
+                Color newColor;
+                ColorUtility.TryParseHtmlString(fieldContent, out newColor);
+                return (T)(object)newColor;
+            }
+
+            private bool IsEnum(System.Type type) {
+                return type == typeof(Element) || type == typeof(DamageType);
+            }
+
+            private T TryParseEnum<T>(string fieldContent) {
+                int value = 0;
+                try {
+                    value = int.Parse(fieldContent, CultureInfo.InvariantCulture.NumberFormat);
+                } catch {
+                    Debug.LogError($"Error trying to parse object of type {typeof(T).AssemblyQualifiedName} from DynamicTable");
+                }
+                return typeof(T) == typeof(Element) ? (T)(object)(Element)value : (T)(object)(DamageType)value;
+            }
+
+            private T TryParseField<T>(string fieldContent) {
+                if (typeof(T) == typeof(int)) {
+                    return TryParseInt<T>(fieldContent);
+                } else if (typeof(T) == typeof(long)) {
+                    return TryParseLong<T>(fieldContent);
+                } else if (typeof(T) == typeof(string)) {
+                    return (T)(object)fieldContent;
+                } else if (typeof(T) == typeof(float)) {
+                    return TryParseFloat<T>(fieldContent);
+                } else if (typeof(T) == typeof(bool)) {
+                    return TryParseBool<T>(fieldContent);
+                } else if (typeof(T) == typeof(Color)) {
+                    return TryParseColor<T>(fieldContent);
+                } else if (IsEnum(typeof(T))) {
+                    return TryParseEnum<T>(fieldContent);
+                } else {
+                    throw new System.NotImplementedException();
+                }
+            }
+
             public T Field<T>(string colName) {
                 int colNumber = GetColNumber(colName, typeof(T).AssemblyQualifiedName);
                 if (colNumber < 0) {
-                    return default(T);
+                    return default;
                 }
 
-                string description = elements[colNumber];
+                string fieldContent = elements[colNumber];
 
-                if (typeof(T) == typeof(int)) {
-                    try {
-                        return (T)(object)int.Parse(description, CultureInfo.InvariantCulture.NumberFormat);
-                    } catch {
-                        Debug.LogError($"Error trying to parse object of type {typeof(T).AssemblyQualifiedName} from DynamicTable");
-                    }
-                } else if (typeof(T) == typeof(long)) {
-                    try {
-                        return (T)(object)long.Parse(description, CultureInfo.InvariantCulture.NumberFormat);
-                    } catch {
-                        Debug.LogError($"Error trying to parse object of type {typeof(T).AssemblyQualifiedName} from DynamicTable");
-                    }
-                } else if (typeof(T) == typeof(string)) {
-                    return (T)(object)description;
-                } else if (typeof(T) == typeof(float)) {
-                    try {
-                        return (T)(object)float.Parse(description, CultureInfo.InvariantCulture.NumberFormat);
-                    } catch {
-                        Debug.LogError($"Error trying to parse object of type {typeof(T).AssemblyQualifiedName} from DynamicTable");
-                    }
-                } else if (typeof(T) == typeof(bool)) {
-                    try {
-                        return (T)(object)bool.Parse(description);
-                    } catch {
-                        Debug.LogError($"Error trying to parse object of type {typeof(T).AssemblyQualifiedName} from DynamicTable");
-                    }
-                } else if (typeof(T) == typeof(Color)) {
-                    Color newColor = new Color();
-                    ColorUtility.TryParseHtmlString(description, out newColor);
-                    return (T)(object)newColor;
-                } else if (typeof(T) == typeof(Element) || typeof(T) == typeof(DamageType)) {
-                    int value = 0;
-                    try {
-                        value = int.Parse(description, CultureInfo.InvariantCulture.NumberFormat);
-                    } catch {
-                        Debug.LogError($"Error trying to parse object of type {typeof(T).AssemblyQualifiedName} from DynamicTable");
-                    }
-                    if (typeof(T) == typeof(Element)) {
-                        return (T)(object)(Element)value;
-                    } else {
-                        return (T)(object)(DamageType)value;
-                    }
-                } else {
-                    return (T)(object)AssetManager.LoadAsset(description, typeof(T));
-                }
-
-                return default(T);
+                return AssetManager.IsTypeSupported(typeof(T))
+                    ? (T)(object)AssetManager.LoadAsset(fieldContent, typeof(T))
+                    : TryParseField<T>(fieldContent);
             }
         }
+        #endregion
 
-        // Variaveis/Proriedades -------------------------
-        private const char splitCharacter = ';';
+        // Variaveis/Propriedades -------------------------
+        protected const char splitCharacter = ';';
         [SerializeField] private string[] colTypes;
         [SerializeField] private string[] colNames;
         private Dictionary<string, int> accessDict;
         [SerializeField] private TableRow[] rows;
-        public ReadOnlyCollection<TableRow> Rows {
-            get {
-                if (rows == null) {
-                    return (new List<TableRow>()).AsReadOnly();
-                } else {
-                    return (new List<TableRow>(rows)).AsReadOnly();
-                }
-            }
-        }
+        private ReadOnlyCollection<TableRow> readOnlyRows;
+        public ReadOnlyCollection<TableRow> Rows => readOnlyRows;
 
         // Metodos ---------------------------------------
         public static DynamicTable Create(TextAsset textFile) {
@@ -125,40 +148,41 @@ namespace FinalInferno {
             }
         }
 
-        // public void Clear(){
-        //     colTypes = new string[0];
-        //     if(accessDict != null){
-        //         accessDict.Clear();
-        //     }
-        //     rows = new TableRow[0];
-        // }
-
         protected static private string GetQualifiedName(string typeName) {
-            switch (typeName) {
-                case "string":
-                    return typeof(string).AssemblyQualifiedName;
-                case "int":
-                    return typeof(int).AssemblyQualifiedName;
-                case "long":
-                    return typeof(long).AssemblyQualifiedName;
-                case "float":
-                    return typeof(float).AssemblyQualifiedName;
-                case "bool":
-                    return typeof(bool).AssemblyQualifiedName;
-                case "Color":
-                    return typeof(Color).AssemblyQualifiedName;
-                case "Enemy":
-                    return typeof(Enemy).AssemblyQualifiedName;
-                case "Party":
-                    return typeof(Party).AssemblyQualifiedName;
-                case "Skill":
-                    return typeof(Skill).AssemblyQualifiedName;
-                case "Element":
-                    return typeof(Element).AssemblyQualifiedName;
-                case "DamageType":
-                    return typeof(DamageType).AssemblyQualifiedName;
-                default:
-                    return typeof(string).AssemblyQualifiedName;
+            return typeName switch {
+                "string" => typeof(string).AssemblyQualifiedName,
+                "int" => typeof(int).AssemblyQualifiedName,
+                "long" => typeof(long).AssemblyQualifiedName,
+                "float" => typeof(float).AssemblyQualifiedName,
+                "bool" => typeof(bool).AssemblyQualifiedName,
+                "Color" => typeof(Color).AssemblyQualifiedName,
+                "Enemy" => typeof(Enemy).AssemblyQualifiedName,
+                "Party" => typeof(Party).AssemblyQualifiedName,
+                "Skill" => typeof(Skill).AssemblyQualifiedName,
+                "Element" => typeof(Element).AssemblyQualifiedName,
+                "DamageType" => typeof(DamageType).AssemblyQualifiedName,
+                _ => typeof(string).AssemblyQualifiedName,
+            };
+        }
+
+        protected void TryAddAccessDictEntry(string key, int value) {
+            try {
+                accessDict.Add(key, value);
+            } catch (System.ArgumentException error) {
+                Debug.LogError($"Table has more than one column named {key}");
+                throw error;
+            }
+        }
+
+        protected void SetupAccessDict() {
+            accessDict = new Dictionary<string, int>();
+            if (colNames != null) {
+                for (int i = 0; i < colNames.Length; i++) {
+                    TryAddAccessDictEntry(colNames[i], i);
+                }
+            }
+            for (int i = 0; i < rows.Length; i++) {
+                rows[i].accessDict = accessDict;
             }
         }
 
@@ -166,47 +190,25 @@ namespace FinalInferno {
             string[] lines = textFile.text.Split((new char[] { '\n', '\r' }), System.StringSplitOptions.RemoveEmptyEntries);
             colNames = lines[0].Split(splitCharacter);
             string[] colTypeNames = lines[1].Split(splitCharacter);
-
-            accessDict = new Dictionary<string, int>();
             colTypes = new string[colTypeNames.Length];
             rows = new TableRow[lines.Length - 2];
 
-            int nCols = colNames.Length;
             for (int i = 0; i < colNames.Length; i++) {
-                try {
-                    accessDict.Add(colNames[i], i);
-                } catch (System.ArgumentException error) {
-                    Debug.LogError($"Table has more than one column named {colNames[i]}");
-                    throw error;
-                }
                 colTypes[i] = GetQualifiedName(colTypeNames[i]);
             }
-
             for (int i = 2; i < lines.Length; i++) {
                 rows[i - 2] = new TableRow(lines[i], colTypes);
-                rows[i - 2].accessDict = accessDict;
             }
+            SetupAccessDict();
         }
 
         void ISerializationCallbackReceiver.OnAfterDeserialize() {
-            accessDict = new Dictionary<string, int>();
-            if (colNames != null) {
-                for (int i = 0; i < colNames.Length; i++) {
-                    try {
-                        accessDict.Add(colNames[i], i);
-                    } catch (System.ArgumentException error) {
-                        Debug.LogError($"Table has more than one column named {colNames[i]}");
-                        throw error;
-                    }
-                }
-            }
-
-            for (int i = 0; i < rows.Length; i++) {
-                rows[i].accessDict = accessDict;
-            }
+            SetupAccessDict();
+            readOnlyRows = rows == null ? (new List<TableRow>()).AsReadOnly() : (new List<TableRow>(rows)).AsReadOnly();
         }
 
         void ISerializationCallbackReceiver.OnBeforeSerialize() {
+            readOnlyRows = null;
         }
     }
 }

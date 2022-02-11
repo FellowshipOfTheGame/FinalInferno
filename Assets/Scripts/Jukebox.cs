@@ -2,10 +2,10 @@
 
 [RequireComponent(typeof(AudioSource))]
 public class Jukebox : MonoBehaviour {
-    private AudioSource source;
+    [SerializeField] private AudioSource source = null;
 
     private void Awake() {
-        source = GetComponent<AudioSource>();
+        source ??= GetComponent<AudioSource>();
         source.Stop();
         source.clip = null;
         source.playOnAwake = false;
