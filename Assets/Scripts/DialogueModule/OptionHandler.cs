@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Fog.Dialogue {
     [RequireComponent(typeof(AudioSource))]
@@ -11,27 +12,34 @@ namespace Fog.Dialogue {
         [SerializeField] private GameObject optionPrefab = null;
         [SerializeField] private float inputCooldown = 0.1f;
         [SerializeField] private float activationTime = 0.5f;
+        [SerializeField] private InputActionReference submitAction;
+        [SerializeField] private InputActionReference directionsAction;
         private float timer;
-        private AudioSource source;
+        private bool IsTimerOver => timer > inputCooldown;
+        private AudioSource audioSource;
         [SerializeField] private AudioClip changeOption;
         [SerializeField] private AudioClip selectOption;
 
-        private int currentOption = -1;
+        private int currentOptionIndex = -1;
+        private DialogueOption CurrentOption => options[currentOptionIndex];
         private List<DialogueOption> options = new List<DialogueOption>();
 
         public bool IsActive { get; private set; }
+        private bool SubmitButtonIsPressed => submitAction.action.phase == InputActionPhase.Started || submitAction.action.phase == InputActionPhase.Performed;
 
         private void Awake() {
-            source = GetComponent<AudioSource>();
-            IsActive = false;
-            container.gameObject.SetActive(false);
-            inputCooldown = Mathf.Max(0f, inputCooldown);
+            audioSource = GetComponent<AudioSource>();
+            Deactivate();
+            ValidatePrefab();
+        }
+
+        private void ValidatePrefab() {
             if (!optionPrefab) {
-                Debug.Log("No prefab detected");
+                Debug.Log("No prefab detected", gameObject);
                 Destroy(this);
             } else {
                 if (!optionPrefab.GetComponent<DialogueOption>()) {
-                    Debug.Log("Prefab must have a DialogueOption component");
+                    Debug.Log("Prefab must have a DialogueOption component", gameObject);
                     Destroy(this);
                 }
             }
@@ -41,14 +49,9 @@ namespace Fog.Dialogue {
             if (infos.Length > 0) {
                 container.gameObject.SetActive(true);
                 foreach (DialogueOptionInfo info in infos) {
-                    GameObject go = Instantiate(optionPrefab, optionList);
-                    DialogueOption newOption = go.GetComponentInChildren<DialogueOption>();
-                    newOption.Configure(info);
-                    newOption.OnSelect += SelectOption;
-                    newOption.OnFocus += FocusOption;
-                    options.Add(newOption);
+                    CreateNewOption(info);
                 }
-                // See Activate method comment
+                // This can be called from animation instead of coroutine, for better visual effect
                 StartCoroutine(DelayedActivate(0.5f));
             } else {
                 Debug.Log("Passed empty option array to Dialogue Handler");
@@ -56,75 +59,114 @@ namespace Fog.Dialogue {
             }
         }
 
+        private void CreateNewOption(DialogueOptionInfo info) {
+            GameObject go = Instantiate(optionPrefab, optionList);
+            DialogueOption newOption = go.GetComponentInChildren<DialogueOption>();
+            newOption.Configure(info);
+            newOption.OnSelect += SelectOption;
+            newOption.OnFocus += FocusOption;
+            options.Add(newOption);
+        }
+
         private IEnumerator DelayedActivate(float delay) {
             yield return new WaitForSeconds(delay);
-
             Activate();
         }
 
-        // This can be called from animation instead of coroutine, for better visual effect
         public void Activate() {
-            currentOption = 0;
-            options[currentOption].OnFocus?.Invoke();
+            currentOptionIndex = 0;
+            CurrentOption.OnFocus?.Invoke();
             IsActive = true;
+            inputCooldown = Mathf.Max(0f, inputCooldown);
+        }
+
+        public void Deactivate() {
+            IsActive = false;
+            container.gameObject.SetActive(false);
+            inputCooldown = Mathf.Max(0f, inputCooldown);
         }
 
         private void FocusOption() {
-            float normalizedTop = scrollPanel.NormalizedTopPosition(options[currentOption].GetComponent<RectTransform>());
-            float normalizedBottom = scrollPanel.NormalizedBottomPosition(options[currentOption].GetComponent<RectTransform>());
+            RectTransform optionRect = CurrentOption.GetComponent<RectTransform>();
+            float normalizedTop = scrollPanel.NormalizedTopPosition(optionRect);
+            float normalizedBottom = scrollPanel.NormalizedBottomPosition(optionRect);
 
-            if (scrollPanel.verticalNormalizedPosition < normalizedTop
-            || scrollPanel.viewport.rect.height <= options[currentOption].GetComponent<RectTransform>().rect.height) {
+            if (scrollPanel.IsVerticalPositionLowerThan(normalizedTop) || scrollPanel.ViewportHeight <= optionRect.rect.height) {
                 scrollPanel.ScrollToPosition(normalizedTop);
-            } else if (scrollPanel.verticalNormalizedPosition > normalizedBottom) {
+            } else if (scrollPanel.IsVerticalPositionHigherThan(normalizedBottom)) {
                 scrollPanel.ScrollToPosition(normalizedBottom);
             }
         }
 
         private void SelectOption() {
-            IsActive = false;
-            timer = 0f;
-            source.PlayOneShot(selectOption);
-            Dialogue selectedDialogue = (currentOption >= 0) ? options[currentOption].NextDialogue : null;
+            audioSource.PlayOneShot(selectOption);
+            Deactivate();
+            ResetTimer();
+            Dialogue selectedDialogue = (currentOptionIndex >= 0) ? CurrentOption.NextDialogue : null;
+            ClearOptionList();
+            StartOrEndDialogue(selectedDialogue);
+        }
+
+        private static void StartOrEndDialogue(Dialogue selectedDialogue) {
+            if (selectedDialogue) {
+                DialogueHandler.instance.StartDialogue(selectedDialogue);
+            } else {
+                DialogueHandler.instance.EndDialogueWithoutCallback();
+            }
+        }
+
+        private void ClearOptionList() {
             foreach (RectTransform transform in optionList) {
                 Destroy(transform.gameObject);
             }
             options.Clear();
-            currentOption = -1;
-            container.gameObject.SetActive(false);
-            if (selectedDialogue) {
-                DialogueHandler.instance.StartDialogue(selectedDialogue);
-            } else {
-                DialogueHandler.instance.EndDialogue(true);
+            currentOptionIndex = -1;
+        }
+
+        private void Update() {
+            if (IsActive) {
+                if (IsTimerOver) {
+                    if (SubmitButtonIsPressed) {
+                        CurrentOption.OnSelect?.Invoke();
+                    } else {
+                        CheckSelectionInput();
+                    }
+                    ResetTimer();
+                }
+                UpdateTimer();
             }
         }
 
-        // Update is called once per frame
-        private void Update() {
-            if (IsActive) {
-                if (timer > inputCooldown) {
-                    if (Input.GetButton("Submit")) {
-                        options[currentOption].OnSelect?.Invoke();
-                    } else {
-                        float input = Input.GetAxisRaw("Vertical") * (-1f);
-                        if (input != 0) {
-                            int newOption = Mathf.Clamp(currentOption + ((input > 0) ? 1 : -1), 0, options.Count - 1);
-                            if (newOption != currentOption) {
-                                options[currentOption].OnExit?.Invoke();
-                                currentOption = newOption;
-                                options[currentOption].OnFocus?.Invoke();
-                            }
-                            // If you press up on the first option it tries to scroll further up
-                            // For cases when the question and answers are using the same scrollpanel
-                            if (input > 0 && currentOption == 0) {
-                                scrollPanel.ScrollToStart();
-                            }
-                        }
-                    }
-                    timer = 0f;
-                }
-                timer += Time.deltaTime;
+        private void CheckSelectionInput() {
+            float axisValue = directionsAction.action.ReadValue<Vector2>().y;
+            float input = axisValue * (-1f);
+            if (input != 0) {
+                int newOptionIndex = Mathf.Clamp(currentOptionIndex + ((input > 0) ? 1 : -1), 0, options.Count - 1);
+                FocusNewOptionIfNecessary(newOptionIndex);
+                ShowHeaderIfNecessary(input);
             }
+        }
+
+        private void FocusNewOptionIfNecessary(int newOptionIndex) {
+            if (newOptionIndex != currentOptionIndex) {
+                CurrentOption.OnExit?.Invoke();
+                currentOptionIndex = newOptionIndex;
+                CurrentOption.OnFocus?.Invoke();
+            }
+        }
+
+        private void ShowHeaderIfNecessary(float input) {
+            if (input > 0 && currentOptionIndex == 0) {
+                scrollPanel.ScrollToStart();
+            }
+        }
+
+        private void UpdateTimer() {
+            timer += Time.deltaTime;
+        }
+
+        private void ResetTimer() {
+            timer = 0f;
         }
     }
 }

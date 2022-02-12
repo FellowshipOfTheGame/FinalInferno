@@ -35,16 +35,14 @@ namespace Fog.Dialogue {
 
         public virtual void BeforeDialogue() {
             if (Agent.Instance) {
-                Agent.Instance.canInteract = false;
+                Agent.Instance.BlockInteractions();
             }
             DialogueHandler.instance.OnDialogueStart -= BeforeDialogue;
         }
 
         public virtual void AfterDialogue() {
             if (Agent.Instance) {
-                // Input cooldown is needed because it uses the same "Interactable" button
-                Agent.Instance.InputCooldown();
-                Agent.Instance.canInteract = true;
+                Agent.Instance.AllowInteractions();
             }
             DialogueHandler.instance.OnDialogueEnd -= AfterDialogue;
         }

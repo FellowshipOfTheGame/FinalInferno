@@ -5,7 +5,9 @@ public class Jukebox : MonoBehaviour {
     [SerializeField] private AudioSource source = null;
 
     private void Awake() {
-        source ??= GetComponent<AudioSource>();
+        if(source == null){
+            source = GetComponent<AudioSource>();
+        }
         source.Stop();
         source.clip = null;
         source.playOnAwake = false;

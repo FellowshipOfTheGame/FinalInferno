@@ -4,12 +4,6 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Fog.Dialogue {
-    [System.Serializable]
-    public struct DialogueOptionInfo {
-        [TextArea] public string text;
-        public Dialogue nextDialogue;
-    }
-
     [RequireComponent(typeof(RectTransform))]
     public class DialogueOption : MonoBehaviour {
         [SerializeField] private TextMeshProUGUI textField;
@@ -35,7 +29,7 @@ namespace Fog.Dialogue {
 
         private void ToggleFocus() {
             if (focusIndicator) {
-                focusIndicator.enabled = (!focusIndicator.enabled);
+                focusIndicator.enabled = !focusIndicator.enabled;
             }
         }
     }

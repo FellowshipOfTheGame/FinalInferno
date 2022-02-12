@@ -86,7 +86,7 @@ namespace FinalInferno {
 
         // A checagem precisa acontecer no LateUpdate para evitar conflito com o update que o sistema de dialogo usa
         private void LateUpdate() {
-            if (encountersEnabled && CharacterOW.PartyCanMove && (agent == null || agent.canInteract)) {
+            if (encountersEnabled && CharacterOW.PartyCanMove && (agent == null || agent.CanInteract)) {
                 // Calcula a distancia entre a posicao atual e a distancia no ultimo LateUpdate
                 float distance = CalculateDistanceWalked();
                 // Incrementa a distancia total entre checagens
@@ -135,7 +135,7 @@ namespace FinalInferno {
             // Impede que o player se movimente e interaja
             CharacterOW.PartyCanMove = false;
             if (agent != null) {
-                agent.canInteract = false;
+                agent.BlockInteractions();
             }
 
             // Usar a tabela de encontros aleatorios para definir a lista de inimigos

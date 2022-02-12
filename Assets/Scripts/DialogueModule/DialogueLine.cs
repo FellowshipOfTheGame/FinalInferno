@@ -12,9 +12,9 @@ namespace Fog.Dialogue {
         [SerializeField] private DialogueEntity speaker = null;
         [SerializeField] [TextArea(3, 5)] private string text = null;
 
-        public DialogueLine(DialogueEntity spkr, string txt) {
-            speaker = spkr;
-            text = "" + txt;
+        public DialogueLine(DialogueEntity speaker, string text) {
+            this.speaker = speaker;
+            this.text = $"{text}";
         }
 
         public DialogueLine Clone() {

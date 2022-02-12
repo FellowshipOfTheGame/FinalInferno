@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 namespace Fog.Dialogue {
     [RequireComponent(typeof(Collider2D))]
     public class Agent : MonoBehaviour {
-        // Singleton
+        #region Singleton
         public static Agent Instance { get; private set; } = null;
         public void Awake() {
             if (!Instance) {
@@ -21,62 +21,84 @@ namespace Fog.Dialogue {
                 Instance = null;
             }
         }
+        #endregion
 
-        [SerializeField]
-        private int maxInteractions = 1;
-        [SerializeField]
-        private int nFramesCooldown = 5;
+        [SerializeField] private int maxInteractions = 1;
+        [SerializeField] private int nFramesCooldown = 5;
         private int wait;
-        [HideInInspector]
-        public bool canInteract;
+        private bool IsCooldownTimerOver => wait <= 0;
+        [SerializeField, HideInInspector] private bool canInteract;
+        public bool CanInteract => canInteract;
         private bool isProcessingInput;
+        int interactedCount;
         [SerializeField] private InputActionReference interactAction;
 
         public List<IInteractable> collidingInteractables = new List<IInteractable>();
 
-        // Valores padrão ao ser criado no editor
         private void Reset() {
             maxInteractions = 1;
             nFramesCooldown = 5;
         }
 
-        // Start is called before the first frame update
         private void Start() {
             canInteract = true;
             isProcessingInput = false;
-            wait = nFramesCooldown;
+            ResetInputCooldownTimer();
         }
 
-        // Update is called once per frame
         private void Update() {
             // Esse botao precisa ser declarado nos inputs do projeto
-            if (interactAction.action.triggered && wait <= 0) {
-                wait = nFramesCooldown;
-                if (!isProcessingInput && canInteract) {
-                    isProcessingInput = true;
-                    int count = 0;
-                    // Quanto o botao e apertado, obtem todos os colliders em contato
-                    foreach (IInteractable interactable in collidingInteractables.ToArray()) {
-                        // Para cada collider encontrado, tenta interagir se houver o componente necessario
-                        if (interactable != null) {
-                            interactable.OnInteractAttempt();
-                            count++;
-                            if (count >= maxInteractions || !canInteract) {
-                                break;
-                            }
-                        } else {
-                            collidingInteractables.Remove(interactable);
-                        }
-                    }
-                    isProcessingInput = false;
-                }
+            if (interactAction.action.triggered && IsCooldownTimerOver) {
+                ResetInputCooldownTimer();
+                InteractIfPossible();
             }
+            UpdateInputCooldownTimer();
+        }
+
+        private void UpdateInputCooldownTimer() {
             wait = (wait <= 0) ? 0 : (wait - 1);
         }
 
-        // Funcao auxiliar para garantir o bloqueio de input apos dialogos
-        public void InputCooldown() {
+        private void ResetInputCooldownTimer() {
             wait = nFramesCooldown;
+        }
+
+        private void InteractIfPossible() {
+            if (isProcessingInput || !canInteract) {
+                return;
+            }
+            isProcessingInput = true;
+            InteractWithAvailableInteractables();
+            isProcessingInput = false;
+        }
+
+        private void InteractWithAvailableInteractables() {
+            interactedCount = 0;
+            foreach (IInteractable interactable in collidingInteractables.ToArray()) {
+                if (interactedCount >= maxInteractions || !canInteract) {
+                    break;
+                }
+                AttemptInteraction(interactable);
+            }
+            interactedCount = 0;
+        }
+
+        private void AttemptInteraction(IInteractable interactable) {
+            if (interactable != null) {
+                interactable.OnInteractAttempt();
+                interactedCount++;
+            } else {
+                collidingInteractables.Remove(interactable);
+            }
+        }
+
+        public void BlockInteractions(){
+            canInteract = false;
+        }
+
+        public void AllowInteractions(){
+            ResetInputCooldownTimer();
+            canInteract = true;
         }
     }
 }

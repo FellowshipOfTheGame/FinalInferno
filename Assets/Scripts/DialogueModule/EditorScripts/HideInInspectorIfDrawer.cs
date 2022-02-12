@@ -1,4 +1,4 @@
-namespace Fog.Editor {
+namespace Fog.Dialogue.Editor {
 #if UNIITY_EDITOR
     [CustomPropertyDrawer(typeof(HideInInspectorIf))]
     [CustomPropertyDrawer(typeof(HideInInspectorIfNot))]

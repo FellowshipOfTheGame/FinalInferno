@@ -4,7 +4,6 @@ using UnityEngine;
 namespace Malee {
 
     public class ReorderableAttribute : PropertyAttribute {
-
         public bool add;
         public bool remove;
         public bool draggable;
@@ -39,7 +38,6 @@ namespace Malee {
         }
 
         public ReorderableAttribute(bool add, bool remove, bool draggable, string elementNameProperty = null, string elementNameOverride = null, string elementIconPath = null) {
-
             this.add = add;
             this.remove = remove;
             this.draggable = draggable;

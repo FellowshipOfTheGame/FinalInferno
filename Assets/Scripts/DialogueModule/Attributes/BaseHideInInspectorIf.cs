@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Fog.Editor {
+namespace Fog.Dialogue {
     public abstract class BaseHideInInspectorIf : PropertyAttribute {
         public string conditionName;
         public bool invertCondition;

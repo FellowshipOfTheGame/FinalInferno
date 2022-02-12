@@ -7,7 +7,9 @@ namespace FinalInferno {
         [SerializeField] private VolumeController volumeController = null;
 
         private void Start() {
+#if !UNITY_EDITOR
             Cursor.visible = false;
+#endif
             volumeController.ResetValues();
             SaveLoader.AutoSave = true;
 

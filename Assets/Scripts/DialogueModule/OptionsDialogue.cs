@@ -11,9 +11,8 @@ namespace Fog.Dialogue {
 
         public override void AfterDialogue() {
             base.AfterDialogue();
-            Agent.Instance.canInteract = false;
+            Agent.Instance.BlockInteractions();
             DialogueHandler.instance.DisplayOptions(question, options);
-
             DialogueHandler.instance.OnDialogueEnd -= AfterDialogue;
         }
     }

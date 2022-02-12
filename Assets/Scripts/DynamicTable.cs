@@ -135,8 +135,7 @@ namespace FinalInferno {
         [SerializeField] private string[] colNames;
         private Dictionary<string, int> accessDict;
         [SerializeField] private TableRow[] rows;
-        private ReadOnlyCollection<TableRow> readOnlyRows;
-        public ReadOnlyCollection<TableRow> Rows => readOnlyRows;
+        public ReadOnlyCollection<TableRow> Rows => System.Array.AsReadOnly(rows);
 
         // Metodos ---------------------------------------
         public static DynamicTable Create(TextAsset textFile) {
@@ -187,7 +186,7 @@ namespace FinalInferno {
         }
 
         protected DynamicTable(TextAsset textFile) {
-            string[] lines = textFile.text.Split((new char[] { '\n', '\r' }), System.StringSplitOptions.RemoveEmptyEntries);
+            string[] lines = textFile.text.Split(new char[] { '\n', '\r' }, System.StringSplitOptions.RemoveEmptyEntries);
             colNames = lines[0].Split(splitCharacter);
             string[] colTypeNames = lines[1].Split(splitCharacter);
             colTypes = new string[colTypeNames.Length];
@@ -204,11 +203,9 @@ namespace FinalInferno {
 
         void ISerializationCallbackReceiver.OnAfterDeserialize() {
             SetupAccessDict();
-            readOnlyRows = rows == null ? (new List<TableRow>()).AsReadOnly() : (new List<TableRow>(rows)).AsReadOnly();
         }
 
         void ISerializationCallbackReceiver.OnBeforeSerialize() {
-            readOnlyRows = null;
         }
     }
 }
