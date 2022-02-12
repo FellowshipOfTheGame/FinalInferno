@@ -1,4 +1,4 @@
-using Malee;
+using Malee.List;
 using UnityEngine;
 
 namespace Fog.Dialogue {
