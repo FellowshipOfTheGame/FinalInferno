@@ -2,7 +2,6 @@ using UnityEditor;
 using UnityEngine;
 
 namespace Fog.Dialogue {
-#if UNITY_EDITOR
     [CustomEditor(typeof(DialogueScrollPanel))]
     public class DialogueScrollPanelEditor : UnityEditor.UI.ScrollRectEditor {
         [SerializeField] private bool wasVerticalLast = true;
@@ -40,5 +39,4 @@ namespace Fog.Dialogue {
             base.OnInspectorGUI();
         }
     }
-#endif
 }

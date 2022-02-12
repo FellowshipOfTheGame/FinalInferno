@@ -5,7 +5,6 @@ using UnityEditor;
 using UnityEngine;
 
 namespace RotaryHeart.Lib.SerializableDictionary {
-#if UNITY_EDITOR
     [CustomPropertyDrawer(typeof(DrawableDictionary), true)]
     public class DictionaryPropertyDrawer : PropertyDrawer {
         #region Fields
@@ -920,5 +919,4 @@ namespace RotaryHeart.Lib.SerializableDictionary {
         }
     }
 
-#endif
 }

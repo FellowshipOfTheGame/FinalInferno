@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Fog.Dialogue {
-#if UNITY_EDITOR
     public class ScrollPanelMenu : MonoBehaviour {
         [MenuItem("GameObject/UI/FOG.Dialogue - ScrollPanel", false, 49)]
         private static void CreateScrollPanel(MenuCommand menuCommand) {
@@ -132,5 +131,4 @@ namespace Fog.Dialogue {
             Selection.activeObject = panelObj;
         }
     }
-#endif
 }

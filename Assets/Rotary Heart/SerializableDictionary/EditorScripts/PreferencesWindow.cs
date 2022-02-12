@@ -2,7 +2,6 @@ using UnityEditor;
 using UnityEngine;
 
 namespace RotaryHeart.Lib.SerializableDictionary {
-#if UNITY_EDITOR
     public class PreferencesWindow {
         #region GUIContent
         private static readonly GUIContent gui_pagesTitle = new GUIContent("Pages", "Section that has all the pages settings for the drawer");
@@ -58,5 +57,4 @@ namespace RotaryHeart.Lib.SerializableDictionary {
         }
     }
 
-#endif
 }

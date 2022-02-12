@@ -1,7 +1,6 @@
 using UnityEditor;
 
 namespace RotaryHeart.Lib.SerializableDictionary {
-#if UNITY_EDITOR
     public sealed class Constants {
         private const bool DEF_SHOW_PAGES = false;
         private const bool DEF_SHOW_SIZE = true;
@@ -31,5 +30,4 @@ namespace RotaryHeart.Lib.SerializableDictionary {
         }
     }
 
-#endif
 }

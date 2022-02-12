@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEditor;
 
 namespace RotaryHeart.Lib.SerializableDictionary {
-#if UNITY_EDITOR
     [InitializeOnLoad]
     public class Definer {
         static Definer() {
@@ -54,5 +53,4 @@ namespace RotaryHeart.Lib.SerializableDictionary {
         }
     }
 
-#endif
 }

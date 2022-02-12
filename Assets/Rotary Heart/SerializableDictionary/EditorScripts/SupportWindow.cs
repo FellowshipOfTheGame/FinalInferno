@@ -2,7 +2,6 @@
 using UnityEngine;
 
 namespace RotaryHeart.Lib.SerializableDictionary {
-#if UNITY_EDITOR
     public class SupportWindow : EditorWindow {
         private int ToolBarIndex;
 
@@ -115,5 +114,4 @@ namespace RotaryHeart.Lib.SerializableDictionary {
 
     }
 
-#endif
 }
