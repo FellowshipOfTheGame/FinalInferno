@@ -55,8 +55,6 @@ namespace FinalInferno.UI.Battle
         }
 
         public void UpdateBattleUnitSize(BattleUnit battleUnit, int ppu = 64){
-            RectTransform referenceTransform = battleUnit.battleItem.transform.parent.Find("Active Reference").GetComponent<RectTransform>();
-            referenceTransform.anchoredPosition += new Vector2(0f, battleUnit.GetComponent<SpriteRenderer>().sprite.bounds.size.y * ppu);
             // Debug.Log("height detected for " + unit.name + " = " + unit.BattleSprite.bounds.size.y);
             battleUnit.battleItem.layout.preferredWidth = battleUnit.Unit.BoundsSizeX * ppu;
             battleUnit.battleItem.layout.preferredHeight = battleUnit.Unit.BoundsSizeY * ppu;
