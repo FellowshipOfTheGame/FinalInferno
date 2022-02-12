@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Fog.Dialogue;
 
 namespace FinalInferno {
     public class LoadStuff : MonoBehaviour {
@@ -12,6 +13,7 @@ namespace FinalInferno {
 #endif
             volumeController.ResetValues();
             SaveLoader.AutoSave = true;
+            DialogueHandler.debugActivated = StaticReferences.DebugBuild;
 
             StartCoroutine(PreloadAsync());
         }

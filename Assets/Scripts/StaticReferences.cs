@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using FinalInferno;
+using Fog.Dialogue;
 
 [RequireComponent(typeof(Jukebox), typeof(DontDestroyThis))]
 public class StaticReferences : MonoBehaviour {
@@ -16,12 +18,12 @@ public class StaticReferences : MonoBehaviour {
     public static Jukebox BGM => Instance ? Instance.bgm : null;
     [SerializeField] private AudioClip mainMenuBGM;
     public static AudioClip MainMenuBGM => Instance == null ? null : Instance.mainMenuBGM;
-    [SerializeField] private Fog.Dialogue.Dialogue firstDialogue;
-    public static Fog.Dialogue.Dialogue FirstDialogue => Instance == null ? null : Instance.firstDialogue;
-    [SerializeField] private FinalInferno.ScenePicker firstScene;
+    [SerializeField] private Dialogue firstDialogue;
+    public static Dialogue FirstDialogue => Instance == null ? null : Instance.firstDialogue;
+    [SerializeField] private ScenePicker firstScene;
     public static string FirstScene => (Instance != null && Instance.firstScene.Name != "") ? Instance.firstScene.Name : null;
-    [SerializeField] private FinalInferno.AssetManager assetManager = null;
-    public static FinalInferno.AssetManager AssetManager => Instance == null ? null : Instance.assetManager;
+    [SerializeField] private AssetManager assetManager = null;
+    public static AssetManager AssetManager => Instance == null ? null : Instance.assetManager;
     [SerializeField] private VolumeController volumeController;
     public static VolumeController VolumeController => Instance == null ? null : Instance.volumeController;
 

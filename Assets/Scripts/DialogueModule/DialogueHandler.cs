@@ -69,6 +69,7 @@ namespace Fog.Dialogue {
         public event DialogueAction OnDialogueEnd;
 
         public static DialogueHandler instance;
+        public static bool debugActivated = false;
 
 		#region Singleton
         private void Awake() {
@@ -125,7 +126,7 @@ namespace Fog.Dialogue {
         private void SkipAllLinesIfDebug() {
             // On unity editor, adds option to skip all dialogues for quicker debugging
             // For this project only, we will use a specific boolean variable instead
-            if (StaticReferences.DebugBuild) {
+            if (debugActivated) {
                 if (cancelAction.action.triggered) {
                     dialogueLines.Clear();
                     EndDialogue();
