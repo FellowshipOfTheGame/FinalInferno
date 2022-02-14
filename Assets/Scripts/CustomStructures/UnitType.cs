@@ -1,7 +1,7 @@
 ﻿namespace FinalInferno {
     public enum UnitType {
-        Hero,
-        Enemy,
-        Null
+        Hero = 0,
+        Enemy = 1,
+        Null = 2
     }
 }
