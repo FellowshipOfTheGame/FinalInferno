@@ -15,6 +15,10 @@ namespace FinalInferno.Input {
 
         protected override void OnEnable() {
             base.OnEnable();
+            FindSerializedProperties();
+        }
+
+        private void FindSerializedProperties() {
             inputActions = serializedObject.FindProperty("inputActions");
             controlSchemesNames = serializedObject.FindProperty("controlSchemesNames");
             controlSchemesImages = serializedObject.FindProperty("controlSchemesImages");
@@ -22,41 +26,60 @@ namespace FinalInferno.Input {
 
         public override void OnInspectorGUI() {
             serializedObject.Update();
+            DisplayActionAssetPicker();
+            DisplayImageConfigIfNeeded();
+            serializedObject.ApplyModifiedProperties();
+            DisplayRegularImageEditor();
+        }
 
+        private void DisplayActionAssetPicker() {
+            EditorGUILayout.Space();
             EditorGUILayout.LabelField("Input Info:", EditorStyles.boldLabel);
             EditorGUILayout.Space();
             EditorGUILayout.PropertyField(inputActions);
+        }
+
+        private void DisplayImageConfigIfNeeded() {
             if (inputActions.objectReferenceValue != null) {
                 EditorGUI.indentLevel++;
                 InputActionAsset inputActionAsset = inputActions.objectReferenceValue as InputActionAsset;
-                string[] schemeNames = Array.ConvertAll<InputControlScheme, string>(inputActionAsset.controlSchemes.ToArray(), map => map.name);
+                string[] schemeNames = GetSchemeNames(inputActionAsset);
                 controlSchemesNames.ClearArray();
                 for (int i = 0; i < schemeNames.Length; i++) {
                     EditorGUILayout.BeginHorizontal();
-
-                    controlSchemesNames.InsertArrayElementAtIndex(i);
-                    controlSchemesNames.GetArrayElementAtIndex(i).stringValue = schemeNames[i];
-                    EditorGUILayout.PrefixLabel(schemeNames[i]);
-
-                    if (i >= controlSchemesImages.arraySize) {
-                        controlSchemesImages.InsertArrayElementAtIndex(i);
-                    }
-                    SerializedProperty imageProperty = controlSchemesImages.GetArrayElementAtIndex(i);
-                    imageProperty.objectReferenceValue = EditorGUILayout.ObjectField(imageProperty.objectReferenceValue, typeof(Sprite), false);
-
+                    SaveAndDisplaySchemeName(schemeNames, i);
+                    DisplaySpritePicker(i);
                     EditorGUILayout.EndHorizontal();
                 }
                 EditorGUI.indentLevel--;
             }
+        }
 
-            serializedObject.ApplyModifiedProperties();
-            EditorGUILayout.Space();
+        private void SaveAndDisplaySchemeName(string[] schemeNames, int i) {
+            controlSchemesNames.InsertArrayElementAtIndex(i);
+            controlSchemesNames.GetArrayElementAtIndex(i).stringValue = schemeNames[i];
+            EditorGUILayout.PrefixLabel(schemeNames[i]);
+        }
+
+        private void DisplaySpritePicker(int i) {
+            if (i >= controlSchemesImages.arraySize) {
+                controlSchemesImages.InsertArrayElementAtIndex(i);
+            }
+            SerializedProperty imageProperty = controlSchemesImages.GetArrayElementAtIndex(i);
+            imageProperty.objectReferenceValue = EditorGUILayout.ObjectField(imageProperty.objectReferenceValue, typeof(Sprite), false);
+        }
+
+        private static string[] GetSchemeNames(InputActionAsset inputActionAsset) {
+            return Array.ConvertAll<InputControlScheme, string>(inputActionAsset.controlSchemes.ToArray(), map => map.name);
+        }
+
+        private void DisplayRegularImageEditor() {
             EditorGUILayout.LabelField("Regular Image Info:", EditorStyles.boldLabel);
             EditorGUILayout.Space();
             base.OnInspectorGUI();
         }
 
-        // Conversion
+        #region Conversion
         // Baseado no código do pacote SoftMaskForUGUI by mob-sakai
         [MenuItem("CONTEXT/Image/Convert to Input Dependent Image", true)]
         private static bool _ConvertToInputDependentImage(MenuCommand command) {
@@ -101,6 +124,7 @@ namespace FinalInferno.Input {
 
             (serializedObject.targetObject as MonoBehaviour).enabled = oldEnable;
         }
+        #endregion
     }
 
 #endif

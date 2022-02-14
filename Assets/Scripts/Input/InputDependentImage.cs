@@ -13,38 +13,65 @@ namespace FinalInferno.Input {
         protected override void OnEnable() {
             base.OnEnable();
             if (inputActions != null) {
-                foreach (InputActionMap map in inputActions.actionMaps) {
-                    map.actionTriggered += UpdateImage;
-                }
+                AddActionCallbacks();
+            }
+        }
+
+        private void AddActionCallbacks() {
+            foreach (InputActionMap map in inputActions.actionMaps) {
+                map.actionTriggered += DetectDeviceAndUpdateImage;
             }
         }
 
         protected override void OnDisable() {
             if (inputActions != null) {
-                foreach (InputActionMap map in inputActions.actionMaps) {
-                    map.actionTriggered -= UpdateImage;
-                }
+                RemoveActionCallbacks();
             }
             base.OnDisable();
         }
 
-        private void UpdateImage(InputAction.CallbackContext context) {
+        private void RemoveActionCallbacks() {
+            foreach (InputActionMap map in inputActions.actionMaps) {
+                map.actionTriggered -= DetectDeviceAndUpdateImage;
+            }
+        }
+
+        private void DetectDeviceAndUpdateImage(InputAction.CallbackContext context) {
             InputDevice newDevice = context.control?.device;
-            if (inputActions == null || newDevice == null || newDevice == lastDevice) {
+            if (ShouldIgnoreChange(newDevice)) {
                 return;
             }
-
             lastDevice = newDevice;
-            int index = controlSchemesNames.FindIndex(IsLastDeviceInControlScheme);
-            if (index >= 0 && index < controlSchemesNames.Count) {
-                if (controlSchemesImages[index] == null) {
-                    Debug.LogError($"[InputDependentImage] No image set for mapping {controlSchemesNames[index]} in object {gameObject.name}");
-                } else {
-                    sprite = controlSchemesImages[index];
-                }
-            } else {
-                Debug.LogWarning($"[InputDependentImage] Device {lastDevice.name} is not inside registered mappings for object {gameObject.name}");
+            UpdateImage();
+        }
+
+        private bool ShouldIgnoreChange(InputDevice newDevice) {
+            return inputActions == null || newDevice == null || newDevice == lastDevice;
+        }
+
+        private void UpdateImage() {
+            int deviceIndex = controlSchemesNames.FindIndex(IsLastDeviceInControlScheme);
+            if (deviceIndex < 0 || deviceIndex >= controlSchemesNames.Count) {
+                LogUnregisteredDeviceWarning();
+                return;
             }
+            UpdateImageSprite(deviceIndex);
+        }
+
+        private void LogUnregisteredDeviceWarning() {
+            Debug.LogWarning($"[InputDependentImage] Device {lastDevice.name} is not inside registered mappings for object {gameObject.name}");
+        }
+
+        private void UpdateImageSprite(int deviceIndex) {
+            if (controlSchemesImages[deviceIndex] == null) {
+                LogNullImageError(deviceIndex);
+            } else {
+                sprite = controlSchemesImages[deviceIndex];
+            }
+        }
+
+        private void LogNullImageError(int index) {
+            Debug.LogError($"[InputDependentImage] No image set for mapping {controlSchemesNames[index]} in object {gameObject.name}");
         }
 
         private bool IsLastDeviceInControlScheme(string schemeName) {
