@@ -6,7 +6,6 @@ namespace FinalInferno {
     // PropertyDrawer necessario para exibir e editar QuestEvent no editor da unity
     [CustomPropertyDrawer(typeof(QuestEvent))]
     public class QuestEventDrawer : PropertyDrawer {
-
         private SerializedProperty quest, eventFlag;
         private int index;
         private Rect questRect;
@@ -20,33 +19,47 @@ namespace FinalInferno {
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
             EditorGUI.BeginProperty(position, label, property);
-
-            // Define a posicao do campo de quest
-            questRect = new Rect(new Vector2(position.position.x, position.position.y), new Vector2(position.size.x, EditorGUIUtility.singleLineHeight));
-            // Encontra as referencias para os elementos da struct
-            quest = property.FindPropertyRelative("quest");
-            eventFlag = property.FindPropertyRelative("eventFlag");
-            // Cria o campo para a referencia de quest
-            EditorGUI.PropertyField(questRect, quest);
-            // Se a referencia de quest for nula, pula o campo de eventFlag, copiando a posicao do campo de quest
-            eventRect = (quest.objectReferenceValue == null) ? questRect : new Rect(new Vector2(questRect.x, questRect.y + questRect.height), new Vector2(position.size.x, EditorGUIUtility.singleLineHeight));
-            if (quest.objectReferenceValue != null) {
-                // Caso uma quest tenha sido referenciada, obtem a lista eventos criados nela
-                Quest _quest = (Quest)quest.objectReferenceValue;
-                string[] keys = _quest.FlagNames;
-                // Cria um popup com as chaves definidas pela quest referenciada
-                index = Mathf.Clamp(System.Array.IndexOf(keys, eventFlag.stringValue), 0, Mathf.Max(keys.Length - 1, 0));
-                index = EditorGUI.Popup(eventRect, "Event", index, keys);
-                eventFlag.stringValue = (keys.Length > 0) ? keys[index] : "";
-            } else {
-                // Se nao houver referencia de quest, apenas salva string vazia sem criar o campo de popup
-                eventFlag.stringValue = "";
-            }
-
+            FindSerializedStructureProperties(property);
+            DrawQuestField(position);
+            DrawEventFlagFieldIfNecessary();
             EditorGUI.EndProperty();
         }
+
+        private void FindSerializedStructureProperties(SerializedProperty property) {
+            quest = property.FindPropertyRelative("quest");
+            eventFlag = property.FindPropertyRelative("eventFlag");
+        }
+
+        private void DrawQuestField(Rect position) {
+            questRect = new Rect(position);
+            questRect.height = EditorGUIUtility.singleLineHeight;
+            EditorGUI.PropertyField(questRect, quest);
+        }
+
+        private void DrawEventFlagFieldIfNecessary() {
+            if (quest.objectReferenceValue != null) {
+                DrawEventFlagField();
+            } else {
+                eventFlag.stringValue = "";
+            }
+        }
+
+        private void DrawEventFlagField() {
+            eventRect = NewRectBelow(questRect);
+            Quest _quest = quest.objectReferenceValue as Quest;
+            string[] keys = _quest.FlagNames;
+            int indexOfSerializedFlag = System.Array.IndexOf(keys, eventFlag.stringValue);
+            index = Mathf.Clamp(indexOfSerializedFlag, 0, Mathf.Max(keys.Length - 1, 0));
+            index = EditorGUI.Popup(eventRect, "Event", index, keys);
+            eventFlag.stringValue = (keys.Length > 0) ? keys[index] : "";
+        }
+
+        private Rect NewRectBelow(Rect rect) {
+            Rect returnValue = new Rect(rect);
+            returnValue.y += rect.height;
+            returnValue.height = EditorGUIUtility.singleLineHeight;
+            return returnValue;
+        }
     }
-
 #endif
-
 }

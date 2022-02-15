@@ -17,36 +17,52 @@ namespace FinalInferno {
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
             EditorGUI.BeginProperty(position, label, property);
-
             position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
+            FindSerializedClassProperties(property);
+            FindSerializedSceneObject();
+            DrawScenePicker(position);
+            SaveSceneInfo();
+            EditorGUI.EndProperty();
+        }
 
-            rect = new Rect(position.x, position.y, position.size.x, EditorGUIUtility.singleLineHeight);
+        private void FindSerializedClassProperties(SerializedProperty property) {
             sceneName = property.FindPropertyRelative("sceneName");
             assetPath = property.FindPropertyRelative("assetPath");
             guid = property.FindPropertyRelative("guid");
+        }
 
-            if (sceneObj == null && assetPath.stringValue != "") {
-                sceneObj = AssetDatabase.LoadAssetAtPath<SceneAsset>(assetPath.stringValue);
-            } else if (assetPath.stringValue == "") {
+        private void FindSerializedSceneObject() {
+            bool hasSceneInfo = (!string.IsNullOrEmpty(assetPath.stringValue) || !string.IsNullOrEmpty(guid.stringValue));
+            if (sceneObj == null && hasSceneInfo) {
+                FindSceneObjUsingGUID();
+                FindSceneObjUsingPathIfNull();
+            } else if (sceneObj != null) {
                 sceneObj = null;
             }
+        }
 
-            sceneObj = EditorGUI.ObjectField(rect, sceneObj, typeof(SceneAsset), false);
-
-            if (sceneObj != null) {
-                sceneName.stringValue = sceneObj.name;
-                assetPath.stringValue = AssetDatabase.GetAssetPath(sceneObj.GetInstanceID());
-                guid.stringValue = AssetDatabase.AssetPathToGUID(assetPath.stringValue);
-            } else {
-                sceneName.stringValue = "";
-                assetPath.stringValue = "";
-                guid.stringValue = "";
+        private void FindSceneObjUsingGUID() {
+            if(!string.IsNullOrEmpty(guid.stringValue)){
+                sceneObj = AssetDatabase.LoadAssetAtPath<SceneAsset>(AssetDatabase.GUIDToAssetPath(guid.stringValue));
             }
+        }
 
-            EditorGUI.EndProperty();
+        private void FindSceneObjUsingPathIfNull() {
+            if(!string.IsNullOrEmpty(assetPath.stringValue)){
+                sceneObj = sceneObj == null ? AssetDatabase.LoadAssetAtPath<SceneAsset>(assetPath.stringValue) : sceneObj;
+            }
+        }
+
+        private void DrawScenePicker(Rect position) {
+            rect = new Rect(position.x, position.y, position.size.x, EditorGUIUtility.singleLineHeight);
+            sceneObj = EditorGUI.ObjectField(rect, sceneObj, typeof(SceneAsset), false);
+        }
+
+        private void SaveSceneInfo() {
+            sceneName.stringValue = sceneObj == null ? "" : sceneObj.name;
+            assetPath.stringValue = sceneObj == null ? "" : AssetDatabase.GetAssetPath(sceneObj.GetInstanceID());
+            guid.stringValue = sceneObj == null ? "" : AssetDatabase.AssetPathToGUID(assetPath.stringValue);
         }
     }
-
 #endif
-
 }

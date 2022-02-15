@@ -21,35 +21,54 @@ namespace FinalInferno {
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
             EditorGUI.BeginProperty(position, label, property);
+            FindSerializedStructProperties(property);
+            DrawQuestField(position);
+            DrawEventFlagFieldIfNecessary();
+            DrawDialogueField();
+            EditorGUI.EndProperty();
+        }
 
-            // Define a posicao do campo de quest
-            questRect = new Rect(new Vector2(position.position.x, position.position.y + 5f), new Vector2(position.size.x, EditorGUIUtility.singleLineHeight));
-            // Encontra as referencias para os elementos da struct
+        private void FindSerializedStructProperties(SerializedProperty property) {
             quest = property.FindPropertyRelative("quest");
             eventFlag = property.FindPropertyRelative("eventFlag");
             dialogue = property.FindPropertyRelative("dialogue");
-            // Cria o campo para a referencia de quest
+        }
+
+        private void DrawQuestField(Rect position) {
+            questRect = new Rect(position);
+            questRect.y += 5f;
+            questRect.height = EditorGUIUtility.singleLineHeight;
             EditorGUI.PropertyField(questRect, quest);
-            // Se a referencia de quest for nula, pula o campo de eventFlag, copiando a posicao do campo de quest
-            eventRect = (quest.objectReferenceValue == null) ? questRect : new Rect(new Vector2(questRect.x, questRect.y + questRect.height), new Vector2(position.size.x, EditorGUIUtility.singleLineHeight));
-            // A posicao do campo de dialogue e relativa a posicao do campo de eventFlag
-            dialogueRect = new Rect(new Vector2(eventRect.x, eventRect.y + eventRect.height), new Vector2(position.size.x, EditorGUIUtility.singleLineHeight));
+        }
+
+        private void DrawEventFlagFieldIfNecessary() {
+            eventRect = (quest.objectReferenceValue == null) ? questRect : NewRectBelow(questRect);
             if (quest.objectReferenceValue != null) {
-                // Caso uma quest tenha sido referenciada, obtem a lista eventos criados nela
-                Quest _quest = (Quest)quest.objectReferenceValue;
-                string[] keys = _quest.FlagNames;
-                // Cria um popup com as chaves definidas pela quest referenciada
-                index = Mathf.Clamp(System.Array.IndexOf(keys, eventFlag.stringValue), 0, Mathf.Max(keys.Length - 1, 0));
-                index = EditorGUI.Popup(eventRect, "Event", index, keys);
-                eventFlag.stringValue = (keys.Length > 0) ? keys[index] : "";
+                DrawEventFlagField();
             } else {
-                // Se nao houver referencia de quest, apenas salva string vazia sem criar o campo de popup
                 eventFlag.stringValue = "";
             }
-            // Cria o campo de referencia de dialogue
-            EditorGUI.PropertyField(dialogueRect, dialogue);
+        }
 
-            EditorGUI.EndProperty();
+        private Rect NewRectBelow(Rect rect) {
+            Rect returnValue = new Rect(rect);
+            returnValue.y += rect.height;
+            returnValue.height = EditorGUIUtility.singleLineHeight;
+            return returnValue;
+        }
+
+        private void DrawEventFlagField() {
+            Quest _quest = quest.objectReferenceValue as Quest;
+            string[] keys = _quest.FlagNames;
+            int indexOfSerializedFlag = System.Array.IndexOf(keys, eventFlag.stringValue);
+            index = Mathf.Clamp(indexOfSerializedFlag, 0, Mathf.Max(keys.Length - 1, 0));
+            index = EditorGUI.Popup(eventRect, "Event", index, keys);
+            eventFlag.stringValue = (keys.Length > 0) ? keys[index] : "";
+        }
+
+        private void DrawDialogueField() {
+            dialogueRect = NewRectBelow(eventRect);
+            EditorGUI.PropertyField(dialogueRect, dialogue);
         }
     }
 #endif

@@ -9,6 +9,7 @@ namespace FinalInferno {
         private Rect nameRect;
         private Rect posRect;
         private Object sceneObj = null;
+        private readonly string[] searchInFolders = { "Assets/Scenes" };
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
             SerializedProperty _sceneName = property.FindPropertyRelative("scene");
@@ -18,33 +19,56 @@ namespace FinalInferno {
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
             EditorGUI.BeginProperty(position, label, property);
-
-            nameRect = new Rect(new Vector2(position.position.x, position.position.y + 5f), new Vector2(position.size.x, EditorGUIUtility.singleLineHeight));
-            posRect = new Rect(new Vector2(nameRect.position.x, nameRect.position.y + nameRect.height), new Vector2(nameRect.size.x, EditorGUIUtility.singleLineHeight));
+            FindSerializedStructProperties(property);
+            if (sceneObj == null) {
+                FindSceneObjByName();
+            }
+            DrawSceneFieldAndSaveSceneName(position);
+            DrawPositionFieldIfNecessary();
+            EditorGUI.EndProperty();
+        }
+        private void FindSerializedStructProperties(SerializedProperty property) {
             sceneName = property.FindPropertyRelative("scene");
             scenePos = property.FindPropertyRelative("position");
+        }
 
-            if (sceneObj == null) {
-                // Tenta achar a cena salva atualmente na pasta de cenas
-                string[] objectsFound = AssetDatabase.FindAssets(sceneName.stringValue + " t:sceneAsset", new[] { "Assets/Scenes" });
-                if (sceneName.stringValue != null && sceneName.stringValue != "" && objectsFound != null && objectsFound.Length > 0 && objectsFound[0] != null && objectsFound[0] != "") {
-                    sceneObj = AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(objectsFound[0]), typeof(Object));
-                } else {
-                    //Debug.Log("Não achou");
-                    sceneObj = null;
-                }
+        private void FindSceneObjByName() {
+            string[] objectsFound = FindScenesInFolders(searchInFolders);
+            bool foundAtLeastOneScene = objectsFound != null && objectsFound.Length > 0 && !string.IsNullOrEmpty(objectsFound[0]);
+            if (!string.IsNullOrEmpty(sceneName.stringValue) && foundAtLeastOneScene) {
+                sceneObj = AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(objectsFound[0]), typeof(Object));
+            } else {
+                sceneObj = null;
             }
+        }
 
+        private string[] FindScenesInFolders(string[] searchInFolders) {
+            return AssetDatabase.FindAssets(sceneName.stringValue + " t:sceneAsset", searchInFolders);
+        }
+
+        private void DrawSceneFieldAndSaveSceneName(Rect position) {
+            nameRect = new Rect(position);
+            nameRect.y += 5f;
+            nameRect.height = EditorGUIUtility.singleLineHeight;
             sceneObj = EditorGUI.ObjectField(nameRect, sceneObj, typeof(SceneAsset), false);
             sceneName.stringValue = (sceneObj != null) ? sceneObj.name : "";
+        }
 
+        private void DrawPositionFieldIfNecessary() {
             if (sceneObj != null) {
+                posRect = NewRectBelow(nameRect);
                 scenePos.vector2Value = EditorGUI.Vector2Field(posRect, "Position", scenePos.vector2Value);
             } else {
                 scenePos.vector2Value = Vector2.zero;
             }
+        }
 
-            EditorGUI.EndProperty();
+
+        private Rect NewRectBelow(Rect rect) {
+            Rect returnValue = new Rect(rect);
+            returnValue.y += rect.height;
+            returnValue.height = EditorGUIUtility.singleLineHeight;
+            return returnValue;
         }
     }
 #endif
