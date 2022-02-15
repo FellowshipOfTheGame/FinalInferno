@@ -27,6 +27,13 @@ namespace FinalInferno {
 
             return croppedTexture;
         }
+
+        public static Rect NewRectBelow(Rect rect) {
+            Rect returnValue = new Rect(rect);
+            returnValue.y += rect.height;
+            returnValue.height = EditorGUIUtility.singleLineHeight;
+            return returnValue;
+        }
     }
 #endif
 }

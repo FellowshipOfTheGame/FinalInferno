@@ -7,66 +7,33 @@ namespace FinalInferno {
 #if UNITY_EDITOR
     [CustomPropertyDrawer(typeof(ChangeRule))]
     public class ChangeRuleDrawer : PropertyDrawer {
-        private SerializedProperty quest, eventFlag, animationFlag, toggleValue;
-        private int questFlagIndex, animationFlagIndex;
-        private Rect questRect;
-        private Rect eventRect;
+        private SerializedProperty animationFlag, toggleValue;
+        private int animationFlagIndex;
         private Rect animRect;
         private Rect toggleRect;
+        private const float toggleFieldSize = 40f;
+        private QuestEventField questEventField = new QuestEventField();
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
-            SerializedProperty _quest = property.FindPropertyRelative("quest");
+            float questEventFieldHeight = questEventField.GetFieldHeight(property);
             Animator anim = Selection.activeGameObject.GetComponent<Animator>();
-            int i = 1 + ((_quest != null && _quest.objectReferenceValue != null) ? 1 : 0) + ((anim != null && anim.runtimeAnimatorController != null) ? 1 : 0);
-            return (i * EditorGUIUtility.singleLineHeight) + 10f;
+            float animFieldHeight = (anim != null && anim.runtimeAnimatorController != null) ? EditorGUIUtility.singleLineHeight : 0;
+            return questEventFieldHeight + animFieldHeight + 10f;
         }
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
             EditorGUI.BeginProperty(position, label, property);
             FindSerializedStructProperties(property);
-            DrawQuestField(position);
-            DrawEventFlagFieldIfNecessary();
+            position.y += 5f;
+            questEventField.DrawQuestEventField(position);
             DrawAnimationFlagFieldIfPossible(position);
             EditorGUI.EndProperty();
         }
 
         private void FindSerializedStructProperties(SerializedProperty property) {
-            quest = property.FindPropertyRelative("quest");
-            eventFlag = property.FindPropertyRelative("eventFlag");
+            questEventField.FindSerializedStructProperties(property);
             animationFlag = property.FindPropertyRelative("animationFlag");
             toggleValue = property.FindPropertyRelative("newValue");
-        }
-
-        private void DrawQuestField(Rect position) {
-            questRect = new Rect(position);
-            questRect.y += 5f;
-            questRect.height = EditorGUIUtility.singleLineHeight;
-            EditorGUI.PropertyField(questRect, quest);
-        }
-
-        private void DrawEventFlagFieldIfNecessary() {
-            eventRect = (quest.objectReferenceValue == null) ? questRect : NewRectBelow(questRect);
-            if (quest.objectReferenceValue != null) {
-                DrawEventFlagField();
-            } else {
-                eventFlag.stringValue = "";
-            }
-        }
-
-        private Rect NewRectBelow(Rect rect) {
-            Rect returnValue = new Rect(rect);
-            returnValue.y += rect.height;
-            returnValue.height = EditorGUIUtility.singleLineHeight;
-            return returnValue;
-        }
-
-        private void DrawEventFlagField() {
-            Quest _quest = quest.objectReferenceValue as Quest;
-            string[] keys = _quest.FlagNames;
-            int indexOfSerializedFlag = System.Array.IndexOf(keys, eventFlag.stringValue);
-            questFlagIndex = Mathf.Clamp(indexOfSerializedFlag, 0, Mathf.Max(keys.Length - 1, 0));
-            questFlagIndex = EditorGUI.Popup(eventRect, "Event", questFlagIndex, keys);
-            eventFlag.stringValue = (keys.Length > 0) ? keys[questFlagIndex] : "";
         }
 
         private void DrawAnimationFlagFieldIfPossible(Rect position) {
@@ -74,7 +41,7 @@ namespace FinalInferno {
             ReenableAnimator(anim);
             if (anim == null || anim.runtimeAnimatorController == null) {
                 LogSelectionErrorIfNecessary(anim);
-                animRect = new Rect(eventRect);
+                animRect = new Rect(questEventField.EventRect);
                 animationFlag.stringValue = "";
             } else {
                 DrawAnimationFlagField(position, anim);
@@ -105,10 +72,11 @@ namespace FinalInferno {
         }
 
         private void CalculateAnimationFlagFieldRects(Rect position) {
-            animRect = NewRectBelow(eventRect);
-            animRect.size = new Vector2(position.size.x - 40, animRect.size.y);
+            animRect = EditorUtils.NewRectBelow(questEventField.EventRect);
+            animRect.size = new Vector2(position.size.x - toggleFieldSize, animRect.size.y);
             toggleRect = new Rect(animRect);
-            toggleRect.size = new Vector2(position.size.x - animRect.size.x, animRect.size.y);
+            toggleRect.x += animRect.size.x;
+            toggleRect.size = new Vector2(toggleFieldSize, animRect.size.y);
         }
 
         private void DrawParametersPopupField(Animator anim) {

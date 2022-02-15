@@ -4,7 +4,7 @@ using UnityEngine;
 namespace FinalInferno {
 #if UNITY_EDITOR
     [CustomPropertyDrawer(typeof(ScenePicker))]
-    public class ScenePickerEditor : PropertyDrawer {
+    public class ScenePickerDrawer : PropertyDrawer {
         private SerializedProperty sceneName;
         private SerializedProperty assetPath;
         private SerializedProperty guid;
@@ -36,7 +36,7 @@ namespace FinalInferno {
             if (sceneObj == null && hasSceneInfo) {
                 FindSceneObjUsingGUID();
                 FindSceneObjUsingPathIfNull();
-            } else if (sceneObj != null) {
+            } else if (sceneObj != null && !hasSceneInfo) {
                 sceneObj = null;
             }
         }
