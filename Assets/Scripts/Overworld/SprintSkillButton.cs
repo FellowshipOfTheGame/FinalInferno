@@ -19,14 +19,12 @@ namespace FinalInferno {
 
         private void OnEnable() {
             isButtonDown = false;
-            buttonAction.action.performed += SetButtonDown;
-            buttonAction.action.canceled += SetButtonUp;
+            SetupCallbacks();
         }
 
-        private void OnDisable() {
-            buttonAction.action.performed -= SetButtonDown;
-            buttonAction.action.canceled -= SetButtonUp;
-            isButtonDown = false;
+        private void SetupCallbacks() {
+            buttonAction.action.performed += SetButtonDown;
+            buttonAction.action.canceled += SetButtonUp;
         }
 
         private void SetButtonDown(InputAction.CallbackContext context) {
@@ -36,15 +34,33 @@ namespace FinalInferno {
             isButtonDown = false;
         }
 
+        private void OnDisable() {
+            RemoveCallbacks();
+            isButtonDown = false;
+        }
+
+        private void RemoveCallbacks() {
+            buttonAction.action.performed -= SetButtonDown;
+            buttonAction.action.canceled -= SetButtonUp;
+        }
+
         private void Update() {
             if (!sprintSkill.active) {
-                if (CharacterOW.PartyCanMove && isButtonDown) {
-                    sprintSkill?.Activate();
-                }
+                CheckButtonPress();
             } else {
-                if (CharacterOW.PartyCanMove && !isButtonDown) {
-                    sprintSkill?.Deactivate();
-                }
+                CheckButtonRelease();
+            }
+        }
+
+        private void CheckButtonPress() {
+            if (CharacterOW.PartyCanMove && isButtonDown) {
+                sprintSkill?.Activate();
+            }
+        }
+
+        private void CheckButtonRelease() {
+            if (CharacterOW.PartyCanMove && !isButtonDown) {
+                sprintSkill?.Deactivate();
             }
         }
     }
