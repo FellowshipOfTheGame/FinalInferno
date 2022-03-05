@@ -9,7 +9,7 @@ namespace FinalInferno {
         private Rect nameRect;
         private Rect posRect;
         private Object sceneObj = null;
-        private readonly string[] searchInFolders = { "Assets/Scenes" };
+        private readonly string[] foldersToSearch = { "Assets/Scenes" };
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
             SerializedProperty _sceneName = property.FindPropertyRelative("scene");
@@ -33,7 +33,7 @@ namespace FinalInferno {
         }
 
         private void FindSceneObjByName() {
-            string[] objectsFound = FindScenesInFolders(searchInFolders);
+            string[] objectsFound = FindScenesInFolders();
             bool foundAtLeastOneScene = objectsFound != null && objectsFound.Length > 0 && !string.IsNullOrEmpty(objectsFound[0]);
             if (!string.IsNullOrEmpty(sceneName.stringValue) && foundAtLeastOneScene) {
                 sceneObj = AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(objectsFound[0]), typeof(Object));
@@ -42,8 +42,8 @@ namespace FinalInferno {
             }
         }
 
-        private string[] FindScenesInFolders(string[] searchInFolders) {
-            return AssetDatabase.FindAssets(sceneName.stringValue + " t:sceneAsset", searchInFolders);
+        private string[] FindScenesInFolders() {
+            return AssetDatabase.FindAssets($"{sceneName.stringValue} t:sceneAsset", foldersToSearch);
         }
 
         private void DrawSceneFieldAndSaveSceneName(Rect position) {
@@ -56,19 +56,11 @@ namespace FinalInferno {
 
         private void DrawPositionFieldIfNecessary() {
             if (sceneObj != null) {
-                posRect = NewRectBelow(nameRect);
+                posRect = EditorUtils.NewRectBelow(nameRect);
                 scenePos.vector2Value = EditorGUI.Vector2Field(posRect, "Position", scenePos.vector2Value);
             } else {
                 scenePos.vector2Value = Vector2.zero;
             }
-        }
-
-
-        private Rect NewRectBelow(Rect rect) {
-            Rect returnValue = new Rect(rect);
-            returnValue.y += rect.height;
-            returnValue.height = EditorGUIUtility.singleLineHeight;
-            return returnValue;
         }
     }
 #endif

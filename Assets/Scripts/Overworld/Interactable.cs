@@ -34,22 +34,10 @@ namespace FinalInferno {
         }
 
         public void OnInteractAttempt() {
-            Dialogue selectedDialogue = GetLastUnlockedDialogue();
+            Dialogue selectedDialogue = DialogueEntry.GetLastUnlockedDialogue(dialogues);
             if (selectedDialogue != null) {
                 DialogueHandler.instance.StartDialogue(selectedDialogue);
             }
-        }
-
-        private Dialogue GetLastUnlockedDialogue() {
-            Dialogue selectedDialogue = null;
-            foreach (DialogueEntry entry in dialogues) {
-                if (entry.IsConditionSatisfied) {
-                    selectedDialogue = entry.dialogue;
-                } else {
-                    break;
-                }
-            }
-            return selectedDialogue;
         }
 
         public void OnTriggerEnter2D(Collider2D col) {

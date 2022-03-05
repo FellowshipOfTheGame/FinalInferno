@@ -1,33 +1,40 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using Fog.Dialogue;
 
 namespace FinalInferno {
     [RequireComponent(typeof(Collider2D))]
     public abstract class Triggerable : MonoBehaviour {
         public void Reset() {
-            int nColliders = GetComponents<Collider2D>().Length;
-            // Se so tem um collider, se certifica que ele seja trigger
+            Collider2D[] colliders = GetComponents<Collider2D>();
+            EnsureAtLeastOneTrigger(colliders);
+        }
+
+        private void EnsureAtLeastOneTrigger(Collider2D[] colliders) {
+            int nColliders = colliders.Length;
             if (nColliders == 1) {
-                GetComponent<Collider2D>().isTrigger = true;
-            } else {
-                bool hasTrigger = false;
-                // Se tiver mais de um collider, verifica se ao menos um deles e trigger
-                foreach (Collider2D col in GetComponents<Collider2D>()) {
-                    hasTrigger = col.isTrigger;
-                    if (hasTrigger) {
-                        break;
-                    }
-                }
-                // Se nenhum deles for, se certifica de que o primeiro deles seja trigger
-                if (!hasTrigger) {
-                    GetComponent<Collider2D>().isTrigger = true;
+                colliders[0].isTrigger = true;
+            } else if (nColliders > 0) {
+                bool alreadyHasTrigger = HasAtLeastOneTrigger(colliders);
+                if (!alreadyHasTrigger) {
+                    colliders[0].isTrigger = true;
                 }
             }
         }
 
-        protected abstract void TriggerAction(Fog.Dialogue.Agent agent);
+        private bool HasAtLeastOneTrigger(Collider2D[] colliders) {
+            foreach (Collider2D col in colliders) {
+                if(col.isTrigger) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        protected abstract void TriggerAction(Agent agent);
 
         private void OnTriggerEnter2D(Collider2D col) {
-            Fog.Dialogue.Agent agent = col.GetComponent<Fog.Dialogue.Agent>();
+            Agent agent = col.GetComponent<Agent>();
             if (agent != null) {
                 TriggerAction(agent);
             }
