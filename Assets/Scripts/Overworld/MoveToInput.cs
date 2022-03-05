@@ -7,7 +7,6 @@ namespace FinalInferno {
         private bool isActive;
         [SerializeField] private InputActionReference movementAction;
 
-        // O objeto deve estar parado inicialmente
         private void Start() {
             input = Vector2.zero;
         }
@@ -22,17 +21,13 @@ namespace FinalInferno {
             isActive = false;
         }
 
-        // A direcao a ser seguida e determinada apenas pelo input
         override public Vector2 Direction() {
             return input.normalized;
         }
 
-        // Update is called once per frame
         private void Update() {
             if (isActive) {
                 input = movementAction.action.ReadValue<Vector2>();
-                // input.x = UnityEngine.Input.GetAxisRaw("Horizontal");
-                // input.y = UnityEngine.Input.GetAxisRaw("Vertical");
             }
         }
     }
