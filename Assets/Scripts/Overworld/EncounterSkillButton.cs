@@ -19,33 +19,39 @@ namespace FinalInferno {
             if (encounterSkill == null || encounterSkill.Level < 1) {
                 gameObject.SetActive(false);
             } else {
-                skillDistance = encounterSkill?.effects[0].value2 ?? 0;
-                onCooldown = false;
-                skillCooldownDistance = Mathf.Max(skillCooldownDistance, float.Epsilon);
+                ResetValuesToDefault();
             }
+        }
+
+        private void ResetValuesToDefault() {
+            skillDistance = encounterSkill?.effects[0].value2 ?? 0;
+            onCooldown = false;
+            skillCooldownDistance = Mathf.Max(skillCooldownDistance, float.Epsilon);
         }
 
         private void Update() {
             if (!encounterSkill.active) {
-                if (CharacterOW.PartyCanMove && !onCooldown && isButtonDown) {
-                    encounterSkill.Activate();
-                    onCooldown = true;
-                }
+                CheckSkillActivation();
             }
         }
 
-        private void OnEnable() {
-            distanceWalkedRef.AddObserver(this);
-            isButtonDown = false;
-            buttonAction.action.performed += SetButtonDown;
-            buttonAction.action.canceled += SetButtonUp;
+        private void CheckSkillActivation() {
+            if (!CharacterOW.PartyCanMove || onCooldown || !isButtonDown) {
+                return;
+            }
+            encounterSkill.Activate();
+            onCooldown = true;
         }
 
-        private void OnDisable() {
-            distanceWalkedRef.RemoveObserver(this);
-            buttonAction.action.performed -= SetButtonDown;
-            buttonAction.action.canceled -= SetButtonUp;
+        private void OnEnable() {
+            SetupCallbacks();
             isButtonDown = false;
+        }
+
+        private void SetupCallbacks() {
+            distanceWalkedRef.AddObserver(this);
+            buttonAction.action.performed += SetButtonDown;
+            buttonAction.action.canceled += SetButtonUp;
         }
 
         private void SetButtonDown(InputAction.CallbackContext context) {
@@ -55,23 +61,42 @@ namespace FinalInferno {
             isButtonDown = false;
         }
 
+        private void OnDisable() {
+            RemoveCallbacks();
+            isButtonDown = false;
+        }
+
+        private void RemoveCallbacks() {
+            distanceWalkedRef.RemoveObserver(this);
+            buttonAction.action.performed -= SetButtonDown;
+            buttonAction.action.canceled -= SetButtonUp;
+        }
+
         public void ValueChanged(float value) {
-            if (!encounterSkill.active) {
-                if (onCooldown) {
-                    float cooldown = Mathf.Max((DistanceWalked - skillDistance), 0) / skillCooldownDistance;
-                    if (cooldown >= 1.0f) {
-                        onCooldown = false;
-                    }
-                    cooldown = Mathf.Clamp(cooldown, 0, 1.0f);
-                    fillImage.fillAmount = cooldown;
-                } else {
-                    fillImage.fillAmount = 1.0f;
-                }
-            } else {
+            if (encounterSkill.active) {
                 fillImage.fillAmount = 1.0f;
-                if (DistanceWalked > skillDistance) {
-                    encounterSkill.Deactivate();
-                }
+                DeactivateOnMovementLimit();
+            } else {
+                DisplayCooldownStatus();
+            }
+        }
+
+        private void DisplayCooldownStatus() {
+            float cooldown = GetCooldownValue();
+            onCooldown = cooldown < 1.0f;
+            fillImage.fillAmount = Mathf.Clamp(cooldown, 0, 1.0f);
+        }
+
+        private float GetCooldownValue() {
+            if(!onCooldown) {
+                return 1.0f;
+            }
+            return Mathf.Max((DistanceWalked - skillDistance), 0) / skillCooldownDistance;
+        }
+
+        private void DeactivateOnMovementLimit() {
+            if (DistanceWalked > skillDistance) {
+                encounterSkill.Deactivate();
             }
         }
     }

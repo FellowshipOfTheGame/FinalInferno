@@ -4,6 +4,7 @@
         public Quest quest;
         public string eventFlag;
         public Fog.Dialogue.Dialogue dialogue;
+        public bool IsConditionSatisfied => quest?.GetFlag(eventFlag) ?? false;
         public DialogueEntry(Quest _quest, string _eventFlag, Fog.Dialogue.Dialogue _dialogue) {
             quest = _quest;
             eventFlag = _eventFlag;

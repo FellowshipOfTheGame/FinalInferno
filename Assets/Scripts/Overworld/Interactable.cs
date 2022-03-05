@@ -8,21 +8,24 @@ namespace FinalInferno {
         [SerializeField] private List<DialogueEntry> dialogues = new List<DialogueEntry>();
 
         public void Reset() {
-            int nColliders = GetComponents<Collider2D>().Length;
-            // Se so tem um collider, se certifica que ele seja trigger
+            Collider2D[] colliders = GetComponents<Collider2D>();
+            EnsureAtLeastOneTrigger(colliders);
+        }
+
+        private void EnsureAtLeastOneTrigger(Collider2D[] colliders) {
+            int nColliders = colliders.Length;
             if (nColliders == 1) {
-                GetComponent<Collider2D>().isTrigger = true;
+                colliders[0].isTrigger = true;
             } else if (nColliders > 0) {
-                bool hasTrigger = HasAtLeastOneTrigger();
-                // Se nenhum deles for, se certifica de que o primeiro deles seja trigger
-                if (!hasTrigger) {
-                    GetComponent<Collider2D>().isTrigger = true;
+                bool alreadyHasTrigger = HasAtLeastOneTrigger(colliders);
+                if (!alreadyHasTrigger) {
+                    colliders[0].isTrigger = true;
                 }
             }
         }
 
-        private bool HasAtLeastOneTrigger() {
-            foreach (Collider2D col in GetComponents<Collider2D>()) {
+        private bool HasAtLeastOneTrigger(Collider2D[] colliders) {
+            foreach (Collider2D col in colliders) {
                 if(col.isTrigger) {
                     return true;
                 }
@@ -31,31 +34,32 @@ namespace FinalInferno {
         }
 
         public void OnInteractAttempt() {
-            Dialogue selectedDialogue = null;
-            foreach (DialogueEntry entry in dialogues) {
-                if (entry.quest != null && entry.quest.GetFlag(entry.eventFlag)) {
-                    selectedDialogue = entry.dialogue;
-                } else {
-                    break;
-                }
-            }
+            Dialogue selectedDialogue = GetLastUnlockedDialogue();
             if (selectedDialogue != null) {
                 DialogueHandler.instance.StartDialogue(selectedDialogue);
             }
         }
 
+        private Dialogue GetLastUnlockedDialogue() {
+            Dialogue selectedDialogue = null;
+            foreach (DialogueEntry entry in dialogues) {
+                if (entry.IsConditionSatisfied) {
+                    selectedDialogue = entry.dialogue;
+                } else {
+                    break;
+                }
+            }
+            return selectedDialogue;
+        }
+
         public void OnTriggerEnter2D(Collider2D col) {
             Agent agent = col.GetComponent<Agent>();
-            if (agent) {
-                agent.collidingInteractables.Add(this);
-            }
+            agent?.collidingInteractables.Add(this);
         }
 
         public void OnTriggerExit2D(Collider2D col) {
             Agent agent = col.GetComponent<Agent>();
-            if (agent) {
-                agent.collidingInteractables.Remove(this);
-            }
+            agent?.collidingInteractables.Remove(this);
         }
 
     }

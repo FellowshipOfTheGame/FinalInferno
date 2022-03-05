@@ -10,10 +10,17 @@ namespace FinalInferno {
         private List<Collider2D> triggers = new List<Collider2D>();
 
         public void Awake() {
+            SaveAnimatorReference();
+            SaveColliderReferences();
+        }
+
+        private void SaveAnimatorReference() {
             if (anim == null) {
                 anim = GetComponent<Animator>();
             }
+        }
 
+        private void SaveColliderReferences() {
             foreach (Collider2D col in GetComponents<Collider2D>()) {
                 if (col.isTrigger) {
                     triggers.Add(col);
@@ -24,16 +31,18 @@ namespace FinalInferno {
         }
 
         public void Reset() {
-            if (anim == null) {
-                anim = GetComponent<Animator>();
-            }
+            SaveAnimatorReference();
         }
 
         public void Update() {
             foreach (ChangeRule rule in changeRules) {
-                if (rule.quest != null && rule.quest.GetFlag(rule.eventFlag)) {
-                    anim.SetBool(rule.animationFlag, rule.newValue);
-                }
+                ApplyChangeIfNecessary(rule);
+            }
+        }
+
+        private void ApplyChangeIfNecessary(ChangeRule rule) {
+            if (rule.IsConditionSatisfied) {
+                anim.SetBool(rule.animationFlag, rule.newValue);
             }
         }
 
