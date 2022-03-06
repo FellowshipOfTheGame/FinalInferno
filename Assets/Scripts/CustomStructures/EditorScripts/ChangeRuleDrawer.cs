@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace FinalInferno {
 #if UNITY_EDITOR
-    // PropertyDrawer necessario para exibir e editar ChangeRule no editor da unity
     [CustomPropertyDrawer(typeof(ChangeRule))]
     public class ChangeRuleDrawer : PropertyDrawer {
 
