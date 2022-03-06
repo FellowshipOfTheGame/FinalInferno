@@ -16,24 +16,24 @@ namespace FinalInferno {
             }
         }
 
-        [SerializeField] private Bundle<Party> party = new Bundle<Party>();
-        [SerializeField] private Bundle<Hero> heroes = new Bundle<Hero>();
-        [SerializeField] private Bundle<Enemy> enemies = new Bundle<Enemy>();
-        [SerializeField] private Bundle<Skill> skills = new Bundle<Skill>();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-        [SerializeField] private Bundle<Quest> quests = new Bundle<Quest>();
+        [SerializeField] private AssetManagerBundle<Party> party = new AssetManagerBundle<Party>();
+        [SerializeField] private AssetManagerBundle<Hero> heroes = new AssetManagerBundle<Hero>();
+        [SerializeField] private AssetManagerBundle<Enemy> enemies = new AssetManagerBundle<Enemy>();
+        [SerializeField] private AssetManagerBundle<Skill> skills = new AssetManagerBundle<Skill>();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+        [SerializeField] private AssetManagerBundle<Quest> quests = new AssetManagerBundle<Quest>();
 
-        private Bundle<T> GetBundle<T>(string typeName) where T : ScriptableObject, IDatabaseItem {
+        private AssetManagerBundle<T> GetBundle<T>(string typeName) where T : ScriptableObject, IDatabaseItem {
             switch (typeName) {
                 case "party":
-                    return party as Bundle<T>;
+                    return party as AssetManagerBundle<T>;
                 case "hero":
-                    return heroes as Bundle<T>;
+                    return heroes as AssetManagerBundle<T>;
                 case "enemy":
-                    return enemies as Bundle<T>;
+                    return enemies as AssetManagerBundle<T>;
                 case "skill":
-                    return skills as Bundle<T>;
+                    return skills as AssetManagerBundle<T>;
                 case "quest":
-                    return quests as Bundle<T>;
+                    return quests as AssetManagerBundle<T>;
                 default:
                     Debug.Log("Access to bundle " + typeName + " is not implemented");
                     return null;
@@ -45,24 +45,23 @@ namespace FinalInferno {
         public void BuildDatabase() {
             InitializeBundles();
 
-            EditorUtility.SetDirty(this);
-
             if (!Application.isPlaying) {
+                EditorUtility.SetDirty(this);
                 AssetDatabase.SaveAssets();
             }
         }
 
         private void InitializeBundles() {
-            party = new Bundle<Party>();
-            party.InitializeAsset();
-            heroes = new Bundle<Hero>();
-            heroes.InitializeAsset();
-            enemies = new Bundle<Enemy>();
-            enemies.InitializeAsset();
-            skills = new Bundle<Skill>();
-            skills.InitializeAsset();
-            quests = new Bundle<Quest>();
-            quests.InitializeAsset();
+            party = new AssetManagerBundle<Party>();
+            party.InitializeAssets();
+            heroes = new AssetManagerBundle<Hero>();
+            heroes.InitializeAssets();
+            enemies = new AssetManagerBundle<Enemy>();
+            enemies.InitializeAssets();
+            skills = new AssetManagerBundle<Skill>();
+            skills.InitializeAssets();
+            quests = new AssetManagerBundle<Quest>();
+            quests.InitializeAssets();
         }
 #endif
 
@@ -76,11 +75,11 @@ namespace FinalInferno {
         }
 
         private static void PreloadAssets() {
-            Instance.party.PreloadAsset();
-            Instance.heroes.PreloadAsset();
-            Instance.enemies.PreloadAsset();
-            Instance.skills.PreloadAsset();
-            Instance.quests.PreloadAsset();
+            Instance.party.PreloadAssets();
+            Instance.heroes.PreloadAssets();
+            Instance.enemies.PreloadAssets();
+            Instance.skills.PreloadAssets();
+            Instance.quests.PreloadAssets();
         }
 
         public static ScriptableObject LoadAsset(string name, System.Type type) {
@@ -124,7 +123,7 @@ namespace FinalInferno {
 
             typeName ??= typeof(T).Name.ToLower();
             Debug.Log($"looking for object {name} of type {typeName} as {typeof(T).Name}");
-            Bundle<T> bundle = Instance.GetBundle<T>(typeName);
+            AssetManagerBundle<T> bundle = Instance.GetBundle<T>(typeName);
             return bundle?.GetAsset(name);
         }
     }

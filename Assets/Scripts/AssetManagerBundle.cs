@@ -4,25 +4,17 @@ using UnityEngine;
 
 namespace FinalInferno {
     [System.Serializable]
-    public class Bundle<T> where T : ScriptableObject, IDatabaseItem {
+    public class AssetManagerBundle<T> where T : ScriptableObject, IDatabaseItem {
         // Lista serializavel configurada pelo editor
         // TO DO: Adicionar HideInInspector depois que tiver certeza que funciona
         [SerializeField] private List<T> assets = new List<T>();
-
-        private string bundleName = "";
-        public string BundleName => bundleName;
-
         private Dictionary<string, T> dict = new Dictionary<string, T>();
         private bool loaded = false;
 
-        public Bundle() {
-            bundleName = typeof(T).Name.ToLower();
-        }
-
 #if UNITY_EDITOR
-        public void InitializeAsset() {
-            string[] guidAssetsPath = LocateAssets();
-            LoadAssets(guidAssetsPath);
+        public void InitializeAssets() {
+            string[] assetsGUIDs = LocateAssets();
+            LoadAssets(assetsGUIDs);
 
             if (!Application.isPlaying) {
                 AssetDatabase.SaveAssets();
@@ -33,31 +25,31 @@ namespace FinalInferno {
             return AssetDatabase.FindAssets("t:" + typeof(T).Name);
         }
 
-        private void LoadAssets(string[] guidAssetsPath) {
+        private void LoadAssets(string[] assetsGUIDs) {
             assets = new List<T>();
-            foreach (string guidPath in guidAssetsPath) {
-                T newAsset = CreateLoadedAsset(AssetDatabase.GUIDToAssetPath(guidPath));
+            foreach (string assetGUID in assetsGUIDs) {
+                T newAsset = GetLoadedAsset(AssetDatabase.GUIDToAssetPath(assetGUID));
                 assets.Add(newAsset);
             }
         }
 
-        private T CreateLoadedAsset(string assetPath) {
+        private T GetLoadedAsset(string assetPath) {
             T asset = AssetDatabase.LoadAssetAtPath<T>(assetPath);
             asset.LoadTables();
             if (!Application.isPlaying) {
+                AssetDatabase.SaveAssets();
                 EditorUtility.SetDirty(asset);
             }
             return asset;
         }
 #endif
 
-        public void PreloadAsset() {
+        public void PreloadAssets() {
             foreach (T asset in assets) {
                 string key = GetAssetKey(asset);
 
                 try {
-                    dict.Add(key, asset);
-                    asset.Preload();
+                    TryPreloadAsset(key, asset);
                 } catch (System.ArgumentException) {
                     Debug.LogWarning($"Asset {key} is being added more than once");
                 }
@@ -66,6 +58,11 @@ namespace FinalInferno {
 
         private string GetAssetKey(T asset) {
             return (asset is Enemy) ? (asset as Enemy).AssetName : asset.name;
+        }
+
+        private void TryPreloadAsset(string key, T asset) {
+            dict.Add(key, asset);
+            asset.Preload();
         }
 
         public T GetAsset(string key) {
