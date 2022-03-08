@@ -15,7 +15,8 @@ namespace FinalInferno {
 
         public float GetFieldHeight(SerializedProperty property) {
             SerializedProperty _quest = property.FindPropertyRelative("quest");
-            int nLines = 1 + ((_quest != null && _quest.objectReferenceValue != null) ? 1 : 0);
+            bool hasQuest = _quest?.objectReferenceValue != null;
+            int nLines = hasQuest ? 2 : 1;
             return (nLines * EditorGUIUtility.singleLineHeight);
         }
 

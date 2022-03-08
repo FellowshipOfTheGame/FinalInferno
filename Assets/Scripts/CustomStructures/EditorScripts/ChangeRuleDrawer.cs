@@ -18,7 +18,8 @@ namespace FinalInferno {
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
             float questEventFieldHeight = questEventField.GetFieldHeight(property);
             Animator anim = Selection.activeGameObject.GetComponent<Animator>();
-            float animFieldHeight = (anim != null && anim.runtimeAnimatorController != null) ? EditorGUIUtility.singleLineHeight : 0;
+            bool hasRuntimeController = anim?.runtimeAnimatorController != null;
+            float animFieldHeight = hasRuntimeController ? EditorGUIUtility.singleLineHeight : 0;
             return questEventFieldHeight + animFieldHeight + (2 * marginSize);
         }
 

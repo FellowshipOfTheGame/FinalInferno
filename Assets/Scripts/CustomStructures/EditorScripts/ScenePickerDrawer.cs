@@ -59,7 +59,7 @@ namespace FinalInferno {
         }
 
         private void SaveSceneInfo() {
-            sceneName.stringValue = sceneObj == null ? "" : sceneObj.name;
+            sceneName.stringValue = sceneObj?.name ?? "";
             assetPath.stringValue = sceneObj == null ? "" : AssetDatabase.GetAssetPath(sceneObj.GetInstanceID());
             guid.stringValue = sceneObj == null ? "" : AssetDatabase.AssetPathToGUID(assetPath.stringValue);
         }
