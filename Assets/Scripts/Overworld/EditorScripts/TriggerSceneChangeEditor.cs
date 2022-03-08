@@ -15,19 +15,24 @@ namespace FinalInferno {
             sceneObj = null;
             sceneName = serializedObject.FindProperty("sceneName");
             bool hasSerializedSceneName = !string.IsNullOrEmpty(sceneName.stringValue);
-            if(hasSerializedSceneName) {
+            if (hasSerializedSceneName) {
                 FindSerializedSceneByName();
             }
         }
 
         private void FindSerializedSceneByName() {
             string[] objectsFound = FindScenesInFolders();
-            bool foundAtLeastOneScene = objectsFound != null && objectsFound.Length > 0 && !string.IsNullOrEmpty(objectsFound[0]);
-            sceneObj = LoadAssetWithGUID(objectsFound[0]);
+            if (FoundAtLeastOneScene(objectsFound)) {
+                sceneObj = LoadAssetWithGUID(objectsFound[0]);
+            }
         }
 
         private string[] FindScenesInFolders() {
             return AssetDatabase.FindAssets($"{sceneName.stringValue} t:sceneAsset", foldersToSearch);
+        }
+
+        private static bool FoundAtLeastOneScene(string[] objectsFound) {
+            return objectsFound != null && objectsFound.Length > 0 && !string.IsNullOrEmpty(objectsFound[0]);
         }
 
         private static Object LoadAssetWithGUID(string objectGUID) {

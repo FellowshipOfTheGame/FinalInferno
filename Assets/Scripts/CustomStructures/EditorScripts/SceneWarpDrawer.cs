@@ -20,8 +20,9 @@ namespace FinalInferno {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
             EditorGUI.BeginProperty(position, label, property);
             FindSerializedStructProperties(property);
-            if (sceneObj == null) {
-                FindSceneObjByName();
+            bool hasSerializedSceneName = !string.IsNullOrEmpty(sceneName.stringValue);
+            if (sceneObj == null && hasSerializedSceneName) {
+                FindSerializedSceneByName();
             }
             DrawCustomSceneField(position);
             DrawPositionFieldIfNecessary();
@@ -32,18 +33,23 @@ namespace FinalInferno {
             scenePos = property.FindPropertyRelative("position");
         }
 
-        private void FindSceneObjByName() {
+        private void FindSerializedSceneByName() {
             string[] objectsFound = FindScenesInFolders();
-            bool foundAtLeastOneScene = objectsFound != null && objectsFound.Length > 0 && !string.IsNullOrEmpty(objectsFound[0]);
-            if (!string.IsNullOrEmpty(sceneName.stringValue) && foundAtLeastOneScene) {
-                sceneObj = AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(objectsFound[0]), typeof(Object));
-            } else {
-                sceneObj = null;
+            if (FoundAtLeastOneScene(objectsFound)) {
+                sceneObj = LoadAssetWithGUID(objectsFound[0]);
             }
         }
 
         private string[] FindScenesInFolders() {
             return AssetDatabase.FindAssets($"{sceneName.stringValue} t:sceneAsset", foldersToSearch);
+        }
+
+        private static bool FoundAtLeastOneScene(string[] objectsFound) {
+            return objectsFound != null && objectsFound.Length > 0 && !string.IsNullOrEmpty(objectsFound[0]);
+        }
+
+        private static Object LoadAssetWithGUID(string objectGUID) {
+            return AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(objectGUID), typeof(Object));
         }
 
         private void DrawCustomSceneField(Rect position) {
