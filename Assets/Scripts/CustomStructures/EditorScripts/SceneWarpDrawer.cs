@@ -23,7 +23,7 @@ namespace FinalInferno {
             if (sceneObj == null) {
                 FindSceneObjByName();
             }
-            DrawSceneFieldAndSaveSceneName(position);
+            DrawCustomSceneField(position);
             DrawPositionFieldIfNecessary();
             EditorGUI.EndProperty();
         }
@@ -46,7 +46,7 @@ namespace FinalInferno {
             return AssetDatabase.FindAssets($"{sceneName.stringValue} t:sceneAsset", foldersToSearch);
         }
 
-        private void DrawSceneFieldAndSaveSceneName(Rect position) {
+        private void DrawCustomSceneField(Rect position) {
             nameRect = new Rect(position);
             nameRect.y += 5f;
             nameRect.height = EditorGUIUtility.singleLineHeight;

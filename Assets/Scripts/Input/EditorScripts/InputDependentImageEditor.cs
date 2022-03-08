@@ -55,17 +55,17 @@ namespace FinalInferno.Input {
             }
         }
 
-        private void SaveAndDisplaySchemeName(string[] schemeNames, int i) {
-            controlSchemesNames.InsertArrayElementAtIndex(i);
-            controlSchemesNames.GetArrayElementAtIndex(i).stringValue = schemeNames[i];
-            EditorGUILayout.PrefixLabel(schemeNames[i]);
+        private void SaveAndDisplaySchemeName(string[] schemeNames, int index) {
+            controlSchemesNames.InsertArrayElementAtIndex(index);
+            controlSchemesNames.GetArrayElementAtIndex(index).stringValue = schemeNames[index];
+            EditorGUILayout.PrefixLabel(schemeNames[index]);
         }
 
-        private void DisplaySpritePicker(int i) {
-            if (i >= controlSchemesImages.arraySize) {
-                controlSchemesImages.InsertArrayElementAtIndex(i);
+        private void DisplaySpritePicker(int index) {
+            if (index >= controlSchemesImages.arraySize) {
+                controlSchemesImages.InsertArrayElementAtIndex(index);
             }
-            SerializedProperty imageProperty = controlSchemesImages.GetArrayElementAtIndex(i);
+            SerializedProperty imageProperty = controlSchemesImages.GetArrayElementAtIndex(index);
             imageProperty.objectReferenceValue = EditorGUILayout.ObjectField(imageProperty.objectReferenceValue, typeof(Sprite), false);
         }
 

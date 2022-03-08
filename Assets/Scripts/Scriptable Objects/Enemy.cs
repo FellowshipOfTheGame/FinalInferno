@@ -215,17 +215,17 @@ namespace FinalInferno {
                 case TargetType.Self:
                     targets.Add(BattleManager.instance.currentUnit);
                     break;
-                case TargetType.MultiAlly:
+                case TargetType.AllLiveAllies:
                     targets = BattleManager.instance.GetTeam(UnitType.Enemy);
                     break;
-                case TargetType.MultiEnemy:
+                case TargetType.AllLiveEnemies:
                     targets = BattleManager.instance.GetTeam(UnitType.Hero);
                     break;
-                case TargetType.SingleAlly:
+                case TargetType.SingleLiveAlly:
                     team = BattleManager.instance.GetTeam(UnitType.Enemy);
                     targets.Add(team[Random.Range(0, team.Count - 1)]);
                     break;
-                case TargetType.SingleEnemy:
+                case TargetType.SingleLiveEnemy:
                     team = BattleManager.instance.GetTeam(UnitType.Hero);
                     targets.Add(team[TargetDecision(team)]);
                     break;

@@ -51,10 +51,10 @@ namespace FinalInferno.UI.Battle.QueueMenu {
                 case TargetType.Self:
                     targets.Add(BattleManager.instance.currentUnit);
                     break;
-                case TargetType.MultiAlly:
+                case TargetType.AllLiveAllies:
                     targets = BattleManager.instance.GetTeam(UnitType.Hero);
                     break;
-                case TargetType.MultiEnemy:
+                case TargetType.AllLiveEnemies:
                     targets = BattleManager.instance.GetTeam(UnitType.Enemy);
                     break;
             }

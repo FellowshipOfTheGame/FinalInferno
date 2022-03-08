@@ -168,8 +168,8 @@ namespace FinalInferno {
             targets = FilterTargets(user, targets); // Filtragem para garantir a consistencia dos callbacks de AoE
 
             if (Type == SkillType.PassiveOnStart || Type == SkillType.PassiveOnEnd) {
-                if (target != TargetType.AllAllies && target != TargetType.AllEnemies && target != TargetType.DeadAllies &&
-                   target != TargetType.DeadEnemies && target != TargetType.MultiAlly && target != TargetType.MultiEnemy) {
+                if (target != TargetType.AllAlliesLiveOrDead && target != TargetType.AllEnemiesLiveOrDead && target != TargetType.AllDeadAllies &&
+                   target != TargetType.AllDeadEnemies && target != TargetType.AllLiveAllies && target != TargetType.AllLiveEnemies) {
                     // Habilidades que não sejam em área e que só são executadas uma vez durante a batalha precisam disso
                     // para que seu ganho de experiencia fique igual ao de outras habilidades com a mesma tabela de exp
                     GiveExp(BattleManager.instance.GetEnemies(user, true));

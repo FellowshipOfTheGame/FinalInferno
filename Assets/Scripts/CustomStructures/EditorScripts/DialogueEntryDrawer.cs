@@ -10,16 +10,17 @@ namespace FinalInferno {
         private SerializedProperty dialogue;
         private Rect dialogueRect;
         private QuestEventField questEventField = new QuestEventField();
+        private const float marginSize = 5f;
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
             float questEventFieldHeight = questEventField.GetFieldHeight(property);
-            return questEventFieldHeight + EditorGUIUtility.singleLineHeight + 10f;
+            return questEventFieldHeight + EditorGUIUtility.singleLineHeight + (2 * marginSize);
         }
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
             EditorGUI.BeginProperty(position, label, property);
             FindSerializedStructProperties(property);
-            position.y += 5f;
+            position.y += marginSize;
             questEventField.DrawQuestEventField(position);
             DrawDialogueField();
             EditorGUI.EndProperty();

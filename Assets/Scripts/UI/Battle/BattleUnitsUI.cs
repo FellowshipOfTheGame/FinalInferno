@@ -95,12 +95,12 @@ namespace FinalInferno.UI.Battle {
             AIIManager manager;
             Unit currentUnit = BattleSkillManager.currentUser.Unit;
             Skill currentSkill = BattleSkillManager.currentSkill;
-            bool useOwnManager = (currentSkill.target == TargetType.AllAllies ||
-                                  currentSkill.target == TargetType.DeadAllies ||
-                                  currentSkill.target == TargetType.DeadAlly ||
-                                  currentSkill.target == TargetType.MultiAlly ||
+            bool useOwnManager = (currentSkill.target == TargetType.AllAlliesLiveOrDead ||
+                                  currentSkill.target == TargetType.AllDeadAllies ||
+                                  currentSkill.target == TargetType.SingleDeadAlly ||
+                                  currentSkill.target == TargetType.AllLiveAllies ||
                                   currentSkill.target == TargetType.Self ||
-                                  currentSkill.target == TargetType.SingleAlly);
+                                  currentSkill.target == TargetType.SingleLiveAlly);
             manager = ((currentUnit.IsHero && useOwnManager) || (!currentUnit.IsHero && !useOwnManager)) ? heroesManager : enemiesManager;
 
             // Obtem a lista de possiveis alvos para a skill em questão
