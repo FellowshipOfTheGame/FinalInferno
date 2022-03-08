@@ -32,7 +32,7 @@ namespace FinalInferno {
         }
 
         private static void SetCharacterInstanceCanMove(Character character, bool value) {
-            if (character != null && character.OverworldInstance) {
+            if (character?.OverworldInstance != null) {
                 character.OverworldInstance.CanMove = value;
             }
         }
@@ -93,9 +93,7 @@ namespace FinalInferno {
 
         private T GetOrAddComponent<T>() where T : Component{
             T component = GetComponent<T>();
-            if(!component) {
-                component = gameObject.AddComponent<T>();
-            }
+            component ??= gameObject.AddComponent<T>();
             return component;
         }
 

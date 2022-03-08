@@ -12,22 +12,26 @@ namespace FinalInferno {
         private readonly string[] foldersToSearch = { "Assets/Scenes" };
 
         public void OnEnable() {
+            sceneObj = null;
             sceneName = serializedObject.FindProperty("sceneName");
-            FindSerializedSceneByName();
+            bool hasSerializedSceneName = !string.IsNullOrEmpty(sceneName.stringValue);
+            if(hasSerializedSceneName) {
+                FindSerializedSceneByName();
+            }
         }
 
         private void FindSerializedSceneByName() {
             string[] objectsFound = FindScenesInFolders();
             bool foundAtLeastOneScene = objectsFound != null && objectsFound.Length > 0 && !string.IsNullOrEmpty(objectsFound[0]);
-            if (!string.IsNullOrEmpty(sceneName.stringValue) && foundAtLeastOneScene) {
-                sceneObj = AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(objectsFound[0]), typeof(Object));
-            } else {
-                sceneObj = null;
-            }
+            sceneObj = LoadAssetWithGUID(objectsFound[0]);
         }
 
         private string[] FindScenesInFolders() {
             return AssetDatabase.FindAssets($"{sceneName.stringValue} t:sceneAsset", foldersToSearch);
+        }
+
+        private static Object LoadAssetWithGUID(string objectGUID) {
+            return AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(objectGUID), typeof(Object));
         }
 
         public override void OnInspectorGUI() {
@@ -46,11 +50,7 @@ namespace FinalInferno {
 
         private void DrawSceneSelectionField() {
             sceneObj = EditorGUILayout.ObjectField(sceneObj, typeof(SceneAsset), false);
-            if (sceneObj != null) {
-                sceneName.stringValue = sceneObj.name;
-            } else {
-                sceneName.stringValue = string.Empty;
-            }
+            sceneName.stringValue = sceneObj?.name ?? string.Empty;
         }
 
         private bool DrawSceneChangeFields() {

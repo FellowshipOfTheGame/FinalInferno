@@ -16,11 +16,10 @@ namespace FinalInferno {
         public static Fog.Dialogue.Dialogue GetLastUnlockedDialogue(List<DialogueEntry> dialogues) {
             Fog.Dialogue.Dialogue selectedDialogue = null;
             foreach (DialogueEntry entry in dialogues) {
-                if (entry.IsConditionSatisfied) {
-                    selectedDialogue = entry.dialogue;
-                } else {
+                if (!entry.IsConditionSatisfied) {
                     break;
                 }
+                selectedDialogue = entry.dialogue;
             }
             return selectedDialogue;
         }
