@@ -23,7 +23,7 @@ namespace FinalInferno {
             if (sceneObj == null) {
                 FindSceneObjByName();
             }
-            DrawSceneFieldAndSaveSceneName(position);
+            DrawCustomSceneField(position);
             DrawPositionFieldIfNecessary();
             EditorGUI.EndProperty();
         }
@@ -46,7 +46,7 @@ namespace FinalInferno {
             return AssetDatabase.FindAssets(sceneName.stringValue + " t:sceneAsset", searchInFolders);
         }
 
-        private void DrawSceneFieldAndSaveSceneName(Rect position) {
+        private void DrawCustomSceneField(Rect position) {
             nameRect = new Rect(position);
             nameRect.y += 5f;
             nameRect.height = EditorGUIUtility.singleLineHeight;
@@ -56,19 +56,11 @@ namespace FinalInferno {
 
         private void DrawPositionFieldIfNecessary() {
             if (sceneObj != null) {
-                posRect = NewRectBelow(nameRect);
+                posRect = EditorUtils.NewRectBelow(nameRect);
                 scenePos.vector2Value = EditorGUI.Vector2Field(posRect, "Position", scenePos.vector2Value);
             } else {
                 scenePos.vector2Value = Vector2.zero;
             }
-        }
-
-
-        private Rect NewRectBelow(Rect rect) {
-            Rect returnValue = new Rect(rect);
-            returnValue.y += rect.height;
-            returnValue.height = EditorGUIUtility.singleLineHeight;
-            return returnValue;
         }
     }
 #endif

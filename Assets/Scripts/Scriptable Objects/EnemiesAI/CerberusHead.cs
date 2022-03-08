@@ -253,10 +253,10 @@ namespace FinalInferno {
                 case TargetType.Self:
                     targets.Add(BattleManager.instance.currentUnit);
                     break;
-                case TargetType.MultiAlly:
+                case TargetType.AllLiveAllies:
                     targets = BattleManager.instance.GetTeam(UnitType.Enemy);
                     break;
-                case TargetType.MultiEnemy:
+                case TargetType.AllLiveEnemies:
                     team = BattleManager.instance.GetTeam(UnitType.Hero);
                     for (int i = 0; i < heads && team.Count > 0; i++) {
                         int targetIdx = TargetDecision(team);
@@ -264,15 +264,15 @@ namespace FinalInferno {
                         team.RemoveAt(targetIdx);
                     }
                     break;
-                case TargetType.SingleAlly:
+                case TargetType.SingleLiveAlly:
                     team = BattleManager.instance.GetTeam(UnitType.Enemy);
                     targets.Add(team[Random.Range(0, team.Count - 1)]);
                     break;
-                case TargetType.SingleEnemy:
+                case TargetType.SingleLiveEnemy:
                     team = BattleManager.instance.GetTeam(UnitType.Hero);
                     targets.Add(team[TargetDecision(team)]);
                     break;
-                case TargetType.DeadAllies:
+                case TargetType.AllDeadAllies:
                     targets = BattleManager.instance.GetTeam(UnitType.Enemy, true, true);
                     break;
             }

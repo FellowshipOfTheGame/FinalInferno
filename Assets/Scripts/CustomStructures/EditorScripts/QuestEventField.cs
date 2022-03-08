@@ -19,14 +19,14 @@ namespace FinalInferno {
             return (nLines * EditorGUIUtility.singleLineHeight);
         }
 
-        public void DrawQuestEventField(Rect position) {
-            DrawQuestField(position);
-            DrawEventFlagFieldIfNecessary();
-        }
-
         public void FindSerializedStructProperties(SerializedProperty property) {
             quest = property.FindPropertyRelative("quest");
             eventFlag = property.FindPropertyRelative("eventFlag");
+        }
+
+        public void DrawQuestEventField(Rect position) {
+            DrawQuestField(position);
+            DrawEventFlagFieldIfNecessary();
         }
 
         private void DrawQuestField(Rect position) {

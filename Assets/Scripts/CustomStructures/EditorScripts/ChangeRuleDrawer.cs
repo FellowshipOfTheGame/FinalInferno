@@ -12,21 +12,22 @@ namespace FinalInferno {
         private Rect animRect;
         private Rect toggleRect;
         private const float toggleFieldSize = 40f;
+        private const float marginSize = 5f;
         private QuestEventField questEventField = new QuestEventField();
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
             float questEventFieldHeight = questEventField.GetFieldHeight(property);
             Animator anim = Selection.activeGameObject.GetComponent<Animator>();
             float animFieldHeight = (anim != null && anim.runtimeAnimatorController != null) ? EditorGUIUtility.singleLineHeight : 0;
-            return questEventFieldHeight + animFieldHeight + 10f;
+            return questEventFieldHeight + animFieldHeight + (2 * marginSize);
         }
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
             EditorGUI.BeginProperty(position, label, property);
             FindSerializedStructProperties(property);
-            position.y += 5f;
+            position.y += marginSize;
             questEventField.DrawQuestEventField(position);
-            DrawAnimationFlagFieldIfPossible(position);
+            DrawAnimationFlagFieldIfPossible(position, property);
             EditorGUI.EndProperty();
         }
 
@@ -36,33 +37,52 @@ namespace FinalInferno {
             toggleValue = property.FindPropertyRelative("newValue");
         }
 
-        private void DrawAnimationFlagFieldIfPossible(Rect position) {
-            Animator anim = Selection.activeGameObject.GetComponent<Animator>();
-            ReenableAnimator(anim);
-            if (anim == null || anim.runtimeAnimatorController == null) {
-                LogSelectionErrorIfNecessary(anim);
-                animRect = new Rect(questEventField.EventRect);
-                animationFlag.stringValue = "";
-            } else {
-                DrawAnimationFlagField(position, anim);
+        private void DrawAnimationFlagFieldIfPossible(Rect position, SerializedProperty property) {
+            MonoBehaviour monoBehaviour = property.serializedObject.targetObject as MonoBehaviour;
+            Animator animator = monoBehaviour?.GetComponent<Animator>();
+            ReenableAnimator(animator);
+            if (HasAnyNullReference(monoBehaviour, animator, property)) {
+                DontDrawAnimationFlagField();
+                return;
+            }
+            DrawAnimationFlagField(position, animator);
+        }
+
+        private static void ReenableAnimator(Animator animator) {
+            // Não sei pq precisa dessa função, mas precisa dessa função
+            if(animator != null){
+                animator.enabled = false;
+                animator.enabled = true;
             }
         }
 
-        private static void ReenableAnimator(Animator anim) {
-            // Não sei pq precisa disso, mas precisa disso
-            if(anim != null){
-                anim.enabled = false;
-                anim.enabled = true;
+        private bool HasAnyNullReference(MonoBehaviour monoBehaviour, Animator animator, SerializedProperty property) {
+            if (monoBehaviour == null) {
+                LogMonoBehaviourError(property);
+                return true;
             }
+            if (animator == null) {
+                LogAnimatorError(monoBehaviour);
+                return true;
+            }
+            return animator.runtimeAnimatorController == null;
         }
 
-        private void LogSelectionErrorIfNecessary(Animator anim) {
-            if(anim == null) {
-                // TO DO: transformar anim em uma propriedade persistente inicializada on enable para evitar isso
-                string errorMessage = $"Selected object without animator ({Selection.activeGameObject.name}) while drawing a ChangeRule in inspector\n";
-                errorMessage += $"Animation flag has been set to empty string, avoid locking inspectors that draw ChangeRule properties";
-                Debug.LogError(errorMessage);
-            }
+        private void LogMonoBehaviourError(SerializedProperty property) {
+            string errorMessage = $"Property of type ChangeRule was added to a non-MonoBehaviour object\n"; 
+            errorMessage += $"Animation flag has been set to empty string";
+            Debug.LogError(errorMessage, property.serializedObject.targetObject);
+        }
+
+        private void LogAnimatorError(MonoBehaviour monoBehaviour) {
+            string errorMessage = $"Property of type ChangeRule could not find Animator component in object {monoBehaviour.gameObject.name}";
+            errorMessage += $"Animation flag has been set to empty string";
+            Debug.LogError(errorMessage, monoBehaviour.gameObject);
+        }
+
+        private void DontDrawAnimationFlagField() {
+            animRect = new Rect(questEventField.EventRect);
+            animationFlag.stringValue = "";
         }
 
         private void DrawAnimationFlagField(Rect position, Animator anim) {
