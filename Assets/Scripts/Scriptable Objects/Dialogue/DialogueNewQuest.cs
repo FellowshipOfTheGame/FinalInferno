@@ -7,7 +7,7 @@ namespace FinalInferno {
 
         public override void AfterDialogue() {
             base.AfterDialogue();
-            questToStart.StartQuest();
+            questToStart.TryStartQuest();
         }
     }
 }

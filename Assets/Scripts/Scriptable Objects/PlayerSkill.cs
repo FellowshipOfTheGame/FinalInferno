@@ -2,32 +2,32 @@
 using UnityEngine;
 
 namespace FinalInferno {
-    //engloba todas as "skills" dos personagens do jogador, que ganham nivel
     [CreateAssetMenu(fileName = "PlayerSkill", menuName = "ScriptableObject/PlayerSkill", order = 5)]
     public class PlayerSkill : Skill {
+        protected const string levelColumnString = "Level";
+        protected const string accumulatedXpColumnName = "XPAccumulated";
+        protected const string xpNextLevelColumnName = "XPNextLevel";
         [Header("Player Skill")]
-        public long xp; //experiencia da "skill"
-        public long xpNext; //experiencia necessaria para a "skill" subir de nivel
-        public long XpCumulative => ((table == null) ? 0 : (xp + ((level <= 1) ? 0 : (XpTable.Rows[level - 2].Field<long>("XPAccumulated")))));
-        public int MinLevel => Mathf.Max(XpTable.Rows[0].Field<int>("Level"), Table.Rows[0].Field<int>("Level"));
-        public int MaxLevel => Mathf.Min(XpTable.Rows[XpTable.Rows.Count - 1].Field<int>("Level"), Table.Rows[Table.Rows.Count - 1].Field<int>("Level"));
-        [TextArea]
-        public string description; //descricao da "skill" que aparecera para o jogador no menu de pause
-        public override string ShortDescription => (shortDescription != null && shortDescription != "") ? shortDescription : description;
+        public long xp;
+        public long xpNext;
+        public long XpCumulative => ((table == null) ? 0 : (xp + CurrentLevelCumulativeXp));
+        private long CurrentLevelCumulativeXp => ((level <= 1) ? 0 : (XpTable.Rows[level-2].Field<long>(accumulatedXpColumnName)));
+        private bool ShouldIncreaseLevel => xp >= xpNext && level < XpTable.Rows.Count && level < Table.Rows.Count;
+        public int MinLevel => Mathf.Max(XpTable.Rows[0].Field<int>(levelColumnString), Table.Rows[0].Field<int>(levelColumnString));
+        public int MaxLevel => Mathf.Min(XpTable.Rows[XpTable.Rows.Count-1].Field<int>(levelColumnString), Table.Rows[Table.Rows.Count-1].Field<int>(levelColumnString));
+        [TextArea] public string description;
+        public override string ShortDescription => (!string.IsNullOrEmpty(shortDescription)) ? shortDescription : description;
         [Header("Unlock Info")]
-        public List<PlayerSkill> skillsToUpdate; //lista de skills que podem ser destravadas com o level dessa skill
-        public List<PlayerSkill> prerequisiteSkills; //lista de skills que sao pre requisitos para essa skill destravar
-        public List<int> prerequisiteSkillsLevel; //level que a skill de pre requisito precisa estar para essa skill destravar
-        public int prerequisiteHeroLevel; //level que o heroi precisa estar para essa skill destravar
+        public List<PlayerSkill> skillsToUpdate;
+        public List<PlayerSkill> prerequisiteSkills;
+        public List<int> prerequisiteSkillsLevel;
+        public int prerequisiteHeroLevel;
         [Header("Stats Table")]
         [SerializeField] private TextAsset skillTable;
         [SerializeField] private DynamicTable table;
         private DynamicTable Table {
             get {
-                if (table == null) {
-                    table = DynamicTable.Create(skillTable);
-                }
-
+                table ??= DynamicTable.Create(skillTable);
                 return table;
             }
         }
@@ -36,29 +36,13 @@ namespace FinalInferno {
         [SerializeField] private DynamicTable xpTable;
         private DynamicTable XpTable {
             get {
-                if (xpTable == null) {
-                    xpTable = DynamicTable.Create(expTable);
-                }
-
+                xpTable ??= DynamicTable.Create(expTable);
                 return xpTable;
-            }
-        }
-        private bool ShouldCalculateMean {
-            get {
-                return true;
-                // Code below will probably be removed soon (tm)
-                switch (Type) {
-                    case SkillType.PassiveOnEnd:
-                    case SkillType.PassiveOnSpawn:
-                    case SkillType.PassiveOnStart:
-                        return false;
-                    default:
-                        return true;
-                }
             }
         }
         public Sprite skillImage;
 
+		#region IDatabaseItem
         public override void LoadTables() {
             table = DynamicTable.Create(skillTable);
             xpTable = DynamicTable.Create(expTable);
@@ -69,109 +53,113 @@ namespace FinalInferno {
             xp = 0;
             xpNext = 0;
         }
+        #endregion
 
-        //atualiza o value dos efeitos, se for necessario.
-        public void LevelUp() {
+        public void GiveExp(List<BattleUnit> targets) {
+            long expValue = CalculateExpFromBattleUnits(targets);
+            GiveExp(expValue);
+        }
 
-            for (int i = 0; i < effects.Count; i++) {
-                SkillEffectTuple modifyEffect = effects[i];
-
-                modifyEffect.value1 = Table.Rows[level - 1].Field<float>("SkillEffect" + i + "Value0");
-
-                modifyEffect.value2 = Table.Rows[level - 1].Field<float>("SkillEffect" + i + "Value1");
-
-                effects[i] = modifyEffect;
+        private static long CalculateExpFromBattleUnits(List<BattleUnit> targets) {
+            long expValue = 0;
+            foreach (BattleUnit target in targets) {
+                expValue += target.Unit.SkillExp;
             }
+            expValue /= Mathf.Max(targets.Count, 1);
+            return expValue;
+        }
 
+        public void GiveExp(long value) {
+            xp += value;
+            bool leveledUp = ShouldIncreaseLevel;
+            while (ShouldIncreaseLevel) {
+                LevelUp();
+            }
+            if (leveledUp) {
+                UpdateToCurrentLevel();
+            }
+        }
+
+        private void LevelUp() {
+            xp -= xpNext;
+            level++;
+            xpNext = XpTable.Rows[level - 1].Field<long>(xpNextLevelColumnName);
+        }
+
+        public void UpdateToCurrentLevel() {
+            for (int skillEffectIndex = 0; skillEffectIndex < effects.Count; skillEffectIndex++) {
+                UpdateSkillEffectValues(skillEffectIndex);
+            }
             foreach (PlayerSkill child in skillsToUpdate) {
                 child.CheckUnlock(Party.Instance.Level);
             }
         }
 
-        //Adiciona os pontos de experiência ao utilizar a skill
-        public bool GiveExp(long exp) {
-            bool up = false;
-
-            xp += exp;
-
-            // testa se a skill subiu de nivel
-            // max level = XpTable.Rows.Count
-            while (xp >= xpNext && level < XpTable.Rows.Count && level < Table.Rows.Count) {
-                xp -= xpNext;
-                level++;
-
-                xpNext = XpTable.Rows[level - 1].Field<long>("XPNextLevel");
-
-                up = true;
-            }
-
-            if (up) {
-                LevelUp();
-            }
-
-            return up;
+        private void UpdateSkillEffectValues(int skillEffectIndex) {
+            SkillEffectTuple modifyEffect = effects[skillEffectIndex];
+            modifyEffect.value1 = Table.Rows[level - 1].Field<float>(SkillEffectValueString(skillEffectIndex, 0));
+            modifyEffect.value2 = Table.Rows[level - 1].Field<float>(SkillEffectValueString(skillEffectIndex, 1));
+            effects[skillEffectIndex] = modifyEffect;
         }
 
-        public bool GiveExp(List<BattleUnit> targets) {
-            long expValue = 0;
-
-            foreach (BattleUnit target in targets) {
-                expValue += target.Unit.SkillExp;
-            }
-            if (ShouldCalculateMean) {
-                expValue /= Mathf.Max(targets.Count, 1);
-            }
-
-            return GiveExp(expValue);
+        private static string SkillEffectValueString(int skillEffectIndex, int valueIndex) {
+            return $"SkillEffect{skillEffectIndex}Value{valueIndex}";
         }
 
-        public bool GiveExp(List<Unit> units) {
-            long expValue = 0;
+        public void GiveExp(List<Unit> units) {
+            long expValue = CalculateExpFromUnits(units);
+            GiveExp(expValue);
+        }
 
+        private static long CalculateExpFromUnits(List<Unit> units) {
+            long expValue = 0;
             foreach (Unit unit in units) {
                 expValue += unit.SkillExp;
             }
-            if (ShouldCalculateMean) {
-                expValue /= Mathf.Max(units.Count, 1);
-            }
-
-            return GiveExp(expValue);
+            expValue /= Mathf.Max(units.Count, 1);
+            return expValue;
         }
 
-        // checa se todos os pre requisitos foram cumpridos para essa skill ser destravada,
-        // em caso positivo destrava a skill e retorna TRUE, caso contrario retorna FALSE
         public bool CheckUnlock(int heroLevel) {
             if (level > 0) {
                 return true;
             }
 
-            bool check = (heroLevel >= prerequisiteHeroLevel);
-
-            if (check) {
-                //checa se todos os pre requisitos foram atendidos
-                for (int i = 0; i < prerequisiteSkills.Count; i++) {
-                    check &= (prerequisiteSkills[i].Level >= prerequisiteSkillsLevel[i]);
-                }
-
-                //se todos os pre requisitos foram atendidos, destrava a skill
-                if (check) {
-                    GiveExp(0);
-                    active = true;
-                }
+            bool levelCheck = (heroLevel >= prerequisiteHeroLevel);
+            if (!levelCheck) {
+                return false;
             }
 
-            return check;
+            bool prerequisitesSatisfied = CheckAllPrerequisites();
+            if (prerequisitesSatisfied) {
+                UnlockSkill();
+            }
+            return prerequisitesSatisfied;
         }
 
-        // Versao de callback das skills precisa ser responsavel por calcular o ganho de exp
-        public override void Use(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f) {
-            targets = FilterTargets(user, targets); // Filtragem para garantir a consistencia dos callbacks de AoE
+        private bool CheckAllPrerequisites() {
+            bool prerequisitesSatisfied = true;
+            for (int i = 0; i < prerequisiteSkills.Count; i++) {
+                prerequisitesSatisfied &= (prerequisiteSkills[i].Level >= prerequisiteSkillsLevel[i]);
+            }
+            return prerequisitesSatisfied;
+        }
 
+        private void UnlockSkill() {
+            GiveExp(0);
+            active = true;
+        }
+
+		#region Overrides
+        public override void UseCallbackOrDelayed(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f) {
+            targets = FilterTargets(user, targets);
+            GiveExpOnCallbackOrDelayed(user, targets);
+            base.UseCallbackOrDelayed(user, targets, shouldOverride1, value1, shouldOverride2, value2);
+        }
+
+        private void GiveExpOnCallbackOrDelayed(BattleUnit user, List<BattleUnit> targets) {
             if (Type == SkillType.PassiveOnStart || Type == SkillType.PassiveOnEnd) {
-                if (target != TargetType.AllAlliesLiveOrDead && target != TargetType.AllEnemiesLiveOrDead && target != TargetType.AllDeadAllies &&
-                   target != TargetType.AllDeadEnemies && target != TargetType.AllLiveAllies && target != TargetType.AllLiveEnemies) {
-                    // Habilidades que não sejam em área e que só são executadas uma vez durante a batalha precisam disso
-                    // para que seu ganho de experiencia fique igual ao de outras habilidades com a mesma tabela de exp
+                if (PassiveSkillShouldUseExpMean()) {
                     GiveExp(BattleManager.instance.GetEnemies(user, true));
                 } else {
                     GiveExp(targets);
@@ -179,8 +167,12 @@ namespace FinalInferno {
             } else {
                 GiveExp(targets);
             }
+        }
 
-            base.Use(user, targets, shouldOverride1, value1, shouldOverride2, value2);
+        private bool PassiveSkillShouldUseExpMean() {
+            return target != TargetType.AllAlliesLiveOrDead && target != TargetType.AllEnemiesLiveOrDead &&
+                   target != TargetType.AllDeadAllies && target != TargetType.AllDeadEnemies &&
+                   target != TargetType.AllLiveAllies && target != TargetType.AllLiveEnemies;
         }
 
         public override void ResetSkill() {
@@ -188,7 +180,7 @@ namespace FinalInferno {
             xp = 0;
             xpNext = 0;
             active = false;
-            Debug.Log("Skill resetada");
         }
+        #endregion
     }
 }

@@ -13,7 +13,7 @@ namespace FinalInferno {
                 mapName = "";
                 heroes = null;
             } else {
-                level = Party.Instance.GetLevel(save.xpParty);
+                level = Party.Instance.CalculateLevel(save.xpParty);
                 mapName = save.mapName;
                 heroes = new List<Hero>();
                 foreach (string heroName in save.archetype) {

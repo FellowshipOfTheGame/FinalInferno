@@ -84,7 +84,8 @@ namespace FinalInferno.UI {
             }
             bool hasResistance = false;
 
-            foreach (Element element in enemy.ElementalResistances.Keys) {
+			ReadOnlyDictionary<Element, float> enemyResistances = enemy.ElementalResistances;
+            foreach (Element element in enemyResistances.Keys) {
                 if (hasResistance) {
                     str += "\n";
                 } else {
@@ -95,7 +96,7 @@ namespace FinalInferno.UI {
                 str += System.Enum.GetName(typeof(Element), element).PadRight(maxLength) + "  ";
 
                 // Escreve a resistencia do monstro a esse elemento, usando porcentagem e colorindo para indicar resistencia ou fraqueza
-                float value = (1.0f - enemy.ElementalResistances[element]) * 100f;
+                float value = (1.0f - enemyResistances[element]) * 100f;
                 if (value < 0) {
                     str += "<color=#840000>";
                 } else {

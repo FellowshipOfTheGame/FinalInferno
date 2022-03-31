@@ -8,53 +8,46 @@ namespace FinalInferno {
         public const int maxCost = 20;
         public const int baseCost = 8;
         [Header("Skill")]
-        public new string name; //nome da "skill"
-        [SerializeField] protected int level; //nivel da "skill"
+        public new string name;
+        [SerializeField] protected int level;
         public virtual int Level { get => level; set { } }
-        public float cost; //tempo que a "skill" custara ao conjurador, em porcentagem da sua velocidade
-        public bool active = true; //sinaliza se a "skill" esta ativa ou nao
+        public float cost;
+        public bool active = true;
         [TextArea, SerializeField] protected string shortDescription;
         public virtual string ShortDescription => shortDescription;
-        public TargetType target; //tipo de alvo da "skill"
-        public Element attribute; //elemento da "skill"
-        [SerializeField] private SkillType type; // Tipo da skill (ativa/passiva e qual tipo de passiva)
+        public TargetType target;
+        public Element attribute;
+        [SerializeField] private SkillType type;
         public string TypeString {
             get {
-                switch (type) {
-                    case SkillType.Active:
-                        return "Active Skill";
-                    case SkillType.PassiveOnDeath:
-                        return "Passive: Triggered on Death";
-                    case SkillType.PassiveOnEnd:
-                        return "Passive: Triggered when Battle Ends";
-                    case SkillType.PassiveOnReceiveBuff:
-                        return "Passive: Triggered when Buffed";
-                    case SkillType.PassiveOnReceiveDebuff:
-                        return "Passive: Triggered when Debuffed";
-                    case SkillType.PassiveOnSkillUsed:
-                        return "Passive: Triggered after Skill Usage";
-                    case SkillType.PassiveOnSpawn:
-                        return "Base Status Changes";
-                    case SkillType.PassiveOnStart:
-                        return "Passive: Triggered at Start of Battle";
-                    case SkillType.PassiveOnTakeDamage:
-                        return "Passive: Triggered when Damage Taken";
-                    default:
-                        return "";
-                }
+                return type switch {
+                    SkillType.Active => "Active Skill",
+                    SkillType.PassiveOnDeath => "Passive: Triggered on Death",
+                    SkillType.PassiveOnEnd => "Passive: Triggered when Battle Ends",
+                    SkillType.PassiveOnReceiveBuff => "Passive: Triggered when Buffed",
+                    SkillType.PassiveOnReceiveDebuff => "Passive: Triggered when Debuffed",
+                    SkillType.PassiveOnSkillUsed => "Passive: Triggered after Skill Usage",
+                    SkillType.PassiveOnSpawn => "Base Status Changes",
+                    SkillType.PassiveOnStart => "Passive: Triggered at Start of Battle",
+                    SkillType.PassiveOnTakeDamage => "Passive: Triggered when Damage Taken",
+                    _ => ""
+                };
             }
         }
         public SkillType Type => type;
         [SerializeField] private int callbackDelay = 0;
-        public List<SkillEffectTuple> effects; //lista de efeitos que a "skill" causa e seus valores associados
+        public List<SkillEffectTuple> effects;
         [Space(15)]
-        [SerializeField] private GameObject visualEffect; // Prefab contendo uma animação da skill
+        [SerializeField] private GameObject visualEffect;
         public GameObject VisualEffect => visualEffect;
 
+		#region IDatabaseItem
         public virtual void LoadTables() { }
 
         public virtual void Preload() { }
+        #endregion
 
+		// TO DO: Would work better as a function of TargetType when they become SOs
         public List<BattleUnit> FilterTargets(BattleUnit source, List<BattleUnit> oldList) {
             List<BattleUnit> newList = new List<BattleUnit>(oldList);
             List<BattleUnit> allies = BattleManager.instance.GetTeam(source, true);
@@ -112,48 +105,47 @@ namespace FinalInferno {
             return newList;
         }
 
-        // funcao que define como a skill sera usada
-        // A versão da função com lista é usada para skills de callback, e invoca o efeito visual
-        public virtual void Use(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f) {
-            // Debug.Log("Skill utilizada(callback): " + name);
+        public virtual void UseCallbackOrDelayed(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f) {
             if (callbackDelay <= 0) {
                 UseCallback(user, targets, shouldOverride1, value1, shouldOverride2, value2);
             } else {
-                foreach (BattleUnit target in targets) {
-                    target.AddEffect(new DelayedSkill(UseCallback, user, target, shouldOverride1, value1, shouldOverride2, value2, callbackDelay));
-                }
+                UseDelayed(user, targets, shouldOverride1, value1, shouldOverride2, value2);
             }
         }
 
         protected virtual void UseCallback(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f) {
             foreach (BattleUnit trgt in targets) {
-
-                if (visualEffect) {
-                    GameObject obj = GameObject.Instantiate(visualEffect, trgt.transform);
-                    obj.GetComponent<SkillVFX>().SetTarget(trgt, true);
-                }
-
-                foreach (SkillEffectTuple skillEffect in effects) {
-                    skillEffect.effect.value1 = (shouldOverride1) ? value1 : skillEffect.value1;
-                    skillEffect.effect.value2 = (shouldOverride2) ? value2 : skillEffect.value2;
-
-
-                    skillEffect.effect.Apply(user, trgt);
-                }
+                ShowVisualEffects(trgt);
+                ApplyAllSkillEffects(user, trgt, shouldOverride1, value1, shouldOverride2, value2);
             }
         }
 
-        // A versão da função com um único alvo é usado durante o turno normal e é invocada pelo efeito visual
-        public virtual void Use(BattleUnit user, BattleUnit target, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f) {
+        protected virtual void UseDelayed(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1, float value1, bool shouldOverride2, float value2) {
+            foreach (BattleUnit target in targets) {
+                target.AddEffect(new DelayedSkill(UseCallback, user, target, shouldOverride1, value1, shouldOverride2, value2, callbackDelay));
+            }
+        }
+
+        protected virtual void ShowVisualEffects(BattleUnit target) {
+            if (!visualEffect) {
+                return;
+            }
+            GameObject obj = GameObject.Instantiate(visualEffect, target.transform);
+            obj.GetComponent<SkillVFX>().SetTarget(target, true);
+        }
+
+        protected virtual void ApplyAllSkillEffects(BattleUnit user, BattleUnit target, bool shouldOverride1, float value1, bool shouldOverride2, float value2) {
             foreach (SkillEffectTuple skillEffect in effects) {
                 skillEffect.effect.value1 = (shouldOverride1) ? value1 : skillEffect.value1;
                 skillEffect.effect.value2 = (shouldOverride2) ? value2 : skillEffect.value2;
-
                 skillEffect.effect.Apply(user, target);
             }
-            // Debug.Log("Skill utilizada: " + name);
         }
 
-        public virtual void ResetSkill() { Debug.Log("Reseto skill errado"); }
+        public virtual void Use(BattleUnit user, BattleUnit target, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f) {
+            ApplyAllSkillEffects(user, target, shouldOverride1, value1, shouldOverride2, value2);
+        }
+
+        public virtual void ResetSkill() { Debug.LogError("Wrong use of skill reset", this); }
     }
 }

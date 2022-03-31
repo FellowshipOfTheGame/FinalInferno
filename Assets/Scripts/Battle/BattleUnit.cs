@@ -210,31 +210,31 @@ namespace FinalInferno {
                         break;
                     case SkillType.PassiveOnStart:
                         // Adiciona a skill no callback de inicio de batalha
-                        OnStartBattle += skill.Use;
+                        OnStartBattle += skill.UseCallbackOrDelayed;
                         break;
                     case SkillType.PassiveOnEnd:
                         // Adiciona a skill no callback de fim de batalha
-                        OnEndBattle += skill.Use;
+                        OnEndBattle += skill.UseCallbackOrDelayed;
                         break;
                     case SkillType.PassiveOnTakeDamage:
                         // Adiciona a skill no callback de dano tomado
-                        OnTakeDamage += skill.Use;
+                        OnTakeDamage += skill.UseCallbackOrDelayed;
                         break;
                     case SkillType.PassiveOnReceiveBuff:
                         // Adiciona a skill no callback de buff recebido
-                        OnReceiveBuff += skill.Use;
+                        OnReceiveBuff += skill.UseCallbackOrDelayed;
                         break;
                     case SkillType.PassiveOnReceiveDebuff:
                         // Adiciona a skill no callback de debuff recebido
-                        OnReceiveDebuff += skill.Use;
+                        OnReceiveDebuff += skill.UseCallbackOrDelayed;
                         break;
                     case SkillType.PassiveOnDeath:
                         // Adiciona a skill no callback de morte
-                        OnDeath += skill.Use;
+                        OnDeath += skill.UseCallbackOrDelayed;
                         break;
                     case SkillType.PassiveOnSkillUsed:
                         // Adiciona a skill no callback de Skill utilizada
-                        OnSkillUsed += skill.Use;
+                        OnSkillUsed += skill.UseCallbackOrDelayed;
                         break;
                 }
             }

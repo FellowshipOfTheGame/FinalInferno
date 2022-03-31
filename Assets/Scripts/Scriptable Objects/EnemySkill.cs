@@ -2,11 +2,11 @@
 using UnityEngine;
 
 namespace FinalInferno {
-    //engloba todas as "skills" dos personagens do jogador, que ganham nivel
     [CreateAssetMenu(fileName = "EnemySkill", menuName = "ScriptableObject/EnemySkill")]
     public class EnemySkill : Skill {
+        protected const string levelColumnName = "Level";
         [Header("Enemy Skill")]
-        public string description; //descricao da "skill" que aparecera para o jogador durante a batalha
+        public string description;
         [Header("Stats Table")]
         [SerializeField] private TextAsset skillTable;
         [SerializeField] private DynamicTable table;
@@ -21,17 +21,20 @@ namespace FinalInferno {
                 return table;
             }
         }
+        protected int MinLevel => Table.Rows[0].Field<int>(levelColumnName);
+        protected int MaxLevel => Table.Rows[Table.Rows.Count-1].Field<int>(levelColumnName);
         public override int Level {
             get => level;
             set {
                 if (value != level && Table != null && Table.Rows.Count > 0) {
-                    level = Mathf.Clamp(value, Table.Rows[0].Field<int>("Level"), Table.Rows[Table.Rows.Count - 1].Field<int>("Level"));
+                    level = Mathf.Clamp(value, MinLevel, MaxLevel);
                     LevelUp();
                 }
             }
         }
         private int curTableRow = 0;
 
+		#region IDatabaseItem
         public override void LoadTables() {
             table = DynamicTable.Create(skillTable);
         }
@@ -39,43 +42,54 @@ namespace FinalInferno {
         public override void Preload() {
             active = true;
             curTableRow = -1;
-            Level = -1; // O valor é -1 para garantir que seja diferente do default 0
+            Level = -1;
         }
+        #endregion
 
-        //atualiza o value dos efeitos, se for necessario.
         public void LevelUp() {
             if (Table == null || Table.Rows.Count < 1) {
-                Debug.Log($"This skill({name}) has no table to load");
+                Debug.LogWarning($"This skill({name}) has no table to load", this);
                 return;
             }
 
+            int newRow = GetTableRow();
+            if (newRow == curTableRow) {
+                return;
+            }
+
+            curTableRow = newRow;
+            for (int skillEffectIndex = 0; skillEffectIndex < effects.Count; skillEffectIndex++) {
+                UpdateSkillEffectValues(skillEffectIndex);
+            }
+        }
+
+        private int GetTableRow() {
             int row = -1;
             do {
                 row++;
-            } while (row < Table.Rows.Count - 1 && Table.Rows[row + 1].Field<int>("Level") <= Level);
+            } while (row < Table.Rows.Count-1 && Table.Rows[row+1].Field<int>(levelColumnName) <= Level);
+            return row;
+        }
 
-            if (row != curTableRow) {
-                curTableRow = row;
-                for (int i = 0; i < effects.Count; i++) {
-                    SkillEffectTuple modifyEffect = effects[i];
+        private void UpdateSkillEffectValues(int skillEffectIndex) {
+            SkillEffectTuple modifyEffect = effects[skillEffectIndex];
+            modifyEffect.value1 = Table.Rows[curTableRow].Field<float>(SkillEffectValueString(skillEffectIndex, 0));
+            modifyEffect.value2 = Table.Rows[curTableRow].Field<float>(SkillEffectValueString(skillEffectIndex, 1));
+            effects[skillEffectIndex] = modifyEffect;
+        }
 
-                    modifyEffect.value1 = Table.Rows[curTableRow].Field<float>("SkillEffect" + i + "Value0");
-                    modifyEffect.value2 = Table.Rows[curTableRow].Field<float>("SkillEffect" + i + "Value1");
-
-                    effects[i] = modifyEffect;
-                }
-            }
+        private static string SkillEffectValueString(int skillEffectIndex, int valueIndex) {
+            return $"SkillEffect{skillEffectIndex}Value{valueIndex}";
         }
 
         public override void ResetSkill() {
             Level = 0;
             active = true;
-            // Debug.Log("Skill resetada");
         }
 
-        public override void Use(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f) {
-            targets = FilterTargets(user, targets); // Filtragem para garantir a consistencia dos callbacks de AoE
-            base.Use(user, targets, shouldOverride1, value1, shouldOverride2, value2);
+        public override void UseCallbackOrDelayed(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f) {
+            targets = FilterTargets(user, targets);
+            base.UseCallbackOrDelayed(user, targets, shouldOverride1, value1, shouldOverride2, value2);
         }
     }
 }

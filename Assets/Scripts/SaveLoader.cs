@@ -3,14 +3,17 @@
 namespace FinalInferno {
     public static class SaveLoader {
         private const string fileName = "SaveFile";
+        private const string demoQuestAssetName = "AdventurerQuest";
+        private const string demoSceneName = "Demo";
+        private const string autosavePlayerPrefKey = "autosave";
         private static DataSaver<SaveFile> dataSaver = new DataSaver<SaveFile>(fileName, true);
         private static SaveFile saveFile = dataSaver.LoadData();
         public static int SaveSlot { get => saveFile.Slot; set => saveFile.Slot = value; }
         public static bool AutoSave {
-            get => saveFile != null && PlayerPrefs.GetString("autosave", "true") == "true";
+            get => saveFile != null && PlayerPrefs.GetString(autosavePlayerPrefKey, "true") == "true";
             set {
                 if (saveFile != null) {
-                    PlayerPrefs.SetString("autosave", (value ? "true" : "false"));
+                    PlayerPrefs.SetString(autosavePlayerPrefKey, (value ? "true" : "false"));
                 }
             }
         }
@@ -58,18 +61,18 @@ namespace FinalInferno {
 
         public static void NewGame() {
             ResetGame();
-            Quest mainQuest = AssetManager.LoadAsset<Quest>("MainQuest");
-            mainQuest.StartQuest(true);
+            Quest mainQuest = AssetManager.LoadAsset<Quest>(Party.mainQuestAssetName);
+            mainQuest.StartQuest();
             SceneLoader.LoadCustsceneFromMenu(StaticReferences.FirstScene, StaticReferences.FirstDialogue);
         }
 
         public static void StartDemo() {
             ResetGame();
-            Quest mainQuest = AssetManager.LoadAsset<Quest>("AdventurerQuest");
-            mainQuest.StartQuest(true);
-            mainQuest = AssetManager.LoadAsset<Quest>("MainQuest");
-            mainQuest.StartQuest(true);
-            SceneLoader.LoadOWSceneWithDefaultPositions("Demo");
+            Quest mainQuest = AssetManager.LoadAsset<Quest>(demoQuestAssetName);
+            mainQuest.StartQuest();
+            mainQuest = AssetManager.LoadAsset<Quest>(Party.mainQuestAssetName);
+            mainQuest.StartQuest();
+            SceneLoader.LoadOWSceneWithDefaultPositions(demoSceneName);
         }
 
         public static void ResetGame() {

@@ -69,14 +69,11 @@ public class VolumeController : ScriptableObject {
         float bgm = BGMChannel.CurrentValue(audioMixer);
         float sfx = SFXChannel.CurrentValue(audioMixer);
         float sfxui = SFXUIChannel.CurrentValue(audioMixer);
-
         return new VolumeInfo(master, bgm, sfx, sfxui);
     }
 
     public void ResetValues(VolumeInfo info = null) {
-        if (info == null) {
-            info = new VolumeInfo();
-        }
+        info ??= new VolumeInfo();
         masterChannel.SetValue(audioMixer, info.VolumeMaster);
         BGMChannel.SetValue(audioMixer, info.VolumeBGM);
         SFXChannel.SetValue(audioMixer, info.VolumeSFX);

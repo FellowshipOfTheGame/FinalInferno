@@ -1,71 +1,56 @@
 ﻿using UnityEngine;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 namespace FinalInferno {
     [CreateAssetMenu(fileName = "Mammon ", menuName = "ScriptableObject/Enemy/Mammon")]
     public class Mammon : Enemy {
         // OBS.: A IA parte do pressuposto que o Mammon é a unica unidade no time inimigo
-        // skills[0] = Mammon's Bribe; skills[1] = Savings; skills[2] = The Great Depression; skills[3] = inflation(passive)
         private static int financialSecurity = 0;
         private static bool marketCrashed = false;
+        private static float SavingsHPTreshold => (0.75f - (0.25f * financialSecurity));
+        private static float GreatDepressionHPTreshold => 1f / 3f;
+        private Skill BribeSkill => skills[0];
+        private Skill SavingsSkill => skills[1];
+        private Skill GreatDepressionSkill => skills[2];
 
         public override void ResetParameters() {
             financialSecurity = 0;
             marketCrashed = false;
         }
 
-        public override Skill SkillDecision(float percentageNotDefense) {
-            float rand = Random.Range(0.0f, 1.0f); //gera um numero aleatorio entre 0 e 1
-            float percentageDebuff = Mathf.Min((1f / 3f), percentageNotDefense / 3f); //porcentagem para o inimigo usar a habilidade de debuff
+        protected override Skill SkillDecision(float percentageNotDefense) {
             BattleUnit battleUnit = BattleManager.instance.GetTeam(UnitType.Enemy)[0];
             float hpPercent = battleUnit.CurHP / (float)battleUnit.MaxHP;
 
-            // Se o hp passar do threshold, usa a skill de regen
-            // habilidade pode ser usada 3 vezes, cada uso move o threshold
-            if (financialSecurity < 3 && hpPercent <= (0.75f - (0.25f * financialSecurity))) {
+            if (financialSecurity < 3 && hpPercent <= SavingsHPTreshold) {
                 financialSecurity++;
-                return skills[1];
+                return SavingsSkill;
             }
 
-            // Se o hp passar do threshold, usa a skill Great Depression
-            // Só pode ser usado uma vez por batalha
-            if (!marketCrashed && hpPercent <= (1f / 3f)) {
+            if (!marketCrashed && hpPercent <= GreatDepressionHPTreshold) {
                 marketCrashed = true;
-                return skills[2];
+                return GreatDepressionSkill;
             }
 
-
-            bool bribeCD = false;
-            // Se algum hero estiver paralizado considera que a habilidade esta em cooldown
-            foreach (BattleUnit unit in BattleManager.instance.GetTeam(UnitType.Hero)) {
-                if (!unit.CanAct) {
-                    bribeCD = true;
-                }
+            float roll = Random.Range(0.0f, 1.0f);
+            float percentageDebuff = Mathf.Min(1f, percentageNotDefense) / 3f;
+            if (!IsBribeOnCooldown() && roll < percentageDebuff) {
+                return BribeSkill;
             }
 
-            if (!bribeCD && rand < percentageDebuff) {
-                return skills[0]; // Usa bribe
-            }
-
-            if (rand < percentageNotDefense) {
+            if (roll < percentageNotDefense) {
                 return AttackDecision();
             }
 
             return defenseSkill;
         }
-    }
 
-#if UNITY_EDITOR
-    [CustomPreview(typeof(Mammon))]
-    public class MammonPreview : UnitPreview {
-        public override bool HasPreviewGUI() {
-            return base.HasPreviewGUI();
-        }
-        public override void OnInteractivePreviewGUI(Rect r, GUIStyle background) {
-            base.OnInteractivePreviewGUI(r, background);
+        private static bool IsBribeOnCooldown() {
+            foreach (BattleUnit unit in BattleManager.instance.GetTeam(UnitType.Hero)) {
+                if (!unit.CanAct) {
+                    return true;
+                }
+            }
+            return false;
         }
     }
-#endif
 }

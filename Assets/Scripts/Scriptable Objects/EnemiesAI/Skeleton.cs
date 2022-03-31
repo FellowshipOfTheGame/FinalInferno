@@ -1,32 +1,15 @@
 ﻿using UnityEngine;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 namespace FinalInferno {
     [CreateAssetMenu(fileName = "Skeleton", menuName = "ScriptableObject/Enemy/Skeleton")]
     public class Skeleton : Enemy {
-        //funcao que escolhe o ataque a ser utilizado
+        private Skill ImpaleSkill => skills[0];
         public override Skill AttackDecision() {
-            float rand = Random.Range(0.0f, 1.0f); //gera um numero aleatorio entre 0 e 1
-
-            if (rand < 0.7f) {
-                return skills[0]; //decide usar primeira habilidade
+            float roll = Random.Range(0.0f, 1.0f);
+            if (roll < 0.7f) {
+                return ImpaleSkill;
             }
-
-            return attackSkill; //decide usar ataque basico
+            return attackSkill;
         }
     }
-
-#if UNITY_EDITOR
-    [CustomPreview(typeof(Skeleton))]
-    public class SkeletonPreview : UnitPreview {
-        public override bool HasPreviewGUI() {
-            return base.HasPreviewGUI();
-        }
-        public override void OnInteractivePreviewGUI(Rect r, GUIStyle background) {
-            base.OnInteractivePreviewGUI(r, background);
-        }
-    }
-#endif
 }

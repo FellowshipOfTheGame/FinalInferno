@@ -183,7 +183,7 @@ namespace FinalInferno {
             Party.Instance.activeQuests.Clear();
             foreach (QuestInfo questInfo in saves[Slot].quest) {
                 Quest quest = AssetManager.LoadAsset<Quest>(questInfo.name);
-                quest.StartQuest(true);
+                quest.StartQuest();
                 ulong bitValue = 1;
                 for (int i = 0; i < quest.EventCount; i++) {
                     quest.SetFlag(questInfo.flagsNames[i], (questInfo.flagsTrue & bitValue) != 0);

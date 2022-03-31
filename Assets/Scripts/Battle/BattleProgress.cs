@@ -55,7 +55,7 @@ namespace FinalInferno {
             currentIndex = 0;
             startingLevel = party.Level;
             startingExp = party.xp;
-            xpToNextLevel = party.xpNext;
+            xpToNextLevel = party.xpNextLevel;
             xpCumulative = party.XpCumulative;
             for (int i = 0; i < Party.Capacity; i++) {
                 heroes[i] = null;

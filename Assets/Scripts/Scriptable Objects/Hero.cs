@@ -1,38 +1,34 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
 namespace FinalInferno {
-    //engloba os tipos/classes de heroi, personagem do jogador
     [CreateAssetMenu(fileName = "Hero", menuName = "ScriptableObject/Hero", order = 2)]
     public class Hero : Unit, IDatabaseItem {
-        public Sprite spriteOW; //"sprite" do heroi no "Over Wolrd"
-        public RuntimeAnimatorController animatorOW; //"animator" do "Over World"
-        public Sprite skillBG; //"sprite" de fundo da arvore de "skills"  
+        public Sprite spriteOW;
+        public RuntimeAnimatorController animatorOW;
         [Space(10)]
         [Header("Hero Info")]
-        [SerializeField] private List<PlayerSkill> InitialsSkills = new List<PlayerSkill>();
-        public List<PlayerSkill> skillsToUpdate; //lista de skills que podem ser destravadas com o level do personagem
+        [SerializeField] private List<PlayerSkill> initialsSkills = new List<PlayerSkill>();
+        public List<PlayerSkill> skillsToUpdate;
+        private long DefaultSkillExp => Mathf.Max(10,(Mathf.FloorToInt(Mathf.Sqrt(Party.Instance.XpCumulative))));
         public override long SkillExp {
             get {
-                if (BattleManager.instance) {
-                    long expValue = 0;
-                    int nEnemies = 0;
-                    List<Unit> units = BattleManager.instance.units;
-                    foreach (Unit u in units) {
-                        if (!u.IsHero) {
-                            expValue += u.SkillExp;
-                            nEnemies++;
-                        }
-                    }
-                    if (nEnemies > 0) {
-                        expValue /= nEnemies;
-                        return expValue;
+                if (!BattleManager.instance) {
+                    return DefaultSkillExp;
+                }
+                long expSum = 0;
+                int nEnemies = 0;
+                foreach (Unit unit in BattleManager.instance.units) {
+                    if (!unit.IsHero) {
+                        expSum += unit.SkillExp;
+                        nEnemies++;
                     }
                 }
-                return Mathf.Max(10, (Mathf.FloorToInt(Mathf.Sqrt(Party.Instance.XpCumulative))));
+                return (nEnemies > 0)? expSum/nEnemies : DefaultSkillExp;
             }
         }
         [Space(10)]
@@ -41,85 +37,69 @@ namespace FinalInferno {
         [SerializeField] private DynamicTable table;
         private DynamicTable Table {
             get {
-                if (table == null) {
-                    table = DynamicTable.Create(heroTable);
-                }
-
+                table ??= DynamicTable.Create(heroTable);
                 return table;
             }
         }
         public override bool IsHero => true;
 
+		#region IDatabaseItem
         public void LoadTables() {
             table = DynamicTable.Create(heroTable);
         }
 
         public void Preload() {
             elementalResistances.Clear();
-            skillsToUpdate = new List<PlayerSkill>(InitialsSkills);
-            LevelUp(-1, true);
+            skillsToUpdate = new List<PlayerSkill>(initialsSkills);
+            LevelUpIgnoringSkills(-1);
         }
+        #endregion
 
-        //funcao que ajusta todos os atributos e "skills" do persoangem quando sobe de nivel
-        public int LevelUp(int newLevel, bool ignoreSkills = false) {
+        private void LevelUpIgnoringSkills(int newLevel) {
             level = Mathf.Clamp(newLevel, 1, Table.Rows.Count);
-            hpMax = Table.Rows[level - 1].Field<int>("HP");
-            baseDmg = Table.Rows[level - 1].Field<int>("Damage");
-            baseDef = Table.Rows[level - 1].Field<int>("Defense");
-            baseMagicDef = Table.Rows[level - 1].Field<int>("Resistance");
-            baseSpeed = Table.Rows[level - 1].Field<int>("Speed");
-
-            if (!ignoreSkills) {
-                UnlockSkills();
-            }
-
-            return hpMax;
+            LoadStatsFromTable();
         }
 
-        //verifica se todas as skills que tem como pre requisito o level do heroi para destravar e tem todas as skills pai destravadas, podem ser destravdas
+        private void LoadStatsFromTable() {
+            int tableIndex = level - 1;
+            hpMax = Table.Rows[tableIndex].Field<int>(HPColumnName);
+            baseDmg = Table.Rows[tableIndex].Field<int>(DamageColumnName);
+            baseDef = Table.Rows[tableIndex].Field<int>(DefenseColumnName);
+            baseMagicDef = Table.Rows[tableIndex].Field<int>(ResistanceColumnName);
+            baseSpeed = Table.Rows[tableIndex].Field<int>(SpeedColumnName);
+        }
+
+        public void LevelUp(int newLevel) {
+            LevelUpIgnoringSkills(newLevel);
+            UnlockSkills();
+        }
+
         public void UnlockSkills() {
             foreach (PlayerSkill skill in skillsToUpdate.ToArray()) {
-
-                //se a skill for destrava esta eh removida da lista e suas skills filhas sao adicionadas
                 if (skill.CheckUnlock(level)) {
-                    //skills filhas sao adicionadas a lista
-                    foreach (PlayerSkill child in skill.skillsToUpdate) {
-                        if (!skillsToUpdate.Contains(child)) {
-                            skillsToUpdate.Add(child);
-                        }
-                    }
-
-                    skillsToUpdate.Remove(skill); //skill eh removida da lista
+                    UpdateUnlockedSkillStatus(skill);
                 }
             }
         }
 
+        private void UpdateUnlockedSkillStatus(PlayerSkill unlockedSkill) {
+            foreach (PlayerSkill child in unlockedSkill.skillsToUpdate) {
+                if (!skillsToUpdate.Contains(child)) {
+                    skillsToUpdate.Add(child);
+                }
+            }
+            skillsToUpdate.Remove(unlockedSkill);
+        }
+
         public void ResetHero() {
+            elementalResistances.Clear();
             foreach (Skill skill in skills) {
                 skill.ResetSkill();
             }
-
-            skillsToUpdate = new List<PlayerSkill>(InitialsSkills);
-            // foreach(PlayerSkill skill in InitialsSkills){
-            //     skill.CheckUnlock(1);
-            // }
-
-            Debug.Log("Hero resetado");
+            skillsToUpdate = new List<PlayerSkill>(initialsSkills);
         }
 
         public override Color DialogueColor => color;
-        public override string DialogueName => (name == null) ? "" : name;
+        public override string DialogueName => name ?? "";
     }
-
-#if UNITY_EDITOR
-    [CustomPreview(typeof(Hero))]
-    public class HeroPreview : UnitPreview {
-        public override bool HasPreviewGUI() {
-            return base.HasPreviewGUI();
-        }
-        public override void OnInteractivePreviewGUI(Rect r, GUIStyle background) {
-            base.OnInteractivePreviewGUI(r, background);
-        }
-    }
-#endif
 }

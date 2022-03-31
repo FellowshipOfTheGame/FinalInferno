@@ -6,9 +6,13 @@ using UnityEditor;
 #endif
 
 namespace FinalInferno {
-    //engloba os inimigos do jogador
     [CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObject/Enemy/Basic")]
     public class Enemy : Unit, IDatabaseItem {
+		private const string LevelSkillColumnName = "LevelSkill";
+		private const string ColorColumnName = "Color";
+		private const string LevelColumnName = "Level";
+		private const string RankColumnName = "Rank";
+		private const string BaseExpColumnName = "XP";
         public Color dialogueColor;
         [Space(10)]
         [Header("Enemy Info")]
@@ -17,13 +21,12 @@ namespace FinalInferno {
         [SerializeField] protected DamageType damageFocus = DamageType.None;
         public DamageType DamageFocus => damageFocus;
         public override Color DialogueColor => dialogueColor;
-        public override string DialogueName => (AssetName == null) ? "" : AssetName;
+        public override string DialogueName => AssetName ?? "";
         [SerializeField] private Sprite bestiaryPortrait;
         public Sprite BestiaryPortrait => bestiaryPortrait;
         [SerializeField] private AudioClip enemyCry;
         public AudioClip EnemyCry => enemyCry;
-        [TextArea]
-        [SerializeField] private string bio = "Bio";
+        [SerializeField, TextArea] private string bio = "Bio";
         public string Bio => bio;
         [Space(10)]
         [Header("Table")]
@@ -41,9 +44,12 @@ namespace FinalInferno {
             }
         }
         [SerializeField, HideInInspector] protected int curTableRow = 0;
-        public override long SkillExp => BaseExp;  // Quanta exp o inimigo dá pra skill quando ela é usada nele
-        public long BaseExp { get; protected set; } // Quanta exp o inimigo dá pra party ao final da batalha
+        protected int MinLevel => Table.Rows[0].Field<int>(LevelColumnName);
+        protected int MaxLevel => Table.Rows[Table.Rows.Count - 1].Field<int>(LevelColumnName);
+        public override long SkillExp => BaseExp;
+        public long BaseExp { get; protected set; }
 
+		#region IDatabaseItem
         public void LoadTables() {
             table = DynamicTable.Create(enemyTable);
         }
@@ -52,201 +58,201 @@ namespace FinalInferno {
             curTableRow = -1;
             LevelEnemy(-1);
         }
+        #endregion
 
-        // Funcao atualmente desnecessaria
         public int GetSkillLevel(EnemySkill skill) {
             int skillIndex = skills.IndexOf(skill);
-            if (skillIndex >= 0) {
-                return Table.Rows[curTableRow].Field<int>("LevelSkill" + skillIndex);
+            if (skillIndex < 0) {
+                return 0;
             }
-
-            return 0;
+            return Table.Rows[curTableRow].Field<int>($"{LevelSkillColumnName}{skillIndex}");
         }
 
-        // Função que identifica o nível do inimigo de acordo com o progresso e ajusta como for necessário
         public int LevelEnemy() {
-            // Calcula o level dos inimigos
-
-            int scaledLevel = Party.Instance.ScaledLevel;
-            // Debug.Log($"Calculated scaled level = {scaledLevel}");
-            // Define o tier de acordo com a historia
-            int enemyLevel = 10 * (scaledLevel / 10);
-            // O tier só deve incrementar depois que o jogador ganhar mais um nível
-            // Debug.Log($"Calculated enemy level = {enemyLevel}");
-            if (scaledLevel == enemyLevel && enemyLevel >= 10) {
-                enemyLevel -= 10;
-            }
-            // Debug.Log($"Calculated enemy level = {enemyLevel}");
-
-            while (scaledLevel > 10) {
-                scaledLevel -= 10;
-            }
-            // Ajusta o nível dos monstros dentro do tier de historia
-            if (scaledLevel > 5) {
-                enemyLevel += 5;
-            }
-            // Debug.Log($"Calculated enemy level = {enemyLevel}");
-
+            int enemyLevel = CalculateEnemyLevel();
             LevelEnemy(enemyLevel);
-
-            // O valor calculado é retornado para calcular apenas uma vez em situações de loop
             return enemyLevel;
         }
 
-        // Função que atualiza os status do inimigo para um novo level e seta o nível das skills
-        public void LevelEnemy(int newLevel) {
-            if (Table == null || Table.Rows.Count < 1) {
-                Debug.Log($"This enemy({AssetName}) has no table to load");
-                return;
-            }
-
-            level = Mathf.Clamp(newLevel, Table.Rows[0].Field<int>("Level"), Table.Rows[Table.Rows.Count - 1].Field<int>("Level"));
-
-            int row = -1;
-            do {
-                row++;
-            } while (row < Table.Rows.Count - 1 && Table.Rows[row + 1].Field<int>("Level") <= newLevel);
-
-            if (row != curTableRow) {
-                curTableRow = row;
-                name = Table.Rows[row].Field<string>("Rank");
-                level = Table.Rows[row].Field<int>("Level");
-                hpMax = Table.Rows[row].Field<int>("HP");
-                baseDmg = Table.Rows[row].Field<int>("Damage");
-                baseDef = Table.Rows[row].Field<int>("Defense");
-                baseMagicDef = Table.Rows[row].Field<int>("Resistance");
-                baseSpeed = Table.Rows[row].Field<int>("Speed");
-                BaseExp = Table.Rows[row].Field<int>("XP");
-
-                elementalResistances.Clear();
-                foreach (Element element in System.Enum.GetValues(typeof(Element))) {
-                    string colName = System.Enum.GetName(typeof(Element), element) + "Resistance";
-                    if (Table.Rows[row].HasField<float>(colName)) {
-                        float value = Table.Rows[row].Field<float>(colName);
-                        if (value != 1.0f) {
-                            elementalResistances.Add(element, value);
-                        }
-                    }
-                }
-
-                color = Table.Rows[row].Field<Color>("Color");
-            }
-
-            for (int i = 0; i < skills.Count; i++) {
-                skills[i].Level = Table.Rows[curTableRow].Field<int>("LevelSkill" + i);
-            }
+        private static int CalculateEnemyLevel() {
+            int scaledLevel = Party.Instance.ScaledLevel;
+            int enemyTier = CalculateEnemyTier(scaledLevel);
+            int enemyTierLevel = CalculateEnemyTierLevel(scaledLevel);
+            return enemyTier + enemyTierLevel;
         }
 
-        //funcao que escolhe o alvo de um ataque baseado na ameaca que herois representam
-        public virtual int TargetDecision(List<BattleUnit> team) {
-            float sumTotal = 0.0f;
-            List<float> percentual = new List<float>();
-
-            //soma a ameaca de todos os herois
-            foreach (BattleUnit unit in team) {
-                sumTotal += Mathf.Clamp(unit.aggro, Mathf.Epsilon, float.MaxValue);
+        private static int CalculateEnemyTier(int scaledLevel) {
+            int enemyTier = 10 * (scaledLevel / 10);
+            if (scaledLevel == enemyTier && enemyTier >= 10) {
+                enemyTier -= 10;
             }
+            return enemyTier;
+        }
 
-            //calcula a porcentagem que cada heroi representa da soma total das ameacas
-            foreach (BattleUnit unit in team) {
-                percentual.Add(Mathf.Clamp(unit.aggro, Mathf.Epsilon, float.MaxValue) / sumTotal);
+        private static int CalculateEnemyTierLevel(int scaledLevel) {
+            while (scaledLevel > 10) {
+                scaledLevel -= 10;
             }
-
-            //gera um numero aleatorio entre 0 e 1
-            float rand = Random.Range(0.0f, 1.0f);
-
-            //escolhe o alvo com probabilidades baseadas na porcentagem que cada heroi representa da soma total das ameacas
-            for (int i = 0; i < team.Count; i++) {
-                if (rand <= percentual[i]) {
-                    return i; //decide atacar o heroi i
-                }
-
-                rand -= percentual[i];
+            if (scaledLevel > 5) {
+                return 5;
             }
-
             return 0;
         }
 
-        //funcao que escolhe o ataque a ser utilizado
-        public virtual Skill AttackDecision() {
-            return attackSkill; //decide usar ataque basico
-        }
-
-        //funcao que escolhe qual acao sera feita no proprio turno
-        public virtual Skill SkillDecision(float percentageNotDefense) {
-            float rand = Random.Range(0.0f, 1.0f); //gera um numero aleatorio entre 0 e 1
-
-            if (rand < percentageNotDefense) {
-                return AttackDecision(); //decide atacar
+        public void LevelEnemy(int newLevel) {
+            if (Table == null || Table.Rows.Count < 1) {
+                Debug.LogWarning($"This enemy({AssetName}) has no table to load", this);
+                return;
             }
 
-            return defenseSkill; //decide defender
+            level = Mathf.Clamp(newLevel, MinLevel, MaxLevel);
+            int newTableRow = GetTableRowWithLevel(newLevel);
+            if (newTableRow != curTableRow) {
+                curTableRow = newTableRow;
+                LoadStatsFromTable(newTableRow);
+            }
+            LoadSkillLevelsFromTable();
         }
 
-        //inteligencia artificial do inimigo na batalha
+        private int GetTableRowWithLevel(int newLevel) {
+            int row = -1;
+            do {
+                row++;
+            } while (row < Table.Rows.Count-1 && Table.Rows[row+1].Field<int>(LevelColumnName) <= newLevel);
+            return row;
+        }
+
+        private void LoadStatsFromTable(int tableRow) {
+            name = Table.Rows[tableRow].Field<string>(RankColumnName);
+            level = Table.Rows[tableRow].Field<int>(LevelColumnName);
+            hpMax = Table.Rows[tableRow].Field<int>(HPColumnName);
+            baseDmg = Table.Rows[tableRow].Field<int>(DamageColumnName);
+            baseDef = Table.Rows[tableRow].Field<int>(DefenseColumnName);
+            baseMagicDef = Table.Rows[tableRow].Field<int>(ResistanceColumnName);
+            baseSpeed = Table.Rows[tableRow].Field<int>(SpeedColumnName);
+            BaseExp = Table.Rows[tableRow].Field<int>(BaseExpColumnName);
+            color = Table.Rows[tableRow].Field<Color>(ColorColumnName);
+            LoadElementalResistancesFromTable(tableRow);
+        }
+
+        private void LoadElementalResistancesFromTable(int tableRow) {
+            elementalResistances.Clear();
+            foreach (Element element in System.Enum.GetValues(typeof(Element))) {
+                LoadElementalResistanceIfValid(tableRow, element);
+            }
+        }
+
+        private void LoadElementalResistanceIfValid(int tableRow, Element element) {
+            string colName = ElementalResistColumnName(element);
+            if (!Table.Rows[tableRow].HasField<float>(colName)) {
+                return;
+            }
+            float value = Table.Rows[tableRow].Field<float>(colName);
+            if (value != 1.0f) {
+                elementalResistances.Add(element, value);
+            }
+        }
+
+        private static string ElementalResistColumnName(Element element) {
+            return $"{System.Enum.GetName(typeof(Element), element)}Resistance";
+        }
+
+        private void LoadSkillLevelsFromTable() {
+            for (int i = 0; i < skills.Count; i++) {
+                skills[i].Level = Table.Rows[curTableRow].Field<int>($"{LevelSkillColumnName}{i}");
+            }
+        }
+
+		#region EnemyAI
         public virtual void AIEnemy() {
-            Skill skill;
+            float relativeHP = BattleManager.instance.currentUnit.CurHP / GetAverageTeamHP();
+            float percentageNotDefense = Mathf.Sqrt(relativeHP) + 0.05f * relativeHP;
+            Skill skill = SkillDecision(percentageNotDefense);
+            BattleSkillManager.currentSkill = skill;
+            BattleSkillManager.currentTargets = GetTargets(skill.target);
+        }
+
+        private static float GetAverageTeamHP() {
             List<BattleUnit> team = BattleManager.instance.GetTeam(UnitType.Enemy);
             float average = 0.0f;
-            float percentualHP;
-
-            //calcula a media de vida do grupo dos inimigos
             foreach (BattleUnit unit in team) {
                 average += unit.CurHP;
             }
             average /= team.Count;
+            return average;
+        }
 
-            //calcula quanto porecento de vida o inimigo atual tem em relacao a media de vida do grupo de inimigos
-            percentualHP = BattleManager.instance.currentUnit.CurHP / average;
+        protected virtual Skill SkillDecision(float percentageNotDefense) {
+            float roll = Random.Range(0.0f, 1.0f);
+            if (roll < percentageNotDefense) {
+                return AttackDecision();
+            }
+            return defenseSkill;
+        }
 
-            skill = SkillDecision(Mathf.Sqrt(percentualHP) + 0.05f * percentualHP); //parametro passado calcula o complementar da porcentagem do inimigo defender, baseado no percentual de vida
-
-            BattleSkillManager.currentSkill = skill;
-            BattleSkillManager.currentTargets = GetTargets(skill.target);
+        public virtual Skill AttackDecision() {
+            return attackSkill;
         }
 
         public virtual void ResetParameters() { /* Função para resetar parametros de boss por exemplo */ }
 
         protected virtual List<BattleUnit> GetTargets(TargetType type) {
-            List<BattleUnit> targets = new List<BattleUnit>();
-            List<BattleUnit> team = new List<BattleUnit>();
+            return type switch {
+                TargetType.Self => new List<BattleUnit>(){BattleManager.instance.currentUnit},
+                TargetType.AllLiveAllies => BattleManager.instance.GetTeam(UnitType.Enemy),
+                TargetType.AllLiveEnemies => BattleManager.instance.GetTeam(UnitType.Hero),
+                TargetType.SingleLiveAlly => new List<BattleUnit>() { GetRandomLiveAlly() },
+                TargetType.SingleLiveEnemy => new List<BattleUnit>() { TargetDecision(GetHeroesTeam()) },
+                _ => throw new System.NotImplementedException("[Enemy.cs]: Target type not implemented for enemy targeting")
+            };
+        }
 
-            switch (type) {
-                case TargetType.Self:
-                    targets.Add(BattleManager.instance.currentUnit);
-                    break;
-                case TargetType.AllLiveAllies:
-                    targets = BattleManager.instance.GetTeam(UnitType.Enemy);
-                    break;
-                case TargetType.AllLiveEnemies:
-                    targets = BattleManager.instance.GetTeam(UnitType.Hero);
-                    break;
-                case TargetType.SingleLiveAlly:
-                    team = BattleManager.instance.GetTeam(UnitType.Enemy);
-                    targets.Add(team[Random.Range(0, team.Count - 1)]);
-                    break;
-                case TargetType.SingleLiveEnemy:
-                    team = BattleManager.instance.GetTeam(UnitType.Hero);
-                    targets.Add(team[TargetDecision(team)]);
-                    break;
-                default:
-                    Debug.LogError("Target type not implemented for enemy targeting (Enemy.cs)");
-                    break;
+        protected static List<BattleUnit> GetHeroesTeam() {
+            return BattleManager.instance.GetTeam(UnitType.Hero);
+        }
+
+        protected static BattleUnit GetRandomLiveAlly() {
+            List<BattleUnit> team = BattleManager.instance.GetTeam(UnitType.Enemy);
+            return team[Random.Range(0, team.Count-1)];
+        }
+
+        protected virtual BattleUnit TargetDecision(List<BattleUnit> targetTeam) {
+            List<float> targetingChances = GetUnitTargetingChances(targetTeam);
+            float roll = Random.Range(0.0f, 1.0f);
+            for (int targetIndex = 0; targetIndex < targetTeam.Count; targetIndex++) {
+                if (roll <= targetingChances[targetIndex]) {
+                    return targetTeam[targetIndex];
+                }
+                roll -= targetingChances[targetIndex];
             }
+            return targetTeam[0];
+        }
 
-            return targets;
+        protected static List<float> GetUnitTargetingChances(List<BattleUnit> targetTeam) {
+            float sumTotal = GetTeamTotalAggro(targetTeam);
+            List<float> percentual = new List<float>();
+            foreach (BattleUnit unit in targetTeam) {
+                percentual.Add(Mathf.Clamp(unit.aggro, Mathf.Epsilon, float.MaxValue) / sumTotal);
+            }
+            return percentual;
         }
-    }
 
-#if UNITY_EDITOR
-    [CustomPreview(typeof(Enemy))]
-    public class EnemyPreview : UnitPreview {
-        public override bool HasPreviewGUI() {
-            return base.HasPreviewGUI();
+        protected static float GetTeamTotalAggro(List<BattleUnit> targetTeam) {
+            float sumTotal = 0.0f;
+            foreach (BattleUnit unit in targetTeam) {
+                sumTotal += Mathf.Clamp(unit.aggro, Mathf.Epsilon, float.MaxValue);
+            }
+            return sumTotal;
         }
-        public override void OnInteractivePreviewGUI(Rect r, GUIStyle background) {
-            base.OnInteractivePreviewGUI(r, background);
+
+        protected static bool AllHeroesAreParalised() {
+            foreach(BattleUnit hero in BattleManager.instance.GetTeam(UnitType.Hero)) {
+                if(hero.CanAct) {
+                    return false;
+                }
+            }
+            return true;
         }
+        #endregion
     }
-#endif
 }

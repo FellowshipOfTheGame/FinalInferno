@@ -73,7 +73,7 @@ namespace FinalInferno.UI.Victory {
             nextLevelText.text = (int.Parse(nextLevelText.text) + 1).ToString();
             previousXPAmountImage.fillAmount = 0f;
             partyLevelSlider.value -= partyLevelSlider.maxValue;
-            partyLevelSlider.maxValue = Party.Instance.xpNext/* - partyLevelSlider.maxValue*/;
+            partyLevelSlider.maxValue = Party.Instance.xpNextLevel/* - partyLevelSlider.maxValue*/;
         }
 
         private IEnumerator HeroesSkills() {
