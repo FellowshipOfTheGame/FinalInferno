@@ -67,41 +67,41 @@ namespace FinalInferno {
                         }
 
                         break;
-                    case TargetType.DeadAlly:
-                    case TargetType.DeadAllies:
+                    case TargetType.SingleDeadAlly:
+                    case TargetType.AllDeadAllies:
                         if (!allies.Contains(unit) || unit.CurHP > 0) {
                             newList.Remove(unit);
                         }
 
                         break;
-                    case TargetType.SingleAlly:
-                    case TargetType.MultiAlly:
+                    case TargetType.SingleLiveAlly:
+                    case TargetType.AllLiveAllies:
                         if (!allies.Contains(unit) || unit.CurHP <= 0) {
                             newList.Remove(unit);
                         }
 
                         break;
-                    case TargetType.AllAllies:
+                    case TargetType.AllAlliesLiveOrDead:
                         if (!allies.Contains(unit)) {
                             newList.Remove(unit);
                         }
 
                         break;
-                    case TargetType.DeadEnemy:
-                    case TargetType.DeadEnemies:
+                    case TargetType.SingleDeadEnemy:
+                    case TargetType.AllDeadEnemies:
                         if (allies.Contains(unit) || unit.CurHP > 0) {
                             newList.Remove(unit);
                         }
 
                         break;
-                    case TargetType.SingleEnemy:
-                    case TargetType.MultiEnemy:
+                    case TargetType.SingleLiveEnemy:
+                    case TargetType.AllLiveEnemies:
                         if (allies.Contains(unit) || unit.CurHP <= 0) {
                             newList.Remove(unit);
                         }
 
                         break;
-                    case TargetType.AllEnemies:
+                    case TargetType.AllEnemiesLiveOrDead:
                         if (allies.Contains(unit)) {
                             newList.Remove(unit);
                         }

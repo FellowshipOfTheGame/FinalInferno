@@ -1,7 +1,7 @@
 ﻿namespace FinalInferno {
     public enum VictoryType {
-        Nobody,
-        Heroes,
-        Enemys
+        Nobody = 0,
+        Heroes = 1,
+        Enemies = 2
     }
 }

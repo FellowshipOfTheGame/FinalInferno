@@ -216,7 +216,7 @@ namespace FinalInferno {
 
             team = GetTeam(UnitType.Hero);
             if (team.Count <= 0) {
-                return VictoryType.Enemys;
+                return VictoryType.Enemies;
             }
 
             return VictoryType.Nobody;

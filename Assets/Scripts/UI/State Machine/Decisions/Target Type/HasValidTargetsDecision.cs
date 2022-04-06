@@ -22,22 +22,22 @@ namespace FinalInferno.UI.FSM {
             TargetType currentSkillType = BattleSkillManager.GetSkillType();
 
             switch (currentSkillType) {
-                case TargetType.AllAllies:
-                case TargetType.AllEnemies:
-                case TargetType.MultiAlly:
-                case TargetType.MultiEnemy:
+                case TargetType.AllAlliesLiveOrDead:
+                case TargetType.AllEnemiesLiveOrDead:
+                case TargetType.AllLiveAllies:
+                case TargetType.AllLiveEnemies:
                 case TargetType.Self:
-                case TargetType.SingleAlly:
-                case TargetType.SingleEnemy:
+                case TargetType.SingleLiveAlly:
+                case TargetType.SingleLiveEnemy:
                     hasValidTargets = true;
                     break;
-                case TargetType.DeadAllies:
-                case TargetType.DeadAlly:
+                case TargetType.AllDeadAllies:
+                case TargetType.SingleDeadAlly:
                     List<BattleUnit> deadAllies = BattleManager.instance.GetTeam(BattleManager.instance.currentUnit, true, true);
                     hasValidTargets = deadAllies.Count > 0;
                     break;
-                case TargetType.DeadEnemies:
-                case TargetType.DeadEnemy:
+                case TargetType.AllDeadEnemies:
+                case TargetType.SingleDeadEnemy:
                     List<BattleUnit> deadEnemies = BattleManager.instance.GetEnemies(BattleManager.instance.currentUnit, true, true);
                     hasValidTargets = deadEnemies.Count > 0;
                     break;
