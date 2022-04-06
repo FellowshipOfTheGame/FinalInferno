@@ -8,12 +8,12 @@ namespace FinalInferno {
         public override void OnInspectorGUI() {
             serializedObject.Update();
 
-            SetOnlyReadInteractions();
+            DrawOnlyReadInteractions();
             
             serializedObject.ApplyModifiedProperties();
         }
 
-        private void SetOnlyReadInteractions() {
+        private void DrawOnlyReadInteractions() {
             GUI.enabled = false;
             base.OnInspectorGUI();
             GUI.enabled = true;

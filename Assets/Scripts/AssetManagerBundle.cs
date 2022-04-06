@@ -47,12 +47,7 @@ namespace FinalInferno {
         public void PreloadAssets() {
             foreach (T asset in assets) {
                 string key = GetAssetKey(asset);
-
-                try {
-                    TryPreloadAsset(key, asset);
-                } catch (System.ArgumentException) {
-                    Debug.LogWarning($"Asset {key} is being added more than once");
-                }
+                TryPreloadAsset(key, asset);
             }
         }
 
@@ -61,8 +56,12 @@ namespace FinalInferno {
         }
 
         private void TryPreloadAsset(string key, T asset) {
-            dict.Add(key, asset);
-            asset.Preload();
+            try {
+                dict.Add(key, asset);
+                asset.Preload();
+            } catch (System.ArgumentException) {
+                Debug.LogWarning($"Asset {key} is being added more than once");
+            }
         }
 
         public T GetAsset(string key) {
