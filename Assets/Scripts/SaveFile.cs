@@ -197,7 +197,7 @@ namespace FinalInferno {
         }
 
         private void LoadSettings() {
-            StaticReferences.VolumeController.ResetValues(saves[Slot].volumeInfo ?? new VolumeController.VolumeInfo());
+            StaticReferences.VolumeController.ResetValues(saves[Slot].volumeInfo ?? new VolumeInfo());
             SaveLoader.AutoSave = saves[Slot].autoSave;
         }
     }
