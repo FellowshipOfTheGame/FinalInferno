@@ -10,27 +10,36 @@ namespace FinalInferno {
         [SerializeField] private FinalInferno.UI.FSM.ButtonClickDecision decision;
 
         public override void AfterDialogue() {
-            Debug.Log("teste");
-            if (scene.scene == null || scene.scene == "" || decision == null) {
-                shouldUnlockMovement = true;
-                base.AfterDialogue();
+            if (string.IsNullOrEmpty(scene.scene) || decision == null) {
+                IgnoreSceneChange();
             } else {
-                SceneLoader.beforeSceneChange += SetFlags;
-                shouldUnlockMovement = false;
-
-                FinalInferno.UI.ChangeSceneUI.sceneName = scene.scene;
-                FinalInferno.UI.ChangeSceneUI.positionOnLoad = scene.position;
-                FinalInferno.UI.ChangeSceneUI.isCutscene = false;
-                FinalInferno.UI.ChangeSceneUI.selectedDialogue = null;
-
-                decision.Click();
+                PrepareSceneChange();
+                ChangeScene();
             }
             Fog.Dialogue.DialogueHandler.instance.OnDialogueStart -= AfterDialogue;
+        }
+
+        private void IgnoreSceneChange() {
+            shouldUnlockMovement = true;
+            base.AfterDialogue();
+        }
+
+        private void PrepareSceneChange() {
+            SceneLoader.beforeSceneChange += SetFlags;
+            shouldUnlockMovement = false;
         }
 
         public void SetFlags() {
             base.AfterDialogue();
             SceneLoader.beforeSceneChange -= SetFlags;
+        }
+
+        private void ChangeScene() {
+            FinalInferno.UI.ChangeSceneUI.sceneName = scene.scene;
+            FinalInferno.UI.ChangeSceneUI.positionOnLoad = scene.position;
+            FinalInferno.UI.ChangeSceneUI.isCutscene = false;
+            FinalInferno.UI.ChangeSceneUI.selectedDialogue = null;
+            decision.Click();
         }
     }
 }

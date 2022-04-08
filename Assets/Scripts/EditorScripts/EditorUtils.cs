@@ -34,6 +34,13 @@ namespace FinalInferno {
             return returnValue;
         }
 
+        public static Rect CropRect(Rect rect, Rect limits) {
+            if (rect.xMax > limits.xMax) {
+                rect.width = Mathf.Max(0f, limits.xMax - rect.xMin);
+            }
+            return rect;
+        }
+
 		[MenuItem("Assets/Final Inferno/Set Selection as Dirty", false)]
         private static void SetSelectionDirty() {
             foreach(Object obj in Selection.objects) {

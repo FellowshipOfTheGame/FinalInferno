@@ -4,7 +4,7 @@ namespace FinalInferno {
     [CreateAssetMenu(menuName = "Variable/Float")]
     public class FloatVariable : GenericVariable<float> {
         public void IncrementValue(float increment) {
-            value += increment;
+            UpdateValue(value + increment);
         }
     }
 }

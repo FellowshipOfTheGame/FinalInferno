@@ -11,7 +11,7 @@ namespace FinalInferno {
 
         [Range(1, 20), SerializeField] private int freeWalkDistance = 3;
         public float FreeWalkDistance => freeWalkDistance;
-        // Esse valor deve ser o valor mínimo do atributo Range acima
+        // O valor abaixo deve ser o valor mínimo do atributo Range em freeWalkDistance
         public int MinFreeWalkDistance => 1;
     }
 }

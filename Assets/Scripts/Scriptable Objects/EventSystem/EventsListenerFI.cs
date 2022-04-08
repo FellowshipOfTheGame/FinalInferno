@@ -7,28 +7,20 @@ namespace FinalInferno.EventSystem {
         [SerializeField] private List<EventFI> _events = new List<EventFI>();
         [SerializeField] private UnityEvent _response;
 
-        // Start is called before the first frame update
-
         private void OnEnable() {
             foreach (EventFI _event in _events) {
-                if (_event != null) {
-                    _event.AddListener(this);
-                }
+                _event?.AddListener(this);
             }
         }
 
         private void OnDisable() {
             foreach (EventFI _event in _events) {
-                if (_event != null) {
-                    _event.RemoveListener(this);
-                }
+                _event?.RemoveListener(this);
             }
         }
 
         public void OnEventRaised() {
-            if (_response != null) {
-                _response.Invoke();
-            }
+            _response?.Invoke();
         }
     }
 }
