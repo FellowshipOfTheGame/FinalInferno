@@ -19,8 +19,7 @@ namespace FinalInferno {
         public Element attribute;
         [SerializeField] private SkillType type;
         public string TypeString {
-            get {
-                return type switch {
+            get => type switch {
                     SkillType.Active => "Active Skill",
                     SkillType.PassiveOnDeath => "Passive: Triggered on Death",
                     SkillType.PassiveOnEnd => "Passive: Triggered when Battle Ends",
@@ -32,7 +31,6 @@ namespace FinalInferno {
                     SkillType.PassiveOnTakeDamage => "Passive: Triggered when Damage Taken",
                     _ => ""
                 };
-            }
         }
         public SkillType Type => type;
         [SerializeField] private int callbackDelay = 0;
@@ -41,13 +39,13 @@ namespace FinalInferno {
         [SerializeField] private GameObject visualEffect;
         public GameObject VisualEffect => visualEffect;
 
-		#region IDatabaseItem
+        #region IDatabaseItem
         public virtual void LoadTables() { }
 
         public virtual void Preload() { }
         #endregion
 
-		// TO DO: Would work better as a function of TargetType when they become SOs
+        // TO DO: Would work better as a function of TargetType when they become SOs
         public List<BattleUnit> FilterTargets(BattleUnit source, List<BattleUnit> oldList) {
             List<BattleUnit> newList = new List<BattleUnit>(oldList);
             List<BattleUnit> allies = BattleManager.instance.GetTeam(source, true);

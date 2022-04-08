@@ -88,7 +88,7 @@ namespace FinalInferno {
         }
 
         private float GetCooldownValue() {
-            if(!onCooldown) {
+            if (!onCooldown) {
                 return 1.0f;
             }
             return Mathf.Max((DistanceWalked - skillDistance), 0) / skillCooldownDistance;

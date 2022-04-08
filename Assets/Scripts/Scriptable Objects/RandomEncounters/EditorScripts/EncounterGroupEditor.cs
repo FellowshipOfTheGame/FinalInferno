@@ -103,7 +103,7 @@ namespace FinalInferno {
             float padding = 15f;
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.Space(padding, false);
-            SerializedProperty indexElement = canEncounter.GetArrayElementAtIndex(level-1);
+            SerializedProperty indexElement = canEncounter.GetArrayElementAtIndex(level - 1);
             indexElement.boolValue = EditorGUILayout.Toggle(indexElement.boolValue, GUILayout.ExpandWidth(true));
             EditorGUILayout.EndHorizontal();
         }

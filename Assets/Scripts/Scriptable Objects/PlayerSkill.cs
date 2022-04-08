@@ -11,10 +11,10 @@ namespace FinalInferno {
         public long xp;
         public long xpNext;
         public long XpCumulative => ((table == null) ? 0 : (xp + CurrentLevelCumulativeXp));
-        private long CurrentLevelCumulativeXp => ((level <= 1) ? 0 : (XpTable.Rows[level-2].Field<long>(accumulatedXpColumnName)));
+        private long CurrentLevelCumulativeXp => ((level <= 1) ? 0 : (XpTable.Rows[level - 2].Field<long>(accumulatedXpColumnName)));
         private bool ShouldIncreaseLevel => xp >= xpNext && level < XpTable.Rows.Count && level < Table.Rows.Count;
         public int MinLevel => Mathf.Max(XpTable.Rows[0].Field<int>(levelColumnString), Table.Rows[0].Field<int>(levelColumnString));
-        public int MaxLevel => Mathf.Min(XpTable.Rows[XpTable.Rows.Count-1].Field<int>(levelColumnString), Table.Rows[Table.Rows.Count-1].Field<int>(levelColumnString));
+        public int MaxLevel => Mathf.Min(XpTable.Rows[XpTable.Rows.Count - 1].Field<int>(levelColumnString), Table.Rows[Table.Rows.Count - 1].Field<int>(levelColumnString));
         [TextArea] public string description;
         public override string ShortDescription => (!string.IsNullOrEmpty(shortDescription)) ? shortDescription : description;
         [Header("Unlock Info")]
@@ -42,7 +42,7 @@ namespace FinalInferno {
         }
         public Sprite skillImage;
 
-		#region IDatabaseItem
+        #region IDatabaseItem
         public override void LoadTables() {
             table = DynamicTable.Create(skillTable);
             xpTable = DynamicTable.Create(expTable);
@@ -150,7 +150,7 @@ namespace FinalInferno {
             active = true;
         }
 
-		#region Overrides
+        #region Overrides
         public override void UseCallbackOrDelayed(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f) {
             targets = FilterTargets(user, targets);
             GiveExpOnCallbackOrDelayed(user, targets);

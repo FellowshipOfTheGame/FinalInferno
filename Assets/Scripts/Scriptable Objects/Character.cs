@@ -2,7 +2,7 @@
 
 namespace FinalInferno {
     [CreateAssetMenu(fileName = "Character", menuName = "ScriptableObject/Character")]
-    public class Character : ScriptableObject{
+    public class Character : ScriptableObject {
         public Hero archetype;
         public int hpCur;
         public Vector2 position;

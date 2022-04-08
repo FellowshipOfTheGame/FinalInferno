@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 #if UNITY_EDITOR
-using UnityEditor;
 #endif
 
 namespace FinalInferno {
@@ -14,7 +12,7 @@ namespace FinalInferno {
         [Header("Hero Info")]
         [SerializeField] private List<PlayerSkill> initialsSkills = new List<PlayerSkill>();
         public List<PlayerSkill> skillsToUpdate;
-        private long DefaultSkillExp => Mathf.Max(10,(Mathf.FloorToInt(Mathf.Sqrt(Party.Instance.XpCumulative))));
+        private long DefaultSkillExp => Mathf.Max(10, (Mathf.FloorToInt(Mathf.Sqrt(Party.Instance.XpCumulative))));
         public override long SkillExp {
             get {
                 if (!BattleManager.instance) {
@@ -28,7 +26,7 @@ namespace FinalInferno {
                         nEnemies++;
                     }
                 }
-                return (nEnemies > 0)? expSum/nEnemies : DefaultSkillExp;
+                return (nEnemies > 0) ? expSum / nEnemies : DefaultSkillExp;
             }
         }
         [Space(10)]
@@ -43,7 +41,7 @@ namespace FinalInferno {
         }
         public override bool IsHero => true;
 
-		#region IDatabaseItem
+        #region IDatabaseItem
         public void LoadTables() {
             table = DynamicTable.Create(heroTable);
         }

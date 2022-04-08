@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
 namespace FinalInferno {
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
     public class QuestEventField {
         private SerializedProperty quest, eventFlag;
         private int questFlagIndex;

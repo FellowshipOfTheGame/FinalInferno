@@ -1,18 +1,17 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 using FinalInferno.UI.Battle;
+using UnityEngine;
 #if UNITY_EDITOR
-using UnityEditor;
 #endif
 
 namespace FinalInferno {
     [CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObject/Enemy/Basic")]
     public class Enemy : Unit, IDatabaseItem {
-		private const string LevelSkillColumnName = "LevelSkill";
-		private const string ColorColumnName = "Color";
-		private const string LevelColumnName = "Level";
-		private const string RankColumnName = "Rank";
-		private const string BaseExpColumnName = "XP";
+        private const string LevelSkillColumnName = "LevelSkill";
+        private const string ColorColumnName = "Color";
+        private const string LevelColumnName = "Level";
+        private const string RankColumnName = "Rank";
+        private const string BaseExpColumnName = "XP";
         public Color dialogueColor;
         [Space(10)]
         [Header("Enemy Info")]
@@ -49,7 +48,7 @@ namespace FinalInferno {
         public override long SkillExp => BaseExp;
         public long BaseExp { get; protected set; }
 
-		#region IDatabaseItem
+        #region IDatabaseItem
         public void LoadTables() {
             table = DynamicTable.Create(enemyTable);
         }
@@ -118,7 +117,7 @@ namespace FinalInferno {
             int row = -1;
             do {
                 row++;
-            } while (row < Table.Rows.Count-1 && Table.Rows[row+1].Field<int>(LevelColumnName) <= newLevel);
+            } while (row < Table.Rows.Count - 1 && Table.Rows[row + 1].Field<int>(LevelColumnName) <= newLevel);
             return row;
         }
 
@@ -163,7 +162,7 @@ namespace FinalInferno {
             }
         }
 
-		#region EnemyAI
+        #region EnemyAI
         public virtual void AIEnemy() {
             float relativeHP = BattleManager.instance.currentUnit.CurHP / GetAverageTeamHP();
             float percentageNotDefense = Mathf.Sqrt(relativeHP) + 0.05f * relativeHP;
@@ -198,7 +197,7 @@ namespace FinalInferno {
 
         protected virtual List<BattleUnit> GetTargets(TargetType type) {
             return type switch {
-                TargetType.Self => new List<BattleUnit>(){BattleManager.instance.currentUnit},
+                TargetType.Self => new List<BattleUnit>() { BattleManager.instance.currentUnit },
                 TargetType.AllLiveAllies => BattleManager.instance.GetTeam(UnitType.Enemy),
                 TargetType.AllLiveEnemies => BattleManager.instance.GetTeam(UnitType.Hero),
                 TargetType.SingleLiveAlly => new List<BattleUnit>() { GetRandomLiveAlly() },
@@ -213,7 +212,7 @@ namespace FinalInferno {
 
         protected static BattleUnit GetRandomLiveAlly() {
             List<BattleUnit> team = BattleManager.instance.GetTeam(UnitType.Enemy);
-            return team[Random.Range(0, team.Count-1)];
+            return team[Random.Range(0, team.Count - 1)];
         }
 
         protected virtual BattleUnit TargetDecision(List<BattleUnit> targetTeam) {
@@ -246,8 +245,8 @@ namespace FinalInferno {
         }
 
         protected static bool AllHeroesAreParalised() {
-            foreach(BattleUnit hero in BattleManager.instance.GetTeam(UnitType.Hero)) {
-                if(hero.CanAct) {
+            foreach (BattleUnit hero in BattleManager.instance.GetTeam(UnitType.Hero)) {
+                if (hero.CanAct) {
                     return false;
                 }
             }

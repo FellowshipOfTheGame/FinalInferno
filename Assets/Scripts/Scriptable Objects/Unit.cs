@@ -2,18 +2,17 @@
 using System.Collections.ObjectModel;
 using UnityEngine;
 #if UNITY_EDITOR
-using UnityEditor;
 #endif
 
 namespace FinalInferno {
     public abstract class Unit : Fog.Dialogue.DialogueEntity {
         private const string xOffsetTooltip = "X axis indicator for the relative position of where status effects show on top of the unit battle sprite. Left margin is 0, right margin is 1, sprites will have the X axis inverted when actually in battle but this value should ignore that";
         private const string yOffsetTooltip = "Y axis indicator for the relative position of where status effects show on top of the unit battle sprite. Bottom is 0, top is 1, the Y axis behaves normally in battle";
-		protected const string HPColumnName = "HP";
-		protected const string DamageColumnName = "Damage";
-		protected const string DefenseColumnName = "Defense";
-		protected const string ResistanceColumnName = "Resistance";
-		protected const string SpeedColumnName = "Speed";
+        protected const string HPColumnName = "HP";
+        protected const string DamageColumnName = "Damage";
+        protected const string DefenseColumnName = "Defense";
+        protected const string ResistanceColumnName = "Resistance";
+        protected const string SpeedColumnName = "Speed";
         public enum BodyPosition {
             Feet = 0,
             Torso = 1,

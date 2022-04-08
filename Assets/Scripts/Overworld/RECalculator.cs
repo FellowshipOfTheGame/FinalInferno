@@ -43,7 +43,7 @@ namespace FinalInferno {
         [Header("Expected value = TriggerChangeScene")]
         [SerializeField] private FinalInferno.UI.FSM.ButtonClickDecision decision;
 
-		#region Initial Setup
+        #region Initial Setup
         private void Start() {
             InitPlayerPositionVariables();
             FindDialogueAgent();
@@ -100,7 +100,7 @@ namespace FinalInferno {
         }
         #endregion
 
-		#region Checking Encounters
+        #region Checking Encounters
         // A checagem precisa acontecer no LateUpdate para evitar conflito com o update do sistema de dialogo
         private void LateUpdate() {
             if (ShouldCheckEncounter()) {
@@ -117,13 +117,13 @@ namespace FinalInferno {
             if (playerObj == null) {
                 return 0f;
             }
-            return Vector2.Distance(lastPosition, (Vector2)playerObj.position);
+            return Vector2.Distance(lastPosition, playerObj.position);
         }
 
         private void CheckDistanceTresholdAndEncounter(float distance) {
             distanceWalked += distance;
             if (distanceWalked < distanceTreshold) {
-                lastPosition = (Vector2)playerObj.position;
+                lastPosition = playerObj.position;
                 return;
             }
             if (CheckEncounter(distanceWalked)) {
@@ -153,7 +153,7 @@ namespace FinalInferno {
         }
 
         private bool RollForBattle() {
-            if(curEncounterRate * skillModifier == 0f) {
+            if (curEncounterRate * skillModifier == 0f) {
                 return false;
             }
             return Random.Range(0.0f, 100.0f) <= (curEncounterRate * skillModifier);
@@ -204,12 +204,12 @@ namespace FinalInferno {
         }
 
         private void UpdatePositions() {
-            lastCheckPosition = (Vector2)playerObj.position;
-            lastPosition = (Vector2)playerObj.position;
+            lastCheckPosition = playerObj.position;
+            lastPosition = playerObj.position;
         }
         #endregion
 
-		#region Encounter Skills Callbacks
+        #region Encounter Skills Callbacks
         public void OnEnable() {
             encounterIncreaseSkill?.AddActivationListener(this);
             encounterDecreaseSkill?.AddActivationListener(this);

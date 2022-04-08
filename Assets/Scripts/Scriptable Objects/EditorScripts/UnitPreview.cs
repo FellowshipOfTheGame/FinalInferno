@@ -84,7 +84,7 @@ namespace FinalInferno {
 
         protected virtual void DrawHeadIndicator(Unit unit, Rect texRect) {
             float rectSize = 0.1f * Mathf.Max(texRect.width, texRect.height);
-            Vector2 headRectPosition = CalculateHeadCenterPosition(unit, texRect) - new Vector2(rectSize/2, rectSize/2);
+            Vector2 headRectPosition = CalculateHeadCenterPosition(unit, texRect) - new Vector2(rectSize / 2, rectSize / 2);
             Rect headRect = new Rect(headRectPosition.x, headRectPosition.y, rectSize, rectSize);
             EditorGUI.DrawRect(headRect, new Color(0f, 1f, 0f, .7f));
         }

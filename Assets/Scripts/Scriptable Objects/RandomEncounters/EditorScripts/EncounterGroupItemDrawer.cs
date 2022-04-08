@@ -13,7 +13,7 @@ namespace FinalInferno {
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
             bool isNull = property.FindPropertyRelative("group")?.objectReferenceValue == null;
-            return ((2 * marginSize) + EditorGUIUtility.singleLineHeight + (isNull? 0f : EncounterGroupDrawer.GroupDetailsHeight));
+            return ((2 * marginSize) + EditorGUIUtility.singleLineHeight + (isNull ? 0f : EncounterGroupDrawer.GroupDetailsHeight));
         }
 
         public override void OnGUI(Rect propertyRect, SerializedProperty property, GUIContent label) {
@@ -62,7 +62,7 @@ namespace FinalInferno {
         }
 
         private static Rect CalculateLabelRect(Rect chanceMultRect) {
-            Rect chanceLabelRect= new Rect(chanceMultRect);
+            Rect chanceLabelRect = new Rect(chanceMultRect);
             chanceLabelRect.position -= new Vector2(0f, EditorGUIUtility.singleLineHeight);
             return chanceLabelRect;
         }

@@ -28,26 +28,22 @@ namespace FinalInferno {
         [SerializeField] private RuntimeAnimatorController animatorMiddleHead;
         [SerializeField] private RuntimeAnimatorController animatorFrontHead;
         public override RuntimeAnimatorController Animator {
-            get {
-                return heads switch {
+            get => heads switch {
                     1 => animator,
                     2 => animatorMiddleHead,
                     3 => animatorFrontHead,
                     _ => null
                 };
-            }
         }
         [SerializeField] private Sprite portraitMiddleHead;
         [SerializeField] private Sprite portraitFrontHead;
         public override Sprite Portrait {
-            get {
-                return heads switch {
+            get => heads switch {
                     1 => portrait,
                     2 => portraitMiddleHead,
                     3 => portraitFrontHead,
                     _ => null
                 };
-            }
         }
         [Space(10)]
         [SerializeField] private Sprite battleSpriteMiddleHead;
@@ -62,14 +58,12 @@ namespace FinalInferno {
         [SerializeField, Range(0, 1f)] private float xOffsetFront = 0;
         [SerializeField, Range(0, 1f)] private float yOffsetFront = 0;
         public override Vector2 EffectsRelativePosition {
-            get {
-                return heads switch {
+            get => heads switch {
                     1 => new Vector2(xOffset, yOffset),
                     2 => new Vector2(xOffsetMiddle, yOffsetMiddle),
                     3 => new Vector2(xOffsetFront, yOffsetFront),
                     _ => new Vector2(0.5f, 1f)
                 };
-            }
         }
         public override Sprite BattleSprite {
             get {
@@ -158,14 +152,12 @@ namespace FinalInferno {
         [SerializeField] private Sprite queueSpriteMiddleHead;
         [SerializeField] private Sprite queueSpriteFrontHead;
         public override Sprite QueueSprite {
-            get {
-                return heads switch {
+            get => heads switch {
                     1 => queueSprite,
                     2 => queueSpriteMiddleHead,
                     3 => queueSpriteFrontHead,
                     _ => null
                 };
-            }
         }
 
         public override Sprite GetSubUnitPortrait(int index) {

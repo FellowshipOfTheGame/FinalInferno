@@ -22,7 +22,7 @@ namespace FinalInferno {
             }
         }
         protected int MinLevel => Table.Rows[0].Field<int>(levelColumnName);
-        protected int MaxLevel => Table.Rows[Table.Rows.Count-1].Field<int>(levelColumnName);
+        protected int MaxLevel => Table.Rows[Table.Rows.Count - 1].Field<int>(levelColumnName);
         public override int Level {
             get => level;
             set {
@@ -34,7 +34,7 @@ namespace FinalInferno {
         }
         private int curTableRow = 0;
 
-		#region IDatabaseItem
+        #region IDatabaseItem
         public override void LoadTables() {
             table = DynamicTable.Create(skillTable);
         }
@@ -67,7 +67,7 @@ namespace FinalInferno {
             int row = -1;
             do {
                 row++;
-            } while (row < Table.Rows.Count-1 && Table.Rows[row+1].Field<int>(levelColumnName) <= Level);
+            } while (row < Table.Rows.Count - 1 && Table.Rows[row + 1].Field<int>(levelColumnName) <= Level);
             return row;
         }
 

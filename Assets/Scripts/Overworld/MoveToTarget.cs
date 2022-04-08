@@ -11,7 +11,7 @@ namespace FinalInferno {
         }
 
         override public Vector2 Direction() {
-            Vector2 target2Dposition = (Vector2)target.position;
+            Vector2 target2Dposition = target.position;
             float distance = Vector2.Distance(rigid2D.position, target2Dposition);
             if (distance > maxDistance) {
                 return (target2Dposition - rigid2D.position).normalized;

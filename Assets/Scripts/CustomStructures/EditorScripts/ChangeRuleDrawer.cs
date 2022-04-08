@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -51,7 +50,7 @@ namespace FinalInferno {
 
         private static void ReenableAnimator(Animator animator) {
             // Não sei pq precisa dessa função, mas precisa dessa função
-            if(animator != null){
+            if (animator != null) {
                 animator.enabled = false;
                 animator.enabled = true;
             }
@@ -70,7 +69,7 @@ namespace FinalInferno {
         }
 
         private void LogMonoBehaviourError(SerializedProperty property) {
-            string errorMessage = $"Property of type ChangeRule was added to a non-MonoBehaviour object\n"; 
+            string errorMessage = $"Property of type ChangeRule was added to a non-MonoBehaviour object\n";
             errorMessage += $"Animation flag has been set to empty string";
             Debug.LogError(errorMessage, property.serializedObject.targetObject);
         }

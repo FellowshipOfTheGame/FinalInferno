@@ -1,6 +1,6 @@
 ﻿using System.Collections;
-using UnityEngine;
 using Fog.Dialogue;
+using UnityEngine;
 
 namespace FinalInferno {
     public class LoadStuff : MonoBehaviour {

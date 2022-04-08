@@ -6,7 +6,7 @@ using UnityEngine;
 namespace FinalInferno {
     [CreateAssetMenu(fileName = "Party", menuName = "ScriptableObject/Party")]
     public class Party : ScriptableObject, IDatabaseItem {
-		public const string mainQuestAssetName = "MainQuest";
+        public const string mainQuestAssetName = "MainQuest";
         private const string partyAssetName = "Party";
         private const string mainQuestChapter1Flag = "CerberusDead";
         private const string accumulatedXpColumnName = "XPAccumulated";
@@ -49,7 +49,7 @@ namespace FinalInferno {
         public long xp;
         public long xpNextLevel;
         public long XpCumulative => ((table == null) ? 0 : (xp + CurrentLevelCumulativeXp));
-        private long CurrentLevelCumulativeXp => ((level <= 1) ? 0 : (table.Rows[level-2].Field<long>(accumulatedXpColumnName)));
+        private long CurrentLevelCumulativeXp => ((level <= 1) ? 0 : (table.Rows[level - 2].Field<long>(accumulatedXpColumnName)));
         private bool ShouldIncreaseLevel => xp >= xpNextLevel && level < Table.Rows.Count;
 
         public List<Character> characters = new List<Character>();
@@ -66,7 +66,7 @@ namespace FinalInferno {
             }
         }
 
-		#region IDatabaseItem
+        #region IDatabaseItem
         public void LoadTables() {
             table = DynamicTable.Create(partyXP);
         }
@@ -111,7 +111,7 @@ namespace FinalInferno {
             }
 
             int calculatedLevel = 1;
-            while (cumulativeExp > Table.Rows[calculatedLevel-1].Field<long>(accumulatedXpColumnName)) {
+            while (cumulativeExp > Table.Rows[calculatedLevel - 1].Field<long>(accumulatedXpColumnName)) {
                 calculatedLevel++;
             }
             return calculatedLevel;
@@ -131,7 +131,7 @@ namespace FinalInferno {
         private void LevelUp() {
             xp -= xpNextLevel;
             level++;
-            xpNextLevel = Table.Rows[level-1].Field<long>(xpNextLevelColumnName);
+            xpNextLevel = Table.Rows[level - 1].Field<long>(xpNextLevelColumnName);
         }
 
         public void ApplyLevelToCharacters() {

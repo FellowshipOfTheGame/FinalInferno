@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using UnityEngine;
 using FinalInferno.CustomExtensions;
+using UnityEngine;
 
 namespace FinalInferno {
     [System.Serializable]

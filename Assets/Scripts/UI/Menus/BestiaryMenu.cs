@@ -84,7 +84,7 @@ namespace FinalInferno.UI {
             }
             bool hasResistance = false;
 
-			ReadOnlyDictionary<Element, float> enemyResistances = enemy.ElementalResistances;
+            ReadOnlyDictionary<Element, float> enemyResistances = enemy.ElementalResistances;
             foreach (Element element in enemyResistances.Keys) {
                 if (hasResistance) {
                     str += "\n";

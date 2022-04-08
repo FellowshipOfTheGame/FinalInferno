@@ -42,13 +42,13 @@ namespace FinalInferno {
         }
 
         private void FindSceneObjUsingGUID() {
-            if(!string.IsNullOrEmpty(guid.stringValue)){
+            if (!string.IsNullOrEmpty(guid.stringValue)) {
                 sceneObj = AssetDatabase.LoadAssetAtPath<SceneAsset>(AssetDatabase.GUIDToAssetPath(guid.stringValue));
             }
         }
 
         private void FindSceneObjUsingPathIfNull() {
-            if(!string.IsNullOrEmpty(assetPath.stringValue)){
+            if (!string.IsNullOrEmpty(assetPath.stringValue)) {
                 sceneObj = sceneObj == null ? AssetDatabase.LoadAssetAtPath<SceneAsset>(assetPath.stringValue) : sceneObj;
             }
         }

@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Fog.Dialogue;
 using UnityEngine;
-using Fog.Dialogue;
 
 namespace FinalInferno {
     [RequireComponent(typeof(Collider2D))]
@@ -24,7 +23,7 @@ namespace FinalInferno {
 
         private bool HasAtLeastOneTrigger(Collider2D[] colliders) {
             foreach (Collider2D col in colliders) {
-                if(col.isTrigger) {
+                if (col.isTrigger) {
                     return true;
                 }
             }

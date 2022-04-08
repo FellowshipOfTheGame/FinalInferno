@@ -26,7 +26,7 @@ namespace FinalInferno {
 
         private bool HasAtLeastOneTrigger(Collider2D[] colliders) {
             foreach (Collider2D col in colliders) {
-                if(col.isTrigger) {
+                if (col.isTrigger) {
                     return true;
                 }
             }

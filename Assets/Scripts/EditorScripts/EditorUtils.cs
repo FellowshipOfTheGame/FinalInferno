@@ -41,22 +41,22 @@ namespace FinalInferno {
             return rect;
         }
 
-		[MenuItem("Assets/Final Inferno/Set Selection as Dirty", false)]
+        [MenuItem("Assets/Final Inferno/Set Selection as Dirty", false)]
         private static void SetSelectionDirty() {
-            foreach(Object obj in Selection.objects) {
+            foreach (Object obj in Selection.objects) {
                 EditorUtility.SetDirty(obj);
             }
         }
 
-		[MenuItem("Assets/Final Inferno/Set Selection as Dirty", true)]
+        [MenuItem("Assets/Final Inferno/Set Selection as Dirty", true)]
         private static bool SetSelectionDirtyValidation() {
             return Selection.objects != null && Selection.objects.Length > 0;
         }
 
-		[MenuItem("Tools/Final Inferno/Set All Scriptable Objects as Dirty")]
+        [MenuItem("Tools/Final Inferno/Set All Scriptable Objects as Dirty")]
         private static void SetAllScriptableOjectsDirty() {
             string[] guids = AssetDatabase.FindAssets("t:ScriptableObject");
-            foreach(string guid in guids) {
+            foreach (string guid in guids) {
                 string assetPath = AssetDatabase.GUIDToAssetPath(guid);
                 EditorUtility.SetDirty(AssetDatabase.LoadAssetAtPath<ScriptableObject>(assetPath));
             }

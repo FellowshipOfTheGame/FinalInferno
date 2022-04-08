@@ -91,7 +91,7 @@ namespace FinalInferno {
             spriteRenderer.spriteSortPoint = SpriteSortPoint.Pivot;
         }
 
-        private T GetOrAddComponent<T>() where T : Component{
+        private T GetOrAddComponent<T>() where T : Component {
             T component = GetComponent<T>();
             component ??= gameObject.AddComponent<T>();
             return component;
@@ -126,7 +126,7 @@ namespace FinalInferno {
         }
 
         public void OnDestroy() {
-            if(characterSO.OverworldInstance == this) {
+            if (characterSO.OverworldInstance == this) {
                 characterSO.OverworldInstance = null;
             }
         }

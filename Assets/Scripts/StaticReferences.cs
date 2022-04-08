@@ -1,6 +1,6 @@
-﻿using UnityEngine;
-using FinalInferno;
+﻿using FinalInferno;
 using Fog.Dialogue;
+using UnityEngine;
 
 [RequireComponent(typeof(Jukebox), typeof(DontDestroyThis))]
 public class StaticReferences : MonoBehaviour {

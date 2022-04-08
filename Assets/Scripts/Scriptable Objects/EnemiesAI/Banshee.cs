@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 using FinalInferno.UI.Battle;
+using UnityEngine;
 
 namespace FinalInferno {
     [CreateAssetMenu(fileName = "Banshee", menuName = "ScriptableObject/Enemy/Banshee")]
@@ -28,7 +28,7 @@ namespace FinalInferno {
                 }
                 roll -= targetingChances[i];
             }
-            return targetTeam[targetTeam.Count-1];
+            return targetTeam[targetTeam.Count - 1];
         }
     }
 }

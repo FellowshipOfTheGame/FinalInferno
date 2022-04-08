@@ -71,7 +71,7 @@ namespace FinalInferno {
         }
 
         private void RemoveListDuplicates() {
-            if(encounterGroupItems == null) {
+            if (encounterGroupItems == null) {
                 return;
             }
             HashSet<EncounterGroup> counter = new HashSet<EncounterGroup>();
