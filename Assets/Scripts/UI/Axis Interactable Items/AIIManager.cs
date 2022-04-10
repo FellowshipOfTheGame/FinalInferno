@@ -84,7 +84,7 @@ namespace FinalInferno.UI.AII {
                 }
 
                 // Executa a ação do item se o eixo for ativado.
-                if (interactable && (activationAction?.action.triggered ?? false)) {
+                if (interactable && activationAction && activationAction.action.triggered) {
                     currentItem.Act();
                 }
             }

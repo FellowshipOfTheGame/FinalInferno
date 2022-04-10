@@ -7,12 +7,12 @@ namespace FinalInferno {
         [SerializeField] private InputActionReference buttonAction;
         private bool isButtonDown = false;
 
-        private float movespeedIncrease => sprintSkill?.effects[0].value1 ?? 0;
+        private float MovespeedIncrease => sprintSkill ? sprintSkill.effects[0].value1 : 0;
 
         private void Start() {
-            if (sprintSkill == null || sprintSkill.Level < 1) {
+            if (!sprintSkill || sprintSkill.Level < 1) {
                 gameObject.SetActive(false);
-            } else if (sprintSkill != null) {
+            } else if (sprintSkill) {
                 sprintSkill.active = false;
             }
         }
@@ -53,14 +53,14 @@ namespace FinalInferno {
         }
 
         private void CheckButtonPress() {
-            if (CharacterOW.PartyCanMove && isButtonDown) {
-                sprintSkill?.Activate();
+            if (CharacterOW.PartyCanMove && isButtonDown && sprintSkill) {
+                sprintSkill.Activate();
             }
         }
 
         private void CheckButtonRelease() {
-            if (CharacterOW.PartyCanMove && !isButtonDown) {
-                sprintSkill?.Deactivate();
+            if (CharacterOW.PartyCanMove && !isButtonDown && sprintSkill) {
+                sprintSkill.Deactivate();
             }
         }
     }

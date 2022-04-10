@@ -20,17 +20,17 @@ namespace FinalInferno {
         [SerializeField] private SkillType type;
         public string TypeString {
             get => type switch {
-                    SkillType.Active => "Active Skill",
-                    SkillType.PassiveOnDeath => "Passive: Triggered on Death",
-                    SkillType.PassiveOnEnd => "Passive: Triggered when Battle Ends",
-                    SkillType.PassiveOnReceiveBuff => "Passive: Triggered when Buffed",
-                    SkillType.PassiveOnReceiveDebuff => "Passive: Triggered when Debuffed",
-                    SkillType.PassiveOnSkillUsed => "Passive: Triggered after Skill Usage",
-                    SkillType.PassiveOnSpawn => "Base Status Changes",
-                    SkillType.PassiveOnStart => "Passive: Triggered at Start of Battle",
-                    SkillType.PassiveOnTakeDamage => "Passive: Triggered when Damage Taken",
-                    _ => ""
-                };
+                SkillType.Active => "Active Skill",
+                SkillType.PassiveOnDeath => "Passive: Triggered on Death",
+                SkillType.PassiveOnEnd => "Passive: Triggered when Battle Ends",
+                SkillType.PassiveOnReceiveBuff => "Passive: Triggered when Buffed",
+                SkillType.PassiveOnReceiveDebuff => "Passive: Triggered when Debuffed",
+                SkillType.PassiveOnSkillUsed => "Passive: Triggered after Skill Usage",
+                SkillType.PassiveOnSpawn => "Base Status Changes",
+                SkillType.PassiveOnStart => "Passive: Triggered at Start of Battle",
+                SkillType.PassiveOnTakeDamage => "Passive: Triggered when Damage Taken",
+                _ => ""
+            };
         }
         public SkillType Type => type;
         [SerializeField] private int callbackDelay = 0;

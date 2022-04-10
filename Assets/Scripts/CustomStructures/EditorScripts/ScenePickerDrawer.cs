@@ -33,10 +33,10 @@ namespace FinalInferno {
 
         private void FindSerializedSceneObject() {
             bool hasSceneInfo = (!string.IsNullOrEmpty(assetPath.stringValue) || !string.IsNullOrEmpty(guid.stringValue));
-            if (sceneObj == null && hasSceneInfo) {
+            if (!sceneObj && hasSceneInfo) {
                 FindSceneObjUsingGUID();
                 FindSceneObjUsingPathIfNull();
-            } else if (sceneObj != null && !hasSceneInfo) {
+            } else if (sceneObj && !hasSceneInfo) {
                 sceneObj = null;
             }
         }
@@ -49,7 +49,7 @@ namespace FinalInferno {
 
         private void FindSceneObjUsingPathIfNull() {
             if (!string.IsNullOrEmpty(assetPath.stringValue)) {
-                sceneObj = sceneObj == null ? AssetDatabase.LoadAssetAtPath<SceneAsset>(assetPath.stringValue) : sceneObj;
+                sceneObj = !sceneObj ? AssetDatabase.LoadAssetAtPath<SceneAsset>(assetPath.stringValue) : sceneObj;
             }
         }
 
@@ -59,9 +59,9 @@ namespace FinalInferno {
         }
 
         private void SaveSceneInfo() {
-            sceneName.stringValue = sceneObj?.name ?? "";
-            assetPath.stringValue = sceneObj == null ? "" : AssetDatabase.GetAssetPath(sceneObj.GetInstanceID());
-            guid.stringValue = sceneObj == null ? "" : AssetDatabase.AssetPathToGUID(assetPath.stringValue);
+            sceneName.stringValue = !sceneObj ? "" : sceneObj.name;
+            assetPath.stringValue = !sceneObj ? "" : AssetDatabase.GetAssetPath(sceneObj.GetInstanceID());
+            guid.stringValue = !sceneObj ? "" : AssetDatabase.AssetPathToGUID(assetPath.stringValue);
         }
     }
 #endif

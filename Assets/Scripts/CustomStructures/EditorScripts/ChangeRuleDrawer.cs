@@ -17,7 +17,7 @@ namespace FinalInferno {
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
             float questEventFieldHeight = questEventField.GetFieldHeight(property);
             Animator anim = Selection.activeGameObject.GetComponent<Animator>();
-            bool hasRuntimeController = anim?.runtimeAnimatorController != null;
+            bool hasRuntimeController = anim && anim.runtimeAnimatorController;
             float animFieldHeight = hasRuntimeController ? EditorGUIUtility.singleLineHeight : 0;
             return questEventFieldHeight + animFieldHeight + (2 * marginSize);
         }
@@ -39,7 +39,7 @@ namespace FinalInferno {
 
         private void DrawAnimationFlagFieldIfPossible(Rect position, SerializedProperty property) {
             MonoBehaviour monoBehaviour = property.serializedObject.targetObject as MonoBehaviour;
-            Animator animator = monoBehaviour?.GetComponent<Animator>();
+            Animator animator = monoBehaviour ? monoBehaviour.GetComponent<Animator>() : null;
             ReenableAnimator(animator);
             if (HasAnyNullReference(monoBehaviour, animator, property)) {
                 DontDrawAnimationFlagField();

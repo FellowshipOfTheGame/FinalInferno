@@ -53,7 +53,7 @@ namespace FinalInferno {
 
         private void DrawSceneSelectionField() {
             sceneObj = EditorGUILayout.ObjectField(sceneObj, typeof(SceneAsset), false);
-            sceneName.stringValue = sceneObj?.name ?? string.Empty;
+            sceneName.stringValue = sceneObj ? sceneObj.name : string.Empty;
         }
 
         private bool DrawSceneChangeFields() {

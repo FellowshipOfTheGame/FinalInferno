@@ -7,7 +7,8 @@ namespace FinalInferno {
         [MenuItem("GameObject/FinalInferno/Overworld Objects", false, 48)]
         private static void CreateOverworldObjects(MenuCommand menuCommand) {
             GameObject[] objectList = new GameObject[7];
-            objectList[6] = GameObject.FindObjectOfType<CameraController>()?.gameObject;
+            CameraController cameraController = GameObject.FindObjectOfType<CameraController>();
+            objectList[6] = cameraController ? cameraController.gameObject : null;
             if (!objectList[6]) {
                 objectList[6] = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Overworld/Main Camera.prefab", typeof(GameObject));
                 if (!objectList[6]) {
@@ -17,13 +18,13 @@ namespace FinalInferno {
                 objectList[6] = null;
             }
 
-            objectList[5] = GameObject.FindObjectOfType<Canvas>()?.gameObject;
+            Canvas canvas = GameObject.FindObjectOfType<Canvas>();
+            objectList[5] = canvas ? canvas.gameObject : null;
             if (!objectList[5]) {
                 objectList[5] = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Overworld/Canvas.prefab", typeof(GameObject));
                 if (!objectList[5]) {
                     Debug.Log("Could not load Assets/Prefabs/Overworld/Canvas.prefab");
                 } else {
-                    Canvas canvas = objectList[5].GetComponent<Canvas>();
                     if (canvas) {
                         canvas.worldCamera = GameObject.FindObjectOfType<Camera>();
                     }
@@ -32,7 +33,8 @@ namespace FinalInferno {
                 objectList[5] = null;
             }
 
-            objectList[4] = GameObject.FindObjectOfType<RECalculator>()?.gameObject;
+            RECalculator encounterCalculator = GameObject.FindObjectOfType<RECalculator>();
+            objectList[4] = encounterCalculator ? encounterCalculator.gameObject : null;
             if (!objectList[4]) {
                 objectList[4] = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Overworld/Random Encounter Calculator.prefab", typeof(GameObject));
                 if (!objectList[4]) {

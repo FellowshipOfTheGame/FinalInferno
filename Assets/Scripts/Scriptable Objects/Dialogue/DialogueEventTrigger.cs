@@ -14,7 +14,8 @@ namespace FinalInferno {
         private void TriggerEvents() {
             foreach (QuestEvent _event in eventsTriggered) {
                 Quest quest = _event.quest;
-                quest?.SetFlag(_event.eventFlag, true);
+                if (quest)
+                    quest.SetFlag(_event.eventFlag, true);
             }
         }
     }

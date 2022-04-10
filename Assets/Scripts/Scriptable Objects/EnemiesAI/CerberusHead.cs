@@ -29,21 +29,21 @@ namespace FinalInferno {
         [SerializeField] private RuntimeAnimatorController animatorFrontHead;
         public override RuntimeAnimatorController Animator {
             get => heads switch {
-                    1 => animator,
-                    2 => animatorMiddleHead,
-                    3 => animatorFrontHead,
-                    _ => null
-                };
+                1 => animator,
+                2 => animatorMiddleHead,
+                3 => animatorFrontHead,
+                _ => null
+            };
         }
         [SerializeField] private Sprite portraitMiddleHead;
         [SerializeField] private Sprite portraitFrontHead;
         public override Sprite Portrait {
             get => heads switch {
-                    1 => portrait,
-                    2 => portraitMiddleHead,
-                    3 => portraitFrontHead,
-                    _ => null
-                };
+                1 => portrait,
+                2 => portraitMiddleHead,
+                3 => portraitFrontHead,
+                _ => null
+            };
         }
         [Space(10)]
         [SerializeField] private Sprite battleSpriteMiddleHead;
@@ -59,11 +59,11 @@ namespace FinalInferno {
         [SerializeField, Range(0, 1f)] private float yOffsetFront = 0;
         public override Vector2 EffectsRelativePosition {
             get => heads switch {
-                    1 => new Vector2(xOffset, yOffset),
-                    2 => new Vector2(xOffsetMiddle, yOffsetMiddle),
-                    3 => new Vector2(xOffsetFront, yOffsetFront),
-                    _ => new Vector2(0.5f, 1f)
-                };
+                1 => new Vector2(xOffset, yOffset),
+                2 => new Vector2(xOffsetMiddle, yOffsetMiddle),
+                3 => new Vector2(xOffsetFront, yOffsetFront),
+                _ => new Vector2(0.5f, 1f)
+            };
         }
         public override Sprite BattleSprite {
             get {
@@ -126,8 +126,10 @@ namespace FinalInferno {
 
         private static void AdjustUnitPositions() {
             CompositeBattleUnit composite = middleHead.gameObject.AddComponent<CompositeBattleUnit>();
-            composite?.AddApendage(backHead);
-            composite?.AddApendage(frontHead);
+            if (!composite)
+                return;
+            composite.AddApendage(backHead);
+            composite.AddApendage(frontHead);
         }
 
         private void CreateCerberusBodyObject() {
@@ -153,11 +155,11 @@ namespace FinalInferno {
         [SerializeField] private Sprite queueSpriteFrontHead;
         public override Sprite QueueSprite {
             get => heads switch {
-                    1 => queueSprite,
-                    2 => queueSpriteMiddleHead,
-                    3 => queueSpriteFrontHead,
-                    _ => null
-                };
+                1 => queueSprite,
+                2 => queueSpriteMiddleHead,
+                3 => queueSpriteFrontHead,
+                _ => null
+            };
         }
 
         public override Sprite GetSubUnitPortrait(int index) {

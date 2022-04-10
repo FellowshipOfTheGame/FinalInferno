@@ -42,12 +42,14 @@ namespace FinalInferno {
 
         public void OnTriggerEnter2D(Collider2D col) {
             Agent agent = col.GetComponent<Agent>();
-            agent?.collidingInteractables.Add(this);
+            if (agent)
+                agent.collidingInteractables.Add(this);
         }
 
         public void OnTriggerExit2D(Collider2D col) {
             Agent agent = col.GetComponent<Agent>();
-            agent?.collidingInteractables.Remove(this);
+            if (agent)
+                agent.collidingInteractables.Remove(this);
         }
 
     }

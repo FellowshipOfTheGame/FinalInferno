@@ -9,13 +9,15 @@ namespace FinalInferno.EventSystem {
 
         private void OnEnable() {
             foreach (EventFI _event in _events) {
-                _event?.AddListener(this);
+                if (_event)
+                    _event.AddListener(this);
             }
         }
 
         private void OnDisable() {
             foreach (EventFI _event in _events) {
-                _event?.RemoveListener(this);
+                if (_event)
+                    _event.RemoveListener(this);
             }
         }
 

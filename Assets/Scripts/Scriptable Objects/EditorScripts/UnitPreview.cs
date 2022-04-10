@@ -17,7 +17,7 @@ namespace FinalInferno {
 
         public override bool HasPreviewGUI() {
             Unit unit = target as Unit;
-            return unit?.BattleSprite != null;
+            return unit && unit.BattleSprite;
         }
 
         public override void OnPreviewGUI(Rect Rect, GUIStyle background) {

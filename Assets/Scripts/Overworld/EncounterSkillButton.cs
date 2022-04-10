@@ -6,7 +6,7 @@ namespace FinalInferno {
     public class EncounterSkillButton : MonoBehaviour, IVariableObserver<float> {
         [SerializeField] private OverworldSkill encounterSkill = null;
         [SerializeField] private FloatVariable distanceWalkedRef;
-        private float DistanceWalked => distanceWalkedRef?.Value ?? 0;
+        private float DistanceWalked => distanceWalkedRef ? distanceWalkedRef.Value : 0;
         [SerializeField] private float skillCooldownDistance = 5f;
         [SerializeField] private InputActionReference buttonAction;
         private bool isButtonDown = false;
@@ -16,7 +16,7 @@ namespace FinalInferno {
         private bool onCooldown = false;
 
         private void Start() {
-            if (encounterSkill == null || encounterSkill.Level < 1) {
+            if (!encounterSkill || encounterSkill.Level < 1) {
                 gameObject.SetActive(false);
             } else {
                 ResetValuesToDefault();
@@ -24,7 +24,7 @@ namespace FinalInferno {
         }
 
         private void ResetValuesToDefault() {
-            skillDistance = encounterSkill?.effects[0].value2 ?? 0;
+            skillDistance = encounterSkill ? encounterSkill.effects[0].value2 : 0;
             onCooldown = false;
             skillCooldownDistance = Mathf.Max(skillCooldownDistance, float.Epsilon);
         }

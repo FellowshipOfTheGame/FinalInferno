@@ -5,17 +5,18 @@ namespace FinalInferno {
         [SerializeField] private ParticleSystem particles;
 
         private void Reset() {
-            if (particles == null) {
+            if (!particles)
                 particles = GetComponent<ParticleSystem>();
-            }
         }
 
         public void PlayParticles(bool withChildren = true) {
-            particles?.Play(withChildren);
+            if (particles)
+                particles.Play(withChildren);
         }
 
         public void StopParticles(bool withChildren = true) {
-            particles?.Stop(withChildren);
+            if (particles)
+                particles.Stop(withChildren);
         }
     }
 }

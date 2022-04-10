@@ -7,11 +7,13 @@ namespace FinalInferno.EventSystem {
         [SerializeField] private UnityEvent _response;
 
         private void OnEnable() {
-            _event?.AddListener(this);
+            if (_event)
+                _event.AddListener(this);
         }
 
         private void OnDisable() {
-            _event?.RemoveListener(this);
+            if (_event)
+                _event.RemoveListener(this);
         }
 
         public void OnEventRaised() {

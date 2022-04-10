@@ -264,7 +264,8 @@ namespace FinalInferno {
 
         public void ShowDamage(int value, bool isHeal, float multiplier) {
             // Show damage ignoring value changes and animations
-            damageIndicator?.ShowDamage(value, isHeal, multiplier);
+            if (damageIndicator)
+                damageIndicator.ShowDamage(value, isHeal, multiplier);
         }
 
         public StatusEffect AddEffect(StatusEffect statusEffect, bool ignoreCallback = false) {
@@ -400,9 +401,9 @@ namespace FinalInferno {
             // Reseta o aggro
             aggro = 0;
             stuns = 0;
-            if (Unit is Enemy) {
-                audioSource.PlayOneShot((Unit as Enemy)?.EnemyCry);
-            }
+            Enemy enemy = Unit as Enemy;
+            if (enemy)
+                audioSource.PlayOneShot(enemy.EnemyCry);
 
             BattleManager.instance.Kill(this);
             // Se houver algum callback de morte que, por exemplo, ressucita a unidade ele já vai ter sido chamado aqui

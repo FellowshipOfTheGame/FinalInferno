@@ -3,7 +3,8 @@
 namespace FinalInferno.EventSystem {
     public class EventRaiserFI : MonoBehaviour {
         public void RaiseEvent(EventFI eventRaised) {
-            eventRaised?.Raise();
+            if (eventRaised)
+                eventRaised.Raise();
         }
     }
 }

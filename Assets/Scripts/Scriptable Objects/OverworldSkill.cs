@@ -25,7 +25,8 @@ namespace FinalInferno {
             }
             active = true;
             for (int i = activationListeners.Count - 1; i >= 0; i--) {
-                activationListeners[i]?.ActivatedSkill(this);
+                if (activationListeners[i] != null)
+                    activationListeners[i].ActivatedSkill(this);
             }
         }
 
@@ -35,7 +36,8 @@ namespace FinalInferno {
             }
             active = false;
             for (int i = activationListeners.Count - 1; i >= 0; i--) {
-                activationListeners[i]?.DeactivatedSkill(this);
+                if (activationListeners[i] != null)
+                    activationListeners[i].DeactivatedSkill(this);
             }
         }
         #endregion

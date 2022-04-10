@@ -8,7 +8,7 @@ namespace FinalInferno {
         public Vector2 position;
         private CharacterOW overworldInstance;
         public CharacterOW OverworldInstance {
-            get => overworldInstance;
+            get => overworldInstance ? overworldInstance : null;
             set => overworldInstance = CanChangeInstanceValue(value) ? value : overworldInstance;
         }
 
