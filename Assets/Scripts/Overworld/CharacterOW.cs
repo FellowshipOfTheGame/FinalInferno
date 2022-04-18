@@ -98,7 +98,8 @@ namespace FinalInferno {
 
         private T GetOrAddComponent<T>() where T : Component {
             T component = GetComponent<T>();
-            component ??= gameObject.AddComponent<T>();
+            if (!component)
+                component = gameObject.AddComponent<T>();
             return component;
         }
 

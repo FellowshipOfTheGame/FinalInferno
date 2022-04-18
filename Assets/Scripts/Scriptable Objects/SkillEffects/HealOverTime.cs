@@ -3,12 +3,12 @@
 namespace FinalInferno {
     [CreateAssetMenu(fileName = "HealOverTime", menuName = "ScriptableObject/SkillEffect/HealOverTime")]
     public class HealOverTime : SkillEffect {
-        // value1 = dmg multiplier
-        // value2 = HoT duration
-        public override string Description => "Heals " + value1 + "x damage for " + value2 + " turns";
+        private float DmgMultiplier => value1;
+        private int HoTDuration => (int)value2;
+        public override string Description => $"Heals {DmgMultiplier}x damage for {HoTDuration} turns";
 
         public override void Apply(BattleUnit source, BattleUnit target) {
-            target.AddEffect(new HealingOverTime(source, target, value1, (int)value2));
+            target.AddEffect(new HealingOverTime(source, target, DmgMultiplier, HoTDuration));
         }
     }
 }

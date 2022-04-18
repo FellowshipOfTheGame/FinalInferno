@@ -3,12 +3,12 @@
 namespace FinalInferno {
     [CreateAssetMenu(fileName = "Suffocation", menuName = "ScriptableObject/SkillEffect/Suffocation")]
     public class Suffocation : SkillEffect {
-        // value1 = dmg multiplier
-        // value2 = DoT duration
-        public override string Description => "Deals " + value1 + "x Wind damage for " + value2 + " turns";
+        private float DmgMultiplier => value1;
+        private int DoTDuration => (int)value2;
+        public override string Description => $"Deals {DmgMultiplier}x Wind damage for {DoTDuration} turns";
 
         public override void Apply(BattleUnit source, BattleUnit target) {
-            target.AddEffect(new DamagingOverTime(source, target, value1, Element.Wind, (int)value2));
+            target.AddEffect(new DamagingOverTime(source, target, DmgMultiplier, Element.Wind, DoTDuration));
         }
     }
 }

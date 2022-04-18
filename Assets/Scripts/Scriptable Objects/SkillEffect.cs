@@ -2,7 +2,6 @@
 
 namespace FinalInferno {
     public abstract class SkillEffect : ScriptableObject {
-
         [SerializeField] private string displayName;
         public string DisplayName => displayName;
         [SerializeField] private Sprite icon;

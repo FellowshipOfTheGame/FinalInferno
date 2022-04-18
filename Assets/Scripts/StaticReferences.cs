@@ -34,7 +34,8 @@ public class StaticReferences : MonoBehaviour {
             Destroy(this);
         }
 
-        bgm ??= GetComponent<Jukebox>();
+        if (!bgm)
+            bgm = GetComponent<Jukebox>();
     }
 
     private void OnDestroy() {

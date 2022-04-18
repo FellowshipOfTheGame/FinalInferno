@@ -3,7 +3,6 @@
 namespace FinalInferno {
     [CreateAssetMenu(fileName = "RemoveMyBuffsDebuffs", menuName = "ScriptableObject/SkillEffect/RemoveMyBuffsDebuffs")]
     public class RemoveMyBuffsDebuffs : SkillEffect {
-        // value1 = not used, but description is useful
         public override string Description => "Remove buffs and debuffs applied by this unit";
 
         public override void Apply(BattleUnit source, BattleUnit target) {

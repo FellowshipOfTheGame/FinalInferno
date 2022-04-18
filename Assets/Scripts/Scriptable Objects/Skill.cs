@@ -126,8 +126,8 @@ namespace FinalInferno {
 
         protected virtual void ApplyAllSkillEffects(BattleUnit user, BattleUnit target, bool shouldOverride1, float value1, bool shouldOverride2, float value2) {
             foreach (SkillEffectTuple skillEffect in effects) {
-                skillEffect.effect.value1 = (shouldOverride1) ? value1 : skillEffect.value1;
-                skillEffect.effect.value2 = (shouldOverride2) ? value2 : skillEffect.value2;
+                skillEffect.effect.value1 = shouldOverride1 ? value1 : skillEffect.value1;
+                skillEffect.effect.value2 = shouldOverride2 ? value2 : skillEffect.value2;
                 skillEffect.effect.Apply(user, target);
             }
         }

@@ -3,22 +3,23 @@
 namespace FinalInferno {
     [CreateAssetMenu(fileName = "RiskyDamageDrain", menuName = "ScriptableObject/SkillEffect/RiskyDamageDrain")]
     public class RiskyDamageDrain : SkillEffect {
-        // value1 = dmgDrain multiplier
-        // value2 = debuff duration
-        public override string Description => "Drain " + value1 * 100 + "% damage for " + value2 + " turns, but gets drained instead if target is alive at the end";
+        private float DmgDrainMultiplier => value1;
+        private int DebuffDuration => (int)value2;
+        public override string Description => $"Drain {DmgDrainMultiplier * 100}% damage for {DebuffDuration} turns, but gets drained instead if target is alive at the end";
 
         public override void Apply(BattleUnit source, BattleUnit target) {
-            bool isDraining = false;
+            if (IsSourceDrainingTarget(source, target))
+                return;
+            source.AddEffect(new DrainingDamage(source, target, DmgDrainMultiplier, DebuffDuration, false, true, true));
+            target.AddEffect(new DamageDrained(source, target, DmgDrainMultiplier, DebuffDuration));
+        }
+
+        private static bool IsSourceDrainingTarget(BattleUnit source, BattleUnit target) {
             foreach (StatusEffect effect in target.effects) {
-                if (effect.GetType() == typeof(DamageDrained) && effect.Source == source) {
-                    isDraining = true;
-                    break;
-                }
+                if (effect is DamageDrained && effect.Source == source)
+                    return true;
             }
-            if (!isDraining) {
-                source.AddEffect(new DrainingDamage(source, target, value1, (int)value2, false, true, true));
-                target.AddEffect(new DamageDrained(source, target, value1, (int)value2));
-            }
+            return false;
         }
     }
 }

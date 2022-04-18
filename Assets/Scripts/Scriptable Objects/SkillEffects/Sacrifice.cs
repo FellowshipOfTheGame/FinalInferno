@@ -4,31 +4,35 @@ using UnityEngine;
 namespace FinalInferno {
     [CreateAssetMenu(fileName = "Sacrifice", menuName = "ScriptableObject/SkillEffect/Sacrifice")]
     public class Sacrifice : SkillEffect {
-        // value1 = percentage of max HP sacrificed
-        // value2 = who receives the heal: 0 = target's allies; 1 = target's enemies;
-        public override string Description => "Sacrifice " + value1 * 100 + "% max HP of target and heal all " + HealTargets + " for that amount in total";
+        private float HPPercentageSacrificed => value1;
+        private bool HealGoesToAllies => (int)value2 % 2 == 0;
+        private bool HealGoesToEnemies => (int)value2 % 2 == 1;
+        public override string Description => $"Sacrifice {HPPercentageSacrificed * 100}% max HP of target and heal all {HealTargetsString} for that amount in total";
 
-        private string HealTargets => ((((int)value2 % 2) == 0) ? "allies" : "enemies");
+        private string HealTargetsString => HealGoesToAllies ? "allies" : "enemies";
         public override void Apply(BattleUnit source, BattleUnit target) {
-            int damage = target.DecreaseHP(value1);
+            int damage = target.DecreaseHP(HPPercentageSacrificed);
+            if (HealGoesToAllies) {
+                DistributeHPToAllies(target, damage);
+            } else if (HealGoesToEnemies) {
+                DistributeHPToEnemies(target, damage);
+            }
+        }
+
+        private static void DistributeHPToAllies(BattleUnit target, int damage) {
             List<BattleUnit> allies = BattleManager.instance.GetTeam(target);
+            int healValue = (allies.Count > 1) ? damage / (allies.Count - 1) : 0;
+            foreach (BattleUnit unit in allies) {
+                if (unit != target)
+                    unit.Heal(healValue, 1.0f, target);
+            }
+        }
+
+        private static void DistributeHPToEnemies(BattleUnit target, int damage) {
             List<BattleUnit> enemies = BattleManager.instance.GetEnemies(target);
-            int healValue;
-            switch ((int)value2 % 2) {
-                case 0: // If the heal is to allies
-                    healValue = (allies.Count > 1) ? damage / (allies.Count - 1) : 0;
-                    foreach (BattleUnit unit in allies) {
-                        if (unit != target) {
-                            unit.Heal(healValue, 1.0f, target);
-                        }
-                    }
-                    break;
-                case 1: // If the heal is to enemies
-                    healValue = (enemies.Count > 0) ? damage / (enemies.Count) : 0;
-                    foreach (BattleUnit unit in enemies) {
-                        unit.Heal(healValue, 1.0f, target);
-                    }
-                    break;
+            int healValue = (enemies.Count > 0) ? damage / enemies.Count : 0;
+            foreach (BattleUnit unit in enemies) {
+                unit.Heal(healValue, 1.0f, target);
             }
         }
     }

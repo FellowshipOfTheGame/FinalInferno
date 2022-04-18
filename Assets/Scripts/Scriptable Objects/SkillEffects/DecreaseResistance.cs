@@ -4,15 +4,15 @@
 namespace FinalInferno {
     [CreateAssetMenu(fileName = "DecreaseResistance", menuName = "ScriptableObject/SkillEffect/DecreaseResistance")]
     public class DecreaseResistance : SkillEffect {
-        // value1 = magicDefUp multiplier
-        // value2 = buff duration
-        public override string Description => "Decrease magical resistance by " + value1 * 100 + "% for " + value2 + " turns";
+        private float MagicDefDownMultiplier => value1;
+        private int DebuffDuration => (int)value2;
+        public override string Description => $"Decrease magical resistance by {MagicDefDownMultiplier * 100}% for {DebuffDuration} turns";
 
         public override void Apply(BattleUnit source, BattleUnit target) {
-            if (value2 < 0) {
-                target.curMagicDef -= (int)value1 * target.curMagicDef;
+            if (DebuffDuration < 0) {
+                target.curMagicDef -= (int)(MagicDefDownMultiplier * target.curMagicDef);
             } else {
-                target.AddEffect(new ResistanceDown(source, target, value1, (int)value2));
+                target.AddEffect(new ResistanceDown(source, target, MagicDefDownMultiplier, DebuffDuration));
             }
         }
     }

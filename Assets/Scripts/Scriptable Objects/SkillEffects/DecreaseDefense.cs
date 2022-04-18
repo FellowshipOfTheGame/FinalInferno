@@ -3,15 +3,15 @@
 namespace FinalInferno {
     [CreateAssetMenu(fileName = "DecreaseDefense", menuName = "ScriptableObject/SkillEffect/DecreaseDefense")]
     public class DecreaseDefense : SkillEffect {
-        // value1 = defDown multiplier
-        // value2 = debuff duration
-        public override string Description => "Decrease defense by " + value1 * 100 + "% for " + value2 + " turns";
+        private float DefDownMultiplier => value1;
+        private int DebuffDuration => (int)value2;
+        public override string Description => $"Decrease defense by {DefDownMultiplier * 100}% for {DebuffDuration} turns";
 
         public override void Apply(BattleUnit source, BattleUnit target) {
-            if (value2 < 0) {
-                target.curDef -= (int)value1 * target.curDef;
+            if (DebuffDuration < 0) {
+                target.curDef -= (int)(DefDownMultiplier * target.curDef);
             } else {
-                target.AddEffect(new DefenseDown(source, target, value1, (int)value2));
+                target.AddEffect(new DefenseDown(source, target, DefDownMultiplier, DebuffDuration));
             }
         }
     }
