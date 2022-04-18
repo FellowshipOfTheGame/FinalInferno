@@ -53,49 +53,42 @@ namespace FinalInferno {
                 switch (target) {
                     case TargetType.Null:
                     case TargetType.Self:
-                        if (unit != source) {
+                        if (unit != source)
                             newList.Remove(unit);
-                        }
 
                         break;
                     case TargetType.SingleDeadAlly:
                     case TargetType.AllDeadAllies:
-                        if (!allies.Contains(unit) || unit.CurHP > 0) {
+                        if (!allies.Contains(unit) || unit.CurHP > 0)
                             newList.Remove(unit);
-                        }
 
                         break;
                     case TargetType.SingleLiveAlly:
                     case TargetType.AllLiveAllies:
-                        if (!allies.Contains(unit) || unit.CurHP <= 0) {
+                        if (!allies.Contains(unit) || unit.CurHP <= 0)
                             newList.Remove(unit);
-                        }
 
                         break;
                     case TargetType.AllAlliesLiveOrDead:
-                        if (!allies.Contains(unit)) {
+                        if (!allies.Contains(unit))
                             newList.Remove(unit);
-                        }
 
                         break;
                     case TargetType.SingleDeadEnemy:
                     case TargetType.AllDeadEnemies:
-                        if (allies.Contains(unit) || unit.CurHP > 0) {
+                        if (allies.Contains(unit) || unit.CurHP > 0)
                             newList.Remove(unit);
-                        }
 
                         break;
                     case TargetType.SingleLiveEnemy:
                     case TargetType.AllLiveEnemies:
-                        if (allies.Contains(unit) || unit.CurHP <= 0) {
+                        if (allies.Contains(unit) || unit.CurHP <= 0)
                             newList.Remove(unit);
-                        }
 
                         break;
                     case TargetType.AllEnemiesLiveOrDead:
-                        if (allies.Contains(unit)) {
+                        if (allies.Contains(unit))
                             newList.Remove(unit);
-                        }
 
                         break;
                 }
@@ -125,9 +118,8 @@ namespace FinalInferno {
         }
 
         protected virtual void ShowVisualEffects(BattleUnit target) {
-            if (!visualEffect) {
+            if (!visualEffect)
                 return;
-            }
             GameObject obj = GameObject.Instantiate(visualEffect, target.transform);
             obj.GetComponent<SkillVFX>().SetTarget(target, true);
         }

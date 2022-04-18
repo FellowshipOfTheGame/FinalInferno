@@ -16,9 +16,8 @@ public class AudioChannel {
         value = Mathf.Clamp(value, 0, 1f);
         PlayerPrefs.SetFloat(VolumeString, value);
         value = MinVolume + value * (MaxVolume - MinVolume);
-        if (!mixer.SetFloat(VolumeString, Mathf.Log10(value) * 20f)) {
+        if (!mixer.SetFloat(VolumeString, Mathf.Log10(value) * 20f))
             Debug.LogError($"Variable {VolumeString} not set in audio mixer");
-        }
     }
 
     public float CurrentValue(AudioMixer mixer) {

@@ -15,9 +15,8 @@ namespace FinalInferno {
         private long DefaultSkillExp => Mathf.Max(10, (Mathf.FloorToInt(Mathf.Sqrt(Party.Instance.XpCumulative))));
         public override long SkillExp {
             get {
-                if (!BattleManager.instance) {
+                if (!BattleManager.instance)
                     return DefaultSkillExp;
-                }
                 long expSum = 0;
                 int nEnemies = 0;
                 foreach (Unit unit in BattleManager.instance.units) {
@@ -74,17 +73,15 @@ namespace FinalInferno {
 
         public void UnlockSkills() {
             foreach (PlayerSkill skill in skillsToUpdate.ToArray()) {
-                if (skill.CheckUnlock(level)) {
+                if (skill.CheckUnlock(level))
                     UpdateUnlockedSkillStatus(skill);
-                }
             }
         }
 
         private void UpdateUnlockedSkillStatus(PlayerSkill unlockedSkill) {
             foreach (PlayerSkill child in unlockedSkill.skillsToUpdate) {
-                if (!skillsToUpdate.Contains(child)) {
+                if (!skillsToUpdate.Contains(child))
                     skillsToUpdate.Add(child);
-                }
             }
             skillsToUpdate.Remove(unlockedSkill);
         }

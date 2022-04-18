@@ -53,9 +53,8 @@ namespace FinalInferno {
             }
 
             int newRow = GetTableRow();
-            if (newRow == curTableRow) {
+            if (newRow == curTableRow)
                 return;
-            }
 
             curTableRow = newRow;
             for (int skillEffectIndex = 0; skillEffectIndex < effects.Count; skillEffectIndex++) {

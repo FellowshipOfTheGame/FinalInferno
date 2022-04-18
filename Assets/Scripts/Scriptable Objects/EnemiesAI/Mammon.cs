@@ -33,22 +33,19 @@ namespace FinalInferno {
 
             float roll = Random.Range(0.0f, 1.0f);
             float percentageDebuff = Mathf.Min(1f, percentageNotDefense) / 3f;
-            if (!IsBribeOnCooldown() && roll < percentageDebuff) {
+            if (!IsBribeOnCooldown() && roll < percentageDebuff)
                 return BribeSkill;
-            }
 
-            if (roll < percentageNotDefense) {
+            if (roll < percentageNotDefense)
                 return AttackDecision();
-            }
 
             return defenseSkill;
         }
 
         private static bool IsBribeOnCooldown() {
             foreach (BattleUnit unit in BattleManager.instance.GetTeam(UnitType.Hero)) {
-                if (!unit.CanAct) {
+                if (!unit.CanAct)
                     return true;
-                }
             }
             return false;
         }

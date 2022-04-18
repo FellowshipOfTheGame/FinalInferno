@@ -40,9 +40,8 @@ namespace FinalInferno {
             DrawScriptableObjectFields();
             InitCurveAndVariables();
             float successChance = 0;
-            if (CurveHasMultiplePoints()) {
+            if (CurveHasMultiplePoints())
                 successChance = CalculateCurvePoints();
-            }
             WriteCalculatedEncounterValues();
             EditorGUILayout.Space();
             DrawAccumulatedEncounterRateGraph(successChance);
@@ -65,17 +64,15 @@ namespace FinalInferno {
             float successChance = Mathf.Clamp(1f - (baseRate / 100f), 0f, 1f);
             while (successChance >= 0.05f && steps < 999) {
                 AddNewPointToCurve(steps, successChance);
-                if (successChance >= 0.5f) {
+                if (successChance >= 0.5f)
                     halfDistance = distanceWalked;
-                }
                 baseRate += increase;
                 distanceWalked += 1.0f;
                 successChance *= Mathf.Clamp((1f - (baseRate / 100f)), 0f, 1f);
                 steps++;
             }
-            if (steps > 0) {
+            if (steps > 0)
                 AddLastCurvePoint(successChance);
-            }
             return successChance;
         }
 

@@ -67,9 +67,8 @@ namespace FinalInferno {
         }
         public override Sprite BattleSprite {
             get {
-                if (BattleManager.instance == null) {
+                if (BattleManager.instance == null)
                     return battleSprite;
-                }
 
                 switch (heads) {
                     default:
@@ -93,34 +92,31 @@ namespace FinalInferno {
 
         private void SaveBackHeadBattleUnitReference() {
             foreach (BattleUnit bUnit in FindObjectsOfType<BattleUnit>()) {
-                if (bUnit.Unit != this || bUnit.name != name) {
+                if (bUnit.Unit != this || bUnit.name != name)
                     continue;
-                }
                 bUnit.name += $" {heads}";
                 backHead = bUnit;
-                break;
+                return;
             }
         }
 
         private void SaveMiddleHeadBattleUnitReference() {
             foreach (BattleUnit bUnit in FindObjectsOfType<BattleUnit>()) {
-                if (bUnit.Unit != this || bUnit.name != name) {
+                if (bUnit.Unit != this || bUnit.name != name)
                     continue;
-                }
                 bUnit.name += $" {heads}";
                 middleHead = bUnit;
-                break;
+                return;
             }
         }
 
         private void SaveFrontHeadBattleUnitReference() {
             foreach (BattleUnit bUnit in FindObjectsOfType<BattleUnit>()) {
-                if (bUnit.Unit != this || bUnit.name != name) {
+                if (bUnit.Unit != this || bUnit.name != name)
                     continue;
-                }
                 bUnit.name += $" {heads}";
                 frontHead = bUnit;
-                break;
+                return;
             }
         }
 
@@ -136,12 +132,10 @@ namespace FinalInferno {
             GameObject bodyObj = new GameObject();
             bodyObj.name = "Cerberus's body";
             bodyObj.transform.SetParent(middleHead.transform);
-            bodyObj.transform.position = Vector3.zero;
-            bodyObj.transform.rotation = Quaternion.identity;
-            SpriteRenderer renderer = bodyObj.gameObject.AddComponent<SpriteRenderer>();
-            if (!renderer) {
+            bodyObj.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+            SpriteRenderer renderer = bodyObj.AddComponent<SpriteRenderer>();
+            if (!renderer)
                 return;
-            }
             renderer.sprite = bodySprite;
             renderer.sortingOrder = 0;
             renderer.flipX = true;
@@ -190,28 +184,25 @@ namespace FinalInferno {
                 TremendousRoalSkill.Level = SkillLevel;
                 return TremendousRoalSkill;
             }
-            if (roll < percentageNotDefense) {
+            if (roll < percentageNotDefense)
                 return AttackDecision();
-            }
             return defenseSkill;
         }
 
         public override Skill AttackDecision() {
-            if (hellFireCD < 1) {
+            if (hellFireCD < 1)
                 return RollHellfireAttack();
-            }
             hellFireCD--;
             return attackSkill;
         }
 
         private Skill RollHellfireAttack() {
             float roll = Random.Range(0.0f, 1.0f);
-            if (roll < 0.9f / heads) {
-                hellFireCD = (heads - 1);
-                HellfireSkill.Level = SkillLevel;
-                return HellfireSkill;
-            }
-            return attackSkill;
+            if (roll >= 0.9f / heads)
+                return attackSkill;
+            hellFireCD = (heads - 1);
+            HellfireSkill.Level = SkillLevel;
+            return HellfireSkill;
         }
 
         protected override List<BattleUnit> GetTargets(TargetType type) {

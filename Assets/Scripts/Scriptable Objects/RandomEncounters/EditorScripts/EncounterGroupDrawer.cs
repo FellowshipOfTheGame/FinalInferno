@@ -25,9 +25,8 @@ namespace FinalInferno {
             EditorGUI.BeginProperty(propertyRect, label, property);
             CalculateFieldRects(propertyRect);
             EditorGUI.ObjectField(objPickerRect, property, label);
-            if (property.objectReferenceValue != null) {
+            if (property.objectReferenceValue != null)
                 DrawEncounterGroupPreview(propertyRect, property);
-            }
             EditorGUI.EndProperty();
         }
 
@@ -43,9 +42,8 @@ namespace FinalInferno {
         private void DrawEncounterGroupPreview(Rect propertyRect, SerializedProperty property) {
             SerializedObject serializedObject = new SerializedObject(property.objectReferenceValue);
             FindSerializedFieldProperties(serializedObject);
-            for (int enemyIndex = 0; enemyIndex < 4; enemyIndex++) {
+            for (int enemyIndex = 0; enemyIndex < 4; enemyIndex++)
                 DrawEnemyPortrait(propertyRect, enemyIndex);
-            }
             WriteDificultyAndLevelInfo(serializedObject);
         }
 
@@ -59,9 +57,8 @@ namespace FinalInferno {
 
         private void DrawEnemyPortrait(Rect propertyRect, int enemyIndex) {
             Enemy enemy = enemies[enemyIndex].objectReferenceValue as Enemy;
-            if (enemy == null) {
+            if (enemy == null)
                 return;
-            }
 
             Vector2 portraitSize = new Vector2(PORTRAIT_SIZE, PORTRAIT_SIZE);
             float xOffset = enemyIndex * (PORTRAIT_SIZE + portraitSpacing);

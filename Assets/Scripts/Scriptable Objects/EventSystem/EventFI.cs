@@ -8,20 +8,19 @@ namespace FinalInferno.EventSystem {
 
         public void Raise() {
             foreach (IEventListenerFI listener in listeners.ToArray()) {
-                listener.OnEventRaised();
+                if (listener != null)
+                    listener.OnEventRaised();
             }
         }
 
         public void AddListener(IEventListenerFI newListener) {
-            if (!listeners.Contains(newListener)) {
+            if (!listeners.Contains(newListener))
                 listeners.Add(newListener);
-            }
         }
 
         public void RemoveListener(IEventListenerFI listenerToRemove) {
-            if (listeners.Contains(listenerToRemove)) {
+            if (listeners.Contains(listenerToRemove))
                 listeners.Remove(listenerToRemove);
-            }
         }
     }
 }

@@ -30,16 +30,12 @@ namespace FinalInferno {
         public int EventCount => events.Count;
 
         public bool GetFlag(string eventName) {
-            if (events.ContainsKey(eventName)) {
-                return events[eventName];
-            }
-            return false;
+            return events.ContainsKey(eventName) && events[eventName];
         }
 
         public void SetFlag(string eventName, bool value) {
-            if (active && events.ContainsKey(eventName)) {
+            if (active && events.ContainsKey(eventName))
                 events[eventName] = value;
-            }
         }
 
         public void ResetQuest() {
@@ -67,9 +63,8 @@ namespace FinalInferno {
         }
 
         public virtual void CompleteQuest() {
-            if (!active) {
+            if (!active)
                 return;
-            }
             foreach (string key in events.Keys) {
                 events[key] = true;
             }
@@ -79,9 +74,8 @@ namespace FinalInferno {
         }
 
         private void ResetQuestIfRepeatable() {
-            if (!repeatable) {
+            if (!repeatable)
                 return;
-            }
             Party.Instance.activeQuests.Remove(this);
             ResetQuest();
         }

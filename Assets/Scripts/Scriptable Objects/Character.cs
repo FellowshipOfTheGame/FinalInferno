@@ -17,17 +17,15 @@ namespace FinalInferno {
         }
 
         public void SaveOverworldPosition() {
-            if (OverworldInstance == null) {
+            if (OverworldInstance == null)
                 return;
-            }
             Vector3 instancePosition = OverworldInstance.transform.position;
             position = new Vector2(instancePosition.x, instancePosition.y);
         }
 
         public void LoadOverworldPosition() {
-            if (OverworldInstance == null) {
+            if (OverworldInstance == null)
                 return;
-            }
             Transform instanceTransform = OverworldInstance.transform;
             instanceTransform.position = new Vector3(position.x, position.y, instanceTransform.position.z);
         }

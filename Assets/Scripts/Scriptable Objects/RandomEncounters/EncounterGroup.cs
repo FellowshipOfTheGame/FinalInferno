@@ -24,9 +24,8 @@ namespace FinalInferno {
         public Enemy[] GetEnemies() {
             List<Enemy> list = new List<Enemy>();
             for (int index = 0; index < ENCOUNTER_MAX_SIZE; index++) {
-                if (this[index] != null) {
+                if (this[index] != null)
                     list.Add(this[index]);
-                }
             }
             return list.ToArray();
         }

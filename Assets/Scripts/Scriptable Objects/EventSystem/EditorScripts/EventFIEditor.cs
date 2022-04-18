@@ -11,9 +11,8 @@ namespace FinalInferno.EventSystem {
             base.OnInspectorGUI();
 
             GUI.enabled = Application.isPlaying;
-            if (GUILayout.Button("Force Raise")) {
+            if (GUILayout.Button("Force Raise"))
                 (target as EventFI).Raise();
-            }
         }
     }
 #endif

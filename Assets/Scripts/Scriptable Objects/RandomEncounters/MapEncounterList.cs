@@ -31,9 +31,8 @@ namespace FinalInferno {
             float sumOfWeights = 0f;
             foreach (EncounterGroupItem encounterGroupItem in encounterGroupItems) {
                 EncounterGroup encounterGroup = encounterGroupItem?.group;
-                if (encounterGroup == null || !encounterGroup.CanEncounter[level]) {
+                if (encounterGroup == null || !encounterGroup.CanEncounter[level])
                     continue;
-                }
                 float encounterWeight = CalculateEncounterWeight(encounterGroupItem, encounterGroup);
                 chanceDict.Add(encounterGroup, encounterWeight);
                 sumOfWeights += encounterWeight;
@@ -71,14 +70,12 @@ namespace FinalInferno {
         }
 
         private void RemoveListDuplicates() {
-            if (encounterGroupItems == null) {
+            if (encounterGroupItems == null)
                 return;
-            }
             HashSet<EncounterGroup> counter = new HashSet<EncounterGroup>();
             for (int index = 0; index < encounterGroupItems.Count; index++) {
-                if (encounterGroupItems[index]?.group == null) {
+                if (encounterGroupItems[index]?.group == null)
                     continue;
-                }
                 if (counter.Contains(encounterGroupItems[index].group)) {
                     RemoveDuplicateEntry(index);
                 } else {

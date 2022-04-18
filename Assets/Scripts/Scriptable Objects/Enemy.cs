@@ -61,9 +61,8 @@ namespace FinalInferno {
 
         public int GetSkillLevel(EnemySkill skill) {
             int skillIndex = skills.IndexOf(skill);
-            if (skillIndex < 0) {
+            if (skillIndex < 0)
                 return 0;
-            }
             return Table.Rows[curTableRow].Field<int>($"{LevelSkillColumnName}{skillIndex}");
         }
 
@@ -82,9 +81,8 @@ namespace FinalInferno {
 
         private static int CalculateEnemyTier(int scaledLevel) {
             int enemyTier = 10 * (scaledLevel / 10);
-            if (scaledLevel == enemyTier && enemyTier >= 10) {
+            if (scaledLevel == enemyTier && enemyTier >= 10)
                 enemyTier -= 10;
-            }
             return enemyTier;
         }
 
@@ -92,9 +90,8 @@ namespace FinalInferno {
             while (scaledLevel > 10) {
                 scaledLevel -= 10;
             }
-            if (scaledLevel > 5) {
+            if (scaledLevel > 5)
                 return 5;
-            }
             return 0;
         }
 
@@ -143,13 +140,11 @@ namespace FinalInferno {
 
         private void LoadElementalResistanceIfValid(int tableRow, Element element) {
             string colName = ElementalResistColumnName(element);
-            if (!Table.Rows[tableRow].HasField<float>(colName)) {
+            if (!Table.Rows[tableRow].HasField<float>(colName))
                 return;
-            }
             float value = Table.Rows[tableRow].Field<float>(colName);
-            if (value != 1.0f) {
+            if (value != 1.0f)
                 elementalResistances.Add(element, value);
-            }
         }
 
         private static string ElementalResistColumnName(Element element) {
@@ -183,9 +178,8 @@ namespace FinalInferno {
 
         protected virtual Skill SkillDecision(float percentageNotDefense) {
             float roll = Random.Range(0.0f, 1.0f);
-            if (roll < percentageNotDefense) {
+            if (roll < percentageNotDefense)
                 return AttackDecision();
-            }
             return defenseSkill;
         }
 
@@ -219,9 +213,8 @@ namespace FinalInferno {
             List<float> targetingChances = GetUnitTargetingChances(targetTeam);
             float roll = Random.Range(0.0f, 1.0f);
             for (int targetIndex = 0; targetIndex < targetTeam.Count; targetIndex++) {
-                if (roll <= targetingChances[targetIndex]) {
+                if (roll <= targetingChances[targetIndex])
                     return targetTeam[targetIndex];
-                }
                 roll -= targetingChances[targetIndex];
             }
             return targetTeam[0];
@@ -246,9 +239,8 @@ namespace FinalInferno {
 
         protected static bool AllHeroesAreParalised() {
             foreach (BattleUnit hero in BattleManager.instance.GetTeam(UnitType.Hero)) {
-                if (hero.CanAct) {
+                if (hero.CanAct)
                     return false;
-                }
             }
             return true;
         }

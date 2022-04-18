@@ -8,21 +8,18 @@ namespace FinalInferno {
         private List<IOverworldSkillListener> activationListeners = new List<IOverworldSkillListener>();
 
         public void AddActivationListener(IOverworldSkillListener listener) {
-            if (!activationListeners.Contains(listener)) {
+            if (!activationListeners.Contains(listener))
                 activationListeners.Add(listener);
-            }
         }
 
         public void RemoveActivationListener(IOverworldSkillListener listener) {
-            if (activationListeners.Contains(listener)) {
+            if (activationListeners.Contains(listener))
                 activationListeners.Remove(listener);
-            }
         }
 
         public void Activate() {
-            if (active) {
+            if (active)
                 return;
-            }
             active = true;
             for (int i = activationListeners.Count - 1; i >= 0; i--) {
                 if (activationListeners[i] != null)
@@ -31,9 +28,8 @@ namespace FinalInferno {
         }
 
         public void Deactivate() {
-            if (!active) {
+            if (!active)
                 return;
-            }
             active = false;
             for (int i = activationListeners.Count - 1; i >= 0; i--) {
                 if (activationListeners[i] != null)

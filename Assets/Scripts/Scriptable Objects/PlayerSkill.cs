@@ -10,8 +10,8 @@ namespace FinalInferno {
         [Header("Player Skill")]
         public long xp;
         public long xpNext;
-        public long XpCumulative => ((table == null) ? 0 : (xp + CurrentLevelCumulativeXp));
-        private long CurrentLevelCumulativeXp => ((level <= 1) ? 0 : (XpTable.Rows[level - 2].Field<long>(accumulatedXpColumnName)));
+        public long XpCumulative => (table == null) ? 0 : (xp + CurrentLevelCumulativeXp);
+        private long CurrentLevelCumulativeXp => (level <= 1) ? 0 : XpTable.Rows[level - 2].Field<long>(accumulatedXpColumnName);
         private bool ShouldIncreaseLevel => xp >= xpNext && level < XpTable.Rows.Count && level < Table.Rows.Count;
         public int MinLevel => Mathf.Max(XpTable.Rows[0].Field<int>(levelColumnString), Table.Rows[0].Field<int>(levelColumnString));
         public int MaxLevel => Mathf.Min(XpTable.Rows[XpTable.Rows.Count - 1].Field<int>(levelColumnString), Table.Rows[Table.Rows.Count - 1].Field<int>(levelColumnString));
@@ -75,9 +75,8 @@ namespace FinalInferno {
             while (ShouldIncreaseLevel) {
                 LevelUp();
             }
-            if (leveledUp) {
+            if (leveledUp)
                 UpdateToCurrentLevel();
-            }
         }
 
         private void LevelUp() {
@@ -121,19 +120,16 @@ namespace FinalInferno {
         }
 
         public bool CheckUnlock(int heroLevel) {
-            if (level > 0) {
+            if (level > 0)
                 return true;
-            }
 
             bool levelCheck = (heroLevel >= prerequisiteHeroLevel);
-            if (!levelCheck) {
+            if (!levelCheck)
                 return false;
-            }
 
             bool prerequisitesSatisfied = CheckAllPrerequisites();
-            if (prerequisitesSatisfied) {
+            if (prerequisitesSatisfied)
                 UnlockSkill();
-            }
             return prerequisitesSatisfied;
         }
 

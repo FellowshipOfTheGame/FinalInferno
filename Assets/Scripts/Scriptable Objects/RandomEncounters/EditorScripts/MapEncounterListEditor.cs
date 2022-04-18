@@ -77,15 +77,13 @@ namespace FinalInferno {
         }
 
         private void DisplayDifficultyFactorDecreaseButton() {
-            if (GUILayout.Button("-", GUILayout.MaxWidth(SMALL_LABEL_WIDTH))) {
+            if (GUILayout.Button("-", GUILayout.MaxWidth(SMALL_LABEL_WIDTH)))
                 selectedDifficultyFactor = Mathf.Max(0.0f, difficultyFactor.floatValue - 0.1f);
-            }
         }
 
         private void DisplayDifficultyFactorIncreaseButton() {
-            if (GUILayout.Button("+", GUILayout.MaxWidth(SMALL_LABEL_WIDTH))) {
+            if (GUILayout.Button("+", GUILayout.MaxWidth(SMALL_LABEL_WIDTH)))
                 selectedDifficultyFactor = Mathf.Min(1f, difficultyFactor.floatValue + 0.1f);
-            }
         }
 
         private void ApplyDifficultyFactorChanges() {
@@ -96,9 +94,8 @@ namespace FinalInferno {
         private void DisplayLevelSelectionButtons() {
             EditorGUILayout.BeginHorizontal(EditorStyles.boldLabel);
             for (int level = 0; level < 5; level++) {
-                if (GUILayout.Button($"level {level + 1}")) {
+                if (GUILayout.Button($"level {level + 1}"))
                     selectedLevel = level;
-                }
             }
             EditorGUILayout.EndHorizontal();
             selectedLevel = Mathf.Clamp(selectedLevel, 0, 4);
@@ -118,9 +115,8 @@ namespace FinalInferno {
                 float currentMultiplier = GetSerializedMultiplierAtIndex(index);
                 hasChanged = storedMultipliers[index] != currentMultiplier;
             }
-            if (hasChanged) {
+            if (hasChanged)
                 SaveMultipliers();
-            }
             return hasChanged;
         }
 
@@ -149,14 +145,12 @@ namespace FinalInferno {
         private void RepopulateValidEncountersList() {
             for (int index = 0; index < encounterGroups.arraySize; index++) {
                 SerializedProperty groupProp = GetGroupPropAtIndex(index);
-                if (groupProp == null || groupProp.objectReferenceValue == null) {
+                if (groupProp == null || groupProp.objectReferenceValue == null)
                     continue;
-                }
 
                 SerializedObject obj = new SerializedObject(groupProp.objectReferenceValue);
-                if (!obj.FindProperty("canEncounter").GetArrayElementAtIndex(selectedLevel).boolValue) {
+                if (!obj.FindProperty("canEncounter").GetArrayElementAtIndex(selectedLevel).boolValue)
                     continue;
-                }
 
                 EncounterGroup encounterGroup = obj.targetObject as EncounterGroup;
                 validEncounterGroups.Add(encounterGroup);
@@ -188,17 +182,15 @@ namespace FinalInferno {
         }
 
         private static void DrawSeparatorIfNecessary(bool isFirst) {
-            if (!isFirst) {
+            if (!isFirst)
                 EditorUtils.DrawSeparator(EditorGUILayout.GetControlRect());
-            }
         }
 
         private static void DrawEncounterGroupEnemies(EncounterGroup encounterGroup) {
             Rect currentRect = EditorGUILayout.GetControlRect();
             for (int index = 0; index < 4; index++) {
-                if (encounterGroup[index] == null) {
+                if (encounterGroup[index] == null)
                     continue;
-                }
                 currentRect = DrawEnemyPortrait(encounterGroup, currentRect, index);
             }
         }

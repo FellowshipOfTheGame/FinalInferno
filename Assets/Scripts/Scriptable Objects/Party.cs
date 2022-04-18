@@ -14,7 +14,7 @@ namespace FinalInferno {
         private static Party instance = null;
         public static Party Instance {
             get {
-                instance ??= AssetManager.LoadAsset<Party>(partyAssetName);
+                instance = instance != null ? instance : AssetManager.LoadAsset<Party>(partyAssetName);
                 return instance;
             }
         }
@@ -35,9 +35,8 @@ namespace FinalInferno {
         private static int CalculateMainQuestProgress() {
             int questParam = 0;
             Quest mainQuest = AssetManager.LoadAsset<Quest>(mainQuestAssetName);
-            if (mainQuest.GetFlag(mainQuestChapter1Flag)) {
+            if (mainQuest.GetFlag(mainQuestChapter1Flag))
                 questParam++;
-            }
             return questParam;
         }
 
@@ -89,26 +88,23 @@ namespace FinalInferno {
 
         public void ReloadBestiary(BestiaryEntry[] entries) {
             bestiary.Clear();
-            if (entries == null) {
+            if (entries == null)
                 return;
-            }
             foreach (BestiaryEntry entry in entries) {
                 AddValidBestiaryEntry(entry);
             }
         }
 
         private void AddValidBestiaryEntry(BestiaryEntry entry) {
-            if (string.IsNullOrEmpty(entry.monsterName)) {
+            if (string.IsNullOrEmpty(entry.monsterName))
                 return;
-            }
             Enemy enemy = AssetManager.LoadAsset<Enemy>(entry.monsterName);
             bestiary.Add(enemy, entry.numberKills);
         }
 
         public int CalculateLevel(long cumulativeExp) {
-            if (cumulativeExp <= 0) {
+            if (cumulativeExp <= 0)
                 return 0;
-            }
 
             int calculatedLevel = 1;
             while (cumulativeExp > Table.Rows[calculatedLevel - 1].Field<long>(accumulatedXpColumnName)) {
@@ -123,9 +119,8 @@ namespace FinalInferno {
             while (ShouldIncreaseLevel) {
                 LevelUp();
             }
-            if (leveledUp) {
+            if (leveledUp)
                 ApplyLevelToCharacters();
-            }
         }
 
         private void LevelUp() {

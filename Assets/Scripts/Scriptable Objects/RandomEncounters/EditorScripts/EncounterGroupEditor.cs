@@ -49,9 +49,8 @@ namespace FinalInferno {
         }
 
         private void ShowEnemyInfo(Enemy enemy, int index) {
-            if (enemy == null) {
+            if (enemy == null)
                 return;
-            }
             EditorGUILayout.BeginHorizontal();
             WriteEnemyName(enemy);
             Rect currentRect = DrawEnemyPortrait(enemy, index);

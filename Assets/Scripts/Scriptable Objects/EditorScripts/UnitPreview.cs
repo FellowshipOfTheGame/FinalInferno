@@ -41,14 +41,14 @@ namespace FinalInferno {
         }
 
         private void CreateBackgroundTexture() {
-            Color[] transparency = CreateTransparentColorArray(tex.width * tex.height);
+            Color32[] transparency = CreateTransparentColorArray(tex.width * tex.height);
             bg = new Texture2D(tex.width, tex.height, tex.format, false, false);
-            bg.SetPixels(transparency);
+            bg.SetPixels32(transparency);
             bg.Apply();
         }
 
-        private static Color[] CreateTransparentColorArray(int length) {
-            Color[] transparency = new Color[length];
+        private static Color32[] CreateTransparentColorArray(int length) {
+            Color32[] transparency = new Color32[length];
             for (int i = 0; i < transparency.Length; i++) {
                 transparency[i] = Color.clear;
             }
