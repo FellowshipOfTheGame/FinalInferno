@@ -49,7 +49,7 @@ jobs:
       - name: Generate Build
         run: |
           make linux UNITY_EXECUTABLE=unity-editor
-          echo "LINUX_BUILD_NAME=Linux/" >> $GITHUB_ENV
+          echo "LINUX_BUILD_NAME=Linux" >> $GITHUB_ENV
 
       - uses: actions/upload-artifact@v3
         with:
@@ -96,7 +96,7 @@ jobs:
       - name: Generate Build
         run: |
           make windows UNITY_EXECUTABLE=unity-editor
-          echo "WINDOWS_BUILD_NAME=Windows/" >> $GITHUB_ENV
+          echo "WINDOWS_BUILD_NAME=Windows" >> $GITHUB_ENV
 
       - uses: actions/upload-artifact@v3
         with:
@@ -143,7 +143,7 @@ jobs:
       - name: Generate Build
         run: |
           make webgl UNITY_EXECUTABLE=unity-editor
-          echo "WEB_BUILD_NAME=Web/" >> $GITHUB_ENV
+          echo "WEB_BUILD_NAME=Web" >> $GITHUB_ENV
 
       - uses: actions/upload-artifact@v3
         with:
