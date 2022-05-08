@@ -54,16 +54,8 @@ namespace FinalInferno {
             }
             Hero hero = character.archetype;
             CharacterOW characterOW = character.OverworldInstance;
-            ReloadCharacterSpriteAndAnimator(hero, characterOW);
-        }
-
-        private static void ReloadCharacterSpriteAndAnimator(Hero hero, CharacterOW characterOW) {
-            if (!hero.spriteOW || !characterOW) {
-                return;
-            }
-            characterOW.spriteRenderer.sprite = hero.spriteOW;
-            Animator anim = characterOW.GetComponent<Animator>();
-            anim.runtimeAnimatorController = hero.animatorOW;
+            SetupCharacterSprite(hero, characterOW);
+            SetupCharacterAnimator(hero, characterOW);
         }
 
         public void Awake() {
@@ -75,8 +67,8 @@ namespace FinalInferno {
             }
 
             Hero hero = characterSO.archetype;
-            SetupCharacterSprite(hero);
-            SetupCharacterAnimator(hero);
+            SetupCharacterSprite(hero, this);
+            SetupCharacterAnimator(hero, this);
             ResetMovementComponents();
         }
 
@@ -87,27 +79,20 @@ namespace FinalInferno {
             }
         }
 
-        private void SetupCharacterSprite(Hero hero) {
+        private static void SetupCharacterSprite(Hero hero, CharacterOW characterOW) {
             if (hero == null || !hero.spriteOW) {
                 return;
             }
-            spriteRenderer = GetOrAddComponent<SpriteRenderer>();
-            spriteRenderer.sprite = hero.spriteOW;
-            spriteRenderer.spriteSortPoint = SpriteSortPoint.Pivot;
+            characterOW.spriteRenderer = Utils.GetOrAddComponent<SpriteRenderer>(characterOW.gameObject);
+            characterOW.spriteRenderer.sprite = hero.spriteOW;
+            characterOW.spriteRenderer.spriteSortPoint = SpriteSortPoint.Pivot;
         }
 
-        private T GetOrAddComponent<T>() where T : Component {
-            T component = GetComponent<T>();
-            if (!component)
-                component = gameObject.AddComponent<T>();
-            return component;
-        }
-
-        private void SetupCharacterAnimator(Hero hero) {
+        private static void SetupCharacterAnimator(Hero hero, CharacterOW characterOW) {
             if (hero == null || !hero.animatorOW) {
                 return;
             }
-            Animator anim = GetOrAddComponent<Animator>();
+            Animator anim = Utils.GetOrAddComponent<Animator>(characterOW.gameObject);
             anim.runtimeAnimatorController = hero.animatorOW;
         }
 
