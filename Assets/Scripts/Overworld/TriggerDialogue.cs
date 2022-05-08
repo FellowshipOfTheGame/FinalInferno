@@ -1,22 +1,15 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Fog.Dialogue;
 
 namespace FinalInferno {
     public class TriggerDialogue : Triggerable {
         [SerializeField] private List<DialogueEntry> dialogues = new List<DialogueEntry>();
 
-        protected override void TriggerAction(Fog.Dialogue.Agent agent) {
-            Fog.Dialogue.Dialogue selectedDialogue = null;
-            foreach (DialogueEntry entry in dialogues) {
-                if (entry.quest != null && entry.quest.GetFlag(entry.eventFlag)) {
-                    selectedDialogue = entry.dialogue;
-                } else {
-                    break;
-                }
-            }
-
+        protected override void TriggerAction(Agent agent) {
+            Dialogue selectedDialogue = DialogueEntry.GetLastUnlockedDialogue(dialogues);
             if (selectedDialogue != null) {
-                Fog.Dialogue.DialogueHandler.instance.StartDialogue(selectedDialogue);
+                DialogueHandler.instance.StartDialogue(selectedDialogue);
             }
         }
     }

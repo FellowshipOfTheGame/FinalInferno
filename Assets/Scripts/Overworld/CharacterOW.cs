@@ -26,67 +26,95 @@ namespace FinalInferno {
             get => Party.Instance.characters?[0]?.OverworldInstance?.CanMove ?? false;
             set {
                 foreach (Character character in Party.Instance.characters) {
-                    if (character != null && character.OverworldInstance) {
-                        character.OverworldInstance.CanMove = value;
-                    }
+                    SetCharacterInstanceCanMove(character, value);
                 }
+            }
+        }
+
+        private static void SetCharacterInstanceCanMove(Character character, bool value) {
+            if (character?.OverworldInstance != null) {
+                character.OverworldInstance.CanMove = value;
             }
         }
 
         public static void ReloadParty() {
             foreach (Character character in Party.Instance.characters) {
-                if (character && character.archetype) {
-                    Hero hero = character.archetype;
-                    CharacterOW characterOW = character?.OverworldInstance;
-                    if (hero.spriteOW && characterOW) {
-                        characterOW.spriteRenderer.sprite = hero.spriteOW;
-                        Animator anim = characterOW.GetComponent<Animator>();
-                        anim.runtimeAnimatorController = hero.animatorOW;
-                    }
-                }
+                ReloadCharacter(character);
             }
         }
 
-        public void Awake() {
-            characterSO.OverworldInstance = this;
-            if (characterSO.OverworldInstance != this) {
-                Debug.LogError($"Failed to set {name} as overworld instance of {characterSO.name}");
+        private static void ReloadCharacter(Character character) {
+            if (!character || !character.archetype) {
                 return;
             }
-            movable = GetComponent<Movable>();
+            Hero hero = character.archetype;
+            CharacterOW characterOW = character.OverworldInstance;
+            SetupCharacterSprite(hero, characterOW);
+            SetupCharacterAnimator(hero, characterOW);
+        }
 
-            if (characterSO && characterSO.archetype) {
-                Hero hero = characterSO.archetype;
-                if (hero.spriteOW) {
-                    spriteRenderer = GetComponent<SpriteRenderer>();
-                    if (!spriteRenderer) {
-                        spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
-                    }
-
-                    spriteRenderer.sprite = hero.spriteOW;
-                    spriteRenderer.spriteSortPoint = SpriteSortPoint.Pivot;
-                    Animator anim = GetComponent<Animator>();
-                    if (!anim) {
-                        anim = gameObject.AddComponent<Animator>();
-                    }
-
-                    anim.runtimeAnimatorController = hero.animatorOW;
-                }
+        public void Awake() {
+            try {
+                RegisterCharacterOWInstance();
+            } catch (System.Exception error) {
+                Debug.LogError(error.Message, this);
+                return;
             }
+
+            Hero hero = characterSO.archetype;
+            SetupCharacterSprite(hero, this);
+            SetupCharacterAnimator(hero, this);
+            ResetMovementComponents();
+        }
+
+        private void RegisterCharacterOWInstance() {
+            characterSO.OverworldInstance = this;
+            if (characterSO.OverworldInstance != this) {
+                throw new System.Exception($"Failed to set {name} as overworld instance of {characterSO.name}");
+            }
+        }
+
+        private static void SetupCharacterSprite(Hero hero, CharacterOW characterOW) {
+            if (hero == null || !hero.spriteOW) {
+                return;
+            }
+            characterOW.spriteRenderer = Utils.GetOrAddComponent<SpriteRenderer>(characterOW.gameObject);
+            characterOW.spriteRenderer.sprite = hero.spriteOW;
+            characterOW.spriteRenderer.spriteSortPoint = SpriteSortPoint.Pivot;
+        }
+
+        private static void SetupCharacterAnimator(Hero hero, CharacterOW characterOW) {
+            if (hero == null || !hero.animatorOW) {
+                return;
+            }
+            Animator anim = Utils.GetOrAddComponent<Animator>(characterOW.gameObject);
+            anim.runtimeAnimatorController = hero.animatorOW;
+        }
+
+        private void ResetMovementComponents() {
+            movable = GetComponent<Movable>();
             moveTo.Reset();
             movable.CanMove = false;
         }
 
         public void Start() {
-            if (!isMain) {
-                int characterIndex = Party.Instance.characters.IndexOf(characterSO);
-                (moveTo as MoveToTarget).target = Party.Instance.characters[characterIndex - 1].OverworldInstance?.transform;
-                spriteRenderer.sortingOrder = MainOWCharacter.spriteRenderer.sortingOrder;
+            if (isMain) {
+                return;
             }
+            SetMovementFollowTarget();
+            spriteRenderer.sortingOrder = MainOWCharacter.spriteRenderer.sortingOrder;
+        }
+
+        private void SetMovementFollowTarget() {
+            int characterIndex = Party.Instance.characters.IndexOf(characterSO);
+            Character targetCharacter = Party.Instance.characters[characterIndex - 1];
+            (moveTo as MoveToTarget).target = targetCharacter.OverworldInstance?.transform;
         }
 
         public void OnDestroy() {
-            characterSO.OverworldInstance = (characterSO.OverworldInstance == this) ? null : characterSO.OverworldInstance;
+            if (characterSO.OverworldInstance == this) {
+                characterSO.OverworldInstance = null;
+            }
         }
 
         #region SprintCallbacks
@@ -99,17 +127,19 @@ namespace FinalInferno {
         }
 
         public void ActivatedSkill(OverworldSkill skill) {
-            if (skill == sprintSkill) {
-                float moveSpeedChange = sprintSkill?.effects[0].value1 ?? 0;
-                movable.MoveSpeed += moveSpeedChange;
+            if (skill != sprintSkill) {
+                return;
             }
+            float moveSpeedChange = sprintSkill?.effects[0].value1 ?? 0;
+            movable.MoveSpeed += moveSpeedChange;
         }
 
         public void DeactivatedSkill(OverworldSkill skill) {
-            if (skill == sprintSkill) {
-                float moveSpeedChange = sprintSkill?.effects[0].value1 ?? 0;
-                movable.MoveSpeed -= moveSpeedChange;
+            if (skill != sprintSkill) {
+                return;
             }
+            float moveSpeedChange = sprintSkill?.effects[0].value1 ?? 0;
+            movable.MoveSpeed -= moveSpeedChange;
         }
         #endregion
     }

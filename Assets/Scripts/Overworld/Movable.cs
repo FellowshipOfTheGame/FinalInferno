@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace FinalInferno {
     [RequireComponent(typeof(Rigidbody2D))]
@@ -8,29 +9,40 @@ namespace FinalInferno {
             get => moveSpeed;
             set => moveSpeed = Mathf.Clamp(value, 0, float.MaxValue);
         }
-        public MoveTo nextPosition;
+        [FormerlySerializedAs("nextPosition")]
+        public MoveTo moveTo;
         private bool canMove;
         public bool CanMove {
             get => canMove;
             set {
                 if (value != canMove) {
                     rigid2D.velocity = Vector2.zero;
-                    if (nextPosition != null) {
-                        if (value) {
-                            nextPosition.Activate();
-                        } else {
-                            nextPosition.Deactivate();
-                        }
-                    }
+                    SetMoveToActive(value);
                 }
                 canMove = value;
             }
         }
+
+        private void SetMoveToActive(bool value) {
+            if (moveTo == null) {
+                return;
+            }
+            if (value) {
+                moveTo.Activate();
+            } else {
+                moveTo.Deactivate();
+            }
+        }
+
         private Rigidbody2D rigid2D;
         private Animator anim;
 
         public void Reset() {
             moveSpeed = 5f;
+            ResetRigidbody();
+        }
+
+        private void ResetRigidbody() {
             Rigidbody2D rb2D = GetComponent<Rigidbody2D>();
             rb2D.bodyType = RigidbodyType2D.Kinematic;
             rb2D.sharedMaterial = null;
@@ -43,33 +55,50 @@ namespace FinalInferno {
             rb2D.gravityScale = 0f;
         }
 
-        // Salva a referencia para o rigdigbody
         private void Awake() {
-            //canMove = true;
             rigid2D = GetComponent<Rigidbody2D>();
             anim = GetComponent<Animator>();
         }
 
-        // Atualiza a velocidade atual de acordo com a direcao definida pelo script de MoveTo
         private void FixedUpdate() {
-            if (nextPosition != null && canMove) {
-                Vector2 direction = nextPosition.Direction();
-                // No caso da direcao ser um vetor zero ou da moveSpeed ser 0, fica parado
-                rigid2D.velocity = moveSpeed * direction;
+            if (moveTo == null || !canMove) {
+                return;
             }
-            if (anim != null) {
-                // TO DO Setar umas propriedades e usar o update para pegar as informações e atualizar o animator
-                anim.SetBool("moving", rigid2D.velocity != Vector2.zero);
-                anim.SetFloat("moveX", rigid2D.velocity.normalized.x);
-                anim.SetFloat("moveY", rigid2D.velocity.normalized.y);
-                if (Mathf.Abs(rigid2D.velocity.x) - Mathf.Abs(rigid2D.velocity.y) > Mathf.Epsilon) {
-                    anim.SetFloat("directionY", 0f);
-                    anim.SetFloat("directionX", rigid2D.velocity.normalized.x);
-                } else if (Mathf.Abs(rigid2D.velocity.y) - Mathf.Abs(rigid2D.velocity.x) > Mathf.Epsilon) {
-                    anim.SetFloat("directionX", 0f);
-                    anim.SetFloat("directionY", rigid2D.velocity.normalized.y);
-                }
+            Vector2 direction = moveTo.Direction();
+            rigid2D.velocity = moveSpeed * direction;
+        }
+
+        private void Update() {
+            if (anim == null) {
+                return;
             }
+            Vector2 normalizedVelocity = rigid2D.velocity.normalized;
+            SetAnimationMoveSpeed(normalizedVelocity);
+            SetAnimationDirection(normalizedVelocity);
+        }
+
+        private void SetAnimationMoveSpeed(Vector2 normalizedVelocity) {
+            anim.SetBool("moving", rigid2D.velocity != Vector2.zero);
+            anim.SetFloat("moveX", normalizedVelocity.x);
+            anim.SetFloat("moveY", normalizedVelocity.y);
+        }
+
+        private void SetAnimationDirection(Vector2 normalizedVelocity) {
+            if (HorizontalSpeedGreaterThanVertical()) {
+                anim.SetFloat("directionY", 0f);
+                anim.SetFloat("directionX", normalizedVelocity.x);
+            } else if (VerticalSpeedGreaterThanHorizontal()) {
+                anim.SetFloat("directionX", 0f);
+                anim.SetFloat("directionY", normalizedVelocity.y);
+            }
+        }
+
+        private bool HorizontalSpeedGreaterThanVertical() {
+            return Mathf.Abs(rigid2D.velocity.x) - Mathf.Abs(rigid2D.velocity.y) > Mathf.Epsilon;
+        }
+
+        private bool VerticalSpeedGreaterThanHorizontal() {
+            return Mathf.Abs(rigid2D.velocity.y) - Mathf.Abs(rigid2D.velocity.x) > Mathf.Epsilon;
         }
     }
 }
