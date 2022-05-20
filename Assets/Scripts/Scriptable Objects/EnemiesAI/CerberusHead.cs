@@ -207,7 +207,7 @@ namespace FinalInferno {
 
         protected override List<BattleUnit> GetTargets(TargetType type) {
             return type switch {
-                TargetType.Self => new List<BattleUnit>() { BattleManager.instance.currentUnit },
+                TargetType.Self => new List<BattleUnit>() { BattleManager.instance.CurrentUnit },
                 TargetType.AllLiveAllies => BattleManager.instance.GetTeam(UnitType.Enemy),
                 TargetType.AllLiveEnemies => GetTargetsPerHead(),
                 TargetType.SingleLiveAlly => new List<BattleUnit>() { GetRandomLiveAlly() },

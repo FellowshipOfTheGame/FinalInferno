@@ -12,6 +12,7 @@ namespace FinalInferno {
         private const string LevelColumnName = "Level";
         private const string RankColumnName = "Rank";
         private const string BaseExpColumnName = "XP";
+        public override UnitType UnitType => UnitType.Enemy;
         public Color dialogueColor;
         [Space(10)]
         [Header("Enemy Info")]
@@ -159,7 +160,7 @@ namespace FinalInferno {
 
         #region EnemyAI
         public virtual void AIEnemy() {
-            float relativeHP = BattleManager.instance.currentUnit.CurHP / GetAverageTeamHP();
+            float relativeHP = BattleManager.instance.CurrentUnit.CurHP / GetAverageTeamHP();
             float percentageNotDefense = Mathf.Sqrt(relativeHP) + 0.05f * relativeHP;
             Skill skill = SkillDecision(percentageNotDefense);
             BattleSkillManager.currentSkill = skill;
@@ -191,7 +192,7 @@ namespace FinalInferno {
 
         protected virtual List<BattleUnit> GetTargets(TargetType type) {
             return type switch {
-                TargetType.Self => new List<BattleUnit>() { BattleManager.instance.currentUnit },
+                TargetType.Self => new List<BattleUnit>() { BattleManager.instance.CurrentUnit },
                 TargetType.AllLiveAllies => BattleManager.instance.GetTeam(UnitType.Enemy),
                 TargetType.AllLiveEnemies => BattleManager.instance.GetTeam(UnitType.Hero),
                 TargetType.SingleLiveAlly => new List<BattleUnit>() { GetRandomLiveAlly() },

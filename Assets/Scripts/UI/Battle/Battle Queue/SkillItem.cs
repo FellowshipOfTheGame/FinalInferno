@@ -27,8 +27,8 @@ namespace FinalInferno.UI.Battle.QueueMenu {
         /// Coloca um marcador na posição da lista onde o personagem ficará quando utilizar a referente skill.
         /// </summary>
         private void StartPreview() {
-            BattleManager.instance.queue.PreviewPosition(BattleManager.instance.currentUnit.actionPoints
-                                                 + Mathf.FloorToInt((1.0f - BattleManager.instance.currentUnit.ActionCostReduction) * skill.cost));
+            BattleManager.instance.queue.PreviewPosition(BattleManager.instance.CurrentUnit.actionPoints
+                                                 + Mathf.FloorToInt((1.0f - BattleManager.instance.CurrentUnit.ActionCostReduction) * skill.cost));
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace FinalInferno.UI.Battle.QueueMenu {
 
             switch (type) {
                 case TargetType.Self:
-                    targets.Add(BattleManager.instance.currentUnit);
+                    targets.Add(BattleManager.instance.CurrentUnit);
                     break;
                 case TargetType.AllLiveAllies:
                     targets = BattleManager.instance.GetTeam(UnitType.Hero);

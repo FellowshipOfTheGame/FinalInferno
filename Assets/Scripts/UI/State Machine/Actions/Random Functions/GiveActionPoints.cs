@@ -19,7 +19,7 @@ namespace FinalInferno.UI.FSM {
                 battleUnit.battleItem.GetComponent<AxisInteractableItem>().DisableReference();
             }
 
-            BattleUnit currentUnit = BattleManager.instance.currentUnit;
+            BattleUnit currentUnit = BattleManager.instance.CurrentUnit;
             // Quando a unidade morre por usar uma skill ou status effect currentUnit==null
             if (currentUnit == null) {
                 currentUnit = BattleSkillManager.currentUser;
@@ -31,7 +31,7 @@ namespace FinalInferno.UI.FSM {
                         BattleSkillManager.currentSkill = currentUnit.Unit.attackSkill;
                     }
                     currentUnit.actionPoints += Mathf.FloorToInt(BattleSkillManager.currentSkill.cost * (1.0f - currentUnit.ActionCostReduction));
-                    BattleManager.instance.UpdateQueue(0, true);
+                    BattleManager.instance.EndTurn();
                 }
             } else {
                 Skill skillSelected = BattleSkillManager.currentSkill;

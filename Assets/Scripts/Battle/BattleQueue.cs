@@ -1,41 +1,37 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
+using System.Collections;
 
 namespace FinalInferno {
     using UI.Battle.QueueMenu;
 
-    public class BattleQueue {
+    public class BattleQueue : IEnumerable<BattleUnit> {
         private BattleQueueUI queueUI;
         private List<BattleUnit> list;
+        public int Count => list.Count;
 
-        //construtor
         public BattleQueue(BattleQueueUI ui) {
             queueUI = ui;
             list = new List<BattleUnit>();
         }
 
-        //insere uma BattleUnit na fila em ordem de actionPoints
         public void Enqueue(BattleUnit element, int additionalValue) {
             element.actionPoints += additionalValue;
-
-            int i;
-            for (i = 0; i < list.Count && element.actionPoints >= list[i].actionPoints; i++) {
-                ;
-            }
-
-            list.Insert(i, element);
-            queueUI.UpdateQueue(BattleManager.instance.currentUnit);
+            int newIndex = CalculateNewPosition(element.actionPoints);
+            list.Insert(newIndex, element);
+            queueUI.UpdateQueue(BattleManager.instance.CurrentUnit);
         }
 
-        //calcula a posição que o heroi ira entrar na fila pelo valor de actionPoints
-        public int PreviewPosition(int actionPoints) {
-            int i;
-            for (i = 0; i < list.Count && actionPoints >= list[i].actionPoints; i++) {
+        private int CalculateNewPosition(int actionPoints) {
+            int predictedIndex;
+            for (predictedIndex = 0; predictedIndex < list.Count && actionPoints >= list[predictedIndex].actionPoints; predictedIndex++)
                 ;
-            }
+            return predictedIndex;
+        }
 
-            queueUI.StartPreview(i);
-            return i;
+        public int PreviewPosition(int actionPoints) {
+            int predictedIndex = CalculateNewPosition(actionPoints);
+            queueUI.StartPreview(predictedIndex);
+            return predictedIndex;
         }
 
         public void StopPreview() {
@@ -46,57 +42,48 @@ namespace FinalInferno {
             return list.Contains(unit);
         }
 
-        //retira e retorna a proxima BattleUnit que agira no combate
         public BattleUnit Dequeue() {
-            BattleUnit bU = list[0];
-            int currentActionPoints = bU.actionPoints;
-            foreach (BattleUnit bUnit in list) {
-                bUnit.actionPoints -= currentActionPoints;
+            BattleUnit firstUnit = list[0];
+            int currentActionPoints = firstUnit.actionPoints;
+            foreach (BattleUnit battleUnit in list) {
+                battleUnit.actionPoints -= currentActionPoints;
             }
             list.RemoveAt(0);
-
-            queueUI.UpdateQueue(bU);
-            return bU;
+            queueUI.UpdateQueue(firstUnit);
+            return firstUnit;
         }
 
-        //retorna a BattleUnit da fila na posicao desejada
         public BattleUnit Peek(int position) {
-            if (list.Count == 0) {
-                Debug.Log("Queue is empty.");
-                return null;
-            } else {
-                return list[position];
-            }
+            return list.Count > 0 && position >= 0 && position < list.Count ? list[position] : null;
         }
 
         public void Remove(BattleUnit unit) {
             list.Remove(unit);
-            queueUI.UpdateQueue(BattleManager.instance.currentUnit);
+            queueUI.UpdateQueue(BattleManager.instance.CurrentUnit);
         }
 
-        //esvazia a fila
         public void Clear() {
             list.Clear();
-            queueUI.UpdateQueue(BattleManager.instance.currentUnit);
+            queueUI.UpdateQueue(BattleManager.instance.CurrentUnit);
         }
 
         public void Sort() {
             list.Sort(CompareUnits);
-            queueUI.UpdateQueue(BattleManager.instance.currentUnit);
+            queueUI.UpdateQueue(BattleManager.instance.CurrentUnit);
         }
 
-        private int CompareUnits(BattleUnit x, BattleUnit y) {
-            if (x.actionPoints == y.actionPoints) {
-                return y.curSpeed - x.curSpeed;
-            }
-            return x.actionPoints - y.actionPoints;
+        private int CompareUnits(BattleUnit first, BattleUnit second) {
+            if (first.actionPoints == second.actionPoints)
+                return second.curSpeed - first.curSpeed;
+            return first.actionPoints - second.actionPoints;
         }
-
-        //retorna a quantidade de BattleUnit na fila
-        public int Count => list.Count;
 
         public IEnumerator<BattleUnit> GetEnumerator() {
-            return list.GetEnumerator();
+            return ((IEnumerable<BattleUnit>)list).GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() {
+            return ((IEnumerable)list).GetEnumerator();
         }
 
         public BattleUnit[] ToArray() {

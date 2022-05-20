@@ -39,6 +39,7 @@ namespace FinalInferno {
             }
         }
         public override bool IsHero => true;
+        public override UnitType UnitType => UnitType.Hero;
 
         #region IDatabaseItem
         public void LoadTables() {

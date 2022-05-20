@@ -16,7 +16,7 @@ namespace FinalInferno.UI.FSM {
         /// </summary>
         /// <param name="controller"> O controlador da máquina de estados. </param>
         public override bool Decide(StateController controller) {
-            return (canAct == BattleManager.instance.currentUnit.CanAct);
+            return (canAct == BattleManager.instance.CurrentUnit.CanAct);
         }
 
     }

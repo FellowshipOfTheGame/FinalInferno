@@ -13,10 +13,8 @@ namespace FinalInferno {
         }
 
         public void AddApendage(BattleUnit newAppendage) {
-            // Garante que não seja possivel adicionar o mesmo elemento 2 vezes
-            if (!appendages.Contains(newAppendage)) {
+            if (!appendages.Contains(newAppendage))
                 appendages.Add(newAppendage);
-            }
         }
 
         public void RemoveAppendage(BattleUnit appendage) {
@@ -25,22 +23,21 @@ namespace FinalInferno {
 
         // Precisa se certificar que isso vai ser chamado depois do Setup dos UnitItem.cs
         public void Setup() {
-            // Remove os listeners de movimento padrão e faz com que todas as unidades se movam juntas
-            thisUnit.OnTurnStart.RemoveAllListeners();
-            thisUnit.OnTurnStart.AddListener(StepForward);
-            thisUnit.OnTurnEnd.RemoveAllListeners();
-            thisUnit.OnTurnEnd.AddListener(StepBack);
+            OverrideTurnCallbacks(thisUnit);
             foreach (BattleUnit appendage in appendages) {
                 appendage.transform.position = transform.position;
-                appendage.OnTurnStart.RemoveAllListeners();
-                appendage.OnTurnStart.AddListener(StepForward);
-                appendage.OnTurnEnd.RemoveAllListeners();
-                appendage.OnTurnEnd.AddListener(StepBack);
+                OverrideTurnCallbacks(appendage);
             }
         }
 
+        private void OverrideTurnCallbacks(BattleUnit battleUnit) {
+            battleUnit.OnTurnStart.RemoveAllListeners();
+            battleUnit.OnTurnStart.AddListener(StepForward);
+            battleUnit.OnTurnEnd.RemoveAllListeners();
+            battleUnit.OnTurnEnd.AddListener(StepBack);
+        }
+
         public void StepForward(BattleUnit unit) {
-            // Debug.Log($"composite unit {unit} stepped forward");
             thisUnit.battleItem.StepForward(thisUnit);
             foreach (BattleUnit appendage in appendages) {
                 appendage.battleItem.StepForward(appendage);
@@ -48,7 +45,6 @@ namespace FinalInferno {
         }
 
         public void StepBack(BattleUnit unit) {
-            // Debug.Log($"composite unit {unit} stepped back");
             thisUnit.battleItem.StepBack(thisUnit);
             foreach (BattleUnit appendage in appendages) {
                 appendage.battleItem.StepBack(appendage);

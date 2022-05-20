@@ -33,12 +33,12 @@ namespace FinalInferno.UI.FSM {
                     break;
                 case TargetType.AllDeadAllies:
                 case TargetType.SingleDeadAlly:
-                    List<BattleUnit> deadAllies = BattleManager.instance.GetTeam(BattleManager.instance.currentUnit, true, true);
+                    List<BattleUnit> deadAllies = BattleManager.instance.GetTeam(BattleManager.instance.CurrentUnit, true, true);
                     hasValidTargets = deadAllies.Count > 0;
                     break;
                 case TargetType.AllDeadEnemies:
                 case TargetType.SingleDeadEnemy:
-                    List<BattleUnit> deadEnemies = BattleManager.instance.GetEnemies(BattleManager.instance.currentUnit, true, true);
+                    List<BattleUnit> deadEnemies = BattleManager.instance.GetEnemies(BattleManager.instance.CurrentUnit, true, true);
                     hasValidTargets = deadEnemies.Count > 0;
                     break;
             }
