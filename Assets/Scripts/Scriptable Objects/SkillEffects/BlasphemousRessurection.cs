@@ -26,7 +26,7 @@ namespace FinalInferno {
                 return;
             }
             GameObject obj = Instantiate(visualEffect, user.transform);
-            obj.GetComponent<SkillVFX>().SetTarget(user, true);
+            obj.GetComponent<SkillVFX>().SetTargetCallback(user);
         }
     }
 }

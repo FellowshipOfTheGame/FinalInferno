@@ -10,83 +10,77 @@ namespace FinalInferno {
             ShowOldest,
             ShowNewest
         }
+        private const string TurnsLeftAnimString = "turnsLeft";
+        private const string ApplyAnimString = "Apply";
+        private const string UpdateAnimString = "Update";
+        private const string RemoveAnimString = "Remove";
+        private const string ResetAnimString = "Reset";
         [SerializeField] private TurnBehaviour visualBehaviour = TurnBehaviour.ShowLongest;
         public TurnBehaviour VisualBehaviour => visualBehaviour;
         [Tooltip("If the value is set to Default, the position is not changed, otherwise, it will be set to the selected position automatically")]
-        [SerializeField] private SkillVFX.TargetPosition position = SkillVFX.TargetPosition.Default;
-        public SkillVFX.TargetPosition Position => position;
-        // Ideia temporariamente descartada, não sei como fazer na maquina de estados
-        // [Tooltip("Should the remove animation be displayed whenever an effect ends even if a similar one is still in effect?")]
-        // [SerializeField] private bool alwaysShowRemove = false;
-        // public bool AlwaysShowRemove { get => alwaysShowRemove; }
-
+        [SerializeField] private TargetPosition position = TargetPosition.Default;
+        public TargetPosition Position => position;
         private List<ParticleSystem> particleSystems;
-        // Referencias para os componentes que precisam ser encontradas muitas vezes
-        // A propriedade é usada para garantir que só vai chamar getcomponent uma vez
-        private Animator anim = null;
-        private Animator Anim {
-            get {
-                if (anim == null) {
-                    anim = GetComponent<Animator>();
-                }
-                return anim;
-            }
-        }
-        private SpriteRenderer sr = null;
-        private SpriteRenderer SRenderer {
-            get {
-                if (sr == null) {
-                    sr = GetComponent<SpriteRenderer>();
-                }
-                return sr;
-            }
-        }
 
         private bool hidden = true;
 
-        // As propriedades são usadas para só precisar procurar uma vez se o parametro existe
+        private Animator anim = null;
+        private Animator Anim {
+            get {
+                anim = this.GetComponentIfNull(anim);
+                return anim;
+            }
+        }
+        private SpriteRenderer spriteRenderer = null;
+        private SpriteRenderer SpriteRenderer {
+            get {
+                spriteRenderer = this.GetComponentIfNull(spriteRenderer);
+                return spriteRenderer;
+            }
+        }
+
+        private bool AnimatorHasParameter(string parameterName) {
+            return System.Array.Find(Anim.parameters, param => param.name == parameterName) != null;
+        }
+
         private bool? hasTurnsParameter = null;
         private bool HasTurnsParameter {
             get {
-                if (hasTurnsParameter == null) {
-                    hasTurnsParameter = System.Array.Find(Anim.parameters, param => param.name == "turnsLeft") != null;
-                }
+                if (hasTurnsParameter == null)
+                    hasTurnsParameter = AnimatorHasParameter(TurnsLeftAnimString);
                 return hasTurnsParameter ?? false;
             }
         }
+
         private bool? hasApplyTrigger = null;
         private bool HasApplyTrigger {
             get {
-                if (hasApplyTrigger == null) {
-                    hasApplyTrigger = System.Array.Find(Anim.parameters, param => param.name == "Apply") != null;
-                }
+                if (hasApplyTrigger == null)
+                    hasApplyTrigger = AnimatorHasParameter(ApplyAnimString);
                 return hasApplyTrigger ?? false;
             }
         }
         private bool? hasUpdateTrigger = null;
         private bool HasUpdateTrigger {
             get {
-                if (hasUpdateTrigger == null) {
-                    hasUpdateTrigger = System.Array.Find(Anim.parameters, param => param.name == "Update") != null;
-                }
+                if (hasUpdateTrigger == null)
+                    hasApplyTrigger = AnimatorHasParameter(UpdateAnimString);
                 return hasUpdateTrigger ?? false;
             }
         }
         private bool? hasRemoveTrigger = null;
         private bool HasRemoveTrigger {
             get {
-                if (hasRemoveTrigger == null) {
-                    hasRemoveTrigger = System.Array.Find(Anim.parameters, param => param.name == "Remove") != null;
-                }
+                if (hasRemoveTrigger == null)
+                    hasApplyTrigger = AnimatorHasParameter(RemoveAnimString);
                 return hasRemoveTrigger ?? false;
             }
         }
         private bool? hasResetTrigger = null;
         private bool HasResetTrigger {
             get {
-                if (hasResetTrigger == null) {
-                    hasResetTrigger = System.Array.Find(Anim.parameters, param => param.name == "Reset") != null;
-                }
+                if (hasResetTrigger == null)
+                    hasApplyTrigger = AnimatorHasParameter(ResetAnimString);
                 return hasResetTrigger ?? false;
             }
         }
@@ -94,75 +88,68 @@ namespace FinalInferno {
         public int TurnsLeft {
             get => turnsLeft;
             set {
-                if (HasTurnsParameter) {
-                    Anim.SetInteger("turnsLeft", value);
-                }
+                if (HasTurnsParameter)
+                    Anim.SetInteger(TurnsLeftAnimString, value);
                 turnsLeft = value;
             }
         }
 
         public void Awake() {
             hidden = true;
-            SRenderer.enabled = !hidden;
+            SpriteRenderer.enabled = false;
             particleSystems = new List<ParticleSystem>(GetComponentsInChildren<ParticleSystem>(true));
         }
 
         public void UpdatePosition(BattleUnit unit) {
             switch (position) {
-                case SkillVFX.TargetPosition.Feet:
+                case TargetPosition.Feet:
                     transform.position = unit.transform.position + new Vector3(unit.FeetPosition.x, unit.FeetPosition.y);
                     break;
-                case SkillVFX.TargetPosition.Torso:
+                case TargetPosition.Torso:
                     transform.position = unit.transform.position + new Vector3(unit.TorsoPosition.x, unit.TorsoPosition.y);
                     break;
-                case SkillVFX.TargetPosition.Head:
+                case TargetPosition.Head:
                     transform.position = unit.transform.position + new Vector3(unit.HeadPosition.x, unit.HeadPosition.y);
                     break;
-                case SkillVFX.TargetPosition.Overhead:
+                case TargetPosition.Overhead:
                     transform.position = unit.transform.position + new Vector3(unit.OverheadPosition.x, unit.OverheadPosition.y);
                     break;
             }
         }
 
-        // Deixa o efeito visivel
         public void Show() {
+            if (hidden)
+                return;
             hidden = false;
-            SRenderer.enabled = true;
+            SpriteRenderer.enabled = true;
         }
 
-        // Esconde o efeito visual
         public void Hide() {
+            if (!hidden)
+                return;
             hidden = true;
-            SRenderer.enabled = false;
+            SpriteRenderer.enabled = false;
             StopAllParticles();
         }
 
         public void UpdateTrigger() {
-            if (HasUpdateTrigger) {
-                Debug.Log("Chamou o trigger de animação Update");
-                Anim.SetTrigger("Update");
-            }
+            if (HasUpdateTrigger)
+                Anim.SetTrigger(UpdateAnimString);
         }
 
         public void ApplyTrigger() {
-            if (HasApplyTrigger) {
-                Debug.Log("Chamou o trigger de animação Apply");
-                Anim.SetTrigger("Apply");
-            }
+            if (HasApplyTrigger)
+                Anim.SetTrigger(ApplyAnimString);
         }
 
         public void ResetTrigger() {
-            if (HasResetTrigger) {
-                Debug.Log("Chamou o trigger de animação Reset");
-                Anim.SetTrigger("Reset");
-            }
+            if (HasResetTrigger)
+                Anim.SetTrigger(ResetAnimString);
         }
 
         public void RemoveTrigger() {
-            if (HasRemoveTrigger) {
-                Debug.Log("Chamou o trigger de animação Remove");
-                Anim.SetTrigger("Remove");
-            }
+            if (HasRemoveTrigger)
+                Anim.SetTrigger(RemoveAnimString);
         }
 
         private void StartAllParticles() {

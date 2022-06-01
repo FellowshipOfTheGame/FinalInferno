@@ -37,7 +37,7 @@ namespace FinalInferno {
             if (!visualEffect)
                 return;
             GameObject obj = Instantiate(visualEffect, herman.transform);
-            obj.GetComponent<SkillVFX>().SetTarget(herman, true);
+            obj.GetComponent<SkillVFX>().SetTargetCallback(herman);
         }
 
         public void PayHerman(BattleUnit target, List<BattleUnit> units, bool shouldOverride1 = false, float val1 = 0f, bool shouldOverride2 = false, float val2 = 0f) {

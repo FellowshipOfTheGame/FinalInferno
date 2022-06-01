@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1595625757440726648}
   - component: {fileID: 748771363260142357}
   - component: {fileID: 1389138768172062512}
-  - component: {fileID: 7043144666623377733}
   - component: {fileID: 133705719631791967}
   m_Layer: 0
   m_Name: PromisseOfRiches
@@ -49,6 +48,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -60,6 +61,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -115,15 +117,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPosition: 1
+  src: {fileID: 133705719631791967}
+  clip: {fileID: 8300000, guid: 0166f8dcec94f20419894815b886e13e, type: 3}
   forceCallback: 0
---- !u!222 &7043144666623377733
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 552734591061099818}
-  m_CullTransparentMesh: 0
 --- !u!82 &133705719631791967
 AudioSource:
   m_ObjectHideFlags: 0

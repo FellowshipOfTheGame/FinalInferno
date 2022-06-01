@@ -4,6 +4,7 @@ namespace FinalInferno {
     public class DrainingSpeed : StatusEffect {
         public override StatusType Type => StatusType.Buff;
         public override float Value => spdValue;
+        public override StatusEffectVisuals VFXID => StatusEffectVisuals.DrainingSpeed;
         private int spdValue;
         private float multiplier;
 

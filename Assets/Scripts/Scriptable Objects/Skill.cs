@@ -121,7 +121,7 @@ namespace FinalInferno {
             if (!visualEffect)
                 return;
             GameObject obj = GameObject.Instantiate(visualEffect, target.transform);
-            obj.GetComponent<SkillVFX>().SetTarget(target, true);
+            obj.GetComponent<SkillVFX>().SetTargetCallback(target);
         }
 
         protected virtual void ApplyAllSkillEffects(BattleUnit user, BattleUnit target, bool shouldOverride1, float value1, bool shouldOverride2, float value2) {

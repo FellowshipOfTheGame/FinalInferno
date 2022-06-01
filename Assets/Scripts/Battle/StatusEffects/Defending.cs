@@ -4,6 +4,7 @@ namespace FinalInferno {
     public class Defending : StatusEffect {
         public override StatusType Type => StatusType.None;
         public override float Value => defValue;
+        public override StatusEffectVisuals VFXID => StatusEffectVisuals.Defending;
         private int defValue;
         private int resValue;
 

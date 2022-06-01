@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7660585946427505686}
   - component: {fileID: 8507080820199389563}
   - component: {fileID: 8010818661017222494}
-  - component: {fileID: 5922425078303412853}
   - component: {fileID: 7590090057568494885}
   m_Layer: 0
   m_Name: Paralyze
@@ -49,6 +48,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -60,6 +61,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -115,15 +117,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPosition: 0
+  src: {fileID: 7590090057568494885}
+  clip: {fileID: 8300000, guid: 0df7f9a95654cf34985e610440426541, type: 3}
   forceCallback: 0
---- !u!222 &5922425078303412853
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8917310150857617220}
-  m_CullTransparentMesh: 0
 --- !u!82 &7590090057568494885
 AudioSource:
   m_ObjectHideFlags: 0

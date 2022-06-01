@@ -71,9 +71,11 @@ namespace FinalInferno {
         private bool hasGhostAnim = false;
         public bool Ghost {
             set {
-                if (value && CurHP <= 0 && hasGhostAnim) {
+                if (!hasGhostAnim)
+                    return;
+                if (value && CurHP <= 0) {
                     animator.SetBool(GhostAnimString, true);
-                } else if (!value && hasGhostAnim) {
+                } else if (!value) {
                     animator.SetBool(GhostAnimString, false);
                 }
             }
@@ -140,7 +142,7 @@ namespace FinalInferno {
                 Unit.BodyPosition.Torso => TorsoPosition,
                 Unit.BodyPosition.Head => HeadPosition,
                 Unit.BodyPosition.Overhead => OverheadPosition,
-                _ => throw new System.NotImplementedException()
+                _ => TorsoPosition
             };
         }
 
@@ -295,7 +297,8 @@ namespace FinalInferno {
         public void UpdateStatusEffects() {
             bool deadUnit = CurHP <= 0;
             foreach (StatusEffect effect in effects.ToArray()) {
-                if (!effect.Update())
+                effect.Update();
+                if (!effect.Removed)
                     statusEffectHandler.UpdateEffect(effect);
             }
             statusEffectHandler.ApplyChanges();
@@ -389,8 +392,8 @@ namespace FinalInferno {
             if (CurHP <= 0) {
                 Kill();
             } else if (OnHeal != null && damage < 0) {
-                List<BattleUnit> aux = new List<BattleUnit> { this };
-                OnHeal(healer, aux, true, -damage);
+                List<BattleUnit> targetList = new List<BattleUnit> { this };
+                OnHeal(healer, targetList, true, -damage);
             }
         }
 
@@ -430,8 +433,8 @@ namespace FinalInferno {
             if (CurHP <= 0) {
                 Kill();
             } else if (OnTakeDamage != null && damage > 0) {
-                List<BattleUnit> aux = new List<BattleUnit> { this };
-                OnTakeDamage(attacker, aux, true, damage, true, (int)element);
+                List<BattleUnit> targetList = new List<BattleUnit> { this };
+                OnTakeDamage(attacker, targetList, true, damage, true, (int)element);
             }
         }
 
@@ -442,7 +445,6 @@ namespace FinalInferno {
             stuns = 0;
             PlayCryIfEnemy();
             BattleManager.instance.Kill(this);
-            // Se houver algum callback de morte que, por exemplo, ressucita a unidade ele já vai ter sido chamado aqui
         }
 
         private void RemoveStatusEffects() {

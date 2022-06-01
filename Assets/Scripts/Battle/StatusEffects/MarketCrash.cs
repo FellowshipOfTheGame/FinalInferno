@@ -57,7 +57,8 @@ namespace FinalInferno {
         public override void Remove() {
             Target.healResistance -= currentReduction;
             Source.damageResistance = 0f;
-            base.Remove();
+            Source.RemoveEffect(this);
+            Removed = true;
         }
     }
 }

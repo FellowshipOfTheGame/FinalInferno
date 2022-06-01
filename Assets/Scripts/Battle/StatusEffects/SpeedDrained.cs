@@ -4,6 +4,7 @@ namespace FinalInferno {
     public class SpeedDrained : StatusEffect {
         public override StatusType Type => StatusType.Debuff;
         public override float Value => spdValue;
+        public override StatusEffectVisuals VFXID => StatusEffectVisuals.SpeedDrained;
         private int spdValue;
         private float valueReceived;
 
