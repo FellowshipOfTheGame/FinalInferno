@@ -9,7 +9,7 @@ namespace FinalInferno {
 
         public override void Apply(BattleUnit source, BattleUnit target) {
             if (DebuffDuration < 0) {
-                target.curDmg -= (int)(DmgDownMultiplier * target.curDmg);
+                target.CurDmg -= (int)(DmgDownMultiplier * target.CurDmg);
             } else {
                 target.AddEffect(new DamageDown(source, target, DmgDownMultiplier, DebuffDuration));
             }

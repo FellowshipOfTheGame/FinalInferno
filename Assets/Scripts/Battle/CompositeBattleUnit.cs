@@ -5,7 +5,6 @@ namespace FinalInferno {
     [RequireComponent(typeof(BattleUnit))]
     public class CompositeBattleUnit : MonoBehaviour {
         private BattleUnit thisUnit;
-        private bool alreadySetup = false;
         [SerializeField] private List<BattleUnit> appendages = new List<BattleUnit>();
 
         private void Awake() {

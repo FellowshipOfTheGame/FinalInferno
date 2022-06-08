@@ -8,10 +8,9 @@ namespace FinalInferno {
         private int dmgValue;
         private float valueReceived;
 
-        public DamageUpExponential(BattleUnit src, BattleUnit trgt, float value, int dur = 1, bool force = false) {
-            if (dur < 0) {
+        public DamageUpExponential(BattleUnit src, BattleUnit trgt, float value, int dur, bool force = false) {
+            if (dur < 0)
                 dur = int.MinValue;
-            }
 
             Duration = dur;
             TurnsLeft = Duration;
@@ -27,23 +26,25 @@ namespace FinalInferno {
         }
 
         public override void Amplify(float modifier) {
-            Target.curDmg -= dmgValue;
+            Target.CurDmg -= dmgValue;
             dmgValue = Mathf.Max(Mathf.FloorToInt(dmgValue * modifier), 1);
-            Target.curDmg += dmgValue;
-
+            Target.CurDmg += dmgValue;
             valueReceived *= modifier;
         }
 
         public override bool Apply(bool force = false) {
             // Esse status effect não pode ser aplicado mais de uma vez
-            if (!base.Apply(force) || Target.effects.Find(effect => effect.GetType() == typeof(DamageUpExponential)) != null) {
+            if (!base.Apply(force) || TargetHasEffectOfType(typeof(DamageUpExponential)))
                 return false;
-            }
 
-            int increment = Mathf.Max(Mathf.FloorToInt(Target.curDmg * valueReceived), 1);
-            dmgValue += increment;
-            Target.curDmg += dmgValue;
+            IncreaseTargetCurrentDamage();
             return true;
+        }
+
+        private void IncreaseTargetCurrentDamage() {
+            int increment = Mathf.Max(Mathf.FloorToInt(Target.CurDmg * valueReceived), 1);
+            dmgValue += increment;
+            Target.CurDmg += increment;
         }
 
         public override bool Update() {
@@ -51,14 +52,12 @@ namespace FinalInferno {
                 return true;
             }
 
-            int increment = Mathf.Max(Mathf.FloorToInt(Target.curDmg * valueReceived), 1);
-            dmgValue += increment;
-            Target.curDmg += increment;
+            IncreaseTargetCurrentDamage();
             return false;
         }
 
         public override void Remove() {
-            Target.curDmg -= dmgValue;
+            Target.CurDmg -= dmgValue;
             base.Remove();
         }
     }

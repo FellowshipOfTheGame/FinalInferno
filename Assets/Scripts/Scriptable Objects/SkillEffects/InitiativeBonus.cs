@@ -18,7 +18,7 @@ namespace FinalInferno {
         public override void Apply(BattleUnit source, BattleUnit target) {
             target.actionPoints -= Mathf.FloorToInt(AbsolutePointReduction);
             if (SpeedPercentagePointReduction > float.Epsilon || SpeedPercentagePointReduction < -float.Epsilon) {
-                float absoluteVariation = Mathf.Abs(SpeedPercentagePointReduction) * target.curSpeed;
+                float absoluteVariation = Mathf.Abs(SpeedPercentagePointReduction) * target.CurSpeed;
                 float variation = CalculateNormalizedVariation(absoluteVariation);
 
                 if (SpeedPercentagePointReduction > float.Epsilon) {

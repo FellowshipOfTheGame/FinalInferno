@@ -10,7 +10,7 @@ namespace FinalInferno {
             Enemy sourceAsEnemy = source.Unit as Enemy;
             DamageType dmgType = sourceAsEnemy ? sourceAsEnemy.DamageFocus : DamageType.None;
             Element element = sourceAsEnemy ? sourceAsEnemy.Element : Element.Neutral;
-            target.TakeDamage(source.curDmg, DmgMultiplier, dmgType, element, source);
+            target.TakeDamage(source.CurDmg, DmgMultiplier, dmgType, element, source);
         }
     }
 }

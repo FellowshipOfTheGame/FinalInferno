@@ -7,7 +7,7 @@ namespace FinalInferno {
         public override StatusType Type => StatusType.Undesirable;
         public override float Value => Duration;
 
-        public Bribed(BattleUnit src, BattleUnit trgt, float value, int dur = 1, bool force = false) {
+        public Bribed(BattleUnit src, BattleUnit trgt, float value, int dur, bool force = false) {
             if (dur < 0)
                 dur = int.MinValue;
             Duration = dur;
@@ -33,23 +33,19 @@ namespace FinalInferno {
             if (base.Update())
                 return true;
 
-            if (IsFirstEffectInList())
+            if (IsFirstEffectInTargetList(typeof(Bribed)))
                 AttackAlliesWithDmgNerf();
             return false;
-        }
-
-        private bool IsFirstEffectInList() {
-            return Target.effects.Find(effect => effect.GetType() == typeof(Bribed)) == this;
         }
 
         private void AttackAlliesWithDmgNerf() {
             Target.SkillSelected();
             List<BattleUnit> allies = BattleManager.instance.GetTeam(Target);
             int teamSize = BattleManager.instance.GetTeam(Target, true).Count;
-            int dmgDecrease = Mathf.FloorToInt((teamSize - 1) / (float)teamSize * Target.curDmg);
-            Target.curDmg -= dmgDecrease;
+            int dmgDecrease = Mathf.FloorToInt((teamSize - 1) / (float)teamSize * Target.CurDmg);
+            Target.CurDmg -= dmgDecrease;
             Target.Unit.attackSkill.UseCallbackOrDelayed(Target, allies);
-            Target.curDmg += dmgDecrease;
+            Target.CurDmg += dmgDecrease;
         }
 
         public override void Remove() {

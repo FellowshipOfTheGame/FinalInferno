@@ -47,6 +47,18 @@ namespace FinalInferno {
             Remove();
         }
 
+        protected bool IsFirstEffectInTargetList(System.Type searchedType) {
+            return Target.effects.Find(effect => effect.GetType() == searchedType) == this;
+        }
+
+        protected bool TargetHasEffectOfType(System.Type searchedType) {
+            return Target.effects.Find(effect => effect.GetType() == searchedType) != null;
+        }
+
+        protected bool SourceHasEffectOfType(System.Type searchedType) {
+            return Source.effects.Find(effect => effect.GetType() == searchedType) != null;
+        }
+
         public virtual bool Update() { // Retorna true quando o status effect foi removido
             if (TurnsLeft == int.MinValue)
                 return false;

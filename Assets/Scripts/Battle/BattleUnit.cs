@@ -22,14 +22,18 @@ namespace FinalInferno {
         [Header("Battle Info")]
         private int curHP;
         public int CurHP { get => curHP; private set => curHP = Mathf.Clamp(value, 0, MaxHP); }
-        public int curDmg;
-        public int curDef;
-        public int curMagicDef;
-        public int curSpeed;
+        [SerializeField] private int curDmg;
+        public int CurDmg { get => Mathf.Clamp(curDmg, 0, Unit.maxStatValue); set => curDmg = value; }
+        [SerializeField] private int curDef;
+        public int CurDef { get => Mathf.Clamp(curDef, 0, Unit.maxStatValue); set => curDef = value; }
+        [SerializeField] private int curMagicDef;
+        public int CurMagicDef { get => Mathf.Clamp(curMagicDef, 0, Unit.maxStatValue); set => curMagicDef = value; }
+        [SerializeField] private int curSpeed;
+        public int CurSpeed { get => Mathf.Clamp(curSpeed, 0, Unit.maxStatValue); set => curSpeed = value; }
         public float ActionCostReduction {
             get {
                 float maxReduction = 0.75f;
-                return Mathf.Clamp(maxReduction * (curSpeed / (Unit.maxStatValue * 1.0f)), 0.0f, maxReduction);
+                return Mathf.Clamp(maxReduction * (CurSpeed / (Unit.maxStatValue * 1.0f)), 0.0f, maxReduction);
             }
         }
         public int actionPoints;
@@ -38,8 +42,10 @@ namespace FinalInferno {
         public bool CanAct => CurHP > 0 && stuns <= 0;
         public float aggro = 0f;
         public float statusResistance = 0f;
-        public float damageResistance = 0f;
-        public float healResistance = 0f;
+        [SerializeField] private float damageResistance = 0f;
+        public float DamageResistance { get => Mathf.Clamp(damageResistance, -1f, 1f); set => damageResistance = value; }
+        [SerializeField] private float healResistance = 0f;
+        public float HealResistance { get => Mathf.Clamp(healResistance, -1f, 1f); set => healResistance = value; }
         private Dictionary<Element, float> elementalResistances = new Dictionary<Element, float>();
         public List<StatusEffect> effects;
         private List<Skill> activeSkills;
@@ -373,14 +379,13 @@ namespace FinalInferno {
         }
 
         private int CalculateHealDamage(int atk, float multiplier) {
-            // healResistance pode ser usado para amplificar cura
-            return Mathf.FloorToInt(atk * -multiplier * Mathf.Clamp(1.0f - healResistance, -1.0f, 1.0f));
+            return Mathf.FloorToInt(atk * -multiplier * (1.0f - HealResistance));
         }
 
         private void ShowHealEffects(int damage) {
             if (damage > 0)
                 animator.SetTrigger(TakeDamageAnimString);
-            damageIndicator.ShowDamage(Mathf.Abs(damage), damage <= 0, 1.0f - healResistance);
+            damageIndicator.ShowDamage(Mathf.Abs(damage), damage <= 0, 1.0f - HealResistance);
         }
 
         private void ApplyHealAggro(BattleUnit healer, int damage) {
@@ -411,10 +416,9 @@ namespace FinalInferno {
         }
 
         private int CalculateDamage(int atk, float multiplier, DamageType type, Element element) {
-            float atkDifference = atk - ((type == DamageType.Physical) ? curDef : ((type == DamageType.Magical) ? curMagicDef : 0));
+            float atkDifference = atk - ((type == DamageType.Physical) ? CurDef : ((type == DamageType.Magical) ? CurMagicDef : 0));
             atkDifference = Mathf.Max(atkDifference, 1);
-            // damageResistance nao pode amplificar o dano ainda por conta da maneira que iria interagir com a resistencia elemental
-            int damage = Mathf.FloorToInt(atkDifference * multiplier * elementalResistances[element] * Mathf.Clamp(1.0f - damageResistance, 0.0f, 1.0f));
+            int damage = Mathf.FloorToInt(atkDifference * multiplier * elementalResistances[element] * (1.0f - DamageResistance));
             return damage;
         }
 
@@ -466,6 +470,7 @@ namespace FinalInferno {
                 return;
             curHP = 1;
             animator.SetBool(IsDeadAnimString, false);
+            Ghost = false;
             BattleManager.instance.Revive(this);
         }
 

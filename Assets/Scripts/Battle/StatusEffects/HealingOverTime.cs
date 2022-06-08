@@ -8,17 +8,16 @@ namespace FinalInferno {
         private int healPerTurn;
         private float valueReceived;
 
-        public HealingOverTime(BattleUnit src, BattleUnit trgt, float value, int dur = 1, bool force = false) {
-            if (dur < 0) {
+        public HealingOverTime(BattleUnit src, BattleUnit trgt, float value, int dur, bool force = false) {
+            if (dur < 0)
                 dur = int.MinValue;
-            }
 
             Duration = dur;
             TurnsLeft = Duration;
             Target = trgt;
             Source = src;
             valueReceived = value;
-            healPerTurn = Mathf.Max(Mathf.FloorToInt(Source.curDmg * value), 1);
+            healPerTurn = Mathf.Max(Mathf.FloorToInt(Source.CurDmg * value), 1);
             Failed = !Apply(force);
         }
 
@@ -31,12 +30,11 @@ namespace FinalInferno {
         }
 
         public override bool Update() {
-            if (base.Update()) {
+            if (base.Update())
                 return true;
-            } else {
-                Target.Heal(healPerTurn, 1.0f, Source);
-                return false;
-            }
+
+            Target.Heal(healPerTurn, 1.0f, Source);
+            return false;
         }
     }
 }

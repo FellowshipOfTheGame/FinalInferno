@@ -17,7 +17,7 @@ namespace FinalInferno {
 
         public override void Apply(BattleUnit source, BattleUnit target) {
             if (DmgMultiplier != 0)
-                target.Heal(source.curDmg, DmgMultiplier, source);
+                target.Heal(source.CurDmg, DmgMultiplier, source);
 
             if (HealthPercentageHeal != 0)
                 target.Heal(target.Unit.hpMax, HealthPercentageHeal, source);

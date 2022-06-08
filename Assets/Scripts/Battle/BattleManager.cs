@@ -132,7 +132,7 @@ namespace FinalInferno {
         }
 
         private void InsertNewUnitInQueue(BattleUnit battleUnit) {
-            float relativeUnitSpeed = (battleUnit.curSpeed - MinBaseSpeed) / (MaxBaseSpeed - MinBaseSpeed);
+            float relativeUnitSpeed = (battleUnit.CurSpeed - MinBaseSpeed) / (MaxBaseSpeed - MinBaseSpeed);
             float meanSkillCost = (Skill.maxCost + Skill.baseCost) / 2.0f;
             float initiative = Mathf.Clamp(relativeUnitSpeed, 0f, 1f) * meanSkillCost;
             queue.Enqueue(battleUnit, -Mathf.FloorToInt(initiative));

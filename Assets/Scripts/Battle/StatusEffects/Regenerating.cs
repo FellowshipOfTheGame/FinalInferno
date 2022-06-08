@@ -7,11 +7,11 @@ namespace FinalInferno {
         public override float Value => Target.MaxHP * percentageGain;
         private float percentageGain;
         private Element element;
+        private int healValue = 0;
 
-        public Regenerating(BattleUnit src, BattleUnit trgt, float value, int dur = 1, bool force = false) {
-            if (dur < 0) {
+        public Regenerating(BattleUnit src, BattleUnit trgt, float value, int dur, bool force = false) {
+            if (dur < 0)
                 dur = int.MinValue;
-            }
 
             Duration = dur;
             TurnsLeft = Duration;
@@ -30,12 +30,12 @@ namespace FinalInferno {
         }
 
         public override bool Update() {
-            if (base.Update()) {
+            if (base.Update())
                 return true;
-            } else {
-                Target.Heal(Mathf.Max(Mathf.FloorToInt(Target.MaxHP * percentageGain), 1), 1.0f, Source);
-                return false;
-            }
+
+            healValue = Mathf.Max(Mathf.FloorToInt(Target.MaxHP * percentageGain), 1);
+            Target.Heal(healValue, 1.0f, Source);
+            return false;
         }
     }
 }

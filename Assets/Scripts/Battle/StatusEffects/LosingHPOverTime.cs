@@ -7,11 +7,11 @@ namespace FinalInferno {
         public override float Value => Target.MaxHP * percentageLoss;
         private float percentageLoss;
         private Element element;
+        private int damageDealt = 0;
 
-        public LosingHPOverTime(BattleUnit src, BattleUnit trgt, float value, Element elemnt, int dur = 1, bool force = false) {
-            if (dur < 0) {
+        public LosingHPOverTime(BattleUnit src, BattleUnit trgt, float value, Element elemnt, int dur, bool force = false) {
+            if (dur < 0)
                 dur = int.MinValue;
-            }
 
             Duration = dur;
             TurnsLeft = Duration;
@@ -31,12 +31,12 @@ namespace FinalInferno {
         }
 
         public override bool Update() {
-            if (base.Update()) {
+            if (base.Update())
                 return true;
-            } else {
-                Target.TakeDamage(Mathf.Max(Mathf.FloorToInt(Target.MaxHP * percentageLoss), 1), 1.0f, DamageType.None, element, Source);
-                return false;
-            }
+
+            damageDealt = Mathf.Max(Mathf.FloorToInt(Target.MaxHP * percentageLoss), 1);
+            Target.TakeDamage(damageDealt, 1.0f, DamageType.None, element, Source);
+            return false;
         }
     }
 }

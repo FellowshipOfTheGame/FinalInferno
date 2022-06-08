@@ -15,7 +15,7 @@ namespace FinalInferno {
         };
         public override string Description => $"Deals {DmgMultiplier}x {DmgTypeString} physical damage";
         public override void Apply(BattleUnit source, BattleUnit target) {
-            target.TakeDamage(source.curDmg, DmgMultiplier, DamageType.Physical, DmgElement, source);
+            target.TakeDamage(source.CurDmg, DmgMultiplier, DamageType.Physical, DmgElement, source);
         }
     }
 }

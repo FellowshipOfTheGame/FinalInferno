@@ -8,10 +8,9 @@ namespace FinalInferno {
         private int dmgValue;
         private float valueReceived;
 
-        public DamageDownExponential(BattleUnit src, BattleUnit trgt, float value, int dur = 1, bool force = false) {
-            if (dur < 0) {
+        public DamageDownExponential(BattleUnit src, BattleUnit trgt, float value, int dur, bool force = false) {
+            if (dur < 0)
                 dur = int.MinValue;
-            }
 
             Duration = dur;
             TurnsLeft = Duration;
@@ -27,38 +26,36 @@ namespace FinalInferno {
         }
 
         public override void Amplify(float modifier) {
-            Target.curDmg += dmgValue;
+            Target.CurDmg += dmgValue;
             dmgValue = Mathf.Max(Mathf.FloorToInt(dmgValue * modifier), 1);
-            Target.curDmg -= dmgValue;
-
+            Target.CurDmg -= dmgValue;
             valueReceived *= modifier;
         }
 
         public override bool Apply(bool force = false) {
-            // Esse status effect não pode ser aplicado mais de uma vez
-            if (!base.Apply(force) || Target.effects.Find(effect => effect.GetType() == typeof(DamageDownExponential)) != null) {
+            if (!base.Apply(force) || TargetHasEffectOfType(typeof(DamageDownExponential)))
                 return false;
-            }
 
-            int decrement = Mathf.Max(Mathf.FloorToInt(Target.curDmg * valueReceived), 1);
-            dmgValue += decrement;
-            Target.curDmg -= dmgValue;
+            ReduceTargetCurrentDamage();
             return true;
         }
 
-        public override bool Update() {
-            if (base.Update()) {
-                return true;
-            }
-
-            int decrement = Mathf.Max(Mathf.FloorToInt(Target.curDmg * valueReceived), 1);
+        private void ReduceTargetCurrentDamage() {
+            int decrement = Mathf.Max(Mathf.FloorToInt(Target.CurDmg * valueReceived), 1);
             dmgValue += decrement;
-            Target.curDmg -= decrement;
+            Target.CurDmg -= decrement;
+        }
+
+        public override bool Update() {
+            if (base.Update())
+                return true;
+
+            ReduceTargetCurrentDamage();
             return false;
         }
 
         public override void Remove() {
-            Target.curDmg += dmgValue;
+            Target.CurDmg += dmgValue;
             base.Remove();
         }
     }

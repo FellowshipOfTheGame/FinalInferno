@@ -28,7 +28,6 @@ namespace FinalInferno {
             public string BundleName => bundleName;
             // Dicionario carregado em runtime para acesso rapido
             private Dictionary<string, T> dict = new Dictionary<string, T>();
-            private bool loaded = false;
 
             public Bundle() {
                 bundleName = typeof(T).Name.ToLower();

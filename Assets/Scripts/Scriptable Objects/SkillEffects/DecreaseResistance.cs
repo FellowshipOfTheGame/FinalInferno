@@ -10,7 +10,7 @@ namespace FinalInferno {
 
         public override void Apply(BattleUnit source, BattleUnit target) {
             if (DebuffDuration < 0) {
-                target.curMagicDef -= (int)(MagicDefDownMultiplier * target.curMagicDef);
+                target.CurMagicDef -= (int)(MagicDefDownMultiplier * target.CurMagicDef);
             } else {
                 target.AddEffect(new ResistanceDown(source, target, MagicDefDownMultiplier, DebuffDuration));
             }

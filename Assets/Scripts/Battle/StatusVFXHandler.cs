@@ -99,10 +99,10 @@ namespace FinalInferno {
 
         private void UpdateStatChanges() {
             // O parametro "TurnsLeft" é utilizado para indicar a variação de status
-            damageChanges.TurnsLeft = unit.curDmg - baseDamage;
-            defenseChanges.TurnsLeft = unit.curDef - baseDefense;
-            resistanceChanges.TurnsLeft = unit.curMagicDef - baseResistance;
-            speedChanges.TurnsLeft = unit.curSpeed - baseSpeed;
+            damageChanges.TurnsLeft = unit.CurDmg - baseDamage;
+            defenseChanges.TurnsLeft = unit.CurDef - baseDefense;
+            resistanceChanges.TurnsLeft = unit.CurMagicDef - baseResistance;
+            speedChanges.TurnsLeft = unit.CurSpeed - baseSpeed;
         }
 
         public void UpdateEffect(StatusEffect effect) {

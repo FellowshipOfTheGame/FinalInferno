@@ -8,20 +8,16 @@ namespace FinalInferno {
         private int spdValue;
         private float multiplier;
 
-        public DrainingSpeed(BattleUnit src, BattleUnit trgt, float value, int dur = 1, bool force = false) {
-            // src é quem drena, trgt é quem é drenado
-            // Isso conta como um buff que trgt aplica em src mesmo que src cause a aplicação do buff
-            // Target então dever ser src e Source deve ser trgt
-            if (dur < 0) {
+        public DrainingSpeed(BattleUnit unitDraining, BattleUnit unitDrained, float value, int dur, bool force = false) {
+            if (dur < 0)
                 dur = int.MinValue;
-            }
 
             Duration = dur;
             TurnsLeft = Duration;
-            Target = src;
-            Source = trgt;
+            Target = unitDraining;
+            Source = unitDrained;
             multiplier = value;
-            spdValue = Mathf.Max(Mathf.FloorToInt(Source.curSpeed * value), 1);
+            spdValue = Mathf.Max(Mathf.FloorToInt(Source.CurSpeed * value), 1);
             Failed = !Apply(force);
         }
 
@@ -30,22 +26,21 @@ namespace FinalInferno {
         }
 
         public override void Amplify(float modifier) {
-            Target.curSpeed -= spdValue;
+            Target.CurSpeed -= spdValue;
             spdValue = Mathf.Max(Mathf.FloorToInt(modifier * spdValue), 1);
             Apply(true);
         }
 
         public override bool Apply(bool force = false) {
-            if (!base.Apply(force)) {
+            if (!base.Apply(force))
                 return false;
-            }
 
-            Target.curSpeed += spdValue;
+            Target.CurSpeed += spdValue;
             return true;
         }
 
         public override void Remove() {
-            Target.curSpeed -= spdValue;
+            Target.CurSpeed -= spdValue;
             base.Remove();
         }
     }
