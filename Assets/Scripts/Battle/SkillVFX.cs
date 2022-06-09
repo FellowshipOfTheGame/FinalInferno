@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using FinalInferno.UI.Battle;
 using UnityEngine;
 
 namespace FinalInferno {
@@ -17,6 +16,11 @@ namespace FinalInferno {
         private SpriteRenderer spriteRenderer = null;
 
         private void Awake() {
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            CheckAudioSourceAndPlayAudio();
+        }
+
+        private void CheckAudioSourceAndPlayAudio() {
             if (!src) {
                 src = null;
                 return;
@@ -25,8 +29,6 @@ namespace FinalInferno {
                 src = null;
                 return;
             }
-
-            spriteRenderer = GetComponent<SpriteRenderer>();
             src.clip = clip;
             effectsPlaying.Add(clip);
             src.Play();
@@ -67,7 +69,7 @@ namespace FinalInferno {
         private void UseSkill() {
             if (isCallback)
                 return;
-            BattleSkillManager.currentSkill.Use(BattleSkillManager.currentUser, transform.parent.GetComponent<BattleUnit>());
+            BattleSkillManager.CurrentSkill.Use(BattleSkillManager.CurrentUser, transform.parent.GetComponent<BattleUnit>());
         }
 
         private void DestroySkillObject() {
@@ -76,7 +78,7 @@ namespace FinalInferno {
                 if (counter >= nTargets) {
                     counter = 0;
                     nTargets = -1;
-                    BattleSkillManager.currentUser.OnSkillUsed?.Invoke(BattleSkillManager.currentUser, BattleManager.instance.battleUnits);
+                    BattleSkillManager.CurrentUser.OnSkillUsed?.Invoke(BattleSkillManager.CurrentUser, BattleManager.instance.battleUnits);
                     UI.FSM.AnimationEnded.EndAnimation();
                 }
             }

@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using FinalInferno.UI.AII;
 using FinalInferno.UI.Battle;
 using UnityEngine;
 using UnityEngine.Events;
@@ -60,12 +59,15 @@ namespace FinalInferno {
         public SkillDelegate OnHeal = null;
         public SkillDelegate OnDeath = null;
         public SkillDelegate OnSkillUsed = null;
-        [HideInInspector] public BattleUnitEvent OnTurnStart = new BattleUnitEvent();
-        [HideInInspector] public BattleUnitEvent OnTurnEnd = new BattleUnitEvent();
+        public BattleUnitEvent OnTurnStart { get; private set; } = new BattleUnitEvent();
+        public BattleUnitEvent OnTurnEnd { get; private set; } = new BattleUnitEvent();
+        public UnityEvent OnUnitSelected { get; private set; } = new UnityEvent();
+        public UnityEvent OnUnitDeselected { get; private set; } = new UnityEvent();
+        public UnityEvent OnSetupFinished { get; private set; } = new UnityEvent();
+        public UnityEvent OnSizeChanged { get; private set; } = new UnityEvent();
         #endregion
 
         [Header("References")]
-        public UnitItem battleItem;
         [SerializeField] private DamageIndicator damageIndicator;
         [SerializeField] private RectTransform reference;
         public RectTransform Reference => reference;
@@ -163,10 +165,12 @@ namespace FinalInferno {
             MaxHP = unit.hpMax;
             if (unit is Hero)
                 LoadHeroCurHP(unit);
-            curDmg = unit.baseDmg;
-            curDef = unit.baseDef;
-            curMagicDef = unit.baseMagicDef;
-            curSpeed = unit.baseSpeed;
+            else
+                CurHP = MaxHP;
+            CurDmg = unit.baseDmg;
+            CurDef = unit.baseDef;
+            CurMagicDef = unit.baseMagicDef;
+            CurSpeed = unit.baseSpeed;
         }
 
         private void LoadHeroCurHP(Unit unit) {
@@ -230,7 +234,7 @@ namespace FinalInferno {
                 return;
 
             List<Unit> enemies = new List<Unit>();
-            foreach (Unit otherUnit in BattleManager.instance.units) {
+            foreach (Unit otherUnit in BattleManager.instance.Units) {
                 if (otherUnit is Enemy)
                     enemies.Add(otherUnit);
             }
@@ -496,7 +500,7 @@ namespace FinalInferno {
         }
 
         public void SkillSelected() {
-            if (BattleSkillManager.currentSkill != Unit.defenseSkill) {
+            if (BattleSkillManager.CurrentSkill != Unit.defenseSkill) {
                 animator.SetTrigger(UseSkillAnimString);
             } else {
                 UseSkill();
@@ -504,11 +508,15 @@ namespace FinalInferno {
         }
 
         public void UseSkill() {
-            BattleSkillManager.UseSkill();
+            BattleSkillManager.UseSelectedSkill();
         }
 
         public void ShowThisAsATarget() {
-            battleItem.ShowThisAsATarget();
+            OnUnitSelected?.Invoke();
+        }
+
+        public void StopShowingThisAsATarget() {
+            OnUnitDeselected?.Invoke();
         }
 
         public void ChangeColor() {

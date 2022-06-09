@@ -19,7 +19,7 @@ namespace FinalInferno {
                     return DefaultSkillExp;
                 long expSum = 0;
                 int nEnemies = 0;
-                foreach (Unit unit in BattleManager.instance.units) {
+                foreach (Unit unit in BattleManager.instance.Units) {
                     if (!unit.IsHero) {
                         expSum += unit.SkillExp;
                         nEnemies++;

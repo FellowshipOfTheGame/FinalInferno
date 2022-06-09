@@ -3,7 +3,7 @@
 namespace FinalInferno {
     [CreateAssetMenu(fileName = "MagicalDamage", menuName = "ScriptableObject/SkillEffect/MagicalDamage")]
     public class MagicalDamage : SkillEffect {
-        private float DmgMultiplier;
+        private float DmgMultiplier => value1;
         private Element DmgElement => (Element)Mathf.Clamp((int)value2, 1, (int)Element.Neutral);
         private string DmgTypeString => DmgElement switch {
             Element.Fire => "Fire",

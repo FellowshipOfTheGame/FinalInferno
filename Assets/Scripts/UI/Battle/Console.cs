@@ -21,24 +21,24 @@ namespace FinalInferno.UI.Battle {
         }
 
         public void UpdateConsole() {
-            if (BattleSkillManager.currentUser != null) {
-                if (BattleSkillManager.currentSkill == null) {
+            if (BattleSkillManager.CurrentUser != null) {
+                if (BattleSkillManager.CurrentSkill == null) {
                     string reasonCantAct = "cannot act";
-                    StatusEffect[] array = BattleSkillManager.currentUser.effects.ToArray();
+                    StatusEffect[] array = BattleSkillManager.CurrentUser.effects.ToArray();
                     if (System.Array.Find<StatusEffect>(array, effect => effect is Confused) != null) {
                         reasonCantAct = "is confused";
                     } else if (System.Array.Find<StatusEffect>(array, effect => effect is Paralyzed) != null) {
                         reasonCantAct = "is paralyzed";
                     } else if (System.Array.Find<StatusEffect>(array, effect => effect is VengefulGhost) != null) {
-                        reasonCantAct = "<color=#" + ColorUtility.ToHtmlStringRGBA(BattleSkillManager.currentUser.Unit.color) + ">"
+                        reasonCantAct = "<color=#" + ColorUtility.ToHtmlStringRGBA(BattleSkillManager.CurrentUser.Unit.color) + ">"
                         + "Ghost</color> attacks";
                     }
 
-                    ConsoleText.text = "<color=#" + ColorUtility.ToHtmlStringRGBA(BattleSkillManager.currentUser.Unit.color) + ">"
-                            + BattleSkillManager.currentUser.Unit.name + "</color> " + reasonCantAct;
+                    ConsoleText.text = "<color=#" + ColorUtility.ToHtmlStringRGBA(BattleSkillManager.CurrentUser.Unit.color) + ">"
+                            + BattleSkillManager.CurrentUser.Unit.name + "</color> " + reasonCantAct;
                 } else {
-                    ConsoleText.text = "<color=#" + ColorUtility.ToHtmlStringRGBA(BattleSkillManager.currentUser.Unit.color) + ">"
-                            + BattleSkillManager.currentUser.Unit.name + "</color> used " + BattleSkillManager.currentSkill.name;
+                    ConsoleText.text = "<color=#" + ColorUtility.ToHtmlStringRGBA(BattleSkillManager.CurrentUser.Unit.color) + ">"
+                            + BattleSkillManager.CurrentUser.Unit.name + "</color> used " + BattleSkillManager.CurrentSkill.name;
                 }
             }
         }

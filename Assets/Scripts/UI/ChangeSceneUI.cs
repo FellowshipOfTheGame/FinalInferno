@@ -3,13 +3,12 @@
 namespace FinalInferno.UI {
 
     public class ChangeSceneUI : MonoBehaviour {
-        private Animator Anim;
-
+        private const string IsBattleAnimString = "IsBattle";
+        private Animator anim;
+        private bool hasIsBattleParameter;
         [SerializeField] private LoadEnemiesPreview loadEnemiesPreview;
-
         // TO DO: Usar sistema de eventos ou delegate para a transição de cena ao inves desses public static
         public static bool isBattle = false;
-
         public static Sprite battleBG;
         public static AudioClip battleBGM;
         public static Enemy[] battleEnemies;
@@ -21,11 +20,13 @@ namespace FinalInferno.UI {
         public static Fog.Dialogue.Dialogue selectedDialogue;
 
         private void Awake() {
-            Anim = GetComponent<Animator>();
+            anim = GetComponent<Animator>();
+            hasIsBattleParameter = System.Array.Find(anim.parameters, parameter => parameter.name == IsBattleAnimString) != null;
         }
 
         private void Update() {
-            Anim.SetBool("IsBattle", isBattle);
+            if (hasIsBattleParameter)
+                anim.SetBool(IsBattleAnimString, isBattle);
         }
 
         private void MainMenu() {

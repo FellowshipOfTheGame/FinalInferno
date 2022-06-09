@@ -11,7 +11,7 @@ namespace FinalInferno.UI.FSM {
                 Skill firstSkill = skillListManager.GetFirstSkill();
                 if (firstSkill != null) {
                     skillListManager.UpdateSkillDescription(firstSkill);
-                    FinalInferno.UI.Battle.BattleSkillManager.currentSkill = firstSkill;
+                    BattleSkillManager.SelectSkill(firstSkill);
                 } else {
                     Debug.LogError($"firstSkill null in object {name} of type ShowFirstSkill");
                 }

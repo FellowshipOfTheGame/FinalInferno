@@ -152,12 +152,7 @@ namespace FinalInferno {
 
         // Metodos que podem ser chamados ao carregar uma nova cena
         public static void OnBattleLoad(Scene map, LoadSceneMode mode) {
-            BattleManager.instance.units.Clear();
-            foreach (Character character in Party.Instance.characters) {
-                BattleManager.instance.units.Add(character.archetype);
-            }
-            BattleManager.instance.units.AddRange(battleInfo.enemies);
-
+            BattleManager.instance.InitUnitsList(battleInfo.enemies);
             UpdateBackgroundImage();
             BattleManager.instance.PrepareBattle();
             PlayBattleBGM();

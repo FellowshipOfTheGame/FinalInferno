@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using FinalInferno.UI.Battle;
 using UnityEngine;
 #if UNITY_EDITOR
 #endif
@@ -163,8 +162,8 @@ namespace FinalInferno {
             float relativeHP = BattleManager.instance.CurrentUnit.CurHP / GetAverageTeamHP();
             float percentageNotDefense = Mathf.Sqrt(relativeHP) + 0.05f * relativeHP;
             Skill skill = SkillDecision(percentageNotDefense);
-            BattleSkillManager.currentSkill = skill;
-            BattleSkillManager.currentTargets = GetTargets(skill.target);
+            BattleSkillManager.SelectSkill(skill);
+            BattleSkillManager.SetTargets(GetTargets(skill.target));
         }
 
         private static float GetAverageTeamHP() {

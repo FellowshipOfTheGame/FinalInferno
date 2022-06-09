@@ -10,11 +10,11 @@ namespace FinalInferno {
         }
 
         public static T GetComponentIfNull<T>(this Component monoBehaviour, T currentValue) where T : Component {
-            return currentValue ? null : monoBehaviour.GetComponent<T>();
+            return currentValue ? currentValue : monoBehaviour.GetComponent<T>();
         }
 
         public static T GetComponentIfNull<T>(this GameObject monoBehaviour, T currentValue) where T : Component {
-            return currentValue ? null : monoBehaviour.GetComponent<T>();
+            return currentValue ? currentValue : monoBehaviour.GetComponent<T>();
         }
 
         public static void DestroyIfExists<T>(T objectToDestroy) where T : Object {

@@ -167,7 +167,6 @@ namespace FinalInferno {
                 return default;
             }
             typeName ??= typeof(T).Name.ToLower();
-            Debug.Log($"looking for object {name} of type {typeName} as {typeof(T).Name}");
             Bundle<T> bundle = Instance.GetBundle<T>(typeName);
             return bundle?.LoadAsset(name);
         }

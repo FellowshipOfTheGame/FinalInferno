@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using FinalInferno.UI.Battle;
 using UnityEngine;
 
 namespace FinalInferno {
@@ -22,7 +21,7 @@ namespace FinalInferno {
             List<float> targetingChances = GetUnitTargetingChances(targetTeam);
             float roll = Random.Range(0.0f, 1.0f);
             for (int i = 0; i < targetTeam.Count; i++) {
-                bool isParalyzingParalizedTarget = BattleSkillManager.currentSkill == ParalyzeSkill && !targetTeam[i].CanAct;
+                bool isParalyzingParalizedTarget = BattleSkillManager.CurrentSkill == ParalyzeSkill && !targetTeam[i].CanAct;
                 if (roll <= targetingChances[i] && !isParalyzingParalizedTarget) {
                     return targetTeam[i];
                 }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using FinalInferno.UI.AII;
+﻿using FinalInferno.UI.AII;
 using UnityEngine;
 
 namespace FinalInferno.UI.Battle.QueueMenu {
@@ -39,29 +38,9 @@ namespace FinalInferno.UI.Battle.QueueMenu {
         }
 
         protected void UseSkill() {
-            BattleSkillManager.currentSkill = skill;
-            BattleSkillManager.currentTargets = skill.FilterTargets(BattleSkillManager.currentUser, BattleManager.instance.battleUnits);
+            BattleSkillManager.SelectSkill(skill);
+            BattleSkillManager.SetTargets(skill.FilterTargets(BattleSkillManager.CurrentUser, BattleManager.instance.battleUnits));
         }
-
-        // Função provavelmente obsoleta
-        private List<BattleUnit> GetTargets(TargetType type) {
-            List<BattleUnit> targets = new List<BattleUnit>();
-
-            switch (type) {
-                case TargetType.Self:
-                    targets.Add(BattleManager.instance.CurrentUnit);
-                    break;
-                case TargetType.AllLiveAllies:
-                    targets = BattleManager.instance.GetTeam(UnitType.Hero);
-                    break;
-                case TargetType.AllLiveEnemies:
-                    targets = BattleManager.instance.GetTeam(UnitType.Enemy);
-                    break;
-            }
-
-            return targets;
-        }
-
     }
 
 }

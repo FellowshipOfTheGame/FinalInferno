@@ -10,7 +10,8 @@ namespace FinalInferno {
     public class BattleManager : MonoBehaviour {
         public static BattleManager instance = null;
         public BoolDecision isBattleReady;
-        public List<Unit> units;
+        [SerializeField] private List<Unit> units;
+        public List<Unit> Units => units;
         public List<BattleUnit> battleUnits;
         public BattleQueue queue;
         public BattleUnit CurrentUnit { get; private set; }
@@ -76,21 +77,28 @@ namespace FinalInferno {
             enemyContent.ShowEnemyInfo(CurrentUnit);
         }
 
+        public void InitUnitsList(List<Enemy> enemyList) {
+            Units.Clear();
+            foreach (Character character in Party.Instance.characters) {
+                Units.Add(character.archetype);
+            }
+            Units.AddRange(enemyList);
+        }
+
         public void PrepareBattle() {
             CameraPPU = Camera.main.gameObject.GetComponent<UnityEngine.U2D.PixelPerfectCamera>().assetsPPU;
             MaxBaseSpeed = 0;
             MinBaseSpeed = Unit.maxStatValue;
 
-            foreach (Unit unit in units) {
+            foreach (Unit unit in Units) {
                 UpdateSpeedLimits(unit);
                 SaveProgressIfHeroUnit(unit);
                 BattleUnit newUnit = BattleUnitsUI.Instance.LoadUnit(unit, CameraPPU);
                 battleUnits.Add(newUnit);
                 SetupIfEnemyUnit(unit, newUnit);
             }
-            SetupBattleItems();
+            UpdateUIElements();
             foreach (BattleUnit battleUnit in battleUnits) {
-                SetupCompositeBattleUnit(battleUnit);
                 InsertNewUnitInQueue(battleUnit);
             }
 
@@ -114,21 +122,16 @@ namespace FinalInferno {
             (newUnit.Unit as Enemy).ResetParameters();
         }
 
-        private void SetupBattleItems() {
+        private void UpdateUIElements() {
             ForceUpdateLayoutPositions();
             foreach (BattleUnit battleUnit in battleUnits) {
-                battleUnit.battleItem.Setup();
+                battleUnit.OnSetupFinished?.Invoke();
             }
         }
 
         private void ForceUpdateLayoutPositions() {
             UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(enemiesLayout);
             UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(heroesLayout);
-        }
-
-        private static void SetupCompositeBattleUnit(BattleUnit battleUnit) {
-            if (battleUnit.TryGetComponent(out CompositeBattleUnit composite))
-                composite.Setup();
         }
 
         private void InsertNewUnitInQueue(BattleUnit battleUnit) {
@@ -172,10 +175,7 @@ namespace FinalInferno {
 
         public void EndTurn() {
             CurrentUnit = null;
-            BattleSkillManager.currentTargets.Clear();
-            BattleSkillManager.currentSkill = null;
-            BattleSkillManager.currentUser = null;
-            BattleSkillManager.skillUsed = false;
+            BattleSkillManager.EndTurn();
         }
 
         public UnitType GetCurrentUnitType() {
