@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using FinalInferno.EventSystem;
 using FinalInferno.UI.Battle;
 using UnityEngine;
 using UnityEngine.Events;
@@ -68,6 +69,7 @@ namespace FinalInferno {
         #endregion
 
         [Header("References")]
+        [SerializeField] private EventFI updateLivesEvent;
         [SerializeField] private DamageIndicator damageIndicator;
         [SerializeField] private RectTransform reference;
         public RectTransform Reference => reference;
@@ -378,7 +380,7 @@ namespace FinalInferno {
             ShowHealEffects(damage);
             ApplyHealAggro(healer, damage);
             CheckHealDeathAndCallbacks(healer, damage);
-            BattleManager.instance.UpdateLives();
+            updateLivesEvent.Raise();
             return damage;
         }
 
@@ -415,7 +417,7 @@ namespace FinalInferno {
             ShowDamageEffects(element, damage);
             ApplyDamageAggro(attacker, damage);
             CheckDamageDeathAndCallbacks(attacker, damage, element);
-            BattleManager.instance.UpdateLives();
+            updateLivesEvent.Raise();
             return damage;
         }
 
@@ -487,7 +489,7 @@ namespace FinalInferno {
                 HpOnHold += CurHP - MaxHP;
                 CurHP = CurHP;
             }
-            BattleManager.instance.UpdateLives();
+            updateLivesEvent.Raise();
             return lostHPAbsoluteValue;
         }
 
@@ -496,7 +498,7 @@ namespace FinalInferno {
             if (curHP > 0)
                 CurHP += HpOnHold;
             HpOnHold = 0;
-            BattleManager.instance.UpdateLives();
+            updateLivesEvent.Raise();
         }
 
         public void SkillSelected() {

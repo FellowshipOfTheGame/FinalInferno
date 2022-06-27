@@ -124,22 +124,6 @@ namespace FinalInferno.UI.AII {
             BattleSkillManager.CurrentTargets.Add(BattleUnit);
         }
 
-        private void UpdateEnemyContent() {
-            BattleManager.instance.enemyContent.ShowEnemyInfo(BattleUnit);
-        }
-
-        private void UpdateHeroContent() {
-            infoLoader.Info.LoadInfo(BattleUnit);
-        }
-
-        private void ResetEnemyContent() {
-            BattleManager.instance.enemyContent.ShowAllLives();
-        }
-
-        private void ResetHeroContent() {
-            // Feito atraves da maquina de estados, ação GetHeroesLivesTrigger
-        }
-
         public void ToggleShowTarget() {
             if (showingTarget) {
                 StopShowingThisAsATarget();

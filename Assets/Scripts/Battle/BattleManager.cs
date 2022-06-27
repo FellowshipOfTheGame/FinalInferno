@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using FinalInferno.EventSystem;
 using FinalInferno.UI.Battle;
 using FinalInferno.UI.FSM;
-using FinalInferno.UI.Battle.LifeMenu;
 using FinalInferno.UI.Battle.QueueMenu;
 
 namespace FinalInferno {
@@ -24,8 +24,8 @@ namespace FinalInferno {
         public BattleUnitsUI unitsUI;
         [SerializeField] private RectTransform heroesLayout;
         [SerializeField] private RectTransform enemiesLayout;
-        public UnitsLives[] unitsLives;
-        public EnemyContent enemyContent;
+        [Header("Events")]
+        [SerializeField] private EventFI updateLivesEvent;
         [Header("Input References")]
         [SerializeField] private InputActionReference debugAction;
 
@@ -64,17 +64,7 @@ namespace FinalInferno {
                 if (bUnit.CurHP > 0)
                     bUnit.DecreaseHP(1.0f);
             }
-            UpdateLives();
-        }
-
-        public void UpdateLives() {
-            foreach (UnitsLives lives in unitsLives) {
-                lives.UpdateLives();
-            }
-        }
-
-        public void ShowEnemyInfo() {
-            enemyContent.ShowEnemyInfo(CurrentUnit);
+            updateLivesEvent.Raise();
         }
 
         public void InitUnitsList(List<Enemy> enemyList) {
@@ -186,7 +176,7 @@ namespace FinalInferno {
             int nNewEffects = ApplyDeathCallbacks(unit);
             if (unit.CurHP <= 0 && nNewEffects <= 0)
                 RemoveDeadUnitReferences(unit);
-            UpdateLives();
+            updateLivesEvent.Raise();
         }
 
         private int ApplyDeathCallbacks(BattleUnit unit) {
@@ -211,7 +201,7 @@ namespace FinalInferno {
         public void Revive(BattleUnit unit) {
             if (!queue.Contains(unit) && CurrentUnit != unit)
                 ReinsertRevivedUnitInQueue(unit);
-            UpdateLives();
+            updateLivesEvent.Raise();
         }
 
         private void ReinsertRevivedUnitInQueue(BattleUnit unit) {
