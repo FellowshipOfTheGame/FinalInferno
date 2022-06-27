@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 using FinalInferno.EventSystem;
 using FinalInferno.UI.Battle;
 using FinalInferno.UI.FSM;
-using FinalInferno.UI.Battle.QueueMenu;
 
 namespace FinalInferno {
     public class BattleManager : MonoBehaviour {
@@ -20,7 +19,6 @@ namespace FinalInferno {
         public int CameraPPU { get; private set; } = 64;
 
         [Header("UI Elements")]
-        [SerializeField] private BattleQueueUI queueUI;
         public BattleUnitsUI unitsUI;
         [SerializeField] private RectTransform heroesLayout;
         [SerializeField] private RectTransform enemiesLayout;
@@ -41,7 +39,6 @@ namespace FinalInferno {
         }
 
         private void InitVariablesAndBattleProgress() {
-            queue = new BattleQueue(queueUI);
             units = new List<Unit>();
             battleUnits = new List<BattleUnit>();
             BattleProgress.ResetInfo(Party.Instance);

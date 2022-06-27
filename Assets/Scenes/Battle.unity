@@ -1260,6 +1260,42 @@ MonoBehaviour:
   content: {fileID: 15794035}
   currentTurnContent: {fileID: 1297961566}
   layout: {fileID: 15794038}
+  startPreviewEventListener:
+    eventListened: {fileID: 11400000, guid: 429ea1fc1faad8542b9e920f4ff140f6, type: 2}
+    eventCallback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 127055009}
+          m_TargetAssemblyTypeName: FinalInferno.UI.Battle.QueueMenu.BattleQueueUI,
+            FinalInferno
+          m_MethodName: StartPreview
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  stopPreviewEventListener:
+    eventListened: {fileID: 11400000, guid: e012386d786fb844595907d4f54c35d6, type: 2}
+    eventCallback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 127055009}
+          m_TargetAssemblyTypeName: FinalInferno.UI.Battle.QueueMenu.BattleQueueUI,
+            FinalInferno
+          m_MethodName: StopPreview
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &127055010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15879,11 +15915,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0170c5b1892fb7b4289b1ccaba155a63, type: 2}
   - {fileID: 11400000, guid: 242d4f97eef6c3245949a9eabd38989c, type: 2}
   battleUnits: []
-  queueUI: {fileID: 127055009}
+  queue:
+    stopQueuePreviewEvent: {fileID: 11400000, guid: e012386d786fb844595907d4f54c35d6,
+      type: 2}
+    startQueuePreviewEvent: {fileID: 11400000, guid: 429ea1fc1faad8542b9e920f4ff140f6,
+      type: 2}
   unitsUI: {fileID: 125682818}
   heroesLayout: {fileID: 552125059}
   enemiesLayout: {fileID: 1478502788}
-  enemyContent: {fileID: 0}
   updateLivesEvent: {fileID: 11400000, guid: 41548a6310b6a8d46b71987c4442d813, type: 2}
   debugAction: {fileID: -2694234675557987794, guid: eeed788d9c9bd6ba4afdbd0089dd3943,
     type: 3}

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using FinalInferno.EventSystem;
 
 namespace FinalInferno.UI.Battle.QueueMenu {
     /// <summary>
@@ -17,6 +18,18 @@ namespace FinalInferno.UI.Battle.QueueMenu {
         /// ao utilizar alguma habilidade.
         /// </summary>
         [SerializeField] private RectTransform PreviewObject;
+        private Image previewObjectImage = null;
+        private Image PreviewObjectImage {
+            get {
+                if (previewObjectImage == null) {
+                    Transform image = PreviewObject.transform.Find("Image");
+                    if (image) {
+                        previewObjectImage = image.GetComponent<Image>();
+                    }
+                }
+                return previewObjectImage;
+            }
+        }
 
         /// <summary>
         /// Local onde os itens da fila ficarão armazenados.
@@ -33,8 +46,12 @@ namespace FinalInferno.UI.Battle.QueueMenu {
         /// </summary>
         [SerializeField] private HorizontalLayoutGroup layout;
 
+        [SerializeField] private GenericEventListenerFI<int> startPreviewEventListener;
+        [SerializeField] private VoidEventListenerFI stopPreviewEventListener;
+
         private Image currentTurnBattleImage;
         private List<Image> BattleImages;
+        private BattleQueue BattleQueue => BattleManager.instance.queue;
 
         private void Awake() {
             BattleImages = new List<Image>();
@@ -42,15 +59,29 @@ namespace FinalInferno.UI.Battle.QueueMenu {
             currentTurnBattleImage = Instantiate(QueueObject, currentTurnContent).GetComponentsInChildren<Image>()[1];
         }
 
+        private void Start() {
+            BattleQueue.OnUpdateQueue.AddListener(UpdateQueue);
+        }
+
+        private void OnEnable() {
+            startPreviewEventListener.StartListeningEvent();
+            stopPreviewEventListener.StartListeningEvent();
+        }
+
+        private void OnDisable() {
+            startPreviewEventListener.StopListeningEvent();
+            stopPreviewEventListener.StopListeningEvent();
+        }
+
         /// <summary>
         /// Atualiza a fila de batalha
         /// </summary>
         public void UpdateQueue(BattleUnit currentUnit) {
-            while (BattleImages.Count < BattleManager.instance.queue.Count) {
+            while (BattleImages.Count < BattleQueue.Count) {
                 Image newImage = Instantiate(QueueObject, content).GetComponentsInChildren<Image>()[1];
                 BattleImages.Add(newImage);
             }
-            while (BattleImages.Count > BattleManager.instance.queue.Count) {
+            while (BattleImages.Count > BattleQueue.Count) {
                 Destroy(BattleImages[BattleImages.Count - 1].transform.parent.gameObject);
                 BattleImages.RemoveAt(BattleImages.Count - 1);
             }
@@ -64,9 +95,9 @@ namespace FinalInferno.UI.Battle.QueueMenu {
             }
 
             // Coloca o restante dos personagens na fila.
-            for (int i = 0; i < BattleManager.instance.queue.Count; i++) {
+            for (int i = 0; i < BattleQueue.Count; i++) {
                 // BattleImages[i].transform.parent.gameObject.SetActive(true);
-                BattleImages[i].sprite = BattleManager.instance.queue.Peek(i).QueueSprite;
+                BattleImages[i].sprite = BattleQueue.Peek(i).QueueSprite;
                 if (BattleImages[i].sprite != null) {
                     BattleImages[i].color = Color.white;
                 } else {
@@ -81,10 +112,8 @@ namespace FinalInferno.UI.Battle.QueueMenu {
         /// <param name="newPosition"> Posição do personagem se utilizar a skill. </param>
         public void StartPreview(int newPosition = 0) {
             PreviewObject.gameObject.SetActive(true);
-            Transform image = PreviewObject.transform.Find("Image");
-            if (image) {
-                image.GetComponent<Image>().sprite = currentTurnBattleImage.sprite;
-            }
+            if (PreviewObjectImage)
+                PreviewObjectImage.sprite = currentTurnBattleImage.sprite;
             SetPreviewPosition(newPosition);
         }
 
@@ -104,10 +133,8 @@ namespace FinalInferno.UI.Battle.QueueMenu {
         /// </summary>
         public void StopPreview() {
             PreviewObject.gameObject.SetActive(false);
-            Transform image = PreviewObject.transform.Find("Image");
-            if (image) {
-                image.GetComponent<Image>().sprite = null;
-            }
+            if (PreviewObjectImage)
+                PreviewObjectImage.sprite = null;
         }
     }
 

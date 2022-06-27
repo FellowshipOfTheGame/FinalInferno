@@ -1,41 +1,41 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections;
+using UnityEngine;
+using UnityEngine.Events;
+using FinalInferno.EventSystem;
 
 namespace FinalInferno {
-    using UI.Battle.QueueMenu;
-
+    [Serializable]
     public class BattleQueue : IEnumerable<BattleUnit> {
-        private BattleQueueUI queueUI;
-        private List<BattleUnit> list;
+        private List<BattleUnit> list = new List<BattleUnit>();
         public int Count => list.Count;
-
-        public BattleQueue(BattleQueueUI ui) {
-            queueUI = ui;
-            list = new List<BattleUnit>();
-        }
+        public UnityEvent<BattleUnit> OnUpdateQueue { get; private set; } = new UnityEvent<BattleUnit>();
+        [SerializeField] private EventFI stopQueuePreviewEvent;
+        [SerializeField] private IntEventFI startQueuePreviewEvent;
 
         public void Enqueue(BattleUnit element, int additionalValue) {
             element.actionPoints += additionalValue;
             int newIndex = CalculateNewPosition(element.actionPoints);
             list.Insert(newIndex, element);
-            queueUI.UpdateQueue(BattleManager.instance.CurrentUnit);
+            OnUpdateQueue?.Invoke(BattleManager.instance.CurrentUnit);
         }
 
         private int CalculateNewPosition(int actionPoints) {
             int predictedIndex;
             for (predictedIndex = 0; predictedIndex < list.Count && actionPoints >= list[predictedIndex].actionPoints; predictedIndex++)
-                ;
+                continue;
             return predictedIndex;
         }
 
         public int PreviewPosition(int actionPoints) {
             int predictedIndex = CalculateNewPosition(actionPoints);
-            queueUI.StartPreview(predictedIndex);
+            startQueuePreviewEvent.Raise(predictedIndex);
             return predictedIndex;
         }
 
         public void StopPreview() {
-            queueUI.StopPreview();
+            stopQueuePreviewEvent.Raise();
         }
 
         public bool Contains(BattleUnit unit) {
@@ -49,7 +49,7 @@ namespace FinalInferno {
                 battleUnit.actionPoints -= currentActionPoints;
             }
             list.RemoveAt(0);
-            queueUI.UpdateQueue(firstUnit);
+            OnUpdateQueue?.Invoke(firstUnit);
             return firstUnit;
         }
 
@@ -59,17 +59,17 @@ namespace FinalInferno {
 
         public void Remove(BattleUnit unit) {
             list.Remove(unit);
-            queueUI.UpdateQueue(BattleManager.instance.CurrentUnit);
+            OnUpdateQueue?.Invoke(BattleManager.instance.CurrentUnit);
         }
 
         public void Clear() {
             list.Clear();
-            queueUI.UpdateQueue(BattleManager.instance.CurrentUnit);
+            OnUpdateQueue?.Invoke(BattleManager.instance.CurrentUnit);
         }
 
         public void Sort() {
             list.Sort(CompareUnits);
-            queueUI.UpdateQueue(BattleManager.instance.CurrentUnit);
+            OnUpdateQueue?.Invoke(BattleManager.instance.CurrentUnit);
         }
 
         private int CompareUnits(BattleUnit first, BattleUnit second) {
