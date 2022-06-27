@@ -3,16 +3,15 @@ using UnityEngine.Audio;
 
 [System.Serializable]
 public class AudioChannel {
-    // All Volume strings must be "Volume" + channelName
-    [SerializeField] private string volumeString;
+    const string ToolTipString = "All volume strings should be \"Volume{Channel Name}\"";
+    [SerializeField, Tooltip(ToolTipString)] private string volumeString;
     public string VolumeString => volumeString;
-    // [SerializeField,HideInInspector] private float minVolume = 0.0001f;
     private const float minVolume = 0.0001f;
     public float MinVolume => minVolume;
     [SerializeField, Range(0.1f, 1)] private float maxVolume = 1;
     public float MaxVolume => maxVolume;
 
-    public void SetValue(AudioMixer mixer, float value) {
+    public void SetVolume(AudioMixer mixer, float value) {
         value = Mathf.Clamp(value, 0, 1f);
         PlayerPrefs.SetFloat(VolumeString, value);
         value = MinVolume + value * (MaxVolume - MinVolume);
