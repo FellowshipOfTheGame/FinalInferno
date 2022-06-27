@@ -19,14 +19,14 @@ public class VolumeController : ScriptableObject {
 
     public void ResetValues(VolumeInfo info = null) {
         info ??= new VolumeInfo();
-        masterChannel.SetValue(audioMixer, info.VolumeMaster);
-        BGMChannel.SetValue(audioMixer, info.VolumeBGM);
-        SFXChannel.SetValue(audioMixer, info.VolumeSFX);
-        SFXUIChannel.SetValue(audioMixer, info.VolumeSFXUI);
+        masterChannel.SetVolume(audioMixer, info.VolumeMaster);
+        BGMChannel.SetVolume(audioMixer, info.VolumeBGM);
+        SFXChannel.SetVolume(audioMixer, info.VolumeSFX);
+        SFXUIChannel.SetVolume(audioMixer, info.VolumeSFXUI);
     }
 
     private void SetVolume(AudioChannel channel, float value) {
-        channel.SetValue(audioMixer, value);
+        channel.SetVolume(audioMixer, value);
     }
     public void SetMasterVolume(float value) {
         SetVolume(masterChannel, value);
