@@ -118,14 +118,14 @@ namespace FinalInferno {
         }
 
         public void Show() {
-            if (hidden)
+            if (!hidden)
                 return;
             hidden = false;
             SpriteRenderer.enabled = true;
         }
 
         public void Hide() {
-            if (!hidden)
+            if (hidden)
                 return;
             hidden = true;
             SpriteRenderer.enabled = false;

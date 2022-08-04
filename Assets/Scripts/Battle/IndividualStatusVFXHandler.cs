@@ -60,28 +60,29 @@ namespace FinalInferno {
             turnsLeftMin = int.MaxValue;
 
             if (effects.Count <= 0) {
-                // Caso seja o ultimo efeito, manda o trigger de animação para remover
                 foreach (StatusEffectVFX vfx in statusEffectVFXes) {
                     vfx.RemoveTrigger();
                 }
             } else {
-                // Caso não seja, avalia os novos valores de min/max
-                foreach (StatusEffect eff in effects) {
-                    turnsLeftMax = Mathf.Max(turnsLeftMax, eff.TurnsLeft);
-                    turnsLeftMin = Mathf.Min(turnsLeftMin, eff.TurnsLeft);
-                }
+                RecalculateMinMaxValues();
+                UpdateTurnsLeftValue();
+            }
+        }
 
-                // Atualiza o valor de turnsLeft de acordo com o comportamento do vfx
-                foreach (StatusEffectVFX vfx in statusEffectVFXes) {
-                    int turnsLeft = GetTurnsLeft(vfx);
+        private void RecalculateMinMaxValues() {
+            foreach (StatusEffect eff in effects) {
+                turnsLeftMax = Mathf.Max(turnsLeftMax, eff.TurnsLeft);
+                turnsLeftMin = Mathf.Min(turnsLeftMin, eff.TurnsLeft);
+            }
+        }
 
-                    // Se o novo valor for igual, não faz nada
-                    if (turnsLeft != vfx.TurnsLeft) {
-                        // Se tiver mudado, muda para o estado de idle correto
-                        vfx.ResetTrigger();
-                        vfx.TurnsLeft = turnsLeft;
-                    }
-                }
+        private void UpdateTurnsLeftValue() {
+            foreach (StatusEffectVFX vfx in statusEffectVFXes) {
+                int turnsLeft = GetTurnsLeft(vfx);
+                if (turnsLeft == vfx.TurnsLeft)
+                    continue;
+                vfx.ResetTrigger();
+                vfx.TurnsLeft = turnsLeft;
             }
         }
     }

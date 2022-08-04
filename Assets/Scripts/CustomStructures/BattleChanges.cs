@@ -5,36 +5,45 @@ namespace FinalInferno {
         public int levelChanges;
         public long xpGained;
         public Hero[] heroes;
-        // Ao contrario das listas de BattleProgress, essas listas contem apenas as habilidades que ganharam exp durante a batalha
         public List<SkillInfo>[] heroSkills;
         public List<PlayerSkill>[] skillReferences;
         public List<PlayerSkill>[] newSkills;
 
-        public BattleChanges(Party party) { // Ex de uso no final da batalha: BattleChanges changes = new BattleChanges(Party.Instance)
+        public BattleChanges(Party party) {
             levelChanges = party.Level - BattleProgress.startingLevel;
             xpGained = party.XpCumulative - BattleProgress.startingCumulativeExp;
             heroes = new Hero[Party.Capacity];
             heroSkills = new List<SkillInfo>[Party.Capacity];
             skillReferences = new List<PlayerSkill>[Party.Capacity];
             newSkills = new List<PlayerSkill>[Party.Capacity];
-            for (int i = 0; i < Party.Capacity; i++) {
-                heroes[i] = BattleProgress.heroes[i];
-                heroSkills[i] = new List<SkillInfo>();
-                skillReferences[i] = new List<PlayerSkill>();
-                newSkills[i] = new List<PlayerSkill>();
+            for (int heroIndex = 0; heroIndex < Party.Capacity; heroIndex++) {
+                heroes[heroIndex] = BattleProgress.heroes[heroIndex];
+                heroSkills[heroIndex] = new List<SkillInfo>();
+                skillReferences[heroIndex] = new List<PlayerSkill>();
+                newSkills[heroIndex] = new List<PlayerSkill>();
+                SaveUsedSkills(heroIndex);
+                SaveUnlockedSkills(heroIndex);
+            }
+        }
 
-                for (int j = 0; j < BattleProgress.skillReferences[i].Count; j++) {
-                    if (BattleProgress.skillReferences[i][j].XpCumulative != BattleProgress.startingHeroesSkillInfo[i][j].xpCumulative) {
-                        heroSkills[i].Add(BattleProgress.startingHeroesSkillInfo[i][j]);
-                        skillReferences[i].Add(BattleProgress.skillReferences[i][j]);
-                    }
-                }
+        private readonly void SaveUsedSkills(int heroIndex) {
+            for (int skillIndex = 0; skillIndex < BattleProgress.skillReferences[heroIndex].Count; skillIndex++) {
+                PlayerSkill skill = BattleProgress.skillReferences[heroIndex][skillIndex];
+                SkillInfo startingSkillInfo = BattleProgress.startingHeroesSkillInfo[heroIndex][skillIndex];
+                if (skill.XpCumulative == startingSkillInfo.xpCumulative)
+                    continue;
+                heroSkills[heroIndex].Add(startingSkillInfo);
+                skillReferences[heroIndex].Add(skill);
+            }
+        }
 
-                for (int j = 0; j < BattleProgress.startingHeroesSkillInfo[i].Count; j++) {
-                    if (BattleProgress.skillReferences[i][j].active && !BattleProgress.startingHeroesSkillInfo[i][j].active) {
-                        newSkills[i].Add(BattleProgress.skillReferences[i][j]);
-                    }
-                }
+        private readonly void SaveUnlockedSkills(int heroIndex) {
+            for (int skillIndex = 0; skillIndex < BattleProgress.startingHeroesSkillInfo[heroIndex].Count; skillIndex++) {
+                PlayerSkill skill = BattleProgress.skillReferences[heroIndex][skillIndex];
+                SkillInfo startingSkillInfo = BattleProgress.startingHeroesSkillInfo[heroIndex][skillIndex];
+                if (!skill.active || startingSkillInfo.active)
+                    continue;
+                newSkills[heroIndex].Add(skill);
             }
         }
     }

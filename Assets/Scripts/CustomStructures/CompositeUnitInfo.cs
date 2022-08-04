@@ -1,10 +1,11 @@
+using System.Collections;
 using System.Collections.Generic;
 
 namespace FinalInferno {
-    public struct CompositeUnitInfo {
+    public struct CompositeUnitInfo : IEnumerable<BattleUnit> {
         public BattleUnit mainUnit;
         public List<BattleUnit> appendages;
-        public List<BattleUnit> units;
+        private List<BattleUnit> units;
 
         public void AddAppendage(BattleUnit newAppendage) {
             appendages.Add(newAppendage);
@@ -21,6 +22,14 @@ namespace FinalInferno {
             this.mainUnit = mainUnit;
             appendages = new List<BattleUnit>();
             units = new List<BattleUnit>() { mainUnit };
+        }
+
+        public IEnumerator<BattleUnit> GetEnumerator() {
+            return ((IEnumerable<BattleUnit>)units).GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() {
+            return ((IEnumerable)units).GetEnumerator();
         }
     }
 }

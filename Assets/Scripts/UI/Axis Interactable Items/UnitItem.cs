@@ -35,6 +35,11 @@ namespace FinalInferno.UI.AII {
             item.OnAct += SetTarget;
         }
 
+        private void SetTarget() {
+            BattleSkillManager.CurrentTargets.Clear();
+            BattleSkillManager.CurrentTargets.Add(BattleUnit);
+        }
+
         public void SetBattleUnit(BattleUnit observedBattleUnit, int currentPPU = 64) {
             ppu = currentPPU;
             BattleUnit = observedBattleUnit;
@@ -52,8 +57,7 @@ namespace FinalInferno.UI.AII {
             item.ActiveReference = unitReference.GetComponent<Image>();
 
             SetUnitTurnCallbacks();
-            BattleUnit.OnUnitSelected.AddListener(ShowThisAsATarget);
-            BattleUnit.OnUnitDeselected.AddListener(StopShowingThisAsATarget);
+            SetUnitSelectionCallbacks();
             SetUnitPosition();
             if (BattleUnit.Unit is ICompositeUnit)
                 SetupCompositeUnit(BattleUnit.Unit as ICompositeUnit);
@@ -84,10 +88,24 @@ namespace FinalInferno.UI.AII {
             UpdateUnitPosition(newPosition);
         }
 
+        private void SetUnitSelectionCallbacks() {
+            BattleUnit.OnUnitSelected.AddListener(ShowThisAsATarget);
+            BattleUnit.OnUnitDeselected.AddListener(StopShowingThisAsATarget);
+        }
+
+        public void ShowThisAsATarget() {
+            item.EnableReference();
+            showingTarget = true;
+        }
+
+        public void StopShowingThisAsATarget() {
+            item.DisableReference();
+            showingTarget = false;
+        }
+
         private void UpdateUnitPosition(Vector3 newPosition) {
-            if ((newPosition - BattleUnit.transform.position).magnitude > float.Epsilon) {
+            if ((newPosition - BattleUnit.transform.position).magnitude > float.Epsilon)
                 BattleUnit.transform.position = newPosition;
-            }
         }
 
         private void SetUnitPosition() {
@@ -110,18 +128,13 @@ namespace FinalInferno.UI.AII {
                 BattleUnit.transform.position = compositeUnitInfo.mainUnit.transform.position;
             }
 
-            foreach (BattleUnit unit in compositeUnitInfo.units) {
+            foreach (BattleUnit unit in compositeUnitInfo) {
                 if (unit == BattleUnit)
                     continue;
                 UnitItem otherItem = BattleUnitsUI.Instance.GetUnitItem(unit);
                 BattleUnit.OnTurnStart.AddListener(_ => otherItem.StepForward(unit));
                 BattleUnit.OnTurnEnd.AddListener(_ => otherItem.StepBack(unit));
             }
-        }
-
-        private void SetTarget() {
-            BattleSkillManager.CurrentTargets.Clear();
-            BattleSkillManager.CurrentTargets.Add(BattleUnit);
         }
 
         public void ToggleShowTarget() {
@@ -131,17 +144,6 @@ namespace FinalInferno.UI.AII {
                 ShowThisAsATarget();
             }
         }
-
-        public void ShowThisAsATarget() {
-            item.EnableReference();
-            showingTarget = true;
-        }
-
-        public void StopShowingThisAsATarget() {
-            item.DisableReference();
-            showingTarget = false;
-        }
-
     }
 
 }
