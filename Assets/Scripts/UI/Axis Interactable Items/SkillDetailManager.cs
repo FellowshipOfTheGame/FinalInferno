@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using FinalInferno.UI.SkillsMenu;
 
 namespace FinalInferno.UI.AII {
     [RequireComponent(typeof(ScrollRect))]
     public class SkillDetailManager : AIIManager {
-        [SerializeField] private List<SkillsMenu.SkillDetailPage> detailPages = new List<SkillsMenu.SkillDetailPage>();
+        [SerializeField] private List<SkillDetailPage> detailPages = new List<SkillDetailPage>();
         [SerializeField] private ToggleItem toggle = null;
-        private List<float> currentValues = null;
+        private List<float> currentScrollValues = null;
         private PlayerSkill currentSkill = null;
         public PlayerSkill CurrentSkill {
             set {
@@ -31,62 +32,59 @@ namespace FinalInferno.UI.AII {
             currentItem = null;
             rightArrow.SetActive(false);
             leftArrow.SetActive(false);
-
-            if (!scrollRect) {
-                scrollRect = GetComponent<ScrollRect>();
-            }
-
-            currentValues = new List<float>();
+            scrollRect = this.GetComponentIfNull(scrollRect);
+            scrollbar.scrollRect = scrollRect;
+            currentScrollValues = new List<float>();
             for (int i = 0; i < detailPages.Count; i++) {
                 detailPages[i].Index = i;
                 detailPages[i].FocusPage = FocusOn;
-
-                if (!toggle && detailPages[i].GetType() == typeof(ToggleItem)) {
+                if (!toggle && detailPages[i].GetType() == typeof(ToggleItem))
                     toggle = detailPages[i].AII as ToggleItem;
-                }
-                currentValues.Add(1f);
+                currentScrollValues.Add(1f);
             }
-            toggle.OnToggle += ToggleSkillActive;
+            if (toggle)
+                toggle.OnToggle += ToggleSkillActive;
         }
 
         private void ToggleSkillActive() {
             currentSkill.active = !currentSkill.active;
-            if (AS) {
-                AS.Play();
-            }
+            if (audioSource)
+                audioSource.Play();
         }
 
         public void FocusOn(int index) {
-            Debug.Log($"Chamou focus on {index}");
             index = Mathf.Clamp(index, 0, detailPages.Count - 1);
+            ShowValidArrowIndicators(index);
+            if (index == currentIndex)
+                return;
+            currentScrollValues[currentIndex] = scrollbar.Value;
+            scrollRect.content = detailPages[index].GetComponent<RectTransform>();
+            UpdatePagesAnchoredPosition(index);
+            currentIndex = index;
+            scrollbar.SetValue(currentScrollValues[currentIndex]);
+        }
 
+        private void UpdatePagesAnchoredPosition(int index) {
+            foreach (SkillDetailPage page in detailPages) {
+                if (page.TryGetComponent(out RectTransform rect)) {
+                    rect.pivot += new Vector2(currentIndex - index, 0);
+                    rect.anchorMin += new Vector2(currentIndex - index, 0);
+                    rect.anchorMax += new Vector2(currentIndex - index, 0);
+                    rect.anchoredPosition = Vector2.zero;
+                }
+            }
+        }
+
+        private void ShowValidArrowIndicators(int index) {
             if (index < detailPages.Count - 1) {
                 rightArrow.SetActive(true);
             } else {
                 rightArrow.SetActive(false);
             }
-
             if (index > 0) {
                 leftArrow.SetActive(true);
             } else {
                 leftArrow.SetActive(false);
-            }
-
-            if (index != currentIndex) {
-
-                scrollRect.content = detailPages[index].GetComponent<RectTransform>();
-                foreach (SkillsMenu.SkillDetailPage page in detailPages) {
-                    RectTransform rect = page.GetComponent<RectTransform>();
-                    if (rect) {
-                        rect.pivot += new Vector2(currentIndex - index, 0);
-                        rect.anchorMin += new Vector2(currentIndex - index, 0);
-                        rect.anchorMax += new Vector2(currentIndex - index, 0);
-                        rect.anchoredPosition = Vector2.zero;
-                    }
-                }
-                currentValues[currentIndex] = scrollbar.SetValue(currentValues[index]);
-
-                currentIndex = index;
             }
         }
 
@@ -98,28 +96,28 @@ namespace FinalInferno.UI.AII {
             toggle.Show();
         }
 
-        public override void Active() {
+        public override void Activate() {
             xIndicator.SetActive(false);
-            currentIndex = 0;
-            for (int i = 0; i < currentValues.Count; i++) {
-                currentValues[i] = 1f;
-            }
-
-            base.Active();
+            ResetIndexAndScrollvalues();
+            FocusOn(0);
+            base.Activate();
         }
 
-        public override void Deactive() {
+        private void ResetIndexAndScrollvalues() {
+            currentIndex = 0;
+            for (int i = 0; i < currentScrollValues.Count; i++) {
+                currentScrollValues[i] = 1f;
+            }
+        }
+
+        public override void Deactivate() {
             FocusOn(0);
+            ResetIndexAndScrollvalues();
             rightArrow.SetActive(false);
             leftArrow.SetActive(false);
             xIndicator.SetActive(true);
-            currentIndex = 0;
-            for (int i = 0; i < currentValues.Count; i++) {
-                currentValues[i] = 1f;
-            }
             scrollbar.SetValue(1f);
-
-            base.Deactive();
+            base.Deactivate();
         }
     }
 }

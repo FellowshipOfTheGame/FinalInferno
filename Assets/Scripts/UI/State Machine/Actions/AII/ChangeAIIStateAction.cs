@@ -19,9 +19,9 @@ namespace FinalInferno.UI.FSM {
         /// <param name="controller"> O controlador da máquina de estados. </param>
         public override void Act(StateController controller) {
             if (manager != null && manager.IsActive) {
-                manager.Deactive();
+                manager.Deactivate();
             } else if (manager != null) {
-                manager.Active();
+                manager.Activate();
             }
         }
 

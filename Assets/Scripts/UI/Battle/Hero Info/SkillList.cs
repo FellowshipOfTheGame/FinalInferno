@@ -120,7 +120,7 @@ namespace FinalInferno.UI.Battle.SkillMenu {
 
                     // Adiciona a decisão de clique no item criado
                     ClickableItem newClickableItem = newSkill.GetComponent<ClickableItem>();
-                    newClickableItem.BCD = clickDecision;
+                    newClickableItem.buttonClickDecision = clickDecision;
 
                     // Adiciona a skill no item que a ativará
                     SkillItem newSkillItem = newSkill.GetComponent<SkillItem>();
@@ -145,7 +145,7 @@ namespace FinalInferno.UI.Battle.SkillMenu {
         // Função e variavel auxiliar foram feitas para permitir chamar isso por animação
         // Dava erro pq ou os objetos criados não tinham chamado awake ainda ou o objeto SkillList estava desativado
         public void ActivateManager() {
-            manager.Active();
+            manager.Activate();
             // shouldActivate = false;
         }
 
@@ -172,7 +172,7 @@ namespace FinalInferno.UI.Battle.SkillMenu {
             // Atualiza a lista de efeitos
             UpdateEffectsContent(skill.effects);
             if (skill is PlayerSkill) {
-                effectsManager.Active();
+                effectsManager.Activate();
             }
         }
 

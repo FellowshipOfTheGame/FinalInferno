@@ -156,7 +156,7 @@ namespace FinalInferno.UI.Battle.SkillMenu {
         }
 
         public void ChangeAIIButtons() {
-            buttonAIIManager.Active();
+            buttonAIIManager.Activate();
         }
     }
 

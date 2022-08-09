@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
+using Fog.Dialogue;
 
 namespace FinalInferno.UI {
-
     public class ChangeSceneUI : MonoBehaviour {
         private const string IsBattleAnimString = "IsBattle";
         private Animator anim;
         private bool hasIsBattleParameter;
         [SerializeField] private LoadEnemiesPreview loadEnemiesPreview;
-        // TO DO: Usar sistema de eventos ou delegate para a transição de cena ao inves desses public static
         public static bool isBattle = false;
         public static Sprite battleBG;
         public static AudioClip battleBGM;
@@ -17,7 +16,7 @@ namespace FinalInferno.UI {
         public static Vector2 positionOnLoad;
         public static Vector2 savePosition;
         public static bool isCutscene;
-        public static Fog.Dialogue.Dialogue selectedDialogue;
+        public static Dialogue selectedDialogue;
 
         private void Awake() {
             anim = GetComponent<Animator>();
@@ -33,7 +32,7 @@ namespace FinalInferno.UI {
             SceneLoader.LoadMainMenu();
         }
 
-        // Overworld callbacks
+        #region Overworld Callbacks
         private void ChangeMap() {
             if (!isCutscene) {
                 SceneLoader.LoadOWSceneWithSetPosition(sceneName, positionOnLoad);
@@ -54,8 +53,9 @@ namespace FinalInferno.UI {
             isBattle = false;
             SceneLoader.LoadBattleScene(new BattleInfo(battleEnemies, battleBG, battleBGM));
         }
+        #endregion
 
-        // Battle callbacks
+        #region Battle Callbacks
         private void ReturnCheckpoint() {
             SaveLoader.LoadGame();
         }
@@ -67,6 +67,7 @@ namespace FinalInferno.UI {
                 SceneLoader.LoadOWSceneFromBattle(Party.Instance.currentMap);
             }
         }
+        #endregion
     }
 
 }

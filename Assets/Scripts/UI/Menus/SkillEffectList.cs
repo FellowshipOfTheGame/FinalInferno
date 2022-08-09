@@ -10,8 +10,8 @@ namespace FinalInferno.UI.AII {
             base.Awake();
         }
 
-        public override void Active() {
-            base.Active();
+        public override void Activate() {
+            base.Activate();
             if (scrollLeftIndicator != null) {
                 scrollLeftIndicator.SetActive(false);
             }
@@ -20,8 +20,8 @@ namespace FinalInferno.UI.AII {
             }
         }
 
-        public override void Deactive() {
-            base.Deactive();
+        public override void Deactivate() {
+            base.Deactivate();
             if (scrollLeftIndicator != null) {
                 scrollLeftIndicator.SetActive(false);
             }
