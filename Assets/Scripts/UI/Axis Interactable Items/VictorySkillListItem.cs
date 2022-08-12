@@ -12,10 +12,8 @@ namespace FinalInferno.UI.AII {
         }
 
         private void UpdateSkillDescription() {
-            if (skill == null) {
+            if (!skill)
                 skill = GetComponent<UpdatedSkill>().thisSkill;
-            }
-
             loader.LoadSkillInfo(skill);
         }
     }

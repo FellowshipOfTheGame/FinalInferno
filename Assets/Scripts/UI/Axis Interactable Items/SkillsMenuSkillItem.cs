@@ -5,15 +5,13 @@ using UnityEngine.UI;
 namespace FinalInferno.UI.AII {
     public class SkillsMenuSkillItem : MonoBehaviour {
         [SerializeField] private AxisInteractableItem item;
+        [SerializeField] private RectTransform rect;
+        [SerializeField] private Text skillNameText;
+        [SerializeField] private Image skillImage;
         private PlayerSkill skill;
         private LoadSkillDescription loader;
+        private HeroSkillsContent content;
         private int heroIndex = 0;
-
-        [SerializeField] private RectTransform rect;
-        [SerializeField] private HeroSkillsContent content;
-
-        [SerializeField] private Text SkillNameText;
-        [SerializeField] private Image SkillImage;
 
         private void Awake() {
             item.OnEnter += UpdateSkillDescription;
@@ -26,8 +24,8 @@ namespace FinalInferno.UI.AII {
             content = _content;
             heroIndex = heroIdx;
 
-            SkillNameText.text = skill.name;
-            SkillImage.sprite = skill.skillImage;
+            skillNameText.text = skill.name;
+            skillImage.sprite = skill.skillImage;
         }
 
         private void UpdateSkillDescription() {

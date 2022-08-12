@@ -5,7 +5,7 @@ using UnityEngine.UI;
 namespace FinalInferno.UI.Victory {
     public class UpdatedSkill : MonoBehaviour {
         [SerializeField] private Text SkillName;
-        [SerializeField] private Image SkillImage;
+        [SerializeField] private Image skillImage;
         [SerializeField] private Text SkillLevelText;
         [SerializeField] private Slider SkillLevelSlider;
         [SerializeField] private Image PreviousXPAmountImage;
@@ -19,7 +19,7 @@ namespace FinalInferno.UI.Victory {
 
         public void LoadUpdatedSkill(SkillInfo pSkill, PlayerSkill skill) {
             SkillName.text = skill.name;
-            SkillImage.sprite = skill.skillImage;
+            skillImage.sprite = skill.skillImage;
             SkillLevelText.text = pSkill.level.ToString();
             SkillLevelSlider.maxValue = pSkill.xpToNextLevel;
             SkillLevelSlider.value = pSkill.xp;
