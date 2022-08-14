@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 namespace FinalInferno.UI.AII {
-    public class SkillEffectList : AII.AIIManager {
+    public class SkillEffectList : AIIManager {
         [Space]
         [SerializeField] private GameObject scrollLeftIndicator = null;
         [SerializeField] private GameObject scrollRightIndicator = null;
@@ -12,25 +12,20 @@ namespace FinalInferno.UI.AII {
 
         public override void Activate() {
             base.Activate();
-            if (scrollLeftIndicator != null) {
+            if (scrollLeftIndicator != null)
                 scrollLeftIndicator.SetActive(false);
-            }
-            if (scrollRightIndicator != null) {
+            if (scrollRightIndicator != null)
                 scrollRightIndicator.SetActive(false);
-            }
         }
 
         public override void Deactivate() {
             base.Deactivate();
-            if (scrollLeftIndicator != null) {
+            if (scrollLeftIndicator != null)
                 scrollLeftIndicator.SetActive(false);
-            }
-            if (scrollRightIndicator != null) {
+            if (scrollRightIndicator != null)
                 scrollRightIndicator.SetActive(false);
-            }
         }
 
-        // Update is called once per frame
         private void LateUpdate() {
             scrollRightIndicator.SetActive(active && (currentItem != lastItem));
             scrollLeftIndicator.SetActive(active && (currentItem != firstItem));

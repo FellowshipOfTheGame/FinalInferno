@@ -46,7 +46,7 @@ namespace FinalInferno.UI.AII {
         }
 
         private void UpdateSkillsContentPosition() {
-            content.SetContentToPosition(index);
+            content.SetContentPosition(index);
         }
     }
 }

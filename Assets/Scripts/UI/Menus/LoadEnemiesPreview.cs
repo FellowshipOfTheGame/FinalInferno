@@ -6,27 +6,23 @@ namespace FinalInferno.UI {
         [SerializeField] private GameObject EnemyImage;
 
         public void LoadPreview() {
+            int previousCreberusHeadCount = CerberusHead.heads;
             CerberusHead.heads = 0;
-            int enemyLevel = int.MinValue;
+            int enemyLevel = Enemy.CalculateEnemyLevel();
             foreach (Enemy enemy in ChangeSceneUI.battleEnemies) {
-                // Esse cálculo supõe que todos os inimigos dever ter o mesmo nível
-                // Caso algo complexo como inimigos tendo níveis diferentes seja necessario
-                // a condicional precisa ser removida e apenas a versão sem parametro da fução seria chamada
-                if (enemyLevel == int.MinValue) {
-                    enemyLevel = enemy.LevelEnemy();
-                } else {
-                    enemy.LevelEnemy(enemyLevel);
-                }
-
-                if (enemy is CerberusHead) {
+                enemy.LevelEnemy(enemyLevel);
+                if (enemy is CerberusHead)
                     CerberusHead.heads++;
-                }
-
-                GameObject newEnemy = Instantiate(EnemyImage, transform);
-                newEnemy.GetComponent<Image>().sprite = enemy.QueueSprite;
-                newEnemy.GetComponent<Image>().color = enemy.color;
+                InstantiateEnemyPortrait(enemy);
             }
-            CerberusHead.heads = 0;
+            CerberusHead.heads = previousCreberusHeadCount;
+        }
+
+        private void InstantiateEnemyPortrait(Enemy enemy) {
+            GameObject newEnemy = Instantiate(EnemyImage, transform);
+            Image enemyImage = newEnemy.GetComponent<Image>();
+            enemyImage.sprite = enemy.QueueSprite;
+            enemyImage.color = enemy.color;
         }
     }
 }

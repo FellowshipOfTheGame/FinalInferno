@@ -6,9 +6,8 @@ namespace FinalInferno.UI {
         [SerializeField] private TextMeshProUGUI versionText;
 
         private void Awake() {
-            if (versionText) {
-                versionText.text = "Version " + Application.version;
-            }
+            if (versionText)
+                versionText.text = $"Version {Application.version}";
         }
 
         public void QuitGame() {
