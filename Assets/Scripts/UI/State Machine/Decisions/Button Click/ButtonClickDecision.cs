@@ -6,9 +6,11 @@ namespace FinalInferno.UI.FSM {
         private bool buttonIsClicked = false;
 
         public override bool Decide(StateController controller) {
-            bool clickedThisFrame = buttonIsClicked;
+            return buttonIsClicked;
+        }
+
+        public override void Reset() {
             buttonIsClicked = false;
-            return clickedThisFrame;
         }
 
         public void Click() {
