@@ -18,7 +18,6 @@ namespace FinalInferno.UI.Saves {
 
         [Header("Click decision")]
         [SerializeField] private ButtonClickDecision clickDecision;
-
         [SerializeField] private LoadPreviews loadPreviewsActions;
 
         [Header("Autosave info")]

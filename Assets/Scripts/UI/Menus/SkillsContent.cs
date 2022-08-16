@@ -57,5 +57,4 @@ namespace FinalInferno.UI.SkillsMenu {
             isInPosition = false;
         }
     }
-
 }

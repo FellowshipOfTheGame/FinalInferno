@@ -11,7 +11,6 @@ namespace FinalInferno.UI.Saves {
         [Header("Slot Type GameObjects")]
         [SerializeField] private GameObject EmptySlotGO;
         [SerializeField] private GameObject PreviewInfoGO;
-
         [Header("UI Preview Items")]
         [SerializeField] private TMP_Text InfosText;
         [SerializeField] private Image[] HeroesImages;
@@ -19,7 +18,6 @@ namespace FinalInferno.UI.Saves {
         [Header("Axis Interactable Item")]
         [SerializeField] private AxisInteractableItem Item;
         [SerializeField] private BoolDecision decision;
-
         private int slotNumber = -1;
         private bool emptySlot;
         private readonly Regex cleanupRegex = new Regex(@"(?<=[A-Z])(?=[A-Z][a-z])|(?<=[^A-Z])(?=[A-Z])|(?<=[A-Za-z])(?=[^A-Za-z])");

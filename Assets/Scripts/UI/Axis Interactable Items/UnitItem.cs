@@ -8,7 +8,6 @@ namespace FinalInferno.UI.AII {
         public BattleUnit BattleUnit { get; private set; }
         [SerializeField] private RectTransform unitReference;
         [SerializeField] private AxisInteractableItem item;
-        [SerializeField] private HeroInfoLoader infoLoader;
         [SerializeField] private LayoutElement layout;
         private RectTransform rectTransform;
         [SerializeField] private float stepSize = 0.5f;

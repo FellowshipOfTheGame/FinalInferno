@@ -12,7 +12,5 @@ namespace FinalInferno.UI.FSM {
         public override void RequestComponent(GameObject provider) {
             scrollbar = provider.GetComponent<KeyboardScrollbar>();
         }
-
     }
-
 }

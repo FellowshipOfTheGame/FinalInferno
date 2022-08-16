@@ -4,17 +4,17 @@ namespace FinalInferno.UI.FSM {
     [CreateAssetMenu(menuName = "BattleUI SM/Decisions/Animation Ended")]
     public class AnimationEnded : Decision {
         private static bool animationEnded = false;
-        public static bool isWaiting = false;
+        private static bool isWaiting = false;
 
         public static void StartAnimation() {
             isWaiting = true;
         }
 
         public static void EndAnimation() {
-            if (!animationEnded && isWaiting) {
-                animationEnded = true;
-                isWaiting = false;
-            }
+            if (!isWaiting || animationEnded)
+                return;
+            animationEnded = true;
+            isWaiting = false;
         }
 
         public override bool Decide(StateController controller) {

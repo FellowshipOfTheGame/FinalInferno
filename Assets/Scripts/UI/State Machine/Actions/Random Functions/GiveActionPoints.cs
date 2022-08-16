@@ -1,46 +1,33 @@
 ﻿using UnityEngine;
 
 namespace FinalInferno.UI.FSM {
-    /// <summary>
-    /// Ação que recoloca a unidade atual na fila como se ela tivesse atacado.
-    /// </summary>
     [CreateAssetMenu(menuName = "BattleUI SM/Actions/Give Action Points")]
     public class GiveActionPoints : Action {
-        /// <summary>
-        /// Executa uma ação.
-        /// </summary>
-        /// <param name="controller"> O controlador da máquina de estados. </param>
-
         [SerializeField] private bool forceAttack = false;
+        private BattleUnit CurrentUnit => BattleManager.instance.CurrentUnit ? BattleManager.instance.CurrentUnit : BattleSkillManager.CurrentUser;
+        private bool CurrentUnitIsDead => !BattleManager.instance.CurrentUnit;
+        private bool CurrentUnitIsDeadFromEffect => !BattleManager.instance.CurrentUnit && !BattleSkillManager.CurrentUser;
         public override void Act(StateController controller) {
             foreach (BattleUnit battleUnit in BattleSkillManager.CurrentTargets) {
                 battleUnit.StopShowingThisAsATarget();
             }
 
-            BattleUnit currentUnit = BattleManager.instance.CurrentUnit;
-            // Quando a unidade morre por usar uma skill ou status effect currentUnit==null
-            if (currentUnit == null) {
-                currentUnit = BattleSkillManager.CurrentUser;
-                // Quando a unidade morre por status effect currentUnit==null aqui e nada deve ser feito
-                if (currentUnit != null) {
-                    Debug.Log("Unidade morreu por conta de counter ou algo do tipo");
-                    // Eu acho que seria impossível chegar aqui e currentSkill ser null, mas fica a precaução
-                    if (BattleSkillManager.CurrentSkill == null) {
-                        BattleSkillManager.SelectSkill(currentUnit.Unit.attackSkill);
-                    }
-                    currentUnit.actionPoints += Mathf.FloorToInt(BattleSkillManager.CurrentSkill.cost * (1.0f - currentUnit.ActionCostReduction));
-                    BattleManager.instance.EndTurn();
-                }
+            if (CurrentUnitIsDeadFromEffect)
+                return;
+
+            if (CurrentUnitIsDead) {
+                if (!BattleSkillManager.CurrentSkill)
+                    BattleSkillManager.SelectSkill(CurrentUnit.Unit.attackSkill);
+                CurrentUnit.actionPoints += CalculateActionCost(BattleSkillManager.CurrentSkill);
+                BattleManager.instance.EndTurn();
             } else {
-                Skill skillSelected = BattleSkillManager.CurrentSkill;
-                if (forceAttack || skillSelected == null) {
-                    BattleManager.instance.UpdateQueue(Mathf.FloorToInt(currentUnit.Unit.attackSkill.cost * (1.0f - currentUnit.ActionCostReduction)));
-                } else {
-                    BattleManager.instance.UpdateQueue(Mathf.FloorToInt(BattleSkillManager.CurrentSkill.cost * (1.0f - currentUnit.ActionCostReduction)));
-                }
+                Skill skillSelected = forceAttack || !BattleSkillManager.CurrentSkill ? CurrentUnit.Unit.attackSkill : BattleSkillManager.CurrentSkill;
+                BattleManager.instance.UpdateQueue(CalculateActionCost(skillSelected));
             }
         }
 
+        private int CalculateActionCost(Skill skillUsed) {
+            return Mathf.FloorToInt(skillUsed.cost * (1.0f - CurrentUnit.ActionCostReduction));
+        }
     }
-
 }

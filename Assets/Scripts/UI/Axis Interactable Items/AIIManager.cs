@@ -76,6 +76,13 @@ namespace FinalInferno.UI.AII {
             active = false;
         }
 
+        public virtual void ToggleActive() {
+            if (IsActive)
+                Deactivate();
+            else
+                Activate();
+        }
+
         public void SetFocus(bool isActive) {
             active = isActive;
         }
