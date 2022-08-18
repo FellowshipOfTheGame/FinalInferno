@@ -2,13 +2,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using FinalInferno.EventSystem;
-using FinalInferno.UI.Battle;
-using FinalInferno.UI.FSM;
 
 namespace FinalInferno {
     public class BattleManager : MonoBehaviour {
         public static BattleManager instance = null;
-        public BoolDecision isBattleReady;
+        public BoolVariable isBattleReady;
         [SerializeField] private List<Unit> units;
         public List<Unit> Units => units;
         public List<BattleUnit> battleUnits;
@@ -17,13 +15,11 @@ namespace FinalInferno {
         public int MaxBaseSpeed { get; private set; } = Unit.maxStatValue;
         public int MinBaseSpeed { get; private set; } = 0;
         public int CameraPPU { get; private set; } = 64;
-
-        [Header("UI Elements")]
-        public BattleUnitsUI unitsUI;
-        [SerializeField] private RectTransform heroesLayout;
-        [SerializeField] private RectTransform enemiesLayout;
+        [SerializeField] private BattleUnitInstantiator battleUnitInstantiator;
         [Header("Events")]
         [SerializeField] private EventFI updateLivesEvent;
+        [SerializeField] private EventFI onSetupFinished;
+        public EventFI OnSetupFinished => onSetupFinished;
         [Header("Input References")]
         [SerializeField] private InputActionReference debugAction;
 
@@ -42,6 +38,7 @@ namespace FinalInferno {
             units = new List<Unit>();
             battleUnits = new List<BattleUnit>();
             BattleProgress.ResetInfo(Party.Instance);
+            isBattleReady.UpdateValue(false);
         }
 
         private void OnDestroy() {
@@ -80,15 +77,13 @@ namespace FinalInferno {
             foreach (Unit unit in Units) {
                 UpdateSpeedLimits(unit);
                 SaveProgressIfHeroUnit(unit);
-                BattleUnit newUnit = BattleUnitsUI.Instance.LoadUnit(unit, CameraPPU);
+                BattleUnit newUnit = battleUnitInstantiator.InstantiateNewBattleUnit(unit);
                 battleUnits.Add(newUnit);
-                SetupIfEnemyUnit(unit, newUnit);
             }
-            UpdateUIElements();
+            OnSetupFinished.Raise();
             foreach (BattleUnit battleUnit in battleUnits) {
                 InsertNewUnitInQueue(battleUnit);
             }
-
             isBattleReady.UpdateValue(true);
         }
 
@@ -100,25 +95,6 @@ namespace FinalInferno {
         private static void SaveProgressIfHeroUnit(Unit unit) {
             if (unit is Hero)
                 BattleProgress.AddHeroSkills((Hero)unit);
-        }
-
-        private static void SetupIfEnemyUnit(Unit unit, BattleUnit newUnit) {
-            if (!(unit is Enemy))
-                return;
-            newUnit.ChangeColor();
-            (newUnit.Unit as Enemy).ResetParameters();
-        }
-
-        private void UpdateUIElements() {
-            ForceUpdateLayoutPositions();
-            foreach (BattleUnit battleUnit in battleUnits) {
-                battleUnit.OnSetupFinished?.Invoke();
-            }
-        }
-
-        private void ForceUpdateLayoutPositions() {
-            UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(enemiesLayout);
-            UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(heroesLayout);
         }
 
         private void InsertNewUnitInQueue(BattleUnit battleUnit) {
@@ -188,7 +164,6 @@ namespace FinalInferno {
 
         private void RemoveDeadUnitReferences(BattleUnit unit) {
             queue.Remove(unit);
-            unitsUI.RemoveUnit(unit);
             if (CurrentUnit != unit)
                 return;
             CurrentUnit.OnTurnEnd?.Invoke(CurrentUnit);
@@ -203,8 +178,7 @@ namespace FinalInferno {
 
         private void ReinsertRevivedUnitInQueue(BattleUnit unit) {
             unit.actionPoints = Mathf.FloorToInt(unit.Unit.attackSkill.cost);
-            queue.Enqueue(unit, 0);
-            unitsUI.ReinsertUnit(unit);
+            queue.ReinsertToQueue(unit);
         }
 
         public VictoryType CheckEnd() {

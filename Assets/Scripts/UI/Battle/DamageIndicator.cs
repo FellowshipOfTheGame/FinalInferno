@@ -1,10 +1,14 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace FinalInferno.UI.Battle {
     [RequireComponent(typeof(Canvas))]
-    public class DamageIndicator : MonoBehaviour {
+    public class DamageIndicator : MonoBehaviour, IDamageIndicator {
+        private const float yOffset = 0.35f;
+        private const string missString = "miss";
         [SerializeField] private GameObject numberPrefab;
+        [SerializeField] private BattleUnit battleUnit;
         [SerializeField, Range(1f, 5f)] private float critFontSize = 2f;
         [SerializeField, Range(0.1f, 1f)] private float weakFontSize = 0.5f;
         [SerializeField] private Color critDamageColor;
@@ -18,79 +22,79 @@ namespace FinalInferno.UI.Battle {
         [SerializeField, Range(0, 5)] private float intervalBetweenNumbers = 0.1f;
         private float cooldown = 0;
 
-        private struct DamageEntry {
-            public int value;
-            public bool isHeal;
-            public DamageStrength strength;
-            public DamageEntry(int val, bool heal, DamageStrength str) {
-                value = val;
-                isHeal = heal;
-                strength = str;
-            }
+        private Queue<DamageEntry?> queue = new Queue<DamageEntry?>();
+
+        private void Awake() {
+            GetComponent<Canvas>().worldCamera = Camera.main;
+            battleUnit.DamageIndicator = this;
         }
-        private enum DamageStrength {
-            Regular,
-            Weak,
-            Strong
+
+        public void Setup() {
+            GetComponent<RectTransform>().anchoredPosition += battleUnit.HeadPosition + new Vector2(0, yOffset);
         }
-        private List<DamageEntry?> queue = new List<DamageEntry?>();
 
         private void InstantiateNewNumber(DamageEntry entry) {
             GameObject newObj = Instantiate(numberPrefab, transform);
-            UnityEngine.UI.Text txt = newObj.GetComponent<UnityEngine.UI.Text>();
+            Text txt = newObj.GetComponent<Text>();
+            ApplyTextSizeAndColor(entry, txt);
+            txt.text = $"{entry.value}";
+        }
+
+        private void ApplyTextSizeAndColor(DamageEntry entry, Text txt) {
             if (entry.strength == DamageStrength.Strong) {
-                txt.color = (entry.isHeal) ? critHealColor : critDamageColor;
+                txt.color = entry.isHeal ? critHealColor : critDamageColor;
                 txt.fontSize = Mathf.CeilToInt(txt.fontSize * critFontSize);
             } else if (entry.strength == DamageStrength.Weak) {
-                txt.color = (entry.isHeal) ? weakHealColor : weakDamageColor;
+                txt.color = entry.isHeal ? weakHealColor : weakDamageColor;
                 txt.fontSize = Mathf.CeilToInt(txt.fontSize * weakFontSize);
             } else {
-                txt.color = (entry.isHeal) ? healColor : damageColor;
+                txt.color = entry.isHeal ? healColor : damageColor;
             }
-            txt.text = "" + entry.value;
         }
 
         private void InstantiateMissWord() {
             GameObject newObj = Instantiate(numberPrefab, transform);
-            UnityEngine.UI.Text txt = newObj.GetComponent<UnityEngine.UI.Text>();
+            Text txt = newObj.GetComponent<Text>();
             txt.color = Color.white;
-            txt.text = "miss";
+            txt.text = missString;
         }
 
         public void ShowDamage(int value, bool isHeal, float multiplier) {
-            float dif = multiplier - 1.0f;
-            DamageStrength strength = DamageStrength.Regular;
-            if (dif < -float.Epsilon) {
-                strength = DamageStrength.Weak;
-            } else if (dif > float.Epsilon) {
-                strength = DamageStrength.Strong;
+            DamageStrength strength = GetDamageStrength(multiplier);
+            queue.Enqueue(new DamageEntry(value, isHeal, strength));
+        }
+
+        private static DamageStrength GetDamageStrength(float multiplier) {
+            float difference = multiplier - 1.0f;
+            if (difference < -float.Epsilon) {
+                return DamageStrength.Weak;
+            } else if (difference > float.Epsilon) {
+                return DamageStrength.Strong;
+            } else {
+                return DamageStrength.Regular;
             }
-            queue.Add(new DamageEntry(value, isHeal, strength));
         }
 
         public void ShowMiss() {
-            queue.Add(null);
+            queue.Enqueue(null);
         }
 
-        private void Awake() {
-            GetComponent<Canvas>().worldCamera = Camera.main;
-        }
-
-        // Update is called once per frame
         private void Update() {
-            if (cooldown <= float.Epsilon && queue.Count > 0) {
-                cooldown = intervalBetweenNumbers;
+            if (cooldown > float.Epsilon || queue.Count <= 0) {
+                if (cooldown > 0)
+                    cooldown -= Time.deltaTime;
+                return;
+            }
+            cooldown = intervalBetweenNumbers;
+            ShowNextDamageEntry();
+        }
 
-                DamageEntry? popped = queue[0];
-                queue.RemoveAt(0);
-
-                if (popped.HasValue) {
-                    InstantiateNewNumber(popped.Value);
-                } else {
-                    InstantiateMissWord();
-                }
-            } else if (cooldown > 0) {
-                cooldown -= Time.deltaTime;
+        private void ShowNextDamageEntry() {
+            DamageEntry? popped = queue.Dequeue();
+            if (popped.HasValue) {
+                InstantiateNewNumber(popped.Value);
+            } else {
+                InstantiateMissWord();
             }
         }
     }

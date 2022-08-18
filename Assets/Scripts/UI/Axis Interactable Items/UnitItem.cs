@@ -1,5 +1,5 @@
 ﻿using FinalInferno.UI.Battle;
-using FinalInferno.UI.FSM;
+using FinalInferno.EventSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,10 +13,15 @@ namespace FinalInferno.UI.AII {
         [SerializeField] private float stepSize = 0.5f;
         private bool showingTarget = false;
         private int ppu;
+        private VoidEventListenerFI setupFinishedEventListener = null;
 
         private void Awake() {
             rectTransform = GetComponent<RectTransform>();
             item.OnAct += SetTarget;
+        }
+
+        private void Destroy() {
+            setupFinishedEventListener?.StopListeningEvent();
         }
 
         private void SetTarget() {
@@ -24,11 +29,12 @@ namespace FinalInferno.UI.AII {
             BattleSkillManager.CurrentTargets.Add(BattleUnit);
         }
 
-        public void SetBattleUnit(BattleUnit observedBattleUnit, int currentPPU = 64) {
-            ppu = currentPPU;
+        public void SetBattleUnit(BattleUnit observedBattleUnit) {
+            ppu = BattleManager.instance.CameraPPU;
             BattleUnit = observedBattleUnit;
-            observedBattleUnit.OnSetupFinished.AddListener(Setup);
             observedBattleUnit.OnSizeChanged.AddListener(UpdateBattleUnitSize);
+            setupFinishedEventListener = new VoidEventListenerFI(BattleManager.instance.OnSetupFinished, Setup);
+            setupFinishedEventListener.StartListeningEvent();
         }
 
         public void UpdateBattleUnitSize() {

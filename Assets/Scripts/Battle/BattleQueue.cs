@@ -13,6 +13,13 @@ namespace FinalInferno {
         public UnityEvent<BattleUnit> OnUpdateQueue { get; private set; } = new UnityEvent<BattleUnit>();
         [SerializeField] private EventFI stopQueuePreviewEvent;
         [SerializeField] private IntEventFI startQueuePreviewEvent;
+        [SerializeField] private BattleUnitEventFI removedUnitEvent;
+        [SerializeField] private BattleUnitEventFI reinsertedUnitEvent;
+
+        public void ReinsertToQueue(BattleUnit element) {
+            Enqueue(element, 0);
+            reinsertedUnitEvent.Raise(element);
+        }
 
         public void Enqueue(BattleUnit element, int additionalValue) {
             element.actionPoints += additionalValue;
@@ -59,6 +66,7 @@ namespace FinalInferno {
 
         public void Remove(BattleUnit unit) {
             list.Remove(unit);
+            removedUnitEvent.Raise(unit);
             OnUpdateQueue?.Invoke(BattleManager.instance.CurrentUnit);
         }
 

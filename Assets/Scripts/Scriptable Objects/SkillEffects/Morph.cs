@@ -25,11 +25,8 @@ namespace FinalInferno {
                 Debug.LogError($"SkillEffect Morph can't access UnitIndex list", this);
                 return;
             }
-
-            int previousHP = target.CurHP;
             LevelUpIfEnemy();
             ConfigureStatsAndUI(target);
-            ShowHPChange(target, previousHP);
         }
 
         private void LevelUpIfEnemy() {
@@ -41,13 +38,6 @@ namespace FinalInferno {
         private void ConfigureStatsAndUI(BattleUnit target) {
             target.ConfigureMorph(unitIndex.UnitList[MorphUnitIndex], PercentageMaxHealth);
             target.OnSizeChanged?.Invoke();
-        }
-
-        private static void ShowHPChange(BattleUnit target, int previousHP) {
-            int hpDifference = target.CurHP - previousHP;
-            if (hpDifference != 0) {
-                target.ShowDamage(Mathf.Abs(hpDifference), hpDifference > 0, 1.0f);
-            }
         }
     }
 }

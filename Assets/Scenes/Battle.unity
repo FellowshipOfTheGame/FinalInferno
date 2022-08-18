@@ -1154,6 +1154,74 @@ MonoBehaviour:
     type: 3}
   heroIndicator: {fileID: 21300000, guid: af0a4470f34ebac4ab0f0444764525f7, type: 3}
   enemyIndicator: {fileID: 21300000, guid: 3496668d8b80af747986990191e7cbfe, type: 3}
+  setupFinishedListener:
+    eventListened: {fileID: 11400000, guid: e361480eca6cb94f8bcf22384af0381e, type: 2}
+    eventCallback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 125682818}
+          m_TargetAssemblyTypeName: FinalInferno.UI.Battle.BattleUnitsUI, FinalInferno
+          m_MethodName: ForceUpdateLayoutPositions
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  unitInstantiatedListener:
+    eventListened: {fileID: 11400000, guid: b5739ef5d951ada7ea81c6f248623455, type: 2}
+    eventCallback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 125682818}
+          m_TargetAssemblyTypeName: FinalInferno.UI.Battle.BattleUnitsUI, FinalInferno
+          m_MethodName: LoadUnit
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  unitRemovedListener:
+    eventListened: {fileID: 11400000, guid: 4a27161e56440bd51bb6bf6d770102e6, type: 2}
+    eventCallback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 125682818}
+          m_TargetAssemblyTypeName: FinalInferno.UI.Battle.BattleUnitsUI, FinalInferno
+          m_MethodName: RemoveUnit
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  unitReinsertedListener:
+    eventListened: {fileID: 11400000, guid: a0d0d7638cf1cee9ea28697913d45c3c, type: 2}
+    eventCallback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 125682818}
+          m_TargetAssemblyTypeName: FinalInferno.UI.Battle.BattleUnitsUI, FinalInferno
+          m_MethodName: ReinsertUnit
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &126771869
 GameObject:
   m_ObjectHideFlags: 0
@@ -4739,7 +4807,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -7.5000005}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -60, y: 17}
+  m_AnchoredPosition: {x: -75, y: 17}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &552125060
@@ -12953,7 +13021,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 7.5}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 60, y: 17}
+  m_AnchoredPosition: {x: 75, y: 17}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1478502789
@@ -15900,25 +15968,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df395b6ee4e6a2a4eae2a8b9baf0f32b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isBattleReady: {fileID: 11400000, guid: 24f067114be575d48b9519b1e4d9a46c, type: 2}
-  units:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 11400000, guid: 5cc173cdd0ad1814eb106967727715e2, type: 2}
-  - {fileID: 11400000, guid: e9525b6ce1e46534e930ac508a9af0ab, type: 2}
-  - {fileID: 11400000, guid: 0170c5b1892fb7b4289b1ccaba155a63, type: 2}
-  - {fileID: 11400000, guid: 242d4f97eef6c3245949a9eabd38989c, type: 2}
+  isBattleReady: {fileID: 11400000, guid: dd989dd95cc0fd211822089ff907f99e, type: 2}
+  units: []
   battleUnits: []
   queue:
     stopQueuePreviewEvent: {fileID: 11400000, guid: e012386d786fb844595907d4f54c35d6,
       type: 2}
     startQueuePreviewEvent: {fileID: 11400000, guid: 429ea1fc1faad8542b9e920f4ff140f6,
       type: 2}
-  unitsUI: {fileID: 125682818}
-  heroesLayout: {fileID: 552125059}
-  enemiesLayout: {fileID: 1478502788}
+    removedUnitEvent: {fileID: 11400000, guid: 4a27161e56440bd51bb6bf6d770102e6, type: 2}
+    reinsertedUnitEvent: {fileID: 11400000, guid: a0d0d7638cf1cee9ea28697913d45c3c,
+      type: 2}
+  battleUnitInstantiator:
+    unitPrefab: {fileID: 8526816310043980822, guid: 20011edcce22c334ea26279a30eefdb0,
+      type: 3}
+    unitInstantiatedEvent: {fileID: 11400000, guid: b5739ef5d951ada7ea81c6f248623455,
+      type: 2}
   updateLivesEvent: {fileID: 11400000, guid: 41548a6310b6a8d46b71987c4442d813, type: 2}
+  onSetupFinished: {fileID: 11400000, guid: e361480eca6cb94f8bcf22384af0381e, type: 2}
   debugAction: {fileID: -2694234675557987794, guid: eeed788d9c9bd6ba4afdbd0089dd3943,
     type: 3}
 --- !u!4 &1984505593
