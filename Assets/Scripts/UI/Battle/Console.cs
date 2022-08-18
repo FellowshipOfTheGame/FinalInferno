@@ -30,10 +30,7 @@ namespace FinalInferno.UI.Battle {
         }
 
         private static string GetActionString() {
-            return BattleSkillManager.CurrentSkill switch {
-                null => GetReasonCantAct(),
-                _ => $"used {BattleSkillManager.CurrentSkill.name}",
-            };
+            return BattleSkillManager.CurrentSkill == null ? GetReasonCantAct() : $"used {BattleSkillManager.CurrentSkill.name}";
         }
 
         private static string GetReasonCantAct() {

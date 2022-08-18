@@ -11,8 +11,6 @@ namespace FinalInferno {
         private List<BattleUnit> list = new List<BattleUnit>();
         public int Count => list.Count;
         public UnityEvent<BattleUnit> OnUpdateQueue { get; private set; } = new UnityEvent<BattleUnit>();
-        [SerializeField] private EventFI stopQueuePreviewEvent;
-        [SerializeField] private IntEventFI startQueuePreviewEvent;
         [SerializeField] private BattleUnitEventFI removedUnitEvent;
         [SerializeField] private BattleUnitEventFI reinsertedUnitEvent;
 
@@ -28,21 +26,11 @@ namespace FinalInferno {
             OnUpdateQueue?.Invoke(BattleManager.instance.CurrentUnit);
         }
 
-        private int CalculateNewPosition(int actionPoints) {
+        public int CalculateNewPosition(int actionPoints) {
             int predictedIndex;
             for (predictedIndex = 0; predictedIndex < list.Count && actionPoints >= list[predictedIndex].actionPoints; predictedIndex++)
                 continue;
             return predictedIndex;
-        }
-
-        public int PreviewPosition(int actionPoints) {
-            int predictedIndex = CalculateNewPosition(actionPoints);
-            startQueuePreviewEvent.Raise(predictedIndex);
-            return predictedIndex;
-        }
-
-        public void StopPreview() {
-            stopQueuePreviewEvent.Raise();
         }
 
         public bool Contains(BattleUnit unit) {

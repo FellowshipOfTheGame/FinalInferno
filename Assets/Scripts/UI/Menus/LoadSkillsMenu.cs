@@ -21,12 +21,16 @@ namespace FinalInferno.UI.SkillsMenu {
             for (int heroIndex = 0; heroIndex < Party.Instance.characters.Count; heroIndex++) {
                 Hero hero = Party.Instance.characters[heroIndex].archetype;
                 HeroesImages[heroIndex].sprite = hero.Portrait;
-                foreach (SkillsMenuSkillItem item in SkillsContents[heroIndex].transform.GetComponentsInChildren<SkillsMenuSkillItem>()) {
-                    Destroy(item.gameObject);
-                }
+                ClearExistingItems(heroIndex);
                 AIIManager manager = SkillsContents[heroIndex];
                 InstantiateHeroSkillItems(heroIndex, manager);
                 FixAnchoring(manager);
+            }
+        }
+
+        private void ClearExistingItems(int heroIndex) {
+            foreach (SkillsMenuSkillItem item in SkillsContents[heroIndex].transform.GetComponentsInChildren<SkillsMenuSkillItem>()) {
+                Destroy(item.gameObject);
             }
         }
 

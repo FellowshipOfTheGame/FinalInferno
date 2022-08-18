@@ -39,19 +39,19 @@ namespace FinalInferno.UI.SkillsMenu {
 
         private void Update() {
             bool isContentMisplaced = Mathf.Abs(content.localPosition.x - xPosition) >= (skillListWidth * 0.02f);
-            if (!isContentMisplaced)
+            if (!isContentMisplaced) {
+                if (!isInPosition)
+                    SkipToPosition(curIndex);
                 return;
-
-            if (!isInPosition) {
-                canvas.pixelPerfect = false;
-                canvas.overridePixelPerfect = true;
-                isInPosition = false;
-                float previousPos = content.localPosition.x;
-                UpdateContentPosition();
-                SkipIfOvershotTargetPosition(previousPos);
-            } else {
-                SkipToPosition(curIndex);
             }
+            if (isInPosition)
+                return;
+            canvas.pixelPerfect = false;
+            canvas.overridePixelPerfect = true;
+            isInPosition = false;
+            float previousPos = content.localPosition.x;
+            UpdateContentPosition();
+            SkipIfOvershotTargetPosition(previousPos);
         }
 
         private void UpdateContentPosition() {

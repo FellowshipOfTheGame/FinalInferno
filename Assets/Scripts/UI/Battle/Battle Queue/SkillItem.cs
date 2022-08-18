@@ -1,20 +1,14 @@
 ﻿using FinalInferno.UI.AII;
+using FinalInferno.EventSystem;
 using UnityEngine;
 
 namespace FinalInferno.UI.Battle.QueueMenu {
-    /// <summary>
-	/// Item que é utilizado para ativar uma skill.
-	/// </summary>
     public class SkillItem : MonoBehaviour {
-        /// <summary>
-        /// Referência à skill do item.
-        /// </summary>
         public Skill skill;
-
-        /// <summary>
-        /// Referência ao item da lista.
-        /// </summary>
         [SerializeField] protected AxisInteractableItem item;
+        [SerializeField] private EventFI stopQueuePreviewEvent;
+        [SerializeField] private IntEventFI startQueuePreviewEvent;
+        private BattleUnit CurrentUnit => BattleManager.instance.CurrentUnit;
 
         public void Awake() {
             item.OnEnter += StartPreview;
@@ -22,19 +16,13 @@ namespace FinalInferno.UI.Battle.QueueMenu {
             item.OnAct += UseSkill;
         }
 
-        /// <summary>
-        /// Coloca um marcador na posição da lista onde o personagem ficará quando utilizar a referente skill.
-        /// </summary>
         private void StartPreview() {
-            BattleManager.instance.queue.PreviewPosition(BattleManager.instance.CurrentUnit.actionPoints
-                                                 + Mathf.FloorToInt((1.0f - BattleManager.instance.CurrentUnit.ActionCostReduction) * skill.cost));
+            int calculatedActionPoints = CurrentUnit.actionPoints + Mathf.FloorToInt((1.0f - CurrentUnit.ActionCostReduction) * skill.cost);
+            startQueuePreviewEvent.Raise(calculatedActionPoints);
         }
 
-        /// <summary>
-        /// Retira o marcador da posição.
-        /// </summary>
         private void StopPreview() {
-            BattleManager.instance.queue.StopPreview();
+            stopQueuePreviewEvent.Raise();
         }
 
         protected void UseSkill() {

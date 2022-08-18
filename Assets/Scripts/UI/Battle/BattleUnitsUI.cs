@@ -227,5 +227,4 @@ namespace FinalInferno.UI.Battle {
             }
         }
     }
-
 }

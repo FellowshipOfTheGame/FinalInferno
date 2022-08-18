@@ -17,5 +17,4 @@ namespace FinalInferno.UI {
             }
         }
     }
-
 }
