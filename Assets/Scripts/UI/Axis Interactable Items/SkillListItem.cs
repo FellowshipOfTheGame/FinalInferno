@@ -8,7 +8,7 @@ namespace FinalInferno.UI.AII {
         private PlayerSkill Skill {
             get {
                 if (!skill)
-                    skill = GetComponent<SkillElement>().skill;
+                    skill = GetComponent<SkillElement>().Skill;
                 return skill;
             }
             set => skill = value;

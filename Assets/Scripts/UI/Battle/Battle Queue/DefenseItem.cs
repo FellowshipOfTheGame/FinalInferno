@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace FinalInferno.UI.Battle.QueueMenu {
+namespace FinalInferno.UI.Battle.SkillMenu {
     public class DefenseItem : SkillItem {
         private const string showConsoleAnimString = "ShowConsole";
         private const string showDetailsAnimString = "ShowSkillDetails";

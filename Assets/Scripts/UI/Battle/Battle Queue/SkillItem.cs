@@ -2,7 +2,7 @@
 using FinalInferno.EventSystem;
 using UnityEngine;
 
-namespace FinalInferno.UI.Battle.QueueMenu {
+namespace FinalInferno.UI.Battle.SkillMenu {
     public class SkillItem : MonoBehaviour {
         public Skill skill;
         [SerializeField] protected AxisInteractableItem item;
