@@ -27,9 +27,8 @@ namespace FinalInferno {
         }
 
         protected override void TriggerAction(Agent agent) {
-            if (string.IsNullOrEmpty(scene.Name)) {
+            if (string.IsNullOrEmpty(scene.Name))
                 return;
-            }
             CharacterOW.PartyCanMove = false;
             Dialogue selectedDialogue = null;
             if (isCutscene) {
