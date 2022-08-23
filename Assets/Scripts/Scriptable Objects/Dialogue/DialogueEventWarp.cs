@@ -50,6 +50,8 @@ namespace FinalInferno {
             sceneChangeInfo.savePosition = Vector2.zero;
             string guid = UnityEditor.AssetDatabase.FindAssets($"t:{typeof(SceneChangeInfoReference)}")[0];
             sceneChangeInfoReference = UnityEditor.AssetDatabase.LoadAssetAtPath<SceneChangeInfoReference>(UnityEditor.AssetDatabase.GUIDToAssetPath(guid));
+            guid = UnityEditor.AssetDatabase.FindAssets($"Start Scene Change t:{typeof(EventFI)}")[0];
+            startSceneChangeAnimation = UnityEditor.AssetDatabase.LoadAssetAtPath<EventFI>(UnityEditor.AssetDatabase.GUIDToAssetPath(guid));
         }
     }
 }

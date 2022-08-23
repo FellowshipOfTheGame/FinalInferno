@@ -716,6 +716,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3759474725854435589, guid: 78755308a1ec8db479f0a007084e8e1c,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3889054453090049994, guid: 78755308a1ec8db479f0a007084e8e1c,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -1652,11 +1657,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: StartingArea03
+  scene:
+    sceneName: StartingArea03
+    assetPath: Assets/Scenes/The Plains Beyond Hell/StartingArea03.unity
+    guid: 23aabd9b971931243a0aacc605081e3e
   positionOnLoad: {x: -0.5, y: 9}
   saveGamePosition: {x: 0, y: 0}
   isCutscene: 0
   dialogues: []
-  decision: {fileID: 11400000, guid: 85e07579030f7964abe5a37c20e26455, type: 2}
+  sceneChangeInfoReference: {fileID: 11400000, guid: fdbb88afa63ff455fb7a81cb8c970183,
+    type: 2}
+  startSceneChangeAnimation: {fileID: 11400000, guid: cf69cddf33ac468b69a9cf9493b3cc10,
+    type: 2}
 --- !u!19719996 &210411360
 TilemapCollider2D:
   m_ObjectHideFlags: 0

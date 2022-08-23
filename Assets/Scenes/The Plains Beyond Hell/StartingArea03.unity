@@ -321,11 +321,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: StartingArea02
+  scene:
+    sceneName: StartingArea02
+    assetPath: Assets/Scenes/The Plains Beyond Hell/StartingArea02.unity
+    guid: d191d7541d22f9641b1484faa33e1441
   positionOnLoad: {x: -2.5, y: 13}
   saveGamePosition: {x: 0, y: 0}
   isCutscene: 0
   dialogues: []
-  decision: {fileID: 11400000, guid: 85e07579030f7964abe5a37c20e26455, type: 2}
+  sceneChangeInfoReference: {fileID: 11400000, guid: fdbb88afa63ff455fb7a81cb8c970183,
+    type: 2}
+  startSceneChangeAnimation: {fileID: 11400000, guid: cf69cddf33ac468b69a9cf9493b3cc10,
+    type: 2}
 --- !u!66 &510557496
 CompositeCollider2D:
   m_ObjectHideFlags: 0
@@ -594,11 +601,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: StartingArea04
+  scene:
+    sceneName: StartingArea04
+    assetPath: Assets/Scenes/The Plains Beyond Hell/StartingArea04.unity
+    guid: 28dc98fd7d7d7274585f52d364f4d83d
   positionOnLoad: {x: -0.5, y: -8}
   saveGamePosition: {x: 0, y: 0}
   isCutscene: 0
   dialogues: []
-  decision: {fileID: 11400000, guid: 85e07579030f7964abe5a37c20e26455, type: 2}
+  sceneChangeInfoReference: {fileID: 11400000, guid: fdbb88afa63ff455fb7a81cb8c970183,
+    type: 2}
+  startSceneChangeAnimation: {fileID: 11400000, guid: cf69cddf33ac468b69a9cf9493b3cc10,
+    type: 2}
 --- !u!66 &582841910
 CompositeCollider2D:
   m_ObjectHideFlags: 0
@@ -24927,6 +24941,11 @@ PrefabInstance:
     - target: {fileID: 3759474725854435589, guid: 78755308a1ec8db479f0a007084e8e1c,
         type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759474725854435589, guid: 78755308a1ec8db479f0a007084e8e1c,
+        type: 3}
+      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3759474725854435589, guid: 78755308a1ec8db479f0a007084e8e1c,

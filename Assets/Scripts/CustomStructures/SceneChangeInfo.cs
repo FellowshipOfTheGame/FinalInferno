@@ -35,7 +35,10 @@ namespace FinalInferno {
         }
 
         public void CopyValues(SceneChangeInfo other) {
-            scene.CopyValues(other.scene);
+            if (scene == null)
+                scene = new ScenePicker(other.scene);
+            else
+                scene.CopyValues(other.scene);
             destinationPosition = other.destinationPosition;
             isCutscene = other.isCutscene;
             cutsceneDialogue = other.cutsceneDialogue;

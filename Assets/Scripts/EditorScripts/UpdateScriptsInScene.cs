@@ -1,37 +1,48 @@
 #if UNITY_EDITOR
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 using UnityEditor.SceneManagement;
 #endif
-using UnityEngine;
-using UnityEngine.SceneManagement;
+using Scene = UnityEngine.SceneManagement.Scene;
+using System;
 
 namespace FinalInferno {
 #if UNITY_EDITOR
     public class UpdateScriptsInScene : IProcessSceneWithReport {
+        private static Type[] typesToCheck = { typeof(TriggerSceneChange) };
         public int callbackOrder => 0;
-
 
         [MenuItem("Tools/Final Inferno/Update All Updatable Scripts in All Scenes")]
         public static void UpdateScriptsInScenes() {
             if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
                 return;
-            Scene currentScene = EditorSceneManager.GetActiveScene();
-            for (int sceneIndex = 0; sceneIndex < EditorSceneManager.sceneCountInBuildSettings; EditorSceneManager.GetSceneByBuildIndex(sceneIndex)) {
-                Scene updatedScene = EditorSceneManager.GetSceneByBuildIndex(sceneIndex);
-                EditorSceneManager.LoadScene(updatedScene.name, LoadSceneMode.Single);
-                UpdateAllUpdatables();
-                EditorSceneManager.SaveOpenScenes();
+            string[] guidList = AssetDatabase.FindAssets($"t:SceneAsset");
+            List<string> scenesToCheck = new List<string>();
+            foreach (string guid in guidList) {
+                scenesToCheck.Add(AssetDatabase.GUIDToAssetPath(guid));
             }
-            EditorSceneManager.LoadScene(currentScene.name, LoadSceneMode.Single);
+
+            string currentScene = EditorSceneManager.GetActiveScene().path;
+            foreach (string scenePath in scenesToCheck) {
+                Scene updatedScene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
+                UpdateAllUpdatables();
+                EditorSceneManager.SaveScene(updatedScene);
+            }
+            EditorSceneManager.OpenScene(currentScene, OpenSceneMode.Single);
         }
 
         private static void UpdateAllUpdatables() {
-            foreach (MonoBehaviour component in GameObject.FindObjectsOfType<MonoBehaviour>()) {
-                if (!(component is IUpdatableScript))
+            List<UnityEngine.Object> objectsToCheck = new List<UnityEngine.Object>();
+            foreach (Type type in typesToCheck) {
+                objectsToCheck.AddRange(UnityEngine.Object.FindObjectsOfType(type));
+            }
+
+            foreach (UnityEngine.Object obj in objectsToCheck) {
+                if (!(obj is IUpdatableScript))
                     continue;
-                (component as IUpdatableScript).UpdateThisObject();
+                (obj as IUpdatableScript).UpdateThisObject();
             }
         }
 

@@ -450,11 +450,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: StartingArea02
+  scene:
+    sceneName: StartingArea02
+    assetPath: Assets/Scenes/The Plains Beyond Hell/StartingArea02.unity
+    guid: d191d7541d22f9641b1484faa33e1441
   positionOnLoad: {x: -10, y: 0}
   saveGamePosition: {x: 0, y: 0}
   isCutscene: 0
   dialogues: []
-  decision: {fileID: 11400000, guid: 85e07579030f7964abe5a37c20e26455, type: 2}
+  sceneChangeInfoReference: {fileID: 11400000, guid: fdbb88afa63ff455fb7a81cb8c970183,
+    type: 2}
+  startSceneChangeAnimation: {fileID: 11400000, guid: cf69cddf33ac468b69a9cf9493b3cc10,
+    type: 2}
 --- !u!1 &332435853
 GameObject:
   m_ObjectHideFlags: 0
@@ -1273,6 +1280,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: TheRealmOfGreed
+  scene:
+    sceneName: TheRealmOfGreed
+    assetPath: Assets/Scenes/Realm of Greed/TheRealmOfGreed.unity
+    guid: 7b4ac55f991085746b85b6362d13952b
   positionOnLoad: {x: 18.2, y: -1.5}
   saveGamePosition: {x: 0, y: 0}
   isCutscene: 1
@@ -1280,7 +1291,10 @@ MonoBehaviour:
   - quest: {fileID: 11400000, guid: bb0791dbfe37dc647ad7ce1c40f3c45c, type: 2}
     eventFlag: CerberusDead
     dialogue: {fileID: 11400000, guid: f077639003dda774c933de1f7845c5d2, type: 2}
-  decision: {fileID: 11400000, guid: 85e07579030f7964abe5a37c20e26455, type: 2}
+  sceneChangeInfoReference: {fileID: 11400000, guid: fdbb88afa63ff455fb7a81cb8c970183,
+    type: 2}
+  startSceneChangeAnimation: {fileID: 11400000, guid: cf69cddf33ac468b69a9cf9493b3cc10,
+    type: 2}
 --- !u!19719996 &803164059
 TilemapCollider2D:
   m_ObjectHideFlags: 0

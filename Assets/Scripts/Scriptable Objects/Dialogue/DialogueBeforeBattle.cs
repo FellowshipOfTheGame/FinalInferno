@@ -54,6 +54,10 @@ namespace FinalInferno {
             battleInfoReference = UnityEditor.AssetDatabase.LoadAssetAtPath<BattleInfoReference>(UnityEditor.AssetDatabase.GUIDToAssetPath(guid));
             guid = UnityEditor.AssetDatabase.FindAssets($"t:{typeof(SceneChangeInfoReference)}")[0];
             sceneChangeInfoReference = UnityEditor.AssetDatabase.LoadAssetAtPath<SceneChangeInfoReference>(UnityEditor.AssetDatabase.GUIDToAssetPath(guid));
+            guid = UnityEditor.AssetDatabase.FindAssets($"Start Scene Change t:{typeof(EventFI)}")[0];
+            startSceneChangeAnimation = UnityEditor.AssetDatabase.LoadAssetAtPath<EventFI>(UnityEditor.AssetDatabase.GUIDToAssetPath(guid));
+            guid = UnityEditor.AssetDatabase.FindAssets($"Is Loading Battle t:{typeof(BoolVariable)}")[0];
+            isLoadingBattle = UnityEditor.AssetDatabase.LoadAssetAtPath<BoolVariable>(UnityEditor.AssetDatabase.GUIDToAssetPath(guid));
         }
     }
 }

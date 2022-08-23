@@ -21,7 +21,7 @@ namespace FinalInferno {
 
         private void SaveFixedSceneChangeParameters() {
             sceneChangeInfo = new SceneChangeInfo();
-            sceneChangeInfo.scene.CopyValues(scene);
+            sceneChangeInfo.scene = new ScenePicker(scene);
             sceneChangeInfo.destinationPosition = positionOnLoad;
             sceneChangeInfo.savePosition = saveGamePosition;
             sceneChangeInfo.isCutscene = isCutscene;
