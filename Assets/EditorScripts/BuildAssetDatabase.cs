@@ -7,7 +7,7 @@ using UnityEngine;
 
 #if UNITY_EDITOR
 public class CreateAssetDatabase : IPreprocessBuildWithReport {
-    public int callbackOrder => 0;
+    public int callbackOrder => 1;
 
     public void OnPreprocessBuild(BuildReport report) {
         BuildDatabase();
@@ -15,12 +15,12 @@ public class CreateAssetDatabase : IPreprocessBuildWithReport {
 
     [MenuItem("Tools/Final Inferno/Build Database")]
     private static void BuildDatabase() {
-        string[] objectsFound = AssetDatabase.FindAssets("t:" + typeof(FinalInferno.AssetManager));
+        string[] objectsFound = AssetDatabase.FindAssets($"t:{typeof(FinalInferno.AssetManager)}");
         int i = 0;
         foreach (string guid in objectsFound) {
             FinalInferno.AssetManager database = AssetDatabase.LoadAssetAtPath<FinalInferno.AssetManager>(AssetDatabase.GUIDToAssetPath(guid));
             database.BuildDatabase();
-            Debug.Log("Updated database in file " + database.name);
+            Debug.Log($"Updated database in file {database.name}");
             i++;
             if (i > 1) {
                 Debug.LogWarning("Only one file of this type is needed");

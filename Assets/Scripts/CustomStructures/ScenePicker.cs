@@ -15,5 +15,15 @@ namespace FinalInferno {
             assetPath = "";
             guid = "";
         }
+
+        public ScenePicker(ScenePicker other) {
+            CopyValues(other);
+        }
+
+        public void CopyValues(ScenePicker other) {
+            sceneName = other.sceneName;
+            assetPath = other.assetPath;
+            guid = other.guid;
+        }
     }
 }

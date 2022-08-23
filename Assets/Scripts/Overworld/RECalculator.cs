@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
+using FinalInferno.EventSystem;
 
 namespace FinalInferno {
     public class RECalculator : MonoBehaviour, IOverworldSkillListener {
@@ -32,9 +33,13 @@ namespace FinalInferno {
         private float encounterDecDist = 0;
         private float skillModifier = 0;
         [Header("Battle Info")]
-        [SerializeField] public Sprite battleBG = null;
+        [SerializeField] private Sprite battleBG = null;
         [SerializeField] private AudioClip battleBGM = null;
         [SerializeField] private AudioClip overworldBGM = null;
+        [SerializeField] private BattleInfoReference battleInfoReference;
+        [Header("Scene Change")]
+        [SerializeField] private BoolVariable isLoadingBattle;
+        [SerializeField] private EventFI startSceneChangeAnimation;
 
         private float baseEncounterRate = 0f;
         private float rateIncreaseValue = 0f;
@@ -45,9 +50,6 @@ namespace FinalInferno {
         private float distanceWalked = 0f;
         private const float distanceTreshold = 1.0f;
         private bool isSafeArea = false;
-
-        [Header("Expected value = TriggerChangeScene")]
-        [SerializeField] private FinalInferno.UI.FSM.ButtonClickDecision decision;
 
         #region Initial Setup
         private void Start() {
@@ -199,11 +201,9 @@ namespace FinalInferno {
                 encounterDecreaseSkill.Deactivate();
             if (encounterIncreaseSkill)
                 encounterIncreaseSkill.Deactivate();
-            FinalInferno.UI.ChangeSceneUI.isBattle = true;
-            FinalInferno.UI.ChangeSceneUI.battleBG = battleBG;
-            FinalInferno.UI.ChangeSceneUI.battleBGM = battleBGM;
-            FinalInferno.UI.ChangeSceneUI.battleEnemies = result.GetEnemies();
-            decision.Click();
+            isLoadingBattle.UpdateValue(true);
+            battleInfoReference.SetValues(result.GetEnemies(), battleBG, battleBGM);
+            startSceneChangeAnimation.Raise();
         }
 
         private void UpdateSkillDistances() {

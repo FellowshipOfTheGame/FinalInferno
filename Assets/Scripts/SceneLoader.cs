@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using Fog.Dialogue;
 
 namespace FinalInferno {
     public static class SceneLoader {
+        private const string backgroundImageObjectName = "BackgroundImage";
+        private const string mainMenuSceneName = "MainMenu";
+        private const string BattleSceneName = "Battle";
         private static BattleInfo battleInfo;
-        private static Fog.Dialogue.Dialogue cutsceneDialogue = null;
-        public static Fog.Dialogue.Dialogue CutsceneDialogue {
+        private static Dialogue cutsceneDialogue = null;
+        public static Dialogue CutsceneDialogue {
             get => cutsceneDialogue;
             set {
                 if (cutsceneDialogue == null) {
@@ -24,14 +28,14 @@ namespace FinalInferno {
         public static UnityAction beforeSceneChange = null;
         public static UnityAction onSceneLoad = null;
 
-        public static void LoadBattleScene(BattleInfo newBattleInfo) {
+        public static void LoadBattleScene(BattleInfoReference battleInfoReference) {
             RECalculator.encountersEnabled = false;
             Party.Instance.currentMap = SceneManager.GetActiveScene().name;
             Party.Instance.SaveOverworldPositions();
-            battleInfo.CopyValues(newBattleInfo);
+            battleInfo.CopyValues(battleInfoReference);
             SceneManager.sceneLoaded += OnBattleLoad;
             beforeSceneChange?.Invoke();
-            SceneManager.LoadScene("Battle");
+            SceneManager.LoadScene(BattleSceneName);
         }
 
         private static void OverrideCharacterPositions(Vector2 newPosition) {
@@ -147,7 +151,7 @@ namespace FinalInferno {
                 SaveLoader.SaveGame();
             }
 
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene(mainMenuSceneName);
         }
 
         // Metodos que podem ser chamados ao carregar uma nova cena
@@ -162,13 +166,11 @@ namespace FinalInferno {
         }
 
         private static void UpdateBackgroundImage() {
-            GameObject go = GameObject.Find("BackgroundImage");
-            if (go && battleInfo.BGImage) {
-                UnityEngine.UI.Image img = go.GetComponent<UnityEngine.UI.Image>();
-                if (img) {
-                    img.sprite = battleInfo.BGImage;
-                }
-            }
+            if (!battleInfo.BGImage)
+                return;
+            GameObject go = GameObject.Find(backgroundImageObjectName);
+            if (go && go.TryGetComponent(out UnityEngine.UI.Image img))
+                img.sprite = battleInfo.BGImage;
         }
 
         private static void PlayBattleBGM() {

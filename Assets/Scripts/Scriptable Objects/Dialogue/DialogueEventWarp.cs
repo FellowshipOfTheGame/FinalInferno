@@ -1,22 +1,24 @@
 ﻿using UnityEngine;
+using FinalInferno.EventSystem;
+using Fog.Dialogue;
 
 namespace FinalInferno {
     [CreateAssetMenu(fileName = "NewEventWarpDialogue", menuName = "ScriptableObject/DialogueSystem/FinalInferno/DialogueEventWarp")]
     public class DialogueEventWarp : DialogueEventTrigger {
-        // TO DO: adicionar suporte de cutscene aqui
         [Header("Scene")]
         [SerializeField] private SceneWarp scene;
-        [Header("Expected value = TriggerChangeScene")]
-        [SerializeField] private FinalInferno.UI.FSM.ButtonClickDecision decision;
+        [SerializeField] private SceneChangeInfo sceneChangeInfo = new SceneChangeInfo();
+        [SerializeField] private SceneChangeInfoReference sceneChangeInfoReference;
+        [SerializeField] private EventFI startSceneChangeAnimation;
 
         public override void AfterDialogue() {
-            if (string.IsNullOrEmpty(scene.scene) || decision == null) {
+            if (string.IsNullOrEmpty(sceneChangeInfo.scene.Name) || startSceneChangeAnimation == null) {
                 IgnoreSceneChange();
             } else {
                 PrepareSceneChange();
                 ChangeScene();
             }
-            Fog.Dialogue.DialogueHandler.instance.OnDialogueStart -= AfterDialogue;
+            DialogueHandler.instance.OnDialogueStart -= AfterDialogue;
         }
 
         private void IgnoreSceneChange() {
@@ -35,11 +37,8 @@ namespace FinalInferno {
         }
 
         private void ChangeScene() {
-            FinalInferno.UI.ChangeSceneUI.sceneName = scene.scene;
-            FinalInferno.UI.ChangeSceneUI.positionOnLoad = scene.position;
-            FinalInferno.UI.ChangeSceneUI.isCutscene = false;
-            FinalInferno.UI.ChangeSceneUI.selectedDialogue = null;
-            decision.Click();
+            sceneChangeInfoReference.SetValues(sceneChangeInfo);
+            startSceneChangeAnimation.Raise();
         }
     }
 }

@@ -4,12 +4,13 @@ using UnityEngine.UI;
 namespace FinalInferno.UI {
     public class LoadEnemiesPreview : MonoBehaviour {
         [SerializeField] private GameObject EnemyImage;
+        [SerializeField] private BattleInfoReference battleInfoReference;
 
         public void LoadPreview() {
             int previousCreberusHeadCount = CerberusHead.heads;
             CerberusHead.heads = 0;
             int enemyLevel = Enemy.CalculateEnemyLevel();
-            foreach (Enemy enemy in ChangeSceneUI.battleEnemies) {
+            foreach (Enemy enemy in battleInfoReference.Enemies) {
                 enemy.LevelEnemy(enemyLevel);
                 if (enemy is CerberusHead)
                     CerberusHead.heads++;
