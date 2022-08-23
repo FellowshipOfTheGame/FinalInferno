@@ -11,7 +11,7 @@ using System;
 namespace FinalInferno {
 #if UNITY_EDITOR
     public class UpdateScriptsInScene : IProcessSceneWithReport {
-        private static Type[] typesToCheck = { typeof(TriggerSceneChange) };
+        private static Type[] typesToCheck = { };
         public int callbackOrder => 0;
 
         [MenuItem("Tools/Final Inferno/Update All Updatable Scripts in All Scenes")]

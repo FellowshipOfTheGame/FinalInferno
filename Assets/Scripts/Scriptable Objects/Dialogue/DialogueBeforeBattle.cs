@@ -3,10 +3,7 @@ using FinalInferno.EventSystem;
 
 namespace FinalInferno {
     [CreateAssetMenu(fileName = "NewBattleDialogue", menuName = "ScriptableObject/DialogueSystem/FinalInferno/DialogueBeforeBattle")]
-    public class DialogueBeforeBattle : DialogueEventTrigger, IUpdatableScript {
-        [SerializeField] private Sprite battleBG;
-        [SerializeField] private AudioClip battleBGM;
-        [SerializeField] private Enemy[] battleEnemies;
+    public class DialogueBeforeBattle : DialogueEventTrigger {
         [SerializeField] private BattleInfo battleInfo;
         [Header("Scene Change")]
         [SerializeField] private BoolVariable isLoadingBattle;
@@ -46,18 +43,6 @@ namespace FinalInferno {
             sceneChangeInfo.cutsceneDialogue = dialogueAfterBattle;
             sceneChangeInfo.isCutscene = dialogueAfterBattle != null;
             return sceneChangeInfo;
-        }
-
-        public void UpdateThisObject() {
-            battleInfo = new BattleInfo(battleEnemies, battleBG, battleBGM);
-            string guid = UnityEditor.AssetDatabase.FindAssets($"t:{typeof(BattleInfoReference)}")[0];
-            battleInfoReference = UnityEditor.AssetDatabase.LoadAssetAtPath<BattleInfoReference>(UnityEditor.AssetDatabase.GUIDToAssetPath(guid));
-            guid = UnityEditor.AssetDatabase.FindAssets($"t:{typeof(SceneChangeInfoReference)}")[0];
-            sceneChangeInfoReference = UnityEditor.AssetDatabase.LoadAssetAtPath<SceneChangeInfoReference>(UnityEditor.AssetDatabase.GUIDToAssetPath(guid));
-            guid = UnityEditor.AssetDatabase.FindAssets($"Start Scene Change t:{typeof(EventFI)}")[0];
-            startSceneChangeAnimation = UnityEditor.AssetDatabase.LoadAssetAtPath<EventFI>(UnityEditor.AssetDatabase.GUIDToAssetPath(guid));
-            guid = UnityEditor.AssetDatabase.FindAssets($"Is Loading Battle t:{typeof(BoolVariable)}")[0];
-            isLoadingBattle = UnityEditor.AssetDatabase.LoadAssetAtPath<BoolVariable>(UnityEditor.AssetDatabase.GUIDToAssetPath(guid));
         }
     }
 }
