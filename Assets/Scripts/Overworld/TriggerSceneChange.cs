@@ -4,8 +4,7 @@ using UnityEngine;
 using FinalInferno.EventSystem;
 
 namespace FinalInferno {
-    public class TriggerSceneChange : Triggerable {
-        //TO DO: Usar a struct SceneWarp aqui e atualizar o script de editor para refletir isso
+    public class TriggerSceneChange : Triggerable, IUpdatableScript {
         [SerializeField] private string sceneName = "Battle";
         [SerializeField] private ScenePicker scene;
         [SerializeField] private Vector2 positionOnLoad = new Vector2(0, 0);
@@ -29,7 +28,7 @@ namespace FinalInferno {
         }
 
         protected override void TriggerAction(Agent agent) {
-            if (string.IsNullOrEmpty(sceneName)) {
+            if (string.IsNullOrEmpty(scene.Name)) {
                 return;
             }
             CharacterOW.PartyCanMove = false;
@@ -53,6 +52,14 @@ namespace FinalInferno {
                 Gizmos.color = Color.green;
                 Gizmos.DrawWireCube(new Vector3(saveGamePosition.x, saveGamePosition.y, 0), Vector3.one);
             }
+        }
+
+        public void UpdateThisObject() {
+            scene = new ScenePicker(sceneName);
+            string guid = UnityEditor.AssetDatabase.FindAssets($"t:{typeof(SceneChangeInfoReference)}")[0];
+            sceneChangeInfoReference = UnityEditor.AssetDatabase.LoadAssetAtPath<SceneChangeInfoReference>(UnityEditor.AssetDatabase.GUIDToAssetPath(guid));
+            guid = UnityEditor.AssetDatabase.FindAssets($"Start Scene Change t:{typeof(EventFI)}")[0];
+            startSceneChangeAnimation = UnityEditor.AssetDatabase.LoadAssetAtPath<EventFI>(UnityEditor.AssetDatabase.GUIDToAssetPath(guid));
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Fog.Dialogue;
 using FinalInferno.EventSystem;
 
 namespace FinalInferno.UI {

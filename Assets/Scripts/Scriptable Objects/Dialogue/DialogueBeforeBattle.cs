@@ -3,7 +3,7 @@ using FinalInferno.EventSystem;
 
 namespace FinalInferno {
     [CreateAssetMenu(fileName = "NewBattleDialogue", menuName = "ScriptableObject/DialogueSystem/FinalInferno/DialogueBeforeBattle")]
-    public class DialogueBeforeBattle : DialogueEventTrigger {
+    public class DialogueBeforeBattle : DialogueEventTrigger, IUpdatableScript {
         [SerializeField] private Sprite battleBG;
         [SerializeField] private AudioClip battleBGM;
         [SerializeField] private Enemy[] battleEnemies;
@@ -35,12 +35,25 @@ namespace FinalInferno {
 
         private void StartBattle() {
             isLoadingBattle.UpdateValue(true);
+            SceneChangeInfo sceneChangeInfo = CreateSceneChangeInfo();
+            sceneChangeInfoReference.SetValues(sceneChangeInfo);
+            battleInfoReference.SetValues(battleInfo);
+            startSceneChangeAnimation.Raise();
+        }
+
+        private SceneChangeInfo CreateSceneChangeInfo() {
             SceneChangeInfo sceneChangeInfo = new SceneChangeInfo(sceneChangeInfoReference);
             sceneChangeInfo.cutsceneDialogue = dialogueAfterBattle;
             sceneChangeInfo.isCutscene = dialogueAfterBattle != null;
-            sceneChangeInfoReference.SetValues(sceneChangeInfo);
-            battleInfoReference.SetValues((Enemy[])battleEnemies.Clone(), battleBG, battleBGM);
-            startSceneChangeAnimation.Raise();
+            return sceneChangeInfo;
+        }
+
+        public void UpdateThisObject() {
+            battleInfo = new BattleInfo(battleEnemies, battleBG, battleBGM);
+            string guid = UnityEditor.AssetDatabase.FindAssets($"t:{typeof(BattleInfoReference)}")[0];
+            battleInfoReference = UnityEditor.AssetDatabase.LoadAssetAtPath<BattleInfoReference>(UnityEditor.AssetDatabase.GUIDToAssetPath(guid));
+            guid = UnityEditor.AssetDatabase.FindAssets($"t:{typeof(SceneChangeInfoReference)}")[0];
+            sceneChangeInfoReference = UnityEditor.AssetDatabase.LoadAssetAtPath<SceneChangeInfoReference>(UnityEditor.AssetDatabase.GUIDToAssetPath(guid));
         }
     }
 }

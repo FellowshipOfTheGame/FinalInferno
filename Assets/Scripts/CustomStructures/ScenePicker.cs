@@ -10,6 +10,12 @@ namespace FinalInferno {
         public string Path { get => assetPath; private set => assetPath = value; }
         public string GUID { get => guid; private set => guid = value; }
 
+        public ScenePicker(string sceneName) {
+            Name = sceneName;
+            guid = UnityEditor.AssetDatabase.FindAssets($"{sceneName} t:{typeof(UnityEditor.SceneAsset)}")[0];
+            Path = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
+        }
+
         public ScenePicker() {
             sceneName = "";
             assetPath = "";
