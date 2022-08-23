@@ -17,7 +17,8 @@ namespace FinalInferno.UI.Saves {
 
         [Header("Axis Interactable Item")]
         [SerializeField] private AxisInteractableItem Item;
-        [SerializeField] private BoolDecision decision;
+        [SerializeField] private BoolDecision emptySlotDecision;
+        [SerializeField] private BoolDecision nonEmptySlotDecision;
         private int slotNumber = -1;
         private bool emptySlot;
         private readonly Regex cleanupRegex = new Regex(@"(?<=[A-Z])(?=[A-Z][a-z])|(?<=[^A-Z])(?=[A-Z])|(?<=[A-Za-z])(?=[^A-Za-z])");
@@ -63,7 +64,8 @@ namespace FinalInferno.UI.Saves {
         }
 
         private void SetSlotType() {
-            decision.UpdateValue(emptySlot);
+            emptySlotDecision.UpdateValue(emptySlot);
+            nonEmptySlotDecision.UpdateValue(!emptySlot);
         }
     }
 }
