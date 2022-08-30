@@ -7,11 +7,13 @@ namespace FinalInferno {
         [SerializeField] private UnityEvent<float> OnValueChanged;
 
         private void OnEnable() {
-            variable.AddObserver(this);
+            if (variable)
+                variable.AddObserver(this);
         }
 
         private void OnDisable() {
-            variable.RemoveObserver(this);
+            if (variable)
+                variable.RemoveObserver(this);
         }
 
         public void ValueChanged(float value) {

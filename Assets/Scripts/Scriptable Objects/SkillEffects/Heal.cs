@@ -3,26 +3,24 @@
 namespace FinalInferno {
     [CreateAssetMenu(fileName = "Heal", menuName = "ScriptableObject/SkillEffect/Heal")]
     public class Heal : SkillEffect {
-        // value1 = dmg multiplier for heal
-        // value2 = health percentage heal
+        private float DmgMultiplier => value1;
+        private float HealthPercentageHeal => value2;
         public override string Description {
             get {
                 string desc = "Increase current HP by ";
-                desc += (value1 != 0) ? (value1 * 100 + "% of user's power") : "";
-                desc += (value1 != 0 && value2 != 0) ? " plus " : "";
-                desc += (value2 != 0) ? value2 * 100 + "% of target's max HP" : "";
+                desc += (DmgMultiplier != 0) ? $"{DmgMultiplier * 100}% of user's power" : "";
+                desc += (DmgMultiplier != 0 && HealthPercentageHeal != 0) ? " plus " : "";
+                desc += (HealthPercentageHeal != 0) ? $"{HealthPercentageHeal * 100}% of target's max HP" : "";
                 return desc;
             }
         }
 
         public override void Apply(BattleUnit source, BattleUnit target) {
-            if (value1 != 0) {
-                target.Heal(source.curDmg, value1, source);
-            }
+            if (DmgMultiplier != 0)
+                target.Heal(source.curDmg, DmgMultiplier, source);
 
-            if (value2 != 0) {
-                target.Heal(target.Unit.hpMax, value2, source);
-            }
+            if (HealthPercentageHeal != 0)
+                target.Heal(target.Unit.hpMax, HealthPercentageHeal, source);
         }
     }
 }

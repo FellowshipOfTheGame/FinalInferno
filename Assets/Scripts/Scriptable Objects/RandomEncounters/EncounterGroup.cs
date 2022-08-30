@@ -14,8 +14,7 @@ namespace FinalInferno {
         public Enemy EnemyC => enemyC;
         [SerializeField] private Enemy enemyD;
         public Enemy EnemyD => enemyD;
-        public Enemy this[int index] => index switch
-        {
+        public Enemy this[int index] => index switch {
             0 => enemyA,
             1 => enemyB,
             2 => enemyC,
@@ -24,13 +23,10 @@ namespace FinalInferno {
         };
         public Enemy[] GetEnemies() {
             List<Enemy> list = new List<Enemy>();
-
-            for (int i = 0; i < ENCOUNTER_MAX_SIZE; i++) {
-                if (this[i] != null) {
-                    list.Add(this[i]);
-                }
+            for (int index = 0; index < ENCOUNTER_MAX_SIZE; index++) {
+                if (this[index] != null)
+                    list.Add(this[index]);
             }
-
             return list.ToArray();
         }
         [SerializeField, Range(0, 1f)] private float difficultyRating = 0;

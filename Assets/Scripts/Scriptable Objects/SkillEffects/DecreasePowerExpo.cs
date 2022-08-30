@@ -3,12 +3,12 @@
 namespace FinalInferno {
     [CreateAssetMenu(fileName = "DecreasePowerExpo", menuName = "ScriptableObject/SkillEffect/DecreasePowerExponential")]
     public class DecreasePowerExpo : SkillEffect {
-        // value1 = dmgDown multiplier
-        // value2 = debuff duration
-        public override string Description => "Decrease power by " + value1 * 100 + "% every turn for " + value2 + " turns";
+        private float DmgDownMultiplier => value1;
+        private int DebuffDuration => (int)value2;
+        public override string Description => $"Decrease power by {DmgDownMultiplier * 100}% every turn for {DebuffDuration} turns";
 
         public override void Apply(BattleUnit source, BattleUnit target) {
-            target.AddEffect(new DamageDownExponential(source, target, value1, (int)value2));
+            target.AddEffect(new DamageDownExponential(source, target, DmgDownMultiplier, DebuffDuration));
         }
     }
 }

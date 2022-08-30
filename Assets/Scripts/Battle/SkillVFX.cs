@@ -98,13 +98,15 @@ namespace FinalInferno {
 
         private void CreateParticles(GameObject particles) {
             GameObject particle = Instantiate(particles, transform.position, transform.rotation, transform);
+            if (particles == null)
+                return;
             particleList.Add(particle);
-            ParticleSystemRenderer renderer = particle?.GetComponent<ParticleSystemRenderer>();
-            if (renderer) {
-                renderer.sortingLayerID = GetComponent<SpriteRenderer>().sortingLayerID;
-                renderer.sortingLayerName = GetComponent<SpriteRenderer>().sortingLayerName;
-                renderer.sortingOrder = GetComponent<SpriteRenderer>().sortingOrder;
-            }
+            ParticleSystemRenderer renderer = particle.GetComponent<ParticleSystemRenderer>();
+            if (!renderer)
+                return;
+            renderer.sortingLayerID = GetComponent<SpriteRenderer>().sortingLayerID;
+            renderer.sortingLayerName = GetComponent<SpriteRenderer>().sortingLayerName;
+            renderer.sortingOrder = GetComponent<SpriteRenderer>().sortingOrder;
         }
     }
 }

@@ -56,7 +56,7 @@ namespace FinalInferno.UI.Battle.QueueMenu {
             }
 
             // Coloca o personagem que se encontra em seu turno atual no local específico.
-            currentTurnBattleImage.sprite = currentUnit?.QueueSprite;
+            currentTurnBattleImage.sprite = currentUnit ? currentUnit.QueueSprite : null;
             if (currentTurnBattleImage.sprite != null) {
                 currentTurnBattleImage.color = Color.white;
             } else {

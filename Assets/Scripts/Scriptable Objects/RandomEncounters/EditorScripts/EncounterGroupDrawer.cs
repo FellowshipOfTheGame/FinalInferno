@@ -12,57 +12,78 @@ namespace FinalInferno {
         private SerializedProperty[] enemies = { null, null, null, null };
         private Rect objPickerRect, displayRect;
         public const float PORTRAIT_SIZE = 48f;
+        private const float marginSize = 5f;
+        private const float portraitSpacing = 25f;
+        public static float GroupDetailsHeight => 2f * EditorGUIUtility.singleLineHeight + PORTRAIT_SIZE + marginSize;
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
             bool isNull = property.objectReferenceValue == null;
-            return (10f + EditorGUIUtility.singleLineHeight * (isNull ? 1f : 3f) + (isNull ? 0f : PORTRAIT_SIZE + 5f));
+            return ((2 * marginSize) + EditorGUIUtility.singleLineHeight + (isNull ? 0f : GroupDetailsHeight));
         }
 
         public override void OnGUI(Rect propertyRect, SerializedProperty property, GUIContent label) {
             EditorGUI.BeginProperty(propertyRect, label, property);
-
-            objPickerRect = new Rect(new Vector2(propertyRect.position.x, propertyRect.position.y + 5f), new Vector2(propertyRect.size.x, EditorGUIUtility.singleLineHeight));
-            displayRect = new Rect(new Vector2(objPickerRect.position.x, objPickerRect.position.y + objPickerRect.size.y + 2.5f), new Vector2(propertyRect.size.x, 2 * EditorGUIUtility.singleLineHeight + PORTRAIT_SIZE + 2.5f));
-
+            CalculateFieldRects(propertyRect);
             EditorGUI.ObjectField(objPickerRect, property, label);
-            if (property.objectReferenceValue != null) {
-                SerializedObject obj = new SerializedObject(property.objectReferenceValue);
-                enemies[0] = obj.FindProperty("enemyA");
-                enemies[1] = obj.FindProperty("enemyB");
-                enemies[2] = obj.FindProperty("enemyC");
-                enemies[3] = obj.FindProperty("enemyD");
-                difficultyRating = obj.FindProperty("difficultyRating");
-                ReadOnlyCollection<bool> canEncounter = (obj.targetObject as EncounterGroup).CanEncounter;
-
-                Vector2 portraitSize = new Vector2(PORTRAIT_SIZE, PORTRAIT_SIZE);
-                for (int i = 0; i < 4; i++) {
-                    Enemy enemy = enemies[i].objectReferenceValue as Enemy;
-                    if (enemy == null) {
-                        continue;
-                    }
-
-                    Vector2 portraitPosition = new Vector2(displayRect.position.x + i * (portraitSize.x + 25f), displayRect.y);
-                    Rect portraitRect = CropRect(new Rect(portraitPosition, portraitSize), propertyRect);
-                    Sprite enemySprite = enemy.GetSubUnitPortrait(i);
-
-                    EditorGUI.DrawTextureTransparent(portraitRect, EditorUtils.GetCroppedTexture(enemySprite), ScaleMode.ScaleAndCrop);
-                }
-
-                Rect detailsRect = new Rect(new Vector2(displayRect.position.x, displayRect.position.y + PORTRAIT_SIZE + 2.5f), new Vector2(displayRect.size.x, 2 * EditorGUIUtility.singleLineHeight));
-                Rect difficultyRect = new Rect(detailsRect.position.x, detailsRect.position.y, detailsRect.width / 2f, detailsRect.height);
-                Rect levelInfoRect = new Rect(detailsRect.position.x + detailsRect.width / 2f, detailsRect.position.y, detailsRect.width / 2f, detailsRect.height);
-                EditorGUI.LabelField(difficultyRect, $"Dificulty rating: {(difficultyRating.floatValue):0.##}");
-                EditorGUI.LabelField(levelInfoRect, $"Levels: 1{(canEncounter[0] ? '☑' : '☐')} 2{(canEncounter[1] ? '☑' : '☐')} 3{(canEncounter[2] ? '☑' : '☐')} 4{(canEncounter[3] ? '☑' : '☐')} 5{(canEncounter[4] ? '☑' : '☐')}");
-            }
-
+            if (property.objectReferenceValue != null)
+                DrawEncounterGroupPreview(propertyRect, property);
             EditorGUI.EndProperty();
         }
 
-        private Rect CropRect(Rect rect, Rect limits) {
-            if (rect.xMax > limits.xMax) {
-                rect.width = Mathf.Max(0f, limits.xMax - rect.xMin);
-            }
-            return rect;
+        private void CalculateFieldRects(Rect propertyRect) {
+            Vector2 objPickerPosition = new Vector2(propertyRect.position.x, propertyRect.position.y + marginSize);
+            Vector2 objPickerSize = new Vector2(propertyRect.size.x, EditorGUIUtility.singleLineHeight);
+            objPickerRect = new Rect(objPickerPosition, objPickerSize);
+            Vector2 displayPosition = objPickerPosition + new Vector2(0f, objPickerSize.y + marginSize / 2f);
+            Vector2 displaySize = new Vector2(propertyRect.size.x, GroupDetailsHeight - marginSize / 2f);
+            displayRect = new Rect(displayPosition, displaySize);
+        }
+
+        private void DrawEncounterGroupPreview(Rect propertyRect, SerializedProperty property) {
+            SerializedObject serializedObject = new SerializedObject(property.objectReferenceValue);
+            FindSerializedFieldProperties(serializedObject);
+            for (int enemyIndex = 0; enemyIndex < 4; enemyIndex++)
+                DrawEnemyPortrait(propertyRect, enemyIndex);
+            WriteDificultyAndLevelInfo(serializedObject);
+        }
+
+        private void FindSerializedFieldProperties(SerializedObject serializedObject) {
+            enemies[0] = serializedObject.FindProperty("enemyA");
+            enemies[1] = serializedObject.FindProperty("enemyB");
+            enemies[2] = serializedObject.FindProperty("enemyC");
+            enemies[3] = serializedObject.FindProperty("enemyD");
+            difficultyRating = serializedObject.FindProperty("difficultyRating");
+        }
+
+        private void DrawEnemyPortrait(Rect propertyRect, int enemyIndex) {
+            Enemy enemy = enemies[enemyIndex].objectReferenceValue as Enemy;
+            if (enemy == null)
+                return;
+
+            Vector2 portraitSize = new Vector2(PORTRAIT_SIZE, PORTRAIT_SIZE);
+            float xOffset = enemyIndex * (PORTRAIT_SIZE + portraitSpacing);
+            Vector2 portraitPosition = new Vector2(displayRect.position.x + xOffset, displayRect.y);
+            Rect portraitRect = EditorUtils.CropRect(new Rect(portraitPosition, portraitSize), propertyRect);
+            Sprite enemySprite = enemy.GetSubUnitPortrait(enemyIndex);
+            EditorGUI.DrawTextureTransparent(portraitRect, EditorUtils.GetCroppedTexture(enemySprite), ScaleMode.ScaleAndCrop);
+        }
+
+        private void WriteDificultyAndLevelInfo(SerializedObject serializedObject) {
+            ReadOnlyCollection<bool> canEncounter = (serializedObject.targetObject as EncounterGroup).CanEncounter;
+            Vector2 detailsRectSize = new Vector2(displayRect.size.x, 2 * EditorGUIUtility.singleLineHeight);
+            Vector2 detailsRectPosition = displayRect.position + new Vector2(0f, PORTRAIT_SIZE + 2.5f);
+            WriteDifficulty(detailsRectPosition, detailsRectSize);
+            WriteLevelInfo(canEncounter, detailsRectPosition, detailsRectSize);
+        }
+
+        private void WriteDifficulty(Vector2 detailsRectPosition, Vector2 detailsRectSize) {
+            Rect difficultyRect = new Rect(detailsRectPosition, new Vector2(detailsRectSize.x / 2f, detailsRectSize.y));
+            EditorGUI.LabelField(difficultyRect, $"Dificulty rating: {(difficultyRating.floatValue):0.##}");
+        }
+
+        private static void WriteLevelInfo(ReadOnlyCollection<bool> canEncounter, Vector2 detailsRectPosition, Vector2 detailsRectSize) {
+            Rect levelInfoRect = new Rect(detailsRectPosition + new Vector2(detailsRectSize.x / 2f, 0f), detailsRectSize);
+            EditorGUI.LabelField(levelInfoRect, $"Levels: 1{(canEncounter[0] ? '☑' : '☐')} 2{(canEncounter[1] ? '☑' : '☐')} 3{(canEncounter[2] ? '☑' : '☐')} 4{(canEncounter[3] ? '☑' : '☐')} 5{(canEncounter[4] ? '☑' : '☐')}");
         }
     }
 #endif

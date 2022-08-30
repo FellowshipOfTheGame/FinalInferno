@@ -1,25 +1,38 @@
 ﻿using UnityEngine;
 
 namespace FinalInferno {
-    //engloba os personagens do jogador
     [CreateAssetMenu(fileName = "Character", menuName = "ScriptableObject/Character")]
-    public class Character : ScriptableObject/*, IDatabaseItem*/{
-        public Hero archetype; //classe desse personagem
-        //public type skillInfo; //
-        public int hpCur; //vida atual do personagem, descontando dano da vida maxima
-        public Vector2 position; //posicao do personagem no Overworld
-        public Vector2 direction; // direção do personagem no Overworld
-        //public bool isPresent;
+    public class Character : ScriptableObject {
+        public Hero archetype;
+        public int hpCur;
+        public Vector2 position;
         private CharacterOW overworldInstance;
         public CharacterOW OverworldInstance {
-            get => overworldInstance;
-            set => overworldInstance = (overworldInstance == null ? value : (value == null ? null : overworldInstance));
+            get => overworldInstance ? overworldInstance : null;
+            set => overworldInstance = CanChangeInstanceValue(value) ? value : overworldInstance;
         }
 
-        //funcao que ajusta a vida atual do personagem quando sobe de nivel
-        public void LevelUp(int level) {
-            //Debug.Log(archetype.name + " passou pro level: " + level);
-            hpCur = archetype.LevelUp(level);
+        private bool CanChangeInstanceValue(CharacterOW value) {
+            return (value == null || overworldInstance == null);
+        }
+
+        public void SaveOverworldPosition() {
+            if (OverworldInstance == null)
+                return;
+            Vector3 instancePosition = OverworldInstance.transform.position;
+            position = new Vector2(instancePosition.x, instancePosition.y);
+        }
+
+        public void LoadOverworldPosition() {
+            if (OverworldInstance == null)
+                return;
+            Transform instanceTransform = OverworldInstance.transform;
+            instanceTransform.position = new Vector3(position.x, position.y, instanceTransform.position.z);
+        }
+
+        public void LevelUp(int newLevel) {
+            archetype.LevelUp(newLevel);
+            hpCur = archetype.hpMax;
         }
 
         public void ResetCharacter() {

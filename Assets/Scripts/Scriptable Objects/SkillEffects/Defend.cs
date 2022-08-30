@@ -3,12 +3,12 @@
 namespace FinalInferno {
     [CreateAssetMenu(fileName = "Defend", menuName = "ScriptableObject/SkillEffect/Defend")]
     public class Defend : SkillEffect {
-        // value1 = defUp multiplier
-        // value2 = buff duration
-        public override string Description => "Increase defense and resistance by " + value1 * 100 + "% for " + value2 + " turns";
+        private float DefUpMultiplier => value1;
+        private int BuffDuration => (int)value2;
+        public override string Description => $"Increase defense and resistance by {DefUpMultiplier * 100}% for {BuffDuration} turns";
 
         public override void Apply(BattleUnit source, BattleUnit target) {
-            target.AddEffect(new Defending(target, value1, (int)value2));
+            target.AddEffect(new Defending(target, DefUpMultiplier, BuffDuration));
         }
     }
 }

@@ -47,7 +47,7 @@ namespace FinalInferno {
                 int dmgDecrease = Mathf.FloorToInt(((teamSize - 1) / (float)teamSize) * Target.curDmg);
 
                 Target.curDmg -= dmgDecrease;
-                Target.Unit.attackSkill.Use(Target, allies);
+                Target.Unit.attackSkill.UseCallbackOrDelayed(Target, allies);
                 Target.curDmg += dmgDecrease;
             }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 namespace FinalInferno {
     [CreateAssetMenu(fileName = "NewQuest", menuName = "ScriptableObject/Quest")]
     public class Quest : ScriptableObject, IDatabaseItem {
+        private const string defaultKeyString = "Default";
         [SerializeField] private bool active;
         [SerializeField] private bool repeatable = false;
         [SerializeField] private int expReward = 0;
@@ -29,54 +30,54 @@ namespace FinalInferno {
         public int EventCount => events.Count;
 
         public bool GetFlag(string eventName) {
-            if (events.ContainsKey(eventName)) {
-                return events[eventName];
-            }
-            return false;
+            return events.ContainsKey(eventName) && events[eventName];
         }
 
         public void SetFlag(string eventName, bool value) {
-            if (active && events.ContainsKey(eventName)) {
+            if (active && events.ContainsKey(eventName))
                 events[eventName] = value;
-            }
         }
 
         public void ResetQuest() {
             List<string> keyList = new List<string>(events.Keys);
             foreach (string key in keyList) {
-                if (key == "Default") {
-                    events[key] = true;
-                } else {
-                    events[key] = false;
-                }
+                events[key] = (key == defaultKeyString);
             }
             active = false;
         }
 
-        public virtual void StartQuest(bool forceReset = false) {
-            if (!active || forceReset) {
-                ResetQuest();
-                expReward = Mathf.Max(expReward, 0);
-                Party.Instance.activeQuests.Remove(this);
-                Party.Instance.activeQuests.Add(this);
-                active = true;
+        public virtual void StartQuest() {
+            ResetQuest();
+            expReward = Mathf.Max(expReward, 0);
+            Party.Instance.activeQuests.Remove(this);
+            Party.Instance.activeQuests.Add(this);
+            active = true;
+        }
+
+        public virtual void TryStartQuest() {
+            if (!active) {
+                StartQuest();
             } else {
-                Debug.Log("Quest has already begun");
+                Debug.LogWarning("Quest has already begun", this);
             }
         }
 
         public virtual void CompleteQuest() {
-            if (active) {
-                foreach (string key in events.Keys) {
-                    events[key] = true;
-                }
-                active = false;
-                Party.Instance.GiveExp(expReward);
-                if (repeatable) {
-                    Party.Instance.activeQuests.Remove(this);
-                    ResetQuest();
-                }
+            if (!active)
+                return;
+            foreach (string key in events.Keys) {
+                events[key] = true;
             }
+            active = false;
+            Party.Instance.GiveExp(expReward);
+            ResetQuestIfRepeatable();
+        }
+
+        private void ResetQuestIfRepeatable() {
+            if (!repeatable)
+                return;
+            Party.Instance.activeQuests.Remove(this);
+            ResetQuest();
         }
     }
 }

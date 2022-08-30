@@ -3,28 +3,28 @@
 namespace FinalInferno {
     [CreateAssetMenu(fileName = "Cleanse", menuName = "ScriptableObject/SkillEffect/Cleanse")]
     public class Cleanse : SkillEffect {
-        // value1 = should remove debuffs: 0 = no; any other value = yes;
-        // value2 = should remove undesirable statuses: 0 = no; any other value = yes;
+        private bool ShouldRemoveDebuffs => value1 != 0;
+        private bool ShouldRemoveUndesirable => value2 != 0;
         public override string Description {
             get {
-                bool removeDebuffs = value1 != 0;
-                bool removeUndesirable = value2 != 0;
                 string desc = "Remove target's ";
-                desc += (removeDebuffs) ? "debuffs" : "";
-                desc += (removeDebuffs && removeUndesirable) ? " and " : "";
-                desc += (removeUndesirable) ? "negative status effects" : "";
+                desc += ShouldRemoveDebuffs ? "debuffs" : "";
+                desc += (ShouldRemoveDebuffs && ShouldRemoveUndesirable) ? " and " : "";
+                desc += ShouldRemoveUndesirable ? "negative status effects" : "";
                 return desc;
             }
         }
 
         public override void Apply(BattleUnit source, BattleUnit target) {
-            bool removeDebuffs = value1 != 0;
-            bool removeUndesirable = value2 != 0;
             foreach (StatusEffect effect in target.effects.ToArray()) {
-                if ((removeDebuffs && effect.Type == StatusType.Debuff) || (removeUndesirable && effect.Type == StatusType.Undesirable)) {
-                    effect.ForceRemove();
-                }
+                if (!ShouldRemoveEffect(effect))
+                    continue;
+                effect.ForceRemove();
             }
+        }
+
+        private bool ShouldRemoveEffect(StatusEffect effect) {
+            return (ShouldRemoveDebuffs && effect.Type == StatusType.Debuff) || (ShouldRemoveUndesirable && effect.Type == StatusType.Undesirable);
         }
     }
 }

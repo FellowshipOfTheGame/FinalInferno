@@ -18,107 +18,143 @@ namespace FinalInferno {
         private ReadOnlyDictionary<EncounterGroup, float> chancesDict;
         private const float PORTRAIT_SIZE = 48f;
         private const float SMALL_LABEL_WIDTH = 20f;
+        private const float previewSpacing = 20f;
+        private const float portraitSpacing = 20f;
+        private const float chanceLabelWidth = 100f;
 
         public void OnEnable() {
+            FindSerializedFieldProperties();
+            InitVariables();
+        }
+
+        private void FindSerializedFieldProperties() {
             encounterGroups = serializedObject.FindProperty("encounterGroupItems");
             difficultyFactor = serializedObject.FindProperty("difficultyFactor");
-            selectedLevel = -1;
-            selectedDifficultyFactor = difficultyFactor.floatValue;
-            validEncounterGroups = new List<EncounterGroup>();
-            storedMultipliers = new List<float>();
             SaveMultipliers();
-            chancesDict = new ReadOnlyDictionary<EncounterGroup, float>(new Dictionary<EncounterGroup, float>());
         }
 
         private void SaveMultipliers() {
-            storedMultipliers.Clear();
+            storedMultipliers = new List<float>();
             for (int i = 0; i < encounterGroups.arraySize; i++) {
                 storedMultipliers.Add(encounterGroups.GetArrayElementAtIndex(i).FindPropertyRelative("chanceMultiplier").floatValue);
             }
         }
 
-        private bool CheckMultiplierChange() {
-            bool hasChanged = encounterGroups.arraySize != storedMultipliers.Count;
-            for (int i = 0; !hasChanged && i < encounterGroups.arraySize; i++) {
-                float currentMultiplier = encounterGroups.GetArrayElementAtIndex(i).FindPropertyRelative("chanceMultiplier").floatValue;
-                hasChanged = storedMultipliers[i] != currentMultiplier;
-            }
-            if (hasChanged) {
-                SaveMultipliers();
-            }
-
-            return hasChanged;
+        private void InitVariables() {
+            selectedLevel = -1;
+            selectedDifficultyFactor = difficultyFactor.floatValue;
+            validEncounterGroups = new List<EncounterGroup>();
+            chancesDict = new ReadOnlyDictionary<EncounterGroup, float>(new Dictionary<EncounterGroup, float>());
         }
 
         public override void OnInspectorGUI() {
             serializedObject.Update();
-
             ShowPreviews();
-
-            EditorGUILayout.Space(20f);
-
+            EditorGUILayout.Space(previewSpacing);
             EditorGUILayout.PropertyField(encounterGroups);
-
             serializedObject.ApplyModifiedProperties();
         }
 
         private void ShowPreviews() {
             float previousDifficultyFactor = selectedDifficultyFactor;
-            DisplayDifficultyFactorButton();
+            DisplayDifficultyFactorButtons();
             EditorGUILayout.Space();
-
-            // Seleção de level da party
             int previousLevel = selectedLevel;
+            DisplayLevelSelectionButtons();
+            EditorGUILayout.Space();
+            bool parametersChanged = CheckForParameterChanges(previousDifficultyFactor, previousLevel);
+            UpdateAndShowSelectedPreview(parametersChanged);
+        }
+
+        private void DisplayDifficultyFactorButtons() {
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Difficulty Factor", EditorStyles.boldLabel);
+            DisplayDifficultyFactorDecreaseButton();
+            EditorGUILayout.LabelField($"{(selectedDifficultyFactor):0.0}", GUILayout.MaxWidth(SMALL_LABEL_WIDTH));
+            DisplayDifficultyFactorIncreaseButton();
+            ApplyDifficultyFactorChanges();
+            EditorGUILayout.EndHorizontal();
+        }
+
+        private void DisplayDifficultyFactorDecreaseButton() {
+            if (GUILayout.Button("-", GUILayout.MaxWidth(SMALL_LABEL_WIDTH)))
+                selectedDifficultyFactor = Mathf.Max(0.0f, difficultyFactor.floatValue - 0.1f);
+        }
+
+        private void DisplayDifficultyFactorIncreaseButton() {
+            if (GUILayout.Button("+", GUILayout.MaxWidth(SMALL_LABEL_WIDTH)))
+                selectedDifficultyFactor = Mathf.Min(1f, difficultyFactor.floatValue + 0.1f);
+        }
+
+        private void ApplyDifficultyFactorChanges() {
+            difficultyFactor.floatValue = selectedDifficultyFactor;
+            serializedObject.ApplyModifiedProperties();
+        }
+
+        private void DisplayLevelSelectionButtons() {
             EditorGUILayout.BeginHorizontal(EditorStyles.boldLabel);
-            for (int i = 0; i < 5; i++) {
-                if (GUILayout.Button($"level {i + 1}")) {
-                    selectedLevel = i;
-                }
+            for (int level = 0; level < 5; level++) {
+                if (GUILayout.Button($"level {level + 1}"))
+                    selectedLevel = level;
             }
             EditorGUILayout.EndHorizontal();
-
-            // Mostra o level selecionado
-            EditorGUILayout.LabelField($"Selected level: {selectedLevel + 1}", EditorStyles.boldLabel);
-            EditorGUILayout.Space();
-
             selectedLevel = Mathf.Clamp(selectedLevel, 0, 4);
+            EditorGUILayout.LabelField($"Selected level: {selectedLevel + 1}", EditorStyles.boldLabel);
+        }
+
+        private bool CheckForParameterChanges(float previousDifficultyFactor, int previousLevel) {
             bool parametersChanged = selectedLevel != previousLevel;
             parametersChanged |= (Mathf.Abs(previousDifficultyFactor - selectedDifficultyFactor) > Mathf.Epsilon);
-            parametersChanged |= CheckMultiplierChange();
+            parametersChanged |= CheckMultiplierChanges();
+            return parametersChanged;
+        }
 
+        private bool CheckMultiplierChanges() {
+            bool hasChanged = encounterGroups.arraySize != storedMultipliers.Count;
+            for (int index = 0; !hasChanged && index < encounterGroups.arraySize; index++) {
+                float currentMultiplier = GetSerializedMultiplierAtIndex(index);
+                hasChanged = storedMultipliers[index] != currentMultiplier;
+            }
+            if (hasChanged)
+                SaveMultipliers();
+            return hasChanged;
+        }
+
+        private float GetSerializedMultiplierAtIndex(int index) {
+            return encounterGroups.GetArrayElementAtIndex(index).FindPropertyRelative("chanceMultiplier").floatValue;
+        }
+
+        private void UpdateAndShowSelectedPreview(bool parametersChanged) {
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
             EditorGUILayout.Space();
-            // Calcula os valores apenas caso precise
             if (parametersChanged) {
-                validEncounterGroups.Clear();
-                chancesDict = (target as MapEncounterList).GetChancesForLevel(selectedLevel);
+                ResetListAndDictionary();
+                RepopulateValidEncountersList();
+                RecalculateEncounterChances();
             }
+            DisplayEncounterInfo();
+            EditorGUILayout.Space();
+            EditorGUILayout.EndVertical();
+        }
 
-            // Repopula a lista de encontros validos caso precise
-            for (int i = 0; parametersChanged && i < encounterGroups.arraySize; i++) {
-                SerializedProperty groupProp = GetGroupPropAtIndex(i);
-                if (groupProp == null || groupProp.objectReferenceValue == null) {
+        private void ResetListAndDictionary() {
+            validEncounterGroups.Clear();
+            chancesDict = (target as MapEncounterList).GetChancesForLevel(selectedLevel);
+        }
+
+        private void RepopulateValidEncountersList() {
+            for (int index = 0; index < encounterGroups.arraySize; index++) {
+                SerializedProperty groupProp = GetGroupPropAtIndex(index);
+                if (groupProp == null || groupProp.objectReferenceValue == null)
                     continue;
-                }
 
                 SerializedObject obj = new SerializedObject(groupProp.objectReferenceValue);
-                if (!obj.FindProperty("canEncounter").GetArrayElementAtIndex(selectedLevel).boolValue) {
+                if (!obj.FindProperty("canEncounter").GetArrayElementAtIndex(selectedLevel).boolValue)
                     continue;
-                }
 
                 EncounterGroup encounterGroup = obj.targetObject as EncounterGroup;
                 validEncounterGroups.Add(encounterGroup);
             }
-            // Calcula as chances caso precise
-            if (parametersChanged) {
-                validEncounterGroups.Sort((first, second) => chancesDict[first].CompareTo(chancesDict[second]));
-            }
-
-            // Mostra a informação calculada de todos os encontros para o level selecionado
-            DisplayEncounterInfo();
-
-            EditorGUILayout.Space();
-            EditorGUILayout.EndVertical();
         }
 
         private SerializedProperty GetGroupPropAtIndex(int index) {
@@ -126,47 +162,45 @@ namespace FinalInferno {
             return itemAtIndex?.FindPropertyRelative("group");
         }
 
-        private void DisplayDifficultyFactorButton() {
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField("Difficulty Factor", EditorStyles.boldLabel);
-            if (GUILayout.Button("-", GUILayout.MaxWidth(SMALL_LABEL_WIDTH))) {
-                selectedDifficultyFactor = Mathf.Max(0.0f, difficultyFactor.floatValue - 0.1f);
-            }
-            EditorGUILayout.LabelField($"{(selectedDifficultyFactor):0.0}", GUILayout.MaxWidth(SMALL_LABEL_WIDTH));
-            if (GUILayout.Button("+", GUILayout.MaxWidth(SMALL_LABEL_WIDTH))) {
-                selectedDifficultyFactor = Mathf.Min(1f, difficultyFactor.floatValue + 0.1f);
-            }
-            difficultyFactor.floatValue = selectedDifficultyFactor;
-            serializedObject.ApplyModifiedProperties();
-            EditorGUILayout.EndHorizontal();
+        private void RecalculateEncounterChances() {
+            validEncounterGroups.Sort((first, second) => chancesDict[first].CompareTo(chancesDict[second]));
         }
 
         private void DisplayEncounterInfo() {
             bool isFirst = true;
             foreach (EncounterGroup encounterGroup in validEncounterGroups) {
-                if (!isFirst) {
-                    EditorUtils.DrawSeparator(EditorGUILayout.GetControlRect());
-                }
-
+                DrawSeparatorIfNecessary(isFirst);
                 isFirst = false;
-
                 EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField($"Chance = {((chancesDict[encounterGroup])):##0.##}%", GUILayout.MinHeight(PORTRAIT_SIZE), GUILayout.MaxWidth(100f));
-                // Mostra informação do encontro
-                Rect currentRect = EditorGUILayout.GetControlRect();
-                for (int i = 0; i < 4; i++) {
-                    if (encounterGroup[i] == null) {
-                        continue;
-                    }
-
-                    Vector2 position = new Vector2(currentRect.position.x + i * (20f + PORTRAIT_SIZE), currentRect.position.y);
-                    EditorGUI.DrawTextureTransparent(new Rect(position, new Vector2(PORTRAIT_SIZE, PORTRAIT_SIZE)),
-                                                    EditorUtils.GetCroppedTexture(encounterGroup[i].Portrait),
-                                                    ScaleMode.ScaleToFit);
-                }
+                EditorGUILayout.LabelField($"Chance = {((chancesDict[encounterGroup])):##0.##}%",
+                                            GUILayout.MinHeight(PORTRAIT_SIZE),
+                                            GUILayout.MaxWidth(chanceLabelWidth));
+                DrawEncounterGroupEnemies(encounterGroup);
                 EditorGUILayout.EndHorizontal();
                 EditorGUILayout.LabelField($"\"{encounterGroup.name}\"", EditorStyles.boldLabel);
             }
+        }
+
+        private static void DrawSeparatorIfNecessary(bool isFirst) {
+            if (!isFirst)
+                EditorUtils.DrawSeparator(EditorGUILayout.GetControlRect());
+        }
+
+        private static void DrawEncounterGroupEnemies(EncounterGroup encounterGroup) {
+            Rect currentRect = EditorGUILayout.GetControlRect();
+            for (int index = 0; index < 4; index++) {
+                if (encounterGroup[index] == null)
+                    continue;
+                currentRect = DrawEnemyPortrait(encounterGroup, currentRect, index);
+            }
+        }
+
+        private static Rect DrawEnemyPortrait(EncounterGroup encounterGroup, Rect currentRect, int index) {
+            Vector2 position = currentRect.position + new Vector2(index * (portraitSpacing + PORTRAIT_SIZE), 0f);
+            EditorGUI.DrawTextureTransparent(new Rect(position, new Vector2(PORTRAIT_SIZE, PORTRAIT_SIZE)),
+                                            EditorUtils.GetCroppedTexture(encounterGroup[index].Portrait),
+                                            ScaleMode.ScaleToFit);
+            return currentRect;
         }
     }
 #endif

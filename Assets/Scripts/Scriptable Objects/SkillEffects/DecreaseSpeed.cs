@@ -3,15 +3,15 @@
 namespace FinalInferno {
     [CreateAssetMenu(fileName = "DecreaseSpeed", menuName = "ScriptableObject/SkillEffect/DecreaseSpeed")]
     public class DecreaseSpeed : SkillEffect {
-        // value1 = speedDown multiplier
-        // value2 = debuff duration
-        public override string Description => "Decrease speed by " + value1 * 100 + "% for " + value2 + " turns";
+        private float SpeedDownMultiplier => value1;
+        private int DebuffDuration => (int)value2;
+        public override string Description => $"Decrease speed by {SpeedDownMultiplier * 100}% for {DebuffDuration} turns";
 
         public override void Apply(BattleUnit source, BattleUnit target) {
-            if (value2 < 0) {
-                target.curSpeed -= (int)value1 * target.curSpeed;
+            if (DebuffDuration < 0) {
+                target.curSpeed -= (int)(SpeedDownMultiplier * target.curSpeed);
             } else {
-                target.AddEffect(new SpeedDown(source, target, value1, (int)value2));
+                target.AddEffect(new SpeedDown(source, target, SpeedDownMultiplier, DebuffDuration));
             }
         }
     }

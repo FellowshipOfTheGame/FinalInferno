@@ -7,7 +7,6 @@ namespace FinalInferno {
 
         public override void BeforeDialogue() {
             CharacterOW.PartyCanMove = false;
-
             base.BeforeDialogue();
             Fog.Dialogue.DialogueHandler.instance.OnDialogueStart -= BeforeDialogue;
         }
@@ -16,9 +15,8 @@ namespace FinalInferno {
             if (shouldUnlockMovement) {
                 CharacterOW.PartyCanMove = true;
             }
-
             base.AfterDialogue();
-            Fog.Dialogue.DialogueHandler.instance.OnDialogueStart -= AfterDialogue;
+            Fog.Dialogue.DialogueHandler.instance.OnDialogueEnd -= AfterDialogue;
         }
     }
 }

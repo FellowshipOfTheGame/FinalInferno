@@ -4,16 +4,17 @@ using UnityEngine;
 
 
 namespace FinalInferno {
-    //representa a equipe inteira do jogador
     [CreateAssetMenu(fileName = "Party", menuName = "ScriptableObject/Party")]
     public class Party : ScriptableObject, IDatabaseItem {
+        public const string mainQuestAssetName = "MainQuest";
+        private const string partyAssetName = "Party";
+        private const string mainQuestChapter1Flag = "CerberusDead";
+        private const string accumulatedXpColumnName = "XPAccumulated";
+        private const string xpNextLevelColumnName = "XPNextLevel";
         private static Party instance = null;
         public static Party Instance {
             get {
-                if (instance == null) {
-                    instance = AssetManager.LoadAsset<Party>("Party");
-                }
-
+                instance = instance != null ? instance : AssetManager.LoadAsset<Party>(partyAssetName);
                 return instance;
             }
         }
@@ -22,43 +23,36 @@ namespace FinalInferno {
 
         public string currentMap = StaticReferences.FirstScene;
         [SerializeField] private int level;
-        public int Level => level;  //nivel da equipe(todos os personagens tem sempre o mesmo nivel)
+        public int Level => level;
         public int ScaledLevel {
-            // Nível ajustado de acordo com o progresso na historia
             get {
-                int questParam = 0;
-                if (AssetManager.LoadAsset<Quest>("MainQuest").GetFlag("CerberusDead")) {
-                    questParam++;
-                }
-
+                int questParam = CalculateMainQuestProgress();
                 int levelRange = questParam * 10;
-
                 return Mathf.Clamp(level, levelRange, levelRange + 10);
             }
         }
-        // Multiplicador para aplicar penalidades ou bonus de exp
+
+        private static int CalculateMainQuestProgress() {
+            int questParam = 0;
+            Quest mainQuest = AssetManager.LoadAsset<Quest>(mainQuestAssetName);
+            if (mainQuest.GetFlag(mainQuestChapter1Flag))
+                questParam++;
+            return questParam;
+        }
+
         [SerializeField, HideInInspector] private float xpMultiplier = 1f;
         public float XpMultiplier {
             get => xpMultiplier;
             set => xpMultiplier = value;
         }
-        public long xp; //experiencia da equipe(todos os personagens tem sempre a mesma experiencia)
-        public long xpNext; //experiencia necessaria para avancar de nivel
-        public long XpCumulative => ((table == null) ? 0 : (xp + ((level <= 1) ? 0 : (table.Rows[level - 2].Field<long>("XPAccumulated")))));
-        public List<Character> characters = new List<Character>(); //lista dos personagens que compoe a equipe 
-        // Precisaria disso pra dar suporte a salvar o jogo em situações com menos personagems que o desejado mas
-        // como talvez de mais trabalho vamo deixar comentado mesmo
-        // public int Count{
-        //     get{
-        //         int i = 0;
-        //         foreach(Character character in characters){
-        //             if(character.isPresent)
-        //                 i++;
-        //         }
-        //         return i;
-        //     }
-        // }
-        public List<Quest> activeQuests = new List<Quest>(); // Lista das quests ativas
+        public long xp;
+        public long xpNextLevel;
+        public long XpCumulative => ((table == null) ? 0 : (xp + CurrentLevelCumulativeXp));
+        private long CurrentLevelCumulativeXp => ((level <= 1) ? 0 : (table.Rows[level - 2].Field<long>(accumulatedXpColumnName)));
+        private bool ShouldIncreaseLevel => xp >= xpNextLevel && level < Table.Rows.Count;
+
+        public List<Character> characters = new List<Character>();
+        public List<Quest> activeQuests = new List<Quest>();
         private Dictionary<Enemy, int> bestiary = new Dictionary<Enemy, int>();
         public ReadOnlyDictionary<Enemy, int> Bestiary => (new ReadOnlyDictionary<Enemy, int>(bestiary));
 
@@ -66,14 +60,12 @@ namespace FinalInferno {
         [SerializeField] private DynamicTable table;
         private DynamicTable Table {
             get {
-                if (table == null) {
-                    table = DynamicTable.Create(partyXP);
-                }
-
+                table ??= DynamicTable.Create(partyXP);
                 return table;
             }
         }
 
+        #region IDatabaseItem
         public void LoadTables() {
             table = DynamicTable.Create(partyXP);
         }
@@ -81,9 +73,10 @@ namespace FinalInferno {
         public void Preload() {
             level = 0;
             xp = 0;
-            xpNext = 0;
+            xpNextLevel = 0;
             currentMap = StaticReferences.FirstScene;
         }
+        #endregion
 
         public void RegisterKill(Enemy enemy) {
             if (bestiary.ContainsKey(enemy)) {
@@ -95,104 +88,94 @@ namespace FinalInferno {
 
         public void ReloadBestiary(BestiaryEntry[] entries) {
             bestiary.Clear();
-            if (entries != null) {
-                foreach (BestiaryEntry entry in entries) {
-                    if (entry.monsterName != "") {
-                        bestiary.Add(AssetManager.LoadAsset<Enemy>(entry.monsterName), entry.numberKills);
-                    }
-                }
+            if (entries == null)
+                return;
+            foreach (BestiaryEntry entry in entries) {
+                AddValidBestiaryEntry(entry);
             }
         }
 
-        //faz todos os persoangens subirem de nivel
-        public void LevelUp() {
+        private void AddValidBestiaryEntry(BestiaryEntry entry) {
+            if (string.IsNullOrEmpty(entry.monsterName))
+                return;
+            Enemy enemy = AssetManager.LoadAsset<Enemy>(entry.monsterName);
+            bestiary.Add(enemy, entry.numberKills);
+        }
+
+        public int CalculateLevel(long cumulativeExp) {
+            if (cumulativeExp <= 0)
+                return 0;
+
+            int calculatedLevel = 1;
+            while (cumulativeExp > Table.Rows[calculatedLevel - 1].Field<long>(accumulatedXpColumnName)) {
+                calculatedLevel++;
+            }
+            return calculatedLevel;
+        }
+
+        public void GiveExp(long value) {
+            xp += value;
+            bool leveledUp = ShouldIncreaseLevel;
+            while (ShouldIncreaseLevel) {
+                LevelUp();
+            }
+            if (leveledUp)
+                ApplyLevelToCharacters();
+        }
+
+        private void LevelUp() {
+            xp -= xpNextLevel;
+            level++;
+            xpNextLevel = Table.Rows[level - 1].Field<long>(xpNextLevelColumnName);
+        }
+
+        public void ApplyLevelToCharacters() {
             foreach (Character character in characters) {
                 character.LevelUp(level);
             }
         }
 
-        // Função auxiliar para preview de level baseado na informação do save file
-        public int GetLevel(long cumulativeExp) {
-            if (cumulativeExp <= 0) {
-                return 0;
-            }
-
-            int _level = 1;
-            while (cumulativeExp > Table.Rows[_level - 1].Field<long>("XPAccumulated")) {
-                _level++;
-            }
-            return _level;
-        }
-
-        //Adiciona os pontos de experiência conquistado pelo jogador
-        public bool GiveExp(long value) {
-            bool up = false;
-
-            xp += value;
-
-            //testa se os persoanagens subiram de nivel
-            while (xp >= xpNext && level < Table.Rows.Count) {
-                // TO DO: Revisão de tabelas (level tem que ser user friendly)
-                xp -= xpNext;
-                level++;
-                xpNext = Table.Rows[level - 1].Field<long>("XPNextLevel");
-
-                up = true;
-            }
-
-
-            if (up) {
-                LevelUp();
-            }
-
-            return up;
-        }
-
         public void SaveOverworldPositions() {
             foreach (Character character in characters) {
-                if (character.OverworldInstance != null) {
-                    Vector3 instancePosition = character.OverworldInstance.transform.position;
-                    character.position = new Vector2(instancePosition.x, instancePosition.y);
-                }
+                character.SaveOverworldPosition();
             }
         }
 
         public void LoadOverworldPositions() {
             foreach (Character character in characters) {
-                if (character.OverworldInstance != null) {
-                    Transform instanceTransform = character.OverworldInstance.transform;
-                    instanceTransform.position = new Vector3(character.position.x, character.position.y, instanceTransform.position.z);
-                }
+                character.LoadOverworldPosition();
             }
         }
 
         public void ResetParty() {
-            level = 0;
-            xp = 0;
-            xpNext = 0;
-            Debug.Log("Party resetada");
-            // characters.Clear();
+            ResetPartyProgress();
+            LoadDefaultHeroAssets();
+            foreach (Character character in characters) {
+                character.ResetCharacter();
+            }
+            ResetPartyXP();
+        }
+
+        private void ResetPartyProgress() {
             bestiary.Clear();
             foreach (Quest quest in activeQuests) {
                 quest.ResetQuest();
             }
             activeQuests.Clear();
             currentMap = StaticReferences.FirstScene;
-            // Gambiarra mas provavelmente tem que ser hardcoded mesmo(?)
-            // Talvez seja desnecessário ter que limpar a lista de character e achar de novo,
-            // pode ser melhor só deixar as 4 referencias fixas e definir que elas não vão ser alteradas
-            // Para os arquétipos pode ter uma configuração base e ela ser usada para construir
-            // characters.Add(AssetManager.LoadAsset<Character>("Character 1"));
+        }
+
+        private void LoadDefaultHeroAssets() {
             characters[0].archetype = AssetManager.LoadAsset<Hero>("Amidi");
-            // characters.Add(AssetManager.LoadAsset<Character>("Character 2"));
             characters[1].archetype = AssetManager.LoadAsset<Hero>("Gregorim");
-            // characters.Add(AssetManager.LoadAsset<Character>("Character 3"));
             characters[2].archetype = AssetManager.LoadAsset<Hero>("Herman");
-            // characters.Add(AssetManager.LoadAsset<Character>("Character 4"));
             characters[3].archetype = AssetManager.LoadAsset<Hero>("Xander");
-            foreach (Character character in characters) {
-                character.ResetCharacter();
-            }
+        }
+
+        private void ResetPartyXP() {
+            level = 0;
+            xp = 0;
+            xpNextLevel = 0;
             GiveExp(0);
         }
     }

@@ -1,8 +1,6 @@
 #if UNITY_EDITOR
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 namespace FinalInferno {
     [CustomEditor(typeof(TriggerSceneChange))]
@@ -55,7 +53,7 @@ namespace FinalInferno {
 
         private void DrawSceneSelectionField() {
             sceneObj = EditorGUILayout.ObjectField(sceneObj, typeof(SceneAsset), false);
-            sceneName.stringValue = sceneObj?.name ?? string.Empty;
+            sceneName.stringValue = sceneObj ? sceneObj.name : string.Empty;
         }
 
         private bool DrawSceneChangeFields() {

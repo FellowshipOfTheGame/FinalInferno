@@ -13,15 +13,21 @@ namespace FinalInferno {
         [SerializeField] private OverworldSkill encounterIncreaseSkill = null;
         [SerializeField] private FloatVariable encounterIncDistWalked = null;
         private float EncounterIncDistWalked {
-            get => encounterIncDistWalked?.Value ?? 0;
-            set => encounterIncDistWalked?.UpdateValue(value);
+            get => encounterIncDistWalked ? encounterIncDistWalked.Value : 0;
+            set {
+                if (encounterIncDistWalked)
+                    encounterIncDistWalked.UpdateValue(value);
+            }
         }
         private float encounterIncDist = 0;
         [SerializeField] private OverworldSkill encounterDecreaseSkill = null;
         [SerializeField] private FloatVariable encounterDecDistWalked = null;
         private float EncounterDecDistWalked {
-            get => encounterDecDistWalked?.Value ?? 0;
-            set => encounterDecDistWalked?.UpdateValue(value);
+            get => encounterDecDistWalked ? encounterDecDistWalked.Value : 0;
+            set {
+                if (encounterDecDistWalked)
+                    encounterDecDistWalked.UpdateValue(value);
+            }
         }
         private float encounterDecDist = 0;
         private float skillModifier = 0;
@@ -43,7 +49,7 @@ namespace FinalInferno {
         [Header("Expected value = TriggerChangeScene")]
         [SerializeField] private FinalInferno.UI.FSM.ButtonClickDecision decision;
 
-		#region Initial Setup
+        #region Initial Setup
         private void Start() {
             InitPlayerPositionVariables();
             FindDialogueAgent();
@@ -55,12 +61,12 @@ namespace FinalInferno {
 
         private void InitPlayerPositionVariables() {
             playerObj = CharacterOW.MainOWCharacter?.transform;
-            lastCheckPosition = playerObj?.position ?? Vector2.zero;
+            lastCheckPosition = playerObj ? (Vector2)playerObj.position : Vector2.zero;
             lastPosition = lastCheckPosition;
         }
 
         private void FindDialogueAgent() {
-            if (agent != null || CharacterOW.MainOWCharacter == null) {
+            if (agent || !CharacterOW.MainOWCharacter) {
                 return;
             }
             agent = CharacterOW.MainOWCharacter.GetComponent<Fog.Dialogue.Agent>();
@@ -82,9 +88,9 @@ namespace FinalInferno {
         }
 
         private void InitEncounterSkillsVariables() {
-            encounterIncDist = encounterIncreaseSkill?.effects[0].value2 ?? 0;
+            encounterIncDist = encounterIncreaseSkill ? encounterIncreaseSkill.effects[0].value2 : 0;
             EncounterIncDistWalked = encounterIncDist;
-            encounterDecDist = encounterDecreaseSkill?.effects[0].value2 ?? 0;
+            encounterDecDist = encounterDecreaseSkill ? encounterDecreaseSkill.effects[0].value2 : 0;
             EncounterDecDistWalked = encounterDecDist;
             skillModifier = 1.0f;
         }
@@ -100,7 +106,7 @@ namespace FinalInferno {
         }
         #endregion
 
-		#region Checking Encounters
+        #region Checking Encounters
         // A checagem precisa acontecer no LateUpdate para evitar conflito com o update do sistema de dialogo
         private void LateUpdate() {
             if (ShouldCheckEncounter()) {
@@ -117,13 +123,13 @@ namespace FinalInferno {
             if (playerObj == null) {
                 return 0f;
             }
-            return Vector2.Distance(lastPosition, (Vector2)playerObj.position);
+            return Vector2.Distance(lastPosition, playerObj.position);
         }
 
         private void CheckDistanceTresholdAndEncounter(float distance) {
             distanceWalked += distance;
             if (distanceWalked < distanceTreshold) {
-                lastPosition = (Vector2)playerObj.position;
+                lastPosition = playerObj.position;
                 return;
             }
             if (CheckEncounter(distanceWalked)) {
@@ -153,7 +159,7 @@ namespace FinalInferno {
         }
 
         private bool RollForBattle() {
-            if(curEncounterRate * skillModifier == 0f) {
+            if (curEncounterRate * skillModifier == 0f) {
                 return false;
             }
             return Random.Range(0.0f, 100.0f) <= (curEncounterRate * skillModifier);
@@ -189,8 +195,10 @@ namespace FinalInferno {
         private void SetupAndStartBattle(EncounterGroup result) {
             // Calculo de level foi movido para Enemy.cs e Party.cs
             // A função é chamada no script de preview LoadEnemiesPreview.cs
-            encounterDecreaseSkill?.Deactivate();
-            encounterIncreaseSkill?.Deactivate();
+            if (encounterDecreaseSkill)
+                encounterDecreaseSkill.Deactivate();
+            if (encounterIncreaseSkill)
+                encounterIncreaseSkill.Deactivate();
             FinalInferno.UI.ChangeSceneUI.isBattle = true;
             FinalInferno.UI.ChangeSceneUI.battleBG = battleBG;
             FinalInferno.UI.ChangeSceneUI.battleBGM = battleBGM;
@@ -204,20 +212,24 @@ namespace FinalInferno {
         }
 
         private void UpdatePositions() {
-            lastCheckPosition = (Vector2)playerObj.position;
-            lastPosition = (Vector2)playerObj.position;
+            lastCheckPosition = playerObj.position;
+            lastPosition = playerObj.position;
         }
         #endregion
 
-		#region Encounter Skills Callbacks
+        #region Encounter Skills Callbacks
         public void OnEnable() {
-            encounterIncreaseSkill?.AddActivationListener(this);
-            encounterDecreaseSkill?.AddActivationListener(this);
+            if (encounterIncreaseSkill)
+                encounterIncreaseSkill.AddActivationListener(this);
+            if (encounterDecreaseSkill)
+                encounterDecreaseSkill.AddActivationListener(this);
         }
 
         public void OnDisable() {
-            encounterIncreaseSkill?.RemoveActivationListener(this);
-            encounterDecreaseSkill?.RemoveActivationListener(this);
+            if (encounterIncreaseSkill)
+                encounterIncreaseSkill.RemoveActivationListener(this);
+            if (encounterDecreaseSkill)
+                encounterDecreaseSkill.RemoveActivationListener(this);
         }
 
         public void ActivatedSkill(OverworldSkill skill) {
@@ -232,13 +244,15 @@ namespace FinalInferno {
         }
 
         private void ActivateEncounterIncreaseSkill(OverworldSkill skill) {
-            encounterDecreaseSkill?.Deactivate();
+            if (encounterDecreaseSkill)
+                encounterDecreaseSkill.Deactivate();
             EncounterIncDistWalked = 0;
             skillModifier = skill.effects[0].value1;
         }
 
         private void ActivateEncounterDecreaseSkill(OverworldSkill skill) {
-            encounterIncreaseSkill?.Deactivate();
+            if (encounterIncreaseSkill)
+                encounterIncreaseSkill.Deactivate();
             EncounterDecDistWalked = 0;
             skillModifier = skill.effects[0].value1;
         }

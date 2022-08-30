@@ -16,7 +16,7 @@ namespace FinalInferno.UI.AII {
             autoSave.Toggle(SaveLoader.AutoSave);
             autoSave.OnToggle += ToggleAutoSave;
 
-            VolumeController.VolumeInfo volumeInfo = volumeController.GetInfo();
+            VolumeInfo volumeInfo = volumeController.GetInfo();
 
             volumeMaster.slider.value = volumeInfo.VolumeMaster;
             bgmVolume.slider.value = volumeInfo.VolumeBGM;

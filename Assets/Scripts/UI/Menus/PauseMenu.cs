@@ -18,7 +18,8 @@ namespace FinalInferno {
         }
 
         public void ToggleBestiary() {
-            bestiaryMenu?.ToggleBestiary();
+            if (bestiaryMenu)
+                bestiaryMenu.ToggleBestiary();
         }
 
         public void ChangePauseState() {

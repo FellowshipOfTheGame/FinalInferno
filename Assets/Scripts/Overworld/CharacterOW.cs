@@ -20,10 +20,15 @@ namespace FinalInferno {
             }
         }
 
-        public static CharacterOW MainOWCharacter => Party.Instance.characters?[0]?.OverworldInstance;
+        public static CharacterOW MainOWCharacter {
+            get {
+                Character firstCharacter = Party.Instance.characters?[0];
+                return firstCharacter ? firstCharacter.OverworldInstance : null;
+            }
+        }
 
         public static bool PartyCanMove {
-            get => Party.Instance.characters?[0]?.OverworldInstance?.CanMove ?? false;
+            get => MainOWCharacter?.CanMove ?? false;
             set {
                 foreach (Character character in Party.Instance.characters) {
                     SetCharacterInstanceCanMove(character, value);
@@ -32,7 +37,7 @@ namespace FinalInferno {
         }
 
         private static void SetCharacterInstanceCanMove(Character character, bool value) {
-            if (character?.OverworldInstance != null) {
+            if (character && character.OverworldInstance) {
                 character.OverworldInstance.CanMove = value;
             }
         }
@@ -119,18 +124,20 @@ namespace FinalInferno {
 
         #region SprintCallbacks
         public void OnEnable() {
-            sprintSkill?.AddActivationListener(this);
+            if (sprintSkill)
+                sprintSkill.AddActivationListener(this);
         }
 
         public void OnDisable() {
-            sprintSkill?.RemoveActivationListener(this);
+            if (sprintSkill)
+                sprintSkill.RemoveActivationListener(this);
         }
 
         public void ActivatedSkill(OverworldSkill skill) {
             if (skill != sprintSkill) {
                 return;
             }
-            float moveSpeedChange = sprintSkill?.effects[0].value1 ?? 0;
+            float moveSpeedChange = sprintSkill ? sprintSkill.effects[0].value1 : 0;
             movable.MoveSpeed += moveSpeedChange;
         }
 
@@ -138,7 +145,7 @@ namespace FinalInferno {
             if (skill != sprintSkill) {
                 return;
             }
-            float moveSpeedChange = sprintSkill?.effects[0].value1 ?? 0;
+            float moveSpeedChange = sprintSkill ? sprintSkill.effects[0].value1 : 0;
             movable.MoveSpeed -= moveSpeedChange;
         }
         #endregion

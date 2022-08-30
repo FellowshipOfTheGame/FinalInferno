@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using UnityEngine;
 using FinalInferno.CustomExtensions;
+using UnityEngine;
 
 namespace FinalInferno {
     [System.Serializable]
@@ -183,7 +183,7 @@ namespace FinalInferno {
             Party.Instance.activeQuests.Clear();
             foreach (QuestInfo questInfo in saves[Slot].quest) {
                 Quest quest = AssetManager.LoadAsset<Quest>(questInfo.name);
-                quest.StartQuest(true);
+                quest.StartQuest();
                 ulong bitValue = 1;
                 for (int i = 0; i < quest.EventCount; i++) {
                     quest.SetFlag(questInfo.flagsNames[i], (questInfo.flagsTrue & bitValue) != 0);
@@ -197,7 +197,7 @@ namespace FinalInferno {
         }
 
         private void LoadSettings() {
-            StaticReferences.VolumeController.ResetValues(saves[Slot].volumeInfo ?? new VolumeController.VolumeInfo());
+            StaticReferences.VolumeController.ResetValues(saves[Slot].volumeInfo ?? new VolumeInfo());
             SaveLoader.AutoSave = saves[Slot].autoSave;
         }
     }

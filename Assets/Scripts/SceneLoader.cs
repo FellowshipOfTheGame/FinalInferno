@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
@@ -206,7 +205,7 @@ namespace FinalInferno {
             onSceneLoad -= UnlockMovement;
         }
         public static void StartDialogue() {
-            Fog.Dialogue.Agent agent = CharacterOW.MainOWCharacter != null? CharacterOW.MainOWCharacter.GetComponent<Fog.Dialogue.Agent>() : null;
+            Fog.Dialogue.Agent agent = CharacterOW.MainOWCharacter != null ? CharacterOW.MainOWCharacter.GetComponent<Fog.Dialogue.Agent>() : null;
             Fog.Dialogue.DialogueHandler.instance.StartDialogue(cutsceneDialogue);
             cutsceneDialogue = null;
             onSceneLoad -= StartDialogue;

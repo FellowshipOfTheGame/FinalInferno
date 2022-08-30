@@ -26,7 +26,7 @@ namespace FinalInferno {
 
         private bool HasAtLeastOneTrigger(Collider2D[] colliders) {
             foreach (Collider2D col in colliders) {
-                if(col.isTrigger) {
+                if (col.isTrigger) {
                     return true;
                 }
             }
@@ -42,12 +42,14 @@ namespace FinalInferno {
 
         public void OnTriggerEnter2D(Collider2D col) {
             Agent agent = col.GetComponent<Agent>();
-            agent?.collidingInteractables.Add(this);
+            if (agent)
+                agent.collidingInteractables.Add(this);
         }
 
         public void OnTriggerExit2D(Collider2D col) {
             Agent agent = col.GetComponent<Agent>();
-            agent?.collidingInteractables.Remove(this);
+            if (agent)
+                agent.collidingInteractables.Remove(this);
         }
 
     }

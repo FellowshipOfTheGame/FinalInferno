@@ -1,6 +1,6 @@
-﻿using UnityEngine;
-using FinalInferno;
+﻿using FinalInferno;
 using Fog.Dialogue;
+using UnityEngine;
 
 [RequireComponent(typeof(Jukebox), typeof(DontDestroyThis))]
 public class StaticReferences : MonoBehaviour {
@@ -34,7 +34,8 @@ public class StaticReferences : MonoBehaviour {
             Destroy(this);
         }
 
-        bgm ??= GetComponent<Jukebox>();
+        if (!bgm)
+            bgm = GetComponent<Jukebox>();
     }
 
     private void OnDestroy() {

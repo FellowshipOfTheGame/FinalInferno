@@ -15,13 +15,18 @@ namespace FinalInferno {
             }
         }
 
-        public void Desecrate(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f) {
-            if (visualEffect != null) {
-                GameObject obj = Instantiate(visualEffect, user.transform);
-                obj.GetComponent<SkillVFX>().SetTarget(user, true);
-            }
+        private void Desecrate(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f) {
+            ShowVFX(user);
             user.Revive();
             user.Heal(user.MaxHP, 1.0f);
+        }
+
+        private void ShowVFX(BattleUnit user) {
+            if (!visualEffect) {
+                return;
+            }
+            GameObject obj = Instantiate(visualEffect, user.transform);
+            obj.GetComponent<SkillVFX>().SetTarget(user, true);
         }
     }
 }

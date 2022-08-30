@@ -13,7 +13,7 @@ public class CreateAssetDatabase : IPreprocessBuildWithReport {
         BuildDatabase();
     }
 
-    [MenuItem("Assets/Final Inferno/Build Database")]
+    [MenuItem("Tools/Final Inferno/Build Database")]
     private static void BuildDatabase() {
         string[] objectsFound = AssetDatabase.FindAssets("t:" + typeof(FinalInferno.AssetManager));
         int i = 0;

@@ -7,14 +7,11 @@ namespace FinalInferno {
         public override void BeforeDialogue() { }
         public override void AfterDialogue() {
             Fog.Dialogue.DialogueHandler.instance.StartCoroutine(WaitToGoBack());
+            Fog.Dialogue.DialogueHandler.instance.OnDialogueEnd -= AfterDialogue;
         }
 
         public IEnumerator WaitToGoBack() {
             yield return new WaitForSecondsRealtime(1.5f);
-            BackToMainMenu();
-        }
-
-        public void BackToMainMenu() {
             SceneLoader.LoadMainMenu();
         }
     }

@@ -50,7 +50,7 @@ namespace FinalInferno.UI.Battle {
             }
         }
 
-        public void UpdateBattleUnitSize(BattleUnit battleUnit, int ppu = 64){
+        public void UpdateBattleUnitSize(BattleUnit battleUnit, int ppu = 64) {
             // Debug.Log("height detected for " + unit.name + " = " + unit.BattleSprite.bounds.size.y);
             battleUnit.battleItem.layout.preferredWidth = battleUnit.Unit.BoundsSizeX * ppu;
             battleUnit.battleItem.layout.preferredHeight = battleUnit.Unit.BoundsSizeY * ppu;

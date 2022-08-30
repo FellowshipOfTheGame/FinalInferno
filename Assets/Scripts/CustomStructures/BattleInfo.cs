@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +8,7 @@ namespace FinalInferno {
         public AudioClip BGM;
         public BattleInfo(Enemy[] enemies, Sprite BG, AudioClip BGM) {
             this.enemies = new List<Enemy>(enemies);
-            this.BGImage = BG;
+            BGImage = BG;
             this.BGM = BGM;
         }
         public void CopyValues(BattleInfo other) {

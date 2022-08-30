@@ -210,31 +210,31 @@ namespace FinalInferno {
                         break;
                     case SkillType.PassiveOnStart:
                         // Adiciona a skill no callback de inicio de batalha
-                        OnStartBattle += skill.Use;
+                        OnStartBattle += skill.UseCallbackOrDelayed;
                         break;
                     case SkillType.PassiveOnEnd:
                         // Adiciona a skill no callback de fim de batalha
-                        OnEndBattle += skill.Use;
+                        OnEndBattle += skill.UseCallbackOrDelayed;
                         break;
                     case SkillType.PassiveOnTakeDamage:
                         // Adiciona a skill no callback de dano tomado
-                        OnTakeDamage += skill.Use;
+                        OnTakeDamage += skill.UseCallbackOrDelayed;
                         break;
                     case SkillType.PassiveOnReceiveBuff:
                         // Adiciona a skill no callback de buff recebido
-                        OnReceiveBuff += skill.Use;
+                        OnReceiveBuff += skill.UseCallbackOrDelayed;
                         break;
                     case SkillType.PassiveOnReceiveDebuff:
                         // Adiciona a skill no callback de debuff recebido
-                        OnReceiveDebuff += skill.Use;
+                        OnReceiveDebuff += skill.UseCallbackOrDelayed;
                         break;
                     case SkillType.PassiveOnDeath:
                         // Adiciona a skill no callback de morte
-                        OnDeath += skill.Use;
+                        OnDeath += skill.UseCallbackOrDelayed;
                         break;
                     case SkillType.PassiveOnSkillUsed:
                         // Adiciona a skill no callback de Skill utilizada
-                        OnSkillUsed += skill.Use;
+                        OnSkillUsed += skill.UseCallbackOrDelayed;
                         break;
                 }
             }
@@ -264,7 +264,8 @@ namespace FinalInferno {
 
         public void ShowDamage(int value, bool isHeal, float multiplier) {
             // Show damage ignoring value changes and animations
-            damageIndicator?.ShowDamage(value, isHeal, multiplier);
+            if (damageIndicator)
+                damageIndicator.ShowDamage(value, isHeal, multiplier);
         }
 
         public StatusEffect AddEffect(StatusEffect statusEffect, bool ignoreCallback = false) {
@@ -400,9 +401,9 @@ namespace FinalInferno {
             // Reseta o aggro
             aggro = 0;
             stuns = 0;
-            if (Unit is Enemy) {
-                audioSource.PlayOneShot((Unit as Enemy)?.EnemyCry);
-            }
+            Enemy enemy = Unit as Enemy;
+            if (enemy)
+                audioSource.PlayOneShot(enemy.EnemyCry);
 
             BattleManager.instance.Kill(this);
             // Se houver algum callback de morte que, por exemplo, ressucita a unidade ele já vai ter sido chamado aqui

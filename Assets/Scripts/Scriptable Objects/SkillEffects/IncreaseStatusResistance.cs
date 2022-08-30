@@ -3,21 +3,21 @@
 namespace FinalInferno {
     [CreateAssetMenu(fileName = "IncreaseStatusResistance", menuName = "ScriptableObject/SkillEffect/IncreaseStatusResistance")]
     public class IncreaseStatusResistance : SkillEffect {
-        // value1 = additive status resistance increase
-        // value2 = buff duration
+        private float StatusResistanceIncrease => value1;
+        private int BuffDuration => (int)value2;
         public override string Description {
             get {
-                string desc = "Increase resistance to abnormal effects by " + value1 * 100 + "% for ";
-                desc += (value2 > 0) ? (value2 + " turns") : "rest of battle";
+                string desc = $"Increase resistance to abnormal effects by {StatusResistanceIncrease * 100}% for ";
+                desc += (BuffDuration > 0) ? $"{BuffDuration} turns" : "rest of battle";
                 return desc;
             }
         }
 
         public override void Apply(BattleUnit source, BattleUnit target) {
-            if (value2 < 0) {
-                target.statusResistance += value1;
+            if (BuffDuration < 0) {
+                target.statusResistance += StatusResistanceIncrease;
             } else {
-                target.AddEffect(new StatusResistUp(source, target, value1, (int)value2));
+                target.AddEffect(new StatusResistUp(source, target, StatusResistanceIncrease, BuffDuration));
             }
         }
     }

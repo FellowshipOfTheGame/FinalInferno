@@ -70,7 +70,7 @@ namespace FinalInferno {
                     enemies[selected]
                 };
 
-                Target.Unit.attackSkill.Use(Target, enemy);
+                Target.Unit.attackSkill.UseCallbackOrDelayed(Target, enemy);
             }
 
             return false;

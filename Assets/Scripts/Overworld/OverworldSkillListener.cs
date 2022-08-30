@@ -8,11 +8,13 @@ namespace FinalInferno {
         [SerializeField] private UnityEvent OnDeactivate = new UnityEvent();
 
         public void OnEnable() {
-            skill?.AddActivationListener(this);
+            if (skill)
+                skill.AddActivationListener(this);
         }
 
         public void OnDisable() {
-            skill?.RemoveActivationListener(this);
+            if (skill)
+                skill.RemoveActivationListener(this);
         }
 
         public void ActivatedSkill(OverworldSkill eventSkill) {

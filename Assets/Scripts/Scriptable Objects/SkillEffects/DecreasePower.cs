@@ -3,15 +3,15 @@
 namespace FinalInferno {
     [CreateAssetMenu(fileName = "DecreasePower", menuName = "ScriptableObject/SkillEffect/DecreasePower")]
     public class DecreasePower : SkillEffect {
-        // value1 = dmgDown multiplier
-        // value2 = debuff duration
-        public override string Description => "Decrease power by " + value1 * 100 + "% for " + value2 + " turns";
+        private float DmgDownMultiplier => value1;
+        private int DebuffDuration => (int)value2;
+        public override string Description => $"Decrease power by {DmgDownMultiplier * 100}% for {DebuffDuration} turns";
 
         public override void Apply(BattleUnit source, BattleUnit target) {
-            if (value2 < 0) {
-                target.curDmg -= (int)value1 * target.curDmg;
+            if (DebuffDuration < 0) {
+                target.curDmg -= (int)(DmgDownMultiplier * target.curDmg);
             } else {
-                target.AddEffect(new DamageDown(source, target, value1, (int)value2));
+                target.AddEffect(new DamageDown(source, target, DmgDownMultiplier, DebuffDuration));
             }
         }
     }

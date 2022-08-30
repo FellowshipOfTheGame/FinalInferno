@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 using Fog.Dialogue;
+using UnityEngine;
 
 namespace FinalInferno {
     public class TriggerDialogue : Triggerable {

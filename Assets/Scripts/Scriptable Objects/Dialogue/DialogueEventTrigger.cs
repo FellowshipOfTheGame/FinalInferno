@@ -6,17 +6,17 @@ namespace FinalInferno {
         public QuestEvent[] eventsTriggered;
 
         public override void AfterDialogue() {
+            TriggerEvents();
+            base.AfterDialogue();
+            Fog.Dialogue.DialogueHandler.instance.OnDialogueEnd -= AfterDialogue;
+        }
+
+        private void TriggerEvents() {
             foreach (QuestEvent _event in eventsTriggered) {
                 Quest quest = _event.quest;
-
-                if (quest != null) {
+                if (quest)
                     quest.SetFlag(_event.eventFlag, true);
-                    Debug.Log("Dialogo triggerou evento " + _event.eventFlag + " da quest " + quest);
-                }
             }
-
-            base.AfterDialogue();
-            Fog.Dialogue.DialogueHandler.instance.OnDialogueStart -= AfterDialogue;
         }
     }
 }
