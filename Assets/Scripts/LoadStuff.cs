@@ -24,7 +24,7 @@ namespace FinalInferno {
             // No editor recarrega as tabelas por precaução
             StaticReferences.AssetManager.BuildDatabase();
 #endif
-            AssetManager.Preload();
+            AssetManager.PreloadBundles();
             yield return new WaitForSeconds(1.5f);
             yield return new WaitForEndOfFrame();
             LoadFirstScene();
