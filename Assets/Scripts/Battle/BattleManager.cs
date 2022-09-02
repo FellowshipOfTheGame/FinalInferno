@@ -135,7 +135,7 @@ namespace FinalInferno {
             UpdateCurrentUnit();
         }
 
-        public void UpdateCurrentUnit() {
+        private void UpdateCurrentUnit() {
             CurrentUnit = queue.Dequeue();
             if (CurrentUnit != null)
                 CurrentUnit.OnTurnStart?.Invoke(CurrentUnit);
