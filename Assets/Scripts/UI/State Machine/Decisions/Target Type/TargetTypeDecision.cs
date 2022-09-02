@@ -8,7 +8,7 @@ namespace FinalInferno.UI.FSM {
 
         public override bool Decide(StateController controller) {
             bool hasOneOrMoreDesiredType = false;
-            TargetType currentSkillType = BattleSkillManager.GetSkillType();
+            TargetType currentSkillType = BattleSkillManager.GetSkillTargetType();
             foreach (TargetType type in desiredTypes) {
                 bool hasThisType = currentSkillType == type;
                 hasOneOrMoreDesiredType |= hasThisType;

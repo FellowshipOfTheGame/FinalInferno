@@ -7,7 +7,7 @@ namespace FinalInferno.UI.FSM {
         [SerializeField] private bool value;
 
         public override bool Decide(StateController controller) {
-            TargetType currentSkillType = BattleSkillManager.GetSkillType();
+            TargetType currentSkillType = BattleSkillManager.GetSkillTargetType();
 
             switch (currentSkillType) {
                 case TargetType.AllAlliesLiveOrDead:

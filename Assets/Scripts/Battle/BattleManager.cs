@@ -108,21 +108,19 @@ namespace FinalInferno {
             foreach (BattleUnit unit in queue.ToArray()) {
                 unit.OnStartBattle?.Invoke(unit, new List<BattleUnit>(queue.ToArray()));
             }
-            StartFirstTurn();
+            UpdateCurrentUnit();
         }
 
-        public void StartFirstTurn() {
+        public void UpdateCurrentUnit() {
             CurrentUnit = queue.Dequeue();
             if (CurrentUnit != null)
                 CurrentUnit.OnTurnStart?.Invoke(CurrentUnit);
         }
 
         public void StartNextTurn() {
-            CurrentUnit = queue.Dequeue();
+            UpdateCurrentUnit();
             if (CurrentUnit == null)
                 return;
-
-            CurrentUnit.OnTurnStart?.Invoke(CurrentUnit);
             CurrentUnit.UpdateAggro();
             CurrentUnit.UpdateStatusEffects();
         }
