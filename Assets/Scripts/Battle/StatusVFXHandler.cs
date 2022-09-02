@@ -66,7 +66,7 @@ namespace FinalInferno {
             int index = (int)effect.VFXID;
             if (handlers[index] == null || handlers[index].effects.Contains(effect)) {
                 if (handlers[index] != null)
-                    Debug.LogError($"Tentou adicionar o efeito {effect} que ja estava no handler", this);
+                    Debug.LogError($"Tried to add effect {effect} already in handler", this);
                 return;
             }
             handlers[index].Add(effect);

@@ -23,7 +23,7 @@ namespace FinalInferno {
             CurrentSkill = skillSelected;
         }
 
-        public static TargetType GetSkillType() {
+        public static TargetType GetSkillTargetType() {
             return CurrentSkill != null ? CurrentSkill.target : TargetType.Null;
         }
 
@@ -53,7 +53,7 @@ namespace FinalInferno {
             SkillVFX.nTargets = CurrentTargets.Count;
             foreach (BattleUnit target in CurrentTargets) {
                 GameObject obj = Object.Instantiate(CurrentSkill.VisualEffect, target.transform);
-                obj.GetComponent<SkillVFX>().SetTarget(target);
+                obj.GetComponent<SkillVFX>().SetTarget(target, false);
             }
         }
     }

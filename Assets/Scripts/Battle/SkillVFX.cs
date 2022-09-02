@@ -4,6 +4,7 @@ using UnityEngine;
 namespace FinalInferno {
     [RequireComponent(typeof(Animator)), RequireComponent(typeof(SpriteRenderer))]
     public class SkillVFX : MonoBehaviour {
+        private const int sortingOrderOffset = 2;
         public static int nTargets;
         private static int counter = 0;
         private static List<AudioClip> effectsPlaying = new List<AudioClip>();
@@ -34,15 +35,9 @@ namespace FinalInferno {
             src.Play();
         }
 
-        public void SetTargetCallback(BattleUnit unit) {
-            isCallback = true;
-            spriteRenderer.sortingOrder = unit.GetComponent<SpriteRenderer>().sortingOrder + 2;
-            UpdateLocalPosition(unit);
-        }
-
-        public void SetTarget(BattleUnit unit) {
-            isCallback = false;
-            spriteRenderer.sortingOrder = unit.GetComponent<SpriteRenderer>().sortingOrder + 2;
+        public void SetTarget(BattleUnit unit, bool isCallback) {
+            this.isCallback = isCallback;
+            spriteRenderer.sortingOrder = unit.GetComponent<SpriteRenderer>().sortingOrder + sortingOrderOffset;
             UpdateLocalPosition(unit);
         }
 

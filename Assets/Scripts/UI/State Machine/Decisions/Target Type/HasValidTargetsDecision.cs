@@ -17,7 +17,7 @@ namespace FinalInferno.UI.FSM {
         /// </summary>
         /// <param name="controller"> O controlador da máquina de estados. </param>
         public override bool Decide(StateController controller) {
-            TargetType currentSkillType = BattleSkillManager.GetSkillType();
+            TargetType currentSkillType = BattleSkillManager.GetSkillTargetType();
 
             switch (currentSkillType) {
                 case TargetType.AllAlliesLiveOrDead:
