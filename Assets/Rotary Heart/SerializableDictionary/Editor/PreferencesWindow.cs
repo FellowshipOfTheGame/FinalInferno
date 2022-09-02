@@ -19,7 +19,13 @@ namespace RotaryHeart.Lib.SerializableDictionary {
         private static int pageCount;
 
         // Add preferences section named "My Preferences" to the Preferences Window
-        [PreferenceItem("RHSD")]
+        [SettingsProvider]
+        public static SettingsProvider PreferenceProviderGUI() {
+            return new SettingsProvider("Preferences/RHSD", SettingsScope.User) {
+                guiHandler = (searchContext) => PreferencesGUI(),
+            };
+        }
+
         public static void PreferencesGUI() {
             if (!prefsLoaded) {
                 showPages = Constants.ShowPages;
