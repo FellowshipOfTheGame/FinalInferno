@@ -25,8 +25,9 @@ namespace FinalInferno.UI.Battle {
         [SerializeField] private Sprite heroIndicator;
         [SerializeField] private Sprite enemyIndicator;
 
+        private Dictionary<BattleUnit, UnitItem> unitItemDict = new Dictionary<BattleUnit, UnitItem>();
+
         private void Awake() {
-            // Singleton
             if (Instance == null) {
                 Instance = this;
             } else if (Instance != this) {
@@ -50,34 +51,32 @@ namespace FinalInferno.UI.Battle {
             }
         }
 
-        public void UpdateBattleUnitSize(BattleUnit battleUnit, int ppu = 64) {
-            // Debug.Log("height detected for " + unit.name + " = " + unit.BattleSprite.bounds.size.y);
-            battleUnit.battleItem.layout.preferredWidth = battleUnit.Unit.BoundsSizeX * ppu;
-            battleUnit.battleItem.layout.preferredHeight = battleUnit.Unit.BoundsSizeY * ppu;
+        public UnitItem GetUnitItem(BattleUnit battleUnit) {
+            return unitItemDict.ContainsKey(battleUnit) ? unitItemDict[battleUnit] : null;
         }
 
         public BattleUnit LoadUnit(Unit unit, int ppu = 64) {
             // Instancia os objetos de UI e normais e faz um referenciar o outro
+            Transform parentTransform = unit.IsHero ? heroesContent : enemiesContent;
             GameObject newUnit = Instantiate(unitPrefab, null);
-            GameObject newUnitItem = Instantiate(unitItemPrefab, (unit.IsHero) ? heroesContent : enemiesContent);
+            GameObject newUnitItem = Instantiate(unitItemPrefab, parentTransform);
             BattleUnit battleUnit = newUnit.GetComponent<BattleUnit>();
             UnitItem battleItem = newUnitItem.GetComponentInChildren<UnitItem>();
-            battleUnit.battleItem = battleItem;
-            battleItem.unit = battleUnit;
+            unitItemDict.Add(battleUnit, battleItem);
+            battleItem.SetBattleUnit(battleUnit);
 
             // Define as configurações de renderização
             int sortingLayer = 0;
-            foreach (Transform child in ((unit.IsHero) ? heroesContent : enemiesContent)) {
+            foreach (Transform child in parentTransform) {
                 // 1 layer pra unidade, 1 pros status effects e 1 pra skill sendo usada na unidade
                 sortingLayer += 3;
             }
             battleUnit.GetComponent<SpriteRenderer>().sortingOrder = sortingLayer;
             battleUnit.Configure(unit);
-            battleItem.Setup();
-            UpdateBattleUnitSize(battleUnit, ppu);
+            battleUnit.OnSizeChanged?.Invoke();
 
-            AxisInteractableItem newItem = battleUnit.battleItem.GetComponent<AxisInteractableItem>();
-            AIIManager manager = (unit.IsHero) ? heroesManager : enemiesManager;
+            AxisInteractableItem newItem = battleItem.GetComponent<AxisInteractableItem>();
+            AIIManager manager = unit.IsHero ? heroesManager : enemiesManager;
 
             // Ordena o item na lista
             if (manager.lastItem != null) {
@@ -93,25 +92,17 @@ namespace FinalInferno.UI.Battle {
 
         public void UpdateTargetList() {
             AIIManager manager;
-            Unit currentUnit = BattleSkillManager.currentUser.Unit;
-            Skill currentSkill = BattleSkillManager.currentSkill;
-            bool useOwnManager = (currentSkill.target == TargetType.AllAlliesLiveOrDead ||
-                                  currentSkill.target == TargetType.AllDeadAllies ||
-                                  currentSkill.target == TargetType.SingleDeadAlly ||
-                                  currentSkill.target == TargetType.AllLiveAllies ||
-                                  currentSkill.target == TargetType.Self ||
-                                  currentSkill.target == TargetType.SingleLiveAlly);
+            Unit currentUnit = BattleSkillManager.CurrentUser.Unit;
+            Skill currentSkill = BattleSkillManager.CurrentSkill;
+            bool useOwnManager = ShouldUseOwnManagerForTargeting(currentSkill);
             manager = ((currentUnit.IsHero && useOwnManager) || (!currentUnit.IsHero && !useOwnManager)) ? heroesManager : enemiesManager;
 
             // Obtem a lista de possiveis alvos para a skill em questão
-            List<BattleUnit> targetUnits = new List<BattleUnit>(BattleSkillManager.currentTargets);
-            // Teoricamente essa lista já foi construída usando o método FilterTargets
-            // A filtragem acontece no script SkillItem.cs
-            // targetUnits = BattleSkillManager.currentSkill.FilterTargets(BattleSkillManager.currentUser, targetUnits);
+            List<BattleUnit> targetUnits = new List<BattleUnit>(BattleSkillManager.CurrentTargets);
 
             manager.ClearItems();
             foreach (BattleUnit unit in targetUnits) {
-                AxisInteractableItem newItem = unit.battleItem.GetComponent<AxisInteractableItem>();
+                AxisInteractableItem newItem = unitItemDict[unit].GetComponent<AxisInteractableItem>();
                 newItem.upItem = null;
                 newItem.downItem = null;
 
@@ -126,6 +117,15 @@ namespace FinalInferno.UI.Battle {
             }
         }
 
+        private static bool ShouldUseOwnManagerForTargeting(Skill currentSkill) {
+            return currentSkill.target == TargetType.AllAlliesLiveOrDead ||
+                   currentSkill.target == TargetType.AllDeadAllies ||
+                   currentSkill.target == TargetType.SingleDeadAlly ||
+                   currentSkill.target == TargetType.AllLiveAllies ||
+                   currentSkill.target == TargetType.Self ||
+                   currentSkill.target == TargetType.SingleLiveAlly;
+        }
+
         public void RemoveUnit(BattleUnit unit) {
             if (unit.Unit.IsHero) {
                 RemoveUnitFromContent(unit, heroesContent, heroesManager);
@@ -138,7 +138,7 @@ namespace FinalInferno.UI.Battle {
             UnitItem[] units = content.GetComponentsInChildren<UnitItem>();
 
             for (int i = 0; i < units.Length; i++) {
-                if (units[i].unit == unit) {
+                if (units[i].BattleUnit == unit) {
                     AxisInteractableItem item = units[i].GetComponent<AxisInteractableItem>();
 
                     if (item == manager.firstItem) {
@@ -173,7 +173,7 @@ namespace FinalInferno.UI.Battle {
             UnitItem[] units = content.GetComponentsInChildren<UnitItem>();
             AxisInteractableItem thisItem = null;
             foreach (UnitItem item in units) {
-                if (item.unit == unit) {
+                if (item.BattleUnit == unit) {
                     thisItem = item.GetComponent<AxisInteractableItem>();
                     break;
                 }

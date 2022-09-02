@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7660585946427505686}
   - component: {fileID: 8507080820199389563}
   - component: {fileID: 8010818661017222494}
-  - component: {fileID: 7317131794499984267}
   - component: {fileID: 826577662112591893}
   m_Layer: 0
   m_Name: LavaInSiloe
@@ -49,6 +48,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -60,6 +61,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -115,15 +117,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPosition: 3
+  src: {fileID: 826577662112591893}
+  clip: {fileID: 8300000, guid: 414d5158d3a75b648b7fc24d1ff82c18, type: 3}
   forceCallback: 0
---- !u!222 &7317131794499984267
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8917310150857617220}
-  m_CullTransparentMesh: 0
 --- !u!82 &826577662112591893
 AudioSource:
   m_ObjectHideFlags: 0

@@ -1,41 +1,47 @@
 ﻿using System.Collections.Generic;
-using FinalInferno.UI.Battle;
 using UnityEngine;
 
 namespace FinalInferno {
     [RequireComponent(typeof(Animator)), RequireComponent(typeof(SpriteRenderer))]
     public class SkillVFX : MonoBehaviour {
-        public enum TargetPosition {
-            Default = 0,
-            Feet,
-            Torso,
-            Head,
-            Overhead
-        }
+        private const int sortingOrderOffset = 2;
         public static int nTargets;
         private static int counter = 0;
         private static List<AudioClip> effectsPlaying = new List<AudioClip>();
 
         [SerializeField] private TargetPosition spawnPosition = TargetPosition.Default;
         private List<GameObject> particleList = new List<GameObject>();
-        private AudioSource src = null;
-        [HideInInspector] public bool forceCallback = false;
+        [SerializeField] private AudioSource src = null;
+        [SerializeField] private AudioClip clip = null;
+        private bool isCallback = false;
+        private SpriteRenderer spriteRenderer = null;
 
         private void Awake() {
-            // Toca um efeito sonoro por skill
-            src = GetComponent<AudioSource>();
-            if (src != null && !effectsPlaying.Contains(src.clip)) {
-                effectsPlaying.Add(src.clip);
-                src.Play();
-            } else if (src != null) {
-                Destroy(src);
-                src = null;
-            }
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            CheckAudioSourceAndPlayAudio();
         }
 
-        public void SetTarget(BattleUnit unit, bool isCallback = false) {
-            forceCallback = isCallback;
-            GetComponent<SpriteRenderer>().sortingOrder = unit.GetComponent<SpriteRenderer>().sortingOrder + 2;
+        private void CheckAudioSourceAndPlayAudio() {
+            if (!src) {
+                src = null;
+                return;
+            } else if (clip == null || effectsPlaying.Contains(clip)) {
+                Utils.DestroyIfExists(src);
+                src = null;
+                return;
+            }
+            src.clip = clip;
+            effectsPlaying.Add(clip);
+            src.Play();
+        }
+
+        public void SetTarget(BattleUnit unit, bool isCallback) {
+            this.isCallback = isCallback;
+            spriteRenderer.sortingOrder = unit.GetComponent<SpriteRenderer>().sortingOrder + sortingOrderOffset;
+            UpdateLocalPosition(unit);
+        }
+
+        private void UpdateLocalPosition(BattleUnit unit) {
             switch (spawnPosition) {
                 case TargetPosition.Default:
                     transform.localPosition = unit.DefaultSkillPosition;
@@ -56,57 +62,44 @@ namespace FinalInferno {
         }
 
         private void UseSkill() {
-            if (!forceCallback) {
-                // Debug.Log("Chamou o use skill pela animação; " + "Object: " + gameObject.name);
-                BattleSkillManager.currentSkill.Use(BattleSkillManager.currentUser, transform.parent.GetComponent<BattleUnit>());
-            }
-        }
-
-        private void EndAnimation() {
-            foreach (GameObject particle in particleList) {
-                if (particle != null) {
-                    Destroy(particle);
-                }
-            }
-
-            if (src != null) {
-                effectsPlaying.Remove(src.clip);
-            }
-
-            Destroy(gameObject);
+            if (isCallback)
+                return;
+            BattleSkillManager.CurrentSkill.Use(BattleSkillManager.CurrentUser, transform.parent.GetComponent<BattleUnit>());
         }
 
         private void DestroySkillObject() {
-            if (!forceCallback) {
+            if (!isCallback) {
                 counter++;
                 if (counter >= nTargets) {
                     counter = 0;
                     nTargets = -1;
-
-                    // Chama o callback de quando se usa a skill
-                    // O usuario atual esta salvo como current user e os alvos da ultima skill estao em currenttargets
-                    if (BattleSkillManager.currentUser.OnSkillUsed != null) {
-                        BattleSkillManager.currentUser.OnSkillUsed(BattleSkillManager.currentUser, BattleManager.instance.battleUnits);
-                    }
-
-                    FinalInferno.UI.FSM.AnimationEnded.EndAnimation();
+                    BattleSkillManager.CurrentUser.OnSkillUsed?.Invoke(BattleSkillManager.CurrentUser, BattleManager.instance.battleUnits);
+                    UI.FSM.AnimationEnded.EndAnimation();
                 }
             }
-
             EndAnimation();
+        }
+
+        private void EndAnimation() {
+            foreach (GameObject particle in particleList) {
+                Utils.DestroyIfExists(particle);
+            }
+            if (src)
+                effectsPlaying.Remove(clip);
+            Destroy(gameObject);
         }
 
         private void CreateParticles(GameObject particles) {
             GameObject particle = Instantiate(particles, transform.position, transform.rotation, transform);
-            if (particles == null)
+            if (!particles)
                 return;
             particleList.Add(particle);
             ParticleSystemRenderer renderer = particle.GetComponent<ParticleSystemRenderer>();
             if (!renderer)
                 return;
-            renderer.sortingLayerID = GetComponent<SpriteRenderer>().sortingLayerID;
-            renderer.sortingLayerName = GetComponent<SpriteRenderer>().sortingLayerName;
-            renderer.sortingOrder = GetComponent<SpriteRenderer>().sortingOrder;
+            renderer.sortingLayerID = spriteRenderer.sortingLayerID;
+            renderer.sortingLayerName = spriteRenderer.sortingLayerName;
+            renderer.sortingOrder = spriteRenderer.sortingOrder;
         }
     }
 }

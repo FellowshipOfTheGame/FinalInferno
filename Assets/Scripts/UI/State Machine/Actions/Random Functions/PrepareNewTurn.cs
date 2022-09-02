@@ -1,5 +1,4 @@
-﻿using FinalInferno.UI.Battle;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace FinalInferno.UI.FSM {
     /// <summary>
@@ -13,7 +12,7 @@ namespace FinalInferno.UI.FSM {
         /// <param name="controller"> O controlador da máquina de estados. </param>
 
         public override void Act(StateController controller) {
-            BattleSkillManager.currentUser = BattleManager.instance.currentUnit;
+            BattleSkillManager.BeginUnitTurn(BattleManager.instance.CurrentUnit);
         }
 
     }

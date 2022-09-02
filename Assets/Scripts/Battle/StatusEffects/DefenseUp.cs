@@ -8,17 +8,16 @@ namespace FinalInferno {
         private int defValue;
         private float valueReceived;
 
-        public DefenseUp(BattleUnit src, BattleUnit trgt, float value, int dur = 1, bool force = false) {
-            if (dur < 0) {
+        public DefenseUp(BattleUnit src, BattleUnit trgt, float value, int dur, bool force = false) {
+            if (dur < 0)
                 dur = int.MinValue;
-            }
 
             Duration = dur;
             TurnsLeft = Duration;
             Target = trgt;
             Source = src;
             valueReceived = value;
-            defValue = Mathf.Max(Mathf.FloorToInt(trgt.curDef * value), 1);
+            defValue = Mathf.Max(Mathf.FloorToInt(trgt.CurDef * value), 1);
             Failed = !Apply(force);
         }
 
@@ -27,22 +26,21 @@ namespace FinalInferno {
         }
 
         public override void Amplify(float modifier) {
-            Target.curDef -= defValue;
+            Target.CurDef -= defValue;
             defValue = Mathf.Max(Mathf.FloorToInt(modifier * defValue), 1);
             Apply(true);
         }
 
         public override bool Apply(bool force = false) {
-            if (!base.Apply(force)) {
+            if (!base.Apply(force))
                 return false;
-            }
 
-            Target.curDef += defValue;
+            Target.CurDef += defValue;
             return true;
         }
 
         public override void Remove() {
-            Target.curDef -= defValue;
+            Target.CurDef -= defValue;
             base.Remove();
         }
     }

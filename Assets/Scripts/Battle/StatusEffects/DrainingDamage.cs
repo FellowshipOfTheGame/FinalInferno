@@ -10,22 +10,18 @@ namespace FinalInferno {
         private bool doubleEdged;
         private bool isPermanent;
 
-        public DrainingDamage(BattleUnit src, BattleUnit trgt, float value, int dur = 1, bool force = false, bool dbleEdged = false, bool isPermnt = false) {
-            // src é quem drena, trgt é quem é drenado
-            // Isso conta como um buff que trgt aplica em src mesmo que src cause a aplicação do buff
-            // Target então dever ser src e Source deve ser trgt
-            if (dur < 0) {
+        public DrainingDamage(BattleUnit unitDraining, BattleUnit unitDrained, float value, int dur, bool force = false, bool isDoubleEdged = false, bool canBePermanent = false) {
+            if (dur < 0)
                 dur = int.MinValue;
-            }
 
             Duration = dur;
             TurnsLeft = Duration;
-            Target = src;
-            Source = trgt;
-            doubleEdged = dbleEdged;
+            Target = unitDraining;
+            Source = unitDrained;
+            doubleEdged = isDoubleEdged;
             multiplier = value;
-            isPermanent = isPermnt;
-            dmgValue = Mathf.Max(Mathf.FloorToInt(Source.curDmg * value), 1);
+            isPermanent = canBePermanent;
+            dmgValue = Mathf.Max(Mathf.FloorToInt(Source.CurDmg * value), 1);
             Failed = !Apply(force);
         }
 
@@ -34,40 +30,46 @@ namespace FinalInferno {
         }
 
         public override void Amplify(float modifier) {
-            Target.curDmg -= dmgValue;
+            Target.CurDmg -= dmgValue;
             dmgValue = Mathf.Max(Mathf.FloorToInt(modifier * dmgValue), 1);
             Apply(true);
         }
 
         public override bool Apply(bool force = false) {
-            if (!base.Apply(force)) {
+            if (!base.Apply(force))
                 return false;
-            }
 
-            Target.curDmg += dmgValue;
+            Target.CurDmg += dmgValue;
             return true;
         }
 
         public override void Remove() {
-            if (Source.CurHP > 0 || !isPermanent) {
-                Target.curDmg -= dmgValue;
-                if (doubleEdged && Source.CurHP > 0) {
-                    // Remove o debuff que foi aplicado quando começou a drenar o dano, caso ainda exista
-                    DamageDrained myDebuff = (DamageDrained)Source.effects.Find(debuff => (debuff.GetType() == typeof(DamageDrained) && debuff.Source == Target && debuff.Target == Source));
-                    if (myDebuff != null) {
-                        myDebuff.Remove();
-                    }
-
-                    // Aplica o dreno de dano ao contrario
-                    Source.AddEffect(new DrainingDamage(Source, Target, multiplier, Duration));
-                    Target.AddEffect(new DamageDrained(Source, Target, multiplier, Duration));
-                }
+            if (!isPermanent || Source.CurHP > 0) {
+                Target.CurDmg -= dmgValue;
+                CheckDoubleEdgedDrain();
             }
             base.Remove();
         }
 
+        private void CheckDoubleEdgedDrain() {
+            if (!doubleEdged || Source.CurHP <= 0)
+                return;
+
+            GetMyDebuff()?.Remove();
+            ApplyInvertedDamageDrain();
+        }
+
+        private DamageDrained GetMyDebuff() {
+            return (DamageDrained)Source.effects.Find(debuff => debuff.GetType() == typeof(DamageDrained) && debuff.Source == Target && debuff.Target == Source);
+        }
+
+        private void ApplyInvertedDamageDrain() {
+            Source.AddEffect(new DrainingDamage(Source, Target, multiplier, Duration));
+            Target.AddEffect(new DamageDrained(Source, Target, multiplier, Duration));
+        }
+
         public override void ForceRemove() {
-            Target.curDmg -= dmgValue;
+            Target.CurDmg -= dmgValue;
             base.Remove();
         }
     }

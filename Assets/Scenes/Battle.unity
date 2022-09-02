@@ -1260,6 +1260,42 @@ MonoBehaviour:
   content: {fileID: 15794035}
   currentTurnContent: {fileID: 1297961566}
   layout: {fileID: 15794038}
+  startPreviewEventListener:
+    eventListened: {fileID: 11400000, guid: 429ea1fc1faad8542b9e920f4ff140f6, type: 2}
+    eventCallback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 127055009}
+          m_TargetAssemblyTypeName: FinalInferno.UI.Battle.QueueMenu.BattleQueueUI,
+            FinalInferno
+          m_MethodName: StartPreview
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  stopPreviewEventListener:
+    eventListened: {fileID: 11400000, guid: e012386d786fb844595907d4f54c35d6, type: 2}
+    eventCallback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 127055009}
+          m_TargetAssemblyTypeName: FinalInferno.UI.Battle.QueueMenu.BattleQueueUI,
+            FinalInferno
+          m_MethodName: StopPreview
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &127055010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4704,7 +4740,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -7.5000005}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -40, y: 17}
+  m_AnchoredPosition: {x: -60, y: 17}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &552125060
@@ -4945,12 +4981,12 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 124090396}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: FinalInferno.UI.AII.AIIStatusWatcher, FinalInferno
         m_MethodName: DeactivatedAII
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 552125060}
-          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, FinalInferno
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4997,12 +5033,12 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 124090396}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: FinalInferno.UI.AII.AIIStatusWatcher, FinalInferno
         m_MethodName: ActivatedAII
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 552125060}
-          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, FinalInferno
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6326,12 +6362,12 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 124090396}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: FinalInferno.UI.AII.AIIStatusWatcher, FinalInferno
         m_MethodName: DeactivatedAII
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 764615253}
-          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, FinalInferno
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6378,12 +6414,12 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 124090396}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: FinalInferno.UI.AII.AIIStatusWatcher, FinalInferno
         m_MethodName: ActivatedAII
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 764615253}
-          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, FinalInferno
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6430,12 +6466,12 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 124090396}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: FinalInferno.UI.AII.AIIStatusWatcher, FinalInferno
         m_MethodName: DeactivatedAII
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 764615253}
-          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, FinalInferno
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6482,12 +6518,12 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 124090396}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: FinalInferno.UI.AII.AIIStatusWatcher, FinalInferno
         m_MethodName: ActivatedAII
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 764615253}
-          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, FinalInferno
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -7289,12 +7325,12 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 124090396}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: FinalInferno.UI.AII.AIIStatusWatcher, FinalInferno
         m_MethodName: DeactivatedAII
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 817592104}
-          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, FinalInferno
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -7341,12 +7377,12 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 124090396}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: FinalInferno.UI.AII.AIIStatusWatcher, FinalInferno
         m_MethodName: ActivatedAII
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 817592104}
-          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, FinalInferno
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -7602,6 +7638,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80cdbfb5260c9fe419ffc41d6be05d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  updateLivesEvent: {fileID: 11400000, guid: 41548a6310b6a8d46b71987c4442d813, type: 2}
   lives: []
   team: 1
   EnemyLife: {fileID: 2613873788813268162, guid: 825281d24cd6ba6419d162bedead2be9,
@@ -10406,12 +10443,12 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 124090396}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: FinalInferno.UI.AII.AIIStatusWatcher, FinalInferno
         m_MethodName: DeactivatedAII
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1114176209}
-          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, FinalInferno
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -10458,12 +10495,12 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 124090396}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: FinalInferno.UI.AII.AIIStatusWatcher, FinalInferno
         m_MethodName: ActivatedAII
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1114176209}
-          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, FinalInferno
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -10510,12 +10547,12 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 124090396}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: FinalInferno.UI.AII.AIIStatusWatcher, FinalInferno
         m_MethodName: ActivatedAII
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1114176209}
-          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, FinalInferno
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -10562,12 +10599,12 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 124090396}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: FinalInferno.UI.AII.AIIStatusWatcher, FinalInferno
         m_MethodName: DeactivatedAII
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1114176209}
-          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, FinalInferno
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -10727,6 +10764,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d90d26e7388f6a40bdc522b393c8fea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  updateLivesEvent: {fileID: 11400000, guid: 41548a6310b6a8d46b71987c4442d813, type: 2}
   lives:
   - {fileID: 2014106877}
   - {fileID: 1019186516}
@@ -12918,7 +12956,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 7.5}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 40, y: 17}
+  m_AnchoredPosition: {x: 60, y: 17}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1478502789
@@ -13159,12 +13197,12 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 124090396}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: FinalInferno.UI.AII.AIIStatusWatcher, FinalInferno
         m_MethodName: DeactivatedAII
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1478502789}
-          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, FinalInferno
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -13211,12 +13249,12 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 124090396}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: FinalInferno.UI.AII.AIIStatusWatcher, FinalInferno
         m_MethodName: ActivatedAII
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1478502789}
-          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, FinalInferno
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -15877,14 +15915,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0170c5b1892fb7b4289b1ccaba155a63, type: 2}
   - {fileID: 11400000, guid: 242d4f97eef6c3245949a9eabd38989c, type: 2}
   battleUnits: []
-  queueUI: {fileID: 127055009}
+  queue:
+    stopQueuePreviewEvent: {fileID: 11400000, guid: e012386d786fb844595907d4f54c35d6,
+      type: 2}
+    startQueuePreviewEvent: {fileID: 11400000, guid: 429ea1fc1faad8542b9e920f4ff140f6,
+      type: 2}
   unitsUI: {fileID: 125682818}
   heroesLayout: {fileID: 552125059}
   enemiesLayout: {fileID: 1478502788}
-  unitsLives:
-  - {fileID: 1125929270}
-  - {fileID: 865854840}
-  enemyContent: {fileID: 0}
+  updateLivesEvent: {fileID: 11400000, guid: 41548a6310b6a8d46b71987c4442d813, type: 2}
   debugAction: {fileID: -2694234675557987794, guid: eeed788d9c9bd6ba4afdbd0089dd3943,
     type: 3}
 --- !u!4 &1984505593

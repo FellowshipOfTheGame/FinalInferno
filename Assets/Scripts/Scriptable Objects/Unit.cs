@@ -39,6 +39,7 @@ namespace FinalInferno {
         public Skill attackSkill;
         public Skill defenseSkill;
         public virtual bool IsHero => false;
+        public virtual UnitType UnitType => UnitType.Null;
         public abstract long SkillExp { get; }
         [Space(10)]
         [Header("Art")]

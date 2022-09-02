@@ -148,8 +148,7 @@ namespace FinalInferno {
         }
 
         protected static private string GetQualifiedName(string typeName) {
-            return typeName switch
-            {
+            return typeName switch {
                 "string" => typeof(string).AssemblyQualifiedName,
                 "int" => typeof(int).AssemblyQualifiedName,
                 "long" => typeof(long).AssemblyQualifiedName,

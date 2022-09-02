@@ -8,7 +8,7 @@ namespace FinalInferno {
         private int dmgValue;
         private float valueReceived;
 
-        public DamageDrained(BattleUnit src, BattleUnit trgt, float value, int dur = 1, bool force = false) {
+        public DamageDrained(BattleUnit src, BattleUnit trgt, float value, int dur, bool force = false) {
             if (dur < 0) {
                 dur = int.MinValue;
             }
@@ -18,7 +18,7 @@ namespace FinalInferno {
             Target = trgt;
             Source = src;
             valueReceived = value;
-            dmgValue = Mathf.Max(Mathf.FloorToInt(trgt.curDmg * value), 1);
+            dmgValue = Mathf.Max(Mathf.FloorToInt(trgt.CurDmg * value), 1);
             Failed = !Apply(force);
         }
 
@@ -27,22 +27,21 @@ namespace FinalInferno {
         }
 
         public override void Amplify(float modifier) {
-            Target.curDmg += dmgValue;
+            Target.CurDmg += dmgValue;
             dmgValue = Mathf.Max(Mathf.FloorToInt(modifier * dmgValue), 1);
             Apply(true);
         }
 
         public override bool Apply(bool force = false) {
-            if (!base.Apply(force)) {
+            if (!base.Apply(force))
                 return false;
-            }
 
-            Target.curDmg -= dmgValue;
+            Target.CurDmg -= dmgValue;
             return true;
         }
 
         public override void Remove() {
-            Target.curDmg += dmgValue;
+            Target.CurDmg += dmgValue;
             base.Remove();
         }
     }

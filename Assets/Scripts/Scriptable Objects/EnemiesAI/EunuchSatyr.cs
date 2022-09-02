@@ -15,7 +15,7 @@ namespace FinalInferno {
         }
 
         public override Skill AttackDecision() {
-            BattleUnit thisUnit = BattleManager.instance.currentUnit;
+            BattleUnit thisUnit = BattleManager.instance.CurrentUnit;
             return (IsDrainingSpeed(thisUnit)) ? attackSkill : SpeedDrainSkill;
         }
     }

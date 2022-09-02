@@ -9,7 +9,7 @@ namespace FinalInferno {
 
         public override void Apply(BattleUnit source, BattleUnit target) {
             if (BuffDuration < 0) {
-                target.curMagicDef += (int)(MagicDefUpMultiplier * target.curMagicDef);
+                target.CurMagicDef += (int)(MagicDefUpMultiplier * target.CurMagicDef);
             } else {
                 target.AddEffect(new ResistanceUp(source, target, MagicDefUpMultiplier, BuffDuration));
             }

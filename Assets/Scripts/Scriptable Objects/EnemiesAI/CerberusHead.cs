@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace FinalInferno {
     [CreateAssetMenu(fileName = "CerberusHead", menuName = "ScriptableObject/Enemy/CerberusHead")]
-    public class CerberusHead : Enemy {
+    public class CerberusHead : Enemy, ICompositeUnit {
         // OBS.: A IA parte do pressuposto que as 3 cabeças do cérbero são as unicas unidades no time inimigo
         // O posicionamento de unidades também será feito levando isso em conta
         // O nível do cérbero deve ser incrementado de 1 em 1 para versões mais fortes
@@ -83,7 +83,6 @@ namespace FinalInferno {
                     case 2:
                         heads++;
                         SaveFrontHeadBattleUnitReference();
-                        AdjustUnitPositions();
                         CreateCerberusBodyObject();
                         return battleSpriteFrontHead;
                 }
@@ -120,12 +119,17 @@ namespace FinalInferno {
             }
         }
 
-        private static void AdjustUnitPositions() {
-            CompositeBattleUnit composite = middleHead.gameObject.AddComponent<CompositeBattleUnit>();
-            if (!composite)
-                return;
-            composite.AddApendage(backHead);
-            composite.AddApendage(frontHead);
+        public CompositeUnitInfo GetCompositeUnitInfo(BattleUnit battleUnit) {
+            if (battleUnit != frontHead && battleUnit != middleHead && battleUnit != backHead)
+                return new CompositeUnitInfo(null);
+            CompositeUnitInfo compositeUnitInfo = new CompositeUnitInfo(middleHead);
+            compositeUnitInfo.AddAppendage(backHead);
+            compositeUnitInfo.AddAppendage(frontHead);
+            return compositeUnitInfo;
+        }
+
+        public bool IsMainUnit(BattleUnit battleUnit) {
+            return battleUnit == middleHead;
         }
 
         private void CreateCerberusBodyObject() {
@@ -207,7 +211,7 @@ namespace FinalInferno {
 
         protected override List<BattleUnit> GetTargets(TargetType type) {
             return type switch {
-                TargetType.Self => new List<BattleUnit>() { BattleManager.instance.currentUnit },
+                TargetType.Self => new List<BattleUnit>() { BattleManager.instance.CurrentUnit },
                 TargetType.AllLiveAllies => BattleManager.instance.GetTeam(UnitType.Enemy),
                 TargetType.AllLiveEnemies => GetTargetsPerHead(),
                 TargetType.SingleLiveAlly => new List<BattleUnit>() { GetRandomLiveAlly() },

@@ -19,7 +19,7 @@ namespace FinalInferno {
                     return DefaultSkillExp;
                 long expSum = 0;
                 int nEnemies = 0;
-                foreach (Unit unit in BattleManager.instance.units) {
+                foreach (Unit unit in BattleManager.instance.Units) {
                     if (!unit.IsHero) {
                         expSum += unit.SkillExp;
                         nEnemies++;
@@ -39,6 +39,7 @@ namespace FinalInferno {
             }
         }
         public override bool IsHero => true;
+        public override UnitType UnitType => UnitType.Hero;
 
         #region IDatabaseItem
         public void LoadTables() {

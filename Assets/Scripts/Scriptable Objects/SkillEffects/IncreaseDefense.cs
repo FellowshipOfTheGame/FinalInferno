@@ -9,7 +9,7 @@ namespace FinalInferno {
 
         public override void Apply(BattleUnit source, BattleUnit target) {
             if (BuffDuration < 0) {
-                target.curDef += (int)(DefUpMultiplier * target.curDef);
+                target.CurDef += (int)(DefUpMultiplier * target.CurDef);
             } else {
                 target.AddEffect(new DefenseUp(source, target, DefUpMultiplier, BuffDuration));
             }

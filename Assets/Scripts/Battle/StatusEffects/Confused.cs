@@ -7,10 +7,9 @@ namespace FinalInferno {
         public override StatusType Type => StatusType.Undesirable;
         public override float Value => Duration;
 
-        public Confused(BattleUnit src, BattleUnit trgt, float value, int dur = 1, bool force = false) {
-            if (dur < 0) {
+        public Confused(BattleUnit src, BattleUnit trgt, float value, int dur, bool force = false) {
+            if (dur < 0)
                 dur = int.MinValue;
-            }
 
             Duration = dur;
             TurnsLeft = Duration;
@@ -25,33 +24,28 @@ namespace FinalInferno {
         }
 
         public override bool Apply(bool force = false) {
-            if (!base.Apply(force)) {
+            if (!base.Apply(force))
                 return false;
-            }
 
             Target.stuns++;
             return true;
         }
 
         public override bool Update() {
-            if (base.Update()) {
+            if (base.Update())
                 return true;
-            }
 
-            // Apenas um dos status effects desse tipo causa um ataque
-            if (Target.effects.Find(effect => effect.GetType() == typeof(Confused)) == this) {
-                Target.SkillSelected();
-
-                List<BattleUnit> allies = BattleManager.instance.GetTeam(Target);
-                int selected = Random.Range(0, allies.Count);
-                List<BattleUnit> enemy = new List<BattleUnit> {
-                    allies[selected]
-                };
-
-                Target.Unit.attackSkill.UseCallbackOrDelayed(Target, enemy);
-            }
-
+            if (IsFirstEffectInTargetList(typeof(Confused)))
+                AttackRandomAllyOrSelf();
             return false;
+        }
+
+        private void AttackRandomAllyOrSelf() {
+            Target.SkillSelected();
+            List<BattleUnit> allies = BattleManager.instance.GetTeam(Target);
+            int selected = Random.Range(0, allies.Count);
+            List<BattleUnit> enemy = new List<BattleUnit> { allies[selected] };
+            Target.Unit.attackSkill.UseCallbackOrDelayed(Target, enemy);
         }
 
         public override void Remove() {

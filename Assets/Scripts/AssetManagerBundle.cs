@@ -9,7 +9,6 @@ namespace FinalInferno {
         // TO DO: Adicionar HideInInspector depois que tiver certeza que funciona
         [SerializeField] private List<T> assets = new List<T>();
         private Dictionary<string, T> dict = new Dictionary<string, T>();
-        private bool loaded = false;
 
 #if UNITY_EDITOR
         public void InitializeAssets() {

@@ -6,14 +6,7 @@ using UnityEngine;
 public class StaticReferences : MonoBehaviour {
     public static StaticReferences Instance { get; private set; } = null;
     [SerializeField] private bool debugBuild;
-    public static bool DebugBuild {
-        get {
-#if UNITY_EDITOR
-            return true;
-#endif
-            return Instance ? Instance.debugBuild : false;
-        }
-    }
+    public static bool DebugBuild => Application.isEditor || (Instance ? Instance.debugBuild : false);
     [SerializeField] private Jukebox bgm;
     public static Jukebox BGM => Instance ? Instance.bgm : null;
     [SerializeField] private AudioClip mainMenuBGM;
@@ -39,8 +32,7 @@ public class StaticReferences : MonoBehaviour {
     }
 
     private void OnDestroy() {
-        if (Instance == this) {
+        if (Instance == this)
             Instance = null;
-        }
     }
 }

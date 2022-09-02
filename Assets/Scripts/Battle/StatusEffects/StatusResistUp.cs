@@ -5,10 +5,9 @@
         public override float Value => resistIncrease;
         private float resistIncrease;
 
-        public StatusResistUp(BattleUnit src, BattleUnit trgt, float value, int dur = 1, bool force = false) {
-            if (dur < 0) {
+        public StatusResistUp(BattleUnit src, BattleUnit trgt, float value, int dur, bool force = false) {
+            if (dur < 0)
                 dur = int.MinValue;
-            }
 
             Duration = dur;
             TurnsLeft = Duration;
@@ -29,9 +28,8 @@
         }
 
         public override bool Apply(bool force = false) {
-            if (!base.Apply(force)) {
+            if (!base.Apply(force))
                 return false;
-            }
 
             Target.statusResistance += resistIncrease;
             return true;

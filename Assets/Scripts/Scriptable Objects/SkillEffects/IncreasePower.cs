@@ -9,7 +9,7 @@ namespace FinalInferno {
 
         public override void Apply(BattleUnit source, BattleUnit target) {
             if (BuffDuration < 0) {
-                target.curDmg += (int)(DmgUpMultiplier * target.curDmg);
+                target.CurDmg += (int)(DmgUpMultiplier * target.CurDmg);
             } else {
                 target.AddEffect(new DamageUp(source, target, DmgUpMultiplier, BuffDuration));
             }

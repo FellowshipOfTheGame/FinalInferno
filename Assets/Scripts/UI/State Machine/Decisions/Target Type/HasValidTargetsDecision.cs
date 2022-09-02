@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using FinalInferno.UI.Battle;
 using UnityEngine;
 
 namespace FinalInferno.UI.FSM {
@@ -18,8 +17,7 @@ namespace FinalInferno.UI.FSM {
         /// </summary>
         /// <param name="controller"> O controlador da máquina de estados. </param>
         public override bool Decide(StateController controller) {
-            bool hasValidTargets = false;
-            TargetType currentSkillType = BattleSkillManager.GetSkillType();
+            TargetType currentSkillType = BattleSkillManager.GetSkillTargetType();
 
             switch (currentSkillType) {
                 case TargetType.AllAlliesLiveOrDead:
@@ -29,21 +27,18 @@ namespace FinalInferno.UI.FSM {
                 case TargetType.Self:
                 case TargetType.SingleLiveAlly:
                 case TargetType.SingleLiveEnemy:
-                    hasValidTargets = true;
-                    break;
+                    return value;
                 case TargetType.AllDeadAllies:
                 case TargetType.SingleDeadAlly:
-                    List<BattleUnit> deadAllies = BattleManager.instance.GetTeam(BattleManager.instance.currentUnit, true, true);
-                    hasValidTargets = deadAllies.Count > 0;
-                    break;
+                    List<BattleUnit> deadAllies = BattleManager.instance.GetTeam(BattleManager.instance.CurrentUnit, true, true);
+                    return value == deadAllies.Count > 0;
                 case TargetType.AllDeadEnemies:
                 case TargetType.SingleDeadEnemy:
-                    List<BattleUnit> deadEnemies = BattleManager.instance.GetEnemies(BattleManager.instance.currentUnit, true, true);
-                    hasValidTargets = deadEnemies.Count > 0;
-                    break;
+                    List<BattleUnit> deadEnemies = BattleManager.instance.GetEnemies(BattleManager.instance.CurrentUnit, true, true);
+                    return value == deadEnemies.Count > 0;
+                default:
+                    return !value;
             }
-
-            return hasValidTargets == value;
         }
 
     }

@@ -37,9 +37,9 @@ namespace FinalInferno.UI.Victory {
         }
 
         public void SetPartyStatus() {
-            partyLevelSlider.maxValue = /*BattleProgress.startingExp +*/ BattleProgress.xpToNextLevel;
+            partyLevelSlider.maxValue = /*BattleProgress.startingExp +*/ BattleProgress.startingExpToNextLevel;
             partyLevelSlider.value = BattleProgress.startingExp;
-            previousXPAmountImage.fillAmount = BattleProgress.startingExp / (float)(/*BattleProgress.startingExp +*/ BattleProgress.xpToNextLevel);
+            previousXPAmountImage.fillAmount = BattleProgress.startingExp / (float)(/*BattleProgress.startingExp +*/ BattleProgress.startingExpToNextLevel);
             startingLevelText.text = startingLevel.ToString();
             nextLevelText.text = (startingLevel + 1).ToString();
 
@@ -64,7 +64,7 @@ namespace FinalInferno.UI.Victory {
                 _time += Time.fixedDeltaTime;
                 yield return new WaitForFixedUpdate();
             }
-            partyLevelSlider.value = (BattleProgress.startingExp + changes.xpGained) % (/*BattleProgress.startingExp*/ +BattleProgress.xpToNextLevel);
+            partyLevelSlider.value = (BattleProgress.startingExp + changes.xpGained) % (/*BattleProgress.startingExp*/ +BattleProgress.startingExpToNextLevel);
         }
 
         private void LevelUp() {

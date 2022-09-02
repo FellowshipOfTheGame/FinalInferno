@@ -9,7 +9,7 @@ namespace FinalInferno {
 
         public override void Apply(BattleUnit source, BattleUnit target) {
             if (DebuffDuration < 0) {
-                target.curSpeed -= (int)(SpeedDownMultiplier * target.curSpeed);
+                target.CurSpeed -= (int)(SpeedDownMultiplier * target.CurSpeed);
             } else {
                 target.AddEffect(new SpeedDown(source, target, SpeedDownMultiplier, DebuffDuration));
             }

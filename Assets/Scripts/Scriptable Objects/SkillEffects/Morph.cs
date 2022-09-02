@@ -39,8 +39,8 @@ namespace FinalInferno {
         }
 
         private void ConfigureStatsAndUI(BattleUnit target) {
-            target.Configure(unitIndex.UnitList[MorphUnitIndex], true, PercentageMaxHealth);
-            UI.Battle.BattleUnitsUI.Instance.UpdateBattleUnitSize(target, BattleManager.instance.CameraPPU);
+            target.ConfigureMorph(unitIndex.UnitList[MorphUnitIndex], PercentageMaxHealth);
+            target.OnSizeChanged?.Invoke();
         }
 
         private static void ShowHPChange(BattleUnit target, int previousHP) {

@@ -19,7 +19,7 @@ namespace FinalInferno {
         [SerializeField] private AssetManagerBundle<Party> party = new AssetManagerBundle<Party>();
         [SerializeField] private AssetManagerBundle<Hero> heroes = new AssetManagerBundle<Hero>();
         [SerializeField] private AssetManagerBundle<Enemy> enemies = new AssetManagerBundle<Enemy>();
-        [SerializeField] private AssetManagerBundle<Skill> skills = new AssetManagerBundle<Skill>();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+        [SerializeField] private AssetManagerBundle<Skill> skills = new AssetManagerBundle<Skill>();
         [SerializeField] private AssetManagerBundle<Quest> quests = new AssetManagerBundle<Quest>();
 
         private AssetManagerBundle<T> GetBundle<T>(string typeName) where T : ScriptableObject, IDatabaseItem {
@@ -70,7 +70,7 @@ namespace FinalInferno {
                 Debug.LogError("No database to preload");
                 return;
             }
-            
+
             PreloadAssets();
         }
 
@@ -104,7 +104,7 @@ namespace FinalInferno {
             };
         }
 
-        private static ScriptableObject LoadAssetByNameAndType(string name, string type){
+        private static ScriptableObject LoadAssetByNameAndType(string name, string type) {
             return type switch {
                 "party" => LoadAsset<Party>(name),
                 "hero" => LoadAsset<Hero>(name),
@@ -122,7 +122,6 @@ namespace FinalInferno {
             }
 
             typeName ??= typeof(T).Name.ToLower();
-            Debug.Log($"looking for object {name} of type {typeName} as {typeof(T).Name}");
             AssetManagerBundle<T> bundle = Instance.GetBundle<T>(typeName);
             return bundle?.GetAsset(name);
         }

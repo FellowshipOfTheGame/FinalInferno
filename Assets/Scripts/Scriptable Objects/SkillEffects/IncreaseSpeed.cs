@@ -9,7 +9,7 @@ namespace FinalInferno {
 
         public override void Apply(BattleUnit source, BattleUnit target) {
             if (BuffDuration < 0) {
-                target.curSpeed += (int)(SpeedUpMultiplier * target.curSpeed);
+                target.CurSpeed += (int)(SpeedUpMultiplier * target.CurSpeed);
             } else {
                 target.AddEffect(new SpeedUp(source, target, SpeedUpMultiplier, BuffDuration));
             }

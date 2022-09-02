@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using FinalInferno.EventSystem;
 
 namespace FinalInferno.UI.FSM {
     /// <summary>
@@ -6,13 +7,14 @@ namespace FinalInferno.UI.FSM {
     /// </summary>
     [CreateAssetMenu(menuName = "BattleUI SM/Actions/Update Lives")]
     public class UpdateLives : Action {
+        [SerializeField] private EventFI updateLivesEvent;
         /// <summary>
         /// Executa uma ação.
         /// Muda o estado do botão.
         /// </summary>
         /// <param name="controller"> O controlador da máquina de estados. </param>
         public override void Act(StateController controller) {
-            BattleManager.instance.UpdateLives();
+            updateLivesEvent.Raise();
         }
 
     }

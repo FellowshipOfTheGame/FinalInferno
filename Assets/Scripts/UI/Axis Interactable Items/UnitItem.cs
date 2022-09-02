@@ -11,7 +11,7 @@ namespace FinalInferno.UI.AII {
         /// <summary>
         /// Referência ao efeito do item.
         /// </summary>
-        public BattleUnit unit;
+        public BattleUnit BattleUnit { get; private set; }
         [SerializeField] private RectTransform unitReference;
 
         /// <summary>
@@ -28,90 +28,122 @@ namespace FinalInferno.UI.AII {
         [HideInInspector] public Vector2 defaultOffset = Vector2.zero;
 
         private bool showingTarget = false;
+        private int ppu;
 
         private void Awake() {
             rectTransform = GetComponent<RectTransform>();
             item.OnAct += SetTarget;
         }
 
+        private void SetTarget() {
+            BattleSkillManager.CurrentTargets.Clear();
+            BattleSkillManager.CurrentTargets.Add(BattleUnit);
+        }
+
+        public void SetBattleUnit(BattleUnit observedBattleUnit, int currentPPU = 64) {
+            ppu = currentPPU;
+            BattleUnit = observedBattleUnit;
+            observedBattleUnit.OnSetupFinished.AddListener(Setup);
+            observedBattleUnit.OnSizeChanged.AddListener(UpdateBattleUnitSize);
+        }
+
+        public void UpdateBattleUnitSize() {
+            layout.preferredWidth = BattleUnit.Unit.BoundsSizeX * ppu;
+            layout.preferredHeight = BattleUnit.Unit.BoundsSizeY * ppu;
+        }
+
         public void Setup() {
-            unitReference = unit.Reference;
-            item.ActiveReference = unitReference.GetComponent<UnityEngine.UI.Image>();
+            unitReference = BattleUnit.Reference;
+            item.ActiveReference = unitReference.GetComponent<Image>();
 
-            unit.OnTurnStart.AddListener(StepForward);
-            unit.OnTurnEnd.AddListener(StepBack);
+            SetUnitTurnCallbacks();
+            SetUnitSelectionCallbacks();
+            SetUnitPosition();
+            if (BattleUnit.Unit is ICompositeUnit)
+                SetupCompositeUnit(BattleUnit.Unit as ICompositeUnit);
+        }
 
-            if (unit.gameObject != gameObject && rectTransform != null) {
-                Vector3 newPosition = rectTransform.localToWorldMatrix.MultiplyPoint3x4(Vector3.zero);
-                UpdateUnitPosition(newPosition, true);
-                // Não sei o motivo mas as unidades tavam dando um passo pra frente
-                // Ou isso ou a posição de mundo calculada ta errada seila
-                StepBack(unit);
-            }
+        private void SetUnitTurnCallbacks() {
+            BattleUnit.OnTurnStart.AddListener(StepForward);
+            BattleUnit.OnTurnEnd.AddListener(StepBack);
         }
 
         public void StepForward(BattleUnit battleUnit) {
-            if (battleUnit != unit) {
+            if (battleUnit != BattleUnit)
                 return;
-            }
-            // Debug.Log($"unit {battleUnit} stepped forward");
 
-            float xOffset = (unit.Unit.IsHero) ? stepSize : -stepSize;
-            Vector3 newPosition = unit.transform.position;
+            float xOffset = BattleUnit.Unit.IsHero ? stepSize : -stepSize;
+            Vector3 newPosition = BattleUnit.transform.position;
             newPosition.x += xOffset;
             UpdateUnitPosition(newPosition);
         }
 
         public void StepBack(BattleUnit battleUnit) {
-            if (battleUnit != unit) {
+            if (battleUnit != BattleUnit)
                 return;
-            }
-            // Debug.Log($"unit {battleUnit} stepped back");
 
-            float xOffset = (unit.Unit.IsHero) ? -stepSize : stepSize;
-            Vector3 newPosition = unit.transform.position;
+            float xOffset = BattleUnit.Unit.IsHero ? -stepSize : stepSize;
+            Vector3 newPosition = BattleUnit.transform.position;
             newPosition.x += xOffset;
             UpdateUnitPosition(newPosition);
         }
 
-        private void UpdateUnitPosition(Vector3 newPosition, bool force = false) {
-            if (force || (newPosition - unit.transform.position).magnitude > float.Epsilon) {
-                unit.transform.position = newPosition;
-            }
-        }
-
-        private void SetTarget() {
-            // Debug.Log("Setting target: " + unit.unit.name);
-            BattleSkillManager.currentTargets.Clear();
-            BattleSkillManager.currentTargets.Add(unit);
-        }
-
-        private void UpdateEnemyContent() {
-            BattleManager.instance.enemyContent.ShowEnemyInfo(unit);
-        }
-
-        private void UpdateHeroContent() {
-            infoLoader.Info.LoadInfo(unit);
-        }
-
-        private void ResetEnemyContent() {
-            BattleManager.instance.enemyContent.ShowAllLives();
-        }
-
-        private void ResetHeroContent() {
-            // Feito atraves da maquina de estados, ação GetHeroesLivesTrigger
+        private void SetUnitSelectionCallbacks() {
+            BattleUnit.OnUnitSelected.AddListener(ShowThisAsATarget);
+            BattleUnit.OnUnitDeselected.AddListener(StopShowingThisAsATarget);
         }
 
         public void ShowThisAsATarget() {
-            if (showingTarget) {
-                item.DisableReference();
-            } else {
-                item.EnableReference();
-            }
-
-            showingTarget = !showingTarget;
+            item.EnableReference();
+            showingTarget = true;
         }
 
+        public void StopShowingThisAsATarget() {
+            item.DisableReference();
+            showingTarget = false;
+        }
+
+        private void UpdateUnitPosition(Vector3 newPosition) {
+            if ((newPosition - BattleUnit.transform.position).magnitude > float.Epsilon)
+                BattleUnit.transform.position = newPosition;
+        }
+
+        private void SetUnitPosition() {
+            if (BattleUnit.gameObject != gameObject && rectTransform != null) {
+                Vector3 newPosition = rectTransform.localToWorldMatrix.MultiplyPoint3x4(Vector3.zero);
+                BattleUnit.transform.position = newPosition;
+            }
+        }
+
+        private void SetupCompositeUnit(ICompositeUnit compositeUnit) {
+            CompositeUnitInfo compositeUnitInfo = compositeUnit.GetCompositeUnitInfo(BattleUnit);
+            if (compositeUnitInfo.mainUnit == null)
+                return;
+
+            if (compositeUnit.IsMainUnit(BattleUnit)) {
+                foreach (BattleUnit appendage in compositeUnitInfo.appendages) {
+                    appendage.transform.position = BattleUnit.transform.position;
+                }
+            } else {
+                BattleUnit.transform.position = compositeUnitInfo.mainUnit.transform.position;
+            }
+
+            foreach (BattleUnit unit in compositeUnitInfo) {
+                if (unit == BattleUnit)
+                    continue;
+                UnitItem otherItem = BattleUnitsUI.Instance.GetUnitItem(unit);
+                BattleUnit.OnTurnStart.AddListener(_ => otherItem.StepForward(unit));
+                BattleUnit.OnTurnEnd.AddListener(_ => otherItem.StepBack(unit));
+            }
+        }
+
+        public void ToggleShowTarget() {
+            if (showingTarget) {
+                StopShowingThisAsATarget();
+            } else {
+                ShowThisAsATarget();
+            }
+        }
     }
 
 }

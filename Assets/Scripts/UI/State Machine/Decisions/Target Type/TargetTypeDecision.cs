@@ -19,7 +19,7 @@ namespace FinalInferno.UI.FSM {
         /// <param name="controller"> O controlador da máquina de estados. </param>
         public override bool Decide(StateController controller) {
             bool desiredType = false;
-            TargetType currentSkillType = BattleSkillManager.GetSkillType();
+            TargetType currentSkillType = BattleSkillManager.GetSkillTargetType();
 
             foreach (TargetType type in desiredTypes) {
                 bool hasThisType = (currentSkillType == type);
