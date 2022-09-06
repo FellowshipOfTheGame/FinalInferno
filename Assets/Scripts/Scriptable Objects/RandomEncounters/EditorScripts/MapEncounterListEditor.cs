@@ -11,7 +11,7 @@ namespace FinalInferno {
     public class MapEncounterListEditor : Editor {
         private SerializedProperty encounterGroups;
         private SerializedProperty difficultyFactor;
-        private int selectedLevel = 0;
+        private int selectedLevelIndex = 0;
         private float selectedDifficultyFactor = 0f;
         private List<EncounterGroup> validEncounterGroups;
         private List<float> storedMultipliers;
@@ -41,7 +41,7 @@ namespace FinalInferno {
         }
 
         private void InitVariables() {
-            selectedLevel = -1;
+            selectedLevelIndex = -1;
             selectedDifficultyFactor = difficultyFactor.floatValue;
             validEncounterGroups = new List<EncounterGroup>();
             chancesDict = new ReadOnlyDictionary<EncounterGroup, float>(new Dictionary<EncounterGroup, float>());
@@ -59,10 +59,10 @@ namespace FinalInferno {
             float previousDifficultyFactor = selectedDifficultyFactor;
             DisplayDifficultyFactorButtons();
             EditorGUILayout.Space();
-            int previousLevel = selectedLevel;
+            int previousIndex = selectedLevelIndex;
             DisplayLevelSelectionButtons();
             EditorGUILayout.Space();
-            bool parametersChanged = CheckForParameterChanges(previousDifficultyFactor, previousLevel);
+            bool parametersChanged = CheckForParameterChanges(previousDifficultyFactor, previousIndex);
             UpdateAndShowSelectedPreview(parametersChanged);
         }
 
@@ -93,17 +93,17 @@ namespace FinalInferno {
 
         private void DisplayLevelSelectionButtons() {
             EditorGUILayout.BeginHorizontal(EditorStyles.boldLabel);
-            for (int level = 0; level < 5; level++) {
-                if (GUILayout.Button($"level {level + 1}"))
-                    selectedLevel = level;
+            for (int level = 1; level <= 5; level++) {
+                if (GUILayout.Button($"level {level}"))
+                    selectedLevelIndex = level - 1;
             }
             EditorGUILayout.EndHorizontal();
-            selectedLevel = Mathf.Clamp(selectedLevel, 0, 4);
-            EditorGUILayout.LabelField($"Selected level: {selectedLevel + 1}", EditorStyles.boldLabel);
+            selectedLevelIndex = Mathf.Clamp(selectedLevelIndex, 0, 4);
+            EditorGUILayout.LabelField($"Selected level: {selectedLevelIndex + 1}", EditorStyles.boldLabel);
         }
 
-        private bool CheckForParameterChanges(float previousDifficultyFactor, int previousLevel) {
-            bool parametersChanged = selectedLevel != previousLevel;
+        private bool CheckForParameterChanges(float previousDifficultyFactor, int previousIndex) {
+            bool parametersChanged = selectedLevelIndex != previousIndex;
             parametersChanged |= (Mathf.Abs(previousDifficultyFactor - selectedDifficultyFactor) > Mathf.Epsilon);
             parametersChanged |= CheckMultiplierChanges();
             return parametersChanged;
@@ -139,7 +139,7 @@ namespace FinalInferno {
 
         private void ResetListAndDictionary() {
             validEncounterGroups.Clear();
-            chancesDict = (target as MapEncounterList).GetChancesForLevel(selectedLevel);
+            chancesDict = (target as MapEncounterList).GetChancesForLevel(selectedLevelIndex + 1);
         }
 
         private void RepopulateValidEncountersList() {
@@ -149,7 +149,7 @@ namespace FinalInferno {
                     continue;
 
                 SerializedObject obj = new SerializedObject(groupProp.objectReferenceValue);
-                if (!obj.FindProperty("canEncounter").GetArrayElementAtIndex(selectedLevel).boolValue)
+                if (!obj.FindProperty("canEncounter").GetArrayElementAtIndex(selectedLevelIndex).boolValue)
                     continue;
 
                 EncounterGroup encounterGroup = obj.targetObject as EncounterGroup;

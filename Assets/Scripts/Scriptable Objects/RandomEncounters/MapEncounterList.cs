@@ -21,7 +21,7 @@ namespace FinalInferno {
 
         public ReadOnlyDictionary<EncounterGroup, float> GetChancesForLevel(int level) {
             Dictionary<EncounterGroup, float> chanceDict = new Dictionary<EncounterGroup, float>();
-            level = Mathf.Clamp(level, 0, 4);
+            level = Mathf.Clamp(level, 1, 5);
             float sumOfWeights = CalculateEncounterWeightsAndSum(level, chanceDict);
             CalculatePercentages(chanceDict, sumOfWeights);
             return new ReadOnlyDictionary<EncounterGroup, float>(chanceDict);
@@ -29,9 +29,10 @@ namespace FinalInferno {
 
         private float CalculateEncounterWeightsAndSum(int level, Dictionary<EncounterGroup, float> chanceDict) {
             float sumOfWeights = 0f;
+            int levelIndex = level - 1;
             foreach (EncounterGroupItem encounterGroupItem in encounterGroupItems) {
                 EncounterGroup encounterGroup = encounterGroupItem?.group;
-                if (encounterGroup == null || !encounterGroup.CanEncounter[level])
+                if (encounterGroup == null || !encounterGroup.CanEncounter[levelIndex])
                     continue;
                 float encounterWeight = CalculateEncounterWeight(encounterGroupItem, encounterGroup);
                 chanceDict.Add(encounterGroup, encounterWeight);
