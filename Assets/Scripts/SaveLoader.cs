@@ -7,7 +7,7 @@ namespace FinalInferno {
         private const string demoSceneName = "Demo";
         private const string autosavePlayerPrefKey = "autosave";
         private static DataSaver<SaveFile> dataSaver = new DataSaver<SaveFile>(fileName, true);
-        private static SaveFile saveFile = dataSaver.LoadData();
+        private static SaveFile saveFile = InitSaveFile();
         public static int SaveSlot { get => saveFile.Slot; set => saveFile.Slot = value; }
         public static bool AutoSave {
             get => saveFile != null && PlayerPrefs.GetString(autosavePlayerPrefKey, "true") == "true";
@@ -27,6 +27,19 @@ namespace FinalInferno {
                 }
                 return (charCount == Party.Capacity);
             }
+        }
+
+        private static SaveFile InitSaveFile() {
+            SaveFile loadedData = dataSaver.LoadData();
+            if (loadedData.HasNewerSaveSlot()) {
+                string backupSuffix = $"-{Application.version}-{System.DateTime.Now}";
+                dataSaver.CreateBackup(backupSuffix);
+                loadedData = dataSaver.LoadData();
+            } else if (loadedData.HasOlderSaveSlot()) {
+                loadedData.ApplyVersionUpdates();
+                dataSaver.SaveData(loadedData);
+            }
+            return loadedData;
         }
 
         public static SavePreviewInfo[] PreviewAllSlots() {
