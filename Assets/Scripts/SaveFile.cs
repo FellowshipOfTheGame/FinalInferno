@@ -92,7 +92,7 @@ namespace FinalInferno {
                 QuestInfo qinfo = new QuestInfo();
 
                 qinfo.name = quest.name;
-                qinfo.flagsNames = quest.FlagNames;
+                qinfo.flagsNames = quest.GetSerializableFlagNames();
                 System.Array.Sort(qinfo.flagsNames);
                 qinfo.SetQuestFlags(quest);
 
