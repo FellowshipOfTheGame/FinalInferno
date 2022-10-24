@@ -70,5 +70,9 @@ namespace FinalInferno {
                 return default;
             }
         }
+
+        public T[] GetAllAssets() {
+            return assets.ToArray();
+        }
     }
 }

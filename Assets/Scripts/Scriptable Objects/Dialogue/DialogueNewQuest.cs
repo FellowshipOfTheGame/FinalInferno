@@ -7,7 +7,11 @@ namespace FinalInferno {
 
         public override void AfterDialogue() {
             base.AfterDialogue();
-            questToStart.TryStartQuest();
+            if (!questToStart.IsActive) {
+                Party.Instance.StartQuest(questToStart);
+            } else {
+                Debug.LogWarning($"Quest {questToStart} has already begun", this);
+            }
             Fog.Dialogue.DialogueHandler.instance.OnDialogueEnd -= AfterDialogue;
         }
     }

@@ -47,7 +47,15 @@ namespace FinalInferno {
         public override int GetHashCode() {
             return (3 * name.GetHashCode() + 5 * flagsNames.GetHashCode() + 7 * flagsTrue.GetHashCode());
         }
-        public void SetQuestFlags(Quest quest) {
+
+        public void SaveQuestInfo(Quest quest) {
+            name = quest.SerializedID;
+            flagsNames = quest.GetSerializableFlagNames();
+            System.Array.Sort(flagsNames);
+            CopyQuestFlags(quest);
+        }
+
+        private void CopyQuestFlags(Quest quest) {
             flagsTrue = 0;
             ulong bitValue = 1;
             for (int j = 0; j < quest.EventCount; j++) {
@@ -55,6 +63,17 @@ namespace FinalInferno {
                 bitValue <<= 1;
             }
         }
-    }
 
+        public void LoadQuestInfo(Quest quest) {
+            if (quest.SerializedID != name) {
+                Debug.LogError("Tried to apply quest info to wrong ScriptableObject", quest);
+                return;
+            }
+            ulong bitValue = 1;
+            for (int i = 0; i < quest.EventCount; i++) {
+                quest.SetFlag(flagsNames[i], (flagsTrue & bitValue) != 0);
+                bitValue = bitValue << 1;
+            }
+        }
+    }
 }

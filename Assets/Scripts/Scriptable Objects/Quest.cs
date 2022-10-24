@@ -5,7 +5,20 @@ namespace FinalInferno {
     public abstract class Quest : ScriptableObject, IDatabaseItem {
         public const string IsActiveFlagString = "IsQuestActive";
         [SerializeField] protected string serializedID;
+        public string SerializedID => serializedID;
         [SerializeField] protected bool active;
+        public bool IsActive => active;
+        public bool IsComplete {
+            get {
+                if (!IsActive)
+                    return false;
+                foreach (bool flag in events.Values) {
+                    if (!flag)
+                        return false;
+                }
+                return true;
+            }
+        }
         [SerializeField] protected int expReward = 0;
         // O número máximo de eventos permitidos é 62 por medida de segurança
         [SerializeField] protected QuestDictionary events = new QuestDictionary();
@@ -22,7 +35,7 @@ namespace FinalInferno {
             if (!quest)
                 return true;
             if (eventFlag == IsActiveFlagString)
-                return quest.active;
+                return quest.IsActive;
             return quest.GetFlag(eventFlag);
         }
 
@@ -46,7 +59,7 @@ namespace FinalInferno {
         }
 
         public void SetFlag(string eventName, bool value) {
-            if (active && events.ContainsKey(eventName))
+            if (IsActive && events.ContainsKey(eventName))
                 events[eventName] = value;
         }
 
@@ -61,26 +74,15 @@ namespace FinalInferno {
         public virtual void StartQuest() {
             ResetQuest();
             expReward = Mathf.Max(expReward, 0);
-            Party.Instance.activeQuests.Remove(this);
-            Party.Instance.activeQuests.Add(this);
             active = true;
         }
 
-        public virtual void TryStartQuest() {
-            if (!active) {
-                StartQuest();
-            } else {
-                Debug.LogWarning("Quest has already begun", this);
-            }
-        }
-
         public virtual void CompleteQuest() {
-            if (!active)
+            if (!IsActive || IsComplete)
                 return;
             foreach (string key in events.Keys) {
                 events[key] = true;
             }
-            active = false;
             Party.Instance.GiveExp(expReward);
         }
     }

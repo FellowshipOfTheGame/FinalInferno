@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using FinalInferno.CustomExtensions;
 using UnityEngine;
 
@@ -85,19 +84,7 @@ namespace FinalInferno {
         }
 
         private void SaveQuestsInfo() {
-            List<Quest> questList = new List<Quest>(Party.Instance.activeQuests.ToArray());
-            saves[Slot].quest = new QuestInfo[questList.Count];
-            for (int i = 0; i < questList.Count; i++) {
-                Quest quest = questList[i];
-                QuestInfo qinfo = new QuestInfo();
-
-                qinfo.name = quest.name;
-                qinfo.flagsNames = quest.GetSerializableFlagNames();
-                System.Array.Sort(qinfo.flagsNames);
-                qinfo.SetQuestFlags(quest);
-
-                saves[Slot].quest[i] = qinfo;
-            }
+            saves[Slot].quest = Party.Instance.GetActiveQuestInfo();
         }
 
         private void SaveBestiaryInfo() {
@@ -210,16 +197,7 @@ namespace FinalInferno {
         }
 
         private void LoadQuestsInfo() {
-            Party.Instance.activeQuests.Clear();
-            foreach (QuestInfo questInfo in saves[Slot].quest) {
-                Quest quest = AssetManager.LoadAsset<Quest>(questInfo.name);
-                quest.StartQuest();
-                ulong bitValue = 1;
-                for (int i = 0; i < quest.EventCount; i++) {
-                    quest.SetFlag(questInfo.flagsNames[i], (questInfo.flagsTrue & bitValue) != 0);
-                    bitValue = bitValue << 1;
-                }
-            }
+            Party.Instance.LoadQuestProgress(saves[Slot].quest);
         }
 
         private void LoadBestiaryInfo() {

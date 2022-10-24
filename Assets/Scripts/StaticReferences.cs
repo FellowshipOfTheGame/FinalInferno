@@ -19,6 +19,11 @@ public class StaticReferences : MonoBehaviour {
     public static AssetManager AssetManager => Instance == null ? null : Instance.assetManager;
     [SerializeField] private VolumeController volumeController;
     public static VolumeController VolumeController => Instance == null ? null : Instance.volumeController;
+    [Header("Demo")]
+    [SerializeField] private SideQuest demoQuest;
+    public static Quest DemoQuest => Instance == null ? null : Instance.demoQuest;
+    [SerializeField] private ScenePicker demoScene;
+    public static string DemoScene => (Instance != null && Instance.demoScene.Name != "") ? Instance.demoScene.Name : null;
 
     private void Awake() {
         if (Instance == null) {
@@ -27,8 +32,7 @@ public class StaticReferences : MonoBehaviour {
             Destroy(this);
         }
 
-        if (!bgm)
-            bgm = GetComponent<Jukebox>();
+        bgm = Utils.GetComponentIfNull(this, bgm);
     }
 
     private void OnDestroy() {

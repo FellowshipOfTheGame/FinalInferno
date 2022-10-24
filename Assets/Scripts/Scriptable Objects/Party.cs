@@ -52,7 +52,7 @@ namespace FinalInferno {
         private bool ShouldIncreaseLevel => xp >= xpNextLevel && level < Table.Rows.Count;
 
         public List<Character> characters = new List<Character>();
-        public List<Quest> activeQuests = new List<Quest>();
+        private ActiveQuestsController activeQuestsController;
         private Dictionary<Enemy, int> bestiary = new Dictionary<Enemy, int>();
         public ReadOnlyDictionary<Enemy, int> Bestiary => new ReadOnlyDictionary<Enemy, int>(bestiary);
 
@@ -75,6 +75,7 @@ namespace FinalInferno {
             xp = 0;
             xpNextLevel = 0;
             currentMap = StaticReferences.FirstScene;
+            activeQuestsController = new ActiveQuestsController(AssetManager.LoadAllAssets<Quest>());
         }
         #endregion
 
@@ -156,12 +157,25 @@ namespace FinalInferno {
             ResetPartyXP();
         }
 
+        public void StartQuest(Quest quest) {
+            activeQuestsController.StartQuest(quest);
+        }
+
+        public void CompleteQuest(Quest quest) {
+            activeQuestsController.CompleteQuest(quest);
+        }
+
+        public void LoadQuestProgress(QuestInfo[] questsInfo) {
+            activeQuestsController.LoadQuestProgress(questsInfo);
+        }
+
+        public QuestInfo[] GetActiveQuestInfo() {
+            return activeQuestsController.GetActiveQuestInfo();
+        }
+
         private void ResetPartyProgress() {
             bestiary.Clear();
-            foreach (Quest quest in activeQuests) {
-                quest.ResetQuest();
-            }
-            activeQuests.Clear();
+            activeQuestsController.ResetProgress();
             currentMap = StaticReferences.FirstScene;
         }
 

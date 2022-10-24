@@ -5,12 +5,8 @@ namespace FinalInferno {
     public class RepeatableQuest : Quest {
         public override void CompleteQuest() {
             base.CompleteQuest();
-            ResetQuestIfRepeatable();
-        }
-
-        private void ResetQuestIfRepeatable() {
-            Party.Instance.activeQuests.Remove(this);
-            ResetQuest();
+            if (IsComplete)
+                ResetQuest();
         }
     }
 }
