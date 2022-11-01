@@ -65,13 +65,16 @@ namespace FinalInferno.UI.AII {
         }
 
         private void UpdatePagesAnchoredPosition(int index) {
-            foreach (SkillDetailPage page in detailPages) {
+            for (int pageIndex = 0; pageIndex < detailPages.Count; pageIndex++) {
+                SkillDetailPage page = detailPages[pageIndex];
+                page.gameObject.SetActive(true);
                 if (page.TryGetComponent(out RectTransform rect)) {
                     rect.pivot += new Vector2(currentIndex - index, 0);
                     rect.anchorMin += new Vector2(currentIndex - index, 0);
                     rect.anchorMax += new Vector2(currentIndex - index, 0);
                     rect.anchoredPosition = Vector2.zero;
                 }
+                page.gameObject.SetActive(pageIndex == index);
             }
         }
 
