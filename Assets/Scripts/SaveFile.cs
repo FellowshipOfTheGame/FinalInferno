@@ -145,6 +145,7 @@ namespace FinalInferno {
                 if (IsSlotEmpty(index))
                     continue;
                 UpdateAutoSaveSettings167(index);
+                saves[index].version = Application.version;
             }
         }
 

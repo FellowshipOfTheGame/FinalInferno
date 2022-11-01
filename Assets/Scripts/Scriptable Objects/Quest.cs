@@ -64,6 +64,10 @@ namespace FinalInferno {
         }
 
         public virtual void ResetQuest() {
+            ResetFlags();
+        }
+
+        protected void ResetFlags() {
             List<string> keyList = new List<string>(events.Keys);
             foreach (string key in keyList) {
                 events[key] = false;
@@ -72,7 +76,7 @@ namespace FinalInferno {
         }
 
         public virtual void StartQuest() {
-            ResetQuest();
+            ResetFlags();
             expReward = Mathf.Max(expReward, 0);
             active = true;
         }

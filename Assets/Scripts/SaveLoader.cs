@@ -32,7 +32,7 @@ namespace FinalInferno {
         private static SaveFile InitSaveFile() {
             SaveFile loadedData = dataSaver.LoadData();
             if (loadedData.HasNewerSaveSlot()) {
-                string backupSuffix = $"-{Application.version}-{System.DateTime.Now}";
+                string backupSuffix = $"-{Application.version}({System.DateTime.Now})";
                 dataSaver.CreateBackup(backupSuffix);
                 loadedData = dataSaver.LoadData();
             } else if (loadedData.HasOlderSaveSlot()) {
