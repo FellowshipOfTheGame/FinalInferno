@@ -1,7 +1,5 @@
 #if UNITY_EDITOR
-using System;
 using UnityEditor;
-using UnityEngine;
 
 namespace FinalInferno {
     [CustomEditor(typeof(TriggerSceneChange))]

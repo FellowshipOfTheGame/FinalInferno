@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FinalInferno.UI.AII;
-using FinalInferno.UI.Battle.QueueMenu;
-using FinalInferno.UI.FSM;
 using UnityEngine;
 using UnityEngine.UI;
 
