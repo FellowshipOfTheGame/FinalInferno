@@ -7,7 +7,7 @@ public class KeyboardScrollbar : MonoBehaviour {
     public ScrollRect scrollRect;
     [SerializeField] private Scrollbar scrollbar;
     private bool processingCodeValueChange = false;
-    public float Value {
+    public float ScrollbarValue {
         get => Mathf.Clamp(scrollbar.value, 0f, 1f);
         private set => scrollbar.value = Mathf.Clamp(value, 0f, 1f);
     }
@@ -17,7 +17,7 @@ public class KeyboardScrollbar : MonoBehaviour {
         get => active;
         set {
             if (!value)
-                Value = 1;
+                ScrollbarValue = 1;
             scrollbar.interactable = value;
             active = value;
         }
@@ -32,7 +32,7 @@ public class KeyboardScrollbar : MonoBehaviour {
 
     public void SetValue(float desiredValue) {
         if (!active) {
-            Value = desiredValue;
+            ScrollbarValue = desiredValue;
             return;
         }
         newValue = desiredValue;
@@ -54,9 +54,9 @@ public class KeyboardScrollbar : MonoBehaviour {
             RecalculateSize();
         if (processingCodeValueChange) {
             processingCodeValueChange = false;
-            Value = newValue;
+            ScrollbarValue = newValue;
         } else if (active) {
-            Value += speed * inputValue * scrollbar.size * Time.deltaTime;
+            ScrollbarValue += speed * inputValue * scrollbar.size * Time.deltaTime;
         }
     }
 

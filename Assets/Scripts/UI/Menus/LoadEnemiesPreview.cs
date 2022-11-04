@@ -7,7 +7,7 @@ namespace FinalInferno.UI {
         [SerializeField] private BattleInfoReference battleInfoReference;
 
         public void LoadPreview() {
-            int previousCreberusHeadCount = CerberusHead.heads;
+            int previousCerberusHeadCount = CerberusHead.heads;
             CerberusHead.heads = 0;
             int enemyLevel = Enemy.CalculateEnemyLevel();
             foreach (Enemy enemy in battleInfoReference.Enemies) {
@@ -16,7 +16,7 @@ namespace FinalInferno.UI {
                     CerberusHead.heads++;
                 InstantiateEnemyPortrait(enemy);
             }
-            CerberusHead.heads = previousCreberusHeadCount;
+            CerberusHead.heads = previousCerberusHeadCount;
         }
 
         private void InstantiateEnemyPortrait(Enemy enemy) {

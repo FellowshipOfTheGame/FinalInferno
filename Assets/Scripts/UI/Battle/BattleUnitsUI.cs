@@ -147,12 +147,10 @@ namespace FinalInferno.UI.Battle {
             manager.lastItem = newItem;
         }
 
-        public void RemoveUnit(BattleUnit unit) {
-            if (unit.Unit.IsHero) {
-                RemoveUnitFromContent(unit, heroesContent, heroesManager);
-            } else {
-                RemoveUnitFromContent(unit, enemiesContent, enemiesManager);
-            }
+        public void RemoveUnit(BattleUnit battleUnit) {
+            Transform content = battleUnit.Unit.IsHero ? heroesContent : enemiesContent;
+            AIIManager manager = battleUnit.Unit.IsHero ? heroesManager : enemiesManager;
+            RemoveUnitFromContent(battleUnit, content, manager);
         }
 
         private void RemoveUnitFromContent(BattleUnit removedUnit, Transform content, AIIManager manager) {
