@@ -7,6 +7,7 @@ namespace FinalInferno {
         private Dictionary<string, Quest> questIdDictionary = new Dictionary<string, Quest>();
 
         public ActiveQuestsController(Quest[] quests) {
+            allQuests.Clear();
             activeQuests.Clear();
             foreach (Quest quest in quests) {
                 allQuests.Add(quest);
