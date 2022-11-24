@@ -2,6 +2,7 @@
 
 namespace FinalInferno {
     public static class SaveLoader {
+        private const string dateTimeFormat = "yyyy/MM/dd HH:mm:ss";
         private const string fileName = "SaveFile";
         private const string autosavePlayerPrefKey = "autosave";
         private const string trueString = "true";
@@ -32,7 +33,7 @@ namespace FinalInferno {
         private static SaveFile InitSaveFile() {
             SaveFile loadedData = dataSaver.LoadData();
             if (loadedData.HasNewerSaveSlot()) {
-                string backupSuffix = $"-{Application.version}({System.DateTime.Now})";
+                string backupSuffix = $"-{Application.version}({System.DateTime.Now.ToString(dateTimeFormat)})";
                 dataSaver.CreateBackup(backupSuffix);
                 loadedData = dataSaver.LoadData();
             } else if (loadedData.HasOlderSaveSlot()) {
