@@ -498,7 +498,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1c613c13d86bc9438b99528e41cf60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BCD: {fileID: 11400000, guid: 029100b728d37ce4986a14d740012c4f, type: 2}
+  buttonClickDecision: {fileID: 11400000, guid: 029100b728d37ce4986a14d740012c4f,
+    type: 2}
   item: {fileID: 7256693467696161553}
 --- !u!114 &5620001163698062861
 MonoBehaviour:
@@ -1002,7 +1003,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1c613c13d86bc9438b99528e41cf60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BCD: {fileID: 11400000, guid: 9c26a2d53c59cc84eb8f19736d0f774a, type: 2}
+  buttonClickDecision: {fileID: 11400000, guid: 9c26a2d53c59cc84eb8f19736d0f774a,
+    type: 2}
   item: {fileID: 553516324683008509}
 --- !u!114 &6197482727980233497
 MonoBehaviour:
@@ -1103,7 +1105,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 36c3e4e5637c9b546a02de8517f42b3d, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1142,7 +1144,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1c613c13d86bc9438b99528e41cf60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BCD: {fileID: 11400000, guid: 2920f29b47860814eb33760081b27b0a, type: 2}
+  buttonClickDecision: {fileID: 11400000, guid: 2920f29b47860814eb33760081b27b0a,
+    type: 2}
   item: {fileID: 553516324953208638}
 --- !u!114 &912817019791113471
 MonoBehaviour:
@@ -1285,13 +1288,12 @@ MonoBehaviour:
   currentItem: {fileID: 0}
   firstItem: {fileID: 3324417337467984172}
   lastItem: {fileID: 0}
-  activatorAxis: Submit
   movementAction: {fileID: -4854843027902488372, guid: eeed788d9c9bd6ba4afdbd0089dd3943,
     type: 3}
   activationAction: {fileID: 8573743842673928875, guid: eeed788d9c9bd6ba4afdbd0089dd3943,
     type: 3}
   interactable: 0
-  AS: {fileID: 6478886318863136460}
+  audioSource: {fileID: 6478886318863136460}
 --- !u!114 &526407793633136265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1310,7 +1312,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 553516324964456306}
         m_TargetAssemblyTypeName: 
-        m_MethodName: Active
+        m_MethodName: Activate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1362,7 +1364,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 553516324964456306}
         m_TargetAssemblyTypeName: 
-        m_MethodName: Deactive
+        m_MethodName: Deactivate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1562,7 +1564,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 36c3e4e5637c9b546a02de8517f42b3d, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1601,7 +1603,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1c613c13d86bc9438b99528e41cf60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BCD: {fileID: 11400000, guid: 1fb3172b382c6154a8fbe9359dcfdb06, type: 2}
+  buttonClickDecision: {fileID: 11400000, guid: 1fb3172b382c6154a8fbe9359dcfdb06,
+    type: 2}
   item: {fileID: 553516325278192034}
 --- !u!114 &7612687998016198559
 MonoBehaviour:
@@ -1873,13 +1876,12 @@ MonoBehaviour:
   currentItem: {fileID: 0}
   firstItem: {fileID: 553516324953208638}
   lastItem: {fileID: 0}
-  activatorAxis: Submit
   movementAction: {fileID: -4854843027902488372, guid: eeed788d9c9bd6ba4afdbd0089dd3943,
     type: 3}
   activationAction: {fileID: 8573743842673928875, guid: eeed788d9c9bd6ba4afdbd0089dd3943,
     type: 3}
   interactable: 0
-  AS: {fileID: 4181472165557231299}
+  audioSource: {fileID: 4181472165557231299}
 --- !u!82 &4181472165557231299
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1995,7 +1997,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 553516325598386496}
         m_TargetAssemblyTypeName: 
-        m_MethodName: Active
+        m_MethodName: Activate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2047,7 +2049,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 553516325598386496}
         m_TargetAssemblyTypeName: 
-        m_MethodName: Deactive
+        m_MethodName: Deactivate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2221,6 +2223,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadEnemiesPreview: {fileID: 2862993414284995568}
+  isLoadingBattle: {fileID: 11400000, guid: 8a0e889bb05558bd9b65a2e6103fe7da, type: 2}
+  startSceneChangeAnimationListener:
+    eventListened: {fileID: 11400000, guid: cf69cddf33ac468b69a9cf9493b3cc10, type: 2}
+    eventCallback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000, guid: 85e07579030f7964abe5a37c20e26455, type: 2}
+          m_TargetAssemblyTypeName: FinalInferno.UI.FSM.ButtonClickDecision, FinalInferno
+          m_MethodName: Click
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  battleInfo: {fileID: 11400000, guid: 14a4cfbc6efc762ac8805fc6177b6483, type: 2}
+  sceneChangeInfo: {fileID: 11400000, guid: fdbb88afa63ff455fb7a81cb8c970183, type: 2}
 --- !u!82 &2179986536894459732
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2565,7 +2587,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1c613c13d86bc9438b99528e41cf60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BCD: {fileID: 11400000, guid: 1389cae749941f14795e7d2846487ede, type: 2}
+  buttonClickDecision: {fileID: 11400000, guid: 1389cae749941f14795e7d2846487ede,
+    type: 2}
   item: {fileID: 553516326119049828}
 --- !u!114 &7937811856410610223
 MonoBehaviour:
@@ -3077,7 +3100,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1c613c13d86bc9438b99528e41cf60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BCD: {fileID: 11400000, guid: dfd3a1ec251353841a16b7030c983029, type: 2}
+  buttonClickDecision: {fileID: 11400000, guid: dfd3a1ec251353841a16b7030c983029,
+    type: 2}
   item: {fileID: 4998151075784380955}
 --- !u!114 &5527583403418789334
 MonoBehaviour:
@@ -3416,10 +3440,10 @@ RectTransform:
   m_Father: {fileID: 2442914127052379545}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 230.26892, y: 33}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -77, y: 0}
+  m_SizeDelta: {x: -174, y: 33}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1050883966777477013
 CanvasRenderer:
@@ -4076,7 +4100,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 36c3e4e5637c9b546a02de8517f42b3d, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4115,7 +4139,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1c613c13d86bc9438b99528e41cf60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BCD: {fileID: 11400000, guid: 1fb3172b382c6154a8fbe9359dcfdb06, type: 2}
+  buttonClickDecision: {fileID: 11400000, guid: 1fb3172b382c6154a8fbe9359dcfdb06,
+    type: 2}
   item: {fileID: 6515220339108084058}
 --- !u!114 &1621068150717820504
 MonoBehaviour:
@@ -4164,7 +4189,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3423429836669996489}
-  - {fileID: 4099976600712983013}
+  - {fileID: 9174404602669789364}
   m_Father: {fileID: 455245132205688218}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4560,8 +4585,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 104, y: 0}
-  m_SizeDelta: {x: 160, y: 0}
+  m_AnchoredPosition: {x: 100, y: 0}
+  m_SizeDelta: {x: 150, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5223880415827299031
 CanvasRenderer:
@@ -4710,12 +4735,11 @@ MonoBehaviour:
   currentItem: {fileID: 0}
   firstItem: {fileID: 0}
   lastItem: {fileID: 0}
-  activatorAxis: 
   movementAction: {fileID: -4854843027902488372, guid: eeed788d9c9bd6ba4afdbd0089dd3943,
     type: 3}
   activationAction: {fileID: 0}
   interactable: 0
-  AS: {fileID: 5711482612016756400}
+  audioSource: {fileID: 5711482612016756400}
 --- !u!114 &1757209217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5743,6 +5767,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyImage: {fileID: 594528275824133192, guid: 0e5b14e269881a443af5a9fa9f91c3ea,
     type: 3}
+  battleInfoReference: {fileID: 11400000, guid: 14a4cfbc6efc762ac8805fc6177b6483,
+    type: 2}
 --- !u!1 &2797400941949754794
 GameObject:
   m_ObjectHideFlags: 0
@@ -5946,7 +5972,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4912267347149622716}
         m_TargetAssemblyTypeName: 
-        m_MethodName: Active
+        m_MethodName: Activate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5957,12 +5983,12 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 8938486246915193893}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: FinalInferno.UI.AII.AIIStatusWatcher, FinalInferno
         m_MethodName: ActivatedAII
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 4912267347149622716}
-          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, FinalInferno
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5986,7 +6012,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4912267347149622716}
         m_TargetAssemblyTypeName: 
-        m_MethodName: Deactive
+        m_MethodName: Deactivate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5997,12 +6023,12 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 8938486246915193893}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: FinalInferno.UI.AII.AIIStatusWatcher, FinalInferno
         m_MethodName: DeactivatedAII
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 4912267347149622716}
-          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: FinalInferno.UI.AII.AIIManager, FinalInferno
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6098,7 +6124,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 5796738237369548138}
         m_TargetAssemblyTypeName: 
-        m_MethodName: Active
+        m_MethodName: Activate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6126,7 +6152,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5796738237369548138}
         m_TargetAssemblyTypeName: 
-        m_MethodName: Deactive
+        m_MethodName: Deactivate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6229,10 +6255,10 @@ RectTransform:
   m_Father: {fileID: 2383379492815641139}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 225.478, y: -33.128376}
-  m_SizeDelta: {x: 430.956, y: 66.25675}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7489824143984948657
 MonoBehaviour:
@@ -6880,8 +6906,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5475370826898685788}
-  m_Father: {fileID: 5774782628835674036}
-  m_RootOrder: 1
+  m_Father: {fileID: 9174404602669789364}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0.85}
@@ -7080,6 +7106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f24d7a396af464d43afef7ff7c3a82f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scrollRect: {fileID: 0}
   scrollbar: {fileID: 6111498009676591512}
   speed: 5
   movementAction: {fileID: -4854843027902488372, guid: eeed788d9c9bd6ba4afdbd0089dd3943,
@@ -8444,8 +8471,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 36c3e4e5637c9b546a02de8517f42b3d, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -8526,7 +8553,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 36c3e4e5637c9b546a02de8517f42b3d, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8585,7 +8612,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1c613c13d86bc9438b99528e41cf60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BCD: {fileID: 11400000, guid: 4e15adbc3c4acce47ad6da0d216d7822, type: 2}
+  buttonClickDecision: {fileID: 11400000, guid: 4e15adbc3c4acce47ad6da0d216d7822,
+    type: 2}
   item: {fileID: 3434093968606741610}
 --- !u!114 &1451699417060226748
 MonoBehaviour:
@@ -8608,7 +8636,9 @@ MonoBehaviour:
   - {fileID: 3434093969230501809}
   - {fileID: 3434093969472470274}
   Item: {fileID: 3434093968606741610}
-  decision: {fileID: 11400000, guid: ef0d8043df2b8dd48a49a6bfec3a1c68, type: 2}
+  emptySlotDecision: {fileID: 11400000, guid: ef0d8043df2b8dd48a49a6bfec3a1c68, type: 2}
+  nonEmptySlotDecision: {fileID: 11400000, guid: 3310033d294af45d2864872a07ce9869,
+    type: 2}
 --- !u!114 &3294040872222880629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8765,8 +8795,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 36c3e4e5637c9b546a02de8517f42b3d, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -9568,8 +9598,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 36c3e4e5637c9b546a02de8517f42b3d, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -10699,7 +10729,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 36c3e4e5637c9b546a02de8517f42b3d, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10758,7 +10788,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1c613c13d86bc9438b99528e41cf60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BCD: {fileID: 11400000, guid: 4e15adbc3c4acce47ad6da0d216d7822, type: 2}
+  buttonClickDecision: {fileID: 11400000, guid: 4e15adbc3c4acce47ad6da0d216d7822,
+    type: 2}
   item: {fileID: 3434093969691395489}
 --- !u!114 &1451699418131445623
 MonoBehaviour:
@@ -10781,7 +10812,9 @@ MonoBehaviour:
   - {fileID: 3434093970308863610}
   - {fileID: 3434093968393911497}
   Item: {fileID: 3434093969691395489}
-  decision: {fileID: 11400000, guid: ef0d8043df2b8dd48a49a6bfec3a1c68, type: 2}
+  emptySlotDecision: {fileID: 11400000, guid: ef0d8043df2b8dd48a49a6bfec3a1c68, type: 2}
+  nonEmptySlotDecision: {fileID: 11400000, guid: 3310033d294af45d2864872a07ce9869,
+    type: 2}
 --- !u!114 &3294040873300390590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11600,7 +11633,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 36c3e4e5637c9b546a02de8517f42b3d, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -11659,7 +11692,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1c613c13d86bc9438b99528e41cf60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BCD: {fileID: 11400000, guid: 4e15adbc3c4acce47ad6da0d216d7822, type: 2}
+  buttonClickDecision: {fileID: 11400000, guid: 4e15adbc3c4acce47ad6da0d216d7822,
+    type: 2}
   item: {fileID: 3434093970244980559}
 --- !u!114 &1451699417611156889
 MonoBehaviour:
@@ -11682,7 +11716,9 @@ MonoBehaviour:
   - {fileID: 3434093969755413652}
   - {fileID: 3434093968913675815}
   Item: {fileID: 3434093970244980559}
-  decision: {fileID: 11400000, guid: ef0d8043df2b8dd48a49a6bfec3a1c68, type: 2}
+  emptySlotDecision: {fileID: 11400000, guid: ef0d8043df2b8dd48a49a6bfec3a1c68, type: 2}
+  nonEmptySlotDecision: {fileID: 11400000, guid: 3310033d294af45d2864872a07ce9869,
+    type: 2}
 --- !u!114 &3294040873853581392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11764,8 +11800,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 36c3e4e5637c9b546a02de8517f42b3d, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -11942,7 +11978,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 36c3e4e5637c9b546a02de8517f42b3d, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -12001,7 +12037,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1c613c13d86bc9438b99528e41cf60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BCD: {fileID: 11400000, guid: 4e15adbc3c4acce47ad6da0d216d7822, type: 2}
+  buttonClickDecision: {fileID: 11400000, guid: 4e15adbc3c4acce47ad6da0d216d7822,
+    type: 2}
   item: {fileID: 3434093970367867866}
 --- !u!114 &1451699417480403212
 MonoBehaviour:
@@ -12024,7 +12061,9 @@ MonoBehaviour:
   - {fileID: 3434093969615632385}
   - {fileID: 3434093969053323954}
   Item: {fileID: 3434093970367867866}
-  decision: {fileID: 11400000, guid: ef0d8043df2b8dd48a49a6bfec3a1c68, type: 2}
+  emptySlotDecision: {fileID: 11400000, guid: ef0d8043df2b8dd48a49a6bfec3a1c68, type: 2}
+  nonEmptySlotDecision: {fileID: 11400000, guid: 3310033d294af45d2864872a07ce9869,
+    type: 2}
 --- !u!114 &3294040873984974021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12753,12 +12792,11 @@ MonoBehaviour:
   currentItem: {fileID: 0}
   firstItem: {fileID: 0}
   lastItem: {fileID: 0}
-  activatorAxis: 
   movementAction: {fileID: -4854843027902488372, guid: eeed788d9c9bd6ba4afdbd0089dd3943,
     type: 3}
   activationAction: {fileID: 0}
   interactable: 0
-  AS: {fileID: 5588101487366363891}
+  audioSource: {fileID: 5588101487366363891}
 --- !u!114 &2096027126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13059,10 +13097,10 @@ RectTransform:
   m_Father: {fileID: 2442914127052379545}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 174.32892, y: 33}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 120, y: 0}
+  m_SizeDelta: {x: -220, y: 33}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7865778293672648246
 CanvasRenderer:
@@ -14931,12 +14969,11 @@ MonoBehaviour:
   currentItem: {fileID: 0}
   firstItem: {fileID: 0}
   lastItem: {fileID: 0}
-  activatorAxis: 
   movementAction: {fileID: -4854843027902488372, guid: eeed788d9c9bd6ba4afdbd0089dd3943,
     type: 3}
   activationAction: {fileID: 0}
   interactable: 0
-  AS: {fileID: 3760825785322779525}
+  audioSource: {fileID: 3760825785322779525}
 --- !u!114 &1357451287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15095,10 +15132,10 @@ RectTransform:
   m_Father: {fileID: 2383379492815641139}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 510.77365, y: -33.128376}
-  m_SizeDelta: {x: 119.63533, y: 66.25675}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &831555280260559265
 MonoBehaviour:
@@ -15314,13 +15351,12 @@ MonoBehaviour:
   currentItem: {fileID: 0}
   firstItem: {fileID: 4252702177416675262}
   lastItem: {fileID: 0}
-  activatorAxis: Submit
   movementAction: {fileID: -4854843027902488372, guid: eeed788d9c9bd6ba4afdbd0089dd3943,
     type: 3}
   activationAction: {fileID: 8573743842673928875, guid: eeed788d9c9bd6ba4afdbd0089dd3943,
     type: 3}
   interactable: 0
-  AS: {fileID: 8249689256550336337}
+  audioSource: {fileID: 8249689256550336337}
 --- !u!82 &8249689256550336337
 AudioSource:
   m_ObjectHideFlags: 0
@@ -15436,7 +15472,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7685539466295355900}
         m_TargetAssemblyTypeName: 
-        m_MethodName: Active
+        m_MethodName: Activate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15488,7 +15524,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7685539466295355900}
         m_TargetAssemblyTypeName: 
-        m_MethodName: Deactive
+        m_MethodName: Deactivate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15691,8 +15727,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 104, y: 0}
-  m_SizeDelta: {x: 160, y: 0}
+  m_AnchoredPosition: {x: 100, y: 0}
+  m_SizeDelta: {x: 150, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7812076850161003022
 CanvasRenderer:
@@ -16315,6 +16351,13 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   speedMultiplier: 25
+  canvas: {fileID: 27441589974258800}
+  childLayoutGroups:
+  - {fileID: 1447323928630916166}
+  - {fileID: 8426460251307205623}
+  - {fileID: 5624388322562197279}
+  - {fileID: 7717018415008780633}
+  - {fileID: 3538476308730450923}
 --- !u!1 &5993231404864181377
 GameObject:
   m_ObjectHideFlags: 0
@@ -16564,7 +16607,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1c613c13d86bc9438b99528e41cf60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BCD: {fileID: 11400000, guid: ba810fe2b46647a409764d7561c117b4, type: 2}
+  buttonClickDecision: {fileID: 11400000, guid: ba810fe2b46647a409764d7561c117b4,
+    type: 2}
   item: {fileID: 3324417337467984172}
 --- !u!114 &5313435901596885043
 MonoBehaviour:
@@ -17613,7 +17657,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 36c3e4e5637c9b546a02de8517f42b3d, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -17672,7 +17716,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1c613c13d86bc9438b99528e41cf60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BCD: {fileID: 11400000, guid: 4e15adbc3c4acce47ad6da0d216d7822, type: 2}
+  buttonClickDecision: {fileID: 11400000, guid: 4e15adbc3c4acce47ad6da0d216d7822,
+    type: 2}
   item: {fileID: 6701105997670167100}
 --- !u!114 &7454089388268929258
 MonoBehaviour:
@@ -17695,7 +17740,9 @@ MonoBehaviour:
   - {fileID: 6701105997312221671}
   - {fileID: 6701105999038958420}
   Item: {fileID: 6701105997670167100}
-  decision: {fileID: 11400000, guid: ef0d8043df2b8dd48a49a6bfec3a1c68, type: 2}
+  emptySlotDecision: {fileID: 11400000, guid: ef0d8043df2b8dd48a49a6bfec3a1c68, type: 2}
+  nonEmptySlotDecision: {fileID: 11400000, guid: 3310033d294af45d2864872a07ce9869,
+    type: 2}
 --- !u!114 &6836902506588865827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17904,13 +17951,12 @@ MonoBehaviour:
   currentItem: {fileID: 0}
   firstItem: {fileID: 6701105997670167100}
   lastItem: {fileID: 0}
-  activatorAxis: Submit
   movementAction: {fileID: -4854843027902488372, guid: eeed788d9c9bd6ba4afdbd0089dd3943,
     type: 3}
   activationAction: {fileID: 8573743842673928875, guid: eeed788d9c9bd6ba4afdbd0089dd3943,
     type: 3}
   interactable: 0
-  AS: {fileID: 6701105998342618218}
+  audioSource: {fileID: 6701105998342618218}
 --- !u!114 &1543471810024946337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18009,7 +18055,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6701105998342618212}
         m_TargetAssemblyTypeName: 
-        m_MethodName: Active
+        m_MethodName: Activate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -18061,7 +18107,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6701105998342618212}
         m_TargetAssemblyTypeName: 
-        m_MethodName: Deactive
+        m_MethodName: Deactivate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -18303,8 +18349,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 36c3e4e5637c9b546a02de8517f42b3d, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -18373,12 +18419,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8b38f3d5e335164c9acfa536993e79f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotObjects:
-  - {fileID: 6701105997670167097}
-  - {fileID: 3434093970367867871}
-  - {fileID: 3434093970244980554}
-  - {fileID: 3434093969691395492}
-  - {fileID: 3434093968606741615}
+  saveSlots:
+  - {fileID: 7454089388268929258}
+  - {fileID: 1451699417480403212}
+  - {fileID: 1451699417611156889}
+  - {fileID: 1451699418131445623}
+  - {fileID: 1451699417060226748}
   slotsContent: {fileID: 6701105998342618214}
   manager: {fileID: 6701105998342618212}
   clickDecision: {fileID: 11400000, guid: 4e15adbc3c4acce47ad6da0d216d7822, type: 2}
@@ -19121,12 +19167,11 @@ MonoBehaviour:
   currentItem: {fileID: 0}
   firstItem: {fileID: 0}
   lastItem: {fileID: 0}
-  activatorAxis: 
   movementAction: {fileID: -4854843027902488372, guid: eeed788d9c9bd6ba4afdbd0089dd3943,
     type: 3}
   activationAction: {fileID: 0}
   interactable: 0
-  AS: {fileID: 6673107024168399627}
+  audioSource: {fileID: 6673107024168399627}
 --- !u!114 &345776408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20613,9 +20658,9 @@ MonoBehaviour:
   m_MinWidth: -1
   m_MinHeight: -1
   m_PreferredWidth: -1
-  m_PreferredHeight: -1
+  m_PreferredHeight: 33
   m_FlexibleWidth: -1
-  m_FlexibleHeight: 1
+  m_FlexibleHeight: -1
   m_LayoutPriority: 1
 --- !u!114 &3890051760623717783
 MonoBehaviour:
@@ -20624,7 +20669,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8096489885288731002}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
   m_Name: 
@@ -21181,13 +21226,12 @@ MonoBehaviour:
   currentItem: {fileID: 0}
   firstItem: {fileID: 1237223665468116333}
   lastItem: {fileID: 0}
-  activatorAxis: Submit
   movementAction: {fileID: -4854843027902488372, guid: eeed788d9c9bd6ba4afdbd0089dd3943,
     type: 3}
   activationAction: {fileID: 8573743842673928875, guid: eeed788d9c9bd6ba4afdbd0089dd3943,
     type: 3}
   interactable: 0
-  AS: {fileID: 8895428292626247651}
+  audioSource: {fileID: 8895428292626247651}
   autoSave: {fileID: 1237223665468116333}
   volumeController: {fileID: 11400000, guid: 08245078b9288ac40b039c1f4b6e2e22, type: 2}
   volumeMaster: {fileID: 1886794658683167909}
@@ -21335,7 +21379,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 9039613599598394341}
         m_TargetAssemblyTypeName: 
-        m_MethodName: Active
+        m_MethodName: Activate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -21387,7 +21431,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 9039613599598394341}
         m_TargetAssemblyTypeName: 
-        m_MethodName: Deactive
+        m_MethodName: Deactivate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -21631,13 +21675,12 @@ MonoBehaviour:
   currentItem: {fileID: 0}
   firstItem: {fileID: 1648008122044983943}
   lastItem: {fileID: 0}
-  activatorAxis: Submit
   movementAction: {fileID: -4854843027902488372, guid: eeed788d9c9bd6ba4afdbd0089dd3943,
     type: 3}
   activationAction: {fileID: 8573743842673928875, guid: eeed788d9c9bd6ba4afdbd0089dd3943,
     type: 3}
   interactable: 0
-  AS: {fileID: 2333530736151099189}
+  audioSource: {fileID: 2333530736151099189}
   detailPages:
   - {fileID: 3463712030243850024}
   - {fileID: 4075540089092152816}
@@ -21900,6 +21943,64 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &8653645591886320189
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9174404602669789364}
+  - component: {fileID: 27441589974258800}
+  m_Layer: 0
+  m_Name: ScrollCanvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &9174404602669789364
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8653645591886320189}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4099976600712983013}
+  m_Father: {fileID: 5774782628835674036}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0.000061035156, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!223 &27441589974258800
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8653645591886320189}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &8715712817039350790
 GameObject:
   m_ObjectHideFlags: 0
@@ -21969,7 +22070,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 36c3e4e5637c9b546a02de8517f42b3d, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -22008,7 +22109,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1c613c13d86bc9438b99528e41cf60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BCD: {fileID: 11400000, guid: 2920f29b47860814eb33760081b27b0a, type: 2}
+  buttonClickDecision: {fileID: 11400000, guid: 2920f29b47860814eb33760081b27b0a,
+    type: 2}
   item: {fileID: 4252702177416675262}
 --- !u!114 &4037057093821236280
 MonoBehaviour:
@@ -22060,8 +22162,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 104, y: 0}
-  m_SizeDelta: {x: 160, y: 0}
+  m_AnchoredPosition: {x: 100, y: 0}
+  m_SizeDelta: {x: 150, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3273154927832646466
 CanvasRenderer:
@@ -22212,13 +22314,12 @@ MonoBehaviour:
   currentItem: {fileID: 0}
   firstItem: {fileID: 78553678996139}
   lastItem: {fileID: 0}
-  activatorAxis: Cancel
   movementAction: {fileID: -4854843027902488372, guid: eeed788d9c9bd6ba4afdbd0089dd3943,
     type: 3}
   activationAction: {fileID: -4191013186812335738, guid: eeed788d9c9bd6ba4afdbd0089dd3943,
     type: 3}
   interactable: 1
-  AS: {fileID: 2466774633977726092}
+  audioSource: {fileID: 2466774633977726092}
 --- !u!82 &2466774633977726092
 AudioSource:
   m_ObjectHideFlags: 0

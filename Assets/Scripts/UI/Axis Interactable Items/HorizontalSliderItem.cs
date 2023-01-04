@@ -27,18 +27,21 @@ namespace FinalInferno.UI.AII {
         }
 
         private void Update() {
-            if (active) {
-                if (timer >= inputCooldown) {
-                    timer -= inputCooldown;
-                    // float input = UnityEngine.Input.GetAxisRaw("Horizontal");
-                    float input = movementAction.action.ReadValue<Vector2>().x;
-                    if (input != 0) {
-                        // Move o slider 10% para a direita ou para a esquerda
-                        slider.value += 0.1f * (slider.maxValue - slider.minValue) * input;
-                    }
-                }
-                timer += Time.deltaTime;
+            if (!active)
+                return;
+            if (timer >= inputCooldown) {
+                timer -= inputCooldown;
+                MoveSliderToHorizontalInput();
             }
+            timer += Time.deltaTime;
+        }
+
+        private void MoveSliderToHorizontalInput() {
+            float input = movementAction.action.ReadValue<Vector2>().x;
+            if (input == 0)
+                return;
+            float movementStep = 0.1f * (slider.maxValue - slider.minValue);
+            slider.value += movementStep * input;
         }
     }
 }

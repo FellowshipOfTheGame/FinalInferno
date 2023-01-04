@@ -72,7 +72,7 @@ namespace FinalInferno {
             return enemyLevel;
         }
 
-        private static int CalculateEnemyLevel() {
+        public static int CalculateEnemyLevel() {
             int scaledLevel = Party.Instance.ScaledLevel;
             int enemyTier = CalculateEnemyTier(scaledLevel);
             int enemyTierLevel = CalculateEnemyTierLevel(scaledLevel);

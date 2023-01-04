@@ -1,53 +1,88 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace FinalInferno.UI.SkillsMenu {
     public class SkillsContent : MonoBehaviour {
         [SerializeField] private RectTransform content;
         [SerializeField] private AnimationCurve speedCurve;
         [SerializeField] private float speedMultiplier = 25f;
+        [SerializeField] private Canvas canvas;
+        [SerializeField] private List<LayoutGroup> childLayoutGroups;
 
         private float xPosition = 0f;
         private int curIndex = 0;
         private const float skillListWidth = 360f;
         private const float skillListsSpacing = 0f;
         private bool isInPosition = false;
+        private bool disabledLayoutGroups = false;
 
         private void Awake() {
             isInPosition = false;
             curIndex = 0;
+            disabledLayoutGroups = false;
+        }
+
+        private void OnEnable() {
+            if (!disabledLayoutGroups)
+                StartCoroutine(DisableLayoutGroupsCoroutine());
+        }
+
+        private IEnumerator DisableLayoutGroupsCoroutine() {
+            disabledLayoutGroups = true;
+            yield return new WaitForEndOfFrame();
+            foreach (LayoutGroup layoutGroup in childLayoutGroups) {
+                layoutGroup.enabled = false;
+            }
         }
 
         private void Update() {
-            if (!isInPosition && Mathf.Abs(content.localPosition.x - xPosition) >= (skillListWidth * 0.02f)) {
-                isInPosition = false;
-                float distance = (xPosition - content.localPosition.x) / skillListWidth;
-                float speed = Mathf.Clamp(speedCurve.Evaluate(Mathf.Clamp(Mathf.Abs(distance), 0, 1f)), 5f, 100f) * (distance < 0 ? -speedMultiplier : speedMultiplier);
-                float previousPos = content.localPosition.x;
-                content.localPosition = new Vector3(content.localPosition.x + (speed * Time.deltaTime), content.localPosition.y);
-                if ((xPosition > previousPos && content.localPosition.x > xPosition) ||
-                    (xPosition < previousPos && content.localPosition.x < xPosition)) {
-                    SetContentToPosition(curIndex, true);
-                }
-            } else {
-                SetContentToPosition(curIndex, true);
+            bool isContentMisplaced = Mathf.Abs(content.localPosition.x - xPosition) >= (skillListWidth * 0.02f);
+            if (!isContentMisplaced) {
+                if (!isInPosition)
+                    SkipToPosition(curIndex);
+                return;
+            }
+            if (isInPosition)
+                return;
+            canvas.pixelPerfect = false;
+            canvas.overridePixelPerfect = true;
+            isInPosition = false;
+            float previousPos = content.localPosition.x;
+            UpdateContentPosition();
+            SkipIfOvershotTargetPosition(previousPos);
+        }
+
+        private void UpdateContentPosition() {
+            float distance = (xPosition - content.localPosition.x) / skillListWidth;
+            float speed = Mathf.Clamp(speedCurve.Evaluate(Mathf.Clamp(Mathf.Abs(distance), 0, 1f)), 5f, 100f);
+            speed *= distance < 0 ? -speedMultiplier : speedMultiplier;
+            content.localPosition += new Vector3(speed * Time.deltaTime, 0f);
+        }
+
+        private void SkipIfOvershotTargetPosition(float previousPos) {
+            if ((xPosition > previousPos && content.localPosition.x > xPosition) ||
+                (xPosition < previousPos && content.localPosition.x < xPosition)) {
+                SkipToPosition(curIndex);
             }
         }
 
         public void SkipToPosition(int index) {
-            isInPosition = false;
-            SetContentToPosition(index, true);
-        }
-
-        public void SetContentToPosition(int index, bool skipAnimation = false) {
+            canvas.pixelPerfect = true;
+            canvas.overridePixelPerfect = false;
             curIndex = index;
             xPosition = -index * skillListWidth - (index * skillListsSpacing);
-            if (!skipAnimation) {
-                isInPosition = false;
-            } else if (!isInPosition) {
-                isInPosition = true;
-                content.localPosition = new Vector3(xPosition, content.localPosition.y);
-            }
+            if (isInPosition)
+                return;
+            isInPosition = true;
+            content.localPosition = new Vector3(xPosition, content.localPosition.y);
+        }
+
+        public void SetContentPosition(int index) {
+            curIndex = index;
+            xPosition = -index * skillListWidth - (index * skillListsSpacing);
+            isInPosition = false;
         }
     }
-
 }

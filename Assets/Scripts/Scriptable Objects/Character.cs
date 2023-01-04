@@ -13,7 +13,7 @@ namespace FinalInferno {
         }
 
         private bool CanChangeInstanceValue(CharacterOW value) {
-            return (value == null || overworldInstance == null);
+            return value == null || overworldInstance == null;
         }
 
         public void SaveOverworldPosition() {

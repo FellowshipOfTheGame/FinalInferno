@@ -13,9 +13,13 @@ namespace FinalInferno.UI.AII {
             set {
                 counter = value;
                 if (hasActiveAII != null) {
-                    hasActiveAII.UpdateValue(counter > 0);
+                    hasActiveAII.UpdateValue(Counter > 0);
                 }
             }
+        }
+
+        void Awake() {
+            counter = 0;
         }
 
         public void ActivatedAII(AIIManager manager) {

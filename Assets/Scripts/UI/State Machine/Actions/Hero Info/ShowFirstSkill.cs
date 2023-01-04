@@ -1,4 +1,5 @@
-﻿using FinalInferno.UI.Battle.SkillMenu;
+﻿using System;
+using FinalInferno.UI.Battle.SkillMenu;
 using UnityEngine;
 
 namespace FinalInferno.UI.FSM {
@@ -7,17 +8,11 @@ namespace FinalInferno.UI.FSM {
         private SkillList skillListManager;
 
         public override void Act(StateController controller) {
-            if (skillListManager != null) {
-                Skill firstSkill = skillListManager.GetFirstSkill();
-                if (firstSkill != null) {
-                    skillListManager.UpdateSkillDescription(firstSkill);
-                    BattleSkillManager.SelectSkill(firstSkill);
-                } else {
-                    Debug.LogError($"firstSkill null in object {name} of type ShowFirstSkill");
-                }
-            } else {
-                Debug.LogError($"skillListManager null in object {name} of type ShowFirstSkill");
-            }
+            Skill firstSkill = skillListManager.GetFirstSkill();
+            if (firstSkill == null)
+                Debug.LogError($"Failed to get first skill from SkillList object {skillListManager}", skillListManager);
+            skillListManager.UpdateSkillDescription(firstSkill);
+            BattleSkillManager.SelectSkill(firstSkill);
         }
 
         public override void RequestComponent(GameObject provider) {

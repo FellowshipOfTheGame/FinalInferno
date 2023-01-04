@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
-namespace FinalInferno.UI.Battle.QueueMenu {
-    /// <summary>
-	/// Item que ativa a skill de ataque.
-	/// </summary>
+namespace FinalInferno.UI.Battle.SkillMenu {
     public class AttackItem : SkillItem {
-        [SerializeField] private UI.Battle.SkillMenu.SkillList skillListManager;
+        private const string showConsoleAnimString = "ShowConsole";
+        private const string showDetailsAnimString = "ShowSkillDetails";
+        [SerializeField] private SkillList skillListManager;
         [SerializeField] private Animator consoleAnim;
+        private BattleUnit CurrentUnit => BattleManager.instance.CurrentUnit;
 
         private new void Awake() {
             item.OnEnter += GetSkill;
@@ -14,16 +14,18 @@ namespace FinalInferno.UI.Battle.QueueMenu {
         }
 
         private void GetSkill() {
-            skill = (BattleManager.instance.CurrentUnit != null) ? BattleManager.instance.CurrentUnit.Unit.attackSkill : null;
-            if (skill != null) {
-                skillListManager.UpdateSkillDescription(skill);
-                // Mostra o console e pede preview de skill
-                if (consoleAnim) {
-                    consoleAnim.SetTrigger("ShowConsole");
-                    consoleAnim.SetTrigger("ShowSkillDetails");
-                }
-            }
+            skill = (CurrentUnit != null) ? CurrentUnit.Unit.attackSkill : null;
+            if (skill == null)
+                return;
+            skillListManager.UpdateSkillDescription(skill);
+            ShowConsoleWithSkillDetails();
+        }
+
+        private void ShowConsoleWithSkillDetails() {
+            if (!consoleAnim)
+                return;
+            consoleAnim.SetTrigger(showConsoleAnimString);
+            consoleAnim.SetTrigger(showDetailsAnimString);
         }
     }
-
 }

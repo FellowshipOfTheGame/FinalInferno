@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
+using FinalInferno.EventSystem;
 
 namespace FinalInferno {
     [CreateAssetMenu(fileName = "NewBattleDialogue", menuName = "ScriptableObject/DialogueSystem/FinalInferno/DialogueBeforeBattle")]
     public class DialogueBeforeBattle : DialogueEventTrigger {
-        [SerializeField] private Sprite battleBG;
-        [SerializeField] private AudioClip battleBGM;
-        [SerializeField] private Enemy[] battleEnemies;
-        [Header("Expected value = TriggerChangeScene")]
-        [SerializeField] private FinalInferno.UI.FSM.ButtonClickDecision decision;
+        [SerializeField] private BattleInfo battleInfo;
+        [Header("Scene Change")]
+        [SerializeField] private BoolVariable isLoadingBattle;
+        [SerializeField] private EventFI startSceneChangeAnimation;
+        [SerializeField] private BattleInfoReference battleInfoReference;
+        [SerializeField] private SceneChangeInfoReference sceneChangeInfoReference;
         [Header("Optional")]
         [SerializeField] private DialogueFI dialogueAfterBattle;
 
@@ -29,13 +31,18 @@ namespace FinalInferno {
         }
 
         private void StartBattle() {
-            FinalInferno.UI.ChangeSceneUI.isBattle = true;
-            FinalInferno.UI.ChangeSceneUI.selectedDialogue = dialogueAfterBattle;
-            FinalInferno.UI.ChangeSceneUI.isCutscene = (dialogueAfterBattle != null);
-            FinalInferno.UI.ChangeSceneUI.battleBG = battleBG;
-            FinalInferno.UI.ChangeSceneUI.battleBGM = battleBGM;
-            FinalInferno.UI.ChangeSceneUI.battleEnemies = (Enemy[])battleEnemies.Clone();
-            decision.Click();
+            isLoadingBattle.UpdateValue(true);
+            SceneChangeInfo sceneChangeInfo = CreateSceneChangeInfo();
+            sceneChangeInfoReference.SetValues(sceneChangeInfo);
+            battleInfoReference.SetValues(battleInfo);
+            startSceneChangeAnimation.Raise();
+        }
+
+        private SceneChangeInfo CreateSceneChangeInfo() {
+            SceneChangeInfo sceneChangeInfo = new SceneChangeInfo(sceneChangeInfoReference);
+            sceneChangeInfo.cutsceneDialogue = dialogueAfterBattle;
+            sceneChangeInfo.isCutscene = dialogueAfterBattle != null;
+            return sceneChangeInfo;
         }
     }
 }

@@ -3,20 +3,15 @@ using UnityEngine;
 using FinalInferno.EventSystem;
 
 namespace FinalInferno.UI.Battle.LifeMenu {
-    /// <summary>
-    /// Classe responsável por gerenciar o menu de vidas.
-    /// </summary>
     public class UnitsLives : MonoBehaviour, IEventListenerFI {
         public delegate void LifeUpdate();
         public event LifeUpdate OnUpdate;
-
-        [SerializeField] private EventFI updateLivesEvent;
-
         protected List<BattleUnit> units;
-
-        public List<UnitLife> lives;
-
+        protected List<UnitLifeImage> lives;
         public UnitType team;
+        [SerializeField] private GameObject unitLifePrefab;
+        [SerializeField] private RectTransform parentTransform;
+        [SerializeField] private EventFI updateLivesEvent;
         private bool shouldUpdate = false;
 
         private void Start() {
@@ -25,10 +20,26 @@ namespace FinalInferno.UI.Battle.LifeMenu {
         }
 
         protected void LoadTeam() {
-            for (int i = 0; i < units.Count; i++) {
-                lives[i].thisUnit = units[i];
+            DestroyExistingUnitLives();
+            lives = new List<UnitLifeImage>(units.Count);
+            foreach (BattleUnit unit in units) {
+                InstantiateNewUnitLife(unit);
             }
             UpdateLives();
+        }
+
+        private void DestroyExistingUnitLives() {
+            foreach (UnitLifeImage life in parentTransform.GetComponentsInChildren<UnitLifeImage>()) {
+                Destroy(life.gameObject);
+            }
+        }
+
+        private void InstantiateNewUnitLife(BattleUnit unit) {
+            UnitLifeImage newLife = Instantiate(unitLifePrefab, parentTransform).GetComponent<UnitLifeImage>();
+            newLife.manager = this;
+            newLife.thisUnit = unit;
+            newLife.AddUpdateToEvent();
+            lives.Add(newLife);
         }
 
         protected void UpdateLives() {

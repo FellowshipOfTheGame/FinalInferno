@@ -5,9 +5,8 @@ namespace FinalInferno.UI.FSM {
         [SerializeField] private T variable;
         [SerializeField] private U value;
         public override void Act(StateController controller) {
-            if (variable != null) {
+            if (variable)
                 variable.UpdateValue(value);
-            }
         }
     }
 }

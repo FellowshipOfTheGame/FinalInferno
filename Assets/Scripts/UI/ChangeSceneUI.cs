@@ -1,45 +1,40 @@
 ﻿using UnityEngine;
+using FinalInferno.EventSystem;
 
 namespace FinalInferno.UI {
-
-    public class ChangeSceneUI : MonoBehaviour {
+    public class ChangeSceneUI : MonoBehaviour, IVariableObserver<bool> {
         private const string IsBattleAnimString = "IsBattle";
         private Animator anim;
         private bool hasIsBattleParameter;
         [SerializeField] private LoadEnemiesPreview loadEnemiesPreview;
-        // TO DO: Usar sistema de eventos ou delegate para a transição de cena ao inves desses public static
-        public static bool isBattle = false;
-        public static Sprite battleBG;
-        public static AudioClip battleBGM;
-        public static Enemy[] battleEnemies;
-
-        public static string sceneName;
-        public static Vector2 positionOnLoad;
-        public static Vector2 savePosition;
-        public static bool isCutscene;
-        public static Fog.Dialogue.Dialogue selectedDialogue;
+        [SerializeField] BoolVariable isLoadingBattle;
+        [SerializeField] VoidEventListenerFI startSceneChangeAnimationListener;
+        [SerializeField] private BattleInfoReference battleInfo;
+        [SerializeField] private SceneChangeInfoReference sceneChangeInfo;
 
         private void Awake() {
             anim = GetComponent<Animator>();
             hasIsBattleParameter = System.Array.Find(anim.parameters, parameter => parameter.name == IsBattleAnimString) != null;
+            isLoadingBattle.UpdateValue(true);
         }
 
-        private void Update() {
-            if (hasIsBattleParameter)
-                anim.SetBool(IsBattleAnimString, isBattle);
+        private void OnEnable() {
+            startSceneChangeAnimationListener.StartListeningEvent();
+            isLoadingBattle.AddObserver(this);
+        }
+
+        private void OnDisable() {
+            isLoadingBattle.RemoveObserver(this);
+            startSceneChangeAnimationListener.StopListeningEvent();
         }
 
         private void MainMenu() {
             SceneLoader.LoadMainMenu();
         }
 
-        // Overworld callbacks
+        #region Overworld Callbacks
         private void ChangeMap() {
-            if (!isCutscene) {
-                SceneLoader.LoadOWSceneWithSetPosition(sceneName, positionOnLoad);
-            } else {
-                SceneLoader.LoadCustsceneWithSetPosition(sceneName, selectedDialogue, positionOnLoad, savePosition);
-            }
+            sceneChangeInfo.LoadSceneFromMenuOrOW();
         }
 
         public void SceneLoadCallback() {
@@ -51,22 +46,25 @@ namespace FinalInferno.UI {
         }
 
         private void StartBattle() {
-            isBattle = false;
-            SceneLoader.LoadBattleScene(new BattleInfo(battleEnemies, battleBG, battleBGM));
+            isLoadingBattle.UpdateValue(false);
+            SceneLoader.LoadBattleScene(battleInfo);
         }
+        #endregion
 
-        // Battle callbacks
+        #region Battle Callbacks
         private void ReturnCheckpoint() {
             SaveLoader.LoadGame();
         }
 
         private void Continue() {
-            if (isCutscene) {
-                SceneLoader.LoadCustsceneFromBattle(Party.Instance.currentMap, selectedDialogue);
-            } else {
-                SceneLoader.LoadOWSceneFromBattle(Party.Instance.currentMap);
-            }
+            sceneChangeInfo.LoadSceneFromBattle();
         }
+
+        public void ValueChanged(bool value) {
+            if (hasIsBattleParameter)
+                anim.SetBool(IsBattleAnimString, value);
+        }
+        #endregion
     }
 
 }

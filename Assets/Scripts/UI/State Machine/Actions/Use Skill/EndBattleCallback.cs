@@ -1,66 +1,56 @@
 ﻿using UnityEngine;
 
 namespace FinalInferno.UI.FSM {
-    /// <summary>
-    /// Ação que muda o estado de um botão.
-    /// </summary>
     [CreateAssetMenu(menuName = "BattleUI SM/Actions/End Battle Callbacks")]
     public class EndBattleCallback : Action {
-        /// <summary>
-        /// Executa uma ação.
-        /// Indica que deve esperar a animação de skill acabar.
-        /// </summary>
-        /// <param name="controller"> O controlador da máquina de estados. </param>
         public override void Act(StateController controller) {
-            // Revive todos os heroes para garantir que as funções de callback serão chamadas propriamente
-            // Reseta o maxhp das unidades, desfazendo aumentos e reduções causados por skills
+            ReviveHeroesAndRemoveLeftoverEffects();
+            CallEndBattleCallbacks();
+            long xpReward = RegisterEnemyKillsAndCalculateExp();
+            SaveHpChangesAndExpGained(xpReward);
+        }
+
+        private static void ReviveHeroesAndRemoveLeftoverEffects() {
             foreach (BattleUnit battleUnit in BattleManager.instance.battleUnits) {
-                if (battleUnit.Unit.IsHero && battleUnit.CurHP <= 0) {
+                if (battleUnit.Unit.IsHero && battleUnit.CurHP <= 0)
                     battleUnit.Revive();
-                }
                 battleUnit.ResetMaxHP();
-
-                // Remove os status effects dos inimigos
-                if (!battleUnit.Unit.IsHero) {
-                    foreach (StatusEffect effect in battleUnit.effects.ToArray()) {
-                        effect.ForceRemove();
-                    }
+                if (battleUnit.Unit.IsHero)
+                    continue;
+                foreach (StatusEffect effect in battleUnit.effects.ToArray()) {
+                    effect.ForceRemove();
                 }
             }
+        }
 
-            // Chama callback de fim de batalha para todas as unidades passando os heroes como alvos
+        private static void CallEndBattleCallbacks() {
             foreach (BattleUnit battleUnit in BattleManager.instance.battleUnits) {
-                // Debug.Log("Chamando o callback da unidade " + battleUnit.name);
-                if (battleUnit.OnEndBattle != null) {
-                    battleUnit.OnEndBattle(battleUnit, BattleManager.instance.GetTeam(UnitType.Hero, true));
-                }
+                battleUnit.OnEndBattle?.Invoke(battleUnit, BattleManager.instance.GetTeam(UnitType.Hero, true));
             }
+        }
 
-            // Calcula a exp ganhada pela party, da a recompensa e registra os inimigos mortos no bestiario
+        private static long RegisterEnemyKillsAndCalculateExp() {
             long xpReward = 0;
             int cerberusCount = 0;
             foreach (BattleUnit battleUnit in BattleManager.instance.battleUnits) {
-                if (battleUnit.Unit is Enemy) {
-                    Enemy enemy = (Enemy)battleUnit.Unit;
-                    if (enemy is CerberusHead) {
-                        cerberusCount++;
-                    }
-
-                    xpReward += enemy.BaseExp;
-                    if (cerberusCount == 0 || (cerberusCount % 3 == 1)) {
-                        Party.Instance.RegisterKill(enemy);
-                    }
-                }
+                if (!(battleUnit.Unit is Enemy))
+                    continue;
+                Enemy enemy = (Enemy)battleUnit.Unit;
+                if (enemy is CerberusHead)
+                    cerberusCount++;
+                xpReward += enemy.BaseExp;
+                if (cerberusCount != 0 && cerberusCount % 3 != 1)
+                    continue;
+                Party.Instance.RegisterKill(enemy);
             }
+            return xpReward;
+        }
 
-            // Armazena o hp atual das unidades para utilizar no inicio da proxima batalha
+        private static void SaveHpChangesAndExpGained(long xpReward) {
             foreach (Character character in Party.Instance.characters) {
                 character.hpCur = Mathf.Max(BattleManager.instance.GetBattleUnit(character.archetype).CurHP, 1);
             }
-            // A exp e distribuida depois, pois se os personagens ganharem um nivel o hp maximo muda
             Party.Instance.GiveExp(xpReward);
         }
-
     }
-
 }

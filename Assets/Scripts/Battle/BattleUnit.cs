@@ -1,15 +1,11 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using FinalInferno.EventSystem;
-using FinalInferno.UI.Battle;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace FinalInferno {
-    #region Custom Delegates/Events
     public delegate void SkillDelegate(BattleUnit user, List<BattleUnit> targets, bool shouldOverride1 = false, float value1 = 0f, bool shouldOverride2 = false, float value2 = 0f);
-    public class BattleUnitEvent : UnityEvent<BattleUnit> { }
-    #endregion
 
     [RequireComponent(typeof(Animator)), RequireComponent(typeof(SpriteRenderer)), RequireComponent(typeof(AudioSource))]
     public class BattleUnit : MonoBehaviour {
@@ -60,17 +56,26 @@ namespace FinalInferno {
         public SkillDelegate OnHeal = null;
         public SkillDelegate OnDeath = null;
         public SkillDelegate OnSkillUsed = null;
-        public BattleUnitEvent OnTurnStart { get; private set; } = new BattleUnitEvent();
-        public BattleUnitEvent OnTurnEnd { get; private set; } = new BattleUnitEvent();
+        public UnityEvent<BattleUnit> OnTurnStart { get; private set; } = new UnityEvent<BattleUnit>();
+        public UnityEvent<BattleUnit> OnTurnEnd { get; private set; } = new UnityEvent<BattleUnit>();
         public UnityEvent OnUnitSelected { get; private set; } = new UnityEvent();
         public UnityEvent OnUnitDeselected { get; private set; } = new UnityEvent();
-        public UnityEvent OnSetupFinished { get; private set; } = new UnityEvent();
         public UnityEvent OnSizeChanged { get; private set; } = new UnityEvent();
         #endregion
 
         [Header("References")]
         [SerializeField] private EventFI updateLivesEvent;
-        [SerializeField] private DamageIndicator damageIndicator;
+        private IDamageIndicator damageIndicator = null;
+        public IDamageIndicator DamageIndicator {
+            private get => damageIndicator;
+            set {
+                if (damageIndicator != null) {
+                    Debug.LogError($"Tried to set DamageIndicator twice for battle unit {name}", this);
+                    return;
+                }
+                damageIndicator = value;
+            }
+        }
         [SerializeField] private RectTransform reference;
         public RectTransform Reference => reference;
         [SerializeField] private StatusVFXHandler statusEffectHandler;
@@ -136,7 +141,7 @@ namespace FinalInferno {
             Vector2 aux = (HeadPosition - FeetPosition) / 3;
             TorsoPosition = FeetPosition + new Vector2(2 * aux.x, 2 * aux.y);
             DefaultSkillPosition = GetDefaultSkillPosition(unit);
-            damageIndicator.GetComponent<RectTransform>().anchoredPosition += new Vector2(HeadPosition.x, HeadPosition.y + 0.35f);
+            DamageIndicator.Setup();
             statusEffectHandler.transform.localPosition = new Vector3(HeadPosition.x, HeadPosition.y + 0.35f);
         }
 
@@ -246,6 +251,7 @@ namespace FinalInferno {
         public void ConfigureMorph(Unit unit, float curHPMultiplier) {
             Unit = unit;
             name = unit.name;
+            int previousHP = curHP;
             SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
             SetupUnitRelativePositions(unit, spriteRenderer);
             SaveAnimationAndSpriteInfo(unit);
@@ -258,6 +264,9 @@ namespace FinalInferno {
                     continue;
                 SaveOrUseSkillMorph(skill);
             }
+            int hpDifference = CurHP - previousHP;
+            if (hpDifference != 0)
+                DamageIndicator.ShowDamage(Mathf.Abs(hpDifference), hpDifference > 0, 1.0f);
         }
 
         private void ApplyBaseStatsMorph(Unit unit, float curHPMultiplier) {
@@ -322,14 +331,9 @@ namespace FinalInferno {
                 BattleManager.instance.Kill(this);
         }
 
-        public void ShowDamage(int value, bool isHeal, float multiplier) {
-            if (damageIndicator)
-                damageIndicator.ShowDamage(value, isHeal, multiplier);
-        }
-
         public StatusEffect AddEffect(StatusEffect statusEffect, bool ignoreCallback = false) {
             if (statusEffect.Failed) {
-                damageIndicator.ShowMiss();
+                DamageIndicator.ShowMiss();
                 return null;
             }
             if (BattleManager.instance.CurrentUnit != this)
@@ -391,7 +395,7 @@ namespace FinalInferno {
         private void ShowHealEffects(int damage) {
             if (damage > 0)
                 animator.SetTrigger(TakeDamageAnimString);
-            damageIndicator.ShowDamage(Mathf.Abs(damage), damage <= 0, 1.0f - HealResistance);
+            DamageIndicator.ShowDamage(Mathf.Abs(damage), damage <= 0, 1.0f - HealResistance);
         }
 
         private void ApplyHealAggro(BattleUnit healer, int damage) {
@@ -431,7 +435,7 @@ namespace FinalInferno {
         private void ShowDamageEffects(Element element, int damage) {
             if (damage > 0)
                 animator.SetTrigger(TakeDamageAnimString);
-            damageIndicator.ShowDamage(Mathf.Abs(damage), damage < 0, elementalResistances[element]);
+            DamageIndicator.ShowDamage(Mathf.Abs(damage), damage < 0, elementalResistances[element]);
         }
 
         private void ApplyDamageAggro(BattleUnit attacker, int damage) {

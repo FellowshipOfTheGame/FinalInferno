@@ -11,11 +11,11 @@ namespace FinalInferno.UI.AII {
         }
 
         private void EnableFirstSkillDescription() {
-            skillsManager.Active();
+            skillsManager.Activate();
         }
 
         private void DisableSkills() {
-            skillsManager.Deactive();
+            skillsManager.Deactivate();
         }
     }
 }

@@ -1,45 +1,23 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 namespace FinalInferno.UI.AII {
-    /// <summary>
-    /// Componente que representa um grupo de itens que podem ser selecionados por atalhos do teclado.
-    /// </summary>
     public class AIIManager : MonoBehaviour {
-        /// <summary>
-        /// Item atualmente ativado.
-        /// </summary>
+        [Header("References")]
         public AxisInteractableItem currentItem;
-
-        /// <summary>
-        /// Primeiro item da lista.
-        /// </summary>
         public AxisInteractableItem firstItem;
-
-        /// <summary>
-        /// Último item da lista.
-        /// </summary>
         public AxisInteractableItem lastItem;
-
-        /// <summary>
-        /// Eixo que precisa ser ativado para executar a ação do item ativado.
-        /// </summary>
-        [SerializeField] private string activatorAxis;
+        [Header("Input Actions")]
         [SerializeField] private InputActionReference movementAction;
         [SerializeField] private InputActionReference activationAction;
-
-        /// <summary>
-        /// Estado do gerenciador.
-        /// </summary>
         protected bool active;
         public bool IsActive => active;
-
         private bool enableInput = true;
-
+        [Header("Config")]
         [SerializeField] private bool interactable;
         public bool Interactable => interactable;
-
-        [SerializeField] protected AudioSource AS;
+        [SerializeField] protected AudioSource audioSource;
 
 
         public void Awake() {
@@ -51,64 +29,58 @@ namespace FinalInferno.UI.AII {
         }
 
         public void Update() {
-            if (active) {
-                // Valida e altera o item ativado se necessário.
-                // Vector2 direction = new Vector2(UnityEngine.Input.GetAxisRaw("Horizontal"), UnityEngine.Input.GetAxisRaw("Vertical"));
-                Vector2 direction = movementAction.action.ReadValue<Vector2>();
-                if (direction == Vector2.up) {
-                    if (currentItem != null && enableInput) {
-                        ChangeItem(currentItem.upItem);
-                    }
-
-                    enableInput = false;
-                } else if (direction == Vector2.down) {
-                    if (currentItem != null && enableInput) {
-                        ChangeItem(currentItem.downItem);
-                    }
-
-                    enableInput = false;
-                } else if (direction == Vector2.left) {
-                    if (currentItem != null && enableInput) {
-                        ChangeItem(currentItem.leftItem);
-                    }
-
-                    enableInput = false;
-                } else if (direction == Vector2.right) {
-                    if (currentItem != null && enableInput) {
-                        ChangeItem(currentItem.rightItem);
-                    }
-
-                    enableInput = false;
-                } else {
-                    enableInput = true;
-                }
-
-                // Executa a ação do item se o eixo for ativado.
-                if (interactable && activationAction && activationAction.action.triggered) {
-                    currentItem.Act();
-                }
-            }
+            if (!active)
+                return;
+            Vector2 direction = movementAction.action.ReadValue<Vector2>();
+            ProcessDirectionInput(direction);
+            if (interactable && activationAction && activationAction.action.triggered)
+                currentItem.Act();
         }
 
-        /// <summary>
-        /// Ativa o gerenciador e o item atual.
-        /// </summary>
-        public virtual void Active() {
+        private void ProcessDirectionInput(Vector2 direction) {
+            if (direction == Vector2.zero) {
+                enableInput = true;
+                return;
+            }
+            if (!enableInput || currentItem == null)
+                return;
+            AxisInteractableItem newItem = GetItemInDirection(direction);
+            if (newItem == null)
+                return;
+            ChangeItem(newItem);
+            enableInput = false;
+        }
+
+        private AxisInteractableItem GetItemInDirection(Vector2 direction) {
+            if (direction == Vector2.up)
+                return currentItem.upItem;
+            else if (direction == Vector2.down)
+                return currentItem.downItem;
+            else if (direction == Vector2.right)
+                return currentItem.rightItem;
+            else if (direction == Vector2.left)
+                return currentItem.leftItem;
+            return null;
+        }
+
+        public virtual void Activate() {
             active = true;
             currentItem = firstItem;
-            if (currentItem != null) {
+            if (currentItem != null)
                 currentItem.Enter();
-            }
         }
 
-        /// <summary>
-        /// Desativa o item atual e o gerenciador.
-        /// </summary>
-        public virtual void Deactive() {
-            if (currentItem != null) {
+        public virtual void Deactivate() {
+            if (currentItem != null)
                 currentItem.Exit();
-            }
             active = false;
+        }
+
+        public virtual void ToggleActive() {
+            if (IsActive)
+                Deactivate();
+            else
+                Activate();
         }
 
         public void SetFocus(bool isActive) {
@@ -120,27 +92,21 @@ namespace FinalInferno.UI.AII {
         }
 
         public void ClearItems() {
-            if (currentItem != null) {
+            if (currentItem != null)
                 currentItem.Exit();
-            }
             currentItem = null;
             firstItem = null;
             lastItem = null;
         }
 
-        /// <summary>
-        /// Muda o item atualmente ativado para o próximo.
-        /// </summary>
-        /// <param name="nextItem"> Próximo item a ser ativado, se existir. </param>
         protected void ChangeItem(AxisInteractableItem nextItem) {
-            if (currentItem != null && nextItem != null) {
-                currentItem.Exit();
-                currentItem = nextItem;
-                currentItem.Enter();
-                if (AS) {
-                    AS.Play();
-                }
-            }
+            if (currentItem == null || nextItem == null)
+                return;
+            currentItem.Exit();
+            currentItem = nextItem;
+            currentItem.Enter();
+            if (audioSource)
+                audioSource.Play();
         }
     }
 

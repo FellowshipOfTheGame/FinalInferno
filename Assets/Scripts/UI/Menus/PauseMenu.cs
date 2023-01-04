@@ -5,15 +5,14 @@ namespace FinalInferno {
         public static PauseMenu Instance { get; private set; } = null;
         public static bool IsPaused { get; private set; } = false;
 
-        [SerializeField] private FinalInferno.UI.BestiaryMenu bestiaryMenu;
+        [SerializeField] private UI.BestiaryMenu bestiaryMenu;
 
         private void Awake() {
-            if (Instance == null) {
-                Instance = this;
-            } else {
+            if (Instance != null) {
                 Destroy(this);
+                return;
             }
-
+            Instance = this;
             IsPaused = false;
         }
 
@@ -28,9 +27,8 @@ namespace FinalInferno {
         }
 
         public void OnDestroy() {
-            if (Instance == this) {
+            if (Instance == this)
                 Instance = null;
-            }
         }
     }
 }

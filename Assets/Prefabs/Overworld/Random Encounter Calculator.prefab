@@ -44,13 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerObj: {fileID: 0}
-  encounterTable: {fileID: 0}
-  table:
-    colTypes: []
-    colNames: []
-    rows: []
-  minNumberEnemies: 0
-  maxNumberEnemies: 0
+  mapEncounterList: {fileID: 0}
   encounterRate: {fileID: 11400000, guid: 375a5c323dccfcb4b80f24ffaf4ba6a4, type: 2}
   encounterIncreaseSkill: {fileID: 11400000, guid: ce0b775e8fd75a649853fbd421384006,
     type: 2}
@@ -63,4 +57,14 @@ MonoBehaviour:
   battleBG: {fileID: 0}
   battleBGM: {fileID: 0}
   overworldBGM: {fileID: 0}
+  battleInfoReference: {fileID: 11400000, guid: 14a4cfbc6efc762ac8805fc6177b6483,
+    type: 2}
+  isLoadingBattle: {fileID: 11400000, guid: 8a0e889bb05558bd9b65a2e6103fe7da, type: 2}
+  startSceneChangeAnimation: {fileID: 11400000, guid: cf69cddf33ac468b69a9cf9493b3cc10,
+    type: 2}
+  sceneChangeAnimationListener:
+    eventListened: {fileID: 0}
+    eventCallback:
+      m_PersistentCalls:
+        m_Calls: []
   decision: {fileID: 11400000, guid: 85e07579030f7964abe5a37c20e26455, type: 2}

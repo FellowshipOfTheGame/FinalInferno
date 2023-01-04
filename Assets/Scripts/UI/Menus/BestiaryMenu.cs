@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,6 +8,10 @@ using UnityEngine.UI;
 
 namespace FinalInferno.UI {
     public class BestiaryMenu : MonoBehaviour {
+        private const string resistanceColorString = "<color=#006400>";
+        private const string waknessColorString = "<color=#840000>";
+        private const string emptyString = "Empty";
+        private const string noResistancesString = "None";
         [SerializeField, Range(0f, 2f)] private float inputCooldown = 0.25f;
         [Header("Active References")]
         [SerializeField] private TextMeshProUGUI monsterName;
@@ -34,33 +39,25 @@ namespace FinalInferno.UI {
         private List<Enemy> enemies = new List<Enemy>();
         private ReadOnlyDictionary<Enemy, int> bestiary;
         private int currentIndex = 0;
+        private int elementStringMaxLength = 0;
         private bool isOpen = false;
         private bool activatedInput = false;
         private float cooldown = 0;
 
-        public void ToggleBestiary() {
-            if (isOpen) {
-                CloseBestiary();
-            } else {
-                OpenBestiary();
-            }
+        private void Awake() {
+            elementStringMaxLength = CalculateElementMaxLength();
+            CloseBestiary();
+            source = GetComponent<AudioSource>();
         }
 
-        public void OpenBestiary() {
-            bestiary = Party.Instance.Bestiary;
-            enemies.Clear();
-            foreach (Enemy enemy in bestiary.Keys) {
-                // Inimigos que não aparecem no bestiario, como o Dummy, tem essa propriedade nula
-                if (enemy.BestiaryPortrait != null) {
-                    enemies.Add(enemy);
-                    enemy.LevelEnemy();
-                }
+        private static int CalculateElementMaxLength() {
+            string[] elementNames = System.Enum.GetNames(typeof(Element));
+            int maxLength = int.MinValue;
+            foreach (string name in elementNames) {
+                if (name.Length > maxLength)
+                    maxLength = name.Length;
             }
-            Enemy firstEntry = (enemies.Count > 0) ? enemies[0] : null;
-            currentIndex = 0;
-            isOpen = true;
-            ShowEnemy(firstEntry);
-            cooldown = 0f;
+            return maxLength;
         }
 
         public void CloseBestiary() {
@@ -73,119 +70,116 @@ namespace FinalInferno.UI {
             activatedInput = false;
         }
 
-        private string GetResistanceString(Enemy enemy) {
-            string str = "";
-            string[] elementNames = System.Enum.GetNames(typeof(Element));
-            int maxLength = int.MinValue;
-            foreach (string name in elementNames) {
-                if (name.Length > maxLength) {
-                    maxLength = name.Length;
-                }
-            }
-            bool hasResistance = false;
-
-            ReadOnlyDictionary<Element, float> enemyResistances = enemy.ElementalResistances;
-            foreach (Element element in enemyResistances.Keys) {
-                if (hasResistance) {
-                    str += "\n";
-                } else {
-                    hasResistance = true;
-                }
-
-                // Escreve o nome do elemento
-                str += System.Enum.GetName(typeof(Element), element).PadRight(maxLength) + "  ";
-
-                // Escreve a resistencia do monstro a esse elemento, usando porcentagem e colorindo para indicar resistencia ou fraqueza
-                float value = (1.0f - enemyResistances[element]) * 100f;
-                if (value < 0) {
-                    str += "<color=#840000>";
-                } else {
-                    // valores iguais a zero não devem aparecer aqui, apenas negativos
-                    str += "<color=#006400>";
-                }
-                str += value.ToString("0.###").PadLeft(6) + "%</color>";
-            }
-
-            if (hasResistance) {
-                return str;
+        public void ToggleBestiary() {
+            if (!isOpen) {
+                OpenBestiary();
             } else {
-                return "None";
+                CloseBestiary();
             }
         }
 
-        private void ShowEnemy(Enemy enemy) {
-            // Se o bestiario não estiver aberto, não faz nada
-            if (!isOpen) {
-                return;
+        public void OpenBestiary() {
+            bestiary = Party.Instance.Bestiary;
+            enemies.Clear();
+            int enemiesLevel = Enemy.CalculateEnemyLevel();
+            foreach (Enemy enemy in bestiary.Keys) {
+                if (enemy.BestiaryPortrait == null)
+                    continue;
+                enemies.Add(enemy);
+                enemy.LevelEnemy(enemiesLevel);
             }
+            Enemy firstEntry = (enemies.Count > 0) ? enemies[0] : null;
+            currentIndex = 0;
+            isOpen = true;
+            ShowEnemy(firstEntry);
+            cooldown = 0f;
+        }
+
+        private void ShowEnemy(Enemy enemy) {
+            if (!isOpen)
+                return;
 
             if (enemy != null) {
                 detailsObject.SetActive(true);
-                monsterName.text = (enemy is CerberusHead) ? "Cerberus" : enemy.AssetName;
-                portrait.sprite = enemy.BestiaryPortrait;
-                bio.text = enemy.Bio;
-                rank.text = "Rank: <color=#" + ColorUtility.ToHtmlStringRGB(enemy.color) + ">" + enemy.name + "</color>";
-                damageType.sprite = Icons.instance.damageSprites[(int)enemy.DamageFocus - 1];
-                element.sprite = Icons.instance.elementSprites[(int)enemy.Element - 1];
-                HP.text = "HP: " + enemy.hpMax;
-                damage.text = "" + enemy.baseDmg;
-                speed.text = "" + enemy.baseSpeed;
-                defense.text = "" + enemy.baseDef;
-                resistance.text = "" + enemy.baseMagicDef;
-                exp.text = "Exp: " + enemy.BaseExp;
-                killCount.text = "Kills: " + bestiary[enemy];
-                elementalResistances.text = GetResistanceString(enemy);
-                if (source != null) {
-                    source.PlayOneShot(enemy.EnemyCry);
-                }
+                ShowEnemyDetails(enemy);
             } else {
-                // Essa função só é chamada com null caso o bestiario esteja vazio
                 detailsObject.SetActive(false);
-                monsterName.text = "Empty";
+                monsterName.text = emptyString;
             }
+            HideInputIndicators();
+        }
 
+        private void ShowEnemyDetails(Enemy enemy) {
+            monsterName.text = enemy.DialogueName;
+            portrait.sprite = enemy.BestiaryPortrait;
+            bio.text = enemy.Bio;
+            rank.text = $"Rank: <color=#{ColorUtility.ToHtmlStringRGB(enemy.color)}>{enemy.name}</color>";
+            damageType.sprite = Icons.instance.damageSprites[(int)enemy.DamageFocus - 1];
+            element.sprite = Icons.instance.elementSprites[(int)enemy.Element - 1];
+            HP.text = $"HP: {enemy.hpMax}";
+            damage.text = $"{enemy.baseDmg}";
+            speed.text = $"{enemy.baseSpeed}";
+            defense.text = $"{enemy.baseDef}";
+            resistance.text = $"{enemy.baseMagicDef}";
+            exp.text = $"Exp: {enemy.BaseExp}";
+            killCount.text = $"Kills: {bestiary[enemy]}";
+            elementalResistances.text = GetResistanceString(enemy);
+            if (source)
+                source.PlayOneShot(enemy.EnemyCry);
+        }
+
+        private string GetResistanceString(Enemy enemy) {
+            ReadOnlyDictionary<Element, float> enemyResistances = enemy.ElementalResistances;
+            if (enemyResistances.Count <= 0)
+                return noResistancesString;
+            StringBuilder stringBuilder = new StringBuilder(string.Empty);
+            bool hasResistance = false;
+            foreach (Element element in enemyResistances.Keys) {
+                stringBuilder.Append(hasResistance ? "\n" : string.Empty);
+                hasResistance = true;
+                stringBuilder.Append($"{System.Enum.GetName(typeof(Element), element).PadRight(elementStringMaxLength)}  ");
+                float value = (1.0f - enemyResistances[element]) * 100f;
+                stringBuilder.Append(value < 0 ? waknessColorString : resistanceColorString);
+                stringBuilder.Append($"{value,6:0.###}%</color>");
+            }
+            return stringBuilder.ToString();
+        }
+
+        private void HideInputIndicators() {
             activatedInput = false;
             rightArrow.SetActive(false);
             leftArrow.SetActive(false);
         }
 
-        private void Awake() {
-            CloseBestiary();
-            source = GetComponent<AudioSource>();
+        private void Update() {
+            if (!isOpen)
+                return;
+            if (cooldown > inputCooldown) {
+                if (!activatedInput)
+                    ShowInputIndicators();
+                ReadInputForPageFlip();
+            } else {
+                cooldown += Time.deltaTime;
+            }
         }
 
-        private void Update() {
-            if (isOpen) {
-                if (cooldown > inputCooldown) {
-                    if (!activatedInput) {
-                        activatedInput = true;
-                        if (currentIndex < enemies.Count - 1) {
-                            rightArrow.SetActive(true);
-                        } else {
-                            rightArrow.SetActive(false);
-                        }
-                        if (currentIndex > 0) {
-                            leftArrow.SetActive(true);
-                        } else {
-                            leftArrow.SetActive(false);
-                        }
-                    }
-
-                    // float input = UnityEngine.Input.GetAxis("Horizontal");
-                    float input = movementAction.action.ReadValue<Vector2>().x;
-                    if (input > 0 && currentIndex < enemies.Count - 1) {
-                        currentIndex++;
-                        ShowEnemy(enemies[currentIndex]);
-                        cooldown = 0f;
-                    } else if (input < 0 && currentIndex > 0) {
-                        currentIndex--;
-                        ShowEnemy(enemies[currentIndex]);
-                        cooldown = 0f;
-                    }
-                } else {
-                    cooldown += Time.deltaTime;
-                }
+        private void ReadInputForPageFlip() {
+            float input = movementAction.action.ReadValue<Vector2>().x;
+            if (input > 0 && currentIndex < enemies.Count - 1) {
+                currentIndex++;
+                ShowEnemy(enemies[currentIndex]);
+                cooldown = 0f;
+            } else if (input < 0 && currentIndex > 0) {
+                currentIndex--;
+                ShowEnemy(enemies[currentIndex]);
+                cooldown = 0f;
             }
+        }
+
+        private void ShowInputIndicators() {
+            activatedInput = true;
+            rightArrow.SetActive(currentIndex < enemies.Count - 1);
+            leftArrow.SetActive(currentIndex > 0);
         }
     }
 }

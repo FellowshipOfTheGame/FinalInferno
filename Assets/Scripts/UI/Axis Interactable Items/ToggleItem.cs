@@ -34,44 +34,35 @@ namespace FinalInferno.UI.AII {
         }
 
         private void Update() {
-            if (active) {
-                if (timer < inputCooldown) {
-                    timer += Time.deltaTime;
-                }
-            }
+            if (!active || timer >= inputCooldown)
+                return;
+            timer += Time.deltaTime;
         }
 
         public void Show() {
-            if (hideObject) {
+            if (hideObject)
                 hideObject.SetActive(true);
-            }
         }
 
         public void Hide() {
-            if (hideObject) {
+            if (hideObject)
                 hideObject.SetActive(false);
-            }
         }
 
         private void Toggle() {
-            if (timer < inputCooldown) {
+            if (timer < inputCooldown)
                 return;
-            }
-
             timer = 0f;
             Toggle(null);
             OnToggle?.Invoke();
         }
 
-        public void Toggle(bool? value = null) {
-
-            isOn = value ?? !isOn;
-            if (textIndicator) {
-                textIndicator.text = (isOn) ? "<color=#006400>On</color>" : "<color=#840000>Off</color>";
-            }
-            if (imageIndicator) {
+        public void Toggle(bool? forceValue = null) {
+            isOn = forceValue ?? !isOn;
+            if (textIndicator)
+                textIndicator.text = isOn ? "<color=#006400>On</color>" : "<color=#840000>Off</color>";
+            if (imageIndicator)
                 imageIndicator.enabled = isOn;
-            }
         }
     }
 }

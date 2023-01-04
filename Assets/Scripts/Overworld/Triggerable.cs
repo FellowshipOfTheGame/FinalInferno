@@ -33,8 +33,7 @@ namespace FinalInferno {
         protected abstract void TriggerAction(Agent agent);
 
         private void OnTriggerEnter2D(Collider2D col) {
-            Agent agent = col.GetComponent<Agent>();
-            if (agent != null) {
+            if (col.TryGetComponent(out Agent agent)) {
                 TriggerAction(agent);
             }
         }

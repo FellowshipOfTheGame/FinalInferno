@@ -7,9 +7,7 @@ namespace FinalInferno.UI.FSM {
         [SerializeField] private BattleQueueUI queue;
 
         public override void Act(StateController controller) {
-            if (queue != null) {
-                queue.StopPreview();
-            }
+            queue.StopPreview();
         }
 
         public override void RequestComponent(GameObject provider) {

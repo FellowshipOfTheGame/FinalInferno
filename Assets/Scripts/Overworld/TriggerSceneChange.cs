@@ -1,23 +1,36 @@
 ﻿using System.Collections.Generic;
 using Fog.Dialogue;
 using UnityEngine;
+using FinalInferno.EventSystem;
 
 namespace FinalInferno {
     public class TriggerSceneChange : Triggerable {
-        //TO DO: Usar a struct SceneWarp aqui e atualizar o script de editor para refletir isso
-        [SerializeField] private string sceneName = "Battle";
+        [SerializeField] private ScenePicker scene;
         [SerializeField] private Vector2 positionOnLoad = new Vector2(0, 0);
         [SerializeField] private Vector2 saveGamePosition = new Vector2(0, 0);
         [SerializeField] private bool isCutscene = false;
         [SerializeField] private List<DialogueEntry> dialogues = new List<DialogueEntry>();
-        [SerializeField] private FinalInferno.UI.FSM.ButtonClickDecision decision;
+        [SerializeField] SceneChangeInfoReference sceneChangeInfoReference;
+        [SerializeField] private EventFI startSceneChangeAnimation;
+        private SceneChangeInfo sceneChangeInfo;
 
-        protected override void TriggerAction(Fog.Dialogue.Agent agent) {
-            if (string.IsNullOrEmpty(sceneName)) {
+        private void Awake() {
+            SaveFixedSceneChangeParameters();
+        }
+
+        private void SaveFixedSceneChangeParameters() {
+            sceneChangeInfo = new SceneChangeInfo();
+            sceneChangeInfo.scene = new ScenePicker(scene);
+            sceneChangeInfo.destinationPosition = positionOnLoad;
+            sceneChangeInfo.savePosition = saveGamePosition;
+            sceneChangeInfo.isCutscene = isCutscene;
+        }
+
+        protected override void TriggerAction(Agent agent) {
+            if (string.IsNullOrEmpty(scene.Name))
                 return;
-            }
             CharacterOW.PartyCanMove = false;
-            Fog.Dialogue.Dialogue selectedDialogue = null;
+            Dialogue selectedDialogue = null;
             if (isCutscene) {
                 selectedDialogue = DialogueEntry.GetLastUnlockedDialogue(dialogues);
             }
@@ -25,12 +38,9 @@ namespace FinalInferno {
         }
 
         private void ChangeSceneWithDialogue(Dialogue selectedDialogue) {
-            FinalInferno.UI.ChangeSceneUI.sceneName = sceneName;
-            FinalInferno.UI.ChangeSceneUI.positionOnLoad = positionOnLoad;
-            FinalInferno.UI.ChangeSceneUI.savePosition = saveGamePosition;
-            FinalInferno.UI.ChangeSceneUI.isCutscene = isCutscene;
-            FinalInferno.UI.ChangeSceneUI.selectedDialogue = selectedDialogue;
-            decision.Click();
+            sceneChangeInfo.cutsceneDialogue = selectedDialogue;
+            sceneChangeInfoReference.SetValues(sceneChangeInfo);
+            startSceneChangeAnimation.Raise();
         }
 
         private void OnDrawGizmosSelected() {

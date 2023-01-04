@@ -5,15 +5,13 @@ namespace FinalInferno.UI {
         [SerializeField] private StringVariable textValue;
         [SerializeField] private UnityEngine.UI.Text text;
 
-        // Start is called before the first frame update
         private void Awake() {
             UpdateText();
         }
 
         public void UpdateText() {
-            if (textValue != null) {
+            if (textValue != null)
                 text.text = textValue.Value;
-            }
         }
     }
 }

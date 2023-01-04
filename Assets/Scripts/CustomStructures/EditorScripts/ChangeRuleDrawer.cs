@@ -117,7 +117,5 @@ namespace FinalInferno {
             return parameters;
         }
     }
-
 #endif
-
 }

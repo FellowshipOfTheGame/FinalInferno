@@ -4,21 +4,17 @@ namespace FinalInferno.UI.FSM {
     [CreateAssetMenu(menuName = "BattleUI SM/Decisions/Bool")]
     public class BoolDecision : Decision {
         [SerializeField] private bool isTrue;
+        [SerializeField] private BoolVariable variable = null;
 
-        /// <summary>
-        /// Verifica se a decisão ativou.
-        /// </summary>
-        /// <param name="controller"> O controlador da máquina de estados. </param>
         public override bool Decide(StateController controller) {
-            return isTrue;
+            return variable ? variable.Value : isTrue;
         }
 
-        /// <summary>
-        /// Função chamada para ativar a decisão.
-        /// </summary>
         public void UpdateValue(bool newValue) {
-            isTrue = newValue;
+            if (variable)
+                variable.UpdateValue(newValue);
+            else
+                isTrue = newValue;
         }
     }
-
 }

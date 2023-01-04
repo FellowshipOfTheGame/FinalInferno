@@ -1,31 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using FinalInferno.UI.AII;
 
 namespace FinalInferno.UI.Battle.SkillMenu {
-    /// <summary>
-    /// Classe que guarda o scriptable object do efeito referente ao item.
-    /// </summary>
-    public class EffectElement : MonoBehaviour {
-        /// <summary>
-        /// Scriptable object do efeito.
-        /// </summary>
-        public SkillEffectTuple effect { get; private set; }
-
+    public class EffectElement : AxisInteractableItem {
+        public SkillEffectTuple EffectTuple { get; private set; }
         [Header("UI elements")]
-        /// <summary>
-        /// Campo de imagem referente à imagem do efeito.
-        /// </summary>
         [SerializeField] private Image effectImage;
+        [SerializeField] private EffectListItem effectListItem;
 
-        /// <summary>
-        /// Inicializa o item de efeito.
-        /// </summary>
-        /// <param name="newEffect"> Efeito a ser inicializado. </param>
-        public void SetEffect(SkillEffectTuple newEffect) {
-            effect = newEffect;
-            effectImage.sprite = effect.effect.Icon;
+        public void Configure(SkillEffectTuple newEffect, SkillList skillList) {
+            EffectTuple = newEffect;
+            effectImage.sprite = EffectTuple.effect.Icon;
+            effectListItem.skillList = skillList;
         }
-
     }
-
 }

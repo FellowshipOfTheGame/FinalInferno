@@ -54,7 +54,7 @@ namespace FinalInferno {
         public List<Character> characters = new List<Character>();
         public List<Quest> activeQuests = new List<Quest>();
         private Dictionary<Enemy, int> bestiary = new Dictionary<Enemy, int>();
-        public ReadOnlyDictionary<Enemy, int> Bestiary => (new ReadOnlyDictionary<Enemy, int>(bestiary));
+        public ReadOnlyDictionary<Enemy, int> Bestiary => new ReadOnlyDictionary<Enemy, int>(bestiary);
 
         [SerializeField] private TextAsset partyXP;
         [SerializeField] private DynamicTable table;

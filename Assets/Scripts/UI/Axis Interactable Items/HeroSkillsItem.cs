@@ -16,44 +16,37 @@ namespace FinalInferno.UI.AII {
         private void Awake() {
             item.OnEnter += EnableFirstSkillDescription;
             item.OnEnter += UpdateSkillsContentPosition;
-            item.OnEnter += () => RegisterAsCurrent(true);
-            item.OnExit += () => RegisterAsCurrent(false);
+            item.OnEnter += () => isCurrent = true;
+            item.OnExit += () => isCurrent = false;
             item.OnExit += DisableSkills;
             item.OnAct += OnCancel;
         }
 
         public void OnCancel() {
-            if (cancelDecision != null) {
+            if (cancelDecision)
                 cancelDecision.Click();
-            }
         }
 
         public void LoseFocus() {
-            if (isCurrent) {
+            if (isCurrent)
                 skillsManager.SetFocus(false);
-            }
         }
 
         public void RegainFocus() {
-            if (isCurrent) {
+            if (isCurrent)
                 skillsManager.SetFocus(true);
-            }
-        }
-
-        private void RegisterAsCurrent(bool value) {
-            isCurrent = value;
         }
 
         private void EnableFirstSkillDescription() {
-            skillsManager.Active();
+            skillsManager.Activate();
         }
 
         private void DisableSkills() {
-            skillsManager.Deactive();
+            skillsManager.Deactivate();
         }
 
         private void UpdateSkillsContentPosition() {
-            content.SetContentToPosition(index);
+            content.SetContentPosition(index);
         }
     }
 }

@@ -2,20 +2,19 @@
 using UnityEngine;
 
 namespace FinalInferno.UI.AII {
-    public class VictorySkillListItem : MonoBehaviour {
-        [SerializeField] private AxisInteractableItem item;
+    public class VictorySkillListItem : AxisInteractableItem {
+        [Space]
         protected PlayerSkill skill;
         public SkillInfoLoader loader;
 
-        private void Awake() {
-            item.OnEnter += UpdateSkillDescription;
+        private new void Awake() {
+            base.Awake();
+            OnEnter += UpdateSkillDescription;
         }
 
         private void UpdateSkillDescription() {
-            if (skill == null) {
-                skill = GetComponent<UpdatedSkill>().thisSkill;
-            }
-
+            if (!skill)
+                skill = GetComponent<UpdatedSkill>().ThisSkill;
             loader.LoadSkillInfo(skill);
         }
     }

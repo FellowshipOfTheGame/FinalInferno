@@ -2,27 +2,27 @@
 using UnityEngine;
 
 namespace FinalInferno.UI.FSM {
-    /// <summary>
-    /// Ação que muda o estado de um botão.
-    /// </summary>
     [CreateAssetMenu(menuName = "BattleUI SM/Actions/Automatic Action End")]
     public class AutomaticActionEnd : Action {
         [SerializeField] private float delay = 0f;
-        /// <summary>
-        /// Executa uma ação.
-        /// Indica que deve esperar a animação de skill acabar.
-        /// </summary>
-        /// <param name="controller"> O controlador da máquina de estados. </param>
+        [SerializeField] private BoolVariable skillAnimationStarted;
+        [SerializeField] private BoolVariable skillAnimationEnded;
+
         public override void Act(StateController controller) {
-            AnimationEnded.StartAnimation();
+            skillAnimationStarted.UpdateValue(true);
             BattleManager.instance.StartCoroutine(EndAnimationAfterSeconds(delay));
         }
 
         private IEnumerator EndAnimationAfterSeconds(float time) {
             yield return new WaitForSeconds(time);
-            AnimationEnded.EndAnimation();
+            NotifySkillAnimationEnd();
         }
 
+        private void NotifySkillAnimationEnd() {
+            if (skillAnimationStarted.Value && !skillAnimationEnded.Value) {
+                skillAnimationStarted.UpdateValue(false);
+                skillAnimationEnded.UpdateValue(true);
+            }
+        }
     }
-
 }

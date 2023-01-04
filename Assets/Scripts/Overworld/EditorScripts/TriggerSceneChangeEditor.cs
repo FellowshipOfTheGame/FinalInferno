@@ -1,79 +1,61 @@
 #if UNITY_EDITOR
+using System;
 using UnityEditor;
 using UnityEngine;
 
 namespace FinalInferno {
     [CustomEditor(typeof(TriggerSceneChange))]
     public class TriggerSceneChangeEditor : Editor {
-        private SerializedProperty sceneName;
-        private Object sceneObj;
-        private readonly string[] foldersToSearch = { "Assets/Scenes" };
+        SerializedProperty scene;
+        SerializedProperty positionOnLoad;
+        SerializedProperty isCutscene;
+        SerializedProperty saveGamePosition;
+        SerializedProperty dialogues;
+        SerializedProperty sceneChangeInfoReference;
+        SerializedProperty startSceneChangeAnimation;
 
         public void OnEnable() {
-            sceneObj = null;
-            sceneName = serializedObject.FindProperty("sceneName");
-            bool hasSerializedSceneName = !string.IsNullOrEmpty(sceneName.stringValue);
-            if (hasSerializedSceneName) {
-                FindSerializedSceneByName();
-            }
-        }
-
-        private void FindSerializedSceneByName() {
-            string[] objectsFound = FindScenesInFolders();
-            if (FoundAtLeastOneScene(objectsFound)) {
-                sceneObj = LoadAssetWithGUID(objectsFound[0]);
-            }
-        }
-
-        private string[] FindScenesInFolders() {
-            return AssetDatabase.FindAssets($"{sceneName.stringValue} t:sceneAsset", foldersToSearch);
-        }
-
-        private static bool FoundAtLeastOneScene(string[] objectsFound) {
-            return objectsFound != null && objectsFound.Length > 0 && !string.IsNullOrEmpty(objectsFound[0]);
-        }
-
-        private static Object LoadAssetWithGUID(string objectGUID) {
-            return AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(objectGUID), typeof(Object));
+            scene = serializedObject.FindProperty("scene");
+            positionOnLoad = serializedObject.FindProperty("positionOnLoad");
+            isCutscene = serializedObject.FindProperty("isCutscene");
+            saveGamePosition = serializedObject.FindProperty("saveGamePosition");
+            dialogues = serializedObject.FindProperty("dialogues");
+            sceneChangeInfoReference = serializedObject.FindProperty("sceneChangeInfoReference");
+            startSceneChangeAnimation = serializedObject.FindProperty("startSceneChangeAnimation");
         }
 
         public override void OnInspectorGUI() {
             serializedObject.Update();
-            DrawSceneSelectionField();
+            EditorGUILayout.PropertyField(scene);
+            serializedObject.Update();
             DrawSceneChangeAndCutsceneFieldsIfNecessary();
             serializedObject.ApplyModifiedProperties();
         }
 
         private void DrawSceneChangeAndCutsceneFieldsIfNecessary() {
-            if (sceneObj != null) {
-                bool isCutscene = DrawSceneChangeFields();
-                DrawCutsceneFieldsIfNecessary(isCutscene);
-            }
+            string sceneName = scene.FindPropertyRelative("sceneName")?.stringValue;
+            if (string.IsNullOrEmpty(sceneName))
+                return;
+            DrawSceneChangeFields();
+            DrawCutsceneFieldsIfNecessary();
+            DrawObjectReferences();
         }
 
-        private void DrawSceneSelectionField() {
-            sceneObj = EditorGUILayout.ObjectField(sceneObj, typeof(SceneAsset), false);
-            sceneName.stringValue = sceneObj ? sceneObj.name : string.Empty;
-        }
-
-        private bool DrawSceneChangeFields() {
-            SerializedProperty positionOnLoad = serializedObject.FindProperty("positionOnLoad");
-            SerializedProperty isCutscene = serializedObject.FindProperty("isCutscene");
-            SerializedProperty decision = serializedObject.FindProperty("decision");
+        private void DrawSceneChangeFields() {
             EditorGUILayout.PropertyField(positionOnLoad);
             EditorGUILayout.PropertyField(isCutscene);
-            EditorGUILayout.PropertyField(decision);
-            return isCutscene.boolValue;
         }
 
-        private void DrawCutsceneFieldsIfNecessary(bool isCutscene) {
-            if (!isCutscene) {
+        private void DrawCutsceneFieldsIfNecessary() {
+            if (!isCutscene.boolValue)
                 return;
-            }
-            SerializedProperty saveGamePosition = serializedObject.FindProperty("saveGamePosition");
-            SerializedProperty dialogues = serializedObject.FindProperty("dialogues");
             EditorGUILayout.PropertyField(saveGamePosition);
             EditorGUILayout.PropertyField(dialogues, includeChildren: true);
+        }
+
+        private void DrawObjectReferences() {
+            EditorGUILayout.PropertyField(sceneChangeInfoReference);
+            EditorGUILayout.PropertyField(startSceneChangeAnimation);
         }
     }
 }
