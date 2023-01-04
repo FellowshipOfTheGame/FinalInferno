@@ -15,6 +15,8 @@ namespace FinalInferno {
         [SerializeField] private AudioClip clip = null;
         private bool isCallback = false;
         private SpriteRenderer spriteRenderer = null;
+        [SerializeField] private BoolVariable skillAnimationStarted;
+        [SerializeField] private BoolVariable skillAnimationEnded;
 
         private void Awake() {
             spriteRenderer = GetComponent<SpriteRenderer>();
@@ -74,10 +76,17 @@ namespace FinalInferno {
                     counter = 0;
                     nTargets = -1;
                     BattleSkillManager.CurrentUser.OnSkillUsed?.Invoke(BattleSkillManager.CurrentUser, BattleManager.instance.battleUnits);
-                    UI.FSM.AnimationEnded.EndAnimation();
+                    NotifySkillAnimationEnd();
                 }
             }
             EndAnimation();
+        }
+
+        private void NotifySkillAnimationEnd() {
+            if (skillAnimationStarted.Value && !skillAnimationEnded.Value) {
+                skillAnimationStarted.UpdateValue(false);
+                skillAnimationEnded.UpdateValue(true);
+            }
         }
 
         private void EndAnimation() {

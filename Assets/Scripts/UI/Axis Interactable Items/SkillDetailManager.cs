@@ -57,7 +57,7 @@ namespace FinalInferno.UI.AII {
             ShowValidArrowIndicators(index);
             if (index == currentIndex)
                 return;
-            currentScrollValues[currentIndex] = scrollbar.Value;
+            currentScrollValues[currentIndex] = scrollbar.ScrollbarValue;
             scrollRect.content = detailPages[index].GetComponent<RectTransform>();
             UpdatePagesAnchoredPosition(index);
             currentIndex = index;

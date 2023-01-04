@@ -4,7 +4,7 @@ namespace FinalInferno.UI.Battle.SkillMenu {
     public class DefenseItem : SkillItem {
         private const string showConsoleAnimString = "ShowConsole";
         private const string showDetailsAnimString = "ShowSkillDetails";
-        [SerializeField] private SkillMenu.SkillList skillListManager;
+        [SerializeField] private SkillList skillListManager;
         [SerializeField] private Animator consoleAnim;
         private BattleUnit CurrentUnit => BattleManager.instance.CurrentUnit;
 

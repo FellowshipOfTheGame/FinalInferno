@@ -10,6 +10,8 @@ namespace FinalInferno.UI {
     public class BestiaryMenu : MonoBehaviour {
         private const string resistanceColorString = "<color=#006400>";
         private const string waknessColorString = "<color=#840000>";
+        private const string emptyString = "Empty";
+        private const string noResistancesString = "None";
         [SerializeField, Range(0f, 2f)] private float inputCooldown = 0.25f;
         [Header("Active References")]
         [SerializeField] private TextMeshProUGUI monsterName;
@@ -37,13 +39,25 @@ namespace FinalInferno.UI {
         private List<Enemy> enemies = new List<Enemy>();
         private ReadOnlyDictionary<Enemy, int> bestiary;
         private int currentIndex = 0;
+        private int elementStringMaxLength = 0;
         private bool isOpen = false;
         private bool activatedInput = false;
         private float cooldown = 0;
 
         private void Awake() {
+            elementStringMaxLength = CalculateElementMaxLength();
             CloseBestiary();
             source = GetComponent<AudioSource>();
+        }
+
+        private static int CalculateElementMaxLength() {
+            string[] elementNames = System.Enum.GetNames(typeof(Element));
+            int maxLength = int.MinValue;
+            foreach (string name in elementNames) {
+                if (name.Length > maxLength)
+                    maxLength = name.Length;
+            }
+            return maxLength;
         }
 
         public void CloseBestiary() {
@@ -90,7 +104,7 @@ namespace FinalInferno.UI {
                 ShowEnemyDetails(enemy);
             } else {
                 detailsObject.SetActive(false);
-                monsterName.text = "Empty";
+                monsterName.text = emptyString;
             }
             HideInputIndicators();
         }
@@ -117,29 +131,18 @@ namespace FinalInferno.UI {
         private string GetResistanceString(Enemy enemy) {
             ReadOnlyDictionary<Element, float> enemyResistances = enemy.ElementalResistances;
             if (enemyResistances.Count <= 0)
-                return "None";
+                return noResistancesString;
             StringBuilder stringBuilder = new StringBuilder(string.Empty);
-            int elementMaxLength = CalculateElementMaxLength();
             bool hasResistance = false;
             foreach (Element element in enemyResistances.Keys) {
                 stringBuilder.Append(hasResistance ? "\n" : string.Empty);
                 hasResistance = true;
-                stringBuilder.Append($"{System.Enum.GetName(typeof(Element), element).PadRight(elementMaxLength)}  ");
+                stringBuilder.Append($"{System.Enum.GetName(typeof(Element), element).PadRight(elementStringMaxLength)}  ");
                 float value = (1.0f - enemyResistances[element]) * 100f;
                 stringBuilder.Append(value < 0 ? waknessColorString : resistanceColorString);
                 stringBuilder.Append($"{value,6:0.###}%</color>");
             }
             return stringBuilder.ToString();
-        }
-
-        private static int CalculateElementMaxLength() {
-            string[] elementNames = System.Enum.GetNames(typeof(Element));
-            int maxLength = int.MinValue;
-            foreach (string name in elementNames) {
-                if (name.Length > maxLength)
-                    maxLength = name.Length;
-            }
-            return maxLength;
         }
 
         private void HideInputIndicators() {

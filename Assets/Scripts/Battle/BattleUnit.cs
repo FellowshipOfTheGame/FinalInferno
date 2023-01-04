@@ -266,7 +266,7 @@ namespace FinalInferno {
             }
             int hpDifference = CurHP - previousHP;
             if (hpDifference != 0)
-                damageIndicator.ShowDamage(Mathf.Abs(hpDifference), hpDifference > 0, 1.0f);
+                DamageIndicator.ShowDamage(Mathf.Abs(hpDifference), hpDifference > 0, 1.0f);
         }
 
         private void ApplyBaseStatsMorph(Unit unit, float curHPMultiplier) {

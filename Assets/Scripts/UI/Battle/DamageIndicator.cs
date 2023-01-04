@@ -33,32 +33,6 @@ namespace FinalInferno.UI.Battle {
             GetComponent<RectTransform>().anchoredPosition += battleUnit.HeadPosition + new Vector2(0, yOffset);
         }
 
-        private void InstantiateNewNumber(DamageEntry entry) {
-            GameObject newObj = Instantiate(numberPrefab, transform);
-            Text txt = newObj.GetComponent<Text>();
-            ApplyTextSizeAndColor(entry, txt);
-            txt.text = $"{entry.value}";
-        }
-
-        private void ApplyTextSizeAndColor(DamageEntry entry, Text txt) {
-            if (entry.strength == DamageStrength.Strong) {
-                txt.color = entry.isHeal ? critHealColor : critDamageColor;
-                txt.fontSize = Mathf.CeilToInt(txt.fontSize * critFontSize);
-            } else if (entry.strength == DamageStrength.Weak) {
-                txt.color = entry.isHeal ? weakHealColor : weakDamageColor;
-                txt.fontSize = Mathf.CeilToInt(txt.fontSize * weakFontSize);
-            } else {
-                txt.color = entry.isHeal ? healColor : damageColor;
-            }
-        }
-
-        private void InstantiateMissWord() {
-            GameObject newObj = Instantiate(numberPrefab, transform);
-            Text txt = newObj.GetComponent<Text>();
-            txt.color = Color.white;
-            txt.text = missString;
-        }
-
         public void ShowDamage(int value, bool isHeal, float multiplier) {
             DamageStrength strength = GetDamageStrength(multiplier);
             queue.Enqueue(new DamageEntry(value, isHeal, strength));
@@ -96,6 +70,32 @@ namespace FinalInferno.UI.Battle {
             } else {
                 InstantiateMissWord();
             }
+        }
+
+        private void InstantiateNewNumber(DamageEntry entry) {
+            GameObject newObj = Instantiate(numberPrefab, transform);
+            Text txt = newObj.GetComponent<Text>();
+            ApplyTextSizeAndColor(entry, txt);
+            txt.text = $"{entry.value}";
+        }
+
+        private void ApplyTextSizeAndColor(DamageEntry entry, Text txt) {
+            if (entry.strength == DamageStrength.Strong) {
+                txt.color = entry.isHeal ? critHealColor : critDamageColor;
+                txt.fontSize = Mathf.CeilToInt(txt.fontSize * critFontSize);
+            } else if (entry.strength == DamageStrength.Weak) {
+                txt.color = entry.isHeal ? weakHealColor : weakDamageColor;
+                txt.fontSize = Mathf.CeilToInt(txt.fontSize * weakFontSize);
+            } else {
+                txt.color = entry.isHeal ? healColor : damageColor;
+            }
+        }
+
+        private void InstantiateMissWord() {
+            GameObject newObj = Instantiate(numberPrefab, transform);
+            Text txt = newObj.GetComponent<Text>();
+            txt.color = Color.white;
+            txt.text = missString;
         }
     }
 }
