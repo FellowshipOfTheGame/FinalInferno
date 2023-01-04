@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 namespace FinalInferno {
@@ -124,6 +123,17 @@ namespace FinalInferno {
             typeName ??= typeof(T).Name.ToLower();
             AssetManagerBundle<T> bundle = Instance.GetBundle<T>(typeName);
             return bundle?.GetAsset(name);
+        }
+
+        public static T[] LoadAllAssets<T>(string typeName = null) where T : ScriptableObject, IDatabaseItem {
+            if (Instance == null) {
+                Debug.LogError("Database has not been loaded");
+                return default;
+            }
+
+            typeName ??= typeof(T).Name.ToLower();
+            AssetManagerBundle<T> bundle = Instance.GetBundle<T>(typeName);
+            return bundle?.GetAllAssets();
         }
     }
 }

@@ -2,14 +2,26 @@
 using UnityEngine;
 
 namespace FinalInferno {
-    [CreateAssetMenu(fileName = "NewQuest", menuName = "ScriptableObject/Quest")]
-    public class Quest : ScriptableObject, IDatabaseItem {
-        private const string defaultKeyString = "Default";
-        [SerializeField] private bool active;
-        [SerializeField] private bool repeatable = false;
-        [SerializeField] private int expReward = 0;
+    public abstract class Quest : ScriptableObject, IDatabaseItem {
+        public const string IsActiveFlagString = "IsQuestActive";
+        [SerializeField] protected string serializedID;
+        public string SerializedID => serializedID;
+        [SerializeField] protected bool active;
+        public bool IsActive => active;
+        public bool IsComplete {
+            get {
+                if (!IsActive)
+                    return false;
+                foreach (bool flag in events.Values) {
+                    if (!flag)
+                        return false;
+                }
+                return true;
+            }
+        }
+        [SerializeField] protected int expReward = 0;
         // O número máximo de eventos permitidos é 62 por medida de segurança
-        [SerializeField] private QuestDictionary events;
+        [SerializeField] protected QuestDictionary events = new QuestDictionary();
 
         public void LoadTables() {
             ResetQuest();
@@ -19,12 +31,25 @@ namespace FinalInferno {
             ResetQuest();
         }
 
-        public string[] FlagNames {
-            get {
-                string[] keys = new string[events.Keys.Count];
-                events.Keys.CopyTo(keys, 0);
-                return keys;
-            }
+        public static bool IsConditionSatisfied(Quest quest, string eventFlag) {
+            if (!quest)
+                return true;
+            if (eventFlag == IsActiveFlagString)
+                return quest.IsActive;
+            return quest.GetFlag(eventFlag);
+        }
+
+        public string[] GetSerializableFlagNames() {
+            string[] keys = new string[events.Keys.Count];
+            events.Keys.CopyTo(keys, 0);
+            return keys;
+        }
+
+        public string[] GetAllFlagNames() {
+            string[] keys = new string[events.Keys.Count + 1];
+            keys[0] = IsActiveFlagString;
+            events.Keys.CopyTo(keys, 1);
+            return keys;
         }
 
         public int EventCount => events.Count;
@@ -34,50 +59,35 @@ namespace FinalInferno {
         }
 
         public void SetFlag(string eventName, bool value) {
-            if (active && events.ContainsKey(eventName))
+            if (IsActive && events.ContainsKey(eventName))
                 events[eventName] = value;
         }
 
-        public void ResetQuest() {
+        public virtual void ResetQuest() {
+            ResetFlags();
+        }
+
+        protected void ResetFlags() {
             List<string> keyList = new List<string>(events.Keys);
             foreach (string key in keyList) {
-                events[key] = (key == defaultKeyString);
+                events[key] = false;
             }
             active = false;
         }
 
         public virtual void StartQuest() {
-            ResetQuest();
+            ResetFlags();
             expReward = Mathf.Max(expReward, 0);
-            Party.Instance.activeQuests.Remove(this);
-            Party.Instance.activeQuests.Add(this);
             active = true;
         }
 
-        public virtual void TryStartQuest() {
-            if (!active) {
-                StartQuest();
-            } else {
-                Debug.LogWarning("Quest has already begun", this);
-            }
-        }
-
         public virtual void CompleteQuest() {
-            if (!active)
+            if (!IsActive || IsComplete)
                 return;
             foreach (string key in events.Keys) {
                 events[key] = true;
             }
-            active = false;
             Party.Instance.GiveExp(expReward);
-            ResetQuestIfRepeatable();
-        }
-
-        private void ResetQuestIfRepeatable() {
-            if (!repeatable)
-                return;
-            Party.Instance.activeQuests.Remove(this);
-            ResetQuest();
         }
     }
 }

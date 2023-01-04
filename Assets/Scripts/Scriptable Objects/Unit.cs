@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
-#if UNITY_EDITOR
-#endif
 
 namespace FinalInferno {
     public abstract class Unit : Fog.Dialogue.DialogueEntity {

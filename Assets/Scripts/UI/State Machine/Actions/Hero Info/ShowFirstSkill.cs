@@ -1,5 +1,4 @@
-﻿using System;
-using FinalInferno.UI.Battle.SkillMenu;
+﻿using FinalInferno.UI.Battle.SkillMenu;
 using UnityEngine;
 
 namespace FinalInferno.UI.FSM {

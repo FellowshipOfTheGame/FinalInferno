@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using FinalInferno.CustomExtensions;
 using UnityEngine;
 
@@ -85,19 +84,7 @@ namespace FinalInferno {
         }
 
         private void SaveQuestsInfo() {
-            List<Quest> questList = new List<Quest>(Party.Instance.activeQuests.ToArray());
-            saves[Slot].quest = new QuestInfo[questList.Count];
-            for (int i = 0; i < questList.Count; i++) {
-                Quest quest = questList[i];
-                QuestInfo qinfo = new QuestInfo();
-
-                qinfo.name = quest.name;
-                qinfo.flagsNames = quest.FlagNames;
-                System.Array.Sort(qinfo.flagsNames);
-                qinfo.SetQuestFlags(quest);
-
-                saves[Slot].quest[i] = qinfo;
-            }
+            saves[Slot].quest = Party.Instance.GetActiveQuestInfo();
         }
 
         private void SaveBestiaryInfo() {
@@ -118,26 +105,57 @@ namespace FinalInferno {
         }
 
         public void Load() {
-            // Verifica se há alguma incompatibilidade entre a versão do jogo do save armazenado e versão atual
-            ApplyVersionUpdates();
             LoadPartyInfo();
             LoadQuestsInfo();
             LoadBestiaryInfo();
             LoadSettings();
         }
 
-        private void ApplyVersionUpdates() {
-            if (!IsSlotEmpty(Slot) && saves[Slot].version != null && saves[Slot].version != "") {
-                if (Application.version.IsNewerVersionThan("1.6.6") && saves[Slot].version.IsOlderVersionThan("1.6.7")) {
-                    Debug.Log($"Setting autosave to True, previous value was {saves[Slot].autoSave}");
-                    saves[Slot].autoSave = true;
-                }
+        public bool HasNewerSaveSlot() {
+            for (int index = 0; index < nSaveSlots; index++) {
+                if (IsSlotEmpty(index) || !SlotHasVersionString(index))
+                    continue;
+                if (Application.version.IsOlderVersionThan(saves[index].version))
+                    return true;
             }
+            return false;
         }
 
         public bool IsSlotEmpty(int slot) {
             // Qualquer jogo salvo tera exp, pois no minimo a exp da primeira batalha foi dada
             return saves[slot].xpParty <= 0;
+        }
+
+        private bool SlotHasVersionString(int index) {
+            return !string.IsNullOrEmpty(saves[index].version);
+        }
+
+        public bool HasOlderSaveSlot() {
+            for (int index = 0; index < nSaveSlots; index++) {
+                if (IsSlotEmpty(index))
+                    continue;
+                if (!SlotHasVersionString(index) || Application.version.IsNewerVersionThan(saves[index].version))
+                    return true;
+            }
+            return false;
+        }
+
+        public void ApplyVersionUpdates() {
+            for (int index = 0; index < nSaveSlots; index++) {
+                if (IsSlotEmpty(index))
+                    continue;
+                UpdateAutoSaveSettings167(index);
+                saves[index].version = Application.version;
+            }
+        }
+
+        private void UpdateAutoSaveSettings167(int index) {
+            if (!SlotHasVersionString(index))
+                return;
+            if (Application.version.IsNewerVersionThan("1.6.6") && saves[index].version.IsOlderVersionThan("1.6.7")) {
+                Debug.Log($"Setting autosave to True, previous value was {saves[index].autoSave}");
+                saves[index].autoSave = true;
+            }
         }
 
         private void LoadPartyInfo() {
@@ -180,16 +198,7 @@ namespace FinalInferno {
         }
 
         private void LoadQuestsInfo() {
-            Party.Instance.activeQuests.Clear();
-            foreach (QuestInfo questInfo in saves[Slot].quest) {
-                Quest quest = AssetManager.LoadAsset<Quest>(questInfo.name);
-                quest.StartQuest();
-                ulong bitValue = 1;
-                for (int i = 0; i < quest.EventCount; i++) {
-                    quest.SetFlag(questInfo.flagsNames[i], (questInfo.flagsTrue & bitValue) != 0);
-                    bitValue = bitValue << 1;
-                }
-            }
+            Party.Instance.LoadQuestProgress(saves[Slot].quest);
         }
 
         private void LoadBestiaryInfo() {

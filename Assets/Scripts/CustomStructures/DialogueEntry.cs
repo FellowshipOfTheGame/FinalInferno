@@ -6,7 +6,7 @@ namespace FinalInferno {
         public Quest quest;
         public string eventFlag;
         public Fog.Dialogue.Dialogue dialogue;
-        public bool IsConditionSatisfied => quest && quest.GetFlag(eventFlag);
+        public bool IsConditionSatisfied => Quest.IsConditionSatisfied(quest, eventFlag);
         public DialogueEntry(Quest _quest, string _eventFlag, Fog.Dialogue.Dialogue _dialogue) {
             quest = _quest;
             eventFlag = _eventFlag;

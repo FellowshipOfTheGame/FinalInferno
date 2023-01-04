@@ -2,18 +2,19 @@
 
 namespace FinalInferno {
     public static class SaveLoader {
+        private const string dateTimeFormat = "yyyy/MM/dd HH:mm:ss";
         private const string fileName = "SaveFile";
-        private const string demoQuestAssetName = "AdventurerQuest";
-        private const string demoSceneName = "Demo";
         private const string autosavePlayerPrefKey = "autosave";
+        private const string trueString = "true";
+        private const string falseString = "false";
         private static DataSaver<SaveFile> dataSaver = new DataSaver<SaveFile>(fileName, true);
-        private static SaveFile saveFile = dataSaver.LoadData();
+        private static SaveFile saveFile = InitSaveFile();
         public static int SaveSlot { get => saveFile.Slot; set => saveFile.Slot = value; }
         public static bool AutoSave {
-            get => saveFile != null && PlayerPrefs.GetString(autosavePlayerPrefKey, "true") == "true";
+            get => saveFile != null && PlayerPrefs.GetString(autosavePlayerPrefKey, trueString) == trueString;
             set {
                 if (saveFile != null) {
-                    PlayerPrefs.SetString(autosavePlayerPrefKey, (value ? "true" : "false"));
+                    PlayerPrefs.SetString(autosavePlayerPrefKey, (value ? trueString : falseString));
                 }
             }
         }
@@ -27,6 +28,19 @@ namespace FinalInferno {
                 }
                 return (charCount == Party.Capacity);
             }
+        }
+
+        private static SaveFile InitSaveFile() {
+            SaveFile loadedData = dataSaver.LoadData();
+            if (loadedData.HasNewerSaveSlot()) {
+                string backupSuffix = $"-{Application.version}({System.DateTime.Now.ToString(dateTimeFormat)})";
+                dataSaver.CreateBackup(backupSuffix);
+                loadedData = dataSaver.LoadData();
+            } else if (loadedData.HasOlderSaveSlot()) {
+                loadedData.ApplyVersionUpdates();
+                dataSaver.SaveData(loadedData);
+            }
+            return loadedData;
         }
 
         public static SavePreviewInfo[] PreviewAllSlots() {
@@ -61,18 +75,13 @@ namespace FinalInferno {
 
         public static void NewGame() {
             ResetGame();
-            Quest mainQuest = AssetManager.LoadAsset<Quest>(Party.mainQuestAssetName);
-            mainQuest.StartQuest();
             SceneLoader.LoadCustsceneFromMenu(StaticReferences.FirstScene, StaticReferences.FirstDialogue);
         }
 
         public static void StartDemo() {
             ResetGame();
-            Quest mainQuest = AssetManager.LoadAsset<Quest>(demoQuestAssetName);
-            mainQuest.StartQuest();
-            mainQuest = AssetManager.LoadAsset<Quest>(Party.mainQuestAssetName);
-            mainQuest.StartQuest();
-            SceneLoader.LoadOWSceneWithDefaultPositions(demoSceneName);
+            Party.Instance.StartQuest(StaticReferences.DemoQuest);
+            SceneLoader.LoadOWSceneWithDefaultPositions(StaticReferences.DemoScene);
         }
 
         public static void ResetGame() {

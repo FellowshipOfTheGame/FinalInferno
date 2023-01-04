@@ -4,6 +4,7 @@ using UnityEngine;
 namespace FinalInferno {
 #if UNITY_EDITOR
     public class QuestEventField {
+        private const string defaultMessage = "No quest selected, condition check defaults to True";
         private SerializedProperty quest, eventFlag;
         private int questFlagIndex;
         private Rect questRect;
@@ -12,10 +13,7 @@ namespace FinalInferno {
         public Rect EventRect => eventRect;
 
         public float GetFieldHeight(SerializedProperty property) {
-            SerializedProperty _quest = property.FindPropertyRelative("quest");
-            bool hasQuest = _quest?.objectReferenceValue != null;
-            int nLines = hasQuest ? 2 : 1;
-            return (nLines * EditorGUIUtility.singleLineHeight);
+            return 2 * EditorGUIUtility.singleLineHeight;
         }
 
         public void FindSerializedStructProperties(SerializedProperty property) {
@@ -25,7 +23,7 @@ namespace FinalInferno {
 
         public void DrawQuestEventField(Rect position) {
             DrawQuestField(position);
-            DrawEventFlagFieldIfNecessary();
+            DrawEventFlagFieldOrDefaultWarning();
         }
 
         private void DrawQuestField(Rect position) {
@@ -34,22 +32,27 @@ namespace FinalInferno {
             EditorGUI.PropertyField(questRect, quest);
         }
 
-        private void DrawEventFlagFieldIfNecessary() {
-            eventRect = (quest.objectReferenceValue == null) ? questRect : EditorUtils.NewRectBelow(questRect);
+        private void DrawEventFlagFieldOrDefaultWarning() {
+            eventRect = EditorUtils.NewRectBelow(questRect);
             if (quest.objectReferenceValue != null) {
                 DrawEventFlagField();
             } else {
                 eventFlag.stringValue = "";
+                DrawDefaultValueMessage();
             }
         }
 
         private void DrawEventFlagField() {
             Quest _quest = quest.objectReferenceValue as Quest;
-            string[] keys = _quest.FlagNames;
+            string[] keys = _quest.GetAllFlagNames();
             int indexOfSerializedFlag = System.Array.IndexOf(keys, eventFlag.stringValue);
             questFlagIndex = Mathf.Clamp(indexOfSerializedFlag, 0, Mathf.Max(keys.Length - 1, 0));
             questFlagIndex = EditorGUI.Popup(eventRect, "Event", questFlagIndex, keys);
             eventFlag.stringValue = (keys.Length > 0) ? keys[questFlagIndex] : "";
+        }
+
+        private void DrawDefaultValueMessage() {
+            EditorGUI.LabelField(eventRect, new GUIContent(defaultMessage, defaultMessage));
         }
     }
 #endif

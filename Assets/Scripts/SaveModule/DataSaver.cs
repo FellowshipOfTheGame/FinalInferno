@@ -68,6 +68,44 @@ public class DataSaver<T> where T : new() {
 
     }
 
+    public void CreateBackup(string filenameSuffix, int index = -1) {
+        filenameSuffix = ReplaceInvalidFilenameCharacters(filenameSuffix, '-');
+        string localFilePath = fileName;
+
+        if (saveHistory) {
+            if (numberOfSaves == 0) {
+                return;
+            }
+            if (index == -1) {
+                localFilePath = (numberOfSaves - 1) + localFilePath;
+            } else if (index >= 0) {
+                localFilePath = index + localFilePath;
+            } else {
+                throw new System.ArgumentOutOfRangeException("Index cant be negative");
+            }
+        }
+        localFilePath = System.IO.Path.Combine(prePath, localFilePath);
+        if (File.Exists(localFilePath)) {
+            File.Copy(localFilePath, $"{localFilePath}{filenameSuffix}");
+            File.Delete(localFilePath);
+            Debug.LogWarning($"Save file backup created at location: \"{localFilePath}{filenameSuffix}\"");
+        } else {
+            Debug.LogWarning($"Save file doesn't exist: \"{fileName}\"");
+        }
+    }
+
+    private static string ReplaceInvalidFilenameCharacters(string filename, char replaceChar) {
+        HashSet<char> invalidChars = new HashSet<char>(Path.GetInvalidFileNameChars()) {
+            Path.DirectorySeparatorChar,
+            Path.AltDirectorySeparatorChar,
+        };
+        StringBuilder stringBuilder = new StringBuilder(filename);
+        foreach (char invalidChar in invalidChars) {
+            stringBuilder.Replace(invalidChar, replaceChar);
+        }
+        return stringBuilder.ToString();
+    }
+
     // Overwrite the current file save with the contents of data argument
     public void SaveData(T data, int index = -1) {
         string jsonString = JsonUtility.ToJson(data);
