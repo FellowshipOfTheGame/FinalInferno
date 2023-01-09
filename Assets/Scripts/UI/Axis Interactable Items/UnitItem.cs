@@ -11,7 +11,6 @@ namespace FinalInferno.UI.AII {
         [SerializeField] private LayoutElement layout;
         private RectTransform rectTransform;
         [SerializeField] private float stepSize = 0.5f;
-        private bool showingTarget = false;
         private int ppu;
         private VoidEventListenerFI setupFinishedEventListener = null;
 
@@ -20,7 +19,7 @@ namespace FinalInferno.UI.AII {
             item.OnAct += SetTarget;
         }
 
-        private void Destroy() {
+        private void OnDestroy() {
             setupFinishedEventListener?.StopListeningEvent();
         }
 
@@ -81,18 +80,8 @@ namespace FinalInferno.UI.AII {
         }
 
         private void SetUnitSelectionCallbacks() {
-            BattleUnit.OnUnitSelected.AddListener(ShowThisAsATarget);
-            BattleUnit.OnUnitDeselected.AddListener(StopShowingThisAsATarget);
-        }
-
-        public void ShowThisAsATarget() {
-            item.EnableReference();
-            showingTarget = true;
-        }
-
-        public void StopShowingThisAsATarget() {
-            item.DisableReference();
-            showingTarget = false;
+            BattleUnit.OnUnitSelected.AddListener(item.EnableReference);
+            BattleUnit.OnUnitDeselected.AddListener(item.DisableReference);
         }
 
         private void SetUnitPosition() {
@@ -127,14 +116,6 @@ namespace FinalInferno.UI.AII {
                 UnitItem otherItem = BattleUnitsUI.Instance.GetUnitItem(unit);
                 BattleUnit.OnTurnStart.AddListener(_ => otherItem.StepForward(unit));
                 BattleUnit.OnTurnEnd.AddListener(_ => otherItem.StepBack(unit));
-            }
-        }
-
-        public void ToggleShowTarget() {
-            if (showingTarget) {
-                StopShowingThisAsATarget();
-            } else {
-                ShowThisAsATarget();
             }
         }
     }

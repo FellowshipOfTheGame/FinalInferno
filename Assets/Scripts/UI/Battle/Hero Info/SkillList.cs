@@ -112,7 +112,7 @@ namespace FinalInferno.UI.Battle.SkillMenu {
         }
 
         private void ClearExistingEffectElements() {
-            foreach (EffectElement element in skillsContent.GetComponentsInChildren<EffectElement>()) {
+            foreach (EffectElement element in effectsContent.GetComponentsInChildren<EffectElement>()) {
                 Destroy(element.gameObject);
             }
         }

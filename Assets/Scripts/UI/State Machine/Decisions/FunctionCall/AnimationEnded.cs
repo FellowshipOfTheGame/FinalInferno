@@ -3,23 +3,11 @@
 namespace FinalInferno.UI.FSM {
     [CreateAssetMenu(menuName = "BattleUI SM/Decisions/Animation Ended")]
     public class AnimationEnded : Decision {
-        private static bool animationEnded = false;
-        private static bool isWaiting = false;
-
-        public static void StartAnimation() {
-            isWaiting = true;
-        }
-
-        public static void EndAnimation() {
-            if (!isWaiting || animationEnded)
-                return;
-            animationEnded = true;
-            isWaiting = false;
-        }
+        [SerializeField] private BoolVariable skillAnimationEnded;
 
         public override bool Decide(StateController controller) {
-            if (animationEnded) {
-                animationEnded = false;
+            if (skillAnimationEnded.Value) {
+                skillAnimationEnded.UpdateValue(false);
                 return true;
             }
             return false;

@@ -30,11 +30,11 @@ namespace FinalInferno.UI.SkillsMenu {
         }
 
         private IEnumerator DisableLayoutGroupsCoroutine() {
+            disabledLayoutGroups = true;
             yield return new WaitForEndOfFrame();
             foreach (LayoutGroup layoutGroup in childLayoutGroups) {
                 layoutGroup.enabled = false;
             }
-            disabledLayoutGroups = true;
         }
 
         private void Update() {
