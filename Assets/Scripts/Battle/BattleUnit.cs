@@ -318,6 +318,8 @@ namespace FinalInferno {
         public void UpdateStatusEffects() {
             bool deadUnit = CurHP <= 0;
             foreach (StatusEffect effect in effects.ToArray()) {
+                if (!deadUnit && CurHP <= 0)
+                    continue;
                 effect.Update();
                 if (!effect.Removed)
                     statusEffectHandler.UpdateEffect(effect);
