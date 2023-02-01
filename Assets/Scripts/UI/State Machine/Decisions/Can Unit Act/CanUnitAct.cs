@@ -6,7 +6,7 @@ namespace FinalInferno.UI.FSM {
         [SerializeField] private bool canAct;
 
         public override bool Decide(StateController controller) {
-            return canAct == BattleManager.instance.CurrentUnit.CanAct;
+            return canAct == (BattleManager.instance.CurrentUnit != null && BattleManager.instance.CurrentUnit.CanAct);
         }
     }
 }
