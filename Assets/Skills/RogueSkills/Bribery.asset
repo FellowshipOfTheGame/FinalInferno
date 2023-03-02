@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Bribery
   m_EditorClassIdentifier: 
   name: Bribery
-  level: 0
+  level: 1
+  probability: 0
   cost: 12
   active: 1
   shortDescription: Decreases max health of an ally so Herman can become almost untargetable.
@@ -23,7 +24,7 @@ MonoBehaviour:
   callbackDelay: 0
   effects:
   - effect: {fileID: 11400000, guid: df7549738b3905a4eb5bdca25036e03a, type: 2}
-    value1: 0.245
+    value1: 0.25
     value2: 1
   - effect: {fileID: 11400000, guid: 07d604dc96abaad4683bacf9782a3d53, type: 2}
     value1: 100
@@ -31,7 +32,7 @@ MonoBehaviour:
   visualEffect: {fileID: 8917310150857617220, guid: abd8053876238744fbeb64cff6c10c6e,
     type: 3}
   xp: 0
-  xpNext: 0
+  xpNext: 333
   description: Offers a fraction of an ally's health to the enemies in order to be
     virtually untargetable for a brief time. Drawing too much aggro may cancel the
     effect.

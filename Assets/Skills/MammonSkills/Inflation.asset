@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Inflation
   m_EditorClassIdentifier: 
   name: Inflation
-  level: 0
+  level: 1
+  probability: 0
   cost: 0
   active: 1
   shortDescription: 
@@ -23,13 +24,27 @@ MonoBehaviour:
   callbackDelay: 0
   effects:
   - effect: {fileID: 11400000, guid: 3f19701bd23be55498240876074e1420, type: 2}
-    value1: 0.01
+    value1: 0.1
     value2: -1
   visualEffect: {fileID: 5434996350183651868, guid: 4c6fc6c7981053447a73e9befab53aea,
     type: 3}
   description: 
   skillTable: {fileID: 4900000, guid: e921b8fd864ac594ea263eefa2a29f5d, type: 3}
   table:
-    colTypes: []
-    colNames: []
-    rows: []
+    colTypes:
+    - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    colNames:
+    - Level
+    - SkillEffect0Value0
+    - SkillEffect0Value1
+    rows:
+    - elements:
+      - 1
+      - 0.1
+      - -1
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089

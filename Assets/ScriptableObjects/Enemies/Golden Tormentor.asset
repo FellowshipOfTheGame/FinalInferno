@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1494de32c58656842bde15226b17b8ca, type: 3}
   m_Name: Golden Tormentor
   m_EditorClassIdentifier: 
-  name: Golden Tormentor
-  level: 5
-  hpMax: 53
-  baseDmg: 38
-  baseDef: 10
-  baseMagicDef: 12
-  baseSpeed: 24
+  name: Noob Golden Tormentor
+  level: 1
+  hpMax: 34
+  baseDmg: 19
+  baseDef: 6
+  baseMagicDef: 6
+  baseSpeed: 10
   elementalResistances:
     reorderableList:
       canAdd: 1
@@ -42,9 +42,11 @@ MonoBehaviour:
       elementIcon: {fileID: 0}
     reqReferences: {fileID: 0}
     isExpanded: 0
-    _keyValues: 
-    _keys: 
-    _values: []
+    _keyValues: 0100000002000000
+    _keys: 0100000002000000
+    _values:
+    - 0.5
+    - 1.5
   skills:
   - {fileID: 11400000, guid: 50d29aa76f7ee9a91b40d49631441a91, type: 2}
   attackSkill: {fileID: 11400000, guid: 95407fd86bf202049848deeb79956196, type: 2}
@@ -69,7 +71,7 @@ MonoBehaviour:
     type: 3}
   enemyCry: {fileID: 8300000, guid: 24c1a2410b1154844a312d23598a28c1, type: 3}
   bio: Eat you up and spit you out. Baller.
-  enemyTable: {fileID: 4900000, guid: fad97e4bea2fabc4192746002a560182, type: 3}
+  enemyTable: {fileID: 4900000, guid: 638d2ca67baaa5b448220ac051f291b7, type: 3}
   table:
     colTypes:
     - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -86,7 +88,6 @@ MonoBehaviour:
     - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-    - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -106,27 +107,25 @@ MonoBehaviour:
     - NeutralResistance
     - XP
     - LevelSkill0
-    - LevelSkill1
-    - ChancetoUseSkill
+    - ChanceToUseSkill0
     rows:
     - elements:
-      - Noob Wanderer
+      - Noob Golden Tormentor
       - 1
       - 34
-      - 25
-      - 4
-      - 5
-      - 13
+      - 19
+      - 6
+      - 6
+      - 10
       - '#FFFFFF'
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 220
-      - 0
-      - 0
-      - 0
+      - 0.5
+      - 1.5
+      - 1
+      - 1
+      - 1
+      - 260
+      - 1
+      - 0.3
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -144,26 +143,24 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - elements:
-      - Wanderer
+      - Golden Tormentor
       - 5
-      - 53
-      - 38
-      - 10
-      - 12
-      - 24
+      - 54
+      - 31
+      - 13
+      - 13
+      - 20
       - '#FF9EC0'
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 830
-      - 0
-      - 0
-      - 0
+      - 0.5
+      - 1.5
+      - 1
+      - 1
+      - 1
+      - 900
+      - 2
+      - 0.3
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -181,26 +178,24 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - elements:
-      - Lt. Wanderer
+      - Lt. Golden Tormentor
       - 10
-      - 82
-      - 52
-      - 21
-      - 23
-      - 39
+      - 84
+      - 42
+      - 27
+      - 27
+      - 32
       - '#FF9EEF'
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1540
-      - 0
-      - 0
-      - 0
+      - 0.5
+      - 1.5
+      - 1
+      - 1
+      - 1
+      - 1600
+      - 3
+      - 0.35
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -216,28 +211,26 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - elements:
-      - Capt. Wanderer
+      - Capt. Golden Tormentor
       - 15
-      - 128
-      - 68
-      - 32
-      - 35
-      - 55
+      - 130
+      - 58
+      - 42
+      - 42
+      - 49
       - '#E59EFF'
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 2210
-      - 0
-      - 0
-      - 0
+      - 0.5
+      - 1.5
+      - 1
+      - 1
+      - 1
+      - 2300
+      - 4
+      - 0.35
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -255,6 +248,5 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-  curTableRow: 1
+  curTableRow: 0
