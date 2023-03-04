@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: MammonsBribe
   m_EditorClassIdentifier: 
   name: MammonsBribe
-  level: 0
+  level: 1
+  probability: 0
   cost: 14
   active: 1
   shortDescription: 
@@ -23,13 +24,27 @@ MonoBehaviour:
   callbackDelay: 0
   effects:
   - effect: {fileID: 11400000, guid: 0577e2aa56915254382457914dfa64ee, type: 2}
-    value1: 0.5
+    value1: 1
     value2: 2
   visualEffect: {fileID: 552734591061099818, guid: adb27ddbffd6de74fb6e34379f56176a,
     type: 3}
   description: 
   skillTable: {fileID: 4900000, guid: 9797faf419d0d994b8e09148256285ff, type: 3}
   table:
-    colTypes: []
-    colNames: []
-    rows: []
+    colTypes:
+    - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    colNames:
+    - Level
+    - SkillEffect0Value0
+    - SkillEffect0Value1
+    rows:
+    - elements:
+      - 1
+      - 1
+      - 2
+      colTypes:
+      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089

@@ -1,15 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.ExceptionServices;
 using UnityEngine;
 
 namespace FinalInferno {
+
     [CreateAssetMenu(fileName = "EnemySkill", menuName = "ScriptableObject/EnemySkill")]
     public class EnemySkill : Skill {
         protected const string levelColumnName = "Level";
+
         [Header("Enemy Skill")]
         public string description;
+
         [Header("Stats Table")]
         [SerializeField] private TextAsset skillTable;
+
         [SerializeField] private DynamicTable table;
+
+        [SerializeField] protected float probability;
+        public float Probability { get => probability; set => probability = value; }
+
         private DynamicTable Table {
             get {
                 if (table == null && skillTable != null) {
@@ -21,20 +31,45 @@ namespace FinalInferno {
                 return table;
             }
         }
-        protected int MinLevel => Table.Rows[0].Field<int>(levelColumnName);
-        protected int MaxLevel => Table.Rows[Table.Rows.Count - 1].Field<int>(levelColumnName);
+
+        protected int MinLevel {
+            get {
+                try {
+                    return Table.Rows[0].Field<int>(levelColumnName);
+                } catch (Exception) {
+                    throw;
+                }
+            }
+        }
+
+        protected int MaxLevel {
+            get {
+                try {
+                    return Table.Rows[Table.Rows.Count - 1].Field<int>(levelColumnName);
+                } catch (Exception) {
+                    throw;
+                }
+            }
+        }
+
         public override int Level {
             get => level;
             set {
                 if (value != level && Table != null && Table.Rows.Count > 0) {
-                    level = Mathf.Clamp(value, MinLevel, MaxLevel);
+                    try {
+                        level = Mathf.Clamp(value, MinLevel, MaxLevel);
+                    } catch (Exception e) {
+                        ExceptionDispatchInfo.Capture(e.InnerException).Throw();
+                    }
                     LevelUp();
                 }
             }
         }
+
         private int curTableRow = 0;
 
         #region IDatabaseItem
+
         public override void LoadTables() {
             table = DynamicTable.Create(skillTable);
         }
@@ -42,9 +77,19 @@ namespace FinalInferno {
         public override void Preload() {
             active = true;
             curTableRow = -1;
-            Level = -1;
+            try {
+                Level = -1;
+            } catch (Exception e) {
+                string error = "";
+                if (e.Data.Contains("UserMessage")) {
+                    error += e.Data["UserMessage"].ToString();
+                }
+                error += $"Skill Name: {skillTable.name} - " + e.Message + Environment.NewLine + e.StackTrace;
+                Debug.LogError(error);
+            }
         }
-        #endregion
+
+        #endregion IDatabaseItem
 
         public void LevelUp() {
             if (Table == null || Table.Rows.Count < 1) {

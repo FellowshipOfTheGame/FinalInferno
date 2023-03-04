@@ -1,13 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Runtime.ExceptionServices;
 using UnityEngine;
 
 namespace FinalInferno {
+
     [System.Serializable]
     public class DynamicTable : ISerializationCallbackReceiver {
         // Declaração de subclasses e delegates ------------------
+
         #region subclass
+
         [System.Serializable]
         public class TableRow {
             public int Count => (elements != null) ? elements.Length : 0;
@@ -29,8 +34,8 @@ namespace FinalInferno {
                 try {
                     return colTypes[accessDict[colName]] == assembQualName ? accessDict[colName] : -1;
                 } catch (KeyNotFoundException e) {
-                    Debug.LogError(e.Message);
-                    return -1;
+                    e.Data.Add("UserMessage", $"ColName: {colName} - ");
+                    throw;
                 }
             }
 
@@ -115,7 +120,12 @@ namespace FinalInferno {
             }
 
             public T Field<T>(string colName) {
-                int colNumber = GetColNumber(colName, typeof(T).AssemblyQualifiedName);
+                int colNumber = -1;
+                try {
+                    colNumber = GetColNumber(colName, typeof(T).AssemblyQualifiedName);
+                } catch (Exception) {
+                    throw;
+                }
                 if (colNumber < 0) {
                     return default;
                 }
@@ -127,10 +137,12 @@ namespace FinalInferno {
                     : TryParseField<T>(fieldContent);
             }
         }
-        #endregion
+
+        #endregion subclass
 
         // Variaveis/Propriedades -------------------------
         protected const char splitCharacter = ';';
+
         [SerializeField] private string[] colTypes;
         [SerializeField] private string[] colNames;
         private Dictionary<string, int> accessDict;
@@ -147,7 +159,7 @@ namespace FinalInferno {
             }
         }
 
-        protected static private string GetQualifiedName(string typeName) {
+        protected static string GetQualifiedName(string typeName) {
             return typeName switch {
                 "string" => typeof(string).AssemblyQualifiedName,
                 "int" => typeof(int).AssemblyQualifiedName,

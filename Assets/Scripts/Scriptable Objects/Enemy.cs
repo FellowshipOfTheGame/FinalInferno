@@ -1,21 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.ExceptionServices;
 using UnityEngine;
+
 #if UNITY_EDITOR
 #endif
 
 namespace FinalInferno {
+
     [CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObject/Enemy/Basic")]
     public class Enemy : Unit, IDatabaseItem {
         private const string LevelSkillColumnName = "LevelSkill";
+        private const string ChanceToUseSkillColumnName = "ChanceToUseSkill";
         private const string ColorColumnName = "Color";
         private const string LevelColumnName = "Level";
         private const string RankColumnName = "Rank";
         private const string BaseExpColumnName = "XP";
         public override UnitType UnitType => UnitType.Enemy;
         public Color dialogueColor;
+
         [Space(10)]
         [Header("Enemy Info")]
         [SerializeField] protected Element element = Element.Neutral;
+
         public Element Element => element;
         [SerializeField] protected DamageType damageFocus = DamageType.None;
         public DamageType DamageFocus => damageFocus;
@@ -27,10 +34,13 @@ namespace FinalInferno {
         public AudioClip EnemyCry => enemyCry;
         [SerializeField, TextArea] private string bio = "Bio";
         public string Bio => bio;
+
         [Space(10)]
         [Header("Table")]
         [SerializeField] protected TextAsset enemyTable;
+
         [SerializeField] protected DynamicTable table;
+
         protected DynamicTable Table {
             get {
                 if (table == null && enemyTable != null) {
@@ -42,13 +52,34 @@ namespace FinalInferno {
                 return table;
             }
         }
+
         [SerializeField, HideInInspector] protected int curTableRow = 0;
-        protected int MinLevel => Table.Rows[0].Field<int>(LevelColumnName);
-        protected int MaxLevel => Table.Rows[Table.Rows.Count - 1].Field<int>(LevelColumnName);
+
+        protected int MinLevel {
+            get {
+                try {
+                    return Table.Rows[0].Field<int>(LevelColumnName);
+                } catch (Exception) {
+                    throw;
+                }
+            }
+        }
+
+        protected int MaxLevel {
+            get {
+                try {
+                    return Table.Rows[Table.Rows.Count - 1].Field<int>(LevelColumnName);
+                } catch (Exception) {
+                    throw;
+                }
+            }
+        }
+
         public override long SkillExp => BaseExp;
         public long BaseExp { get; protected set; }
 
         #region IDatabaseItem
+
         public void LoadTables() {
             table = DynamicTable.Create(enemyTable);
         }
@@ -57,7 +88,8 @@ namespace FinalInferno {
             curTableRow = -1;
             LevelEnemy(-1);
         }
-        #endregion
+
+        #endregion IDatabaseItem
 
         public int GetSkillLevel(EnemySkill skill) {
             int skillIndex = skills.IndexOf(skill);
@@ -100,14 +132,18 @@ namespace FinalInferno {
                 Debug.LogWarning($"This enemy({AssetName}) has no table to load", this);
                 return;
             }
-
-            level = Mathf.Clamp(newLevel, MinLevel, MaxLevel);
+            try {
+                level = Mathf.Clamp(newLevel, MinLevel, MaxLevel);
+            } catch (Exception e) {
+                ExceptionDispatchInfo.Capture(e.InnerException).Throw();
+            }
             int newTableRow = GetTableRowWithLevel(newLevel);
             if (newTableRow != curTableRow) {
                 curTableRow = newTableRow;
                 LoadStatsFromTable(newTableRow);
             }
             LoadSkillLevelsFromTable();
+            LoadSkillProbabilitiesFromTable();
         }
 
         private int GetTableRowWithLevel(int newLevel) {
@@ -153,11 +189,36 @@ namespace FinalInferno {
 
         private void LoadSkillLevelsFromTable() {
             for (int i = 0; i < skills.Count; i++) {
-                skills[i].Level = Table.Rows[curTableRow].Field<int>($"{LevelSkillColumnName}{i}");
+                try {
+                    skills[i].Level = Table.Rows[curTableRow].Field<int>($"{LevelSkillColumnName}{i}");
+                } catch (Exception e) {
+                    string error = "";
+                    if (e.Data.Contains("UserMessage")) {
+                        error += e.Data["UserMessage"].ToString();
+                    }
+                    error += $"Asset Name: {AssetName} - " + e.Message + Environment.NewLine + e.StackTrace;
+                    Debug.LogError(error);
+                }
+            }
+        }
+
+        private void LoadSkillProbabilitiesFromTable() {
+            for (int i = 0; i < skills.Count; i++) {
+                try {
+                    ((EnemySkill)skills[i]).Probability = Table.Rows[curTableRow].Field<float>($"{ChanceToUseSkillColumnName}{i}");
+                } catch (Exception e) {
+                    string error = "";
+                    if (e.Data.Contains("UserMessage")) {
+                        error += e.Data["UserMessage"].ToString();
+                    }
+                    error += $"Asset Name: {AssetName} - " + e.Message + Environment.NewLine + e.StackTrace;
+                    Debug.LogError(error);
+                }
             }
         }
 
         #region EnemyAI
+
         public virtual void AIEnemy() {
             float relativeHP = BattleManager.instance.CurrentUnit.CurHP / GetAverageTeamHP();
             float percentageNotDefense = Mathf.Sqrt(relativeHP) + 0.05f * relativeHP;
@@ -177,7 +238,7 @@ namespace FinalInferno {
         }
 
         protected virtual Skill SkillDecision(float percentageNotDefense) {
-            float roll = Random.Range(0.0f, 1.0f);
+            float roll = UnityEngine.Random.Range(0.0f, 1.0f);
             if (roll < percentageNotDefense)
                 return AttackDecision();
             return defenseSkill;
@@ -187,7 +248,9 @@ namespace FinalInferno {
             return attackSkill;
         }
 
-        public virtual void ResetParameters() { /* Função para resetar parametros de boss por exemplo */ }
+        public virtual void ResetParameters() {
+            /* Função para resetar parametros de boss por exemplo */
+        }
 
         protected virtual List<BattleUnit> GetTargets(TargetType type) {
             return type switch {
@@ -206,12 +269,12 @@ namespace FinalInferno {
 
         protected static BattleUnit GetRandomLiveAlly() {
             List<BattleUnit> team = BattleManager.instance.GetTeam(UnitType.Enemy);
-            return team[Random.Range(0, team.Count - 1)];
+            return team[UnityEngine.Random.Range(0, team.Count - 1)];
         }
 
         protected virtual BattleUnit TargetDecision(List<BattleUnit> targetTeam) {
             List<float> targetingChances = GetUnitTargetingChances(targetTeam);
-            float roll = Random.Range(0.0f, 1.0f);
+            float roll = UnityEngine.Random.Range(0.0f, 1.0f);
             for (int targetIndex = 0; targetIndex < targetTeam.Count; targetIndex++) {
                 if (roll <= targetingChances[targetIndex])
                     return targetTeam[targetIndex];
@@ -244,6 +307,7 @@ namespace FinalInferno {
             }
             return true;
         }
-        #endregion
+
+        #endregion EnemyAI
     }
 }

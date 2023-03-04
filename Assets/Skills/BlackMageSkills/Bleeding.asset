@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Bleeding
   m_EditorClassIdentifier: 
   name: Bleeding
-  level: 0
+  level: 1
+  probability: 0
   cost: 12
   active: 1
   shortDescription: Single target neutral damage over time.
@@ -23,12 +24,12 @@ MonoBehaviour:
   callbackDelay: 0
   effects:
   - effect: {fileID: 11400000, guid: 533417b90c067e14bbdc85bb2e52be6f, type: 2}
-    value1: 0.403
+    value1: 0.4
     value2: 3
   visualEffect: {fileID: 8917310150857617220, guid: 22f2b907285e270409571aaca3977e5b,
     type: 3}
   xp: 0
-  xpNext: 0
+  xpNext: 999
   description: Makes the blood (or any equivalent life essence) come out of the enemy
     from its holes and pores. Causes Damage over time for a few turns.
   skillsToUpdate:
