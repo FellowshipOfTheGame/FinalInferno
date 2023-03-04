@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: Herman Scheme
   m_EditorClassIdentifier: 
   name: Herman Scheme
-  level: 1
-  probability: 0
+  level: 0
   cost: 12
   active: 1
   shortDescription: "Steals power from enemy for a short time. Must payback double\r
@@ -25,12 +24,12 @@ MonoBehaviour:
   callbackDelay: 0
   effects:
   - effect: {fileID: 11400000, guid: 2a811d6fe345e7241af719fce9698395, type: 2}
-    value1: 0.05
+    value1: 0.055
     value2: 3
   visualEffect: {fileID: 8917310150857617220, guid: 3a53acaf9cd688c469dcfe47f3d32270,
     type: 3}
   xp: 0
-  xpNext: 333
+  xpNext: 0
   description: Borrows power from an enemy for a limited amount of turns. If the
     enemy is not dead at the end of said turns, Heman pays back the loan with interest,
     lending his own power to the enemy. Does not work if the target already has damage
