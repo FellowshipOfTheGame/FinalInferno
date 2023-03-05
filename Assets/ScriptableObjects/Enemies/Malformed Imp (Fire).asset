@@ -9,16 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1494de32c58656842bde15226b17b8ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 5bb4b73a56b066945a09e38fde03ea7c, type: 3}
   m_Name: Malformed Imp (Fire)
   m_EditorClassIdentifier: 
-  name: Malformed Imp
-  level: 5
-  hpMax: 53
-  baseDmg: 38
-  baseDef: 10
-  baseMagicDef: 12
-  baseSpeed: 24
+  name: Noob MalformedI mp
+  level: 1
+  hpMax: 30
+  baseDmg: 27
+  baseDef: 4
+  baseMagicDef: 5
+  baseSpeed: 14
   elementalResistances:
     reorderableList:
       canAdd: 1
@@ -42,10 +42,13 @@ MonoBehaviour:
       elementIcon: {fileID: 0}
     reqReferences: {fileID: 0}
     isExpanded: 0
-    _keyValues: 
-    _keys: 
-    _values: []
-  skills: []
+    _keyValues: 0100000002000000
+    _keys: 0100000002000000
+    _values:
+    - 0.5
+    - 1.5
+  skills:
+  - {fileID: 11400000, guid: f25a5633998651b4c99f38fb1da19a95, type: 2}
   attackSkill: {fileID: 11400000, guid: 95407fd86bf202049848deeb79956196, type: 2}
   defenseSkill: {fileID: 11400000, guid: 91ee493282c723147a741a8ac23970d9, type: 2}
   color: {r: 1, g: 1, b: 1, a: 1}
@@ -68,7 +71,7 @@ MonoBehaviour:
     type: 3}
   enemyCry: {fileID: 8300000, guid: 24c1a2410b1154844a312d23598a28c1, type: 3}
   bio: Mother, am I pretty?
-  enemyTable: {fileID: 4900000, guid: fad97e4bea2fabc4192746002a560182, type: 3}
+  enemyTable: {fileID: 4900000, guid: 6b6bb685b91ae344b96d15b915a34c61, type: 3}
   table:
     colTypes:
     - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -85,7 +88,6 @@ MonoBehaviour:
     - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-    - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -105,27 +107,25 @@ MonoBehaviour:
     - NeutralResistance
     - XP
     - LevelSkill0
-    - LevelSkill1
-    - ChancetoUseSkill
+    - ChanceToUseSkill0
     rows:
     - elements:
-      - Noob Wanderer
+      - Noob MalformedI mp
       - 1
-      - 34
-      - 25
+      - 30
+      - 27
       - 4
       - 5
-      - 13
+      - 14
       - '#FFFFFF'
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 220
-      - 0
-      - 0
-      - 0
+      - 0.5
+      - 1.5
+      - 1
+      - 1
+      - 1
+      - 240
+      - 1
+      - 0.3
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -143,26 +143,24 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - elements:
-      - Wanderer
+      - Malformed Imp
       - 5
-      - 53
-      - 38
+      - 48
+      - 44
       - 10
       - 12
-      - 24
+      - 25
       - '#FF9EC0'
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 830
-      - 0
-      - 0
-      - 0
+      - 0.5
+      - 1.5
+      - 1
+      - 1
+      - 1
+      - 860
+      - 2
+      - 0.3
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -180,26 +178,24 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - elements:
-      - Lt. Wanderer
+      - Lt. Malformed Imp
       - 10
-      - 82
-      - 52
+      - 76
+      - 59
       - 21
       - 23
-      - 39
+      - 40
       - '#FF9EEF'
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1540
-      - 0
-      - 0
-      - 0
+      - 0.5
+      - 1.5
+      - 1
+      - 1
+      - 1
+      - 1570
+      - 3
+      - 0.35
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -215,28 +211,26 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
     - elements:
-      - Capt. Wanderer
+      - Capt. Malformed Imp
       - 15
-      - 128
-      - 68
+      - 120
+      - 77
       - 32
       - 35
-      - 55
+      - 57
       - '#E59EFF'
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 1.0
-      - 2210
-      - 0
-      - 0
-      - 0
+      - 0.5
+      - 1.5
+      - 1
+      - 1
+      - 1
+      - 2260
+      - 4
+      - 0.35
       colTypes:
       - System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -254,6 +248,5 @@ MonoBehaviour:
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      - System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-  curTableRow: 1
+  curTableRow: 0
