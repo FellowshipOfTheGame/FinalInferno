@@ -10,7 +10,7 @@ namespace FinalInferno {
         public bool IsCutscene => sceneChangeInfo.isCutscene;
         public Dialogue CutsceneDialogue => sceneChangeInfo.cutsceneDialogue;
         public Vector2 SavePosition => sceneChangeInfo.savePosition;
-        private SceneChangeInfo sceneChangeInfo = new SceneChangeInfo();
+        private SceneChangeInfo sceneChangeInfo = new SceneChangeInfo(new ScenePicker(), Vector2.zero);
 
         public void SetValues(SceneChangeInfo other) {
             sceneChangeInfo.CopyValues(other);
