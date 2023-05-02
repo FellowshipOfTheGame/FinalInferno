@@ -8,7 +8,7 @@ namespace FinalInferno {
         public List<Enemy> Enemies => battleInfo.enemies;
         public Sprite BGImage => battleInfo.BGImage;
         public AudioClip BGM => battleInfo.BGM;
-        private BattleInfo battleInfo = new BattleInfo();
+        private BattleInfo battleInfo = new BattleInfo(new Enemy[] { }, null, null);
 
         public void SetValues(BattleInfo other) {
             battleInfo.CopyValues(other);
