@@ -9,9 +9,11 @@ namespace FinalInferno {
         // O nível do cérbero deve ser incrementado de 1 em 1 para versões mais fortes
         // O nível das habilidades do cérbero devem ser incrementadas de 3 em 3 para cada versão
         private const int maxHeads = 3;
+        private const float hellfireChance = 0.9f;
         public static int heads = 0;
         private static int hellFireCD = 0;
-        private static bool summonedGhosts;
+        private static int tremendousRoarCD = 0;
+        private static bool summonedGhosts = false;
         private static BattleUnit backHead = null;
         private static BattleUnit middleHead = null;
         private static BattleUnit frontHead = null;
@@ -171,6 +173,7 @@ namespace FinalInferno {
 
         public override void ResetParameters() {
             hellFireCD = 0;
+            tremendousRoarCD = 0;
             summonedGhosts = false;
         }
 
@@ -184,7 +187,8 @@ namespace FinalInferno {
             float roll = Random.Range(0.0f, 1.0f);
             float percentageDebuff = Mathf.Min(1f, percentageNotDefense) / 3f;
 
-            if (!AllHeroesAreParalised() && roll < percentageDebuff) {
+            if (!AllHeroesAreParalised() && RollRoarOffCooldown(roll, percentageDebuff)) {
+                tremendousRoarCD = heads;
                 TremendousRoalSkill.Level = SkillLevel;
                 return TremendousRoalSkill;
             }
@@ -193,20 +197,29 @@ namespace FinalInferno {
             return defenseSkill;
         }
 
-        public override Skill AttackDecision() {
-            if (hellFireCD < 1)
-                return RollHellfireAttack();
-            hellFireCD--;
-            return attackSkill;
+        private bool RollRoarOffCooldown(float roll, float roarChance) {
+            if (tremendousRoarCD > 0) {
+                tremendousRoarCD--;
+                return false;
+            }
+            return roll < roarChance;
         }
 
-        private Skill RollHellfireAttack() {
+        public override Skill AttackDecision() {
+            return RollHellfireOffCooldown() ? HellfireSkill : attackSkill;
+        }
+
+        private bool RollHellfireOffCooldown() {
+            if (hellFireCD > 0) {
+                hellFireCD--;
+                return false;
+            }
             float roll = Random.Range(0.0f, 1.0f);
-            if (roll >= 0.9f / heads)
-                return attackSkill;
-            hellFireCD = (heads - 1);
+            if (roll >= hellfireChance / heads)
+                return false;
+            hellFireCD = heads;
             HellfireSkill.Level = SkillLevel;
-            return HellfireSkill;
+            return true;
         }
 
         protected override List<BattleUnit> GetTargets(TargetType type) {
