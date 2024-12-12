@@ -273,7 +273,7 @@ TextureImporter:
       213: 21300178
     second: lava-Sheet_89
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -290,10 +290,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -332,6 +334,8 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 1
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -343,6 +347,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 1
   - serializedVersion: 3
@@ -355,6 +360,46 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
@@ -2260,9 +2305,99 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: 
+    nameFileIdTable:
+      lava-Sheet_0: 21300000
+      lava-Sheet_1: 21300002
+      lava-Sheet_10: 21300020
+      lava-Sheet_11: 21300022
+      lava-Sheet_12: 21300024
+      lava-Sheet_13: 21300026
+      lava-Sheet_14: 21300028
+      lava-Sheet_15: 21300030
+      lava-Sheet_16: 21300032
+      lava-Sheet_17: 21300034
+      lava-Sheet_18: 21300036
+      lava-Sheet_19: 21300038
+      lava-Sheet_2: 21300004
+      lava-Sheet_20: 21300040
+      lava-Sheet_21: 21300042
+      lava-Sheet_22: 21300044
+      lava-Sheet_23: 21300046
+      lava-Sheet_24: 21300048
+      lava-Sheet_25: 21300050
+      lava-Sheet_26: 21300052
+      lava-Sheet_27: 21300054
+      lava-Sheet_28: 21300056
+      lava-Sheet_29: 21300058
+      lava-Sheet_3: 21300006
+      lava-Sheet_30: 21300060
+      lava-Sheet_31: 21300062
+      lava-Sheet_32: 21300064
+      lava-Sheet_33: 21300066
+      lava-Sheet_34: 21300068
+      lava-Sheet_35: 21300070
+      lava-Sheet_36: 21300072
+      lava-Sheet_37: 21300074
+      lava-Sheet_38: 21300076
+      lava-Sheet_39: 21300078
+      lava-Sheet_4: 21300008
+      lava-Sheet_40: 21300080
+      lava-Sheet_41: 21300082
+      lava-Sheet_42: 21300084
+      lava-Sheet_43: 21300086
+      lava-Sheet_44: 21300088
+      lava-Sheet_45: 21300090
+      lava-Sheet_46: 21300092
+      lava-Sheet_47: 21300094
+      lava-Sheet_48: 21300096
+      lava-Sheet_49: 21300098
+      lava-Sheet_5: 21300010
+      lava-Sheet_50: 21300100
+      lava-Sheet_51: 21300102
+      lava-Sheet_52: 21300104
+      lava-Sheet_53: 21300106
+      lava-Sheet_54: 21300108
+      lava-Sheet_55: 21300110
+      lava-Sheet_56: 21300112
+      lava-Sheet_57: 21300114
+      lava-Sheet_58: 21300116
+      lava-Sheet_59: 21300118
+      lava-Sheet_6: 21300012
+      lava-Sheet_60: 21300120
+      lava-Sheet_61: 21300122
+      lava-Sheet_62: 21300124
+      lava-Sheet_63: 21300126
+      lava-Sheet_64: 21300128
+      lava-Sheet_65: 21300130
+      lava-Sheet_66: 21300132
+      lava-Sheet_67: 21300134
+      lava-Sheet_68: 21300136
+      lava-Sheet_69: 21300138
+      lava-Sheet_7: 21300014
+      lava-Sheet_70: 21300140
+      lava-Sheet_71: 21300142
+      lava-Sheet_72: 21300144
+      lava-Sheet_73: 21300146
+      lava-Sheet_74: 21300148
+      lava-Sheet_75: 21300150
+      lava-Sheet_76: 21300152
+      lava-Sheet_77: 21300154
+      lava-Sheet_78: 21300156
+      lava-Sheet_79: 21300158
+      lava-Sheet_8: 21300016
+      lava-Sheet_80: 21300160
+      lava-Sheet_81: 21300162
+      lava-Sheet_82: 21300164
+      lava-Sheet_83: 21300166
+      lava-Sheet_84: 21300168
+      lava-Sheet_85: 21300170
+      lava-Sheet_86: 21300172
+      lava-Sheet_87: 21300174
+      lava-Sheet_88: 21300176
+      lava-Sheet_89: 21300178
+      lava-Sheet_9: 21300018
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
