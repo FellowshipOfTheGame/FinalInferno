@@ -55,6 +55,15 @@ namespace FinalInferno {
                 questInfo.LoadQuestInfo(quest);
                 activeQuests.Add(quest);
             }
+            foreach (Quest quest in new List<Quest>(activeQuests)) {
+                if (!(quest is StoryQuest))
+                    continue;
+                StoryQuest storyQuest = quest as StoryQuest;
+                if (!storyQuest.NextQuest || activeQuests.Contains(storyQuest.NextQuest))
+                    continue;
+                if (storyQuest.IsComplete)
+                    StartQuest(storyQuest.NextQuest);
+            }
         }
     }
 }

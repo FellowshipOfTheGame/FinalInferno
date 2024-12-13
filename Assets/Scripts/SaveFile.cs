@@ -1,9 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using FinalInferno.CustomExtensions;
 using UnityEngine;
 
 namespace FinalInferno {
-    [System.Serializable]
+    [Serializable]
     public class SaveFile {
         private const int nSaveSlots = 5;
         public static int NSaveSlots => nSaveSlots;
@@ -144,18 +145,82 @@ namespace FinalInferno {
             for (int index = 0; index < nSaveSlots; index++) {
                 if (IsSlotEmpty(index))
                     continue;
-                UpdateAutoSaveSettings167(index);
+                if (SlotHasVersionString(index)) {
+                    UpdateAutoSaveSettings167(index);
+                    UpdateMainQuestProgress200(index);
+                }
                 saves[index].version = Application.version;
             }
         }
 
         private void UpdateAutoSaveSettings167(int index) {
-            if (!SlotHasVersionString(index))
+            if (!Application.version.IsNewerVersionThan("1.6.6") || !saves[index].version.IsOlderVersionThan("1.6.7"))
                 return;
-            if (Application.version.IsNewerVersionThan("1.6.6") && saves[index].version.IsOlderVersionThan("1.6.7")) {
-                Debug.Log($"Setting autosave to True, previous value was {saves[index].autoSave}");
-                saves[index].autoSave = true;
+            Debug.Log($"Setting autosave to True, previous value was {saves[index].autoSave}");
+            saves[index].autoSave = true;
+        }
+
+        private void UpdateMainQuestProgress200(int index) {
+            if (!Application.version.IsNewerVersionThan("1.7.0") || !saves[index].version.IsOlderVersionThan("2.0.0"))
+                return;
+            Debug.Log($"Applying Main Quest updates for slot {index}");
+            for (int i = 0; i < saves[index].quest.Length; i++) {
+                if (saves[index].quest[i].name != "MainQuest")
+                    continue;
+
+                int previousFlagCount = saves[index].quest[i].flagsNames.Length;
+                int defaultFlagIndex = RemoveDefaultFlagName200(index, i);
+                ulong CerberusDeadFlagBit = FindCerberusDeadFlagBit200(index, i);
+                if ((CerberusDeadFlagBit & saves[index].quest[i].flagsTrue) != 0) {
+                    saves[index].quest[i].flagsTrue = 0;
+                    ulong bitValue = 1;
+                    bitValue <<= saves[index].quest[i].flagsNames.Length - 1;
+                    while (bitValue > 0) {
+                        saves[index].quest[i].flagsTrue |= bitValue;
+                        bitValue >>= 1;
+                    }
+                } else {
+                    ulong previousFlags = saves[index].quest[i].flagsTrue;
+                    saves[index].quest[i].flagsTrue = 0;
+                    ulong copyBitMask = 1;
+                    ulong pasteBitMask = 1;
+                    for (int flag = 0; flag < previousFlagCount; flag++) {
+                        if (flag == defaultFlagIndex) {
+                            copyBitMask <<= 1;
+                            continue;
+                        }
+                        if ((previousFlags & copyBitMask) != 0)
+                            saves[index].quest[i].flagsTrue |= pasteBitMask;
+                        copyBitMask <<= 1;
+                        pasteBitMask <<= 1;
+                    }
+                }
+                return;
             }
+        }
+
+        private int RemoveDefaultFlagName200(int slot, int questIndex) {
+            bool skipped = false;
+            int defaultFlagIndex = -1;
+            string[] previousList = (string[])saves[slot].quest[questIndex].flagsNames.Clone();
+            saves[slot].quest[questIndex].flagsNames = new string[previousList.Length - 1];
+            for (int i = 0; i < previousList.Length; i++) {
+                if (previousList[i] == "Default") {
+                    skipped = true;
+                    defaultFlagIndex = i;
+                    continue;
+                }
+                saves[slot].quest[questIndex].flagsNames[skipped ? i - 1 : i] = previousList[i];
+            }
+            return defaultFlagIndex;
+        }
+
+        private ulong FindCerberusDeadFlagBit200(int slot, int questIndex) {
+            for (int i = 0; i < saves[slot].quest[questIndex].flagsNames.Length; i++) {
+                if (saves[slot].quest[questIndex].flagsNames[i] == "CerberusDead")
+                    return (ulong)1 << i;
+            }
+            throw new Exception("[SaveFile]: Could not find CerberusDead flag in save file");
         }
 
         private void LoadPartyInfo() {

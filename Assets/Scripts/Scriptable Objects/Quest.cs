@@ -58,7 +58,7 @@ namespace FinalInferno {
             return events.ContainsKey(eventName) && events[eventName];
         }
 
-        public void SetFlag(string eventName, bool value) {
+        public virtual void SetFlag(string eventName, bool value) {
             if (IsActive && events.ContainsKey(eventName))
                 events[eventName] = value;
         }
