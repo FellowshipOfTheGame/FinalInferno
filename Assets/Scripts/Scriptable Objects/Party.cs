@@ -32,6 +32,8 @@ namespace FinalInferno {
             }
         }
 
+        public int ScaledLevelTier => ((ScaledLevel - 1) % 5) + 1;
+
         private static int CalculateMainQuestProgress() {
             int questParam = 0;
             Quest mainQuest = AssetManager.LoadAsset<Quest>(mainQuestAssetName);

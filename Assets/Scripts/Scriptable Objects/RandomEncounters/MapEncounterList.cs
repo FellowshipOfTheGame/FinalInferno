@@ -19,10 +19,10 @@ namespace FinalInferno {
         }
         [SerializeField] private float difficultyFactor = 0.8f;
 
-        public ReadOnlyDictionary<EncounterGroup, float> GetChancesForLevel(int level) {
+        public ReadOnlyDictionary<EncounterGroup, float> GetChancesForLevel(int levelTier) {
             Dictionary<EncounterGroup, float> chanceDict = new Dictionary<EncounterGroup, float>();
-            level = Mathf.Clamp(level, 1, 5);
-            float sumOfWeights = CalculateEncounterWeightsAndSum(level, chanceDict);
+            levelTier = Mathf.Clamp(levelTier, 1, 5);
+            float sumOfWeights = CalculateEncounterWeightsAndSum(levelTier, chanceDict);
             CalculatePercentages(chanceDict, sumOfWeights);
             return new ReadOnlyDictionary<EncounterGroup, float>(chanceDict);
         }

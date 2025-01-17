@@ -175,8 +175,8 @@ namespace FinalInferno {
         }
 
         private EncounterGroup CalculateEncounterGroup() {
-            int partyLevel = Party.Instance.ScaledLevel;
-            ReadOnlyDictionary<EncounterGroup, float> chanceDict = mapEncounterList.GetChancesForLevel(partyLevel);
+            int levelTier = Party.Instance.ScaledLevelTier;
+            ReadOnlyDictionary<EncounterGroup, float> chanceDict = mapEncounterList.GetChancesForLevel(levelTier);
             List<EncounterGroup> encounterGroups = new List<EncounterGroup>(chanceDict.Keys);
             encounterGroups.Sort((first, second) => first.DifficultyRating.CompareTo(second.DifficultyRating));
             EncounterGroup result = RollEncounterGroup(encounterGroups, chanceDict);
